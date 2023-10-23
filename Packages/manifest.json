@@ -50,7 +50,7 @@
   },
   "scopedRegistries": [
     {
-      "name": "spoiledcat",
+      "name": "Git-For-Unity",
       "url": "https://registry.spoiledcat.com",
       "scopes": [
         "com.spoiledcat"
