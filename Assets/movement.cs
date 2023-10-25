@@ -5,6 +5,7 @@ using UnityEngine;
 public class movement : MonoBehaviour
 {
     Vector2 velocity;
+    public float driftCorrection;
     public Rigidbody2D rigid;
     public float Acceleration;
     public float Rot_Acceleration;
@@ -20,6 +21,16 @@ public class movement : MonoBehaviour
         return (line_norm.x * target.x + line_norm.y * target.y) * line_norm;
     }
 
+    Vector2 push(Vector2 target, Vector2 line)
+    {
+        float length = target.magnitude;
+        float prod = (line.normalized.x * target.x + line.normalized.y * target.y);
+        float kv = (prod + length) / 2; //Gives nicer turns, but less snapped in backwards feel
+        //float kv = prod; //more control going backwards, but kinda confusing
+        Vector2 proj = kv * line.normalized;
+        return proj - target;
+    }
+
     void Start()
     {
         velocity = new Vector2();
@@ -28,32 +39,28 @@ public class movement : MonoBehaviour
     void Update()
     {
         if (Input.GetKey("w")) {
-            accel = 10 * Acceleration;
+            float eff = 1 / (1 + Mathf.Exp(velocity.sqrMagnitude / 100 - 10));
+            accel = 10 * Acceleration * eff;
+            
+            float vm = velocity.magnitude;
+            velocity += driftCorrection * Time.deltaTime * push(velocity, forwards);
+            velocity *= (.01f + vm) / (.01f+velocity.magnitude);
+
         } else if (Input.GetKey("s")) {
             velocity *= Mathf.Pow(.2f, Time.deltaTime);
         } else {
             accel = 0;
         }
 
-        if (Input.GetKey("a"))
-        {
-            rot_acc = 500*Rot_Acceleration;
-        } else if (Input.GetKey("d"))
-        {
-            rot_acc = -500*Rot_Acceleration;
-        } else {
-            rot_acc = 0;
-        }
 
-        forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.rotation), Mathf.Cos(Mathf.Deg2Rad * rigid.rotation));
+        Vector3 tar = Input.mousePosition - new Vector3(Screen.width/2, Screen.height/2, 0);
+        forwards = tar.normalized;
+        transform.rotation=Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
+        //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.rotation), Mathf.Cos(Mathf.Deg2Rad * rigid.rotation));
 
         velocity += accel * forwards * Time.deltaTime;
         velocity *= Mathf.Pow(.9f, Time.deltaTime);
-        rot_vel += rot_acc * Time.deltaTime;
-        rot_vel *= Mathf.Pow(.5f, Time.deltaTime);
 
-        rigid.angularVelocity = rot_vel;
-        velocity = project(velocity, forwards);
         rigid.velocity = velocity;
 
     }
