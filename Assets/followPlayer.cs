@@ -43,7 +43,7 @@ public class followPlayer : MonoBehaviour
         Color cul = Color.HSVToRGB(vul / 256f, .2f, .2f);
         Color cuu = Color.HSVToRGB(vuu / 256f, .2f, .2f);
 
-        Debug.Log(vll);
+        //Debug.Log(vll);
 
         return Lerp(
             Lerp(cll,cul,xt),

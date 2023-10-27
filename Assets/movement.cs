@@ -6,6 +6,7 @@ public class movement : MonoBehaviour
 {
     Vector2 velocity;
     public float driftCorrection;
+    public float speedLimit;
     public Rigidbody2D rigid;
     public float Acceleration;
     public float Rot_Acceleration;
@@ -39,7 +40,8 @@ public class movement : MonoBehaviour
     void Update()
     {
         if (Input.GetKey("w")) {
-            float eff = 1 / (1 + Mathf.Exp(velocity.sqrMagnitude / 100 - 10));
+            float dv = speedLimit * speedLimit / 100;
+            float eff = 1 / (1 + Mathf.Exp(velocity.sqrMagnitude / 100 - dv));
             accel = 10 * Acceleration * eff;
             
             float vm = velocity.magnitude;
