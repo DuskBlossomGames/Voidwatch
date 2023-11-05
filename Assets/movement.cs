@@ -55,7 +55,7 @@ public class movement : MonoBehaviour
         }
 
 
-        Vector3 tar = Input.mousePosition - new Vector3(Screen.width/2, Screen.height/2, 0);
+        Vector3 tar = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         forwards = tar.normalized;
         transform.rotation=Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
         //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.rotation), Mathf.Cos(Mathf.Deg2Rad * rigid.rotation));

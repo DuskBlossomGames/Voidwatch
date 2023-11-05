@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class followPlayer : MonoBehaviour
 {
+    public float jump = 0.01f;
+    public float shipPull = .35f;
+    public float camLazyness = 1f;
+    Vector3 camOffset;
+
     int Hash(int input)
     {
         return (
@@ -21,6 +26,9 @@ public class followPlayer : MonoBehaviour
 
     Color Lerp(Color A, Color B, float t)
     {
+        return A * (1 - t) + B * t;
+    }
+    Vector3 Lerp(Vector3 A, Vector3 B, float t) {
         return A * (1 - t) + B * t;
     }
     Color genColorfromCoords(Vector2 pos, float cellsize)
@@ -56,13 +64,30 @@ public class followPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        camOffset = new Vector3();
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.GetComponent<Camera>().backgroundColor = genColorfromCoords(player.transform.position,100);
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y,transform.position.z);
+        Vector3 playerpos = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+        Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mouse2player = mousepos - playerpos;
+        float sqM = (mouse2player - (transform.position - playerpos)).sqrMagnitude/camLazyness;
+        float mouseInf = mouse2player.sqrMagnitude / 10;
+        float scale = (sqM + mouseInf) / (1 + sqM + mouseInf);
+        //camOffset = Lerp((transform.position - playerpos), mouse2player * shipPull, jump * scale);
+
+        //transform.position = playerpos + camOffset;
+        camOffset = Lerp(transform.position, Lerp(playerpos,mousepos, shipPull), jump * scale * scale);
+
+        transform.position = camOffset;
+        transform.rotation = Quaternion.Euler(new Vector3(0,0,-90+Mathf.Rad2Deg*Mathf.Atan2(playerpos.y,playerpos.x)));
+
+
+        sqM = (mousepos-playerpos).sqrMagnitude/500;
+        scale = sqM / (1 + sqM);
+        Camera.main.orthographicSize = 15 +  5 * scale;
     }
 }
