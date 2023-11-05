@@ -29,7 +29,10 @@ public class movement : MonoBehaviour
         float kv = (prod + length) / 2; //Gives nicer turns, but less snapped in backwards feel
         //float kv = prod; //more control going backwards, but kinda confusing
         Vector2 proj = kv * line.normalized;
-        return proj - target;
+
+        Vector2 mid = (target.normalized + line.normalized).normalized * length/2;
+
+        return proj - target + mid;
     }
 
     void Start()
