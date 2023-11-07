@@ -68,7 +68,7 @@ public class followPlayer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.GetComponent<Camera>().backgroundColor = genColorfromCoords(player.transform.position,100);
         Vector3 playerpos = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
@@ -88,6 +88,6 @@ public class followPlayer : MonoBehaviour
 
         sqM = (mousepos-playerpos).sqrMagnitude/500;
         scale = sqM / (1 + sqM);
-        Camera.main.orthographicSize = 15 +  5 * scale;
+        Camera.main.orthographicSize = 12 +  5 * scale;
     }
 }
