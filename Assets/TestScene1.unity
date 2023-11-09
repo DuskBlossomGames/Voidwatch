@@ -549,10 +549,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9bb6a6abedda794fb657da828c810d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 2086174079}
   jump: 0.1
   shipPull: 0.35
-  camLazyness: 10
-  player: {fileID: 2086174079}
+  camLaziness: 1
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,6 +1271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1480058253}
   - component: {fileID: 1480058252}
+  - component: {fileID: 1480058254}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -1345,6 +1346,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1480058254
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480058251}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.49999997
 --- !u!1 &1542269544
 GameObject:
   m_ObjectHideFlags: 0
@@ -6613,7 +6649,7 @@ GameObject:
   - component: {fileID: 2086174083}
   - component: {fileID: 2086174084}
   m_Layer: 0
-  m_Name: Triangle
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6633,9 +6669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   driftCorrection: 5
   speedLimit: 20
-  rigid: {fileID: 2086174083}
-  Acceleration: 5
-  Rot_Acceleration: 0.6
+  acceleration: 1.2
 --- !u!212 &2086174081
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6748,7 +6782,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028cf50648571b74ea91103ca7784bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243, type: 3}
+  bulletPrefab: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243, type: 3}
+  playArea: {fileID: 1480058251}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
