@@ -12,7 +12,7 @@ public class DestroyOffScreen : MonoBehaviour
     {
         _renderer = GetComponent<Renderer>();
     }
-    
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject == playArea) _inPlayArea = false;
