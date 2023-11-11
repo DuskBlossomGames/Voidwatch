@@ -13,16 +13,31 @@ public class BoidHandler : MonoBehaviour
     public float maxSpeed;
     public float minSpeed;
     public GameObject target;
+    public GameObject bulletPrefab;
+    public GameObject playArea;
+    public GameObject gravitySource;
+    public float shootDist;
 
     float SqrHypot(Vector2 v, Vector2 w)
     {
         return (v.x - w.x) * (v.x - w.x) + (v.y - w.y) * (v.y - w.y);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Shoot()
     {
+        Vector2 diff = new Vector2(target.transform.position.x - transform.position.x, target.transform.position.y - transform.position.y);
+        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, -90 + Mathf.Rad2Deg * Mathf.Atan2(diff.y, diff.x)));
         
+        if(diff.sqrMagnitude < shootDist * shootDist)
+        {
+            Debug.Log("Shooting");
+            var bullet = Instantiate(bulletPrefab, transform.position, rot);
+            bullet.GetComponent<DestroyOffScreen>().playArea = playArea;
+            bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
+            bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, 500));
+            Debug.Log(bullet.name);
+        }
+
     }
 
     // Update is called once per frame
@@ -71,6 +86,8 @@ public class BoidHandler : MonoBehaviour
                 Vector2 uVel = transform.GetComponent<Rigidbody2D>().velocity.normalized;
                 transform.GetComponent<Rigidbody2D>().velocity = uVel * minSpeed;
             }
+
+            Shoot();
 
         } else
         {

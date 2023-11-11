@@ -7,12 +7,13 @@ public class BulletCollision : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject other = collision.gameObject;
+
         //Psuedocode for damage able objects
         /*if (other.GetComponent<DAMAGEHANDLER>() != null)
         {
             DAMAGECODE
         }*/
-        Debug.Log("Collision");
         Destroy(gameObject);
+        
     }
 }
