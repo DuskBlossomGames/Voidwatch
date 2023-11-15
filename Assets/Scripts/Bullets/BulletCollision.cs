@@ -8,11 +8,12 @@ public class BulletCollision : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        //Psuedocode for damage able objects
-        /*if (other.GetComponent<DAMAGEHANDLER>() != null)
+        var damageable = other.GetComponent<Damageable>(); 
+        if (damageable != null)
         {
-            DAMAGECODE
-        }*/
+            damageable.Damage(10);
+        }
+        
         Destroy(gameObject);
         
     }

@@ -17,6 +17,12 @@ public class BoidHandler : MonoBehaviour
     public GameObject playArea;
     public GameObject gravitySource;
     public float shootDist;
+    private Rigidbody2D _rigidbody2D;
+
+    private void Start()
+    {
+        _rigidbody2D = transform.GetComponent<Rigidbody2D>();
+    }
 
     float SqrHypot(Vector2 v, Vector2 w)
     {
@@ -30,12 +36,10 @@ public class BoidHandler : MonoBehaviour
         
         if(diff.sqrMagnitude < shootDist * shootDist)
         {
-            Debug.Log("Shooting");
             var bullet = Instantiate(bulletPrefab, transform.position, rot);
             bullet.GetComponent<DestroyOffScreen>().playArea = playArea;
             bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
             bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, 500));
-            Debug.Log(bullet.name);
         }
 
     }
@@ -62,7 +66,7 @@ public class BoidHandler : MonoBehaviour
                 if (SqrHypot(transform.position, child.transform.position) < protectedRange)
                 {
                     nearBoids.Add(child.gameObject);
-                    pushaway += (transform.GetComponent<Rigidbody2D>().position - child.GetComponent<Rigidbody2D>().position) * avoidFactor;
+                    pushaway += (_rigidbody2D.position - child.GetComponent<Rigidbody2D>().position) * avoidFactor;
                 }
             }
         }
@@ -71,27 +75,27 @@ public class BoidHandler : MonoBehaviour
             avgVel /= otherBoids.Count;
             avgPos /= otherBoids.Count;
 
-            transform.GetComponent<Rigidbody2D>().velocity += pushaway;
-            transform.GetComponent<Rigidbody2D>().velocity += (avgVel - transform.GetComponent<Rigidbody2D>().velocity) * matchingFactor;
-            transform.GetComponent<Rigidbody2D>().velocity += (avgPos - transform.GetComponent<Rigidbody2D>().position) * centeringFactor;
-            transform.GetComponent<Rigidbody2D>().velocity += ((Vector2)target.transform.position - transform.GetComponent<Rigidbody2D>().position) * targettingFactor;
+            _rigidbody2D.velocity += pushaway;
+            _rigidbody2D.velocity += (avgVel - _rigidbody2D.velocity) * matchingFactor;
+            _rigidbody2D.velocity += (avgPos - _rigidbody2D.position) * centeringFactor;
+            _rigidbody2D.velocity += ((Vector2)target.transform.position - _rigidbody2D.position) * targettingFactor;
 
-            float sqrSpeed = transform.GetComponent<Rigidbody2D>().velocity.sqrMagnitude;
+            float sqrSpeed = _rigidbody2D.velocity.sqrMagnitude;
             if (sqrSpeed > maxSpeed * maxSpeed)
             {
-                Vector2 uVel = transform.GetComponent<Rigidbody2D>().velocity.normalized;
-                transform.GetComponent<Rigidbody2D>().velocity = uVel * maxSpeed;
+                Vector2 uVel = _rigidbody2D.velocity.normalized;
+                _rigidbody2D.velocity = uVel * maxSpeed;
             } else if (sqrSpeed < minSpeed * minSpeed)
             {
-                Vector2 uVel = transform.GetComponent<Rigidbody2D>().velocity.normalized;
-                transform.GetComponent<Rigidbody2D>().velocity = uVel * minSpeed;
+                Vector2 uVel = _rigidbody2D.velocity.normalized;
+                _rigidbody2D.velocity = uVel * minSpeed;
             }
 
             Shoot();
 
         } else
         {
-            transform.GetComponent<Rigidbody2D>().velocity = new Vector2();
+            _rigidbody2D.velocity = new Vector2();
         }
     }
 }
