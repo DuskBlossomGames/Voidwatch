@@ -41,7 +41,8 @@ public class Damageable : MonoBehaviour
 
     private void Kill()
     {
-        // Destroy(gameObject);
+        Destroy(_healthBar);
+        Destroy(gameObject);
     }
     
     public void Damage(int damage)
