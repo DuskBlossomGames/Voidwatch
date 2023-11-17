@@ -12,6 +12,8 @@ public class Damageable : MonoBehaviour
     
     private int _health;
     private GameObject _healthBar;
+
+    private float _barVisibility = 0;
     
     private void Start()
     {
@@ -27,6 +29,14 @@ public class Damageable : MonoBehaviour
         _healthBar.transform.rotation = Camera.main.transform.rotation;
         _healthBar.transform.position = 
             transform.position + new Vector3(Offset*Mathf.Sin(camAngle), Offset*Mathf.Cos(camAngle), 0);
+        
+        foreach (var sprite in _healthBar.GetComponentsInChildren<SpriteRenderer>())
+        {
+            var color = sprite.color;
+            color.a = _barVisibility -= 0.3f * Time.deltaTime;
+            
+            sprite.color = color;
+        }
     }
 
     private void Kill()
@@ -36,6 +46,7 @@ public class Damageable : MonoBehaviour
     
     public void Damage(int damage)
     {
+        _barVisibility = 1;
         _health -= damage;
         
         if (_health <= 0)

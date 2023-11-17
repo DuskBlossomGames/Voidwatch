@@ -5,7 +5,7 @@ using UnityEngine.Animations;
 
 public class SizeMinimap : MonoBehaviour
 {
-    private void Awake()
+    private void Update()
     {
         var rect = (RectTransform)transform;
         var size = Screen.height * 0.4f;
