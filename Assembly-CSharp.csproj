@@ -56,6 +56,7 @@
      <Compile Include="Assets/BoidHandler.cs" />
      <Compile Include="Assets/Scripts/Bullets/DestroyOffScreen.cs" />
      <Compile Include="Assets/Scripts/Damageable.cs" />
+     <Compile Include="Assets/Scripts/ForceFieldHandler.cs" />
      <Compile Include="Assets/Scripts/SizeMinimap.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Scripts" />

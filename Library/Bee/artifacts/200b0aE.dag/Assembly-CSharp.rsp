@@ -379,6 +379,7 @@
 "Assets/Scripts/Bullets/DestroyOffScreen.cs"
 "Assets/Scripts/Bullets/Gravitatable.cs"
 "Assets/Scripts/Damageable.cs"
+"Assets/Scripts/ForceFieldHandler.cs"
 "Assets/Scripts/GravityEmitter.cs"
 "Assets/Scripts/Player/FollowPlayer.cs"
 "Assets/Scripts/Player/Movement.cs"
