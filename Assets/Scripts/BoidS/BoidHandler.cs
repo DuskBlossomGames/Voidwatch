@@ -14,7 +14,7 @@ public class BoidHandler : MonoBehaviour
     public float minSpeed;
     public GameObject target;
     public GameObject bulletPrefab;
-    public GameObject playArea;
+    public float playRadius;
     public GameObject gravitySource;
     public float shootDist;
     private Rigidbody2D _rigidbody2D;
@@ -37,9 +37,9 @@ public class BoidHandler : MonoBehaviour
         if(diff.sqrMagnitude < shootDist * shootDist)
         {
             var bullet = Instantiate(bulletPrefab, transform.position, rot);
-            bullet.GetComponent<DestroyOffScreen>().playArea = playArea;
+            bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
             bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
-            bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, 500));
+            bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, 1000));
         }
 
     }

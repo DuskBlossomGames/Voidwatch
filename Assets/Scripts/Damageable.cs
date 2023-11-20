@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
-    private const float Offset = 1.5f;
+    private const float _koffset = 1.5f;
     
     public GameObject healthBarPrefab;
     public int maxHealth;
+    public AnimationCurve heathOpacityCurve;
     
     private int _health;
     private GameObject _healthBar;
@@ -28,12 +29,13 @@ public class Damageable : MonoBehaviour
         
         _healthBar.transform.rotation = Camera.main.transform.rotation;
         _healthBar.transform.position = 
-            transform.position + new Vector3(Offset*Mathf.Sin(camAngle), Offset*Mathf.Cos(camAngle), 0);
+            transform.position + new Vector3(_koffset*Mathf.Sin(camAngle), _koffset*Mathf.Cos(camAngle), 0);
         
         foreach (var sprite in _healthBar.GetComponentsInChildren<SpriteRenderer>())
         {
             var color = sprite.color;
-            color.a = _barVisibility -= 0.3f * Time.deltaTime;
+            _barVisibility -= .4f * Time.deltaTime;
+            color.a = heathOpacityCurve.Evaluate(_barVisibility);
             
             sprite.color = color;
         }

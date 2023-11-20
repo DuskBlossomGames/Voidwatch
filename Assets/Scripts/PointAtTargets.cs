@@ -5,12 +5,24 @@ using UnityEngine;
 public class PointAtTargets : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    public GameObject playArea;
+    public float playRadius;
     public GameObject gravitySource;
     public Transform target;
     float _rot = 0;
     float _countdown = 0;
 
+    float leadShot(Vector2 relPos, Vector2 relVel, float bulletVel)
+    {
+        float a = bulletVel * bulletVel - relVel.sqrMagnitude;
+        float b = 2 * Vector2.Dot(relPos, relVel);
+        float c = relPos.sqrMagnitude;
+
+        float colTime = (b + Mathf.Sqrt(b * b + 4 * a * c)) / (2 * a);
+        Vector2 colPos = relPos + colTime * relVel;
+        return Mathf.Atan2(colPos.y, colPos.x);
+
+        //quadratic formula
+    }
     // Update is called once per frame
     void Update()
     {
@@ -19,7 +31,10 @@ public class PointAtTargets : MonoBehaviour
         if((diff.x*transform.position.x + diff.y * transform.position.y) > 0)
         {
             _countdown -= Time.deltaTime;
-            _rot = Mathf.Atan2(diff.y, diff.x);
+            float bulletVel = 5000 / bulletPrefab.GetComponent<Rigidbody2D>().mass * Time.fixedDeltaTime;
+            float angle = leadShot(diff, target.GetComponent<Rigidbody2D>().velocity, bulletVel);
+            _rot = angle;
+            //_rot = Mathf.Atan2(diff.y, diff.x);
         } else
         {
             _countdown = 1;
@@ -30,7 +45,7 @@ public class PointAtTargets : MonoBehaviour
         {
             _countdown = .05f;
             var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-            bullet.GetComponent<DestroyOffScreen>().playArea = playArea;
+            bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
             bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
             bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, 5000));
         }
