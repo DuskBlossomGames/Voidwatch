@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 284
+  controlID: -1
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -34,21 +34,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
-    m_Text: Project
-    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
+    m_Text: Game
+    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 636
-    width: 1465
-    height: 363
+    x: 363
+    y: 73
+    width: 1101
+    height: 540
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -59,118 +59,70 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
-  m_SearchFilter:
-    m_NameFilter: 
-    m_ClassNames: []
-    m_AssetLabels: []
-    m_AssetBundleNames: []
-    m_ReferencingInstanceIDs: 
-    m_SceneHandles: 
-    m_ShowAllHits: 0
-    m_SkipHidden: 0
-    m_SearchArea: 1
-    m_Folders:
-    - Assets/Scripts
-    m_Globs: []
-    m_OriginalText: 
-    m_ImportLogFlags: 0
-    m_FilterByTypeIntersection: 0
-  m_ViewMode: 1
-  m_StartGridSize: 64
-  m_LastFolders:
-  - Assets/Scripts
-  m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\gbell\Games\GDC-Project
-  m_LockTracker:
-    m_IsLocked: 0
-  m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b2590000
-    m_LastClickedID: 22962
-    m_ExpandedIDs: 0000000090590000925900009459000096590000985900009a59000000ca9a3b
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 0000000090590000925900009459000096590000985900009a59000000ca9a3b
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-    m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 64
-  m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 207
+  m_SerializedViewNames: []
+  m_SerializedViewValues: []
+  m_PlayModeViewName: GameView
+  m_ShowGizmos: 0
+  m_TargetDisplay: 0
+  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
+  m_TargetSize: {x: 1101, y: 519}
+  m_TextureFilterMode: 0
+  m_TextureHideFlags: 61
+  m_RenderIMGUI: 1
+  m_EnterPlayModeBehavior: 0
+  m_UseMipMap: 0
+  m_VSyncEnabled: 0
+  m_Gizmos: 0
+  m_Stats: 0
+  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_ZoomArea:
+    m_HRangeLocked: 0
+    m_VRangeLocked: 0
+    hZoomLockedByDefault: 0
+    vZoomLockedByDefault: 0
+    m_HBaseRangeMin: -550.5
+    m_HBaseRangeMax: 550.5
+    m_VBaseRangeMin: -259.5
+    m_VBaseRangeMax: 259.5
+    m_HAllowExceedBaseRangeMin: 1
+    m_HAllowExceedBaseRangeMax: 1
+    m_VAllowExceedBaseRangeMin: 1
+    m_VAllowExceedBaseRangeMax: 1
+    m_ScaleWithWindow: 0
+    m_HSlider: 0
+    m_VSlider: 0
+    m_IgnoreScrollWheelUntilClicked: 0
+    m_EnableMouseInput: 0
+    m_EnableSliderZoomHorizontal: 0
+    m_EnableSliderZoomVertical: 0
+    m_UniformScale: 1
+    m_UpDirection: 1
+    m_DrawArea:
+      serializedVersion: 2
+      x: 0
+      y: 21
+      width: 1101
+      height: 519
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 550.5, y: 259.5}
+    m_MarginLeft: 0
+    m_MarginRight: 0
+    m_MarginTop: 0
+    m_MarginBottom: 0
+    m_LastShownAreaInsideMargins:
+      serializedVersion: 2
+      x: -550.5
+      y: -259.5
+      width: 1101
+      height: 519
+    m_MinimalGUI: 1
+  m_defaultScale: 1
+  m_LastWindowPixelSize: {x: 1101, y: 540}
+  m_ClearInEditMode: 1
+  m_NoCameraWarning: 1
+  m_LowResolutionForAspectRatios: 01000000000000000000
+  m_XRRenderMode: 0
+  m_RenderTexture: {fileID: 0}
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Children:
   - {fileID: 4}
-  - {fileID: 10}
+  - {fileID: 9}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -195,7 +147,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 285
+  controlID: -1
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -216,11 +168,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1466
-    height: 563
+    height: 561
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 276
+  controlID: -1
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -239,7 +191,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 363
-    height: 563
+    height: 561
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
@@ -268,9 +220,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 19
+    y: 73
     width: 362
-    height: 542
+    height: 540
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -284,9 +236,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: c0eaffff26fbffff
+      m_SelectedIDs: 4a580000
+      m_LastClickedID: 22602
+      m_ExpandedIDs: 26fbffff88580000ba58000010590000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -328,13 +280,13 @@ MonoBehaviour:
     x: 363
     y: 0
     width: 1103
-    height: 563
+    height: 561
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 9}
+  m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 8}
-  - {fileID: 9}
+  - {fileID: 2}
   m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &8
@@ -682,13 +634,26 @@ MonoBehaviour:
       layout: 4
       size: {x: 0, y: 0}
       sizeOverriden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 1
+      snapOffset: {x: 48, y: 48}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: UnityEditor.SceneViewCameraOverlay
+      index: 11
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverriden: 0
     m_OverlaysVisible: 1
   m_WindowGUID: cc27987af1a868c49b0894db9c0f5429
   m_Gizmos: 1
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
@@ -723,35 +688,35 @@ MonoBehaviour:
       m_Size: {x: 0, y: 0}
     yGrid:
       m_Fade:
+        m_Target: 0
+        speed: 2
+        m_Value: 0
+      m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
+      m_Pivot: {x: 0, y: 0, z: 0}
+      m_Size: {x: 1, y: 1}
+    zGrid:
+      m_Fade:
         m_Target: 1
         speed: 2
         m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
-    zGrid:
-      m_Fade:
-        m_Target: 0
-        speed: 2
-        m_Value: 0
-      m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
-      m_Pivot: {x: 0, y: 0, z: 0}
-      m_Size: {x: 0, y: 0}
     m_ShowGrid: 1
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
     m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 0.99999994}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 42.903786
+    m_Target: 10
     speed: 2
-    m_Value: 42.903786
+    m_Value: 10
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -765,7 +730,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -781,21 +746,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: ProjectBrowser
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 561
+    width: 1466
+    height: 386
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 10}
+  m_Panes:
+  - {fileID: 10}
+  - {fileID: 11}
+  m_Selected: 0
+  m_LastSelected: 1
+--- !u!114 &10
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
   m_TitleContent:
-    m_Text: Game
-    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
+    m_Text: Project
+    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 364
-    y: 19
-    width: 1101
-    height: 542
+    x: 0
+    y: 634
+    width: 1465
+    height: 365
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -806,97 +798,118 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
-  m_SerializedViewNames: []
-  m_SerializedViewValues: []
-  m_PlayModeViewName: GameView
-  m_ShowGizmos: 0
-  m_TargetDisplay: 0
-  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1101, y: 521}
-  m_TextureFilterMode: 0
-  m_TextureHideFlags: 61
-  m_RenderIMGUI: 1
-  m_EnterPlayModeBehavior: 0
-  m_UseMipMap: 0
-  m_VSyncEnabled: 0
-  m_Gizmos: 0
-  m_Stats: 0
-  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  m_ZoomArea:
-    m_HRangeLocked: 0
-    m_VRangeLocked: 0
-    hZoomLockedByDefault: 0
-    vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -550.5
-    m_HBaseRangeMax: 550.5
-    m_VBaseRangeMin: -260.5
-    m_VBaseRangeMax: 260.5
-    m_HAllowExceedBaseRangeMin: 1
-    m_HAllowExceedBaseRangeMax: 1
-    m_VAllowExceedBaseRangeMin: 1
-    m_VAllowExceedBaseRangeMax: 1
-    m_ScaleWithWindow: 0
-    m_HSlider: 0
-    m_VSlider: 0
-    m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
-    m_EnableSliderZoomHorizontal: 0
-    m_EnableSliderZoomVertical: 0
-    m_UniformScale: 1
-    m_UpDirection: 1
-    m_DrawArea:
-      serializedVersion: 2
-      x: 0
-      y: 21
-      width: 1101
-      height: 521
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 550.5, y: 260.5}
-    m_MarginLeft: 0
-    m_MarginRight: 0
-    m_MarginTop: 0
-    m_MarginBottom: 0
-    m_LastShownAreaInsideMargins:
-      serializedVersion: 2
-      x: -550.5
-      y: -260.5
-      width: 1101
-      height: 521
-    m_MinimalGUI: 1
-  m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1101, y: 542}
-  m_ClearInEditMode: 1
-  m_NoCameraWarning: 1
-  m_LowResolutionForAspectRatios: 01000000000000000000
-  m_XRRenderMode: 0
-  m_RenderTexture: {fileID: 0}
---- !u!114 &10
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
-  m_EditorClassIdentifier: 
-  m_Children: []
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 563
-    width: 1466
-    height: 384
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 2}
-  m_Panes:
-  - {fileID: 2}
-  - {fileID: 11}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_SearchFilter:
+    m_NameFilter: 
+    m_ClassNames: []
+    m_AssetLabels: []
+    m_AssetBundleNames: []
+    m_ReferencingInstanceIDs: 
+    m_SceneHandles: 
+    m_ShowAllHits: 0
+    m_SkipHidden: 0
+    m_SearchArea: 1
+    m_Folders:
+    - Assets/Scripts
+    m_Globs: []
+    m_OriginalText: 
+    m_ImportLogFlags: 0
+    m_FilterByTypeIntersection: 0
+  m_ViewMode: 1
+  m_StartGridSize: 64
+  m_LastFolders:
+  - Assets/Scripts
+  m_LastFoldersGridSize: -1
+  m_LastProjectPath: C:\Users\gbell\Games\GDC-Project
+  m_LockTracker:
+    m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: b2590000
+    m_LastClickedID: 22962
+    m_ExpandedIDs: 00000000a8590000aa590000ac590000ae590000b0590000b259000000ca9a3b
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_AssetTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 00000000a8590000aa590000ac590000ae590000b0590000b2590000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_ListAreaState:
+    m_SelectedInstanceIDs: 4a580000
+    m_LastClickedInstanceID: 22602
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c6230000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+    m_NewAssetIndexInList: -1
+    m_ScrollPosition: {x: 0, y: 0}
+    m_GridSize: 64
+  m_SkipHiddenPackages: 0
+  m_DirectoriesAreaWidth: 207
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -941,7 +954,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Window
+  m_Name: 
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -950,13 +963,12 @@ MonoBehaviour:
     y: 0
     width: 454
     height: 947
-  m_MinSize: {x: 101, y: 121}
+  m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
-  - {fileID: 14}
-  m_Selected: 1
+  m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &13
 MonoBehaviour:
@@ -1005,2809 +1017,3 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &14
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ffb9ccd5681bd841ae77e9e5571f770, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Git for Unity
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 1466
-    y: 73
-    width: 453
-    height: 926
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
-  progressMessageClearTime: -1
-  notificationClearTime: -1
-  timeSinceLastRotation: -1
-  currentBranchAndRemoteHasUpdate: 0
-  currentTrackingStatusHasUpdate: 0
-  currentStatusEntriesHasUpdate: 0
-  repositoryProgressHasUpdate: 0
-  appManagerProgressHasUpdate: 0
-  changeTab: 4
-  activeTab: 4
-  initProjectView:
-    hasCompletedInitialCheck: 0
-    isUserDataPresent: 0
-    lastCheckUserChangedEvent:
-      updatedTimeString: 2023-11-14T20:12:25.364-06:00
-      cacheType: 8
-  branchesView:
-    treeLocals:
-      IsRemote: 0
-      folders:
-        keys:
-        - Local branches
-        values:
-        - path: Local branches
-          label: Local branches
-          level: 0
-          isFolder: 1
-          isContainer: 0
-          isCollapsed: 0
-          isHidden: 0
-          isActive: 0
-          treeIsCheckable: 0
-          checkState: 0
-      checkedFileNodes:
-        keys: []
-        values: []
-      title: Local branches
-      pathSeparator: /
-      displayRootNode: 1
-      isSelectable: 1
-      isCheckable: 0
-      nodes:
-      - path: Local branches
-        label: Local branches
-        level: 0
-        isFolder: 1
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-      - path: master
-        label: master
-        level: 1
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-      - path: main
-        label: main
-        level: 1
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-      - path: test
-        label: test
-        level: 1
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 1
-        treeIsCheckable: 0
-        checkState: 0
-      selectedNode:
-        path: test
-        label: test
-        level: 1
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 1
-        treeIsCheckable: 0
-        checkState: 0
-    treeRemotes:
-      IsRemote: 1
-      folders:
-        keys:
-        - Remote branches
-        - origin
-        values:
-        - path: Remote branches
-          label: Remote branches
-          level: 0
-          isFolder: 1
-          isContainer: 0
-          isCollapsed: 0
-          isHidden: 0
-          isActive: 0
-          treeIsCheckable: 0
-          checkState: 0
-        - path: origin
-          label: origin
-          level: 1
-          isFolder: 1
-          isContainer: 0
-          isCollapsed: 0
-          isHidden: 0
-          isActive: 0
-          treeIsCheckable: 0
-          checkState: 0
-      checkedFileNodes:
-        keys: []
-        values: []
-      title: Remote branches
-      pathSeparator: /
-      displayRootNode: 1
-      isSelectable: 1
-      isCheckable: 0
-      nodes:
-      - path: Remote branches
-        label: Remote branches
-        level: 0
-        isFolder: 1
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-      - path: origin
-        label: origin
-        level: 1
-        isFolder: 1
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-      - path: origin/main
-        label: main
-        level: 2
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-      - path: origin/test
-        label: test
-        level: 2
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-      selectedNode:
-        path: 
-        label: 
-        level: 0
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-    mode: 0
-    newBranchName: 
-    scroll: {x: 0, y: 0}
-    disableDelete: 1
-    disableCreate: 0
-    lastLocalAndRemoteBranchListChangedEvent:
-      updatedTimeString: 2023-11-17T18:55:46.269-06:00
-      cacheType: 2
-    lastCurrentBranchAndRemoteChange:
-      updatedTimeString: 2023-11-17T18:56:07.770-06:00
-      cacheType: 1
-    currentBranch:
-      name: test
-      tracking: origin/test
-    currentRemote:
-      name: origin
-      url: https://github.com/LASA-Game-Development-Club/NamePending.git
-      login: 
-      user: 
-      host: 
-      function: 0
-      token: 
-    localBranches:
-    - name: master
-      tracking: 
-    - name: main
-      tracking: origin/main
-    - name: test
-      tracking: origin/test
-    remoteBranches:
-    - name: origin/main
-      tracking: '[None]'
-    - name: origin/test
-      tracking: '[None]'
-  changesView:
-    currentBranchHasUpdate: 0
-    currentStatusEntriesHasUpdate: 0
-    currentLocksHasUpdate: 0
-    commitBody: 
-    commitMessage: 
-    currentBranch: main
-    treeScroll: {x: 0, y: 0}
-    treeChanges:
-      assets:
-        keys: []
-        values: []
-      folders:
-        keys: []
-        values: []
-      checkedFileNodes:
-        keys: []
-        values: []
-      title: 
-      pathSeparator: \
-      displayRootNode: 0
-      isSelectable: 1
-      isCheckable: 1
-      isUsingGlobalSelection: 1
-      nodes:
-      - path: 
-        label: 
-        level: -1
-        isFolder: 1
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 1
-        checkState: 0
-        isLocked: 0
-        gitStatusEntry:
-          path: 
-          fullPath: 
-          projectPath: 
-          originalPath: 
-          indexStatus: 0
-          workTreeStatus: 0
-      selectedNode:
-        path: 
-        label: 
-        level: 0
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-        isLocked: 0
-        gitStatusEntry:
-          path: 
-          fullPath: 
-          projectPath: 
-          originalPath: 
-          indexStatus: 0
-          workTreeStatus: 0
-    gitStatusEntries: []
-    changedFilesText: No changed files
-    lastCurrentBranchChangedEvent:
-      updatedTimeString: 2023-11-17T18:51:41.507-06:00
-      cacheType: 1
-    lastStatusEntriesChangedEvent:
-      updatedTimeString: 2023-11-17T18:55:41.366-06:00
-      cacheType: 6
-    lastLocksChangedEvent:
-      updatedTimeString: 0001-01-01T00:00:00.000+00:00
-      cacheType: 7
-  historyView:
-    currentLogHasUpdate: 0
-    currentTrackingStatusHasUpdate: 0
-    logEntries:
-    - commitID: a063deb51d4b119fa6657832c4dfd84f34e5f840
-      mergeA: 015da354704e738d72b3ce138e4499d19ca425e7
-      mergeB: 7dd44e8ad4128bbf6bd144a3f4845ad475070bb8
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Merge branch 'main' of https://github.com/LASA-Game-Development-Club/NamePending
-      description: 
-      timeString: 2023-11-17T17:38:42.000-06:00
-      commitTimeString: 2023-11-17T17:38:42.000-06:00
-      changes: []
-    - commitID: 7dd44e8ad4128bbf6bd144a3f4845ad475070bb8
-      mergeA: 
-      mergeB: 
-      authorName: Malcolm Roalson
-      authorEmail: mtroalson@gmail.com
-      commitEmail: mtroalson@gmail.com
-      commitName: Malcolm Roalson
-      summary: health bar fade
-      description: 
-      timeString: 2023-11-17T12:39:29.000-06:00
-      commitTimeString: 2023-11-17T12:39:29.000-06:00
-      changes:
-      - path: Assets\Scripts\Damageable.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Damageable.cs
-        projectPath: Assets\Scripts\Damageable.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Scripts\SizeMinimap.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\SizeMinimap.cs
-        projectPath: Assets\Scripts\SizeMinimap.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: 713358da96caa0e881ce44bbfbcdfddf97a7c48a
-      mergeA: 
-      mergeB: 
-      authorName: Malcolm Roalson
-      authorEmail: mtroalson@gmail.com
-      commitEmail: mtroalson@gmail.com
-      commitName: Malcolm Roalson
-      summary: make minimap size with screen
-      description: 
-      timeString: 2023-11-17T12:13:26.000-06:00
-      commitTimeString: 2023-11-17T12:13:26.000-06:00
-      changes:
-      - path: Assets\HealthBar.prefab
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\HealthBar.prefab
-        projectPath: Assets\HealthBar.prefab
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Scenes\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-        projectPath: Assets\Scenes\TestScene1.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Scripts\SizeMinimap.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\SizeMinimap.cs
-        projectPath: Assets\Scripts\SizeMinimap.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\SizeMinimap.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\SizeMinimap.cs.meta
-        projectPath: Assets\Scripts\SizeMinimap.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-    - commitID: 015da354704e738d72b3ce138e4499d19ca425e7
-      mergeA: 48207bc7f4d69c7a401730a912f0ae21c71400ce
-      mergeB: 49b5ee50275fce07076cb0730908ef24d591f999
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Merge branch 'main' of https://github.com/LASA-Game-Development-Club/NamePending
-      description: 
-      timeString: 2023-11-14T20:12:44.000-06:00
-      commitTimeString: 2023-11-14T20:12:44.000-06:00
-      changes: []
-    - commitID: 48207bc7f4d69c7a401730a912f0ae21c71400ce
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Collision MAtrix Tweak
-      description: 
-      timeString: 2023-11-14T20:12:38.000-06:00
-      commitTimeString: 2023-11-14T20:12:38.000-06:00
-      changes:
-      - path: ProjectSettings\Physics2DSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Physics2DSettings.asset
-        projectPath: ProjectSettings\Physics2DSettings.asset
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: 49b5ee50275fce07076cb0730908ef24d591f999
-      mergeA: 
-      mergeB: 
-      authorName: Malcolm Roalson
-      authorEmail: mtroalson@gmail.com
-      commitEmail: mtroalson@gmail.com
-      commitName: Malcolm Roalson
-      summary: begin health bars
-      description: 
-      timeString: 2023-11-14T19:18:55.000-06:00
-      commitTimeString: 2023-11-14T19:18:55.000-06:00
-      changes:
-      - path: Assets\BoidHandler.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidHandler.cs
-        projectPath: Assets\BoidHandler.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\HealthBar.prefab
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\HealthBar.prefab
-        projectPath: Assets\HealthBar.prefab
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\HealthBar.prefab.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\HealthBar.prefab.meta
-        projectPath: Assets\HealthBar.prefab.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scenes\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-        projectPath: Assets\Scenes\TestScene1.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets\BulletCollision.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\BulletCollision.cs
-        projectPath: Assets\Scripts\Bullets\BulletCollision.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Scripts\Damageable.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Damageable.cs
-        projectPath: Assets\Scripts\Damageable.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Damageable.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Damageable.cs.meta
-        projectPath: Assets\Scripts\Damageable.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\Physics2DSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Physics2DSettings.asset
-        projectPath: ProjectSettings\Physics2DSettings.asset
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: edb4e84c9368c61c0762f2a6f5d2a3662fd89121
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Scuffed Experimental Change
-      description: Various tweaks surrounding boids, and collisions, might break
-        everything.
-      timeString: 2023-11-11T15:16:45.000-06:00
-      commitTimeString: 2023-11-11T15:16:45.000-06:00
-      changes:
-      - path: Assets\BoidHandler.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidHandler.cs
-        projectPath: Assets\BoidHandler.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Bullet.prefab
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab
-        projectPath: Assets\Bullet.prefab
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\EnemyBullet.prefab
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\EnemyBullet.prefab
-        projectPath: Assets\EnemyBullet.prefab
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\EnemyBullet.prefab.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\EnemyBullet.prefab.meta
-        projectPath: Assets\EnemyBullet.prefab.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scenes\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-        projectPath: Assets\Scenes\TestScene1.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets\BulletCollision.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\BulletCollision.cs
-        projectPath: Assets\Scripts\Bullets\BulletCollision.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: ProjectSettings\Physics2DSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Physics2DSettings.asset
-        projectPath: ProjectSettings\Physics2DSettings.asset
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: ProjectSettings\TagManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\TagManager.asset
-        projectPath: ProjectSettings\TagManager.asset
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: dd9c685c41d587269b1c123a51d8089429c70100
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Scuffed Boids
-      description: Added basic boids, they target the player and have a boid spawner.
-      timeString: 2023-11-10T19:54:18.000-06:00
-      commitTimeString: 2023-11-10T19:54:18.000-06:00
-      changes:
-      - path: Assets\BoidHandler.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidHandler.cs
-        projectPath: Assets\BoidHandler.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\BoidHandler.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidHandler.cs.meta
-        projectPath: Assets\BoidHandler.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\BoidSpawner.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidSpawner.cs
-        projectPath: Assets\BoidSpawner.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\BoidSpawner.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidSpawner.cs.meta
-        projectPath: Assets\BoidSpawner.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scenes\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-        projectPath: Assets\Scenes\TestScene1.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: 6951ab6a6d2e1195bb625af7bd15b63864694738
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Coilcannon Turret + Gravity
-      description: Added bullet gravity, they die on collision now, and I also added
-        a turret that has basic tracking and shooting.
-      timeString: 2023-11-09T22:33:23.000-06:00
-      commitTimeString: 2023-11-09T22:33:23.000-06:00
-      changes:
-      - path: Assets\Bullet.prefab
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab
-        projectPath: Assets\Bullet.prefab
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Coilcannon Base.png
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Coilcannon Base.png
-        projectPath: Assets\Coilcannon Base.png
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Coilcannon Base.png.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Coilcannon Base.png.meta
-        projectPath: Assets\Coilcannon Base.png.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Coilcannon Gun.png
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Coilcannon Gun.png
-        projectPath: Assets\Coilcannon Gun.png
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Coilcannon Gun.png.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Coilcannon Gun.png.meta
-        projectPath: Assets\Coilcannon Gun.png.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scenes\SampleScene - Copy.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene - Copy.unity
-        projectPath: Assets\Scenes\SampleScene - Copy.unity
-        originalPath: Assets\SampleScene.unity
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\Scenes\SampleScene - Copy.unity.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene - Copy.unity.meta
-        projectPath: Assets\Scenes\SampleScene - Copy.unity.meta
-        originalPath: Assets\SampleScene.unity.meta
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\Scenes\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-        projectPath: Assets\Scenes\TestScene1.unity
-        originalPath: Assets\TestScene1.unity
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\Scenes\TestScene1.unity.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity.meta
-        projectPath: Assets\Scenes\TestScene1.unity.meta
-        originalPath: Assets\TestScene1.unity.meta
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets.meta
-        projectPath: Assets\Scripts\Bullets.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets\BulletCollision.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\BulletCollision.cs
-        projectPath: Assets\Scripts\Bullets\BulletCollision.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets\BulletCollision.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\BulletCollision.cs.meta
-        projectPath: Assets\Scripts\Bullets\BulletCollision.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets\DestroyOffScreen.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\DestroyOffScreen.cs
-        projectPath: Assets\Scripts\Bullets\DestroyOffScreen.cs
-        originalPath: Assets\Scripts\DestroyOffScreen.cs
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets\DestroyOffScreen.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\DestroyOffScreen.cs.meta
-        projectPath: Assets\Scripts\Bullets\DestroyOffScreen.cs.meta
-        originalPath: Assets\Scripts\DestroyOffScreen.cs.meta
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets\Gravitatable.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\Gravitatable.cs
-        projectPath: Assets\Scripts\Bullets\Gravitatable.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Bullets\Gravitatable.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\Gravitatable.cs.meta
-        projectPath: Assets\Scripts\Bullets\Gravitatable.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\GravityEmitter.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\GravityEmitter.cs
-        projectPath: Assets\Scripts\GravityEmitter.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\GravityEmitter.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\GravityEmitter.cs.meta
-        projectPath: Assets\Scripts\GravityEmitter.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Player\Shoot.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Shoot.cs
-        projectPath: Assets\Scripts\Player\Shoot.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Scripts\PointAtTargets.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\PointAtTargets.cs
-        projectPath: Assets\Scripts\PointAtTargets.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\PointAtTargets.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\PointAtTargets.cs.meta
-        projectPath: Assets\Scripts\PointAtTargets.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-    - commitID: 4ac1326e1bd48bad50d4615fe84a8ea8acff4b26
-      mergeA: 
-      mergeB: 
-      authorName: Malcolm Roalson
-      authorEmail: mtroalson@gmail.com
-      commitEmail: mtroalson@gmail.com
-      commitName: Malcolm Roalson
-      summary: add shooty
-      description: 
-      timeString: 2023-11-08T21:10:02.000-06:00
-      commitTimeString: 2023-11-08T21:10:02.000-06:00
-      changes:
-      - path: .idea\.idea.NamePending\.idea\.gitignore
-        fullPath: C:\Users\gbell\Games\GDC-Project\.idea\.idea.NamePending\.idea\.gitignore
-        projectPath: .idea\.idea.NamePending\.idea\.gitignore
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: .idea\.idea.NamePending\.idea\indexLayout.xml
-        fullPath: C:\Users\gbell\Games\GDC-Project\.idea\.idea.NamePending\.idea\indexLayout.xml
-        projectPath: .idea\.idea.NamePending\.idea\indexLayout.xml
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: .idea\.idea.NamePending\.idea\vcs.xml
-        fullPath: C:\Users\gbell\Games\GDC-Project\.idea\.idea.NamePending\.idea\vcs.xml
-        projectPath: .idea\.idea.NamePending\.idea\vcs.xml
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Bullet.prefab
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab
-        projectPath: Assets\Bullet.prefab
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Scripts.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts.meta
-        projectPath: Assets\Scripts.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\DestroyOffScreen.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\DestroyOffScreen.cs
-        projectPath: Assets\Scripts\DestroyOffScreen.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\DestroyOffScreen.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\DestroyOffScreen.cs.meta
-        projectPath: Assets\Scripts\DestroyOffScreen.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Player.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player.meta
-        projectPath: Assets\Scripts\Player.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Player\FollowPlayer.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\FollowPlayer.cs
-        projectPath: Assets\Scripts\Player\FollowPlayer.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Player\FollowPlayer.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\FollowPlayer.cs.meta
-        projectPath: Assets\Scripts\Player\FollowPlayer.cs.meta
-        originalPath: Assets\followPlayer.cs.meta
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\Scripts\Player\Movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Movement.cs
-        projectPath: Assets\Scripts\Player\Movement.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Player\Movement.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Movement.cs.meta
-        projectPath: Assets\Scripts\Player\Movement.cs.meta
-        originalPath: Assets\movement.cs.meta
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\Scripts\Player\Shoot.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Shoot.cs
-        projectPath: Assets\Scripts\Player\Shoot.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scripts\Player\Shoot.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Shoot.cs.meta
-        projectPath: Assets\Scripts\Player\Shoot.cs.meta
-        originalPath: Assets\shoot.cs.meta
-        indexStatus: 6
-        workTreeStatus: 0
-      - path: Assets\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity
-        projectPath: Assets\TestScene1.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\followPlayer.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-        projectPath: Assets\followPlayer.cs
-        originalPath: 
-        indexStatus: 5
-        workTreeStatus: 0
-      - path: Assets\movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-        projectPath: Assets\movement.cs
-        originalPath: 
-        indexStatus: 5
-        workTreeStatus: 0
-      - path: Assets\shoot.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\shoot.cs
-        projectPath: Assets\shoot.cs
-        originalPath: 
-        indexStatus: 5
-        workTreeStatus: 0
-      - path: Packages\manifest.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\Packages\manifest.json
-        projectPath: Packages\manifest.json
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Packages\packages-lock.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\Packages\packages-lock.json
-        projectPath: Packages\packages-lock.json
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: b3dfe53db69070a118bb635cb74510b0fac685ca
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: GDC 2023 11-7
-      description: Shrunk planet, swapped background colors, modified default player
-        stats and added brokn shooting.
-      timeString: 2023-11-07T12:30:00.000-06:00
-      commitTimeString: 2023-11-07T12:30:00.000-06:00
-      changes:
-      - path: Assets\Bullet.prefab
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab
-        projectPath: Assets\Bullet.prefab
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Bullet.prefab.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab.meta
-        projectPath: Assets\Bullet.prefab.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity
-        projectPath: Assets\TestScene1.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\followPlayer.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-        projectPath: Assets\followPlayer.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\shoot.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\shoot.cs
-        projectPath: Assets\shoot.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\shoot.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\shoot.cs.meta
-        projectPath: Assets\shoot.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-    - commitID: d948c0e6241c9cbb0ada62fed63f94730db80c58
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Movement fix
-      description: Better player assist to work with camera controls
-      timeString: 2023-11-05T17:20:01.000-06:00
-      commitTimeString: 2023-11-05T17:20:01.000-06:00
-      changes:
-      - path: Assets\movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-        projectPath: Assets\movement.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: b5c96685bdacaaa4af6a7e65213e9ab7c2a3f257
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Camera + Map
-      description: Spent quite a while reworking the camera to go from a static camera
-        to one which has look ahead based on your mouse position and that will slow
-        down when making turns or else to give emphasis to the action. Also added
-        a crude pixel art map and play zone (red). Needs to be reorganized, but should
-        work for now.
-      timeString: 2023-11-04T23:43:58.000-05:00
-      commitTimeString: 2023-11-04T23:43:58.000-05:00
-      changes:
-      - path: Assets\MiniMap.renderTexture
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\MiniMap.renderTexture
-        projectPath: Assets\MiniMap.renderTexture
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\MiniMap.renderTexture.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\MiniMap.renderTexture.meta
-        projectPath: Assets\MiniMap.renderTexture.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Planet-1.png.png
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Planet-1.png.png
-        projectPath: Assets\Planet-1.png.png
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Planet-1.png.png.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Planet-1.png.png.meta
-        projectPath: Assets\Planet-1.png.png.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity
-        projectPath: Assets\TestScene1.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\epicship.png.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\epicship.png.meta
-        projectPath: Assets\epicship.png.meta
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\followPlayer.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-        projectPath: Assets\followPlayer.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-        projectPath: Assets\movement.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Packages\manifest.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\Packages\manifest.json
-        projectPath: Packages\manifest.json
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Packages\packages-lock.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\Packages\packages-lock.json
-        projectPath: Packages\packages-lock.json
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: 5d4ae0e459d7bfab5d6a144cb7442e660b61e509
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Minor tweak
-      description: Added speed limit variable, and removed debug line. :)
-      timeString: 2023-10-26T22:02:36.000-05:00
-      commitTimeString: 2023-10-26T22:02:36.000-05:00
-      changes:
-      - path: Assets\followPlayer.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-        projectPath: Assets\followPlayer.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-        projectPath: Assets\movement.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: b4c3ca57129dce3bccdb47d4541eb2adc808db5b
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Movement rework
-      description: Total movement rework. Added trails cuz they look nice and make
-        movement feel better. Fixed particles so they spawn globally. Added background
-        colors to contract better with the dark ship design.
-      timeString: 2023-10-26T21:17:48.000-05:00
-      commitTimeString: 2023-10-26T21:17:48.000-05:00
-      changes:
-      - path: Assets\SampleScene.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\SampleScene.unity
-        projectPath: Assets\SampleScene.unity
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\SampleScene.unity.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\SampleScene.unity.meta
-        projectPath: Assets\SampleScene.unity.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\TestScene1.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity
-        projectPath: Assets\TestScene1.unity
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\TestScene1.unity.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity.meta
-        projectPath: Assets\TestScene1.unity.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\epicship.png
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\epicship.png
-        projectPath: Assets\epicship.png
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\epicship.png.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\epicship.png.meta
-        projectPath: Assets\epicship.png.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\followPlayer.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-        projectPath: Assets\followPlayer.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: 7df6cc24c1697b2a7a3ab0f21276834e27c694c6
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Revert "Revert "Movement + Trail""
-      description: This reverts commit c8c63efa1ccbe4a7e699645f2b6207fcced60015.
-      timeString: 2023-10-26T18:31:58.000-05:00
-      commitTimeString: 2023-10-26T18:31:58.000-05:00
-      changes:
-      - path: Assets\Scenes\SampleScene.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-        projectPath: Assets\Scenes\SampleScene.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-        projectPath: Assets\movement.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: c8c63efa1ccbe4a7e699645f2b6207fcced60015
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Revert "Movement + Trail"
-      description: This reverts commit 55f1234504779be3e65b2c85e7ecbf824e7b8a5e.
-      timeString: 2023-10-24T22:36:08.000-05:00
-      commitTimeString: 2023-10-24T22:36:08.000-05:00
-      changes:
-      - path: Assets\Scenes\SampleScene.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-        projectPath: Assets\Scenes\SampleScene.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-        projectPath: Assets\movement.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: 55f1234504779be3e65b2c85e7ecbf824e7b8a5e
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Movement + Trail
-      description: Redid movement to hopefully have a very nice feel and better flow.
-        Added a trail and attached the particles to the ship.
-      timeString: 2023-10-24T21:55:38.000-05:00
-      commitTimeString: 2023-10-24T21:55:38.000-05:00
-      changes:
-      - path: Assets\Scenes\SampleScene.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-        projectPath: Assets\Scenes\SampleScene.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-        projectPath: Assets\movement.cs
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: bf627b38bfbdd892a4c463f4784341a6852d2ea6
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Test
-      description: 
-      timeString: 2023-10-22T20:18:13.000-05:00
-      commitTimeString: 2023-10-22T20:18:13.000-05:00
-      changes:
-      - path: Assets\Scenes\SampleScene.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-        projectPath: Assets\Scenes\SampleScene.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: 070c41a1aad35370732a36ca3916066f46be1f06
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Minor Tweak
-      description: Trying to make Git-for-Unity work.
-      timeString: 2023-10-22T20:05:07.000-05:00
-      commitTimeString: 2023-10-22T20:05:07.000-05:00
-      changes:
-      - path: Packages\manifest.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\Packages\manifest.json
-        projectPath: Packages\manifest.json
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: ProjectSettings\PackageManagerSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\PackageManagerSettings.asset
-        projectPath: ProjectSettings\PackageManagerSettings.asset
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-    - commitID: c21d3d9c5693b91f1d6b4114e44e7a51f522a857
-      mergeA: 
-      mergeB: 
-      authorName: CMDRZero
-      authorEmail: gbell12907@gmail.com
-      commitEmail: gbell12907@gmail.com
-      commitName: CMDRZero
-      summary: Basic Movement
-      description: Worked on making a (hopefully) fluid and cool movement system
-      timeString: 2023-10-22T19:06:57.000-05:00
-      commitTimeString: 2023-10-22T19:06:57.000-05:00
-      changes:
-      - path: .vsconfig
-        fullPath: C:\Users\gbell\Games\GDC-Project\.vsconfig
-        projectPath: .vsconfig
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scenes\SampleScene.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-        projectPath: Assets\Scenes\SampleScene.unity
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\followPlayer.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-        projectPath: Assets\followPlayer.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\followPlayer.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs.meta
-        projectPath: Assets\followPlayer.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\movement.cs
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-        projectPath: Assets\movement.cs
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\movement.cs.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs.meta
-        projectPath: Assets\movement.cs.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\PackageManagerSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\PackageManagerSettings.asset
-        projectPath: ProjectSettings\PackageManagerSettings.asset
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: ProjectSettings\Packages\com.unity.services.core\Settings.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Packages\com.unity.services.core\Settings.json
-        projectPath: ProjectSettings\Packages\com.unity.services.core\Settings.json
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-    - commitID: fe9279ff4786779bfb3d2f3b52f95c2739e65b59
-      mergeA: 
-      mergeB: 
-      authorName: Malcolm Roalson
-      authorEmail: mtroalson@gmail.com
-      commitEmail: mtroalson@gmail.com
-      commitName: Malcolm Roalson
-      summary: add Unity files
-      description: 
-      timeString: 2023-10-16T21:21:16.000-05:00
-      commitTimeString: 2023-10-16T21:21:16.000-05:00
-      changes:
-      - path: .gitignore
-        fullPath: C:\Users\gbell\Games\GDC-Project\.gitignore
-        projectPath: .gitignore
-        originalPath: 
-        indexStatus: 3
-        workTreeStatus: 0
-      - path: Assets\Resources.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Resources.meta
-        projectPath: Assets\Resources.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Resources\BillingMode.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Resources\BillingMode.json
-        projectPath: Assets\Resources\BillingMode.json
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Resources\BillingMode.json.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Resources\BillingMode.json.meta
-        projectPath: Assets\Resources\BillingMode.json.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scenes.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes.meta
-        projectPath: Assets\Scenes.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scenes\SampleScene.unity
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-        projectPath: Assets\Scenes\SampleScene.unity
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Assets\Scenes\SampleScene.unity.meta
-        fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity.meta
-        projectPath: Assets\Scenes\SampleScene.unity.meta
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Packages\manifest.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\Packages\manifest.json
-        projectPath: Packages\manifest.json
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: Packages\packages-lock.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\Packages\packages-lock.json
-        projectPath: Packages\packages-lock.json
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\AudioManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\AudioManager.asset
-        projectPath: ProjectSettings\AudioManager.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\ClusterInputManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\ClusterInputManager.asset
-        projectPath: ProjectSettings\ClusterInputManager.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\DynamicsManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\DynamicsManager.asset
-        projectPath: ProjectSettings\DynamicsManager.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\EditorBuildSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\EditorBuildSettings.asset
-        projectPath: ProjectSettings\EditorBuildSettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\EditorSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\EditorSettings.asset
-        projectPath: ProjectSettings\EditorSettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\GraphicsSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\GraphicsSettings.asset
-        projectPath: ProjectSettings\GraphicsSettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\InputManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\InputManager.asset
-        projectPath: ProjectSettings\InputManager.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\MemorySettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\MemorySettings.asset
-        projectPath: ProjectSettings\MemorySettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\NavMeshAreas.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\NavMeshAreas.asset
-        projectPath: ProjectSettings\NavMeshAreas.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\PackageManagerSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\PackageManagerSettings.asset
-        projectPath: ProjectSettings\PackageManagerSettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\Physics2DSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Physics2DSettings.asset
-        projectPath: ProjectSettings\Physics2DSettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\PresetManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\PresetManager.asset
-        projectPath: ProjectSettings\PresetManager.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\ProjectSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\ProjectSettings.asset
-        projectPath: ProjectSettings\ProjectSettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\ProjectVersion.txt
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\ProjectVersion.txt
-        projectPath: ProjectSettings\ProjectVersion.txt
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\QualitySettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\QualitySettings.asset
-        projectPath: ProjectSettings\QualitySettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\SceneTemplateSettings.json
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\SceneTemplateSettings.json
-        projectPath: ProjectSettings\SceneTemplateSettings.json
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\TagManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\TagManager.asset
-        projectPath: ProjectSettings\TagManager.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\TimeManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\TimeManager.asset
-        projectPath: ProjectSettings\TimeManager.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\UnityConnectSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\UnityConnectSettings.asset
-        projectPath: ProjectSettings\UnityConnectSettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\VFXManager.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\VFXManager.asset
-        projectPath: ProjectSettings\VFXManager.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: ProjectSettings\VersionControlSettings.asset
-        fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\VersionControlSettings.asset
-        projectPath: ProjectSettings\VersionControlSettings.asset
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-    - commitID: 4cca9bd116c83ad072118fe5cc6c89cce4610a34
-      mergeA: 
-      mergeB: 
-      authorName: Malcolm Roalson
-      authorEmail: mtroalson@gmail.com
-      commitEmail: noreply@github.com
-      commitName: GitHub
-      summary: Initial commit
-      description: 
-      timeString: 2023-10-16T21:04:39.000-05:00
-      commitTimeString: 2023-10-16T21:04:39.000-05:00
-      changes:
-      - path: .gitignore
-        fullPath: C:\Users\gbell\Games\GDC-Project\.gitignore
-        projectPath: .gitignore
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-      - path: LICENSE
-        fullPath: C:\Users\gbell\Games\GDC-Project\LICENSE
-        projectPath: LICENSE
-        originalPath: 
-        indexStatus: 4
-        workTreeStatus: 0
-    statusAhead: 3
-    lastLogChangedEvent:
-      updatedTimeString: 2023-11-17T18:55:46.766-06:00
-      cacheType: 3
-    lastTrackingStatusChangedEvent:
-      updatedTimeString: 2023-11-17T18:55:46.756-06:00
-      cacheType: 5
-    historyControl:
-      scroll: {x: 0, y: 0}
-      entries:
-      - commitID: a063deb51d4b119fa6657832c4dfd84f34e5f840
-        mergeA: 015da354704e738d72b3ce138e4499d19ca425e7
-        mergeB: 7dd44e8ad4128bbf6bd144a3f4845ad475070bb8
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Merge branch 'main' of https://github.com/LASA-Game-Development-Club/NamePending
-        description: 
-        timeString: 2023-11-17T17:38:42.000-06:00
-        commitTimeString: 2023-11-17T17:38:42.000-06:00
-        changes: []
-      - commitID: 7dd44e8ad4128bbf6bd144a3f4845ad475070bb8
-        mergeA: 
-        mergeB: 
-        authorName: Malcolm Roalson
-        authorEmail: mtroalson@gmail.com
-        commitEmail: mtroalson@gmail.com
-        commitName: Malcolm Roalson
-        summary: health bar fade
-        description: 
-        timeString: 2023-11-17T12:39:29.000-06:00
-        commitTimeString: 2023-11-17T12:39:29.000-06:00
-        changes:
-        - path: Assets\Scripts\Damageable.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Damageable.cs
-          projectPath: Assets\Scripts\Damageable.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Scripts\SizeMinimap.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\SizeMinimap.cs
-          projectPath: Assets\Scripts\SizeMinimap.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: 713358da96caa0e881ce44bbfbcdfddf97a7c48a
-        mergeA: 
-        mergeB: 
-        authorName: Malcolm Roalson
-        authorEmail: mtroalson@gmail.com
-        commitEmail: mtroalson@gmail.com
-        commitName: Malcolm Roalson
-        summary: make minimap size with screen
-        description: 
-        timeString: 2023-11-17T12:13:26.000-06:00
-        commitTimeString: 2023-11-17T12:13:26.000-06:00
-        changes:
-        - path: Assets\HealthBar.prefab
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\HealthBar.prefab
-          projectPath: Assets\HealthBar.prefab
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Scenes\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-          projectPath: Assets\Scenes\TestScene1.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Scripts\SizeMinimap.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\SizeMinimap.cs
-          projectPath: Assets\Scripts\SizeMinimap.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\SizeMinimap.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\SizeMinimap.cs.meta
-          projectPath: Assets\Scripts\SizeMinimap.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-      - commitID: 015da354704e738d72b3ce138e4499d19ca425e7
-        mergeA: 48207bc7f4d69c7a401730a912f0ae21c71400ce
-        mergeB: 49b5ee50275fce07076cb0730908ef24d591f999
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Merge branch 'main' of https://github.com/LASA-Game-Development-Club/NamePending
-        description: 
-        timeString: 2023-11-14T20:12:44.000-06:00
-        commitTimeString: 2023-11-14T20:12:44.000-06:00
-        changes: []
-      - commitID: 48207bc7f4d69c7a401730a912f0ae21c71400ce
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Collision MAtrix Tweak
-        description: 
-        timeString: 2023-11-14T20:12:38.000-06:00
-        commitTimeString: 2023-11-14T20:12:38.000-06:00
-        changes:
-        - path: ProjectSettings\Physics2DSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Physics2DSettings.asset
-          projectPath: ProjectSettings\Physics2DSettings.asset
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: 49b5ee50275fce07076cb0730908ef24d591f999
-        mergeA: 
-        mergeB: 
-        authorName: Malcolm Roalson
-        authorEmail: mtroalson@gmail.com
-        commitEmail: mtroalson@gmail.com
-        commitName: Malcolm Roalson
-        summary: begin health bars
-        description: 
-        timeString: 2023-11-14T19:18:55.000-06:00
-        commitTimeString: 2023-11-14T19:18:55.000-06:00
-        changes:
-        - path: Assets\BoidHandler.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidHandler.cs
-          projectPath: Assets\BoidHandler.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\HealthBar.prefab
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\HealthBar.prefab
-          projectPath: Assets\HealthBar.prefab
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\HealthBar.prefab.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\HealthBar.prefab.meta
-          projectPath: Assets\HealthBar.prefab.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scenes\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-          projectPath: Assets\Scenes\TestScene1.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets\BulletCollision.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\BulletCollision.cs
-          projectPath: Assets\Scripts\Bullets\BulletCollision.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Scripts\Damageable.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Damageable.cs
-          projectPath: Assets\Scripts\Damageable.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Damageable.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Damageable.cs.meta
-          projectPath: Assets\Scripts\Damageable.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\Physics2DSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Physics2DSettings.asset
-          projectPath: ProjectSettings\Physics2DSettings.asset
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: edb4e84c9368c61c0762f2a6f5d2a3662fd89121
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Scuffed Experimental Change
-        description: Various tweaks surrounding boids, and collisions, might break
-          everything.
-        timeString: 2023-11-11T15:16:45.000-06:00
-        commitTimeString: 2023-11-11T15:16:45.000-06:00
-        changes:
-        - path: Assets\BoidHandler.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidHandler.cs
-          projectPath: Assets\BoidHandler.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Bullet.prefab
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab
-          projectPath: Assets\Bullet.prefab
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\EnemyBullet.prefab
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\EnemyBullet.prefab
-          projectPath: Assets\EnemyBullet.prefab
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\EnemyBullet.prefab.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\EnemyBullet.prefab.meta
-          projectPath: Assets\EnemyBullet.prefab.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scenes\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-          projectPath: Assets\Scenes\TestScene1.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets\BulletCollision.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\BulletCollision.cs
-          projectPath: Assets\Scripts\Bullets\BulletCollision.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: ProjectSettings\Physics2DSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Physics2DSettings.asset
-          projectPath: ProjectSettings\Physics2DSettings.asset
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: ProjectSettings\TagManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\TagManager.asset
-          projectPath: ProjectSettings\TagManager.asset
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: dd9c685c41d587269b1c123a51d8089429c70100
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Scuffed Boids
-        description: Added basic boids, they target the player and have a boid spawner.
-        timeString: 2023-11-10T19:54:18.000-06:00
-        commitTimeString: 2023-11-10T19:54:18.000-06:00
-        changes:
-        - path: Assets\BoidHandler.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidHandler.cs
-          projectPath: Assets\BoidHandler.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\BoidHandler.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidHandler.cs.meta
-          projectPath: Assets\BoidHandler.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\BoidSpawner.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidSpawner.cs
-          projectPath: Assets\BoidSpawner.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\BoidSpawner.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\BoidSpawner.cs.meta
-          projectPath: Assets\BoidSpawner.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scenes\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-          projectPath: Assets\Scenes\TestScene1.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: 6951ab6a6d2e1195bb625af7bd15b63864694738
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Coilcannon Turret + Gravity
-        description: Added bullet gravity, they die on collision now, and I also
-          added a turret that has basic tracking and shooting.
-        timeString: 2023-11-09T22:33:23.000-06:00
-        commitTimeString: 2023-11-09T22:33:23.000-06:00
-        changes:
-        - path: Assets\Bullet.prefab
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab
-          projectPath: Assets\Bullet.prefab
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Coilcannon Base.png
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Coilcannon Base.png
-          projectPath: Assets\Coilcannon Base.png
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Coilcannon Base.png.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Coilcannon Base.png.meta
-          projectPath: Assets\Coilcannon Base.png.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Coilcannon Gun.png
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Coilcannon Gun.png
-          projectPath: Assets\Coilcannon Gun.png
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Coilcannon Gun.png.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Coilcannon Gun.png.meta
-          projectPath: Assets\Coilcannon Gun.png.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scenes\SampleScene - Copy.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene -
-            Copy.unity
-          projectPath: Assets\Scenes\SampleScene - Copy.unity
-          originalPath: Assets\SampleScene.unity
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\Scenes\SampleScene - Copy.unity.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene -
-            Copy.unity.meta
-          projectPath: Assets\Scenes\SampleScene - Copy.unity.meta
-          originalPath: Assets\SampleScene.unity.meta
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\Scenes\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity
-          projectPath: Assets\Scenes\TestScene1.unity
-          originalPath: Assets\TestScene1.unity
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\Scenes\TestScene1.unity.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\TestScene1.unity.meta
-          projectPath: Assets\Scenes\TestScene1.unity.meta
-          originalPath: Assets\TestScene1.unity.meta
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets.meta
-          projectPath: Assets\Scripts\Bullets.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets\BulletCollision.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\BulletCollision.cs
-          projectPath: Assets\Scripts\Bullets\BulletCollision.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets\BulletCollision.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\BulletCollision.cs.meta
-          projectPath: Assets\Scripts\Bullets\BulletCollision.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets\DestroyOffScreen.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\DestroyOffScreen.cs
-          projectPath: Assets\Scripts\Bullets\DestroyOffScreen.cs
-          originalPath: Assets\Scripts\DestroyOffScreen.cs
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets\DestroyOffScreen.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\DestroyOffScreen.cs.meta
-          projectPath: Assets\Scripts\Bullets\DestroyOffScreen.cs.meta
-          originalPath: Assets\Scripts\DestroyOffScreen.cs.meta
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets\Gravitatable.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\Gravitatable.cs
-          projectPath: Assets\Scripts\Bullets\Gravitatable.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Bullets\Gravitatable.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Bullets\Gravitatable.cs.meta
-          projectPath: Assets\Scripts\Bullets\Gravitatable.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\GravityEmitter.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\GravityEmitter.cs
-          projectPath: Assets\Scripts\GravityEmitter.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\GravityEmitter.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\GravityEmitter.cs.meta
-          projectPath: Assets\Scripts\GravityEmitter.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Player\Shoot.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Shoot.cs
-          projectPath: Assets\Scripts\Player\Shoot.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Scripts\PointAtTargets.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\PointAtTargets.cs
-          projectPath: Assets\Scripts\PointAtTargets.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\PointAtTargets.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\PointAtTargets.cs.meta
-          projectPath: Assets\Scripts\PointAtTargets.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-      - commitID: 4ac1326e1bd48bad50d4615fe84a8ea8acff4b26
-        mergeA: 
-        mergeB: 
-        authorName: Malcolm Roalson
-        authorEmail: mtroalson@gmail.com
-        commitEmail: mtroalson@gmail.com
-        commitName: Malcolm Roalson
-        summary: add shooty
-        description: 
-        timeString: 2023-11-08T21:10:02.000-06:00
-        commitTimeString: 2023-11-08T21:10:02.000-06:00
-        changes:
-        - path: .idea\.idea.NamePending\.idea\.gitignore
-          fullPath: C:\Users\gbell\Games\GDC-Project\.idea\.idea.NamePending\.idea\.gitignore
-          projectPath: .idea\.idea.NamePending\.idea\.gitignore
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: .idea\.idea.NamePending\.idea\indexLayout.xml
-          fullPath: C:\Users\gbell\Games\GDC-Project\.idea\.idea.NamePending\.idea\indexLayout.xml
-          projectPath: .idea\.idea.NamePending\.idea\indexLayout.xml
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: .idea\.idea.NamePending\.idea\vcs.xml
-          fullPath: C:\Users\gbell\Games\GDC-Project\.idea\.idea.NamePending\.idea\vcs.xml
-          projectPath: .idea\.idea.NamePending\.idea\vcs.xml
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Bullet.prefab
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab
-          projectPath: Assets\Bullet.prefab
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Scripts.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts.meta
-          projectPath: Assets\Scripts.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\DestroyOffScreen.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\DestroyOffScreen.cs
-          projectPath: Assets\Scripts\DestroyOffScreen.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\DestroyOffScreen.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\DestroyOffScreen.cs.meta
-          projectPath: Assets\Scripts\DestroyOffScreen.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Player.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player.meta
-          projectPath: Assets\Scripts\Player.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Player\FollowPlayer.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\FollowPlayer.cs
-          projectPath: Assets\Scripts\Player\FollowPlayer.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Player\FollowPlayer.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\FollowPlayer.cs.meta
-          projectPath: Assets\Scripts\Player\FollowPlayer.cs.meta
-          originalPath: Assets\followPlayer.cs.meta
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\Scripts\Player\Movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Movement.cs
-          projectPath: Assets\Scripts\Player\Movement.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Player\Movement.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Movement.cs.meta
-          projectPath: Assets\Scripts\Player\Movement.cs.meta
-          originalPath: Assets\movement.cs.meta
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\Scripts\Player\Shoot.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Shoot.cs
-          projectPath: Assets\Scripts\Player\Shoot.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scripts\Player\Shoot.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scripts\Player\Shoot.cs.meta
-          projectPath: Assets\Scripts\Player\Shoot.cs.meta
-          originalPath: Assets\shoot.cs.meta
-          indexStatus: 6
-          workTreeStatus: 0
-        - path: Assets\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity
-          projectPath: Assets\TestScene1.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\followPlayer.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-          projectPath: Assets\followPlayer.cs
-          originalPath: 
-          indexStatus: 5
-          workTreeStatus: 0
-        - path: Assets\movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-          projectPath: Assets\movement.cs
-          originalPath: 
-          indexStatus: 5
-          workTreeStatus: 0
-        - path: Assets\shoot.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\shoot.cs
-          projectPath: Assets\shoot.cs
-          originalPath: 
-          indexStatus: 5
-          workTreeStatus: 0
-        - path: Packages\manifest.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\Packages\manifest.json
-          projectPath: Packages\manifest.json
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Packages\packages-lock.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\Packages\packages-lock.json
-          projectPath: Packages\packages-lock.json
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: b3dfe53db69070a118bb635cb74510b0fac685ca
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: GDC 2023 11-7
-        description: Shrunk planet, swapped background colors, modified default player
-          stats and added brokn shooting.
-        timeString: 2023-11-07T12:30:00.000-06:00
-        commitTimeString: 2023-11-07T12:30:00.000-06:00
-        changes:
-        - path: Assets\Bullet.prefab
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab
-          projectPath: Assets\Bullet.prefab
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Bullet.prefab.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Bullet.prefab.meta
-          projectPath: Assets\Bullet.prefab.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity
-          projectPath: Assets\TestScene1.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\followPlayer.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-          projectPath: Assets\followPlayer.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\shoot.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\shoot.cs
-          projectPath: Assets\shoot.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\shoot.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\shoot.cs.meta
-          projectPath: Assets\shoot.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-      - commitID: d948c0e6241c9cbb0ada62fed63f94730db80c58
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Movement fix
-        description: Better player assist to work with camera controls
-        timeString: 2023-11-05T17:20:01.000-06:00
-        commitTimeString: 2023-11-05T17:20:01.000-06:00
-        changes:
-        - path: Assets\movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-          projectPath: Assets\movement.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: b5c96685bdacaaa4af6a7e65213e9ab7c2a3f257
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Camera + Map
-        description: Spent quite a while reworking the camera to go from a static
-          camera to one which has look ahead based on your mouse position and that
-          will slow down when making turns or else to give emphasis to the action.
-          Also added a crude pixel art map and play zone (red). Needs to be reorganized,
-          but should work for now.
-        timeString: 2023-11-04T23:43:58.000-05:00
-        commitTimeString: 2023-11-04T23:43:58.000-05:00
-        changes:
-        - path: Assets\MiniMap.renderTexture
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\MiniMap.renderTexture
-          projectPath: Assets\MiniMap.renderTexture
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\MiniMap.renderTexture.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\MiniMap.renderTexture.meta
-          projectPath: Assets\MiniMap.renderTexture.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Planet-1.png.png
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Planet-1.png.png
-          projectPath: Assets\Planet-1.png.png
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Planet-1.png.png.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Planet-1.png.png.meta
-          projectPath: Assets\Planet-1.png.png.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity
-          projectPath: Assets\TestScene1.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\epicship.png.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\epicship.png.meta
-          projectPath: Assets\epicship.png.meta
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\followPlayer.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-          projectPath: Assets\followPlayer.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-          projectPath: Assets\movement.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Packages\manifest.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\Packages\manifest.json
-          projectPath: Packages\manifest.json
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Packages\packages-lock.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\Packages\packages-lock.json
-          projectPath: Packages\packages-lock.json
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: 5d4ae0e459d7bfab5d6a144cb7442e660b61e509
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Minor tweak
-        description: Added speed limit variable, and removed debug line. :)
-        timeString: 2023-10-26T22:02:36.000-05:00
-        commitTimeString: 2023-10-26T22:02:36.000-05:00
-        changes:
-        - path: Assets\followPlayer.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-          projectPath: Assets\followPlayer.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-          projectPath: Assets\movement.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: b4c3ca57129dce3bccdb47d4541eb2adc808db5b
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Movement rework
-        description: Total movement rework. Added trails cuz they look nice and make
-          movement feel better. Fixed particles so they spawn globally. Added background
-          colors to contract better with the dark ship design.
-        timeString: 2023-10-26T21:17:48.000-05:00
-        commitTimeString: 2023-10-26T21:17:48.000-05:00
-        changes:
-        - path: Assets\SampleScene.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\SampleScene.unity
-          projectPath: Assets\SampleScene.unity
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\SampleScene.unity.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\SampleScene.unity.meta
-          projectPath: Assets\SampleScene.unity.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\TestScene1.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity
-          projectPath: Assets\TestScene1.unity
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\TestScene1.unity.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\TestScene1.unity.meta
-          projectPath: Assets\TestScene1.unity.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\epicship.png
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\epicship.png
-          projectPath: Assets\epicship.png
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\epicship.png.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\epicship.png.meta
-          projectPath: Assets\epicship.png.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\followPlayer.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-          projectPath: Assets\followPlayer.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: 7df6cc24c1697b2a7a3ab0f21276834e27c694c6
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Revert "Revert "Movement + Trail""
-        description: This reverts commit c8c63efa1ccbe4a7e699645f2b6207fcced60015.
-        timeString: 2023-10-26T18:31:58.000-05:00
-        commitTimeString: 2023-10-26T18:31:58.000-05:00
-        changes:
-        - path: Assets\Scenes\SampleScene.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-          projectPath: Assets\Scenes\SampleScene.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-          projectPath: Assets\movement.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: c8c63efa1ccbe4a7e699645f2b6207fcced60015
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Revert "Movement + Trail"
-        description: This reverts commit 55f1234504779be3e65b2c85e7ecbf824e7b8a5e.
-        timeString: 2023-10-24T22:36:08.000-05:00
-        commitTimeString: 2023-10-24T22:36:08.000-05:00
-        changes:
-        - path: Assets\Scenes\SampleScene.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-          projectPath: Assets\Scenes\SampleScene.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-          projectPath: Assets\movement.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: 55f1234504779be3e65b2c85e7ecbf824e7b8a5e
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Movement + Trail
-        description: Redid movement to hopefully have a very nice feel and better
-          flow. Added a trail and attached the particles to the ship.
-        timeString: 2023-10-24T21:55:38.000-05:00
-        commitTimeString: 2023-10-24T21:55:38.000-05:00
-        changes:
-        - path: Assets\Scenes\SampleScene.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-          projectPath: Assets\Scenes\SampleScene.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-          projectPath: Assets\movement.cs
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: bf627b38bfbdd892a4c463f4784341a6852d2ea6
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Test
-        description: 
-        timeString: 2023-10-22T20:18:13.000-05:00
-        commitTimeString: 2023-10-22T20:18:13.000-05:00
-        changes:
-        - path: Assets\Scenes\SampleScene.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-          projectPath: Assets\Scenes\SampleScene.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: 070c41a1aad35370732a36ca3916066f46be1f06
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Minor Tweak
-        description: Trying to make Git-for-Unity work.
-        timeString: 2023-10-22T20:05:07.000-05:00
-        commitTimeString: 2023-10-22T20:05:07.000-05:00
-        changes:
-        - path: Packages\manifest.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\Packages\manifest.json
-          projectPath: Packages\manifest.json
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: ProjectSettings\PackageManagerSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\PackageManagerSettings.asset
-          projectPath: ProjectSettings\PackageManagerSettings.asset
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-      - commitID: c21d3d9c5693b91f1d6b4114e44e7a51f522a857
-        mergeA: 
-        mergeB: 
-        authorName: CMDRZero
-        authorEmail: gbell12907@gmail.com
-        commitEmail: gbell12907@gmail.com
-        commitName: CMDRZero
-        summary: Basic Movement
-        description: Worked on making a (hopefully) fluid and cool movement system
-        timeString: 2023-10-22T19:06:57.000-05:00
-        commitTimeString: 2023-10-22T19:06:57.000-05:00
-        changes:
-        - path: .vsconfig
-          fullPath: C:\Users\gbell\Games\GDC-Project\.vsconfig
-          projectPath: .vsconfig
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scenes\SampleScene.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-          projectPath: Assets\Scenes\SampleScene.unity
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\followPlayer.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs
-          projectPath: Assets\followPlayer.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\followPlayer.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\followPlayer.cs.meta
-          projectPath: Assets\followPlayer.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\movement.cs
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs
-          projectPath: Assets\movement.cs
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\movement.cs.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\movement.cs.meta
-          projectPath: Assets\movement.cs.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\PackageManagerSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\PackageManagerSettings.asset
-          projectPath: ProjectSettings\PackageManagerSettings.asset
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: ProjectSettings\Packages\com.unity.services.core\Settings.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Packages\com.unity.services.core\Settings.json
-          projectPath: ProjectSettings\Packages\com.unity.services.core\Settings.json
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-      - commitID: fe9279ff4786779bfb3d2f3b52f95c2739e65b59
-        mergeA: 
-        mergeB: 
-        authorName: Malcolm Roalson
-        authorEmail: mtroalson@gmail.com
-        commitEmail: mtroalson@gmail.com
-        commitName: Malcolm Roalson
-        summary: add Unity files
-        description: 
-        timeString: 2023-10-16T21:21:16.000-05:00
-        commitTimeString: 2023-10-16T21:21:16.000-05:00
-        changes:
-        - path: .gitignore
-          fullPath: C:\Users\gbell\Games\GDC-Project\.gitignore
-          projectPath: .gitignore
-          originalPath: 
-          indexStatus: 3
-          workTreeStatus: 0
-        - path: Assets\Resources.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Resources.meta
-          projectPath: Assets\Resources.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Resources\BillingMode.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Resources\BillingMode.json
-          projectPath: Assets\Resources\BillingMode.json
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Resources\BillingMode.json.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Resources\BillingMode.json.meta
-          projectPath: Assets\Resources\BillingMode.json.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scenes.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes.meta
-          projectPath: Assets\Scenes.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scenes\SampleScene.unity
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity
-          projectPath: Assets\Scenes\SampleScene.unity
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Assets\Scenes\SampleScene.unity.meta
-          fullPath: C:\Users\gbell\Games\GDC-Project\Assets\Scenes\SampleScene.unity.meta
-          projectPath: Assets\Scenes\SampleScene.unity.meta
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Packages\manifest.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\Packages\manifest.json
-          projectPath: Packages\manifest.json
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: Packages\packages-lock.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\Packages\packages-lock.json
-          projectPath: Packages\packages-lock.json
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\AudioManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\AudioManager.asset
-          projectPath: ProjectSettings\AudioManager.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\ClusterInputManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\ClusterInputManager.asset
-          projectPath: ProjectSettings\ClusterInputManager.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\DynamicsManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\DynamicsManager.asset
-          projectPath: ProjectSettings\DynamicsManager.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\EditorBuildSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\EditorBuildSettings.asset
-          projectPath: ProjectSettings\EditorBuildSettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\EditorSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\EditorSettings.asset
-          projectPath: ProjectSettings\EditorSettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\GraphicsSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\GraphicsSettings.asset
-          projectPath: ProjectSettings\GraphicsSettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\InputManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\InputManager.asset
-          projectPath: ProjectSettings\InputManager.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\MemorySettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\MemorySettings.asset
-          projectPath: ProjectSettings\MemorySettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\NavMeshAreas.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\NavMeshAreas.asset
-          projectPath: ProjectSettings\NavMeshAreas.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\PackageManagerSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\PackageManagerSettings.asset
-          projectPath: ProjectSettings\PackageManagerSettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\Physics2DSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\Physics2DSettings.asset
-          projectPath: ProjectSettings\Physics2DSettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\PresetManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\PresetManager.asset
-          projectPath: ProjectSettings\PresetManager.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\ProjectSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\ProjectSettings.asset
-          projectPath: ProjectSettings\ProjectSettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\ProjectVersion.txt
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\ProjectVersion.txt
-          projectPath: ProjectSettings\ProjectVersion.txt
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\QualitySettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\QualitySettings.asset
-          projectPath: ProjectSettings\QualitySettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\SceneTemplateSettings.json
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\SceneTemplateSettings.json
-          projectPath: ProjectSettings\SceneTemplateSettings.json
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\TagManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\TagManager.asset
-          projectPath: ProjectSettings\TagManager.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\TimeManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\TimeManager.asset
-          projectPath: ProjectSettings\TimeManager.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\UnityConnectSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\UnityConnectSettings.asset
-          projectPath: ProjectSettings\UnityConnectSettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\VFXManager.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\VFXManager.asset
-          projectPath: ProjectSettings\VFXManager.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: ProjectSettings\VersionControlSettings.asset
-          fullPath: C:\Users\gbell\Games\GDC-Project\ProjectSettings\VersionControlSettings.asset
-          projectPath: ProjectSettings\VersionControlSettings.asset
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-      - commitID: 4cca9bd116c83ad072118fe5cc6c89cce4610a34
-        mergeA: 
-        mergeB: 
-        authorName: Malcolm Roalson
-        authorEmail: mtroalson@gmail.com
-        commitEmail: noreply@github.com
-        commitName: GitHub
-        summary: Initial commit
-        description: 
-        timeString: 2023-10-16T21:04:39.000-05:00
-        commitTimeString: 2023-10-16T21:04:39.000-05:00
-        changes:
-        - path: .gitignore
-          fullPath: C:\Users\gbell\Games\GDC-Project\.gitignore
-          projectPath: .gitignore
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-        - path: LICENSE
-          fullPath: C:\Users\gbell\Games\GDC-Project\LICENSE
-          projectPath: LICENSE
-          originalPath: 
-          indexStatus: 4
-          workTreeStatus: 0
-      statusAhead: 3
-      selectedIndex: -1
-    selectedEntry:
-      commitID: 
-      mergeA: 
-      mergeB: 
-      authorName: 
-      authorEmail: 
-      commitEmail: 
-      commitName: 
-      summary: 
-      description: 
-      timeString: 0001-01-01T00:00:00.000+00:00
-      commitTimeString: 0001-01-01T00:00:00.000+00:00
-      changes: []
-    treeChanges:
-      assets:
-        keys: []
-        values: []
-      folders:
-        keys: []
-        values: []
-      checkedFileNodes:
-        keys: []
-        values: []
-      title: 
-      pathSeparator: /
-      displayRootNode: 0
-      isSelectable: 1
-      isCheckable: 0
-      isUsingGlobalSelection: 0
-      nodes: []
-      selectedNode:
-        path: 
-        label: 
-        level: 0
-        isFolder: 0
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 0
-        checkState: 0
-        isLocked: 0
-        gitStatusEntry:
-          path: 
-          fullPath: 
-          projectPath: 
-          originalPath: 
-          indexStatus: 0
-          workTreeStatus: 0
-    detailsScroll: {x: 0, y: 0}
-  settingsView:
-    gitPathView:
-      gitPath: 
-      gitLfsPath: 
-      errorMessage: 
-      resetToBundled: 0
-      resetToSystem: 0
-      changingManually: 0
-    hasRemote: 0
-    lastCurrentRemoteChangedEvent:
-      updatedTimeString: 
-      cacheType: 0
-    newRepositoryRemoteUrl: 
-    repositoryRemoteName: 
-    repositoryRemoteUrl: 
-    scroll: {x: 0, y: 0}
-    userSettingsView:
-      gitName: 
-      gitEmail: 
-      newGitName: 
-      newGitEmail: 
-      needsSaving: 0
-      lastCheckUserChangedEvent:
-        updatedTimeString: 
-        cacheType: 0
-    webTimeout: 0
-    gitTimeout: 0
-  locksView:
-    currentRemoteHasUpdate: 1
-    currentStatusEntriesHasUpdate: 0
-    currentLocksHasUpdate: 0
-    keychainHasUpdate: 1
-    locksControl:
-      scroll: {x: 0, y: 0}
-      gitLockEntries: []
-      assets:
-        keys: []
-        values: []
-      gitStatusDictionary:
-        keys: []
-        values: []
-      selectedEntry:
-        gitLock:
-          id: 
-          path: 
-          owner:
-            name: 
-            email: 
-          lockedAtString: 
-        gitFileStatus: 0
-        lockedAt: 1 Jan 0001, 00:00
-    lastCurrentRemoteChangedEvent:
-      updatedTimeString: 2023-11-17T18:51:41.507-06:00
-      cacheType: 1
-    lastLocksChangedEvent:
-      updatedTimeString: 0001-01-01T00:00:00.000+00:00
-      cacheType: 7
-    lastStatusEntriesChangedEvent:
-      updatedTimeString: 2023-11-17T18:55:41.366-06:00
-      cacheType: 6
-    lockedFiles: []
-    gitStatusEntries: []
-    currentUsername: 
-    unlockFileMenuContent:
-      m_Text: Release Lock
-      m_Image: {fileID: 0}
-      m_Tooltip: 
-    forceUnlockFileMenuContent:
-      m_Text: Release Lock (forced)
-      m_Image: {fileID: 0}
-      m_Tooltip: 
-  hasRemote: 1
-  currentRemoteName: origin
-  currentBranch: test
-  currentRemoteUrl: https://github.com/LASA-Game-Development-Club/NamePending.git
-  statusAhead: 0
-  statusBehind: 0
-  hasItemsToCommit: 1
-  isTrackingRemoteBranch: 1
-  currentBranchContent:
-    m_Text: test
-    m_Image: {fileID: 0}
-    m_Tooltip: Active branch
-  currentRemoteUrlContent:
-    m_Text: https://github.com/LASA-Game-Development-Club/NamePending.git
-    m_Image: {fileID: 0}
-    m_Tooltip: Url of the origin remote
-  lastCurrentBranchAndRemoteChangedEvent:
-    updatedTimeString: 2023-11-17T18:56:07.770-06:00
-    cacheType: 1
-  lastTrackingStatusChangedEvent:
-    updatedTimeString: 2023-11-17T18:56:11.808-06:00
-    cacheType: 5
-  lastStatusEntriesChangedEvent:
-    updatedTimeString: 2023-11-17T18:57:40.861-06:00
-    cacheType: 6
-  pullButtonContent:
-    m_Text: Pull
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  pushButtonContent:
-    m_Text: Push
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  refreshButtonContent:
-    m_Text: Refresh
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  fetchButtonContent:
-    m_Text: Fetch
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  repositoryProgressValue: 0
-  repositoryProgressMessage: 
-  appManagerProgressValue: 1
-  appManagerProgressMessage: 
-  primaryConnectionUsername: 
