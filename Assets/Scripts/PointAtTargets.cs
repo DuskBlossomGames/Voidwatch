@@ -20,9 +20,13 @@ public class PointAtTargets : MonoBehaviour
         float colTime = (b + Mathf.Sqrt(b * b + 4 * a * c)) / (2 * a);
         Vector2 colPos = relPos + colTime * relVel;
         return Mathf.Atan2(colPos.y, colPos.x);
-
-        //quadratic formula
     }
+
+    Vector2 rot(Vector2 vec, float angle)
+    {
+        return new Vector2(vec.x * Mathf.Cos(angle) + vec.y * Mathf.Sin(angle), -vec.x * Mathf.Sin(angle) + vec.y * Mathf.Cos(angle));
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -32,7 +36,8 @@ public class PointAtTargets : MonoBehaviour
         {
             _countdown -= Time.deltaTime;
             float bulletVel = 5000 / bulletPrefab.GetComponent<Rigidbody2D>().mass * Time.fixedDeltaTime;
-            float angle = leadShot(diff, target.GetComponent<Rigidbody2D>().velocity, bulletVel);
+            float globalrot = Mathf.Deg2Rad * transform.parent.rotation.eulerAngles.z;
+            float angle = leadShot(rot(diff,globalrot), rot(target.GetComponent<Rigidbody2D>().velocity,globalrot), bulletVel);
             _rot = angle;
             //_rot = Mathf.Atan2(diff.y, diff.x);
         } else
@@ -41,7 +46,7 @@ public class PointAtTargets : MonoBehaviour
             _rot = Mathf.Pow(.5f,Time.deltaTime) * (_rot - Mathf.PI / 2)+Mathf.PI/2;
         }
 
-        if (_countdown < 0)
+        if (_countdown < 0 && target.GetComponent<EnforcePlayArea>().attackable)
         {
             _countdown = .05f;
             var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
@@ -51,7 +56,7 @@ public class PointAtTargets : MonoBehaviour
         }
 
         
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90 + Mathf.Rad2Deg * _rot));
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, transform.parent.rotation.eulerAngles.z - 90 + Mathf.Rad2Deg * _rot));
         transform.localPosition = new Vector3(.211f * Mathf.Cos(_rot), .211f * Mathf.Sin(_rot) +.099f, transform.localPosition.z);
     }
 }
