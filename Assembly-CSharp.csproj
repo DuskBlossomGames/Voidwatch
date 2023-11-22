@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Player\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\GravityEmitter.cs" />
     <Compile Include="Assets\Scripts\Player\Shoot.cs" />
+    <Compile Include="Assets\Scripts\GunHandler.cs" />
     <Compile Include="Assets\Scripts\BoidS\BoidHandler.cs" />
     <Compile Include="Assets\Scripts\DefenseSpawner.cs" />
     <Compile Include="Assets\Scripts\Bullets\DestroyOffScreen.cs" />

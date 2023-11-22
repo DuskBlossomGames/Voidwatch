@@ -11,7 +11,7 @@ public class Damageable : MonoBehaviour
     public int maxHealth;
     public AnimationCurve heathOpacityCurve;
     
-    private int _health;
+    private float _health;
     private GameObject _healthBar;
 
     private float _barVisibility = 0;
@@ -47,7 +47,7 @@ public class Damageable : MonoBehaviour
         Destroy(gameObject);
     }
     
-    public void Damage(int damage)
+    public void Damage(float damage)
     {
         _barVisibility = 1;
         _health -= damage;

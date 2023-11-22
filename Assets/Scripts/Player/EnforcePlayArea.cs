@@ -29,7 +29,6 @@ public class EnforcePlayArea : MonoBehaviour
         }
 
         _outOfBoundsTime = clamp01(_outOfBoundsTime);
-        Debug.Log(_outOfBoundsTime);
 
         if (_outOfBoundsTime > 0)
         {
