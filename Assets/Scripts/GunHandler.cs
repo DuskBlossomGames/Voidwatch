@@ -72,7 +72,7 @@ public class GunHandler : MonoBehaviour
                 if (bullets > 1)
                 {
                     latOff = lateralSeperation * (2 * i - bullets + 1) / (bullets - 1);
-                    verOff = verticalSeperation * (1 - Mathf.Abs(2 * (i / (bullets - 1)) - 1));
+                    verOff = verticalSeperation * (1 - Mathf.Abs(2 * ((float)i / (bullets - 1)) - 1));
                 } else
                 {
                     latOff = verOff = 0;

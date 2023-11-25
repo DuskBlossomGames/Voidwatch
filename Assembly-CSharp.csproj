@@ -59,6 +59,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.11f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\MissleAim2.cs" />
     <Compile Include="Assets\Scripts\Player\EnforcePlayArea.cs" />
     <Compile Include="Assets\Scripts\Player\Movement.cs" />
     <Compile Include="Assets\Scripts\Bullets\Gravitatable.cs" />
@@ -68,10 +69,12 @@
     <Compile Include="Assets\Scripts\GravityEmitter.cs" />
     <Compile Include="Assets\Scripts\Player\Shoot.cs" />
     <Compile Include="Assets\Scripts\GunHandler.cs" />
+    <Compile Include="Assets\Scripts\MissleAim.cs" />
     <Compile Include="Assets\Scripts\BoidS\BoidHandler.cs" />
     <Compile Include="Assets\Scripts\DefenseSpawner.cs" />
     <Compile Include="Assets\Scripts\Bullets\DestroyOffScreen.cs" />
     <Compile Include="Assets\Scripts\Damageable.cs" />
+    <Compile Include="Assets\MissleShooter.cs" />
     <Compile Include="Assets\Scripts\BoidS\BoidSpawner.cs" />
     <Compile Include="Assets\Scripts\ForceFieldHandler.cs" />
     <Compile Include="Assets\Scripts\SizeMinimap.cs" />
