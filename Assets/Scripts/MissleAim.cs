@@ -12,6 +12,9 @@ public class MissleAim : MonoBehaviour
     //public GameObject marker;
     public float maxFuel;
     public GameObject particles;
+    public GameObject explosion;
+    public float stallTime;
+    public float dmg;
 
     private Vector2 _oVel;
     private Vector2 _nDir;
@@ -74,8 +77,45 @@ public class MissleAim : MonoBehaviour
                 psmain.loop = false;
                 _stopped = true;
                 StopCoroutine(LeadShots());
+                GetComponent<PositionHinter>().Kill();
+                Destroy(GetComponent<PositionHinter>());
+            }
+            stallTime -= Time.fixedDeltaTime;
+            if (stallTime < 0)
+            {
+                Explode();
             }
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Explode();
+    }
+
+    public void Explode()
+    {
+        explosion.transform.parent = null;
+        explosion.GetComponent<ParticleSystem>().Play();
+        int rayNum = 16;
+        for (int i = 0; i < rayNum; i++)
+        {
+            Vector2 raydir = new Vector2(Mathf.Cos(2 * Mathf.PI * i / rayNum), Mathf.Sin(2 * Mathf.PI * i / rayNum));
+            LayerMask mask = 1<<LayerMask.NameToLayer("Player") | 1<<LayerMask.NameToLayer("Enemy") | 1<<LayerMask.NameToLayer("Scene Objects");
+            RaycastHit2D hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + 5 * raydir,mask);
+            if (hit.collider!=null)
+            {
+                var tar = hit.transform.gameObject;
+                //Debug.LogFormat("Ray {0} collided with {1}", i, tar.name);
+                var dmgable = tar.GetComponent<Damageable>();
+                if (dmgable != null)
+                {
+                    dmgable.Damage(dmg / rayNum);
+                }
+            }
+            //Debug.LogFormat("Ray {0} end", i);
+        }
+        Destroy(gameObject);
     }
 
     Vector2 LeadShot(Vector2 relPos, Vector2 relVel, float vesselAccel)

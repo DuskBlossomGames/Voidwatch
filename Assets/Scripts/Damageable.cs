@@ -43,6 +43,12 @@ public class Damageable : MonoBehaviour
 
     private void Kill()
     {
+        var posHint = GetComponent<PositionHinter>();
+        if (posHint != null)
+        {
+            posHint.Kill();
+            Destroy(posHint);
+        }
         Destroy(_healthBar);
         Destroy(gameObject);
     }

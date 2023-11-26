@@ -19,8 +19,13 @@ public class MissleShooter : MonoBehaviour
         if (_timer < 0)
         {
             _timer = shootInterval;
-            GameObject missile = Instantiate(missilePrefab,transform.position , transform.rotation, transform);
-            missile.GetComponent<MissleAim>().target = target;
+            for (int i = 0; i < 2; i++)
+            {
+                GameObject missile = Instantiate(missilePrefab, transform.position, transform.rotation, transform);
+                missile.GetComponent<MissleAim>().target = target;
+                missile.GetComponent<Rigidbody2D>().AddForce(1000 * Random.insideUnitCircle);
+            }
+            
         }
     }
 }
