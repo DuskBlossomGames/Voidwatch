@@ -34,7 +34,9 @@ public class GunHandler : MonoBehaviour
     private void Start()
     {
         _currClipCount = clipCount;
+        _currClipCap = clipCap;
         _readyToFire = true;
+        status = "Ready To Fire";
     }
 
     public bool Shoot(float angle)//returns if could start the shoot coroutine
@@ -50,6 +52,10 @@ public class GunHandler : MonoBehaviour
         }
     }
 
+    public float ExpectedVelocity()
+    {
+        return shotForce / bulletPrefab.GetComponent<Rigidbody2D>().mass * Time.fixedDeltaTime;
+    }
     IEnumerator _Fire()
     {
         _readyToFire = false;

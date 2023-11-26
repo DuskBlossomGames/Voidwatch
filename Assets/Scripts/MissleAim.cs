@@ -96,12 +96,13 @@ public class MissleAim : MonoBehaviour
     public void Explode()
     {
         explosion.transform.parent = null;
+        explosion.GetComponent<ExplosionHandler>().Run();
         explosion.GetComponent<ParticleSystem>().Play();
         int rayNum = 16;
         for (int i = 0; i < rayNum; i++)
         {
             Vector2 raydir = new Vector2(Mathf.Cos(2 * Mathf.PI * i / rayNum), Mathf.Sin(2 * Mathf.PI * i / rayNum));
-            LayerMask mask = 1<<LayerMask.NameToLayer("Player") | 1<<LayerMask.NameToLayer("Enemy") | 1<<LayerMask.NameToLayer("Scene Objects");
+            LayerMask mask = 1<<LayerMask.NameToLayer("Enemies") | 1<<LayerMask.NameToLayer("Player") | 1<<LayerMask.NameToLayer("Scene Objects");
             RaycastHit2D hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + 5 * raydir,mask);
             if (hit.collider!=null)
             {

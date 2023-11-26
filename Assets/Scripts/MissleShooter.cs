@@ -7,6 +7,8 @@ public class MissleShooter : MonoBehaviour
     public GameObject target;
     public GameObject missilePrefab;
     public float shootInterval;
+    public float engageDist;
+    public int amt = 3;
 
     private float _timer;
     private void Start()
@@ -19,11 +21,14 @@ public class MissleShooter : MonoBehaviour
         if (_timer < 0)
         {
             _timer = shootInterval;
-            for (int i = 0; i < 2; i++)
+            if ((target.transform.position - transform.position).sqrMagnitude < engageDist * engageDist)
             {
-                GameObject missile = Instantiate(missilePrefab, transform.position, transform.rotation, transform);
-                missile.GetComponent<MissleAim>().target = target;
-                missile.GetComponent<Rigidbody2D>().AddForce(1000 * Random.insideUnitCircle);
+                for (int i = 0; i < amt; i++)
+                {
+                    GameObject missile = Instantiate(missilePrefab, transform.position, transform.rotation);
+                    missile.GetComponent<MissleAim>().target = target;
+                    missile.GetComponent<Rigidbody2D>().AddForce(1000 * Random.insideUnitCircle);
+                }
             }
             
         }

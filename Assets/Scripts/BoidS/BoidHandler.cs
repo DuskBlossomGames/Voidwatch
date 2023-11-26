@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BoidHandler : MonoBehaviour
 {
@@ -18,9 +19,11 @@ public class BoidHandler : MonoBehaviour
     public GameObject gravitySource;
     public float shootDist;
     private Rigidbody2D _rigidbody2D;
+    private GunHandler _gun;
 
     private void Start()
     {
+        _gun = GetComponent<GunHandler>();
         _rigidbody2D = transform.GetComponent<Rigidbody2D>();
     }
 
@@ -32,14 +35,16 @@ public class BoidHandler : MonoBehaviour
     void Shoot()
     {
         Vector2 diff = new Vector2(target.transform.position.x - transform.position.x, target.transform.position.y - transform.position.y);
-        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, -90 + Mathf.Rad2Deg * Mathf.Atan2(diff.y, diff.x)));
-        
-        if(diff.sqrMagnitude < shootDist * shootDist)
+        Vector2 relVel = target.GetComponent<Rigidbody2D>().velocity - _rigidbody2D.velocity;
+        float angle = leadShot(diff, relVel, _gun.ExpectedVelocity());
+        //Debug.LogErrorFormat("Errored angle = {0}", angle);
+        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, -90 + Mathf.Rad2Deg * angle));
+        transform.rotation = rot;
+
+
+        if (diff.sqrMagnitude < shootDist * shootDist)
         {
-            var bullet = Instantiate(bulletPrefab, transform.position, rot);
-            bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
-            bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
-            bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, 1000));
+            _gun.Shoot(0);
         }
 
     }
@@ -97,5 +102,19 @@ public class BoidHandler : MonoBehaviour
         {
             _rigidbody2D.velocity = new Vector2();
         }
+    }
+    float leadShot(Vector2 relPos, Vector2 relVel, float bulletVel)
+    {
+        float a = bulletVel * bulletVel - relVel.sqrMagnitude;
+        float b = 2 * Vector2.Dot(relPos, relVel);
+        float c = relPos.sqrMagnitude;
+
+        if(b * b + 4 * a * c < 0 || a==0){
+            return 0;
+        }
+
+        float colTime = (b + Mathf.Sqrt(b * b + 4 * a * c)) / (2 * a);
+        Vector2 colPos = relPos + colTime * relVel;
+        return Mathf.Atan2(colPos.y, colPos.x);
     }
 }
