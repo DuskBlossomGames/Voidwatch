@@ -27,7 +27,11 @@ namespace Player
             if (Input.GetKey("w")) {
                 var dv = speedLimit * speedLimit / 100;
                 var eff = 1 / (1 + Mathf.Exp(_velocity.sqrMagnitude / 100 - dv));
-                _acceleration = 10 * acceleration * eff;
+                if (_velocity.sqrMagnitude > (speedLimit + 5) * (speedLimit + 5)){
+                    _acceleration = 0;
+                } else {
+                    _acceleration = 10 * acceleration * eff;
+                }
             
                 var vm = _velocity.magnitude;
                 _velocity += driftCorrection * Time.deltaTime * Push(_velocity, _forwards);
@@ -48,7 +52,7 @@ namespace Player
             //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.rotation), Mathf.Cos(Mathf.Deg2Rad * rigid.rotation));
 
             _velocity += _forwards * (_acceleration * Time.deltaTime);
-            _velocity *= Mathf.Pow(.9f, Time.deltaTime);
+            _velocity *= Mathf.Pow(.99f, Time.deltaTime);
 
             _rigid.velocity = _velocity;
         }

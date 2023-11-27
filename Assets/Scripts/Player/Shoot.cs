@@ -1,22 +1,28 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Player
 {
     public class Shoot : MonoBehaviour
     {
         public GameObject bulletPrefab;
-        public GameObject playArea;
+        public float playRadius;
         public GameObject gravitySource;
+        public TMPro.TextMeshProUGUI bulletText;
 
+        GunHandler _gun;
+        private void Start()
+        {
+            _gun = GetComponent<GunHandler>();
+        }
         private void Update()
         {
+            
             if (Input.GetMouseButtonDown(0))
             {
-                var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-                bullet.GetComponent<DestroyOffScreen>().playArea = playArea;
-                bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
-                bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, 1700));
+                _gun.Shoot(0);
             }
+            bulletText.text = string.Format("Clips: {0}/{1}\nAmmo: {2}/{3}\nStatus: {4}", _gun.CurrClipCount(), _gun.clipCount, _gun.CurrClipCap(), _gun.clipCap,_gun.status);
         }
     }
 }
