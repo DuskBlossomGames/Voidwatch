@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: Enemy Spawn Data
   m_EditorClassIdentifier: 
-  m_GroupName: EnemySpawnData
+  m_GroupName: Enemy Spawn Data
   m_Data:
     m_SerializedData: []
   m_GUID: c3f39f3fae0df4fe69df89633452392c
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: ce772ed7423914db4aca415ce52ac7b3
+    m_Address: Assets/Prefabs/Enemies
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemies
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2b694b73e3cde4410a254b8bd0d67fec, type: 2}
   m_SchemaSet:
