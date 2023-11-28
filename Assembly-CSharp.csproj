@@ -53,6 +53,7 @@
      <Compile Include="Assets/Scripts/ExplosionHandler.cs" />
      <Compile Include="Assets/Scripts/PointAtTargets.cs" />
      <Compile Include="Assets/Scripts/PositionHinter.cs" />
+     <Compile Include="Assets/Scripts/EnemySpawner/EnemyVariant.cs" />
      <Compile Include="Assets/Scripts/Bullets/BulletCollision.cs" />
      <Compile Include="Assets/Scripts/Player/FollowPlayer.cs" />
      <Compile Include="Assets/Scripts/GravityEmitter.cs" />
@@ -67,27 +68,32 @@
      <Compile Include="Assets/Scripts/BoidS/BoidSpawner.cs" />
      <Compile Include="Assets/Scripts/ForceFieldHandler.cs" />
      <Compile Include="Assets/Scripts/SizeMinimap.cs" />
+     <Compile Include="Assets/Scripts/EnemySpawner/EnemySpawner.cs" />
      <Folder Include="Assets" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets/TextMesh Pro/Sprites" />
      <Folder Include="Assets/Scripts/BoidS" />
      <Folder Include="Assets/Scripts" />
+     <Folder Include="Assets/Prefabs/Enemies/Misslers" />
      <Folder Include="Assets/TextMesh Pro/Resources/Sprite Assets" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
      <None Include="Assets/Resources/BillingMode.json" />
      <Folder Include="Assets/Scripts/Bullets" />
      <Folder Include="Assets/TextMesh Pro/Resources/Fonts &amp; Materials" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
+     <Folder Include="Assets/AddressableAssetsData/AssetGroups" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
      <Folder Include="Assets/TextMesh Pro/Resources" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
      <Folder Include="Assets/Resources" />
      <Folder Include="Assets/TextMesh Pro" />
+     <Folder Include="Assets/AddressableAssetsData/DataBuilders" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
      <None Include="Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF.shader" />
+     <Folder Include="Assets/AddressableAssetsData" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
@@ -96,14 +102,19 @@
      <Folder Include="Assets/Animations" />
      <Folder Include="Assets/TextMesh Pro/Resources/Style Sheets" />
      <Folder Include="Assets/Scenes" />
+     <Folder Include="Assets/AddressableAssetsData/AssetGroups/Schemas" />
      <Folder Include="Assets/TextMesh Pro/Fonts" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
+     <Folder Include="Assets/Scripts/EnemySpawner" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
+     <Folder Include="Assets/AddressableAssetsData/AssetGroupTemplates" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
      <Folder Include="Assets/Scripts/Player" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />
      <None Include="Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt" />
+     <Folder Include="Assets/Prefabs/Enemies/Boids" />
      <Folder Include="Assets/TextMesh Pro/Documentation" />
+     <Folder Include="Assets/Prefabs/Enemies" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" />
      <Folder Include="Assets/Audio" />
      <None Include="Assets/TextMesh Pro/Sprites/EmojiOne.json" />
@@ -754,77 +765,32 @@
      <Reference Include="Unity.AI.Navigation">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.PlasticSCM.Editor">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.Purchasing.SecurityStub">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityStub.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.Analytics.DataPrivacy">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Timeline.Editor">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+     <Reference Include="Unity.ResourceManager">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.ScriptableBuildPipeline">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Core">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Services.Core.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEditor.SpatialTracking">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualStudio.Editor">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.UI">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-     </Reference>
-     <Reference Include="Purchasing.Common">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Purchasing.Common.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.2D.PixelPerfect.Editor">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Analytics">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Analytics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Rider.Editor">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.Advertisements">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.SpatialTracking">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.Advertisements.Editor">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.2D.Sprite.Editor">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Services.Core.Environments">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Services.Core.Environments.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Services.Analytics">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Services.Analytics.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEngine.Purchasing.SecurityCore">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityCore.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.AI.Navigation.Updater">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.Purchasing.Codeless">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Purchasing.Codeless.dll</HintPath>
@@ -841,29 +807,89 @@
      <Reference Include="Unity.Services.Core.Analytics">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.AI.Navigation.Editor">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro.Editor">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
      </Reference>
-     <Reference Include="com.spoiledcat.git">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/com.spoiledcat.git.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Tilemap.Editor">
-     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.VSCode.Editor">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="com.spoiledcat.git">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/com.spoiledcat.git.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Editor.Tasks">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Editor.Tasks.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.Purchasing">
      <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.PlasticSCM.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.Purchasing.SecurityStub">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityStub.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.Advertisements">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Timeline.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.SpatialTracking">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualStudio.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.UI">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="Purchasing.Common">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Purchasing.Common.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.SpatialTracking">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="Analytics">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Analytics.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.Advertisements.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Timeline">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Services.Analytics">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Services.Analytics.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Addressables.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.AI.Navigation.Updater">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.TextMeshPro.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.AI.Navigation.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Tilemap.Editor">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Addressables">
+     <HintPath>/Users/malcolmroalson/Documents/Unity/NamePending/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
