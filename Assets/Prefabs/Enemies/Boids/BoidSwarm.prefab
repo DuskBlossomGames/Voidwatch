@@ -116,6 +116,7 @@ MonoBehaviour:
   playRadius: 75
   gravitySource: {fileID: 0}
   shootDist: 15
+  original: 1
 --- !u!50 &7785630740059733268
 Rigidbody2D:
   serializedVersion: 4
@@ -269,20 +270,20 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6569384808679381653, guid: 116573cd1e8558d468ec2a5d067e03cd, type: 3}
   playRadius: 100
   gravitySource: {fileID: 0}
-  clipCount: 20
-  clipCap: 3
+  clipCount: 5
+  clipCap: 1
   bulletsPerShot: 1
   bulletsPerShotVarience: 0
   reloadTime: 1
-  refillTime: 0
-  shotForce: 800
+  refillTime: 5
+  shotForce: 1500
   forceVarience: 200
   lateralSeperation: 0
   verticalSeperation: 0
   misfireChance: 0
-  repeats: 2
-  repeatSeperation: 0.03
-  dmgMod: 3
+  repeats: 0
+  repeatSeperation: 0.01
+  dmgMod: 20
   status: 
 --- !u!1 &6001684470992877439
 GameObject:

@@ -20,11 +20,19 @@ public class BoidHandler : MonoBehaviour
     public float shootDist;
     private Rigidbody2D _rigidbody2D;
     private GunHandler _gun;
+    public bool original = true;
 
     private void Start()
     {
         _gun = GetComponent<GunHandler>();
         _rigidbody2D = transform.GetComponent<Rigidbody2D>();
+        if (target == null) target = GameObject.FindGameObjectWithTag("Player");
+        if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
+        if (original)
+        {
+            original = false;
+            transform.parent.GetComponent<BoidSpawner>().Ready();
+        }
     }
 
     float SqrHypot(Vector2 v, Vector2 w)

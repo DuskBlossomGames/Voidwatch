@@ -13,6 +13,7 @@ public class MissleShooter : MonoBehaviour
     private float _timer;
     private void Start()
     {
+        if (target == null) target = GameObject.FindGameObjectWithTag("Player");
         _timer = shootInterval;
     }
     void Update()

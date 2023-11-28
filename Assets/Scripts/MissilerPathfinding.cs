@@ -13,6 +13,7 @@ public class MissilerPathfinding : MonoBehaviour
     
     void Start()
     {
+        if (target == null) target = GameObject.FindGameObjectWithTag("Player");
         _rigid = GetComponent<Rigidbody2D>();
     }
 

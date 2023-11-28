@@ -1590,7 +1590,7 @@ GameObject:
   - component: {fileID: 1331667016}
   m_Layer: 9
   m_Name: Planet
-  m_TagString: Untagged
+  m_TagString: GravitySource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7997,15 +7997,15 @@ MonoBehaviour:
   playRadius: 75
   gravitySource: {fileID: 1331667012}
   clipCount: 5
-  clipCap: 30
+  clipCap: 50
   bulletsPerShot: 5
   bulletsPerShotVarience: 0
   reloadTime: 1
-  refillTime: 3
+  refillTime: 1
   shotForce: 1500
   forceVarience: 20
-  lateralSeperation: 100
-  verticalSeperation: 500
+  lateralSeperation: 50
+  verticalSeperation: 200
   misfireChance: 0
   repeats: 0
   repeatSeperation: 0.05

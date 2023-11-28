@@ -33,6 +33,7 @@ public class GunHandler : MonoBehaviour
 
     private void Start()
     {
+        if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
         _currClipCount = clipCount;
         _currClipCap = clipCap;
         _readyToFire = true;

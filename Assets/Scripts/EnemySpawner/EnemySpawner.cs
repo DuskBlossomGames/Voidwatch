@@ -63,7 +63,7 @@ namespace EnemySpawner
             var groupBudgets = new Dictionary<string, int>();
 
             var groups = _groups.Keys.ToList();
-            var budgets = groupBudgetTiers;
+            var budgets = new List<int>(groupBudgetTiers);
             while (groups.Count > 0 && budget > groupBudgetTiers[0])
             {
                 budgets.RemoveAll(b => b > budget);
@@ -73,12 +73,34 @@ namespace EnemySpawner
                 
                 groups.RemoveAt(group);
             }
-            
+
+            //spend extra points
+            for (int i = 0; i < groupBudgets.Count; i++)
+            {
+                for (int j = 0; j < budgets.Count; j++)
+                {
+                    string groupName = groupBudgets.ElementAt(i).Key;
+                    int diff = budgets[j] - groupBudgets[groupName];
+                    if (diff > 0 && diff <= budget)//if spends budget and doesnt cause negative budget
+                    {
+                        int temp = budgets[j];
+                        budgets[j] = groupBudgets[groupName]; //puts back old budget
+                        groupBudgets[groupName] = temp;
+                        budget -= diff;
+                    }
+                }
+            }
+
+            foreach (var name in groupBudgets.Keys)
+            {
+                Debug.LogFormat("Spent {0} on {1}", groupBudgets[name], name);
+            }
+
             var enemies = new List<GameObject>();
             foreach (var group in groupBudgets.Keys)
             {
                 var groupBudget = groupBudgets[group];
-                var variants = _groups[group];
+                var variants = new List<EnemyVariant>(_groups[group]);
                 while (variants.Count > 0 && groupBudget > 0)
                 {
                     var variant = variants[Random.Range(0, variants.Count)];
