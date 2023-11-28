@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 827806350012326624}
   - component: {fileID: 8637506044539804873}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,8 +99,8 @@ GameObject:
   - component: {fileID: 5225478676399284925}
   - component: {fileID: -8421811644800896990}
   - component: {fileID: 5454405178126030269}
-  m_Layer: 6
-  m_Name: Bullet
+  m_Layer: 7
+  m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.68482774, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -199,7 +199,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &-9038750106323171659
 BoxCollider2D:
@@ -230,7 +230,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e4647872011451388a546b1bcf005b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playArea: {fileID: 0}
+  playRadius: 0
 --- !u!114 &-8421811644800896990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,3 +284,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmg: 10
