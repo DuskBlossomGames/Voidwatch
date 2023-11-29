@@ -60,30 +60,31 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\MissleAim2.cs" />
-    <Compile Include="Assets\Scripts\Player\EnforcePlayArea.cs" />
-    <Compile Include="Assets\Scripts\MissleShooter.cs" />
-    <Compile Include="Assets\Scripts\Player\Movement.cs" />
-    <Compile Include="Assets\Scripts\Bullets\Gravitatable.cs" />
-    <Compile Include="Assets\Scripts\ExplosionHandler.cs" />
-    <Compile Include="Assets\Scripts\PointAtTargets.cs" />
-    <Compile Include="Assets\Scripts\PositionHinter.cs" />
-    <Compile Include="Assets\Scripts\EnemySpawner\EnemyVariant.cs" />
-    <Compile Include="Assets\Scripts\Bullets\BulletCollision.cs" />
-    <Compile Include="Assets\Scripts\Player\FollowPlayer.cs" />
-    <Compile Include="Assets\Scripts\GravityEmitter.cs" />
-    <Compile Include="Assets\Scripts\Player\Shoot.cs" />
-    <Compile Include="Assets\Scripts\GunHandler.cs" />
-    <Compile Include="Assets\Scripts\MissleAim.cs" />
-    <Compile Include="Assets\Scripts\MissilerPathfinding.cs" />
-    <Compile Include="Assets\Scripts\BoidS\BoidHandler.cs" />
-    <Compile Include="Assets\Scripts\DefenseSpawner.cs" />
-    <Compile Include="Assets\Scripts\Bullets\DestroyOffScreen.cs" />
-    <Compile Include="Assets\Scripts\Damageable.cs" />
-    <Compile Include="Assets\Scripts\BoidS\BoidSpawner.cs" />
-    <Compile Include="Assets\Scripts\ForceFieldHandler.cs" />
-    <Compile Include="Assets\Scripts\SizeMinimap.cs" />
-    <Compile Include="Assets\Scripts\EnemySpawner\EnemySpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Bullets\DestroyOffScreen.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Player\Movement.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Gravitatable.cs" />
+    <Compile Include="Assets\Scripts\Static Objects or Misc\ForceFieldHandler.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Player\EnforcePlayArea.cs" />
+    <Compile Include="Assets\Scripts\Static Objects or Misc\SizeMinimap.cs" />
+    <Compile Include="Assets\Scripts\Spawning Scripts\DefenseSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Misslers\MissilerPathfinding.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Defenses\PointAtTargets.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Boids\BoidHandler.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Player\Shoot.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Boids\BoidSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleAim.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleAim2.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\PositionHinter.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Player\FollowPlayer.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\GunHandler.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\MiniMapIcon.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Damageable.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleShooter.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Bullets\BulletCollision.cs" />
+    <Compile Include="Assets\Scripts\Static Objects or Misc\GravityEmitter.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Misslers\ExplosionHandler.cs" />
+    <Compile Include="Assets\Scripts\Spawning Scripts\EnemySpawner\EnemyVariant.cs" />
+    <Compile Include="Assets\Scripts\Spawning Scripts\EnemySpawner\EnemySpawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
