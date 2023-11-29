@@ -16,7 +16,19 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: b0ae79841bd6e4f5386bff506e0dea46
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 7c73869e016d24e6ab576ed09db01a13
+    m_Address: Assets/Sprites/Planets
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - planets
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce772ed7423914db4aca415ce52ac7b3
+    m_Address: Assets/Prefabs/Enemies
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemies
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2b694b73e3cde4410a254b8bd0d67fec, type: 2}
   m_SchemaSet:

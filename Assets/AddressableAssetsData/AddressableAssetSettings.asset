@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: b0ae79841bd6e4f5386bff506e0dea46
   m_currentHash:
     serializedVersion: 2
-    Hash: ee942f39f5f0743991cf837eb542d677
+    Hash: 36cb221c28a31cbd459aae266709ec23
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -46,7 +46,6 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: b81349e4a8fdd45d4b16ce83eb2039c0, type: 2}
   - {fileID: 11400000, guid: 7a7ee18e5255f42868fad973aa2e7ad9, type: 2}
-  - {fileID: 11400000, guid: b2ab13f42b06c43abb80f7b359cf6628, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -89,6 +88,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - enemies
+    - planets
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 1951f15ecbeb0452a9f4b4bb83dcfe57, type: 2}
