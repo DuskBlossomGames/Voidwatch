@@ -11,6 +11,8 @@ namespace Level_Select
         public float camSizeDragRatio;
         public float scrollSpeed, minCamSize, maxCamSize;
 
+        public MiniPlayerController playerMini;
+
         private Vector2 _minScroll;
         private Vector2 _maxScroll;
 
@@ -23,6 +25,8 @@ namespace Level_Select
                     _minScroll = Vector3.Min(level.WorldPosition, _minScroll);
                     _maxScroll = Vector3.Max(level.WorldPosition, _maxScroll);
                 }
+                
+                playerMini.SetOrbitPosition(data.Levels[data.CurrentPlanet].WorldPosition);
             };
         }
 
@@ -40,6 +44,7 @@ namespace Level_Select
             _lastMousePos = Input.mousePosition;
         }
 
+        // TODO: scale stars accordingly?
         private void Update()
         {
             camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + Input.mouseScrollDelta.y * scrollSpeed,

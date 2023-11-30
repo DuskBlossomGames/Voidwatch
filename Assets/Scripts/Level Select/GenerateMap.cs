@@ -13,6 +13,7 @@ namespace Level_Select
         public GameObject planetPrefab;
         public AssetLabelReference spriteLabel;
         public LevelSelectData data;
+        public MiniPlayerController playerMini;
         
         private void Start()
         {
@@ -35,6 +36,9 @@ namespace Level_Select
             var usedGridPositions = new List<Vector2>();
             
             var planetScale = planetPrefab.transform.localScale;
+            var planetRadius = Mathf.Max(planetScale.x, planetScale.y) / 2;
+            playerMini.SetOrbitRadius(planetRadius * 1.5f);
+            
             while (true)
             {
                 // position represents position in a theoretical discrete grid of planets
@@ -70,7 +74,7 @@ namespace Level_Select
                         connectionsPerLevel[i].Count < 3 &&
                         !connectionsPerLevel[level].Contains(i) &&
                         !connections.Any(c => Intersect(levels[i].WorldPosition, levels[level].WorldPosition, levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
-                        !levels.Any(l => l != levels[i] && l != levels[level] && SegmentAndCircleIntersect(levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition, Mathf.Max(planetScale.x, planetScale.y))))
+                        !levels.Any(l => l != levels[i] && l != levels[level] && SegmentAndCircleIntersect(levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition, planetRadius*2)))
                     .ToList();
                 
                 while (connectionsLeft > 0 && validConnections.Count > 0)
