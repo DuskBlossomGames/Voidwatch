@@ -4,3 +4,5 @@ Temp/
 *Cache*
 .vs/
 Library/
+UserSettings/
+Packages/packages-lock.json
