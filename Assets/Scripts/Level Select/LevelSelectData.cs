@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Level_Select
@@ -7,13 +8,27 @@ namespace Level_Select
     {
         public int Difficulty;
         public Sprite Sprite;
-        public Vector2 Position;
+
+        public Vector3 WorldPosition;
     }
     
     public class LevelSelectData : ScriptableObject
     {
         [NonSerialized] public int CurrentPlanet = -1;
-        public LevelData[] Levels;
-        public Tuple<int, int>[] Connections;
+        [NonSerialized] public List<int> VisitedPlanets;
+        
+        public LevelData[] Levels { get; private set; }
+        public Tuple<int, int>[] Connections { get; private set; }
+
+        public void PopulateData(LevelData[] levels, Tuple<int, int>[] connections)
+        {
+            Levels = levels;
+            Connections = connections;
+            VisitedPlanets = CurrentPlanet != -1 ? new List<int> { CurrentPlanet } : new List<int>();
+            
+            OnPopulate?.Invoke();
+        }
+        
+        public event Action OnPopulate;
     }
 }
