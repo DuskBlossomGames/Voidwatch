@@ -8,6 +8,7 @@ namespace Level_Select
     {
         public int Difficulty;
         public Sprite Sprite;
+        public List<int> Connections;
 
         public Vector3 WorldPosition;
     }
