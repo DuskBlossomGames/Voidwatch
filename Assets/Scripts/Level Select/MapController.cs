@@ -12,6 +12,7 @@ namespace Level_Select
         public float scrollSpeed, minCamSize, maxCamSize;
 
         public MiniPlayerController playerMini;
+        public Selector selector;
 
         private Vector2 _minScroll;
         private Vector2 _maxScroll;
@@ -35,7 +36,16 @@ namespace Level_Select
                 playerMini.SetOrbitPosition(pos);
             };
         }
+        
+        private void OnMouseUpAsButton()
+        {
+            selector.SetPosition(null);
+        }
 
+        /* --------------------
+         * |   CAMERA STUFF   |
+         * --------------------*/
+        
         private Vector3 _lastMousePos;
         private void OnMouseDown() { _lastMousePos = Input.mousePosition; }
         private void OnMouseDrag()
@@ -49,7 +59,7 @@ namespace Level_Select
             camTransform.position = camPos;
             _lastMousePos = Input.mousePosition;
         }
-
+        
         // TODO: scale stars accordingly?
         // TODO: zoom to mouse?
         private void Update()

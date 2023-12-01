@@ -13,7 +13,9 @@ namespace Level_Select
         public GameObject planetPrefab;
         public AssetLabelReference spriteLabel;
         public LevelSelectData data;
+        public Sprite hiddenSprite;
         public MiniPlayerController playerMini;
+        public Selector selector;
         
         private void Start()
         {
@@ -98,31 +100,35 @@ namespace Level_Select
 
         private void RenderGalaxy()
         {
-            for (var i = 0; i < data.Levels.Length; i++)
-            {
-                var level = data.Levels[i];
-                
-                var planet = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity);
-                planet.GetComponent<SpriteRenderer>().sprite = level.Sprite;
-
-                planet.GetComponentInChildren<SpriteMask>().enabled = data.VisitedPlanets.Contains(i);
-            }
-            
+            var shownPlanets = new HashSet<int>();
             foreach (var connection in data.Connections)
             {
+                if (!data.VisitedPlanets.Contains(connection.Item1) &&
+                    !data.VisitedPlanets.Contains(connection.Item2)) continue;
+                
+                shownPlanets.Add(connection.Item1);
+                shownPlanets.Add(connection.Item2);
+                    
                 var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();
 
                 line.material = lineMaterial;
                 line.startColor = line.endColor = Color.red;
                 line.startWidth = line.endWidth = 3f;
-                
-                if (!data.VisitedPlanets.Contains(connection.Item1) || !data.VisitedPlanets.Contains(connection.Item2))
-                {
-                    line.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-                }
-                
+                    
                 line.SetPosition(0, data.Levels[connection.Item1].WorldPosition);
                 line.SetPosition(1, data.Levels[connection.Item2].WorldPosition);
+
+            }
+
+            foreach (var planet in shownPlanets)
+            {
+                var level = data.Levels[planet];
+                var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity);
+                planetObj.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(planet) ? level.Sprite : hiddenSprite; ;
+
+                var selectable = planetObj.GetComponent<Selectable>();
+                selectable.selector = selector;
+                // TODO: selectable.OnSelected 
             }
         }
         

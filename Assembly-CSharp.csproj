@@ -60,6 +60,7 @@
      <Compile Include="Assets/Scripts/Spawnables/Player/Shoot.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Boids/BoidSpawner.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleAim.cs" />
+     <Compile Include="Assets/Scripts/Level Select/Selectable.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleAim2.cs" />
      <Compile Include="Assets/Scripts/Spawnables/PositionHinter.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Player/FollowPlayer.cs" />
@@ -74,6 +75,7 @@
      <Compile Include="Assets/Scripts/Spawning Scripts/EnemySpawner/EnemyVariant.cs" />
      <Compile Include="Assets/Scripts/Spawning Scripts/EnemySpawner/EnemySpawner.cs" />
      <Compile Include="Assets/Scripts/Level Select/MiniPlayerController.cs" />
+     <Compile Include="Assets/Scripts/Level Select/Selector.cs" />
      <Compile Include="Assets/Scripts/Level Select/MapController.cs" />
      <Folder Include="Assets" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
