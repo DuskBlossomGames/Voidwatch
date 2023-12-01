@@ -25,8 +25,14 @@ namespace Level_Select
                     _minScroll = Vector3.Min(level.WorldPosition, _minScroll);
                     _maxScroll = Vector3.Max(level.WorldPosition, _maxScroll);
                 }
+
+                var camTransform = camera.transform;
                 
-                playerMini.SetOrbitPosition(data.Levels[data.CurrentPlanet].WorldPosition);
+                var pos = data.Levels[data.CurrentPlanet].WorldPosition;
+                pos.z = camTransform.position.z;
+
+                camTransform.position = pos;
+                playerMini.SetOrbitPosition(pos);
             };
         }
 
@@ -45,6 +51,7 @@ namespace Level_Select
         }
 
         // TODO: scale stars accordingly?
+        // TODO: zoom to mouse?
         private void Update()
         {
             camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + Input.mouseScrollDelta.y * scrollSpeed,

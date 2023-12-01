@@ -98,10 +98,14 @@ namespace Level_Select
 
         private void RenderGalaxy()
         {
-            foreach (var level in data.Levels)
+            for (var i = 0; i < data.Levels.Length; i++)
             {
+                var level = data.Levels[i];
+                
                 var planet = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity);
                 planet.GetComponent<SpriteRenderer>().sprite = level.Sprite;
+
+                planet.GetComponentInChildren<SpriteMask>().enabled = data.VisitedPlanets.Contains(i);
             }
             
             foreach (var connection in data.Connections)
@@ -111,6 +115,11 @@ namespace Level_Select
                 line.material = lineMaterial;
                 line.startColor = line.endColor = Color.red;
                 line.startWidth = line.endWidth = 3f;
+                
+                if (!data.VisitedPlanets.Contains(connection.Item1) || !data.VisitedPlanets.Contains(connection.Item2))
+                {
+                    line.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                }
                 
                 line.SetPosition(0, data.Levels[connection.Item1].WorldPosition);
                 line.SetPosition(1, data.Levels[connection.Item2].WorldPosition);
