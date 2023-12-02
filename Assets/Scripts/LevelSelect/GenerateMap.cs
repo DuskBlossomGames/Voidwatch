@@ -105,8 +105,6 @@ namespace LevelSelect
 
         private void RenderGalaxy()
         {
-            Debug.Log("rendering galaxy");
-            Debug.Log("t: " + data.VisitedPlanets);
             var shownPlanets = new HashSet<int>();
             foreach (var connection in data.Connections)
             {

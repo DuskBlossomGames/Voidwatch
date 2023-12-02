@@ -32,7 +32,7 @@ namespace LevelSelect
     
     public class LevelSelectData : ScriptableObject
     {
-        private int _currentPlanet = -1;
+        [NonSerialized] private int _currentPlanet = -1;
 
         public int CurrentPlanet
         {
@@ -43,22 +43,27 @@ namespace LevelSelect
                 _currentPlanet = value;
             }
         }
-        [NonSerialized] public List<int> VisitedPlanets = new();
+        [NonSerialized] public readonly List<int> VisitedPlanets = new();
         
         public LevelData[] Levels { get; private set; }
         public Tuple<int, int>[] Connections { get; private set; }
 
         public void PopulateData(LevelData[] levels, Tuple<int, int>[] connections)
         {
-            Debug.Log("data populated");
             Levels = levels;
             Connections = connections;
-            
-            VisitedPlanets = new List<int>();
+
+            VisitedPlanets.Clear();
             CurrentPlanet = 0;
-            Debug.Log(VisitedPlanets);
             
             OnPopulate?.Invoke();
+        }
+
+        public void ClearData()
+        {
+            _currentPlanet = -1;
+            Levels = null;
+            Connections = null;
         }
         
         public event Action OnPopulate;
