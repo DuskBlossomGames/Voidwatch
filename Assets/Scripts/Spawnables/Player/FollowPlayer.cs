@@ -15,19 +15,32 @@ namespace Player
         
         private Camera _cameraComponent;
         private Camera _mainCamera;
+        private Vector3 _moddedOffset;
+        private float _timeSubStep;
+        private Vector3 _oldOffset;
 
         private void Start()
         {
             _mainCamera = Camera.main;
             _cameraComponent = transform.GetComponent<Camera>();
         }
+        /*private void Update()
+        {
+            if (_timeSubStep == 0)
+            {
+                _oldOffset = transform.position;
+            }
+            _timeSubStep += Time.deltaTime;
+            Vector3 realOffset = Lerp(_oldOffset, _moddedOffset, _timeSubStep/Time.fixedDeltaTime);
+            transform.position = realOffset;
+        }*/
 
         private void FixedUpdate()
         {
             var playerPosition = player.transform.position;
             var cameraPosition = transform.position;
             
-            _cameraComponent.backgroundColor = GenColorFromCoords(playerPosition,100);
+            //_cameraComponent.backgroundColor = GenColorFromCoords(playerPosition,100);
             
             var playerPos = new Vector3(playerPosition.x, playerPosition.y, cameraPosition.z);
             var mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -40,6 +53,8 @@ namespace Player
             //transform.position = playerpos + camOffset;
             _camOffset = Lerp(cameraPosition, Lerp(playerPos,mousePos, shipPull), jump * scale * scale);
 
+            _timeSubStep = 0;
+            //_moddedOffset = _camOffset;
             transform.position = _camOffset;
             transform.rotation = Quaternion.Euler(new Vector3(0,0,-90+Mathf.Rad2Deg*Mathf.Atan2(playerPos.y,playerPos.x)));
 
