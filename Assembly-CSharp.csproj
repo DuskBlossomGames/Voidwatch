@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Spawnables\Player\EnforcePlayArea.cs" />
     <Compile Include="Assets\Scripts\Static Objects or Misc\SizeMinimap.cs" />
     <Compile Include="Assets\Scripts\Level Select\GenerateStars.cs" />
+    <Compile Include="Assets\DebugSpawnEnemies.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\DefenseSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissilerPathfinding.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Defenses\PointAtTargets.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Assets\Scripts\Spawnables\Boids\BoidHandler.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Player\Shoot.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Boids\BoidSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Worms\WormDamageable.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleAim.cs" />
     <Compile Include="Assets\Scripts\Level Select\Selectable.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleAim2.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Assets\Scripts\Spawnables\MiniMapIcon.cs" />
     <Compile Include="Assets\Scripts\Level Select\GenerateMap.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Damageable.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Worms\WormBeamAttack.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleShooter.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Bullets\BulletCollision.cs" />
     <Compile Include="Assets\Scripts\Static Objects or Misc\GravityEmitter.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Assets\Scripts\Level Select\MiniPlayerController.cs" />
     <Compile Include="Assets\Scripts\Level Select\Selector.cs" />
     <Compile Include="Assets\Scripts\Level Select\MapController.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Worms\MultiDamageable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

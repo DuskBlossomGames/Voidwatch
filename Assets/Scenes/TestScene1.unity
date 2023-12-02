@@ -7448,6 +7448,7 @@ GameObject:
   - component: {fileID: 2086174087}
   - component: {fileID: 2086174088}
   - component: {fileID: 2086174089}
+  - component: {fileID: 2086174090}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -7772,6 +7773,21 @@ MonoBehaviour:
   size: 5
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
+--- !u!114 &2086174090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086174079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82675336e44748a4798852e8f9734ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugspawnpts: 27
+  spawn: 0
+  enemySpawner: {fileID: 1780276283}
 --- !u!1 &2146917946
 GameObject:
   m_ObjectHideFlags: 0

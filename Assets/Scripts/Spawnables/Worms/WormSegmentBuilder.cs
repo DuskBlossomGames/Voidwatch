@@ -24,6 +24,7 @@ public class WormSegmentBuilder : MonoBehaviour
         child = Instantiate(segmentPrefab, transform);
         child.GetComponent<SpriteRenderer>().sprite = headSprite;
         child.GetComponent<WormSegment>().form = WormSegment.Form.Head;
+        child.GetComponent<WormDamageable>().root = gameObject;
         child.transform.localPosition = relPos;
         oldChild = child;
         relPos.x += 1;
@@ -35,6 +36,7 @@ public class WormSegmentBuilder : MonoBehaviour
             child.GetComponent<WormSegment>().prev = oldChild;
             oldChild.GetComponent<WormSegment>().next = child;
             child.transform.localPosition = relPos;
+            child.GetComponent<WormDamageable>().root = gameObject;
             oldChild = child;
             relPos.x += 1;
         }
@@ -44,6 +46,7 @@ public class WormSegmentBuilder : MonoBehaviour
         child.GetComponent<WormSegment>().prev = oldChild;
         oldChild.GetComponent<WormSegment>().next = child;
         child.transform.localPosition = relPos;
+        child.GetComponent<WormDamageable>().root = gameObject;
     }
 
 }

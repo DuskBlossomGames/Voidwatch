@@ -5847,55 +5847,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1104243337
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1104243338}
-  - component: {fileID: 1104243339}
-  m_Layer: 0
-  m_Name: Worm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1104243338
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104243337}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.87, y: 13.72, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1104243339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104243337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e33da0678499a4f429ef60bf55d3d204, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  length: 10
-  headSprite: {fileID: 21300000, guid: edcae8b1191baee43912fa6a9fcadb10, type: 3}
-  bodySprite: {fileID: 21300000, guid: df07921861849ca419b7c674c67e9082, type: 3}
-  tailSprite: {fileID: 21300000, guid: 1d2ff1e71bb8a1647acb73eca3d003e8, type: 3}
-  segmentPrefab: {fileID: 7633799158591997125, guid: 6c78abdf5b286a04cbf5b3ac8164d0fc, type: 3}
 --- !u!1 &1139070866
 GameObject:
   m_ObjectHideFlags: 0
@@ -8013,4 +7964,3 @@ SceneRoots:
   - {fileID: 1746983932}
   - {fileID: 1054937396}
   - {fileID: 1547782872}
-  - {fileID: 1104243338}
