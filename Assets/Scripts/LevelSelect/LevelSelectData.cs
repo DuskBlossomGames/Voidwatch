@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using LevelSelect;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+namespace LevelSelect
+{
+    public enum LevelType
+    {
+        ENTRANCE,
+        NORMAL,
+        ELITE,
+        BOSS,
+        SPACE_STATION
+        // TODO: warp (wormhole)
+        // TODO: hidden?
+        // TODO: other NPCs
+        
+    }
+    
+    public class LevelData
+    {
+        public LevelType Type;
+        public int Difficulty;
+        public Sprite Sprite;
+        public List<int> Connections;
+
+        public Vector3 WorldPosition;
+    }
+    
+    public class LevelSelectData : ScriptableObject
+    {
+        private int _currentPlanet = -1;
+
+        public int CurrentPlanet
+        {
+            get => _currentPlanet;
+            set
+            {
+                VisitedPlanets.Add(value);
+                _currentPlanet = value;
+            }
+        }
+        [NonSerialized] public List<int> VisitedPlanets = new();
+        
+        public LevelData[] Levels { get; private set; }
+        public Tuple<int, int>[] Connections { get; private set; }
+
+        public void PopulateData(LevelData[] levels, Tuple<int, int>[] connections)
+        {
+            Debug.Log("data populated");
+            Levels = levels;
+            Connections = connections;
+            
+            VisitedPlanets = new List<int>();
+            CurrentPlanet = 0;
+            Debug.Log(VisitedPlanets);
+            
+            OnPopulate?.Invoke();
+        }
+        
+        public event Action OnPopulate;
+    }
+}

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+// TODO: make this a particle system instead
 public class GenerateStars : MonoBehaviour
 {
     public GameObject baseStar;

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Util;
 using Random = UnityEngine.Random;
 
-namespace Level_Select
+namespace LevelSelect
 {
     public class GenerateMap : MonoBehaviour
     {
@@ -14,9 +15,10 @@ namespace Level_Select
         public AssetLabelReference spriteLabel;
         public LevelSelectData data;
         public Sprite hiddenSprite;
+        public Sprite spaceStationSprite;
+        public Sprite entranceSprite;
         public MiniPlayerController playerMini;
         public Selector selector;
-        public MapController mapController;
         
         private void Start()
         {
@@ -33,8 +35,6 @@ namespace Level_Select
         // TODO: in the name of all that is holy, add some variables lmao
         private void GenerateGalaxy(IList<Sprite> sprites)
         {
-            data.CurrentPlanet = 0;
-        
             var levels = new List<LevelData>();
             var usedGridPositions = new List<Vector2>();
             
@@ -54,6 +54,7 @@ namespace Level_Select
                 
                 levels.Add(new LevelData
                 {
+                    Type = levels.Count == 0 ? LevelType.ENTRANCE : LevelType.NORMAL,
                     Difficulty = Random.Range(3, 50),
                     Sprite = sprites[Random.Range(0, sprites.Count)],
                     Connections = new List<int>(),
@@ -64,6 +65,9 @@ namespace Level_Select
                 
                 if (Random.value < 1/(1+Mathf.Exp(5-levels.Count/2.5f))) break;
             }
+
+            // TODO: probably oughta pick the location better...
+            levels[Random.Range(1, levels.Count - 1)].Type = LevelType.SPACE_STATION;
             
             var connections = new List<Tuple<int, int>>();
             for (var level = 0; level < levels.Count; level++)
@@ -101,6 +105,8 @@ namespace Level_Select
 
         private void RenderGalaxy()
         {
+            Debug.Log("rendering galaxy");
+            Debug.Log("t: " + data.VisitedPlanets);
             var shownPlanets = new HashSet<int>();
             foreach (var connection in data.Connections)
             {
@@ -125,7 +131,10 @@ namespace Level_Select
             {
                 var level = data.Levels[planet];
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity);
-                planetObj.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(planet) ? level.Sprite : hiddenSprite; ;
+                planetObj.GetComponent<SpriteRenderer>().sprite = level.Type == LevelType.NORMAL ?
+                    data.VisitedPlanets.Contains(planet) ? level.Sprite : hiddenSprite :
+                    level.Type == LevelType.SPACE_STATION ? spaceStationSprite :
+                        level.Type == LevelType.ENTRANCE ? entranceSprite : null;
 
                 var selectable = planetObj.GetComponent<Selectable>();
                 selectable.selector = selector;

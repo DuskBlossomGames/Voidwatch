@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Level_Select
+namespace Util
 {
     public class Selector : MonoBehaviour
     {

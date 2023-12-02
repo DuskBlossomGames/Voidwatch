@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Level_Select
+namespace LevelSelect
 {
     public class MiniPlayerController : MonoBehaviour
     {
