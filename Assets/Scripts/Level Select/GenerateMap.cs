@@ -16,6 +16,7 @@ namespace Level_Select
         public Sprite hiddenSprite;
         public MiniPlayerController playerMini;
         public Selector selector;
+        public MapController mapController;
         
         private void Start()
         {
@@ -55,6 +56,7 @@ namespace Level_Select
                 {
                     Difficulty = Random.Range(3, 50),
                     Sprite = sprites[Random.Range(0, sprites.Count)],
+                    Connections = new List<int>(),
                     WorldPosition = planetPrefab.transform.localPosition +
                                (Vector3) (position * planetScale * 2.25f + // make every grid space 2 and a quarter planets wide
                                           Random.insideUnitCircle * planetScale / 2) // offset by up to half a planet
@@ -64,17 +66,16 @@ namespace Level_Select
             }
             
             var connections = new List<Tuple<int, int>>();
-            var connectionsPerLevel = levels.ConvertAll(_ => new List<int>());
             for (var level = 0; level < levels.Count; level++)
             {
-                var connectionsLeft = Random.Range(1, 4) - connectionsPerLevel[level]?.Count;
+                var connectionsLeft = Random.Range(1, 4) - levels[level].Connections.Count;
 
                 var validConnections = levels
                     .Select((_, i) => i)
                     .Where(i => 
                         i != level &&
-                        connectionsPerLevel[i].Count < 3 &&
-                        !connectionsPerLevel[level].Contains(i) &&
+                        levels[i].Connections.Count < 3 &&
+                        !levels[level].Connections.Contains(i) &&
                         !connections.Any(c => Intersect(levels[i].WorldPosition, levels[level].WorldPosition, levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
                         !levels.Any(l => l != levels[i] && l != levels[level] && SegmentAndCircleIntersect(levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition, planetRadius*2)))
                     .ToList();
@@ -82,12 +83,12 @@ namespace Level_Select
                 while (connectionsLeft > 0 && validConnections.Count > 0)
                 {
                     var connectionIdx = Random.Range(0, validConnections.Count);
-                    var connection = validConnections[connectionIdx];
+                    var other = validConnections[connectionIdx];
                     
-                    connections.Add(new Tuple<int, int>(level, connection));
+                    connections.Add(new Tuple<int, int>(level, other));
                     
-                    connectionsPerLevel[level].Add(connection);
-                    connectionsPerLevel[connection].Add(level);
+                    levels[level].Connections.Add(other);
+                    levels[other].Connections.Add(level);
                     
                     validConnections.RemoveAt(connectionIdx);
 
@@ -128,7 +129,6 @@ namespace Level_Select
 
                 var selectable = planetObj.GetComponent<Selectable>();
                 selectable.selector = selector;
-                // TODO: selectable.OnSelected 
             }
         }
         
