@@ -10,8 +10,6 @@ public class ForceFieldHandler : MonoBehaviour
     
     private void Start()
     {
-        Debug.Log(_generators.Count);
-        Debug.Log(_generators.Capacity);
         var prefab = transform.GetChild(0).gameObject;
         _generators.Add(prefab);
         for (var i = 1; i < 4; i++)

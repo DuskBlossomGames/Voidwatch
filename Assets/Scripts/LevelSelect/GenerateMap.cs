@@ -18,17 +18,20 @@ namespace LevelSelect
         public Sprite spaceStationSprite;
         public Sprite entranceSprite;
         public MiniPlayerController playerMini;
+        public MapController mapController;
         public Selector selector;
         
         private void Start()
         {
-            data.OnPopulate += RenderGalaxy;
-            
             // grab sprites, then continue
             Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
             {
                 // only re-generate if it doesn't already exist
                 if (data.CurrentPlanet == -1) GenerateGalaxy(handle.Result);
+                
+                playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 1.5f);
+                RenderGalaxy();
+                mapController.Instantiate();
             };
         }
         
@@ -40,7 +43,6 @@ namespace LevelSelect
             
             var planetScale = planetPrefab.transform.localScale;
             var planetRadius = Mathf.Max(planetScale.x, planetScale.y) / 2;
-            playerMini.SetOrbitRadius(planetRadius * 1.5f);
             
             while (true)
             {
@@ -52,11 +54,13 @@ namespace LevelSelect
                 } while (usedGridPositions.Contains(position));
                 usedGridPositions.Add(position);
                 
+                // TODO: difficulty better
                 levels.Add(new LevelData
                 {
                     Type = levels.Count == 0 ? LevelType.ENTRANCE : LevelType.NORMAL,
                     Difficulty = Random.Range(3, 50),
-                    Sprite = sprites[Random.Range(0, sprites.Count)],
+                    Waves = Random.Range(1, 4),
+                    Sprite = levels.Count == 0 ? entranceSprite : sprites[Random.Range(0, sprites.Count)],
                     Connections = new List<int>(),
                     WorldPosition = planetPrefab.transform.localPosition +
                                (Vector3) (position * planetScale * 2.25f + // make every grid space 2 and a quarter planets wide
@@ -67,7 +71,9 @@ namespace LevelSelect
             }
 
             // TODO: probably oughta pick the location better...
-            levels[Random.Range(1, levels.Count - 1)].Type = LevelType.SPACE_STATION;
+            var stationIdx = Random.Range(1, levels.Count);
+            levels[stationIdx].Type = LevelType.SPACE_STATION;
+            levels[stationIdx].Sprite = spaceStationSprite;
             
             var connections = new List<Tuple<int, int>>();
             for (var level = 0; level < levels.Count; level++)
@@ -115,6 +121,7 @@ namespace LevelSelect
                 shownPlanets.Add(connection.Item2);
                     
                 var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();
+                line.transform.SetParent(transform);
 
                 line.material = lineMaterial;
                 line.startColor = line.endColor = Color.red;
@@ -128,11 +135,11 @@ namespace LevelSelect
             foreach (var planet in shownPlanets)
             {
                 var level = data.Levels[planet];
-                var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity);
-                planetObj.GetComponent<SpriteRenderer>().sprite = level.Type == LevelType.NORMAL ?
-                    data.VisitedPlanets.Contains(planet) ? level.Sprite : hiddenSprite :
-                    level.Type == LevelType.SPACE_STATION ? spaceStationSprite :
-                        level.Type == LevelType.ENTRANCE ? entranceSprite : null;
+                var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
+                planetObj.GetComponent<SpriteRenderer>().sprite =
+                    level.Type == LevelType.NORMAL && !data.VisitedPlanets.Contains(planet)
+                        ? hiddenSprite
+                        : level.Sprite; 
 
                 var selectable = planetObj.GetComponent<Selectable>();
                 selectable.selector = selector;

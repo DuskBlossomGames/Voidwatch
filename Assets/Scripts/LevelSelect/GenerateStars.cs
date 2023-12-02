@@ -14,7 +14,7 @@ public class GenerateStars : MonoBehaviour
     public int maxFailAttempts;
     public int clusterDist;
     public int maxCluster;
-
+    
     private void Awake()
     {
         var starPositions = new List<Vector3> { baseStar.transform.localPosition };

@@ -17,8 +17,6 @@ namespace LevelSelect
 
         public Transform panelBody;
         public Transform panelEnd;
-
-        public String sceneName;
         
         private Vector2 _textureScale;
         private bool _shown;
@@ -51,7 +49,7 @@ namespace LevelSelect
             panelBody.GetComponentInChildren<Button>().OnClick += () =>
             {
                 data.CurrentPlanet = _selectedLevel;
-                SceneManager.LoadScene(sceneName);
+                SceneManager.LoadScene("LevelPlay");
             };
         }
 

@@ -20,24 +20,21 @@ namespace LevelSelect
         private Vector2 _minScroll;
         private Vector2 _maxScroll;
         
-        private void Start()
+        public void Instantiate()
         {
-            data.OnPopulate += () =>
+            foreach (var level in data.Levels)
             {
-                foreach (var level in data.Levels)
-                {
-                    _minScroll = Vector3.Min(level.WorldPosition, _minScroll);
-                    _maxScroll = Vector3.Max(level.WorldPosition, _maxScroll);
-                }
+                _minScroll = Vector3.Min(level.WorldPosition, _minScroll);
+                _maxScroll = Vector3.Max(level.WorldPosition, _maxScroll);
+            }
 
-                var camTransform = camera.transform;
-                
-                var pos = data.Levels[data.CurrentPlanet].WorldPosition;
-                pos.z = camTransform.position.z;
+            var camTransform = camera.transform;
+            
+            var pos = data.Levels[data.CurrentPlanet].WorldPosition;
+            pos.z = camTransform.position.z;
 
-                camTransform.position = pos;
-                playerMini.SetOrbitPosition(pos);
-            };
+            camTransform.position = pos;
+            playerMini.SetOrbitPosition(pos);
             
             selector.OnSelectionChange += DrawPathToPlanet;
         }

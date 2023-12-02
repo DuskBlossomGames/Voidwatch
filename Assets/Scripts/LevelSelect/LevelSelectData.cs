@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LevelSelect;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace LevelSelect
@@ -24,6 +25,7 @@ namespace LevelSelect
     {
         public LevelType Type;
         public int Difficulty;
+        public int Waves;
         public Sprite Sprite;
         public List<int> Connections;
 
@@ -47,7 +49,7 @@ namespace LevelSelect
         
         public LevelData[] Levels { get; private set; }
         public Tuple<int, int>[] Connections { get; private set; }
-
+        
         public void PopulateData(LevelData[] levels, Tuple<int, int>[] connections)
         {
             Levels = levels;
@@ -55,8 +57,6 @@ namespace LevelSelect
 
             VisitedPlanets.Clear();
             CurrentPlanet = 0;
-            
-            OnPopulate?.Invoke();
         }
 
         public void ClearData()
@@ -65,7 +65,5 @@ namespace LevelSelect
             Levels = null;
             Connections = null;
         }
-        
-        public event Action OnPopulate;
     }
 }

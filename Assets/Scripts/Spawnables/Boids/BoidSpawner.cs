@@ -17,4 +17,9 @@ public class BoidSpawner : MonoBehaviour
         }
         Destroy(sample);
     }
+    
+    private void Update()
+    {
+        if (transform.childCount == 0) Destroy(gameObject);
+    }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spawnables.Player;
 using UnityEngine;
 
 public class PointAtTargets : MonoBehaviour
@@ -27,7 +28,7 @@ public class PointAtTargets : MonoBehaviour
         return new Vector2(vec.x * Mathf.Cos(angle) + vec.y * Mathf.Sin(angle), -vec.x * Mathf.Sin(angle) + vec.y * Mathf.Cos(angle));
     }
 
-    // Update is called once per frame
+    // TODO: sooo many GetComponent calls here, fix
     void Update()
     {
         Vector2 diff = new Vector2(target.position.x - transform.parent.position.x, target.position.y - transform.parent.position.y);

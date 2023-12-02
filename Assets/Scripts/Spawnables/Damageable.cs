@@ -23,6 +23,11 @@ public class Damageable : MonoBehaviour
         _healthBar = Instantiate(healthBarPrefab);
     }
 
+    private void OnDestroy()
+    {
+        Destroy(_healthBar);
+    }
+
     private void LateUpdate()
     {
         var camAngle = -Camera.main.transform.eulerAngles.z * Mathf.Deg2Rad;
