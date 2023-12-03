@@ -8,28 +8,41 @@ using Random = UnityEngine.Random;
 
 namespace LevelSelect
 {
-    public enum LevelType
+    public class LevelType
     {
-        ENTRANCE,
-        NORMAL,
-        ELITE,
-        BOSS,
-        SPACE_STATION
+        public static readonly LevelType Entrance = new("The entrance to the galaxy. Where you just came from!");
+        public static readonly LevelType Normal = new("The Cult of the Void has control. Can you break them?");
+        public static readonly LevelType Elite = new("The Void's strongest forces reside here. Keep your wits about you.");
+        public static readonly LevelType Boss = new("The Void beckons...");
+        public static readonly LevelType SpaceStation = new("A temporary respite for travelers. Who might be here now?");
+
+        public readonly string Description;
+
+        private LevelType() { }
+        private LevelType(string description)
+        {
+            Description = description;
+        }
+        
         // TODO: warp (wormhole)
         // TODO: hidden?
         // TODO: other NPCs
-        
+
     }
     
     public class LevelData
     {
         public LevelType Type;
         public int Difficulty;
+        public int Loot;
         public int Waves;
         public Sprite Sprite;
         public List<int> Connections;
 
         public Vector3 WorldPosition;
+
+        public string Name;
+        public string LoreText;
     }
     
     public class LevelSelectData : ScriptableObject

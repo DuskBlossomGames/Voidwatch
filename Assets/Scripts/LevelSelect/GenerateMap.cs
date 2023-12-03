@@ -57,14 +57,17 @@ namespace LevelSelect
                 // TODO: difficulty better
                 levels.Add(new LevelData
                 {
-                    Type = levels.Count == 0 ? LevelType.ENTRANCE : LevelType.NORMAL,
+                    Type = levels.Count == 0 ? LevelType.Entrance : LevelType.Normal,
                     Difficulty = Random.Range(3, 50),
                     Waves = Random.Range(1, 4),
                     Sprite = levels.Count == 0 ? entranceSprite : sprites[Random.Range(0, sprites.Count)],
                     Connections = new List<int>(),
                     WorldPosition = planetPrefab.transform.localPosition +
                                (Vector3) (position * planetScale * 2.25f + // make every grid space 2 and a quarter planets wide
-                                          Random.insideUnitCircle * planetScale / 2) // offset by up to half a planet
+                                          Random.insideUnitCircle * planetScale / 2), // offset by up to half a planet
+                    
+                    Name = "Planet Name",
+                    LoreText = "Lore text goes here, idk how long it'll be but decently I would think. Maybe a bit more? How about a teeeensy bit more."
                 });
                 
                 if (Random.value < 1/(1+Mathf.Exp(5-levels.Count/2.5f))) break;
@@ -72,7 +75,7 @@ namespace LevelSelect
 
             // TODO: probably oughta pick the location better...
             var stationIdx = Random.Range(1, levels.Count);
-            levels[stationIdx].Type = LevelType.SPACE_STATION;
+            levels[stationIdx].Type = LevelType.SpaceStation;
             levels[stationIdx].Sprite = spaceStationSprite;
             
             var connections = new List<Tuple<int, int>>();
@@ -137,7 +140,7 @@ namespace LevelSelect
                 var level = data.Levels[planet];
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
                 planetObj.GetComponent<SpriteRenderer>().sprite =
-                    level.Type == LevelType.NORMAL && !data.VisitedPlanets.Contains(planet)
+                    level.Type == LevelType.Normal && !data.VisitedPlanets.Contains(planet)
                         ? hiddenSprite
                         : level.Sprite; 
 

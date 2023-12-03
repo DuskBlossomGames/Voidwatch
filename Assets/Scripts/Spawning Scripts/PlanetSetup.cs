@@ -13,6 +13,6 @@ public class PlanetSetup : MonoBehaviour
         var level = data.Levels[data.CurrentPlanet];
 
         GetComponent<SpriteRenderer>().sprite = level.Sprite;
-        if (level.Type != LevelType.NORMAL) forceField.SetActive(false);
+        if (level.Type != LevelType.Normal) forceField.SetActive(false);
     }
 }
