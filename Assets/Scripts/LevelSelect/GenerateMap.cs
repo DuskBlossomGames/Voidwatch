@@ -15,7 +15,7 @@ namespace LevelSelect
         public AssetLabelReference spriteLabel;
         public LevelSelectData data;
         public Sprite hiddenSprite, spaceStationSprite,
-            hiddenElite, eliteSprite, bossSprite, entranceSprite;
+            hiddenElite, bossSprite, entranceSprite;
         public MiniPlayerController playerMini;
         public MapController mapController;
         public Selector selector;
@@ -139,7 +139,6 @@ namespace LevelSelect
                 while (eliteIdx == stationIdx || eliteIdx == furthestPlanet);
 
                 levels[eliteIdx].Type = LevelType.Elite;
-                levels[eliteIdx].Sprite = eliteSprite;
                 levels[eliteIdx].HiddenSprite = hiddenElite;
             }
             
