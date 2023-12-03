@@ -12,9 +12,9 @@ namespace LevelSelect
     {
         public static readonly LevelType Entrance = new("The entrance to the galaxy. Where you just came from!");
         public static readonly LevelType Normal = new("The Cult of the Void has control. Can you break them?");
-        public static readonly LevelType Elite = new("The Void's strongest forces reside here. Keep your wits about you.");
+        public static readonly LevelType Elite = new("The Cult of the Void has control. Can you bre~kskxzsh");
         public static readonly LevelType Boss = new("The Void beckons...");
-        public static readonly LevelType SpaceStation = new("A temporary respite for travelers. Who might be here now?");
+        public static readonly LevelType SpaceStation = new("A temporary respite for travelers. Who might you find?");
 
         public readonly string Description;
 
@@ -38,6 +38,13 @@ namespace LevelSelect
         public int Waves;
         public Sprite Sprite;
         public List<int> Connections;
+
+        private Sprite _hiddenSprite;
+        public Sprite HiddenSprite
+        {
+            get => _hiddenSprite ?? Sprite;
+            set => _hiddenSprite = value;
+        }
 
         public Vector3 WorldPosition;
 

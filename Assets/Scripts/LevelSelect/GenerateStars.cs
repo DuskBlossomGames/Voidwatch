@@ -17,6 +17,7 @@ public class GenerateStars : MonoBehaviour
     
     private void Awake()
     {
+        return;
         var starPositions = new List<Vector3> { baseStar.transform.localPosition };
         var scale = transform.localScale;
 

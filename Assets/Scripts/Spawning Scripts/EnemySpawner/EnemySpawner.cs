@@ -52,6 +52,9 @@ namespace EnemySpawner
 
         private void Update()
         {
+            // TODO: debug
+            if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
+            
             if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
             
             var level = data.Levels[data.CurrentPlanet];

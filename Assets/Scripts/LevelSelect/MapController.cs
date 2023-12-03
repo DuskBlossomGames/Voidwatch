@@ -50,7 +50,7 @@ namespace LevelSelect
 
             if (!planet.HasValue || current.WorldPosition == planet.Value) return;
 
-            var path = GetShortestPath(current, planet.Value);
+            var path = MapUtil.GetShortestPath(data.Levels, current, planet.Value);
             for (var i = 0; i < path.Length-1; i++)
             {
                 var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();
@@ -64,38 +64,6 @@ namespace LevelSelect
 
                 line.textureScale = new Vector2(Vector2.Distance(path[i], path[i+1])/100 * 6, 0);
                 line.SetPositions(new[] { path[i], path[i+1] });
-            }
-        }
-
-        private Vector3[] GetShortestPath(LevelData start, Vector3 end)
-        {
-            if (start.WorldPosition == end) return new Vector3[] {};
-            
-            var visited = new List<Vector3>();
-            var queue = new SortedList<double, (LevelData, double, List<Vector3>)>
-            {
-                { 0, (start, 0, new List<Vector3> { start.WorldPosition }) }
-            };
-            
-            while (true)
-            {
-                var (current, distance, path) = queue.Values[0];
-                queue.RemoveAt(0);
-
-                foreach (var neighbor in current.Connections)
-                {
-                    var neighborData = data.Levels[neighbor];
-                    var position = neighborData.WorldPosition;
-                    
-                    if (visited.Contains(position)) continue;
-                    visited.Add(position);
-                    
-                    var newPath = new List<Vector3>(path) { neighborData.WorldPosition };
-                    if (position == end) return newPath.ToArray();
-                    
-                    var newDistance = distance + Vector2.Distance(current.WorldPosition, neighborData.WorldPosition);
-                    queue.Add(newDistance, (neighborData, newDistance, newPath));
-                }
             }
         }
         

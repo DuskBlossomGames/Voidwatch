@@ -49,9 +49,9 @@
      <Compile Include="Assets/Scripts/Spawnables/Player/Movement.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Gravitatable.cs" />
      <Compile Include="Assets/Scripts/Static Objects or Misc/ForceFieldHandler.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/SnakePathfinder.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Player/EnforcePlayArea.cs" />
      <Compile Include="Assets/Scripts/Static Objects or Misc/SizeMinimap.cs" />
-     <Compile Include="Assets/DebugSpawnEnemies.cs" />
      <Compile Include="Assets/Scripts/Spawning Scripts/DefenseSpawner.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissilerPathfinding.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Defenses/PointAtTargets.cs" />
@@ -73,7 +73,10 @@
      <Compile Include="Assets/Scripts/Spawnables/MiniMapIcon.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Damageable.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/MapController.cs" />
+     <Compile Include="Assets/Scripts/Misc or Dep/DebugSpawnEnemies.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/IPathfinder.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/GenerateStars.cs" />
+     <Compile Include="Assets/Scripts/LevelSelect/MapUtil.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/LevelSelectData.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Worms/WormBeamAttack.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleShooter.cs" />
@@ -83,6 +86,7 @@
      <Compile Include="Assets/Scripts/Util/Selector.cs" />
      <Compile Include="Assets/Scripts/Spawning Scripts/EnemySpawner/EnemyVariant.cs" />
      <Compile Include="Assets/Scripts/Spawning Scripts/EnemySpawner/EnemySpawner.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/DirectPathfinding.cs" />
      <Compile Include="Assets/Scripts/Util/Selectable.cs" />
      <Compile Include="Assets/Scripts/Util/Button.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/LevelInfoController.cs" />
@@ -139,6 +143,7 @@
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
      <Folder Include="Assets/Scripts/Util" />
      <Folder Include="Assets/AddressableAssetsData/AssetGroupTemplates" />
+     <Folder Include="Assets/Scripts/Misc or Dep" />
      <Folder Include="Assets/Scripts/Spawning Scripts" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
      <Folder Include="Assets/Scripts/Spawnables/Player" />

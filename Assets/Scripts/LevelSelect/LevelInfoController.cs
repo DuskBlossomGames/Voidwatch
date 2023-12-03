@@ -32,6 +32,9 @@ namespace LevelSelect
         public Transform lootContainer;
         public RectTransform loreText;
 
+        public Sprite[] difficultySprites;
+        public Sprite[] lootSprites;
+
         private ExpandOnHover _spriteExpand;
         private SpriteRenderer _panelEndRenderer;
 
@@ -74,8 +77,21 @@ namespace LevelSelect
                 if (!_previousSelection.HasValue) _prevSide = _side;
 
                 planetName.GetComponent<TextMeshPro>().text = level!.Name;
-                planetSprite.GetComponent<SpriteRenderer>().sprite = level!.Sprite;
+                planetSprite.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(_selection.Value) ? level!.Sprite : level!.HiddenSprite;
                 levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
+
+                // assumes 5 indicators that go from empty to half to full;
+                var difficulty = level!.Difficulty / 5 / 2f;
+                var loot = level!.Loot / 5 / 2f;
+
+                for (var i = 0; i < 5; i++)
+                {
+                    var difficultySprite = difficultySprites[(int) Mathf.Clamp01(difficulty--) * 2];
+                    var lootSprite = lootSprites[(int) Mathf.Clamp01(loot--) * 2];
+
+                    difficultyContainer.GetChild(i).GetComponent<SpriteRenderer>().sprite = difficultySprite;
+                    lootContainer.GetChild(i).GetComponent<SpriteRenderer>().sprite = lootSprite;
+                }
             };
 
             planetSprite.GetComponent<Button>().OnClick += () =>

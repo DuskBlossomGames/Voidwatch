@@ -14,9 +14,8 @@ namespace LevelSelect
         public GameObject planetPrefab;
         public AssetLabelReference spriteLabel;
         public LevelSelectData data;
-        public Sprite hiddenSprite;
-        public Sprite spaceStationSprite;
-        public Sprite entranceSprite;
+        public Sprite hiddenSprite, spaceStationSprite,
+            hiddenElite, eliteSprite, bossSprite, entranceSprite;
         public MiniPlayerController playerMini;
         public MapController mapController;
         public Selector selector;
@@ -53,14 +52,17 @@ namespace LevelSelect
                     position = new Vector2(Random.Range(-3, 4), Random.Range(-3, 4));
                 } while (usedGridPositions.Contains(position));
                 usedGridPositions.Add(position);
-                
-                // TODO: difficulty better
+
+                var difficulty = Random.Range(3, 50);
+                // TODO: generate basically everything better
                 levels.Add(new LevelData
                 {
                     Type = levels.Count == 0 ? LevelType.Entrance : LevelType.Normal,
-                    Difficulty = Random.Range(3, 50),
+                    Difficulty = difficulty,
+                    Loot = Mathf.Clamp((int) (difficulty * (Random.value + 0.5)), 3, 50),
                     Waves = Random.Range(1, 4),
                     Sprite = levels.Count == 0 ? entranceSprite : sprites[Random.Range(0, sprites.Count)],
+                    HiddenSprite = hiddenSprite,
                     Connections = new List<int>(),
                     WorldPosition = planetPrefab.transform.localPosition +
                                (Vector3) (position * planetScale * 2.25f + // make every grid space 2 and a quarter planets wide
@@ -72,11 +74,6 @@ namespace LevelSelect
                 
                 if (Random.value < 1/(1+Mathf.Exp(5-levels.Count/2.5f))) break;
             }
-
-            // TODO: probably oughta pick the location better...
-            var stationIdx = Random.Range(1, levels.Count);
-            levels[stationIdx].Type = LevelType.SpaceStation;
-            levels[stationIdx].Sprite = spaceStationSprite;
             
             var connections = new List<Tuple<int, int>>();
             for (var level = 0; level < levels.Count; level++)
@@ -89,8 +86,8 @@ namespace LevelSelect
                         i != level &&
                         levels[i].Connections.Count < 3 &&
                         !levels[level].Connections.Contains(i) &&
-                        !connections.Any(c => Intersect(levels[i].WorldPosition, levels[level].WorldPosition, levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
-                        !levels.Any(l => l != levels[i] && l != levels[level] && SegmentAndCircleIntersect(levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition, planetRadius*2)))
+                        !connections.Any(c => MapUtil.Intersect(levels[i].WorldPosition, levels[level].WorldPosition, levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
+                        !levels.Any(l => l != levels[i] && l != levels[level] && MapUtil.SegmentAndCircleIntersect(levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition, planetRadius*2)))
                     .ToList();
                 
                 while (connectionsLeft > 0 && validConnections.Count > 0)
@@ -107,6 +104,43 @@ namespace LevelSelect
 
                     connectionsLeft--;
                 }
+            }
+
+            // TODO: do setting these better
+            var furthestPlanet = 0;
+            var furthestPlanetDist = 0;
+            for (var i = 1; i < levels.Count; i++)
+            {
+                var dist = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[0].WorldPosition).Length;
+                
+                if (dist > furthestPlanetDist)
+                {
+                    furthestPlanetDist = dist;
+                    furthestPlanet = i;
+                }
+            }
+
+            levels[furthestPlanet].Type = LevelType.Boss;
+            levels[furthestPlanet].Sprite = bossSprite;
+            levels[furthestPlanet].HiddenSprite = null;
+            
+            int stationIdx;
+            do stationIdx = Random.Range(1, levels.Count);
+            while (stationIdx == furthestPlanet);
+            
+            levels[stationIdx].Type = LevelType.SpaceStation;
+            levels[stationIdx].Sprite = spaceStationSprite;
+            levels[stationIdx].HiddenSprite = null;
+
+            for (var i = 0; i < Random.Range(0, 2); i++)
+            {
+                int eliteIdx;
+                do eliteIdx = Random.Range(1, levels.Count);
+                while (eliteIdx == stationIdx || eliteIdx == furthestPlanet);
+
+                levels[eliteIdx].Type = LevelType.Elite;
+                levels[eliteIdx].Sprite = eliteSprite;
+                levels[eliteIdx].HiddenSprite = hiddenElite;
             }
             
             data.PopulateData(levels.ToArray(), connections.ToArray());
@@ -139,38 +173,13 @@ namespace LevelSelect
             {
                 var level = data.Levels[planet];
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
-                planetObj.GetComponent<SpriteRenderer>().sprite =
-                    level.Type == LevelType.Normal && !data.VisitedPlanets.Contains(planet)
-                        ? hiddenSprite
-                        : level.Sprite; 
+                planetObj.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(planet) 
+                    ? level.Sprite 
+                    : level.HiddenSprite; 
 
                 var selectable = planetObj.GetComponent<Selectable>();
                 selectable.selector = selector;
             }
-        }
-        
-        private static bool AreCcw(Vector2 a, Vector2 b, Vector2 c)
-        {
-            return (c.y-a.y) * (b.x-a.x) > (b.y-a.y) * (c.x-a.x);
-        }
-        
-        private static bool Intersect(Vector2 a, Vector2 b, Vector2 c, Vector2 d)
-        {
-            return AreCcw(a,c,d) != AreCcw(b,c,d) && AreCcw(a,b,c) != AreCcw(a,b,d);
-        }
-
-        private static bool SegmentAndCircleIntersect(Vector2 start, Vector2 end, Vector2 point, float radius)
-        {
-            // simplified from https://www.splashlearn.com/math-vocabulary/distance-of-a-point-from-a-line
-            var slope = (start.y - end.y) / (start.x - end.x);
-            var intercept = start.y - slope * start.x;
-            
-            var dist = Mathf.Abs(slope * point.x - point.y + intercept) / Mathf.Sqrt(slope * slope + 1);
-            
-            // check if center is too close, and that it actually hits part of the line segment, not the extended line
-            return dist < radius &&
-                   Mathf.Min(start.x, end.x) <= point.x + radius && point.x - radius <= Mathf.Max(start.x, end.x) &&
-                   Mathf.Min(start.y, end.y) <= point.y + radius && point.y - radius <= Mathf.Max(start.y, end.y);
         }
     }
 }
