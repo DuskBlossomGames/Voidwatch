@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 8992771421621785060}
   - component: {fileID: 8923720366018640108}
   - component: {fileID: -630066795176946171}
+  - component: {fileID: 4405246181603560970}
+  - component: {fileID: 8290449300364683273}
   m_Layer: 8
   m_Name: Stem Segment
   m_TagString: Untagged
@@ -99,10 +101,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7633799158591997125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35de8e2c84732804d9bca2ce270e9cdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 65230843010703642949fbdc11b41c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pathmode: 0
+  aroundPather: {fileID: 4405246181603560970}
+  directPather: {fileID: 8290449300364683273}
   form: 0
   dmg: 0
   segLength: 2
@@ -115,41 +119,38 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0041656494
-      value: 0.30187845
-      inSlope: 0.000013828263
-      outSlope: 0.000013828263
+      time: -0.008333334
+      value: 0.4811321
+      inSlope: -1.2893082
+      outSlope: -1.2893082
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.2922154
-    - serializedVersion: 3
-      time: 0.87220055
-      value: 0.99751484
-      inSlope: -0.24613416
-      outSlope: -0.24613416
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.08110205
-      outWeight: 1
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -7.805314
-      outSlope: -7.805314
-      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0
+      outWeight: 0.17391264
+    - serializedVersion: 3
+      time: 0.8541687
+      value: 0.9481122
+      inSlope: -1.0566134
+      outSlope: -1.0566134
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5769189
+    - serializedVersion: 3
+      time: 0.99583334
+      value: 0.0023584906
+      inSlope: -8.534106
+      outSlope: -8.534106
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16250004
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  snakeyness: 0.6
-  snaketime: 2
-  atkRange: 40
-  chargeUpTime: 3
+  atkRange: 30
+  chargeUpTime: 2
   bend: 0
-  expDir: {x: 0, y: 0}
 --- !u!114 &-7001248555379214586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,3 +396,29 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   root: {fileID: 0}
+--- !u!114 &4405246181603560970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633799158591997125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d4d169d436b534784dbe3223ce433d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snakeyness: 0.8
+  snaketime: 2
+--- !u!114 &8290449300364683273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633799158591997125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7d822bc273fdd479601481e939a2c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -6652,6 +6652,8 @@ MonoBehaviour:
   variantLabel:
     m_LabelString: enemies
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
+  boundaryCircle: {fileID: 0}
+  data: {fileID: 0}
   debugSpawnEnemies: 30
 --- !u!4 &1354142218
 Transform:

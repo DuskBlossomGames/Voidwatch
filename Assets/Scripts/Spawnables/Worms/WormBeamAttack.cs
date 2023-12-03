@@ -26,7 +26,7 @@ public class WormBeamAttack : MonoBehaviour
 
     IEnumerator _Shoot()
     {
-        GetComponent<WormSegment>().snakeyness /= 3;
+        GetComponent<WormSegment>().aroundPather.snakeyness /= 3;
         GetComponent<WormSegment>().pathmode = WormSegment.PathMode.Direct;
         yield return new WaitForSeconds(chargeTime);
 
@@ -123,7 +123,7 @@ public class WormBeamAttack : MonoBehaviour
         }
 
         GetComponent<WormSegment>().pathmode = WormSegment.PathMode.Around;
-        GetComponent<WormSegment>().snakeyness *= 3;
+        GetComponent<WormSegment>().aroundPather.snakeyness *= 3;
 
         yield return new WaitForSeconds(.1f);
         Destroy(ray);

@@ -15,6 +15,14 @@ namespace Player
         private float _acceleration;
 
         private Vector2 _forwards;
+        private struct OrbitState
+        {
+            float _orbitDistance;
+            bool _isAntiClockwise;
+            Vector2 _targetVel;
+            Vector2 _orbitPoint;
+        };
+        private OrbitState _orbitState;
 
         private void Start()
         {
@@ -37,11 +45,17 @@ namespace Player
                 _velocity += driftCorrection * Time.deltaTime * Push(_velocity, _forwards);
                 _velocity *= (.01f + vm) / (.01f+_velocity.magnitude);
 
+                /*if (Input.GetKey("a"))
+                {
+                    _velocity = _or
+                }*/
+
             } else if (Input.GetKey("s")) {
                 _velocity *= Mathf.Pow(.2f, Time.deltaTime);
             } else {
                 _acceleration = 0;
             }
+
 
 
             var tar = _camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
