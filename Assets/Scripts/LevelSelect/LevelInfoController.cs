@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
 
+// TODO: revisit what happens when one switching directly from one to another
 namespace LevelSelect
 {
     public class LevelInfoController : MonoBehaviour
@@ -19,7 +21,18 @@ namespace LevelSelect
         
         public Transform panelBody;
         public Transform panelEnd;
+        
+        public RectTransform planetName;
+        public RectTransform clickInstructions;
+        public Transform planetSprite;
+        public RectTransform levelDescription;
+        public RectTransform difficultyLabel;
+        public Transform difficultyContainer;
+        public RectTransform lootLabel;
+        public Transform lootContainer;
+        public RectTransform loreText;
 
+        private ExpandOnHover _spriteExpand;
         private SpriteRenderer _panelEndRenderer;
 
         private Vector2 _textureScale;
@@ -32,6 +45,7 @@ namespace LevelSelect
 
         private void Awake()
         {
+            _spriteExpand = planetSprite.GetComponent<ExpandOnHover>();
             var sprite = (_panelEndRenderer = panelEnd.GetComponent<SpriteRenderer>()).sprite;
             
             // idk why it's 256, but that's what I found in testing
@@ -45,22 +59,26 @@ namespace LevelSelect
                     _selection = null;
                     return;
                 }
-                
+
+                LevelData level = null;
                 for (var i = 0; i < data.Levels.Length; i++)
                 {
                     if (data.Levels[i].WorldPosition != planet) continue;
-                        
+
+                    level = data.Levels[i];
                     _selection = i;
                     break;
                 }
                 
-                // TODO: make popup show from either left or right of screen
-                // TODO: set planet info on popup
                 _side = data.Levels[_selection!.Value].WorldPosition.x > camera.transform.position.x ? -1 : 1;
                 if (!_previousSelection.HasValue) _prevSide = _side;
+
+                planetName.GetComponent<TextMeshPro>().text = level!.Name;
+                planetSprite.GetComponent<SpriteRenderer>().sprite = level!.Sprite;
+                levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
             };
 
-            panelBody.GetComponentInChildren<Button>().OnClick += () =>
+            planetSprite.GetComponent<Button>().OnClick += () =>
             {
                 if (!_selection.HasValue) return;
                 
@@ -108,6 +126,33 @@ namespace LevelSelect
             panelEnd.localPosition = new Vector3(_prevSide * -panelBodyWidth / 2 / height, 0, 0);
             
             _panelEndRenderer.flipX = _prevSide < 0;
+
+            var xTranslate = _side * 7 / height; // 7 px border, just taken from sprite
+            var xFactor = width / height;
+            var yFactor = 1 / _textureScale.y;
+            FillTransform(planetName, xTranslate, xFactor, yFactor, y: 0.35f, width: 0.65f);
+            FillTransform(clickInstructions, xTranslate, xFactor, yFactor, y: 0.28125f, width: 0.3f, height: 0.03125f);
+            FillTransform(planetSprite, xTranslate, xFactor, yFactor, y: 0.15f, width: _spriteExpand.CurrentMultiplier * 0.35f, height: _spriteExpand.CurrentMultiplier * 0.35f * xFactor / yFactor);
+            FillTransform(levelDescription, xTranslate, xFactor, yFactor, y: -0.05f, width: 0.65f);
+            FillTransform(difficultyLabel, xTranslate, xFactor, yFactor, x: -0.22f, y: -0.19f, width: 0.3f);
+            FillTransform(lootLabel, xTranslate, xFactor, yFactor, x: 0.22f, y: -0.19f, width: 0.3f / 2.14f);
+            FillTransform(difficultyContainer, xTranslate, xFactor, yFactor, x: -0.22f, y: -0.25f, width: 0.35f, height: 0.35f * xFactor / yFactor);
+            FillTransform(lootContainer, xTranslate, xFactor, yFactor, x: 0.22f, y: -0.25f, width: 0.35f, height: 0.35f * xFactor / yFactor);
+            FillTransform(loreText, xTranslate, xFactor, yFactor, y: -0.4f, width: 0.75f);
+        }
+
+        private static void FillTransform(Transform transform, float xTranslate, float xFactor, float yFactor, float x = 0, float y = 0, float width = 0, float height = 0)
+        {
+            var position = transform.localPosition;
+            position.x = xTranslate + xFactor * x;
+            position.y = yFactor * y;
+            transform.localPosition = position;
+            
+            var size = transform is RectTransform rectTransform ? (Vector3) rectTransform.sizeDelta : transform.localScale;
+            if (width != 0) size.x = xFactor * width;
+            if (height != 0) size.y = yFactor * height;
+            if (transform is RectTransform rect) rect.sizeDelta = size;
+            else transform.localScale = size; 
         }
     }
 }

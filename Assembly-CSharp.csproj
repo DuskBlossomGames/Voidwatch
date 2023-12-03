@@ -61,6 +61,7 @@
      <Compile Include="Assets/Scripts/Spawnables/Boids/BoidSpawner.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Worms/WormDamageable.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleAim.cs" />
+     <Compile Include="Assets/Scripts/LevelSelect/ExpandOnHover.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/MiniPlayerController.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/GenerateMap.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleAim2.cs" />
