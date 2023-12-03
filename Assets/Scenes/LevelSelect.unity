@@ -1059,7 +1059,6 @@ MonoBehaviour:
   selector: {fileID: 1229988540}
   data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   secondsToSlide: 0.7
-  a: 12
   xPercent: 0.35
   yPercent: 0.85
   camera: {fileID: 743845641}
