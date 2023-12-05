@@ -75,7 +75,6 @@
      <Compile Include="Assets/Scripts/LevelSelect/MapController.cs" />
      <Compile Include="Assets/Scripts/Misc or Dep/DebugSpawnEnemies.cs" />
      <Compile Include="Assets/Scripts/Spawnables/IPathfinder.cs" />
-     <Compile Include="Assets/Scripts/LevelSelect/GenerateStars.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/MapUtil.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/LevelSelectData.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Worms/WormBeamAttack.cs" />
