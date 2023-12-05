@@ -39,6 +39,8 @@ namespace LevelSelect
         private ExpandOnHover _spriteExpand;
         private SpriteRenderer _panelEndRenderer;
 
+        private BoxCollider2D _collider;
+
         private Vector2 _textureScale;
 
         private int _prevSide = 1;
@@ -49,6 +51,7 @@ namespace LevelSelect
 
         private void Awake()
         {
+            _collider = GetComponent<BoxCollider2D>();
             _spriteExpand = planetSprite.GetComponent<ExpandOnHover>();
             var sprite = (_panelEndRenderer = panelEnd.GetComponent<SpriteRenderer>()).sprite;
             
@@ -78,10 +81,11 @@ namespace LevelSelect
                 if (!_previousSelection.HasValue) _prevSide = _side;
 
                 planetName.GetComponent<TextMeshPro>().text = level!.Name;
-                clickInstructions.gameObject.SetActive(
-                    planetSprite.GetComponent<Button>().enabled =
-                        level!.Type != LevelType.Entrance);
                 planetSprite.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(_selection.Value) ? level!.Sprite : level!.HiddenSprite;
+                clickInstructions.gameObject.SetActive(
+                    planetSprite.GetComponent<ExpandOnHover>().enabled = 
+                        planetSprite.GetComponent<CircleCollider2D>().enabled = 
+                            level!.Type != LevelType.Entrance);
                 levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
 
                 // assumes 5 indicators that go from empty to half to full, with max values of 200
@@ -152,6 +156,9 @@ namespace LevelSelect
             var xTranslate = _side * 7 / height; // 7 px border, just taken from sprite
             var xFactor = width / height;
             var yFactor = 1 / _textureScale.y;
+
+            _collider.size = new Vector2(xFactor, yFactor);
+            
             FillTransform(planetName, xTranslate, xFactor, yFactor, y: 0.35f, width: 0.65f);
             FillTransform(clickInstructions, xTranslate, xFactor, yFactor, y: 0.28125f, width: 0.3f, height: 0.03125f);
             FillTransform(planetSprite, xTranslate, xFactor, yFactor, y: 0.15f, width: _spriteExpand.CurrentMultiplier * 0.35f, height: _spriteExpand.CurrentMultiplier * 0.35f * xFactor / yFactor);
