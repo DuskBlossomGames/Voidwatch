@@ -33,6 +33,7 @@ namespace LevelSelect
         public RectTransform loreText;
 
         public Sprite[] difficultySprites;
+        public Sprite[] eliteDifficultySprites;
         public Sprite[] lootSprites;
 
         private ExpandOnHover _spriteExpand;
@@ -77,16 +78,21 @@ namespace LevelSelect
                 if (!_previousSelection.HasValue) _prevSide = _side;
 
                 planetName.GetComponent<TextMeshPro>().text = level!.Name;
+                clickInstructions.gameObject.SetActive(
+                    planetSprite.GetComponent<Button>().enabled =
+                        level!.Type != LevelType.Entrance);
                 planetSprite.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(_selection.Value) ? level!.Sprite : level!.HiddenSprite;
                 levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
 
-                // assumes 5 indicators that go from empty to half to full;
-                var difficulty = level!.Difficulty / 5 / 2f;
-                var loot = level!.Loot / 5 / 2f;
+                // assumes 5 indicators that go from empty to half to full, with max values of 200
+                var difficulty = level!.Difficulty / 9 / 2f;
+                var loot = level!.Loot / 9 / 2f;
 
                 for (var i = 0; i < 5; i++)
                 {
-                    var difficultySprite = difficultySprites[(int) Mathf.Clamp01(difficulty--) * 2];
+                    var difficultySprite = (level!.Type == LevelType.Elite ?
+                        eliteDifficultySprites :
+                        difficultySprites)[(int) Mathf.Clamp01(difficulty--) * 2];
                     var lootSprite = lootSprites[(int) Mathf.Clamp01(loot--) * 2];
 
                     difficultyContainer.GetChild(i).GetComponent<SpriteRenderer>().sprite = difficultySprite;

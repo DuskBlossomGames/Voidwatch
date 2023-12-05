@@ -2432,6 +2432,10 @@ MonoBehaviour:
   lootContainer: {fileID: 392425584}
   loreText: {fileID: 337187043}
   difficultySprites:
+  - {fileID: 21300000, guid: d81bacf32536149b6830184839432c0e, type: 3}
+  - {fileID: 21300000, guid: ac9daf21c9f964f00b5483b06967e08c, type: 3}
+  - {fileID: 21300000, guid: 60aa07e5df6144e24aee7d8eacbad5c3, type: 3}
+  eliteDifficultySprites:
   - {fileID: 21300000, guid: e5e488f6b689d47459dbd2bcc0337512, type: 3}
   - {fileID: 21300000, guid: 86749e607ed714c1db7f65298cc0d77a, type: 3}
   - {fileID: 21300000, guid: 96130b609c2244c20bda3718f597c1d1, type: 3}
@@ -8068,7 +8072,6 @@ MonoBehaviour:
   hiddenSprite: {fileID: 21300000, guid: 9be96e015369c43edae8d4f7a511c4bf, type: 3}
   spaceStationSprite: {fileID: 21300000, guid: 2bda11fe986974445b5f06ae3ffa0169, type: 3}
   hiddenElite: {fileID: 21300000, guid: 31332f6bb31934ec5a5daf9dec5e8853, type: 3}
-  eliteSprite: {fileID: 0}
   bossSprite: {fileID: 0}
   entranceSprite: {fileID: 21300000, guid: e758bd15639d74ba888c3b34e56e38a7, type: 3}
   playerMini: {fileID: 1289256210}

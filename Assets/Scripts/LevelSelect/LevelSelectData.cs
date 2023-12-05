@@ -14,7 +14,7 @@ namespace LevelSelect
         public static readonly LevelType Normal = new("The Cult of the Void has control. Can you break them?");
         public static readonly LevelType Elite = new("The Cult of the Void has control. Can you bre~kskxzsh");
         public static readonly LevelType Boss = new("The Void beckons...");
-        public static readonly LevelType SpaceStation = new("A temporary respite for travelers. Who might you find?");
+        public static readonly LevelType SpaceStation = new("A brief respite for the weary. Who might you find?");
 
         public readonly string Description;
 
@@ -34,6 +34,7 @@ namespace LevelSelect
     {
         public LevelType Type;
         public int Difficulty;
+        public int DifficultyBudget;
         public int Loot;
         public int Waves;
         public Sprite Sprite;
