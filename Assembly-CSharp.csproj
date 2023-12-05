@@ -49,6 +49,7 @@
      <Compile Include="Assets/Scripts/Spawnables/Player/Movement.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Gravitatable.cs" />
      <Compile Include="Assets/Scripts/Static Objects or Misc/ForceFieldHandler.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/Chasers/ChaserBehavior.cs" />
      <Compile Include="Assets/Scripts/Spawnables/SnakePathfinder.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Player/EnforcePlayArea.cs" />
      <Compile Include="Assets/Scripts/Static Objects or Misc/SizeMinimap.cs" />
@@ -137,6 +138,7 @@
      <Folder Include="Assets/Sprites/Level Select" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
      <Folder Include="Assets/Scripts/Spawning Scripts/EnemySpawner" />
+     <Folder Include="Assets/Scripts/Spawnables/Chasers" />
      <Folder Include="Assets/Sprites" />
      <Folder Include="Assets/Sprites/Level Select/Planets" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
