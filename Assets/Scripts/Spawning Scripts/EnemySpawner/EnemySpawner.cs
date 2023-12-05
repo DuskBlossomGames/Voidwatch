@@ -69,7 +69,7 @@ namespace EnemySpawner
                 }
                 else
                 {
-                    foreach (var enemy in GetSpawnedEnemies(level.Difficulty))
+                    foreach (var enemy in GetSpawnedEnemies(level.DifficultyBudget))
                     {
                         var boundarySize = boundaryCircle.transform.localScale / 2;
                         var rad = Random.Range(0, 2 * Mathf.PI);

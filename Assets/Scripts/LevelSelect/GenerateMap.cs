@@ -15,7 +15,7 @@ namespace LevelSelect
         public AssetLabelReference spriteLabel;
         public LevelSelectData data;
         public Sprite hiddenSprite, spaceStationSprite,
-            hiddenElite, eliteSprite, bossSprite, entranceSprite;
+            hiddenElite, bossSprite, entranceSprite;
         public MiniPlayerController playerMini;
         public MapController mapController;
         public Selector selector;
@@ -53,14 +53,18 @@ namespace LevelSelect
                 } while (usedGridPositions.Contains(position));
                 usedGridPositions.Add(position);
 
-                var difficulty = Random.Range(3, 50);
+                var budget = Random.Range(3, 30);
+                var waves = Random.Range(1, 3);
+                var difficulty = budget * waves;
+                
                 // TODO: generate basically everything better
                 levels.Add(new LevelData
                 {
                     Type = levels.Count == 0 ? LevelType.Entrance : LevelType.Normal,
                     Difficulty = difficulty,
-                    Loot = Mathf.Clamp((int) (difficulty * (Random.value + 0.5)), 3, 50),
-                    Waves = Random.Range(1, 4),
+                    DifficultyBudget = budget,
+                    Loot = Mathf.Clamp((int) (difficulty * (Random.value*0.4+0.8)), 3, 200),
+                    Waves = waves,
                     Sprite = levels.Count == 0 ? entranceSprite : sprites[Random.Range(0, sprites.Count)],
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>(),
@@ -139,7 +143,6 @@ namespace LevelSelect
                 while (eliteIdx == stationIdx || eliteIdx == furthestPlanet);
 
                 levels[eliteIdx].Type = LevelType.Elite;
-                levels[eliteIdx].Sprite = eliteSprite;
                 levels[eliteIdx].HiddenSprite = hiddenElite;
             }
             
