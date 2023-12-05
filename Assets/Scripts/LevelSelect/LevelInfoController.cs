@@ -10,6 +10,8 @@ namespace LevelSelect
 {
     public class LevelInfoController : MonoBehaviour
     {
+        public static float MaxDifficultyScore;
+        
         public Selector selector;
         public LevelSelectData data;
         
@@ -88,8 +90,8 @@ namespace LevelSelect
                             level!.Type != LevelType.Entrance);
                 levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
 
-                // assumes 5 indicators that go from empty to half to full, with max values of 200
-                var difficulty = level!.Difficulty / 9 / 2f;
+                // assumes 5 indicators that go from empty to half to full
+                var difficulty = (int) (level!.DifficultyScore / MaxDifficultyScore / 10) / 2f;
                 var loot = level!.Loot / 9 / 2f;
 
                 for (var i = 0; i < 5; i++)

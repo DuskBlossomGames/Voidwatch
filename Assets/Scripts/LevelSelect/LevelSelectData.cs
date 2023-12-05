@@ -33,10 +33,9 @@ namespace LevelSelect
     public class LevelData
     {
         public LevelType Type;
-        public int Difficulty;
-        public int DifficultyBudget;
         public int Loot;
-        public int Waves;
+        public int DifficultyScore;
+        public int[] Waves;
         public Sprite Sprite;
         public List<int> Connections;
 
