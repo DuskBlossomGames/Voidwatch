@@ -102,7 +102,39 @@ namespace LevelSelect
                 }
             }
 
-            // TODO: do setting these better
+            // idk if this is a great way to do it but *should* work...
+            List<int> pathless = new();
+            for (var level = 0; level < levels.Count; level++)
+            {
+                if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) == null) pathless.Add(level);
+            }
+            foreach (var level in pathless)
+            {
+                var validConnections = levels
+                    .Select((_, i) => i)
+                    .Where(i =>
+                        i != level &&
+                        !pathless.Contains(i) &&
+                        !connections.Any(c => MapUtil.Intersect(levels[i].WorldPosition, levels[level].WorldPosition,
+                            levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
+                        !levels.Any(l =>
+                            l != levels[i] && l != levels[level] && MapUtil.SegmentAndCircleIntersect(
+                                levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition,
+                                planetRadius * 2))).ToList();
+                
+                if (validConnections.Any(i => levels[i].Connections.Count < 3))
+                {
+                    validConnections = validConnections.Where(i => levels[i].Connections.Count < 3).ToList();
+                }
+
+                var other = validConnections[Random.Range(0, validConnections.Count)];
+                connections.Add(new Tuple<int, int>(level, other));
+                    
+                levels[level].Connections.Add(other);
+                levels[other].Connections.Add(level);
+            }
+
+            // TODO: do level type generation better
             var furthestPlanet = 0;
             var furthestPlanetDist = 0;
             for (var i = 1; i < levels.Count; i++)

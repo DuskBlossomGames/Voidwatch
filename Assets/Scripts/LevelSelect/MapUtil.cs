@@ -17,7 +17,7 @@ namespace LevelSelect
             
             while (true)
             {
-                if (queue.Count == 0) return new Vector3[] {};
+                if (queue.Count == 0) return null;
                 
                 var (current, distance, path) = queue.Values[0];
                 queue.RemoveAt(0);
