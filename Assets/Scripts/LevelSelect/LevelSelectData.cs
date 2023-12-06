@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using LevelSelect;
 using UnityEngine;
@@ -33,10 +34,9 @@ namespace LevelSelect
     public class LevelData
     {
         public LevelType Type;
-        public int Difficulty;
-        public int DifficultyBudget;
         public int Loot;
-        public int Waves;
+        public int DifficultyScore;
+        public int[] Waves;
         public Sprite Sprite;
         public List<int> Connections;
 
@@ -55,18 +55,69 @@ namespace LevelSelect
     
     public class LevelSelectData : ScriptableObject
     {
-        [NonSerialized] private int _currentPlanet = -1;
+        public float baseDifficulty;
+        public float gameDifficultyModifier;
+        public float levelModifier;
+        public float randomModifier;
+        public float galaxyModifier;
+        public int[] minBudgetPerWave;
 
+        // based on how difficultyScore is generated below
+        public float MaxDifficultyScore => baseDifficulty + 
+                                           levelModifier * (Levels.Length - 1);
+
+        
+        [NonSerialized] private int _currentPlanet = -1;
         public int CurrentPlanet
         {
             get => _currentPlanet;
             set
             {
-                VisitedPlanets.Add(value);
                 _currentPlanet = value;
+                if (value < 0) return;
+                
+                _visitedPlanets.Add(value);
+                foreach (var idx in Levels[value].Connections)
+                {
+                    var level = Levels[idx];
+                    if (level.Waves != null) continue;
+                    
+                    var difficultyScore = level.Type == LevelType.Boss ? MaxDifficultyScore :
+                        baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 2) * randomModifier;
+                    var difficultyBudget = (int) (gameDifficultyModifier * (difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/));
+                    List<int> waves = new();
+                
+                    // start with as many waves as possible given min budget
+                    while (true)
+                    {
+                        var budget = minBudgetPerWave[waves.Count];
+                        if ((difficultyBudget -= budget) < 0)
+                        {
+                            difficultyBudget += budget;
+                            break;
+                        }
+                    
+                        waves.Add(budget);
+                    }
+                    // distribute the rest randomly
+                    while (difficultyBudget > 0)
+                    {
+                        var addition = difficultyBudget < 5 ? difficultyBudget :
+                            Random.Range(0, difficultyBudget);
+                        
+                        waves[Random.Range(0, waves.Count - 1)] += addition;
+                        difficultyBudget -= addition;
+                    }
+
+                    level.Loot = Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 3, 200);
+                    level.DifficultyScore = (int) difficultyScore;
+                    level.Waves = waves.ToArray();
+                }
             }
         }
-        [NonSerialized] public readonly List<int> VisitedPlanets = new();
+
+        [NonSerialized] private readonly List<int> _visitedPlanets = new();
+        public ReadOnlyCollection<int> VisitedPlanets => new(_visitedPlanets);
         
         public LevelData[] Levels { get; private set; }
         public Tuple<int, int>[] Connections { get; private set; }
@@ -76,7 +127,7 @@ namespace LevelSelect
             Levels = levels;
             Connections = connections;
 
-            VisitedPlanets.Clear();
+            _visitedPlanets.Clear();
             CurrentPlanet = 0;
         }
 

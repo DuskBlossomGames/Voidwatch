@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01efde16147240e188b7f512da06ad59, type: 3}
   m_Name: LevelSelectData
   m_EditorClassIdentifier: 
+  baseDifficulty: 5
+  gameDifficultyModifier: 1
+  levelModifier: 2
+  randomModifier: 3
+  galaxyModifier: 0
+  minBudgetPerWave: 050000000a0000000f0000001400000019000000

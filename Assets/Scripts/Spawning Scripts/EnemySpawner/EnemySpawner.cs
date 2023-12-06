@@ -48,7 +48,7 @@ namespace EnemySpawner
         }
 
         private readonly List<GameObject> _spawnedEnemies = new();
-        private int _wave;
+        private int _wave = -1;
 
         private void Update()
         {
@@ -63,13 +63,13 @@ namespace EnemySpawner
             _spawnedEnemies.RemoveAll(g => g == null);
             if (_spawnedEnemies.Count == 0)
             {
-                if (_wave++ == level.Waves)
+                if (++_wave == level.Waves.Length)
                 {
                     SceneManager.LoadScene("LevelSelect");
                 }
                 else
                 {
-                    foreach (var enemy in GetSpawnedEnemies(level.DifficultyBudget))
+                    foreach (var enemy in GetSpawnedEnemies(level.Waves[_wave]))
                     {
                         var boundarySize = boundaryCircle.transform.localScale / 2;
                         var rad = Random.Range(0, 2 * Mathf.PI);

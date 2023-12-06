@@ -52,19 +52,11 @@ namespace LevelSelect
                     position = new Vector2(Random.Range(-3, 4), Random.Range(-3, 4));
                 } while (usedGridPositions.Contains(position));
                 usedGridPositions.Add(position);
-
-                var budget = Random.Range(3, 30);
-                var waves = Random.Range(1, 3);
-                var difficulty = budget * waves;
                 
                 // TODO: generate basically everything better
                 levels.Add(new LevelData
                 {
                     Type = levels.Count == 0 ? LevelType.Entrance : LevelType.Normal,
-                    Difficulty = difficulty,
-                    DifficultyBudget = budget,
-                    Loot = Mathf.Clamp((int) (difficulty * (Random.value*0.4+0.8)), 3, 200),
-                    Waves = waves,
                     Sprite = levels.Count == 0 ? entranceSprite : sprites[Random.Range(0, sprites.Count)],
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>(),
@@ -176,9 +168,13 @@ namespace LevelSelect
             {
                 var level = data.Levels[planet];
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
-                planetObj.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(planet) 
-                    ? level.Sprite 
-                    : level.HiddenSprite; 
+                planetObj.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(planet)
+                    ? level.Sprite
+                    : level.HiddenSprite;
+                if (level.Type == LevelType.Elite && data.VisitedPlanets.Contains(planet))
+                {
+                    planetObj.transform.GetChild(0).gameObject.SetActive(true);
+                }
 
                 var selectable = planetObj.GetComponent<Selectable>();
                 selectable.selector = selector;

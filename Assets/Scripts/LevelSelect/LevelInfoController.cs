@@ -25,6 +25,7 @@ namespace LevelSelect
         public RectTransform planetName;
         public RectTransform clickInstructions;
         public Transform planetSprite;
+        public Transform eliteOverlay;
         public RectTransform levelDescription;
         public RectTransform difficultyLabel;
         public Transform difficultyContainer;
@@ -35,7 +36,7 @@ namespace LevelSelect
         public Sprite[] difficultySprites;
         public Sprite[] eliteDifficultySprites;
         public Sprite[] lootSprites;
-
+        
         private ExpandOnHover _spriteExpand;
         private SpriteRenderer _panelEndRenderer;
 
@@ -81,23 +82,27 @@ namespace LevelSelect
                 if (!_previousSelection.HasValue) _prevSide = _side;
 
                 planetName.GetComponent<TextMeshPro>().text = level!.Name;
+                eliteOverlay.gameObject.SetActive(level!.Type == LevelType.Elite && data.VisitedPlanets.Contains(_selection.Value));
                 planetSprite.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(_selection.Value) ? level!.Sprite : level!.HiddenSprite;
+                // TODO: this can somehow get stuck sometimes... ?
                 clickInstructions.gameObject.SetActive(
                     planetSprite.GetComponent<ExpandOnHover>().enabled = 
                         planetSprite.GetComponent<CircleCollider2D>().enabled = 
                             level!.Type != LevelType.Entrance);
                 levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
+                loreText.GetComponent<TextMeshPro>().text = level!.LoreText;
 
-                // assumes 5 indicators that go from empty to half to full, with max values of 200
-                var difficulty = level!.Difficulty / 9 / 2f;
+                // assumes 5 indicators that go from empty to half to full
+                var difficulty = (int) (level!.DifficultyScore / data.MaxDifficultyScore * 10) / 2f;
+                Debug.Log("score: " + level!.DifficultyScore + " / " + data.MaxDifficultyScore+" ("+difficulty+")");
                 var loot = level!.Loot / 9 / 2f;
 
                 for (var i = 0; i < 5; i++)
                 {
-                    var difficultySprite = (level!.Type == LevelType.Elite ?
+                    var difficultySprite = (level!.Type == LevelType.Elite || level!.Type == LevelType.Boss ?
                         eliteDifficultySprites :
-                        difficultySprites)[(int) Mathf.Clamp01(difficulty--) * 2];
-                    var lootSprite = lootSprites[(int) Mathf.Clamp01(loot--) * 2];
+                        difficultySprites)[(int) (Mathf.Clamp01(difficulty--) * 2)];
+                    var lootSprite = lootSprites[(int) (Mathf.Clamp01(loot--) * 2)];
 
                     difficultyContainer.GetChild(i).GetComponent<SpriteRenderer>().sprite = difficultySprite;
                     lootContainer.GetChild(i).GetComponent<SpriteRenderer>().sprite = lootSprite;
