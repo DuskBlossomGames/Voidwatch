@@ -19,21 +19,9 @@ namespace LevelSelect
         public MiniPlayerController playerMini;
         public MapController mapController;
         public Selector selector;
-
-        public float baseDifficulty;
-        public float gameDifficultyModifier;
-        public float levelModifier;
-        public float randomModifier;
-        public float galaxyModifier;
-
-        public int[] minBudgetPerWave;
         
         private void Start()
         {
-            LevelInfoController.MaxDifficultyScore = baseDifficulty +
-                                                     levelModifier * (data.Levels.Length - 1) +
-                                                     2 * randomModifier;
-            
             // grab sprites, then continue
             Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
             {
@@ -64,38 +52,11 @@ namespace LevelSelect
                     position = new Vector2(Random.Range(-3, 4), Random.Range(-3, 4));
                 } while (usedGridPositions.Contains(position));
                 usedGridPositions.Add(position);
-
-                var difficultyScore = baseDifficulty +
-                                      levelModifier * (data.VisitedPlanets.Count - 1) +
-                                      Random.Range(0, 2) * randomModifier;
-                var difficultyBudget =(int) (gameDifficultyModifier *
-                                      (difficultyScore + 
-                                          0// TODO: galaxyNumber * galaxyModifier
-                                          ));
-                List<int> waves = new();
-                
-                // start with as many waves as possible given min budget
-                while (true)
-                {
-                    var budget = minBudgetPerWave[waves.Count];
-                    if ((difficultyBudget -= budget) < 0) break;
-                    
-                    waves.Add(budget);
-                }
-                // distribute the rest randomly
-                while (difficultyBudget > 0)
-                {
-                    waves[Random.Range(0, waves.Count - 1)] +=
-                        difficultyBudget -= Random.Range(0, Math.Min(5, difficultyBudget));
-                }
                 
                 // TODO: generate basically everything better
                 levels.Add(new LevelData
                 {
                     Type = levels.Count == 0 ? LevelType.Entrance : LevelType.Normal,
-                    Loot = Mathf.Clamp((int) (difficultyScore * (Random.value*0.4+0.8)), 3, 200),
-                    DifficultyScore = (int) difficultyScore,
-                    Waves = waves.ToArray(),
                     Sprite = levels.Count == 0 ? entranceSprite : sprites[Random.Range(0, sprites.Count)],
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>(),
@@ -207,9 +168,13 @@ namespace LevelSelect
             {
                 var level = data.Levels[planet];
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
-                planetObj.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(planet) 
-                    ? level.Sprite 
-                    : level.HiddenSprite; 
+                planetObj.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(planet)
+                    ? level.Sprite
+                    : level.HiddenSprite;
+                if (level.Type == LevelType.Elite && data.VisitedPlanets.Contains(planet))
+                {
+                    planetObj.transform.GetChild(0).gameObject.SetActive(true);
+                }
 
                 var selectable = planetObj.GetComponent<Selectable>();
                 selectable.selector = selector;

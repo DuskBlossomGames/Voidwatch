@@ -63,7 +63,7 @@ namespace EnemySpawner
             _spawnedEnemies.RemoveAll(g => g == null);
             if (_spawnedEnemies.Count == 0)
             {
-                if (++_wave == level.Waves.Length-1)
+                if (++_wave == level.Waves.Length)
                 {
                     SceneManager.LoadScene("LevelSelect");
                 }
