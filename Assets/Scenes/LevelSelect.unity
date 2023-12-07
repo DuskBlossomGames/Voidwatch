@@ -3179,6 +3179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 494ad1902f8546d698cba2b81a63f8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
   lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   planetPrefab: {fileID: 2592568482620455634, guid: abe8b813b45d6444da2a04a6a3be2534, type: 3}
   spriteLabel:

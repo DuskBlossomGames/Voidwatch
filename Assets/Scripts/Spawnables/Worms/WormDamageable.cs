@@ -43,12 +43,6 @@ public class WormDamageable : MonoBehaviour
 
     public void Kill()
     {
-        var posHint = GetComponent<PositionHinter>();
-        if (posHint != null)
-        {
-            posHint.Kill();
-            Destroy(posHint);
-        }
         Destroy(_healthBar);
         Destroy(gameObject);
     }

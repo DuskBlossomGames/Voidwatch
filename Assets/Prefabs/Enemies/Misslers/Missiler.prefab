@@ -212,11 +212,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4430136990600543352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2521ccb539344fbbabb1296a3b6dc89, type: 3}
+  m_Script: {fileID: 11500000, guid: 782e6bbb22f98477eb312180482b1954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  maxHealth: 200
   heathOpacityCurve:
     serializedVersion: 2
     m_Curve:
@@ -250,6 +249,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  maxHealth: 200
 --- !u!114 &1269399153704899952
 MonoBehaviour:
   m_ObjectHideFlags: 0

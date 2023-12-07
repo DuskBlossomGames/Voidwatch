@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Scriptable_Objects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Util;
@@ -22,7 +23,6 @@ namespace LevelSelect
         
         private void Start()
         {
-            // grab sprites, then continue
             Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
             {
                 // only re-generate if it doesn't already exist
@@ -104,7 +104,7 @@ namespace LevelSelect
 
             // idk if this is a great way to do it but *should* work...
             List<int> pathless = new();
-            for (var level = 0; level < levels.Count; level++)
+            for (var level = 1; level < levels.Count; level++)
             {
                 if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) == null) pathless.Add(level);
             }
@@ -127,7 +127,8 @@ namespace LevelSelect
                     validConnections = validConnections.Where(i => levels[i].Connections.Count < 3).ToList();
                 }
 
-                var other = validConnections[Random.Range(0, validConnections.Count)];
+                // TODO: index out of bounds sometimes?
+                var other = validConnections[Random.Range(0, validConnections.Count-1)];
                 connections.Add(new Tuple<int, int>(level, other));
                     
                 levels[level].Connections.Add(other);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spawnables;
 using Complex = System.Numerics.Complex;
 using Num = System.Numerics;
 using UnityEngine;
@@ -77,7 +78,6 @@ public class MissleAim : MonoBehaviour
                 psmain.loop = false;
                 _stopped = true;
                 StopCoroutine(LeadShots());
-                GetComponent<PositionHinter>().Kill();
                 Destroy(GetComponent<PositionHinter>());
             }
             stallTime -= Time.fixedDeltaTime;

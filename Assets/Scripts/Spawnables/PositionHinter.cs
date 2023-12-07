@@ -50,7 +50,7 @@ public class PositionHinter : MonoBehaviour
         }
     }
 
-    public void Kill()
+    public void OnDestroy()
     {
         Destroy(_arrow);
     }
