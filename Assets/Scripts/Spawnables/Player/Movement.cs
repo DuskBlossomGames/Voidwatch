@@ -55,9 +55,7 @@ namespace Player
             } else {
                 _acceleration = 0;
             }
-
-
-
+            
             var tar = _camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             _forwards = tar.normalized;
 

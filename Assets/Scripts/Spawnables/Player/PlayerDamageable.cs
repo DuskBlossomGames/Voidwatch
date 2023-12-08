@@ -11,7 +11,7 @@ namespace Spawnables.Player
         protected override float MaxHealth => playerData.playerMaxHealth;
         protected override float Health
         {
-            get => playerData.Health is -1 ? MaxHealth : playerData.Health;
+            get => playerData.Health ?? MaxHealth;
             set => playerData.Health = value;
         }
     }

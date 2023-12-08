@@ -7,7 +7,7 @@ namespace Scriptable_Objects
     {
         public int playerMaxHealth;
         
-        [NonSerialized] public float Health = -1;
+        [NonSerialized] public float? Health = null;
         [NonSerialized] public float Scrap;
     }
 }

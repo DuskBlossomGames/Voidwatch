@@ -11,6 +11,9 @@ namespace LevelSelect
 {
     public class GenerateMap : MonoBehaviour
     {
+        // has to have PlayerData so that it is initialized
+        public PlayerData playerData;
+        
         public Material lineMaterial;
         public GameObject planetPrefab;
         public AssetLabelReference spriteLabel;
