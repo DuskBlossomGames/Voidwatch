@@ -51,7 +51,7 @@ namespace LevelSelect
             if (!planet.HasValue || current.WorldPosition == planet.Value) return;
 
             // TODO: undiscovered paths
-            var path = MapUtil.GetShortestPath(data.Levels, current, planet.Value);
+            var path = MapUtil.GetShortestPath(data.Levels, current, planet.Value, data.VisitedPlanets);
             for (var i = 0; i < path.Length-1; i++)
             {
                 var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();

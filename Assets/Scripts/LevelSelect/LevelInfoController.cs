@@ -89,9 +89,6 @@ namespace LevelSelect
                     planetSprite.GetComponent<ExpandOnHover>().enabled = 
                         planetSprite.GetComponent<CircleCollider2D>().enabled = 
                             level!.Type != LevelType.Entrance);
-                Debug.Log((level!.Type != LevelType.Entrance) + ": " + clickInstructions.gameObject.activeInHierarchy +
-                          " | " + planetSprite.GetComponent<ExpandOnHover>().enabled + " | " +
-                          planetSprite.GetComponent<CircleCollider2D>().enabled);
                 levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
                 loreText.GetComponent<TextMeshPro>().text = level!.LoreText;
 
@@ -114,7 +111,6 @@ namespace LevelSelect
 
             planetSprite.GetComponent<Button>().OnClick += () =>
             {
-                Debug.Log("button onclick");
                 if (!_selection.HasValue) return;
                 
                 data.CurrentPlanet = _selection!.Value;
@@ -156,7 +152,7 @@ namespace LevelSelect
                 time = 1-time;
             }
 
-            transform.localPosition = new Vector3((goalPosition - startPosition)*Mathf.Log((11)*time+1, 12) + startPosition, 0, 1);
+            transform.localPosition = new Vector3((goalPosition - startPosition)*Mathf.Log((11)*time+1, 12) + startPosition, 0, transform.localPosition.z);
             panelBody.localPosition = new Vector3(_prevSide * panelEndWidth / 2 / height, 0, 0);
             panelEnd.localPosition = new Vector3(_prevSide * -panelBodyWidth / 2 / height, 0, 0);
             

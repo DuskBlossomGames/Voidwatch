@@ -33,6 +33,9 @@ namespace LevelSelect
                 mapController.Instantiate();
             };
         }
+
+        // TODO: debug
+        private bool _noValidConnections;
         
         // TODO: in the name of all that is holy, add some variables lmao
         private void GenerateGalaxy(IList<Sprite> sprites)
@@ -110,6 +113,8 @@ namespace LevelSelect
             }
             foreach (var level in pathless)
             {
+                if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) != null) continue;
+                
                 var validConnections = levels
                     .Select((_, i) => i)
                     .Where(i =>
@@ -127,13 +132,18 @@ namespace LevelSelect
                     validConnections = validConnections.Where(i => levels[i].Connections.Count < 3).ToList();
                 }
 
-                // TODO: index out of bounds sometimes?
-                Debug.Log(level + " ["+levels[level].WorldPosition+"] (" + levels[level].Type.Description + "): [" + validConnections.Aggregate("", (s, i) => s+i+",")+"]");
+                if (validConnections.Count == 0) continue;
                 var other = validConnections[Random.Range(0, validConnections.Count-1)];
                 connections.Add(new Tuple<int, int>(level, other));
                     
                 levels[level].Connections.Add(other);
                 levels[other].Connections.Add(level);
+            }
+            
+            // TODO: just for now, to make sure the above works fine
+            for (var level = 1; level < levels.Count; level++)
+            {
+                if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) == null) Debug.LogError("!! PATHLESS EXIST !!");
             }
 
             // TODO: do level type generation better
@@ -180,7 +190,7 @@ namespace LevelSelect
             var shownPlanets = new HashSet<int>();
             foreach (var connection in data.Connections)
             {
-                if (!data.VisitedPlanets.Contains(connection.Item1) &&
+                if (!_noValidConnections && !data.VisitedPlanets.Contains(connection.Item1) &&
                     !data.VisitedPlanets.Contains(connection.Item2)) continue;
                 
                 shownPlanets.Add(connection.Item1);
@@ -202,10 +212,10 @@ namespace LevelSelect
             {
                 var level = data.Levels[planet];
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
-                planetObj.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(planet)
+                planetObj.GetComponent<SpriteRenderer>().sprite = _noValidConnections || data.VisitedPlanets.Contains(planet)
                     ? level.Sprite
                     : level.HiddenSprite;
-                if (level.Type == LevelType.Elite && data.VisitedPlanets.Contains(planet))
+                if (level.Type == LevelType.Elite && (_noValidConnections || data.VisitedPlanets.Contains(planet)))
                 {
                     planetObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
