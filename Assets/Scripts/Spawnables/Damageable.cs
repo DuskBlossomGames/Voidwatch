@@ -56,7 +56,6 @@ namespace Spawnables
             }
         
             // scale *2 because it extends in both directions
-            Debug.Log("health perc: "+(Health/MaxHealth));
             _healthBar.transform.GetChild(0).localScale = new Vector3(
                 2 * (1 - Health / MaxHealth), 1, 1);
         }

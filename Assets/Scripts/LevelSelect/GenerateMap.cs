@@ -128,6 +128,7 @@ namespace LevelSelect
                 }
 
                 // TODO: index out of bounds sometimes?
+                Debug.Log(level + " ["+levels[level].WorldPosition+"] (" + levels[level].Type.Description + "): [" + validConnections.Aggregate("", (s, i) => s+i+",")+"]");
                 var other = validConnections[Random.Range(0, validConnections.Count-1)];
                 connections.Add(new Tuple<int, int>(level, other));
                     

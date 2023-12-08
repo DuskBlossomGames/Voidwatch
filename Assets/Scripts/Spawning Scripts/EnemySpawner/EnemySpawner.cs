@@ -19,8 +19,6 @@ namespace EnemySpawner
         public GameObject boundaryCircle;
         public LevelSelectData data;
         
-        public int debugSpawnEnemies; // TODO: debug only
-
         private readonly Dictionary<string, List<EnemyVariant>> _groups = new();
         
         private readonly Dictionary<string, bool> _loadedVariants = new();
@@ -82,23 +80,6 @@ namespace EnemySpawner
                             ));
                     }
                 }
-            }
-            
-            if (debugSpawnEnemies != 0)
-            {
-                foreach (var enemy in GetSpawnedEnemies(debugSpawnEnemies))
-                {
-                    var rad = Random.Range(0, 2 * Mathf.PI);
-                    
-                    Instantiate(
-                        enemy,
-                        transform.position +
-                            new Vector3(40*Mathf.Cos(rad), 40*Mathf.Sin(rad), 0),
-                        Quaternion.identity
-                    );
-                }
-                
-                debugSpawnEnemies = 0;
             }
         }
 

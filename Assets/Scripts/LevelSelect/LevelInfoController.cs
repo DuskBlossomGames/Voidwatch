@@ -89,6 +89,9 @@ namespace LevelSelect
                     planetSprite.GetComponent<ExpandOnHover>().enabled = 
                         planetSprite.GetComponent<CircleCollider2D>().enabled = 
                             level!.Type != LevelType.Entrance);
+                Debug.Log((level!.Type != LevelType.Entrance) + ": " + clickInstructions.gameObject.activeInHierarchy +
+                          " | " + planetSprite.GetComponent<ExpandOnHover>().enabled + " | " +
+                          planetSprite.GetComponent<CircleCollider2D>().enabled);
                 levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
                 loreText.GetComponent<TextMeshPro>().text = level!.LoreText;
 
@@ -111,6 +114,7 @@ namespace LevelSelect
 
             planetSprite.GetComponent<Button>().OnClick += () =>
             {
+                Debug.Log("button onclick");
                 if (!_selection.HasValue) return;
                 
                 data.CurrentPlanet = _selection!.Value;

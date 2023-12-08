@@ -74,7 +74,6 @@
      <Compile Include="Assets/Scripts/Spawnables/MiniMapIcon.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Damageable.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/MapController.cs" />
-     <Compile Include="Assets/Scripts/Misc or Dep/DebugSpawnEnemies.cs" />
      <Compile Include="Assets/Scripts/Spawnables/IPathfinder.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/MapUtil.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Player/PlayerDamageable.cs" />
@@ -149,7 +148,6 @@
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
      <Folder Include="Assets/Scripts/Util" />
      <Folder Include="Assets/AddressableAssetsData/AssetGroupTemplates" />
-     <Folder Include="Assets/Scripts/Misc or Dep" />
      <Folder Include="Assets/Scripts/Spawning Scripts" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
      <Folder Include="Assets/Scripts/Spawnables/Player" />
