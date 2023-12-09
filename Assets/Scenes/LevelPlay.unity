@@ -2313,7 +2313,6 @@ MonoBehaviour:
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
-  debugSpawnEnemies: 0
 --- !u!4 &1780276284
 Transform:
   m_ObjectHideFlags: 0
@@ -7487,6 +7486,9 @@ MonoBehaviour:
   driftCorrection: 5
   speedLimit: 20
   acceleration: 1.2
+  dashTime: 0.5
+  dashDistance: 25
+  dashTimeDilation: 0.9
 --- !u!212 &2086174081
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7789,7 +7791,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
-  maxHealth: 1000
 --- !u!1 &2146917946
 GameObject:
   m_ObjectHideFlags: 0

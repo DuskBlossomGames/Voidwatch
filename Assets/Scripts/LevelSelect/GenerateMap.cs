@@ -38,7 +38,7 @@ namespace LevelSelect
         }
 
         // TODO: debug
-        private bool _noValidConnections;
+        private bool _revealMap;
         
         // TODO: in the name of all that is holy, add some variables lmao
         private void GenerateGalaxy(IList<Sprite> sprites)
@@ -146,7 +146,11 @@ namespace LevelSelect
             // TODO: just for now, to make sure the above works fine
             for (var level = 1; level < levels.Count; level++)
             {
-                if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) == null) Debug.LogError("!! PATHLESS EXIST !!");
+                if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) == null)
+                {
+                    Debug.LogError("!! PATHLESS EXIST !!");
+                    _revealMap = true;
+                }
             }
 
             // TODO: do level type generation better
@@ -154,7 +158,7 @@ namespace LevelSelect
             var furthestPlanetDist = 0;
             for (var i = 1; i < levels.Count; i++)
             {
-                var dist = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[0].WorldPosition).Length;
+                var dist = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[0].WorldPosition)?.Length ?? 0;
                 
                 if (dist > furthestPlanetDist)
                 {
@@ -193,7 +197,7 @@ namespace LevelSelect
             var shownPlanets = new HashSet<int>();
             foreach (var connection in data.Connections)
             {
-                if (!_noValidConnections && !data.VisitedPlanets.Contains(connection.Item1) &&
+                if (!_revealMap && !data.VisitedPlanets.Contains(connection.Item1) &&
                     !data.VisitedPlanets.Contains(connection.Item2)) continue;
                 
                 shownPlanets.Add(connection.Item1);
@@ -215,10 +219,10 @@ namespace LevelSelect
             {
                 var level = data.Levels[planet];
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
-                planetObj.GetComponent<SpriteRenderer>().sprite = _noValidConnections || data.VisitedPlanets.Contains(planet)
+                planetObj.GetComponent<SpriteRenderer>().sprite = _revealMap || data.VisitedPlanets.Contains(planet)
                     ? level.Sprite
                     : level.HiddenSprite;
-                if (level.Type == LevelType.Elite && (_noValidConnections || data.VisitedPlanets.Contains(planet)))
+                if (level.Type == LevelType.Elite && (_revealMap || data.VisitedPlanets.Contains(planet)))
                 {
                     planetObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
