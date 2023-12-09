@@ -11,6 +11,8 @@ namespace Player
         public float dashDistance;
         public float dashTimeDilation;
     
+        private Collider2D _collider;
+        private SpriteRenderer _renderer;
         private Rigidbody2D _rigid;
         private Camera _camera;
     
@@ -30,13 +32,12 @@ namespace Player
         private float _dashTimer;
         private Vector2 _dashDirection;
         
-        private Collider2D _collider;
-
         private void Start()
         {
             _camera = Camera.main;
             _rigid = gameObject.GetComponent<Rigidbody2D>();
             _collider = gameObject.GetComponent<Collider2D>();
+            _renderer = gameObject.GetComponent<SpriteRenderer>();
         }
     
         private void FixedUpdate()
@@ -56,6 +57,7 @@ namespace Player
             var dashing = (_dashTimer = Mathf.Clamp01(_dashTimer - Time.fixedDeltaTime / dashTime)) > 0;
             Time.timeScale = dashing ? dashTimeDilation : 1;
             _collider.enabled = !dashing;
+            _renderer.color = dashing ? new Color(1, 1, 1, 0.5f) : Color.white;
             
             if (dashing)
             {
@@ -64,7 +66,6 @@ namespace Player
             }
             if (wasDashing)
             {
-                Debug.Log("dash ended\t" + _forwards + "\t" + _velocity.magnitude);
                 _velocity = _forwards * _velocity.magnitude;
             }
             

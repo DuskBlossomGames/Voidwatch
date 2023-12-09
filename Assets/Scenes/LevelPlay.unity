@@ -7487,7 +7487,7 @@ MonoBehaviour:
   speedLimit: 20
   acceleration: 1.2
   dashTime: 0.5
-  dashDistance: 25
+  dashDistance: 15
   dashTimeDilation: 0.9
 --- !u!212 &2086174081
 SpriteRenderer:
