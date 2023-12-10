@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public class MissleAim2 : MonoBehaviour
 {
@@ -10,13 +10,13 @@ public class MissleAim2 : MonoBehaviour
     public float diveSpeed;
     public float fuel;
 
-    private Rigidbody2D _rb;
+    private CustomRigidbody2D _rb;
     private Vector2 _dir;
     private float _moveSpeed;
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<CustomRigidbody2D>();
         StartCoroutine(FindDir());
     }
 
@@ -37,14 +37,14 @@ public class MissleAim2 : MonoBehaviour
             Vector2 relpos = target.transform.position - transform.position;
             if (relpos.sqrMagnitude < 30)
             {
-                _dir = leadShot(relpos, target.GetComponent<Rigidbody2D>().velocity - _rb.velocity, diveSpeed);
+                _dir = leadShot(relpos, target.GetComponent<CustomRigidbody2D>().velocity - _rb.velocity, diveSpeed);
                 transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(_dir.y, _dir.x));
                 _moveSpeed = diveSpeed;
                 yield return new WaitForFixedUpdate();
             }
             else
             {
-                _dir = leadShot(relpos,target.GetComponent<Rigidbody2D>().velocity - _rb.velocity,cruiseSpeed);
+                _dir = leadShot(relpos,target.GetComponent<CustomRigidbody2D>().velocity - _rb.velocity,cruiseSpeed);
                 transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(_dir.y, _dir.x));
                 _moveSpeed = cruiseSpeed;
                 yield return new WaitForFixedUpdate();

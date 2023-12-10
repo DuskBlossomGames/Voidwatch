@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 namespace Player
 {
@@ -10,13 +11,13 @@ namespace Player
         public float acceleration;
         public float dashSpeed;
         public float dashDistance;
-        public float dashAfterImageFrequency; // in seconds
+        public float dashAfterImageSpacing;
         public float dashTimeDilation;
     
         private Collider2D _collider;
         private SpriteRenderer _sprite;
         private TrailRenderer[] _trails;
-        private Rigidbody2D _rigid;
+        private CustomRigidbody2D _rigid;
         private Camera _camera;
     
         private Vector2 _velocity;
@@ -40,7 +41,7 @@ namespace Player
         private void Start()
         {
             _camera = Camera.main;
-            _rigid = GetComponent<Rigidbody2D>();
+            _rigid = GetComponent<CustomRigidbody2D>();
             _collider = GetComponent<Collider2D>();
             _sprite = GetComponent<SpriteRenderer>();
             _trails = GetComponentsInChildren<TrailRenderer>();
@@ -61,8 +62,8 @@ namespace Player
             }
 
             var wasDashing = _dashTimer > 0;
-            var dashing = (_dashTimer = Mathf.Clamp01(_dashTimer - Time.fixedDeltaTime * dashSpeed/dashDistance)) > 0;
-            Time.timeScale = dashing ? dashTimeDilation : 1;
+            var dashing = (_dashTimer = Mathf.Clamp01(_dashTimer - Time.fixedDeltaTime * dashTimeDilation * dashSpeed/dashDistance)) > 0;
+            CustomRigidbody2D.Scaling = dashing ? dashTimeDilation : 1;
             _collider.enabled = !dashing;
             foreach (var trail in _trails) trail.emitting = !dashing;
             _sprite.color = dashing ? new Color(1, 1, 1, 0.5f) : Color.white;
@@ -70,7 +71,7 @@ namespace Player
             if (dashing)
             {
                 if ((_afterImageTimer =
-                        Mathf.Clamp01(_afterImageTimer - Time.fixedDeltaTime / dashAfterImageFrequency)) == 0)
+                        Mathf.Clamp01(_afterImageTimer - Time.fixedDeltaTime * dashTimeDilation * dashSpeed/dashAfterImageSpacing)) == 0)
                 {
                     _afterImageTimer = 1;
                     
@@ -85,7 +86,7 @@ namespace Player
                     
                     var sprite = afterImage.AddComponent<SpriteRenderer>();
                     sprite.sprite = _sprite.sprite;
-                    sprite.color = _sprite.color;
+                    sprite.color = new Color(1, 1, 1, 0.225f);
 
                     _afterImages.Add(afterImage);
                 }
@@ -124,7 +125,7 @@ namespace Player
                 _acceleration = 0;
             }
             
-            //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.rotation), Mathf.Cos(Mathf.Deg2Rad * rigid.rotation));
+            //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.freezeRotation), Mathf.Cos(Mathf.Deg2Rad * rigid.freezeRotation));
 
             _velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
             _velocity *= Mathf.Pow(.99f, Time.fixedDeltaTime);

@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using Util;
 
 public class BoidHandler : MonoBehaviour
 {
@@ -18,14 +17,14 @@ public class BoidHandler : MonoBehaviour
     public float playRadius;
     public GameObject gravitySource;
     public float shootDist;
-    private Rigidbody2D _rigidbody2D;
+    private CustomRigidbody2D _rigidbody2D;
     private GunHandler _gun;
     public bool original = true;
 
     private void Start()
     {
         _gun = GetComponent<GunHandler>();
-        _rigidbody2D = transform.GetComponent<Rigidbody2D>();
+        _rigidbody2D = transform.GetComponent<CustomRigidbody2D>();
         if (target == null) target = GameObject.FindGameObjectWithTag("Player");
         if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
         if (original)
@@ -43,7 +42,7 @@ public class BoidHandler : MonoBehaviour
     void Shoot()
     {
         Vector2 diff = new Vector2(target.transform.position.x - transform.position.x, target.transform.position.y - transform.position.y);
-        Vector2 relVel = target.GetComponent<Rigidbody2D>().velocity - _rigidbody2D.velocity;
+        Vector2 relVel = target.GetComponent<CustomRigidbody2D>().velocity - _rigidbody2D.velocity;
         float angle = leadShot(diff, relVel, _gun.ExpectedVelocity());
         //Debug.LogErrorFormat("Errored angle = {0}", angle);
         Quaternion rot = Quaternion.Euler(new Vector3(0, 0, -90 + Mathf.Rad2Deg * angle));
@@ -73,13 +72,13 @@ public class BoidHandler : MonoBehaviour
             if (SqrHypot(transform.position, child.transform.position) < visualRangel)
             {
                 otherBoids.Add(child.gameObject);
-                avgVel += child.GetComponent<Rigidbody2D>().velocity;
-                avgPos += child.GetComponent<Rigidbody2D>().position;
+                avgVel += child.GetComponent<CustomRigidbody2D>().velocity;
+                avgPos += child.GetComponent<CustomRigidbody2D>().position;
 
                 if (SqrHypot(transform.position, child.transform.position) < protectedRange)
                 {
                     nearBoids.Add(child.gameObject);
-                    pushaway += (_rigidbody2D.position - child.GetComponent<Rigidbody2D>().position) * avoidFactor;
+                    pushaway += (_rigidbody2D.position - child.GetComponent<CustomRigidbody2D>().position) * avoidFactor;
                 }
             }
         }

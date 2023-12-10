@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Spawnables
 {
     public class EnemyDamageable : Damageable

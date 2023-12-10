@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WormSegmentBuilder : MonoBehaviour
@@ -17,7 +15,7 @@ public class WormSegmentBuilder : MonoBehaviour
     {
         if (length < 2)
         {
-            throw new System.Exception(string.Format("Length: {0} is less than 2, the minimum length", length));
+            throw new Exception(string.Format("Length: {0} is less than 2, the minimum length", length));
         }
 
         GameObject child, oldChild;

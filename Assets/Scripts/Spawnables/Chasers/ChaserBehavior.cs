@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ChaserBehavior : MonoBehaviour
@@ -44,7 +42,7 @@ public class ChaserBehavior : MonoBehaviour
             _movDir = UtilFuncs.LerpSafe(_movDir, tarmovDir, 10 * Time.deltaTime);
             _currSpeed = Mathf.Min(maxSpeed, _currSpeed + accel * Time.deltaTime);
         }
-        GetComponent<Rigidbody2D>().velocity = _movDir * _currSpeed * maxSpeedCurve.Evaluate(diff.magnitude);
+        GetComponent<Rigidbody2D>().velocity = _movDir * _currSpeed;
         transform.rotation = UtilFuncs.RotFromNorm(_movDir);
     }
 }

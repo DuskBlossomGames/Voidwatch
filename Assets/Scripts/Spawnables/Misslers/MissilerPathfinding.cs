@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public class MissilerPathfinding : MonoBehaviour
 {
@@ -9,12 +8,12 @@ public class MissilerPathfinding : MonoBehaviour
 
     private Vector3 _tar;
     private bool _moving = false;
-    private Rigidbody2D _rigid;
+    private CustomRigidbody2D _rigid;
     
     void Start()
     {
         if (target == null) target = GameObject.FindGameObjectWithTag("Player");
-        _rigid = GetComponent<Rigidbody2D>();
+        _rigid = GetComponent<CustomRigidbody2D>();
     }
 
     

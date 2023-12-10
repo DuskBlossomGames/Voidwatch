@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DefenseSpawner : MonoBehaviour
@@ -20,7 +18,7 @@ public class DefenseSpawner : MonoBehaviour
             float angle = (float) i / defCount * (2 * Mathf.PI);
             newChild.transform.position = rot(sample.transform.position,angle);
             newChild.transform.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * angle);
-            //newChild.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 100));
+            //newChild.GetComponent<CustomRigidbody2D>().AddForce(new Vector2(0, 100));
 
         }
         Destroy(sample);
