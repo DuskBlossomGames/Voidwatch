@@ -57,6 +57,7 @@ namespace Player
             //_moddedOffset = _camOffset;
             transform.position = _camOffset;
             transform.rotation = Quaternion.Euler(new Vector3(0,0,-90+Mathf.Rad2Deg*Mathf.Atan2(playerPos.y,playerPos.x)));
+            player.GetComponent<Rigidbody2D>().angularVelocity = 0;
 
 
             sqM = (mousePos-playerPos).sqrMagnitude/500;

@@ -10,6 +10,7 @@ public class ChaserBehavior : MonoBehaviour
     public float accel;
     public float maxSpeed;
     public float movVal;
+    public AnimationCurve maxSpeedCurve;
 
     private Vector2 _movDir;
     private Vector2 _oldMovDir;
@@ -43,7 +44,7 @@ public class ChaserBehavior : MonoBehaviour
             _movDir = UtilFuncs.LerpSafe(_movDir, tarmovDir, 10 * Time.deltaTime);
             _currSpeed = Mathf.Min(maxSpeed, _currSpeed + accel * Time.deltaTime);
         }
-        GetComponent<Rigidbody2D>().velocity = _movDir * _currSpeed;
+        GetComponent<Rigidbody2D>().velocity = _movDir * _currSpeed * maxSpeedCurve.Evaluate(diff.magnitude);
         transform.rotation = UtilFuncs.RotFromNorm(_movDir);
     }
 }
