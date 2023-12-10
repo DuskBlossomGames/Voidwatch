@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player
@@ -7,12 +8,14 @@ namespace Player
         public float driftCorrection;
         public float speedLimit;
         public float acceleration;
-        public float dashTime;
+        public float dashSpeed;
         public float dashDistance;
+        public float dashAfterImageFrequency; // in seconds
         public float dashTimeDilation;
     
         private Collider2D _collider;
-        private SpriteRenderer _renderer;
+        private SpriteRenderer _sprite;
+        private TrailRenderer[] _trails;
         private Rigidbody2D _rigid;
         private Camera _camera;
     
@@ -30,14 +33,17 @@ namespace Player
         private OrbitState _orbitState;
 
         private float _dashTimer;
+        private float _afterImageTimer;
         private Vector2 _dashDirection;
+        private readonly List<GameObject> _afterImages = new();
         
         private void Start()
         {
             _camera = Camera.main;
-            _rigid = gameObject.GetComponent<Rigidbody2D>();
-            _collider = gameObject.GetComponent<Collider2D>();
-            _renderer = gameObject.GetComponent<SpriteRenderer>();
+            _rigid = GetComponent<Rigidbody2D>();
+            _collider = GetComponent<Collider2D>();
+            _sprite = GetComponent<SpriteRenderer>();
+            _trails = GetComponentsInChildren<TrailRenderer>();
         }
     
         private void FixedUpdate()
@@ -47,25 +53,50 @@ namespace Player
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (_dashTimer == 0 && Input.GetKey(KeyCode.LeftShift))
+            if (_dashTimer == 0 && Input.GetKey(KeyCode.Space))
             {
                 _dashTimer = 1;
+                _afterImageTimer = 0;
                 _dashDirection = new Vector2(_forwards.x, _forwards.y);
             }
 
             var wasDashing = _dashTimer > 0;
-            var dashing = (_dashTimer = Mathf.Clamp01(_dashTimer - Time.fixedDeltaTime / dashTime)) > 0;
+            var dashing = (_dashTimer = Mathf.Clamp01(_dashTimer - Time.fixedDeltaTime * dashSpeed/dashDistance)) > 0;
             Time.timeScale = dashing ? dashTimeDilation : 1;
             _collider.enabled = !dashing;
-            _renderer.color = dashing ? new Color(1, 1, 1, 0.5f) : Color.white;
+            foreach (var trail in _trails) trail.emitting = !dashing;
+            _sprite.color = dashing ? new Color(1, 1, 1, 0.5f) : Color.white;
             
             if (dashing)
             {
-                _rigid.velocity = _dashDirection * (dashDistance / dashTime / dashTimeDilation);
+                if ((_afterImageTimer =
+                        Mathf.Clamp01(_afterImageTimer - Time.fixedDeltaTime / dashAfterImageFrequency)) == 0)
+                {
+                    _afterImageTimer = 1;
+                    
+                    var afterImage = new GameObject
+                    {
+                        transform =
+                        {
+                            position = transform.position,
+                            rotation = transform.rotation
+                        }
+                    };
+                    
+                    var sprite = afterImage.AddComponent<SpriteRenderer>();
+                    sprite.sprite = _sprite.sprite;
+                    sprite.color = _sprite.color;
+
+                    _afterImages.Add(afterImage);
+                }
+                _rigid.velocity = _dashDirection * dashSpeed;
                 return;
             }
             if (wasDashing)
             {
+                _afterImages.ForEach(Destroy);
+                _afterImages.Clear();
+                
                 _velocity = _forwards * _velocity.magnitude;
             }
             
