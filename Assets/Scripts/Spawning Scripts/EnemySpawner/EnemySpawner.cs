@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using LevelSelect;
 using UnityEngine;
@@ -54,7 +51,7 @@ namespace EnemySpawner
             if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
             
             if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
-            
+
             var level = data.Levels[data.CurrentPlanet];
 
             // TODO: do spawning waves better

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2939211911759100268}
   - component: {fileID: 4463978116567004011}
-  - component: {fileID: 6541819056611726313}
+  - component: {fileID: 688720319049230838}
   - component: {fileID: -9038750106323171659}
   - component: {fileID: 5225478676399284925}
   - component: {fileID: -8421811644800896990}
@@ -89,33 +89,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &6541819056611726313
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &688720319049230838
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6569384808679381653}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidMass: 1
+  collisionDetection: 1
+  constraints:
+    freezeX: 0
+    freezeY: 0
+    freezeRotation: 0
 --- !u!61 &-9038750106323171659
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public class MissleShooter : MonoBehaviour
 {
@@ -28,7 +27,7 @@ public class MissleShooter : MonoBehaviour
                 {
                     GameObject missile = Instantiate(missilePrefab, transform.position, transform.rotation);
                     missile.GetComponent<MissleAim>().target = target;
-                    missile.GetComponent<Rigidbody2D>().AddForce(1000 * Random.insideUnitCircle);
+                    missile.GetComponent<CustomRigidbody2D>().AddForce(1000 * Random.insideUnitCircle);
                 }
             }
             

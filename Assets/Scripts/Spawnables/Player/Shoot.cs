@@ -1,5 +1,5 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Player
 {
@@ -8,7 +8,7 @@ namespace Player
         public GameObject bulletPrefab;
         public float playRadius;
         public GameObject gravitySource;
-        public TMPro.TextMeshProUGUI bulletText;
+        public TextMeshProUGUI bulletText;
 
         GunHandler _gun;
         private void Start()

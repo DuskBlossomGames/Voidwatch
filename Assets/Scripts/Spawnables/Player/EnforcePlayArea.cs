@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,7 +33,7 @@ namespace Spawnables.Player
 
             if (_outOfBoundsTime > 0)
             {
-                warningText.GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
+                warningText.GetComponent<TextMeshProUGUI>().enabled = true;
                 RectTransform rt = warningSlider.GetComponent<RectTransform>();
                 float width = 500 * (1 - _outOfBoundsTime / timeTillAttack);
                 rt.sizeDelta = new Vector2(width, 30f);
@@ -41,7 +42,7 @@ namespace Spawnables.Player
                 warningBack.GetComponent<Image>().enabled = true;
             
             } else {
-                warningText.GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
+                warningText.GetComponent<TextMeshProUGUI>().enabled = false;
                 warningSlider.GetComponent<Image>().enabled = false;
                 warningBack.GetComponent<Image>().enabled = false;
             }

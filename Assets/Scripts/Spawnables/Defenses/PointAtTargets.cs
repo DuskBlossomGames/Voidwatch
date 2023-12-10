@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Spawnables.Player;
 using UnityEngine;
+using Util;
 
 public class PointAtTargets : MonoBehaviour
 {
@@ -36,9 +35,9 @@ public class PointAtTargets : MonoBehaviour
         if((diff.x*transform.position.x + diff.y * transform.position.y) > 0)
         {
             _countdown -= Time.deltaTime;
-            float bulletVel = 5000 / bulletPrefab.GetComponent<Rigidbody2D>().mass * Time.fixedDeltaTime;
+            float bulletVel = 5000 / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
             float globalrot = Mathf.Deg2Rad * transform.parent.rotation.eulerAngles.z;
-            float angle = leadShot(rot(diff,globalrot), rot(target.GetComponent<Rigidbody2D>().velocity,globalrot), bulletVel);
+            float angle = leadShot(rot(diff,globalrot), rot(target.GetComponent<CustomRigidbody2D>().velocity,globalrot), bulletVel);
             _rot = angle;
             //_rot = Mathf.Atan2(diff.y, diff.x);
         } else
@@ -53,7 +52,7 @@ public class PointAtTargets : MonoBehaviour
             var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
             bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
             bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
-            bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, 5000));
+            bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(0, 5000));
         }
 
         

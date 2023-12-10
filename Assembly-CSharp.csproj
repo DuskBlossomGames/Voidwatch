@@ -90,6 +90,7 @@
      <Compile Include="Assets\Scripts\Util\UtilFuncs.cs" />
      <Compile Include="Assets\Scriptable Objects\LevelSelectData.cs" />
      <Compile Include="Assets\Scripts\Spawnables\DirectPathfinding.cs" />
+     <Compile Include="Assets\Scripts\Util\CustomRigidbody2D.cs" />
      <Compile Include="Assets\Scripts\Util\Selectable.cs" />
      <Compile Include="Assets\Scripts\Util\Button.cs" />
      <Compile Include="Assets\Scripts\LevelSelect\LevelInfoController.cs" />

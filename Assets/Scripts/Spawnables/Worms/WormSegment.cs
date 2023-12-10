@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public class WormSegment : MonoBehaviour
 {
@@ -58,7 +57,7 @@ public class WormSegment : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * angle);
             
-            var rigid = GetComponent<Rigidbody2D>();
+            var rigid = GetComponent<CustomRigidbody2D>();
             float deltVel = accel * accelCurve.Evaluate(rigid.velocity.magnitude/speed) * Time.deltaTime;
             _currSpeed = Mathf.Min(_currSpeed+ deltVel, speed);
             rigid.velocity = _currSpeed * _dir;
@@ -102,6 +101,6 @@ public class WormSegment : MonoBehaviour
 
     public Vector2 PredDir(float time)
     {
-        return (target.transform.position + time * (Vector3)target.GetComponent<Rigidbody2D>().velocity - transform.position).normalized;
+        return (target.transform.position + time * (Vector3)target.GetComponent<CustomRigidbody2D>().velocity - transform.position).normalized;
     }
 }

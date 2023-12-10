@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public class GunHandler : MonoBehaviour
 {
@@ -55,7 +55,7 @@ public class GunHandler : MonoBehaviour
 
     public float ExpectedVelocity()
     {
-        return shotForce / bulletPrefab.GetComponent<Rigidbody2D>().mass * Time.fixedDeltaTime;
+        return shotForce / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
     }
     IEnumerator _Fire()
     {
@@ -92,13 +92,13 @@ public class GunHandler : MonoBehaviour
                 {
                     var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
-                    bullet.GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity;
+                    bullet.GetComponent<CustomRigidbody2D>().velocity = GetComponent<CustomRigidbody2D>().velocity;
                     bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
                     bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
 
                     float vertForce = shotForce + Random.Range(-forceVarience, forceVarience) + verOff;
                     float latForce = Random.Range(-forceVarience, forceVarience) + latOff;
-                    bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
+                    bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
                     bullet.GetComponent<BulletCollision>().dmg = dmgMod;
                 }
 

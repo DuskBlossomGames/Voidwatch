@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Spawnables;
-using Complex = System.Numerics.Complex;
-using Num = System.Numerics;
 using UnityEngine;
-using UnityEngine.Audio;
+using Util;
+using Complex = System.Numerics.Complex;
 
 public class MissleAim : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public class MissleAim : MonoBehaviour
 
     private Vector2 _oVel;
     private Vector2 _nDir;
-    private Rigidbody2D _rigid;
+    private CustomRigidbody2D _rigid;
 
     private bool _stopped = false;
     private Quaternion _cRot;
@@ -30,7 +30,7 @@ public class MissleAim : MonoBehaviour
     private void Start()
     {
         _fuel = maxFuel;
-        _rigid = GetComponent<Rigidbody2D>();
+        _rigid = GetComponent<CustomRigidbody2D>();
         StartCoroutine(LeadShots());
     }
 
@@ -40,7 +40,7 @@ public class MissleAim : MonoBehaviour
         {
             Vector3 relPos = target.transform.position - transform.position;
             //Debug.LogFormat("target.name: {0}",target.name);
-            Vector3 relVel = target.GetComponent<Rigidbody2D>().velocity - _rigid.velocity;
+            Vector3 relVel = target.GetComponent<CustomRigidbody2D>().velocity - _rigid.velocity;
             float accel = (accelforce) / _rigid.mass;
             _nDir = LeadShot(relPos, relVel, accel);
             yield return new WaitForSeconds(.1f);
@@ -132,7 +132,7 @@ public class MissleAim : MonoBehaviour
         float colTime = MinPosRoot(coefs);
 
         Vector2 colPos = relPos + colTime * relVel;
-        //marker.transform.position = (Vector3)((Vector2)target.transform.position + colTime * target.GetComponent<Rigidbody2D>().velocity);
+        //marker.transform.position = (Vector3)((Vector2)target.transform.position + colTime * target.GetComponent<CustomRigidbody2D>().velocity);
         //marker.name = string.Format("+{0};{1}", colTime.ToString(), Time.time + colTime);
         _timeToImpact = colTime;
         return colPos.normalized;
@@ -391,7 +391,7 @@ public class MissleAim : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             //Debug.LogFormat("Root {0} = {1}", i, newAproxRoots[i]);
-            if (System.Math.Abs(newAproxRoots[i].Imaginary) < prec)
+            if (Math.Abs(newAproxRoots[i].Imaginary) < prec)
             {
                 if ((newAproxRoots[i].Real < ret || ret == -1) && newAproxRoots[i].Real > 0)
                 {
