@@ -96,8 +96,8 @@
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleShooter.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Bullets\BulletCollision.cs" />
     <Compile Include="Assets\Scripts\Static Objects or Misc\GravityEmitter.cs" />
-    <Compile Include="Assets\Scripts\Spawnables\Misslers\ExplosionHandler.cs" />
     <Compile Include="Assets\Scriptable Objects\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Misslers\ExplosionHandler.cs" />
     <Compile Include="Assets\Scripts\Spawnables\EnemyDamageable.cs" />
     <Compile Include="Assets\Scripts\Util\Selector.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\EnemySpawner\EnemyVariant.cs" />
