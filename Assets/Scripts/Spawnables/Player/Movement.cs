@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Util;
 
 namespace Player
@@ -9,11 +10,11 @@ namespace Player
         public float driftCorrection;
         public float speedLimit;
         public float acceleration;
-        public float dashSpeed;
-        public float dashDistance;
-        public float dashAfterImageSpacing;
-        public float dashTimeDilation;
-    
+        public float dodgeVelocity;
+        public float dodgeDistance;
+        public float dodgeTimeDilation;
+        public float afterImageSpacing;
+
         private Collider2D _collider;
         private SpriteRenderer _sprite;
         private TrailRenderer[] _trails;
@@ -33,9 +34,9 @@ namespace Player
         };
         private OrbitState _orbitState;
 
-        private float _dashTimer;
+        private float _dodgeTimer;
         private float _afterImageTimer;
-        private Vector2 _dashDirection;
+        private Vector2 _dodgeDirection;
         private readonly List<GameObject> _afterImages = new();
         
         private void Start()
@@ -54,16 +55,16 @@ namespace Player
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (_dashTimer == 0 && Input.GetKey(KeyCode.Space))
+            if (_dodgeTimer == 0 && Input.GetKey(KeyCode.Space))
             {
-                _dashTimer = 1;
+                _dodgeTimer = 1;
                 _afterImageTimer = 0;
-                _dashDirection = new Vector2(_forwards.x, _forwards.y);
+                _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
             }
 
-            var wasDashing = _dashTimer > 0;
-            var dashing = (_dashTimer = Mathf.Clamp01(_dashTimer - Time.fixedDeltaTime * dashTimeDilation * dashSpeed/dashDistance)) > 0;
-            CustomRigidbody2D.Scaling = dashing ? dashTimeDilation : 1;
+            var wasDashing = _dodgeTimer > 0;
+            var dashing = (_dodgeTimer = Mathf.Clamp01(_dodgeTimer - Time.fixedDeltaTime * dodgeTimeDilation * dodgeVelocity/dodgeDistance)) > 0;
+            CustomRigidbody2D.Scaling = dashing ? dodgeTimeDilation : 1;
             _collider.enabled = !dashing;
             foreach (var trail in _trails) trail.emitting = !dashing;
             _sprite.color = dashing ? new Color(1, 1, 1, 0.5f) : Color.white;
@@ -71,7 +72,7 @@ namespace Player
             if (dashing)
             {
                 if ((_afterImageTimer =
-                        Mathf.Clamp01(_afterImageTimer - Time.fixedDeltaTime * dashTimeDilation * dashSpeed/dashAfterImageSpacing)) == 0)
+                        Mathf.Clamp01(_afterImageTimer - Time.fixedDeltaTime * dodgeTimeDilation * dodgeVelocity/afterImageSpacing)) == 0)
                 {
                     _afterImageTimer = 1;
                     
@@ -90,7 +91,7 @@ namespace Player
 
                     _afterImages.Add(afterImage);
                 }
-                _rigid.velocity = _dashDirection * dashSpeed;
+                _rigid.velocity = _dodgeDirection * dodgeVelocity;
                 return;
             }
             if (wasDashing)

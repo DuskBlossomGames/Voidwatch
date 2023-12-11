@@ -46,7 +46,7 @@ namespace Util
             public bool freezeRotation;
         }
         
-        [FormerlySerializedAs("rigidMass")] public float mass = 1;
+        public float mass = 1;
         public CollisionDetectionMode2D collisionDetection;
         public Constraints constraints;
 

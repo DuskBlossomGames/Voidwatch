@@ -7468,10 +7468,10 @@ MonoBehaviour:
   driftCorrection: 5
   speedLimit: 20
   acceleration: 1.2
-  dashSpeed: 45
-  dashDistance: 7.5
-  dashAfterImageSpacing: 1.7
-  dashTimeDilation: 0.4
+  dodgeVelocity: 45
+  dodgeDistance: 8.5
+  dodgeTimeDilation: 0.25
+  afterImageSpacing: 1.7
 --- !u!212 &2086174081
 SpriteRenderer:
   m_ObjectHideFlags: 0
