@@ -12,6 +12,7 @@ namespace Player
         public float acceleration;
         public float dodgeVelocity;
         public float dodgeDistance;
+        public float dodgeCooldown;
         public float dodgeTimeDilation;
         public float afterImageSpacing;
 
@@ -34,6 +35,7 @@ namespace Player
         };
         private OrbitState _orbitState;
 
+        private float _lastDodge;
         private float _dodgeTimer;
         private float _afterImageTimer;
         private Vector2 _dodgeDirection;
@@ -55,7 +57,7 @@ namespace Player
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (_dodgeTimer == 0 && Input.GetKey(KeyCode.Space))
+            if (Time.time - _lastDodge >= dodgeCooldown && _dodgeTimer == 0 && Input.GetKey(KeyCode.Space))
             {
                 _dodgeTimer = 1;
                 _afterImageTimer = 0;
@@ -100,6 +102,7 @@ namespace Player
                 _afterImages.Clear();
                 
                 _velocity = _forwards * _velocity.magnitude;
+                _lastDodge = Time.time;
             }
             
             if (Input.GetKey("w")) {
