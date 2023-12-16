@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1269399153704899952}
   - component: {fileID: 582754640268470002}
   - component: {fileID: 6725564530229344085}
+  - component: {fileID: -810703383415305791}
   m_Layer: 8
   m_Name: Missiler
   m_TagString: Untagged
@@ -81,8 +82,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 0.27302432, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: -1358975380, guid: dd50de61391000b40a753484f74b5372, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidMass: 1
+  mass: 1
   collisionDetection: 0
   constraints:
     freezeX: 0
@@ -179,7 +180,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.8828125}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 0.8828125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -286,3 +287,19 @@ MonoBehaviour:
   size: 3
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
+--- !u!111 &-810703383415305791
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430136990600543352}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 732e5442519b99f4a9a2e21c786751f6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 732e5442519b99f4a9a2e21c786751f6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
