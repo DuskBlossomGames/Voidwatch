@@ -10,6 +10,7 @@ namespace Util
 
         public static float Scaling
         {
+            get => _scaling;
             set
             {
                 ScalingChange?.Invoke(_scaling, value);

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Util;
 
 namespace Spawnables.Player
 {
@@ -14,22 +15,17 @@ namespace Spawnables.Player
         public GameObject warningText;
         public GameObject warningSlider;
         public GameObject warningBack;
-
-        float clamp(float x, float low = 0, float high = 1)
-        {
-            return x<low?low:(x>high?high:x);
-        }
-
+        
         void Update()
         {
             if (gameObject.transform.position.sqrMagnitude > 75 * 75)
             {
-                _outOfBoundsTime += Time.deltaTime;
+                _outOfBoundsTime += Time.deltaTime * CustomRigidbody2D.Scaling;
             } else {
-                _outOfBoundsTime -= Time.deltaTime;
+                _outOfBoundsTime -= Time.deltaTime * CustomRigidbody2D.Scaling;
             }
 
-            _outOfBoundsTime = clamp(_outOfBoundsTime,0,timeTillAttack);
+            _outOfBoundsTime = Mathf.Clamp(_outOfBoundsTime,0,timeTillAttack);
 
             if (_outOfBoundsTime > 0)
             {

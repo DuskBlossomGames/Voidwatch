@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Player
 {
+    // TODO: make this stay across levels
     public class Upgradeable : MonoBehaviour
     {
         private readonly List<BaseUpgrade> _upgrades = new();
@@ -34,8 +35,6 @@ namespace Player
 
         private void Update()
         {
-            _upgrades.ForEach(u => u.Update(this));
-
             if (debugAddUpgrade)
             {
                 AddUpgrade(debugAddUpgrade);
