@@ -38,7 +38,7 @@ public class BulletCollision : MonoBehaviour
             if (_upgradeable)
             {
                 damage = _upgradeable.Upgrades.Aggregate(damage,
-                    (current, upgrade) => upgrade.DealDamage(other, current));
+                    (current, upgrade) => upgrade.OnDealDamage(other, current));
             }
             
             var damageable = other.GetComponent<Damageable>();

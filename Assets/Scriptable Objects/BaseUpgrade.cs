@@ -32,9 +32,9 @@ namespace Scriptable_Objects
         public Sprite sprite;
         public Rarity rarity;
 
-        public virtual void Equip(Upgradeable upgradeable) { }
-        public virtual void UnEquip(Upgradeable upgradeable) { }
-        public virtual float DealDamage(GameObject other, float damage) { return damage; }
-        public virtual void Shoot(ShootInfo info) { }
+        public virtual void OnEquip(Upgradeable upgradeable) { }
+        public virtual void OnUnequip(Upgradeable upgradeable) { }
+        public virtual float OnDealDamage(GameObject other, float damage) { return damage; }
+        public virtual void OnShoot(ShootInfo info) { }
     }
 }

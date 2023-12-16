@@ -20,15 +20,17 @@ public class UpgradeSlot : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
 
-    private void Start()
+    public void Ready()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void SetMode(Mode mode) {
+        _spriteRenderer.enabled = true;
         switch (mode){
             case Mode.Space:
-                _spriteRenderer.sprite = emptySprite;
+                //_spriteRenderer.sprite = emptySprite;
+                _spriteRenderer.enabled = false;
                 _spriteRenderer.color = emptyColor;
                 break;
             case Mode.Vacant:

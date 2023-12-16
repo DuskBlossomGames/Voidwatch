@@ -81,7 +81,7 @@ public class GunHandler : MonoBehaviour
             repeats = repeats,
             repeatSeperation = repeatSeperation
         };
-        if (_upgradeable) _upgradeable.Upgrades.ToList().ForEach(upgrade => upgrade.Shoot(info));
+        if (_upgradeable) _upgradeable.Upgrades.ToList().ForEach(upgrade => upgrade.OnShoot(info));
 
         for (int rep = 0; rep < info.repeats+1; rep++)
         {

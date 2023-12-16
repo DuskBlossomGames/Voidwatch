@@ -19,14 +19,14 @@ namespace Player
         public void AddUpgrade(BaseUpgrade upgrade)
         {
             _upgrades.Add(upgrade);
-            upgrade.Equip(this);
+            upgrade.OnEquip(this);
         }
 
         public bool RemoveUpgrade(BaseUpgrade upgrade)
         {
             if (_upgrades.Remove(upgrade))
             {
-                upgrade.UnEquip(this);
+                upgrade.OnUnequip(this);
                 return true;
             }
 

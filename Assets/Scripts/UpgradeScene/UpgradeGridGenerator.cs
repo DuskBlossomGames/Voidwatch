@@ -54,9 +54,9 @@ public class UpgradeGridGenerator : MonoBehaviour
                 modeGrid[col, row] = cState ? UpgradeSlot.Mode.Vacant : UpgradeSlot.Mode.Space;
                 GameObject spawn = Instantiate(slotPrefab, new Vector3(x, y, -1), Quaternion.identity, transform);
                 _gridObjects[col, row] = spawn;
+                spawn.GetComponent<UpgradeSlot>().Ready();
+                spawn.GetComponent<UpgradeSlot>().SetMode(modeGrid[col, row]);
                 spawn.name = string.Format("Grid Cell X: {0}, Y: {1}", col, row);
-                spawn.GetComponent<SpriteRenderer>().enabled = cState;
-                spawn.GetComponent<SpriteRenderer>().color = vacantColor;
                 spawn.transform.localScale = new Vector3(dp, dp, 1);
             }
             if (clayout[0] != ';')

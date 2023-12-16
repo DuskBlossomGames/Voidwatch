@@ -9,13 +9,13 @@ namespace Scriptable_Objects.Upgrades
         public float accelerationDifference;
         public float speedLimitDifference;
         
-        public override void Equip(Upgradeable upgradeable)
+        public override void OnEquip(Upgradeable upgradeable)
         {
             upgradeable.GetComponent<Movement>().acceleration += accelerationDifference;
             upgradeable.GetComponent<Movement>().speedLimit += speedLimitDifference;
         }
         
-        public override void UnEquip(Upgradeable upgradeable)
+        public override void OnUnequip(Upgradeable upgradeable)
         {
             upgradeable.GetComponent<Movement>().acceleration -= accelerationDifference;
             upgradeable.GetComponent<Movement>().speedLimit -= speedLimitDifference;

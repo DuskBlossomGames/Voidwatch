@@ -8,12 +8,12 @@ namespace Scriptable_Objects.Upgrades
     {
         public int bulletDifference;
         
-        public override void Equip(Upgradeable upgradeable)
+        public override void OnEquip(Upgradeable upgradeable)
         {
             upgradeable.GetComponent<GunHandler>().bulletsPerShot += bulletDifference;
         }
         
-        public override void UnEquip(Upgradeable upgradeable)
+        public override void OnUnequip(Upgradeable upgradeable)
         {
             upgradeable.GetComponent<GunHandler>().bulletsPerShot -= bulletDifference;
         }

@@ -8,12 +8,12 @@ namespace Scriptable_Objects.Upgrades
     {
         public float separationDifference;
         
-        public override void Equip(Upgradeable upgradeable)
+        public override void OnEquip(Upgradeable upgradeable)
         {
             upgradeable.GetComponent<GunHandler>().lateralSeperation += separationDifference;
         }
         
-        public override void UnEquip(Upgradeable upgradeable)
+        public override void OnUnequip(Upgradeable upgradeable)
         {
             upgradeable.GetComponent<GunHandler>().lateralSeperation -= separationDifference;
         }

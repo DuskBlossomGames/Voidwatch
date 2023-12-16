@@ -10,12 +10,12 @@ namespace Scriptable_Objects.Upgrades
         public PlayerData playerData;
         public int healthDifference;
         
-        public override void Equip(Upgradeable upgradeable)
+        public override void OnEquip(Upgradeable upgradeable)
         { 
             playerData.playerMaxHealth += healthDifference;
         }
         
-        public override void UnEquip(Upgradeable upgradeable)
+        public override void OnUnequip(Upgradeable upgradeable)
         {
             playerData.playerMaxHealth -= healthDifference;
         }

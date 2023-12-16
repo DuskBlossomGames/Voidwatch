@@ -8,6 +8,7 @@ public class UpgradeItem : MonoBehaviour
     public uint height;
     public string shape;
     public UpgradeGridGenerator gridGenerator;
+    public Vector2 targetPos;
 
     private bool[,] _shape;//[x,y] form
     private bool _isDragging;
@@ -18,11 +19,13 @@ public class UpgradeItem : MonoBehaviour
     private Vector2Int _gridPos;
     private bool _isValid;
     private bool _isPlanted;
+    private SpriteRenderer _spriteRenderer;
 
     private void Start()
     {
         _isPlanted = false;
         _mainCamera = Camera.main;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _slotsize = 2f / (gridGenerator.size - 1);
         transform.localScale = new Vector3(_slotsize, _slotsize, 1);
 
@@ -86,6 +89,13 @@ public class UpgradeItem : MonoBehaviour
                 }
                 _grabPos = (Vector2)transform.position - globalMousePos;
             }
+            else if (!_isPlanted)
+            {
+                _spriteRenderer.color = new Color(255, 255, 255);
+                gridGenerator.Restore();
+                Vector2 temp = UtilFuncs.LerpSafe((Vector2)transform.position, targetPos, 10 * Time.deltaTime);
+                transform.position = new Vector3(temp.x, temp.y, transform.position.z);
+            }
         }
         else
         {
@@ -123,11 +133,11 @@ public class UpgradeItem : MonoBehaviour
                         
                         if (isValid)
                         {
-                            GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
+                            _spriteRenderer.color = new Color(255, 255, 255);
                         }
                         else
                         {
-                            GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+                            _spriteRenderer.color = new Color(255, 0, 0);
                         }
                     }
 
