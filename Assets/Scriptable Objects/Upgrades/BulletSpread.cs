@@ -4,18 +4,13 @@ using UnityEngine;
 namespace Scriptable_Objects.Upgrades
 {
     [CreateAssetMenu(fileName = "BulletSpread", menuName = "Upgrades/BulletSpread")]
-    public class BulletSpread : BaseUpgrade
+    public class BulletSpread : BaseUpgrade<ShootEvent>
     {
-        public float separationDifference;
-        
-        public override void OnEquip(Upgradeable upgradeable)
+        public float separationModifier;
+
+        protected override void OnEvent(Upgradeable upgradeable, ShootEvent evt)
         {
-            upgradeable.GetComponent<GunHandler>().lateralSeperation += separationDifference;
-        }
-        
-        public override void OnUnequip(Upgradeable upgradeable)
-        {
-            upgradeable.GetComponent<GunHandler>().lateralSeperation -= separationDifference;
+            evt.lateralSeperation *= separationModifier;
         }
     }
 }

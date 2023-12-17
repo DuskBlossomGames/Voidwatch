@@ -4,21 +4,15 @@ using UnityEngine;
 namespace Scriptable_Objects.Upgrades
 {
     [CreateAssetMenu(fileName = "SpeedIncrease", menuName = "Upgrades/SpeedIncrease")]
-    public class SpeedIncrease : BaseUpgrade
+    public class SpeedIncrease : BaseUpgrade<MoveEvent>
     {
-        public float accelerationDifference;
-        public float speedLimitDifference;
-        
-        public override void OnEquip(Upgradeable upgradeable)
+        public float accelerationModifier;
+        public float speedLimitModifier;
+
+        protected override void OnEvent(Upgradeable upgradeable, MoveEvent evt)
         {
-            upgradeable.GetComponent<Movement>().acceleration += accelerationDifference;
-            upgradeable.GetComponent<Movement>().speedLimit += speedLimitDifference;
-        }
-        
-        public override void OnUnequip(Upgradeable upgradeable)
-        {
-            upgradeable.GetComponent<Movement>().acceleration -= accelerationDifference;
-            upgradeable.GetComponent<Movement>().speedLimit -= speedLimitDifference;
+            evt.acceleration *= accelerationModifier;
+            evt.speedLimit *= speedLimitModifier;
         }
     }
 }

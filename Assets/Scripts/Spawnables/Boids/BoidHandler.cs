@@ -13,8 +13,6 @@ public class BoidHandler : MonoBehaviour
     public float maxSpeed;
     public float minSpeed;
     public GameObject target;
-    public GameObject bulletPrefab;
-    public float playRadius;
     public GameObject gravitySource;
     public float shootDist;
     private CustomRigidbody2D _rigidbody2D;

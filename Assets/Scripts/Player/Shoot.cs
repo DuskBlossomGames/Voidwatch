@@ -5,9 +5,6 @@ namespace Player
 {
     public class Shoot : MonoBehaviour
     {
-        public GameObject bulletPrefab;
-        public float playRadius;
-        public GameObject gravitySource;
         public TextMeshProUGUI bulletText;
 
         GunHandler _gun;
