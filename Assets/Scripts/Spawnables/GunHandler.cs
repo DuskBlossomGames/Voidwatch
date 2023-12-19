@@ -120,6 +120,7 @@ public class GunHandler : MonoBehaviour
                     float latForce = Random.Range(-info.forceVarience, info.forceVarience) + latOff;
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
                     bullet.GetComponent<BulletCollision>().dmg = dmgMod;
+                    bullet.GetComponent<BulletCollision>().owner = gameObject;
                 }
 
             }

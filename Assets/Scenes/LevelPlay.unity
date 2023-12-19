@@ -257,7 +257,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxHealth: 500
+  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  maxHealth: 5000
 --- !u!61 &48853191
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7715,6 +7716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  shieldBarPrefab: {fileID: 6640671108004503463, guid: 676d94c475dd6c6408461914a753155c, type: 3}
   heathOpacityCurve:
     serializedVersion: 2
     m_Curve:
@@ -7748,6 +7750,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  bodyDmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
   playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
 --- !u!114 &2086174092
 MonoBehaviour:

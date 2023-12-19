@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   playerMaxHealth: 1000
+  playerMaxShield: 5000
+  playerShieldRegenRate: 1000
+  playerMaxShieldDebt: 500

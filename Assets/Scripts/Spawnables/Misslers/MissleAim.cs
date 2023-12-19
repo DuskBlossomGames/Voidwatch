@@ -108,10 +108,10 @@ public class MissleAim : MonoBehaviour
             {
                 var tar = hit.transform.gameObject;
                 //Debug.LogFormat("Ray {0} collided with {1}", i, tar.name);
-                var dmgable = tar.GetComponent<Damageable>();
+                var dmgable = tar.GetComponent<IDamageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(dmg / rayNum);
+                    dmgable.Damage(dmg / rayNum, IDamageable.DmgType.Physical);
                 }
             }
             //Debug.LogFormat("Ray {0} end", i);

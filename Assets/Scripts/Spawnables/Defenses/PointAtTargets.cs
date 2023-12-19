@@ -53,6 +53,7 @@ public class PointAtTargets : MonoBehaviour
             bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
             bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
             bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(0, 5000));
+            bullet.GetComponent<BulletCollision>().owner = gameObject;
         }
 
         

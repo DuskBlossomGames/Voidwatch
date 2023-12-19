@@ -23,9 +23,12 @@ public class UpgradeItem : MonoBehaviour
 
     private void Start()
     {
-        _isPlanted = false;
         _mainCamera = Camera.main;
         _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    public void Ready()
+    {
+        _isPlanted = false;
         _slotsize = 2f / (gridGenerator.size - 1);
         transform.localScale = new Vector3(_slotsize, _slotsize, 1);
 
@@ -33,17 +36,17 @@ public class UpgradeItem : MonoBehaviour
 
         _shape = new bool[width, height];
 
-        for (int col = 0; col < width; col++)
+        for (int row = 0; row < height; row++)
         {
-            for (int row = 0; row < height; row++)
+            for (int col = 0; col < width; col++) 
             {
                 if (cshape[0] == '.')
                 {
-                    _shape[row, col] = false;
+                    _shape[col, row] = false;
                 }
                 else if (cshape[0] == 'X')
                 {
-                    _shape[row, col] = true;
+                    _shape[col, row] = true;
 
                 }
                 else
@@ -81,10 +84,10 @@ public class UpgradeItem : MonoBehaviour
             if (_hasMouse && Input.GetMouseButtonDown(0))
             {
                 _isDragging = true;
+                transform.position -= .5f * Vector3.forward;
                 if (_isPlanted)
                 {
                     _isPlanted = false;
-                    transform.position -= .5f * Vector3.forward;
                     gridGenerator.Free(_gridPos, width, height, _shape);
                 }
                 _grabPos = (Vector2)transform.position - globalMousePos;
@@ -102,10 +105,10 @@ public class UpgradeItem : MonoBehaviour
             if (!Input.GetMouseButton(0))
             {
                 _isDragging = false;
+                transform.position += .5f * Vector3.forward;
                 if (_isValid)
                 {
                     _isPlanted = true;
-                    transform.position += .5f * Vector3.forward;
                     gridGenerator.Reserve(_gridPos, width, height, _shape);
                 }
             }

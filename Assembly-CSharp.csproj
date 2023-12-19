@@ -77,8 +77,8 @@
     <Compile Include="Assets\Scripts\Spawnables\Boids\BoidHandler.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeItem.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerDamageable.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\ShieldDamageable.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeSlot.cs" />
-    <Compile Include="Assets\UpgradeManager.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Boids\BoidSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormDamageable.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleAim.cs" />
@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\LevelSelect\MapController.cs" />
     <Compile Include="Assets\Scriptable Objects\BaseUpgrade.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeGridGenerator.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\DamageResistances.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\DamageIncrease.cs" />
     <Compile Include="Assets\Scripts\Spawnables\IPathfinder.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\SpeedIncrease.cs" />
@@ -119,6 +120,8 @@
     <Compile Include="Assets\Scripts\Spawnables\DirectPathfinding.cs" />
     <Compile Include="Assets\Scripts\Util\CustomRigidbody2D.cs" />
     <Compile Include="Assets\Scripts\Util\Selectable.cs" />
+    <Compile Include="Assets\Scripts\UpgradeScene\UpgradeManager.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Util\Button.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\LevelInfoController.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\MultiDamageable.cs" />

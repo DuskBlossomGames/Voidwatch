@@ -25,15 +25,15 @@ public class UpgradeManager : MonoBehaviour
         float y = 1f;
         foreach (var component in components)
         {
-            UpgradeItem upgrade = component.GetComponent<UpgradeItem>();
-
-            y -= upgrade.height / 2 * dp;
+            y -= component.GetComponent<UpgradeItem>().height / 2 * dp;
             GameObject spawn = Instantiate(component, new Vector3(lmid, y, -2), Quaternion.identity, transform);
+            UpgradeItem upgrade = spawn.GetComponent<UpgradeItem>();
             y -= upgrade.height / 2 * dp + .2f;
 
            
             upgrade.gridGenerator = gridGenerator;
             upgrade.targetPos = spawn.transform.localPosition;
+            upgrade.Ready();
         }
     }
 }

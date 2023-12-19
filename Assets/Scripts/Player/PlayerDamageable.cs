@@ -2,7 +2,7 @@ using Scriptable_Objects;
 
 namespace Spawnables.Player
 {
-    public class PlayerDamageable : Damageable
+    public class PlayerDamageable : ShieldDamageable
     {
         public PlayerData playerData;
 
@@ -12,5 +12,9 @@ namespace Spawnables.Player
             get => playerData.Health ?? MaxHealth;
             set => playerData.Health = value;
         }
+
+        protected override float ShieldRegenRate => playerData.playerShieldRegenRate;
+        protected override float ShieldMaxPower => playerData.playerMaxShield;
+        protected override float ShieldMaxDebt => playerData.playerMaxShieldDebt;
     }
 }

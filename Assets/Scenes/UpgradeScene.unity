@@ -223,6 +223,8 @@ MonoBehaviour:
   components:
   - {fileID: 1887697886606333739, guid: 930b17f3bf8248a42afba63f83ccdd8e, type: 3}
   - {fileID: 6962080291463191610, guid: d4050593afbfddd4485d3ba2a4c6d86d, type: 3}
+  - {fileID: 1887697886606333739, guid: 308394da050ce844e8e52b384cb965db, type: 3}
+  - {fileID: 6962080291463191610, guid: d4050593afbfddd4485d3ba2a4c6d86d, type: 3}
   upgrades: []
   gridGenerator: {fileID: 39030810}
 --- !u!1 &194978419
@@ -472,7 +474,7 @@ Transform:
   m_GameObject: {fileID: 412780902}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.012, y: -2.3, z: -0.2}
+  m_LocalPosition: {x: 0.012, y: -2.3, z: -2.2}
   m_LocalScale: {x: -2.0824, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WormDamageable : MonoBehaviour
+public class WormDamageable : MonoBehaviour, Spawnables.IDamageable
 {
     private const float _koffset = 1.5f;
     
@@ -8,7 +8,8 @@ public class WormDamageable : MonoBehaviour
     public int maxHealth;
     public AnimationCurve heathOpacityCurve;
     public GameObject root;
-    
+    public DamageResistances dmgRes;
+
     private GameObject _healthBar;
 
     private float _barVisibility = 0;
@@ -44,8 +45,10 @@ public class WormDamageable : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Damage(float damage)
+    public void Damage(float damage, Spawnables.IDamageable.DmgType dmgType)
     {
+        damage *= dmgRes.dmgMod[(int)dmgType];
+
         _barVisibility = 1;
         root.GetComponent<MultiDamageable>().health -= damage;
         

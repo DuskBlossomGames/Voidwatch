@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  maxHealth: 1000
+  maxHealth: 2000
   heathOpacityCurve:
     serializedVersion: 2
     m_Curve:
@@ -387,6 +387,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   root: {fileID: 0}
+  dmgRes: {fileID: 11400000, guid: 5118d3f272cff524dbb6354c0b9dbb77, type: 2}
 --- !u!114 &4405246181603560970
 MonoBehaviour:
   m_ObjectHideFlags: 0

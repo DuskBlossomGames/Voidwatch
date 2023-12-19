@@ -110,6 +110,7 @@ MonoBehaviour:
   shootInterval: 2
   engageDist: 20
   amt: 1
+  shoot: {fileID: 0}
 --- !u!114 &1114353160703292457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +242,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   maxHealth: 200
 --- !u!114 &1269399153704899952
 MonoBehaviour:

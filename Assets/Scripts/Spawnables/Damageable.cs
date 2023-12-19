@@ -1,8 +1,9 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Spawnables
 {
-    public class Damageable : MonoBehaviour
+    public class Damageable : MonoBehaviour, IDamageable
     {
         private const float _koffset = 1.5f;
     
@@ -15,9 +16,12 @@ namespace Spawnables
         private GameObject _healthBar;
 
         private float _barVisibility;
+
+        public DamageResistances dmgRes;
     
         protected void Start()
         {
+            dmgRes.Ready();
             _healthBar = Instantiate(healthBarPrefab);
         }
 
@@ -43,9 +47,10 @@ namespace Spawnables
                 sprite.color = color;
             }
         }
-        
-        public void Damage(float damage)
+
+        public void Damage(float damage, IDamageable.DmgType dmgType)
         {
+            damage *= dmgRes.dmgMod[(int)dmgType];
             _barVisibility = 1;
             Health -= damage;
         

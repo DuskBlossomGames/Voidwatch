@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a70ed9f3d2af644b92fd396ac32c86, type: 3}
+  m_Name: DefaultDmgRes
+  m_EditorClassIdentifier: 
+  physDmgMod: 1
+  physDmgReduce: 0
+  physDmgBleed: 0
+  engDmgMod: 1
+  engDmgReduce: 0
+  engDmgBleed: 0
+  conDmgMod: 2
+  conDmgReduce: 0
+  conDmgBleed: 0
+  corrDmgMod: 3
+  corrDmgReduce: 0
+  corrDmgBleed: 0
+  blackDmgMod: 5
+  blackDmgReduce: 0
+  blackDmgBleed: 0
+  dmgMod: []
+  dmgReduce: []
+  dmgBleed: []

@@ -41,23 +41,13 @@ public class BulletCollision : MonoBehaviour
                     (current, upgrade) => upgrade.OnDealDamage(other, current));
             }
             
-            var damageable = other.GetComponent<Damageable>();
+            var damageable = other.GetComponent<IDamageable>();
             if (damageable != null)
             {
                 Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
-                //Debug.Log(string.Format(".05 * dmg * mass * sqrSpeed = .05 * {0} * {1} * {2} = {3}",dmg,mass,sqrSpeed,.05f * dmg * mass * sqrSpeed));
-                damageable.Damage(.5f * damage * mass * sqrSpeed) ;
-            }
-            var wdamageable = other.GetComponent<WormDamageable>();
-            if (wdamageable != null)
-            {
-                Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
-                float mass = GetComponent<CustomRigidbody2D>().mass;
-                float sqrSpeed = velDiff.sqrMagnitude / 1_000f;
-                //Debug.Log(string.Format(".05 * dmg * mass * sqrSpeed = .05 * {0} * {1} * {2} = {3}",dmg,mass,sqrSpeed,.05f * dmg * mass * sqrSpeed));
-                wdamageable.Damage(.5f * damage * mass * sqrSpeed);
+                damageable.Damage(.5f * damage * mass * sqrSpeed, IDamageable.DmgType.Physical) ;
             }
 
             Destroy(gameObject);
