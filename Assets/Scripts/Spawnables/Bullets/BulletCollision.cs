@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Player;
 using Scriptable_Objects;
+using Scriptable_Objects.Upgrades;
 using Spawnables;
 using UnityEngine;
 using Util;
@@ -33,21 +34,26 @@ public class BulletCollision : MonoBehaviour
 
         if (_leftOwner || other != owner)
         {
-            var damage = dmg;
-
-            if (_upgradeable)
-            {
-                damage = _upgradeable.Upgrades.Aggregate(damage,
-                    (current, upgrade) => upgrade.OnDealDamage(other, current));
-            }
+            var evt = new DealDamageEvent { damaged = other, damage = dmg };
+            if (_upgradeable) _upgradeable.HandleEvent(evt);
             
-            var damageable = other.GetComponent<IDamageable>();
+            var damageable = other.GetComponent<Damageable>();
             if (damageable != null)
             {
                 Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
-                damageable.Damage(.5f * damage * mass * sqrSpeed, IDamageable.DmgType.Physical) ;
+                //Debug.Log(string.Format(".05 * dmg * mass * sqrSpeed = .05 * {0} * {1} * {2} = {3}",dmg,mass,sqrSpeed,.05f * dmg * mass * sqrSpeed));
+                damageable.Damage(.5f * evt.damage * mass * sqrSpeed) ;
+            }
+            var wdamageable = other.GetComponent<WormDamageable>();
+            if (wdamageable != null)
+            {
+                Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
+                float mass = GetComponent<CustomRigidbody2D>().mass;
+                float sqrSpeed = velDiff.sqrMagnitude / 1_000f;
+                //Debug.Log(string.Format(".05 * dmg * mass * sqrSpeed = .05 * {0} * {1} * {2} = {3}",dmg,mass,sqrSpeed,.05f * dmg * mass * sqrSpeed));
+                wdamageable.Damage(.5f * evt.damage * mass * sqrSpeed);
             }
 
             Destroy(gameObject);

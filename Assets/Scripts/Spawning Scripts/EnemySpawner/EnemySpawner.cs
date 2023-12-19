@@ -1,15 +1,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using LevelSelect;
+using Spawnables;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace EnemySpawner
 {
     public class EnemySpawner : MonoBehaviour
     {
+        public GameObject scrapPrefab;
+        public List<int> difficultyToLootTiers;
+        public List<int> scrapCountTiers;
+        public List<float> scrapChanceTiers;
+        
         public AssetLabelReference variantLabel;
         public List<int> groupBudgetTiers;
 
@@ -69,12 +76,25 @@ namespace EnemySpawner
                         var boundarySize = boundaryCircle.transform.localScale / 2;
                         var rad = Random.Range(0, 2 * Mathf.PI);
 
-                        _spawnedEnemies.Add(Instantiate(
-                            enemy, 
-                            transform.position + 
-                            new Vector3(boundarySize.x * Mathf.Cos(rad), boundarySize.y * Mathf.Sin(rad), 0), 
-                            Quaternion.identity
-                            ));
+                        var enemyObj = Instantiate(
+                            enemy,
+                            transform.position +
+                            new Vector3(boundarySize.x * Mathf.Cos(rad), boundarySize.y * Mathf.Sin(rad), 0),
+                            Quaternion.identity);
+                        var damageable = enemyObj.GetComponentInChildren<EnemyDamageable>();
+
+                        var tier = difficultyToLootTiers
+                            .FindIndex(t => t > enemyObj.GetComponent<EnemyVariant>().cost);
+
+                        // TODO: :|
+                        if (damageable)
+                        {
+                            damageable.ScrapPrefab = scrapPrefab;
+                            damageable.ScrapChance = scrapChanceTiers[tier];
+                            damageable.ScrapCount = scrapCountTiers[tier];
+                        }
+                        
+                        _spawnedEnemies.Add(enemyObj);
                     }
                 }
             }

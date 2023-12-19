@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using Player;
 using Scriptable_Objects;
+using Scriptable_Objects.Upgrades;
 using UnityEngine;
 using Util;
 
@@ -70,7 +71,7 @@ public class GunHandler : MonoBehaviour
         status = "Shooting";
         //Debug.Log("started");
         
-        var info = new BaseUpgrade.ShootInfo() {
+        var evt = new ShootEvent {
             bulletsPerShot = bulletsPerShot,
             bulletsPerShotVarience = bulletsPerShotVarience,
             shotForce = shotForce,
@@ -81,16 +82,16 @@ public class GunHandler : MonoBehaviour
             repeats = repeats,
             repeatSeperation = repeatSeperation
         };
-        if (_upgradeable) _upgradeable.Upgrades.ToList().ForEach(upgrade => upgrade.OnShoot(info));
+        if (_upgradeable) _upgradeable.HandleEvent(evt);
 
-        for (int rep = 0; rep < info.repeats+1; rep++)
+        for (int rep = 0; rep < evt.repeats+1; rep++)
         {
             if (rep > 0)//only delay between repeats
             {
-                yield return new WaitForSeconds(info.repeatSeperation);
+                yield return new WaitForSeconds(evt.repeatSeperation);
             }
 
-            int bullets = Mathf.Min(_currClipCap, info.bulletsPerShot + Random.Range(-info.bulletsPerShotVarience, info.bulletsPerShotVarience + 1));
+            int bullets = Mathf.Min(_currClipCap, evt.bulletsPerShot + Random.Range(-evt.bulletsPerShotVarience, evt.bulletsPerShotVarience + 1));
             //Debug.Log(string.Format("bullets: {0}",bullets));
             _currClipCap -= bullets;
             for (int i = 0; i < bullets; i++)
@@ -98,8 +99,8 @@ public class GunHandler : MonoBehaviour
                 float latOff, verOff;
                 if (bullets > 1)
                 {
-                    latOff = info.lateralSeperation * (2 * i - bullets + 1) / (bullets - 1);
-                    verOff = info.verticalSeperation * (1 - Mathf.Abs(2 * ((float)i / (bullets - 1)) - 1));
+                    latOff = evt.lateralSeperation * (2 * i - bullets + 1) / (bullets - 1);
+                    verOff = evt.verticalSeperation * (1 - Mathf.Abs(2 * ((float)i / (bullets - 1)) - 1));
                 } else
                 {
                     latOff = verOff = 0;
@@ -108,7 +109,7 @@ public class GunHandler : MonoBehaviour
                 Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles.x,
                     transform.rotation.eulerAngles.x,
                     transform.rotation.eulerAngles.z + _bulletAngle);
-                if (Random.Range(0f, 1f) > info.misfireChance)
+                if (Random.Range(0f, 1f) > evt.misfireChance)
                 {
                     var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
@@ -116,8 +117,8 @@ public class GunHandler : MonoBehaviour
                     bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
                     bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
 
-                    float vertForce = info.shotForce + Random.Range(-info.forceVarience, info.forceVarience) + verOff;
-                    float latForce = Random.Range(-info.forceVarience, info.forceVarience) + latOff;
+                    float vertForce = evt.shotForce + Random.Range(-evt.forceVarience, evt.forceVarience) + verOff;
+                    float latForce = Random.Range(-evt.forceVarience, evt.forceVarience) + latOff;
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
                     bullet.GetComponent<BulletCollision>().dmg = dmgMod;
                     bullet.GetComponent<BulletCollision>().owner = gameObject;

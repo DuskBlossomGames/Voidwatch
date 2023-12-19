@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ namespace Spawnables.Player
 {
     public class EnforcePlayArea : MonoBehaviour
     {
-        private float _outOfBoundsTime = 0;
+        private readonly Timer _outOfBoundsTimer = new();
 
         public bool attackable;
         public float timeTillAttack = 1;
@@ -15,26 +16,24 @@ namespace Spawnables.Player
         public GameObject warningText;
         public GameObject warningSlider;
         public GameObject warningBack;
-        
+
+        private void Start()
+        {
+            _outOfBoundsTimer.Value = timeTillAttack;
+        }
+
         void Update()
         {
-            if (gameObject.transform.position.sqrMagnitude > 75 * 75)
-            {
-                _outOfBoundsTime += Time.deltaTime * CustomRigidbody2D.Scaling;
-            } else {
-                _outOfBoundsTime -= Time.deltaTime * CustomRigidbody2D.Scaling;
-            }
+            _outOfBoundsTimer.Update(gameObject.transform.position.sqrMagnitude > 75 * 75 ? -1 : 1);
 
-            _outOfBoundsTime = Mathf.Clamp(_outOfBoundsTime,0,timeTillAttack);
-
-            if (_outOfBoundsTime > 0)
+            if (_outOfBoundsTimer.IsActive())
             {
                 warningText.GetComponent<TextMeshProUGUI>().enabled = true;
                 RectTransform rt = warningSlider.GetComponent<RectTransform>();
-                float width = 500 * (1 - _outOfBoundsTime / timeTillAttack);
+                float width = 500 * (_outOfBoundsTimer.Value / timeTillAttack);
                 rt.sizeDelta = new Vector2(width, 30f);
                 warningSlider.GetComponent<Image>().enabled = true;
-                warningSlider.GetComponent<Image>().color = colorCurve.Evaluate(_outOfBoundsTime / timeTillAttack);
+                warningSlider.GetComponent<Image>().color = colorCurve.Evaluate(1 - _outOfBoundsTimer.Value / timeTillAttack);
                 warningBack.GetComponent<Image>().enabled = true;
             
             } else {
@@ -42,7 +41,8 @@ namespace Spawnables.Player
                 warningSlider.GetComponent<Image>().enabled = false;
                 warningBack.GetComponent<Image>().enabled = false;
             }
-            attackable = _outOfBoundsTime>=timeTillAttack;
+            
+            attackable = _outOfBoundsTimer.IsFinished();
         }
     }
 }

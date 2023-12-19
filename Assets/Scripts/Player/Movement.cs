@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Scriptable_Objects.Upgrades;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Util;
@@ -35,11 +36,13 @@ namespace Player
         };
         private OrbitState _orbitState;
 
-        private float _lastDodge;
-        private float _dodgeTimer;
-        private float _afterImageTimer;
+        private readonly Timer _dodgeTimer = new();
+        private readonly Timer _dodgeCooldownTimer = new();
+        private readonly Timer _afterImageTimer = new();
         private Vector2 _dodgeDirection;
         private readonly List<GameObject> _afterImages = new();
+
+        private Upgradeable _upgradeable;
         
         private void Start()
         {
@@ -48,6 +51,7 @@ namespace Player
             _collider = GetComponent<Collider2D>();
             _sprite = GetComponent<SpriteRenderer>();
             _trails = GetComponentsInChildren<TrailRenderer>();
+            _upgradeable = GetComponent<Upgradeable>();
         }
     
         private void FixedUpdate()
@@ -57,26 +61,37 @@ namespace Player
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (Time.time - _lastDodge >= dodgeCooldown && _dodgeTimer == 0 && Input.GetKey(KeyCode.Space))
+            if (_dodgeCooldownTimer.IsFinished() && Input.GetKey(KeyCode.Space))
             {
-                _dodgeTimer = 1;
-                _afterImageTimer = 0;
+                var evt = new DodgeEvent
+                {
+                    dodgeCooldown = dodgeCooldown,
+                    dodgeDistance = dodgeDistance,
+                    dodgeVelocity = dodgeVelocity
+                };
+                if (_upgradeable) _upgradeable.HandleEvent(evt);
+
+                _dodgeTimer.Value = evt.dodgeDistance / evt.dodgeVelocity;
+                _dodgeCooldownTimer.Value = evt.dodgeDistance / evt.dodgeVelocity + evt.dodgeCooldown;
                 _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
             }
 
-            var wasDashing = _dodgeTimer > 0;
-            var dashing = (_dodgeTimer = Mathf.Clamp01(_dodgeTimer - Time.fixedDeltaTime * dodgeTimeDilation * dodgeVelocity/dodgeDistance)) > 0;
-            CustomRigidbody2D.Scaling = dashing ? dodgeTimeDilation : 1;
-            _collider.enabled = !dashing;
-            foreach (var trail in _trails) trail.emitting = !dashing;
-            _sprite.color = dashing ? new Color(1, 1, 1, 0.5f) : Color.white;
+            var wasDodging = !_dodgeTimer.IsFinished();
+            _dodgeTimer.FixedUpdate();
+            _dodgeCooldownTimer.FixedUpdate();
+            _afterImageTimer.FixedUpdate();
+            var dodging = !_dodgeTimer.IsFinished();
             
-            if (dashing)
+            CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
+            _collider.enabled = !dodging;
+            foreach (var trail in _trails) trail.emitting = !dodging;
+            _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
+            
+            if (dodging)
             {
-                if ((_afterImageTimer =
-                        Mathf.Clamp01(_afterImageTimer - Time.fixedDeltaTime * dodgeTimeDilation * dodgeVelocity/afterImageSpacing)) == 0)
+                if (_afterImageTimer.IsFinished())
                 {
-                    _afterImageTimer = 1;
+                    _afterImageTimer.Value = afterImageSpacing / dodgeVelocity;
                     
                     var afterImage = new GameObject
                     {
@@ -96,22 +111,25 @@ namespace Player
                 _rigid.velocity = _dodgeDirection * dodgeVelocity;
                 return;
             }
-            if (wasDashing)
+            if (wasDodging)
             {
                 _afterImages.ForEach(Destroy);
                 _afterImages.Clear();
                 
                 _velocity = _forwards * _velocity.magnitude;
-                _lastDodge = Time.time;
             }
             
-            if (Input.GetKey("w")) {
-                var dv = speedLimit * speedLimit / 100;
+            if (Input.GetKey("w"))
+            {
+                var evt = new MoveEvent { speedLimit = speedLimit, acceleration = acceleration };
+                if (_upgradeable) _upgradeable.HandleEvent(evt);
+                
+                var dv = evt.speedLimit * evt.speedLimit / 100;
                 var eff = 1 / (1 + Mathf.Exp(_velocity.sqrMagnitude / 100 - dv));
-                if (_velocity.sqrMagnitude > (speedLimit + 5) * (speedLimit + 5)){
+                if (_velocity.sqrMagnitude > (evt.speedLimit + 5) * (evt.speedLimit + 5)){
                     _acceleration = 0;
                 } else {
-                    _acceleration = 10 * acceleration * eff;
+                    _acceleration = 10 * evt.acceleration * eff;
                 }
             
                 var vm = _velocity.magnitude;

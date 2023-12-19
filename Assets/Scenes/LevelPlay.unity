@@ -2291,6 +2291,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e01d494ff164a77818764c89b4396c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
+  difficultyToLootTiers: 070000000f0000001900000032000000
+  scrapCountTiers: 02000000050000000a0000000f000000
+  scrapChanceTiers:
+  - 0.075
+  - 0.1
+  - 0.2
+  - 0.5
   variantLabel:
     m_LabelString: enemies
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
@@ -7559,9 +7567,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028cf50648571b74ea91103ca7784bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243, type: 3}
-  playRadius: 75
-  gravitySource: {fileID: 1331667012}
   bulletText: {fileID: 266863374}
 --- !u!61 &2086174085
 BoxCollider2D:

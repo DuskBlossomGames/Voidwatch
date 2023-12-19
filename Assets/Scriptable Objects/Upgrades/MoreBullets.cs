@@ -4,18 +4,13 @@ using UnityEngine;
 namespace Scriptable_Objects.Upgrades
 {
     [CreateAssetMenu(fileName = "MoreBullets", menuName = "Upgrades/MoreBullets")]
-    public class MoreBullets : BaseUpgrade
+    public class MoreBullets : BaseUpgrade<ShootEvent>
     {
-        public int bulletDifference;
-        
-        public override void OnEquip(Upgradeable upgradeable)
+        public float bulletModifier;
+
+        protected override void OnEvent(Upgradeable upgradeable, ShootEvent evt)
         {
-            upgradeable.GetComponent<GunHandler>().bulletsPerShot += bulletDifference;
-        }
-        
-        public override void OnUnequip(Upgradeable upgradeable)
-        {
-            upgradeable.GetComponent<GunHandler>().bulletsPerShot -= bulletDifference;
+            evt.bulletsPerShot = (int)(evt.bulletsPerShot * bulletModifier);
         }
     }
 }

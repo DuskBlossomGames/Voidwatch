@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using JetBrains.Annotations;
 using Scriptable_Objects;
+using Scriptable_Objects.Upgrades;
 using UnityEngine;
 
 namespace Player
@@ -10,39 +12,26 @@ namespace Player
     // TODO: make this stay across levels
     public class Upgradeable : MonoBehaviour
     {
-        private readonly List<BaseUpgrade> _upgrades = new();
-        public IReadOnlyCollection<BaseUpgrade> Upgrades => new ReadOnlyCollection<BaseUpgrade>(_upgrades.ToList());
+        [ItemCanBeNull] private readonly List<BaseUpgrade> _upgrades = new();
 
         public BaseUpgrade debugAddUpgrade;
         public BaseUpgrade debugRemoveUpgrade;
+
+        public void HandleEvent(IUpgradeableEvent evt)
+        {
+            _upgrades.ForEach(u=>u.OnEvent(this, evt));
+        }
         
-        public void AddUpgrade(BaseUpgrade upgrade)
-        {
-            _upgrades.Add(upgrade);
-            upgrade.OnEquip(this);
-        }
-
-        public bool RemoveUpgrade(BaseUpgrade upgrade)
-        {
-            if (_upgrades.Remove(upgrade))
-            {
-                upgrade.OnUnequip(this);
-                return true;
-            }
-
-            return false;
-        }
-
         private void Update()
         {
             if (debugAddUpgrade)
             {
-                AddUpgrade(debugAddUpgrade);
+                _upgrades.Add(debugAddUpgrade);
                 debugAddUpgrade = null;
             }
             if (debugRemoveUpgrade)
             {
-                RemoveUpgrade(debugRemoveUpgrade);
+                _upgrades.Remove(debugRemoveUpgrade);
                 debugRemoveUpgrade = null;
             }
         }
