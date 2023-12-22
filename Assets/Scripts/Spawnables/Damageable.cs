@@ -48,15 +48,15 @@ namespace Spawnables
             }
         }
 
-        public void Damage(float damage, IDamageable.DmgType dmgType)
+        public void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
         {
+            damage -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
             damage *= dmgRes.dmgMod[(int)dmgType];
             _barVisibility = 1;
-            Health -= damage;
+            Health -= damage>0 ? damage : 0;
         
             if (Health <= 0)
             {
-                Destroy(_healthBar);
                 Destroy(gameObject);
             }
         

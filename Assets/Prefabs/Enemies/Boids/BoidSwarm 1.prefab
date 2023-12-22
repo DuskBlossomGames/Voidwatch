@@ -227,6 +227,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   maxHealth: 20
 --- !u!114 &988408655905092487
 MonoBehaviour:
@@ -272,7 +273,7 @@ MonoBehaviour:
   misfireChance: 0
   repeats: 0
   repeatSeperation: 0.01
-  dmgMod: 20
+  dmgMod: 50
   status: 
 --- !u!114 &7410061765303661339
 MonoBehaviour:

@@ -164,9 +164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chargeTime: 2
-  dodgeTime: 0.25
-  ramp: 1.5
-  baseDmg: 30
+  dodgeTime: 0.2
+  ramp: 2
+  baseDmg: 50
   material: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   warnColor:
     serializedVersion: 2
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  maxHealth: 2000
+  maxHealth: 1000
   heathOpacityCurve:
     serializedVersion: 2
     m_Curve:

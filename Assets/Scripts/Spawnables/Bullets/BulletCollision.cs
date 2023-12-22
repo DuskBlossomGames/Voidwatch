@@ -11,6 +11,7 @@ public class BulletCollision : MonoBehaviour
 {
     public float dmg = 10;
     public GameObject owner;
+    public IDamageable.DmgType dmgType;
 
     private bool _leftOwner;
     private Upgradeable _upgradeable;
@@ -37,23 +38,14 @@ public class BulletCollision : MonoBehaviour
             var evt = new DealDamageEvent { damaged = other, damage = dmg };
             if (_upgradeable) _upgradeable.HandleEvent(evt);
             
-            var damageable = other.GetComponent<Damageable>();
+            var damageable = other.GetComponent<IDamageable>();
             if (damageable != null)
             {
                 Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
                 //Debug.Log(string.Format(".05 * dmg * mass * sqrSpeed = .05 * {0} * {1} * {2} = {3}",dmg,mass,sqrSpeed,.05f * dmg * mass * sqrSpeed));
-                damageable.Damage(.5f * evt.damage * mass * sqrSpeed) ;
-            }
-            var wdamageable = other.GetComponent<WormDamageable>();
-            if (wdamageable != null)
-            {
-                Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
-                float mass = GetComponent<CustomRigidbody2D>().mass;
-                float sqrSpeed = velDiff.sqrMagnitude / 1_000f;
-                //Debug.Log(string.Format(".05 * dmg * mass * sqrSpeed = .05 * {0} * {1} * {2} = {3}",dmg,mass,sqrSpeed,.05f * dmg * mass * sqrSpeed));
-                wdamageable.Damage(.5f * evt.damage * mass * sqrSpeed);
+                damageable.Damage(.5f * evt.damage * mass * sqrSpeed, dmgType);
             }
 
             Destroy(gameObject);

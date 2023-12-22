@@ -15,6 +15,7 @@ namespace Player
         public float dodgeDistance;
         public float dodgeCooldown;
         public float dodgeTimeDilation;
+        public AnimationCurve dodgeTimeDilationCurve;
         public float afterImageSpacing;
 
         private Collider2D _collider;
@@ -36,6 +37,7 @@ namespace Player
         };
         private OrbitState _orbitState;
 
+        private float _dodgeTimeLength;
         private readonly Timer _dodgeTimer = new();
         private readonly Timer _dodgeCooldownTimer = new();
         private readonly Timer _afterImageTimer = new();
@@ -71,7 +73,8 @@ namespace Player
                 };
                 if (_upgradeable) _upgradeable.HandleEvent(evt);
 
-                _dodgeTimer.Value = evt.dodgeDistance / evt.dodgeVelocity;
+                _dodgeTimeLength = evt.dodgeDistance / evt.dodgeVelocity;
+                _dodgeTimer.Value = _dodgeTimeLength;
                 _dodgeCooldownTimer.Value = evt.dodgeDistance / evt.dodgeVelocity + evt.dodgeCooldown;
                 _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
             }
@@ -81,8 +84,10 @@ namespace Player
             _dodgeCooldownTimer.FixedUpdate();
             _afterImageTimer.FixedUpdate();
             var dodging = !_dodgeTimer.IsFinished();
+
             
-            CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
+            CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
+            //CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
             _collider.enabled = !dodging;
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;

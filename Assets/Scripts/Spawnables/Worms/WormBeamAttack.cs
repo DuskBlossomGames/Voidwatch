@@ -75,7 +75,7 @@ public class WormBeamAttack : MonoBehaviour
                 var dmgable = tar.GetComponent<IDamageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(.01f * dmg, IDamageable.DmgType.Physical);
+                    dmgable.Damage(.01f * dmg, IDamageable.DmgType.Physical, .01f);
                 }
             }
             yield return new WaitForSeconds(.02f);
@@ -118,7 +118,7 @@ public class WormBeamAttack : MonoBehaviour
                 var dmgable = tar.GetComponent<Damageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(.01f * dmg, IDamageable.DmgType.Physical);
+                    dmgable.Damage(.01f * dmg, IDamageable.DmgType.Physical, .01f);
                 }
             }
         }

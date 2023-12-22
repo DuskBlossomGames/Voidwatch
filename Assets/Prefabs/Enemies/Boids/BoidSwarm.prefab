@@ -112,8 +112,6 @@ MonoBehaviour:
   maxSpeed: 13
   minSpeed: 10
   target: {fileID: 0}
-  bulletPrefab: {fileID: 6569384808679381653, guid: 116573cd1e8558d468ec2a5d067e03cd, type: 3}
-  playRadius: 75
   gravitySource: {fileID: 0}
   shootDist: 15
   original: 1
@@ -275,7 +273,7 @@ MonoBehaviour:
   misfireChance: 0
   repeats: 0
   repeatSeperation: 0.01
-  dmgMod: 20
+  dmgMod: 50
   status: 
 --- !u!114 &7410061765303661339
 MonoBehaviour:

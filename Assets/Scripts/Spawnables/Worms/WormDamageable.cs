@@ -16,6 +16,7 @@ public class WormDamageable : MonoBehaviour, Spawnables.IDamageable
     
     private void Start()
     {
+        dmgRes.Ready();
         root.GetComponent<MultiDamageable>().health = maxHealth;
         
         _healthBar = Instantiate(healthBarPrefab);
@@ -45,13 +46,14 @@ public class WormDamageable : MonoBehaviour, Spawnables.IDamageable
         Destroy(gameObject);
     }
 
-    public void Damage(float damage, Spawnables.IDamageable.DmgType dmgType)
+    public void Damage(float damage, Spawnables.IDamageable.DmgType dmgType, float reduceMod = 1f)
     {
+        damage -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
         damage *= dmgRes.dmgMod[(int)dmgType];
 
         _barVisibility = 1;
-        root.GetComponent<MultiDamageable>().health -= damage;
-        
+        root.GetComponent<MultiDamageable>().health -= damage > 0 ? damage : 0;
+
         if (root.GetComponent<MultiDamageable>().health <= 0)
         {
             root.GetComponent<MultiDamageable>().Kill();

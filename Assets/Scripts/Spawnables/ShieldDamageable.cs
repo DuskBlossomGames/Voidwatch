@@ -23,9 +23,13 @@ namespace Spawnables
         private GameObject _shieldBar;
 
         private float _barVisibility;
+        private float _barVisibilityShield;
 
         public DamageResistances bodyDmgRes;
         public DamageResistances shieldDmgRes;
+
+        private float _oldHealth = 0;
+        private float _oldShield = 0;
 
         protected void Start()
         {
@@ -54,77 +58,88 @@ namespace Spawnables
                 transform.position + new Vector3(_koffset * Mathf.Sin(camAngle), _koffset * Mathf.Cos(camAngle), 0);
             _shieldBar.transform.rotation = Camera.main.transform.rotation;
             _shieldBar.transform.position =
-                transform.position + new Vector3(_koffset * Mathf.Sin(camAngle), _koffset * Mathf.Cos(camAngle), 0);
+                transform.position + new Vector3((_koffset+.2f) * Mathf.Sin(camAngle), (_koffset + .2f) * Mathf.Cos(camAngle), 0);
+
+            if (_oldShield != ShieldPower)
+            {
+
+                _oldShield = ShieldPower;
+                _barVisibility = _barVisibilityShield = Mathf.Max(_barVisibilityShield, .9f);
+                //_barVisibility = 1;
+                _shieldBar.transform.GetChild(0).localScale = new Vector3(
+                    (Mathf.Clamp(ShieldPower, 0, ShieldMaxPower) / ShieldMaxPower), 1, 1);
+            }
+            if (_oldHealth != Health)
+            {
+                _oldHealth = Health;
+                _barVisibility = _barVisibilityShield = Mathf.Max(_barVisibilityShield, .9f);
+                //_barVisibility = 1;
+                _healthBar.transform.GetChild(0).localScale = new Vector3(
+                    2 * (1 - Health / MaxHealth), 1, 1);
+            }
+            
+            _barVisibility = _barVisibilityShield = _barVisibility -= .7f * Time.deltaTime;
 
             foreach (var sprite in _healthBar.GetComponentsInChildren<SpriteRenderer>())
             {
                 var color = sprite.color;
-                _barVisibility -= .4f * Time.deltaTime;
+                
+                //color.a = _barVisibilityShield>0 ? 0 : heathOpacityCurve.Evaluate(_barVisibility);
                 color.a = heathOpacityCurve.Evaluate(_barVisibility);
 
                 sprite.color = color;
             }
-            foreach (var sprite in _shieldBar.GetComponentsInChildren<SpriteRenderer>())
             {
+                var sprite = _shieldBar.transform.GetChild(0).GetComponent<SpriteRenderer>();
                 var color = sprite.color;
-                _barVisibility -= .4f * Time.deltaTime;
-                color.a = heathOpacityCurve.Evaluate(_barVisibility);
+                //_barVisibilityShield -= .4f * Time.deltaTime;
+                color.a = heathOpacityCurve.Evaluate(_barVisibilityShield);
 
                 sprite.color = color;
             }
+
         }
 
-        public void Damage(float damage, IDamageable.DmgType dmgType)
+        public void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
         {
-            Debug.LogFormat("Took {0} dmg as type {1}", damage, dmgType);
             float bleed = damage * shieldDmgRes.dmgBleed[(int)dmgType];
             damage -= bleed;//some damage leaks through
 
-            Debug.LogFormat("Multiplied by {0}", shieldDmgRes.dmgMod[(int)dmgType]);
+            damage -= reduceMod * shieldDmgRes.dmgReduce[(int)dmgType];
             damage *= shieldDmgRes.dmgMod[(int)dmgType];
-            Debug.LogFormat("Reduced by {0}", shieldDmgRes.dmgReduce[(int)dmgType]);
-            damage -= shieldDmgRes.dmgReduce[(int)dmgType];
-            Debug.LogFormat("Giving {0}", damage);
+            
             if (damage > 0)
             {
-                Debug.Log(">0");
                 if (ShieldPower < 0)
                 {
                     bleed += damage;
                 }
                 else
                 {
-                    Debug.LogFormat("Causes harm @ {0}",damage);
-                    Debug.LogFormat("Current Power: {0}",ShieldPower);
                     ShieldPower -= damage;
                     ShieldPower -= 1;
-                    Debug.LogFormat("After Power: {0}", ShieldPower);
                     if (ShieldPower < -ShieldMaxDebt)
                     { 
                         float overDebt = -ShieldMaxDebt - ShieldPower;
                         ShieldPower += overDebt;
                         bleed += overDebt;//excess damage overflows to bleeded damage
-                        Debug.Log("Dmg Overflow");
                     }
                 }
             }
 
+            bleed -= reduceMod * bodyDmgRes.dmgReduce[(int)dmgType];
             bleed *= bodyDmgRes.dmgMod[(int)dmgType];
-            bleed -= bodyDmgRes.dmgReduce[(int)dmgType];
 
-            _barVisibility = 1;
-            Health -= bleed;
+            Health -= bleed > 0 ? bleed : 0;
 
             if (Health <= 0)
             {
+                Destroy(_shieldBar);
                 Destroy(_healthBar);
                 Destroy(gameObject);
             }
 
-            _healthBar.transform.GetChild(0).localScale = new Vector3(
-                2 * (1 - Health / MaxHealth), 1, 1);
-            _shieldBar.transform.GetChild(0).localScale = new Vector3(
-                2 * (1 - Mathf.Clamp(ShieldPower,0,ShieldMaxPower) / ShieldMaxPower), 1, 1);
+            _barVisibility = _barVisibilityShield = 1;
         }
     }
 }

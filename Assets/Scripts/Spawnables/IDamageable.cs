@@ -14,6 +14,6 @@ namespace Spawnables
             Corrosive = 3, //Non-bleed Energy, but extreame anti material, + anti-organic
             Black = 4,     //Most abstract, effectively anti-everything, all is weak, but especially real matter.
         }
-        public void Damage(float damage, DmgType dmgType);
+        public void Damage(float damage, DmgType dmgType, float reduceMod = 1f);
     }
 }
