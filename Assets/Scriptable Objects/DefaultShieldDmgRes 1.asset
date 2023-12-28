@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a70ed9f3d2af644b92fd396ac32c86, type: 3}
   m_Name: DefaultShieldDmgRes 1
   m_EditorClassIdentifier: 
-  physDmgMod: 0.5
-  physDmgReduce: 2
+  physDmgMod: 0.8
+  physDmgReduce: 1
   physDmgBleed: 0
   _123456789: 0
-  engDmgMod: 0.1
-  engDmgReduce: 2
+  engDmgMod: 0.3
+  engDmgReduce: 0.5
   engDmgBleed: 0.05
   _123456788: 0
   conDmgMod: 5
@@ -33,14 +33,14 @@ MonoBehaviour:
   blackDmgBleed: 0.2
   _123456785: 0
   dmgMod:
-  - 0.5
-  - 0.1
+  - 0.8
+  - 0.3
   - 5
   - 0.2
   - 3
   dmgReduce:
-  - 2
-  - 2
+  - 1
+  - 0.5
   - 0
   - 0
   - 0

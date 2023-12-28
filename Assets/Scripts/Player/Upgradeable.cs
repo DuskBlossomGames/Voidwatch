@@ -17,9 +17,9 @@ namespace Player
         public BaseUpgrade debugAddUpgrade;
         public BaseUpgrade debugRemoveUpgrade;
 
-        public void HandleEvent(IUpgradeableEvent evt)
+        public void HandleEvent(IUpgradeableEvent evt, int? callerWeaponID)
         {
-            _upgrades.ForEach(u=>u.OnEvent(this, evt));
+            _upgrades.ForEach(u=>u.OnEvent(this, evt, callerWeaponID));
         }
         
         private void Update()

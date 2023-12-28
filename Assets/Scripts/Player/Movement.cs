@@ -71,7 +71,7 @@ namespace Player
                     dodgeDistance = dodgeDistance,
                     dodgeVelocity = dodgeVelocity
                 };
-                if (_upgradeable) _upgradeable.HandleEvent(evt);
+                if (_upgradeable) _upgradeable.HandleEvent(evt, null);
 
                 _dodgeTimeLength = evt.dodgeDistance / evt.dodgeVelocity;
                 _dodgeTimer.Value = _dodgeTimeLength;
@@ -127,7 +127,7 @@ namespace Player
             if (Input.GetKey("w"))
             {
                 var evt = new MoveEvent { speedLimit = speedLimit, acceleration = acceleration };
-                if (_upgradeable) _upgradeable.HandleEvent(evt);
+                if (_upgradeable) _upgradeable.HandleEvent(evt, null);
                 
                 var dv = evt.speedLimit * evt.speedLimit / 100;
                 var eff = 1 / (1 + Mathf.Exp(_velocity.sqrMagnitude / 100 - dv));

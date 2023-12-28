@@ -12,6 +12,7 @@ public class BulletCollision : MonoBehaviour
     public float dmg = 10;
     public GameObject owner;
     public IDamageable.DmgType dmgType;
+    public int weaponID;
 
     private bool _leftOwner;
     private Upgradeable _upgradeable;
@@ -36,7 +37,7 @@ public class BulletCollision : MonoBehaviour
         if (_leftOwner || other != owner)
         {
             var evt = new DealDamageEvent { damaged = other, damage = dmg };
-            if (_upgradeable) _upgradeable.HandleEvent(evt);
+            if (_upgradeable) _upgradeable.HandleEvent(evt, weaponID);
             
             var damageable = other.GetComponent<IDamageable>();
             if (damageable != null)

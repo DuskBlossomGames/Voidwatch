@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3ebb35444c7654787f70b897e59849, type: 3}
+  m_Name: Std_Kinetic
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
+  playRadius: 0
+  gravitySource: {fileID: 0}
+  clipCount: 0
+  clipCap: 0
+  bulletsPerShot: 0
+  bulletsPerShotVarience: 0
+  reloadTime: 0
+  refillTime: 0
+  shotForce: 0
+  forceVarience: 0
+  lateralSeperation: 0
+  verticalSeperation: 0
+  misfireChance: 0
+  repeats: 0
+  repeatSeperation: 0
+  dmgMod: 0

@@ -1,52 +1,37 @@
 using System.Collections;
-using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
 using Player;
 using Scriptable_Objects;
 using Scriptable_Objects.Upgrades;
-using UnityEngine;
 using Util;
 
-public class GunHandler : MonoBehaviour
+public class KineticWeapon : IBaseWeapon
 {
-    public GameObject bulletPrefab;
-    public float playRadius;
-    public GameObject gravitySource;
-
-    public int clipCount;
-    public int clipCap;
-    public int bulletsPerShot;
-    public int bulletsPerShotVarience;
-    public float reloadTime;
-    public float refillTime;
-    public float shotForce;
-    public float forceVarience;
-    public float lateralSeperation;
-    public float verticalSeperation;
-    public float misfireChance;
-    public int repeats;
-    public float repeatSeperation;
-
-    public float dmgMod;
+    public KineticSettings kineticSettings;
 
     private int _currClipCount;
     private int _currClipCap;
 
     private bool _readyToFire;
     private float _bulletAngle;
-    public string status;
 
-    private Upgradeable _upgradeable;
+    public GameObject gravitySource;
+    public string status;
 
     private void Start()
     {
         if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
-        _currClipCount = clipCount;
-        _currClipCap = clipCap;
+        _currClipCount = kineticSettings.clipCount;
+        _currClipCap = kineticSettings.clipCap;
         _readyToFire = true;
         status = "Ready To Fire";
 
-        _upgradeable = GetComponent<Upgradeable>();
+        _upgradeable = GetComponent<Player.Upgradeable>();
     }
+
+    public override void OnGetFocus() { return; }
+    public override void OnLoseFocus() { return; }
 
     public bool Shoot(float angle)//returns if could start the shoot coroutine
     {
@@ -55,7 +40,8 @@ public class GunHandler : MonoBehaviour
             _bulletAngle = angle;
             StartCoroutine(_Fire());
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
@@ -63,28 +49,30 @@ public class GunHandler : MonoBehaviour
 
     public float ExpectedVelocity()
     {
-        return shotForce / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
+        return kineticSettings.shotForce / kineticSettings.bulletPrefab.GetComponent<Util.CustomRigidbody2D>().mass * Time.fixedDeltaTime;
     }
     IEnumerator _Fire()
     {
         _readyToFire = false;
         status = "Shooting";
         //Debug.Log("started");
-        
-        var evt = new ShootEvent {
-            bulletsPerShot = bulletsPerShot,
-            bulletsPerShotVarience = bulletsPerShotVarience,
-            shotForce = shotForce,
-            forceVarience = forceVarience,
-            lateralSeperation = lateralSeperation,
-            verticalSeperation = verticalSeperation,
-            misfireChance = misfireChance,
-            repeats = repeats,
-            repeatSeperation = repeatSeperation
-        };
-        if (_upgradeable) _upgradeable.HandleEvent(evt, null);
 
-        for (int rep = 0; rep < evt.repeats+1; rep++)
+        var ks = kineticSettings;//Just aliasing things that make this more legible
+        var evt = new ShootEvent
+        {
+            bulletsPerShot = ks.bulletsPerShot,
+            bulletsPerShotVarience = ks.bulletsPerShotVarience,
+            shotForce = ks.shotForce,
+            forceVarience = ks.forceVarience,
+            lateralSeperation = ks.lateralSeperation,
+            verticalSeperation = ks.verticalSeperation,
+            misfireChance = ks.misfireChance,
+            repeats = ks.repeats,
+            repeatSeperation = ks.repeatSeperation
+        };
+        if (_upgradeable) HandleEvent(evt);
+
+        for (int rep = 0; rep < evt.repeats + 1; rep++)
         {
             if (rep > 0)//only delay between repeats
             {
@@ -101,7 +89,8 @@ public class GunHandler : MonoBehaviour
                 {
                     latOff = evt.lateralSeperation * (2 * i - bullets + 1) / (bullets - 1);
                     verOff = evt.verticalSeperation * (1 - Mathf.Abs(2 * ((float)i / (bullets - 1)) - 1));
-                } else
+                }
+                else
                 {
                     latOff = verOff = 0;
                 }
@@ -111,16 +100,16 @@ public class GunHandler : MonoBehaviour
                     transform.rotation.eulerAngles.z + _bulletAngle);
                 if (Random.Range(0f, 1f) > evt.misfireChance)
                 {
-                    var bullet = Instantiate(bulletPrefab, transform.position, rot);
+                    var bullet = Instantiate(kineticSettings.bulletPrefab, transform.position, rot);
 
                     bullet.GetComponent<CustomRigidbody2D>().velocity = GetComponent<CustomRigidbody2D>().velocity;
-                    bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
+                    bullet.GetComponent<DestroyOffScreen>().playRadius = kineticSettings.playRadius;
                     bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
 
                     float vertForce = evt.shotForce + Random.Range(-evt.forceVarience, evt.forceVarience) + verOff;
                     float latForce = Random.Range(-evt.forceVarience, evt.forceVarience) + latOff;
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
-                    bullet.GetComponent<BulletCollision>().dmg = dmgMod;
+                    bullet.GetComponent<BulletCollision>().dmg = kineticSettings.dmgMod;
                     bullet.GetComponent<BulletCollision>().owner = gameObject;
                 }
 
@@ -131,19 +120,19 @@ public class GunHandler : MonoBehaviour
         {
             //Debug.Log("Reloading");
             status = "Reloading";
-            yield return new WaitForSeconds(reloadTime);
+            yield return new WaitForSeconds(kineticSettings.reloadTime);
             _currClipCount -= 1;
-            _currClipCap = clipCap;
+            _currClipCap = kineticSettings.clipCap;
             //Debug.Log("Reloaded");
         }
-        
+
 
         if (_currClipCount <= 0)//should never be less than 0
         {
             //Debug.Log("Refilling");
             status = "Refilling";
-            yield return new WaitForSeconds(refillTime);
-            _currClipCount = clipCount;
+            yield return new WaitForSeconds(kineticSettings.refillTime);
+            _currClipCount = kineticSettings.clipCount;
             //Debug.Log("Refilled");
         }
 

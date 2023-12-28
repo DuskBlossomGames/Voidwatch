@@ -15,18 +15,38 @@ MonoBehaviour:
   physDmgMod: 1
   physDmgReduce: 0
   physDmgBleed: 0
+  _123456789: 0
   engDmgMod: 1
   engDmgReduce: 0
   engDmgBleed: 0
+  _123456788: 0
   conDmgMod: 2
   conDmgReduce: 0
   conDmgBleed: 0
+  _123456787: 0
   corrDmgMod: 3
   corrDmgReduce: 0
   corrDmgBleed: 0
+  _123456786: 0
   blackDmgMod: 5
   blackDmgReduce: 0
   blackDmgBleed: 0
-  dmgMod: []
-  dmgReduce: []
-  dmgBleed: []
+  _123456785: 0
+  dmgMod:
+  - 1
+  - 1
+  - 2
+  - 3
+  - 5
+  dmgReduce:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  dmgBleed:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0

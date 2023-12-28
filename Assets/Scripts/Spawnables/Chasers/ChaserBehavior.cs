@@ -1,4 +1,5 @@
 using UnityEngine;
+using Util;
 
 public class ChaserBehavior : MonoBehaviour
 {
