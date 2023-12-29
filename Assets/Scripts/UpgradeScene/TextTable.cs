@@ -61,8 +61,11 @@ public class TextTable : MonoBehaviour
     private string[,] _grid;
     private uint[] _cWidths;
     private uint _curPos;
+    private BaseWeapon?[] _equippedWeapons;
 
     public List<BaseUpgrade> upgrades;
+    public List<BaseComponent> components;
+    public bool isWeapons;
 
     public enum Select
     {
@@ -70,6 +73,11 @@ public class TextTable : MonoBehaviour
         Current,
         Selected,
     }
+    public enum CorU
+    {
+        Component, Upgrade,
+    }
+    public CorU coru;
 
     public Select selectState;
 
@@ -80,8 +88,9 @@ public class TextTable : MonoBehaviour
         nstr += "+-";
         for (int i = 0; i < _cWidths[0]; i++){nstr += '-';}
         nstr += "-+------+-----+\n";
-        
-        nstr += "| " + "Components".Center(_cWidths[0]) +" | Mass |     |\n";
+
+        string label = coru == CorU.Component ? "Components" : "Upgrades";
+        nstr += "| " + label.Center(_cWidths[0]) +" | Mass |     |\n";
         
         nstr += "+-";
         for (int i = 0; i < _cWidths[0]; i++) { nstr += '-'; }
@@ -90,17 +99,35 @@ public class TextTable : MonoBehaviour
         nstr += "<>".Center(_cWidths[0]);
         nstr += " |      |     |\n";
 
-        for (int i = 0; i < upgrades.Count; i++)
+        if (coru == CorU.Upgrade)
         {
-            var upgrade = upgrades[i];
-            string name = upgrade.name;
-            name = (name.Length <= _cWidths[0] - 3)
-                ? name.Center(_cWidths[0] - 3)
-                : name.Substring(0, (int)_cWidths[0] - 6) + "...";
-            string ind = (i==_curPos) 
-                ? selectState switch { Select.None => "   ", Select.Selected => ">> ", Select.Current => ">  ", _=>"?? "}
-                : "   " ;
-            nstr += "| " + ind + name + " | " + upgrade.weight.ToString().Right(_cWidths[1]) + " |     |\n";
+            for (int i = 0; i < upgrades.Count; i++)
+            {
+                var upgrade = upgrades[i];
+                string name = upgrade.name;
+                name = (name.Length <= _cWidths[0] - 3)
+                    ? name.Center(_cWidths[0] - 3)
+                    : name.Substring(0, (int)_cWidths[0] - 6) + "...";
+                string ind = (i == _curPos)
+                    ? selectState switch { Select.None => "   ", Select.Selected => ">> ", Select.Current => ">  ", _ => "?? " }
+                    : "   ";
+                nstr += "| " + ind + name + " | " + upgrade.weight.ToString().Right(_cWidths[1]) + " |     |\n";
+            }
+        } else if (coru == CorU.Component)
+        {
+            for (int i = 0; i < components.Count; i++)
+            {
+                var component = components[i];
+                string name = component.name;
+                name = (name.Length <= _cWidths[0] - 3)
+                    ? name.Center(_cWidths[0] - 3)
+                    : name.Substring(0, (int)_cWidths[0] - 6) + "...";
+                string ind = (i == _curPos)
+                    ? selectState switch { Select.None => "   ", Select.Selected => ">> ", Select.Current => ">  ", _ => "?? " }
+                    : "   ";
+                string occ = isWeapons ? ( component.weaponID == null ? "   " : "("+component.weaponID+")" ) : "(*)"; 
+                nstr += "| " + ind + name + " | " + component.compWeight.ToString().Right(_cWidths[1]) + " | "+ occ +" |\n";
+            }
         }
 
         nstr += "+-";
@@ -118,6 +145,7 @@ public class TextTable : MonoBehaviour
 
     private void Start()
     {
+        _equippedWeapons = new BaseWeapon?[3];
         _text = GetComponent<Text>();
         _rTransform = GetComponent<RectTransform>();
 
@@ -145,7 +173,33 @@ public class TextTable : MonoBehaviour
                 _curPos = _curPos==0 ? 0 : _curPos - 1;
             } else if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                _curPos = _curPos == upgrades.Count - 1 ? _curPos : _curPos + 1;
+                int maxrow = coru == CorU.Component ? components.Count : upgrades.Count;
+                _curPos = _curPos == maxrow - 1 ? _curPos : _curPos + 1;
+            }
+
+            if(coru == CorU.Component && isWeapons)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (Input.GetKeyDown( (i+1).ToString() ))
+                    {
+                        int? oldInd = components[(int)_curPos].weaponID;
+                        if (oldInd != null) { _equippedWeapons[(int)oldInd-1] = null; }
+                        if (_equippedWeapons[i] != null)
+                        {
+                            _equippedWeapons[i].weaponID = null;
+                        }
+                        _equippedWeapons[i] = (BaseWeapon)components[(int)_curPos];
+                        components[(int)_curPos].weaponID = i+1;
+                    }
+                }
+                if (Input.GetKeyDown("0"))
+                {
+                    int? oldInd = components[(int)_curPos].weaponID;
+                    if (oldInd != null) { _equippedWeapons[(int)oldInd - 1] = null; }
+                    components[(int)_curPos].weaponID = null;
+                }
+
             }
         }
         UpdateText();

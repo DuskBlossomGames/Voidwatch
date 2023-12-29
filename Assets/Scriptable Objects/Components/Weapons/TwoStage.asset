@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6915e175ad9759419b49ee5e4e0c1b5, type: 3}
-  m_Name: Std_Kinetic
+  m_Name: TwoStage
   m_EditorClassIdentifier: 
   compEnabled: 0
-  compName: Std Kinetic
-  compWeight: 5
+  compName: Two Stage Light Gas Gun
+  compWeight: 40
   rarity: 0
-  bulletPrefab: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243, type: 3}
-  playRadius: 75
-  clipCount: 5
-  clipCap: 50
-  bulletsPerShot: 5
+  bulletPrefab: {fileID: 0}
+  playRadius: 0
+  clipCount: 0
+  clipCap: 0
+  bulletsPerShot: 0
   bulletsPerShotVarience: 0
-  reloadTime: 1
-  refillTime: 1
-  shotForce: 1500
-  forceVarience: 20
-  lateralSeperation: 50
-  verticalSeperation: 200
+  reloadTime: 0
+  refillTime: 0
+  shotForce: 0
+  forceVarience: 0
+  lateralSeperation: 0
+  verticalSeperation: 0
   misfireChance: 0
   repeats: 0
   repeatSeperation: 0
-  dmgMod: 10
+  dmgMod: 0
   gravitySource: {fileID: 0}
   status: 
   manager: {fileID: 0}

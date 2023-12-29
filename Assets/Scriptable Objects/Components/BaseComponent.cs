@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Scriptable_Objects.Upgrades;
 
-public abstract class IBaseComponent : MonoBehaviour
+public abstract class BaseComponent : ScriptableObject
 {
     public List<System.Type> eventsGenerated;
-    public string compName;
-    public int compWeight;
     public bool compEnabled;
     public int? weaponID;
+    public string compName;
+    public int compWeight;
+    public BaseUpgrade.Rarity rarity;
 
     protected Player.Upgradeable _upgradeable;
 

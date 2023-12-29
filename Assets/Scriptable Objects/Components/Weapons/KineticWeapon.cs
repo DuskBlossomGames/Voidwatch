@@ -6,9 +6,27 @@ using Scriptable_Objects;
 using Scriptable_Objects.Upgrades;
 using Util;
 
-public class KineticWeapon : IBaseWeapon
+[CreateAssetMenu(menuName = "Components/Weapons/Kinetic")]
+public class KineticWeapon : BaseWeapon
 {
-    public KineticSettings kineticSettings;
+    public GameObject bulletPrefab;
+    public float playRadius;
+
+    public int clipCount;
+    public int clipCap;
+    public int bulletsPerShot;
+    public int bulletsPerShotVarience;
+    public float reloadTime;
+    public float refillTime;
+    public float shotForce;
+    public float forceVarience;
+    public float lateralSeperation;
+    public float verticalSeperation;
+    public float misfireChance;
+    public int repeats;
+    public float repeatSeperation;
+
+    public float dmgMod;
 
     private int _currClipCount;
     private int _currClipCap;
@@ -19,26 +37,28 @@ public class KineticWeapon : IBaseWeapon
     public GameObject gravitySource;
     public string status;
 
-    private void Start()
+    public ComponentManager manager;
+
+    public override void Start()
     {
         if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
-        _currClipCount = kineticSettings.clipCount;
-        _currClipCap = kineticSettings.clipCap;
+        _currClipCount = clipCount;
+        _currClipCap = clipCap;
         _readyToFire = true;
         status = "Ready To Fire";
 
-        _upgradeable = GetComponent<Player.Upgradeable>();
+        _upgradeable = manager.GetComponent<Player.Upgradeable>();
     }
 
-    public override void OnGetFocus() { return; }
-    public override void OnLoseFocus() { return; }
+    public override void OnGetFocus() { }
+    public override void OnLoseFocus() { }
 
     public bool Shoot(float angle)//returns if could start the shoot coroutine
     {
         if (_readyToFire)
         {
             _bulletAngle = angle;
-            StartCoroutine(_Fire());
+            manager.ElevStartCoroutine(_Fire());
             return true;
         }
         else
@@ -49,7 +69,7 @@ public class KineticWeapon : IBaseWeapon
 
     public float ExpectedVelocity()
     {
-        return kineticSettings.shotForce / kineticSettings.bulletPrefab.GetComponent<Util.CustomRigidbody2D>().mass * Time.fixedDeltaTime;
+        return shotForce / bulletPrefab.GetComponent<Util.CustomRigidbody2D>().mass * Time.fixedDeltaTime;
     }
     IEnumerator _Fire()
     {
@@ -57,18 +77,17 @@ public class KineticWeapon : IBaseWeapon
         status = "Shooting";
         //Debug.Log("started");
 
-        var ks = kineticSettings;//Just aliasing things that make this more legible
         var evt = new ShootEvent
         {
-            bulletsPerShot = ks.bulletsPerShot,
-            bulletsPerShotVarience = ks.bulletsPerShotVarience,
-            shotForce = ks.shotForce,
-            forceVarience = ks.forceVarience,
-            lateralSeperation = ks.lateralSeperation,
-            verticalSeperation = ks.verticalSeperation,
-            misfireChance = ks.misfireChance,
-            repeats = ks.repeats,
-            repeatSeperation = ks.repeatSeperation
+            bulletsPerShot = bulletsPerShot,
+            bulletsPerShotVarience = bulletsPerShotVarience,
+            shotForce = shotForce,
+            forceVarience = forceVarience,
+            lateralSeperation = lateralSeperation,
+            verticalSeperation = verticalSeperation,
+            misfireChance = misfireChance,
+            repeats = repeats,
+            repeatSeperation = repeatSeperation
         };
         if (_upgradeable) HandleEvent(evt);
 
@@ -95,22 +114,22 @@ public class KineticWeapon : IBaseWeapon
                     latOff = verOff = 0;
                 }
 
-                Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles.x,
-                    transform.rotation.eulerAngles.x,
-                    transform.rotation.eulerAngles.z + _bulletAngle);
+                Quaternion rot = Quaternion.Euler(manager.transform.rotation.eulerAngles.x,
+                    manager.transform.rotation.eulerAngles.x,
+                    manager.transform.rotation.eulerAngles.z + _bulletAngle);
                 if (Random.Range(0f, 1f) > evt.misfireChance)
                 {
-                    var bullet = Instantiate(kineticSettings.bulletPrefab, transform.position, rot);
+                    var bullet = Instantiate(bulletPrefab, manager.transform.position, rot);
 
-                    bullet.GetComponent<CustomRigidbody2D>().velocity = GetComponent<CustomRigidbody2D>().velocity;
-                    bullet.GetComponent<DestroyOffScreen>().playRadius = kineticSettings.playRadius;
+                    bullet.GetComponent<CustomRigidbody2D>().velocity = manager.GetComponent<CustomRigidbody2D>().velocity;
+                    bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
                     bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
 
                     float vertForce = evt.shotForce + Random.Range(-evt.forceVarience, evt.forceVarience) + verOff;
                     float latForce = Random.Range(-evt.forceVarience, evt.forceVarience) + latOff;
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
-                    bullet.GetComponent<BulletCollision>().dmg = kineticSettings.dmgMod;
-                    bullet.GetComponent<BulletCollision>().owner = gameObject;
+                    bullet.GetComponent<BulletCollision>().dmg = dmgMod;
+                    bullet.GetComponent<BulletCollision>().owner = manager.gameObject;
                 }
 
             }
@@ -120,9 +139,9 @@ public class KineticWeapon : IBaseWeapon
         {
             //Debug.Log("Reloading");
             status = "Reloading";
-            yield return new WaitForSeconds(kineticSettings.reloadTime);
+            yield return new WaitForSeconds(reloadTime);
             _currClipCount -= 1;
-            _currClipCap = kineticSettings.clipCap;
+            _currClipCap = clipCap;
             //Debug.Log("Reloaded");
         }
 
@@ -131,8 +150,8 @@ public class KineticWeapon : IBaseWeapon
         {
             //Debug.Log("Refilling");
             status = "Refilling";
-            yield return new WaitForSeconds(kineticSettings.refillTime);
-            _currClipCount = kineticSettings.clipCount;
+            yield return new WaitForSeconds(refillTime);
+            _currClipCount = clipCount;
             //Debug.Log("Refilled");
         }
 

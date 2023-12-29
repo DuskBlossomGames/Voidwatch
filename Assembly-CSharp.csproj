@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\Spawnables\Bullets\DestroyOffScreen.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\BaseUpgrade.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Gravitatable.cs" />
+    <Compile Include="Assets\Scripts\Player\ComponentManager.cs" />
     <Compile Include="Assets\Scripts\Player\EnforcePlayArea.cs" />
     <Compile Include="Assets\Scripts\Static Objects or Misc\ForceFieldHandler.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Chasers\ChaserBehavior.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormSegmentBuilder.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\Weapons\KineticWeapon.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Boids\BoidHandler.cs" />
-    <Compile Include="Assets\Scriptable Objects\Components\IBaseComponent.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\Weapons\BaseWeapon.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeItem.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerDamageable.cs" />
@@ -119,13 +119,13 @@
     <Compile Include="Assets\Scripts\Spawning Scripts\EnemySpawner\EnemyVariant.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\EnemySpawner\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\TextTable.cs" />
+    <Compile Include="Assets\Scriptable Objects\Components\BaseComponent.cs" />
     <Compile Include="Assets\Scripts\Player\Upgradeable.cs" />
     <Compile Include="Assets\Scripts\Util\Exceptions.cs" />
     <Compile Include="Assets\Scripts\Util\UtilFuncs.cs" />
     <Compile Include="Assets\Scriptable Objects\LevelSelectData.cs" />
     <Compile Include="Assets\Scripts\Spawnables\DirectPathfinding.cs" />
     <Compile Include="Assets\Scripts\Util\CustomRigidbody2D.cs" />
-    <Compile Include="Assets\Scriptable Objects\Components\Weapons\KineticSettings.cs" />
     <Compile Include="Assets\Scripts\Util\Selectable.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeManager.cs" />
     <Compile Include="Assets\Scripts\Spawnables\IDamageable.cs" />

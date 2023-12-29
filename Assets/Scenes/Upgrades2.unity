@@ -431,12 +431,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rows: 0
-  cols: 3
-  upgrades:
-  - {fileID: 11400000, guid: 0ffd5b4e6fb3b4ddca675a8d6f5c157b, type: 2}
-  - {fileID: 11400000, guid: b78a2ea0382ab44d8aa01c3046b1f2db, type: 2}
-  - {fileID: 11400000, guid: 681d62305d943432dbdca8fcbab6392e, type: 2}
-  selectState: 0
+  cols: 0
+  upgrades: []
+  components:
+  - {fileID: 11400000, guid: e8e1e55f8edbaf74fba7da128626e583, type: 2}
+  - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
+  - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
+  - {fileID: 11400000, guid: c52e59bdc3da7304a8acd53ddf433688, type: 2}
+  isWeapons: 1
+  coru: 0
+  selectState: 1
 --- !u!1 &1101874105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1005,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rows: 0
   cols: 0
-  upgrades: []
+  upgrades:
+  - {fileID: 11400000, guid: 0ffd5b4e6fb3b4ddca675a8d6f5c157b, type: 2}
+  - {fileID: 11400000, guid: b78a2ea0382ab44d8aa01c3046b1f2db, type: 2}
+  - {fileID: 11400000, guid: 681d62305d943432dbdca8fcbab6392e, type: 2}
+  components: []
+  isWeapons: 0
+  coru: 1
   selectState: 0
 --- !u!1 &2112286536
 GameObject:
