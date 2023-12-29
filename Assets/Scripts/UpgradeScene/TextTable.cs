@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Util;
 using Scriptable_Objects.Upgrades;
 using System;
+using System.Linq;
 
 namespace Util
 {
@@ -66,6 +67,14 @@ public class TextTable : MonoBehaviour
     public List<BaseUpgrade> upgrades;
     public List<BaseComponent> components;
     public bool isWeapons;
+    public TextTable next;
+    public TextTable prev;
+    public ComponentSelecter prevalt;
+
+    public DataInfoPanel panel;
+    public bool ack;
+
+    private List<BaseComponent> _filteredComps;
 
     public enum Select
     {
@@ -81,6 +90,10 @@ public class TextTable : MonoBehaviour
 
     public Select selectState;
 
+    public void TakeFocus()
+    {
+        selectState = Select.Current;
+    }
     void UpdateText()
     {
 
@@ -115,17 +128,17 @@ public class TextTable : MonoBehaviour
             }
         } else if (coru == CorU.Component)
         {
-            for (int i = 0; i < components.Count; i++)
+            for (int i = 0; i < _filteredComps.Count; i++)  
             {
-                var component = components[i];
-                string name = component.name;
+                var component = _filteredComps[i];
+                string name = component.compName;
                 name = (name.Length <= _cWidths[0] - 3)
                     ? name.Center(_cWidths[0] - 3)
                     : name.Substring(0, (int)_cWidths[0] - 6) + "...";
                 string ind = (i == _curPos)
                     ? selectState switch { Select.None => "   ", Select.Selected => ">> ", Select.Current => ">  ", _ => "?? " }
                     : "   ";
-                string occ = isWeapons ? ( component.weaponID == null ? "   " : "("+component.weaponID+")" ) : "(*)"; 
+                string occ = isWeapons ? ( component.weaponID == null ? "   " : "("+component.weaponID+")" ) : (component.compEnabled ? "(*)" : "   "); 
                 nstr += "| " + ind + name + " | " + component.compWeight.ToString().Right(_cWidths[1]) + " | "+ occ +" |\n";
             }
         }
@@ -162,18 +175,23 @@ public class TextTable : MonoBehaviour
         _cWidths[0] = (uint) _charWidth - 17;
         _cWidths[1] = 4;
         _cWidths[2] = 3;
+
+        _filteredComps = new List<BaseComponent>();
         
     }
     private void Update()
     {
         if(selectState == Select.Current)
         {
+            _filteredComps = components.Where(x => CompStateEq(x.compType, prevalt.compstate)).ToList();
+            panel.objName = coru == CorU.Component ? _filteredComps[(int)_curPos].compName : upgrades[(int)_curPos].name;
+
             if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 _curPos = _curPos==0 ? 0 : _curPos - 1;
             } else if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                int maxrow = coru == CorU.Component ? components.Count : upgrades.Count;
+                int maxrow = coru == CorU.Component ? _filteredComps.Count : upgrades.Count;
                 _curPos = _curPos == maxrow - 1 ? _curPos : _curPos + 1;
             }
 
@@ -183,26 +201,53 @@ public class TextTable : MonoBehaviour
                 {
                     if (Input.GetKeyDown( (i+1).ToString() ))
                     {
-                        int? oldInd = components[(int)_curPos].weaponID;
+                        int? oldInd = _filteredComps[(int)_curPos].weaponID;
                         if (oldInd != null) { _equippedWeapons[(int)oldInd-1] = null; }
                         if (_equippedWeapons[i] != null)
                         {
                             _equippedWeapons[i].weaponID = null;
                         }
-                        _equippedWeapons[i] = (BaseWeapon)components[(int)_curPos];
-                        components[(int)_curPos].weaponID = i+1;
+                        _equippedWeapons[i] = (BaseWeapon)_filteredComps[(int)_curPos];
+                        _filteredComps[(int)_curPos].weaponID = i+1;
                     }
                 }
                 if (Input.GetKeyDown("0"))
                 {
-                    int? oldInd = components[(int)_curPos].weaponID;
+                    int? oldInd = _filteredComps[(int)_curPos].weaponID;
                     if (oldInd != null) { _equippedWeapons[(int)oldInd - 1] = null; }
-                    components[(int)_curPos].weaponID = null;
+                    _filteredComps[(int)_curPos].weaponID = null;
                 }
 
             }
+
+            if (ack && Input.GetKeyDown(KeyCode.Return) && next != null)
+            {
+                selectState = Select.Selected;
+                next.selectState = Select.Current;
+            }
+            if(ack && Input.GetKeyDown(KeyCode.Escape) && prev != null)
+            {
+                selectState = Select.None;
+                prev.selectState = Select.Current;
+            }
+            if(ack && Input.GetKeyDown(KeyCode.Escape) && prevalt != null)
+            {
+                selectState = Select.None;
+                prevalt.select = Select.Current;
+            }
+            ack = true;
+        } else
+        {
+            _curPos = 0;
         }
         UpdateText();
+    }
+
+    bool CompStateEq(BaseComponent.CompType compType, ComponentSelecter.ComponentState componentState)
+    {
+        return (compType == BaseComponent.CompType.Engine && componentState == ComponentSelecter.ComponentState.Engines
+            || compType == BaseComponent.CompType.Shield && componentState == ComponentSelecter.ComponentState.Shields
+            || compType == BaseComponent.CompType.Weapon && componentState == ComponentSelecter.ComponentState.Weapons);
     }
 }
 

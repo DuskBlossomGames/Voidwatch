@@ -11,6 +11,14 @@ public abstract class BaseComponent : ScriptableObject
     public string compName;
     public int compWeight;
     public BaseUpgrade.Rarity rarity;
+    public enum CompType
+    {
+        Weapon = 1,
+        Engine = 2,
+        Shield = 3,
+    }
+
+    public CompType compType;
 
     protected Player.Upgradeable _upgradeable;
 

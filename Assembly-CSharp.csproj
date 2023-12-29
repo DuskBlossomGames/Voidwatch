@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scriptable Objects\Upgrades\MoreBullets.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\DefenseSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissilerPathfinding.cs" />
+    <Compile Include="Assets\Scripts\UpgradeScene\ComponentSelecter.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Defenses\PointAtTargets.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormSegmentBuilder.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\Weapons\KineticWeapon.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Assets\Scripts\Spawnables\Misslers\ExplosionHandler.cs" />
     <Compile Include="Assets\Scripts\Spawnables\EnemyDamageable.cs" />
     <Compile Include="Assets\Scripts\Util\Selector.cs" />
+    <Compile Include="Assets\Scripts\UpgradeScene\DataInfoPanel.cs" />
     <Compile Include="Assets\Scripts\Util\Timer.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\EnemySpawner\EnemyVariant.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\EnemySpawner\EnemySpawner.cs" />

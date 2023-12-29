@@ -433,14 +433,15 @@ MonoBehaviour:
   rows: 0
   cols: 0
   upgrades: []
-  components:
-  - {fileID: 11400000, guid: e8e1e55f8edbaf74fba7da128626e583, type: 2}
-  - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
-  - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
-  - {fileID: 11400000, guid: c52e59bdc3da7304a8acd53ddf433688, type: 2}
+  components: []
   isWeapons: 1
+  next: {fileID: 2104301275}
+  prev: {fileID: 0}
+  prevalt: {fileID: 1672074211}
+  panel: {fileID: 1363006386}
+  ack: 0
   coru: 0
-  selectState: 1
+  selectState: 0
 --- !u!1 &1101874105
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +547,7 @@ GameObject:
   - component: {fileID: 1363006385}
   - component: {fileID: 1363006384}
   - component: {fileID: 1363006383}
+  - component: {fileID: 1363006386}
   m_Layer: 5
   m_Name: Data Zone C
   m_TagString: Untagged
@@ -629,6 +631,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363006381}
   m_CullTransparentMesh: 1
+--- !u!114 &1363006386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363006381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 031b708d48511cd43a01078efead105e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objName: 
+  objDesc: 
+  text: {fileID: 1363006384}
 --- !u!1 &1672074207
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,6 +657,7 @@ GameObject:
   - component: {fileID: 1672074208}
   - component: {fileID: 1672074210}
   - component: {fileID: 1672074209}
+  - component: {fileID: 1672074211}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -707,6 +725,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672074207}
   m_CullTransparentMesh: 1
+--- !u!114 &1672074211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672074207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 687312c0d04fff8469f02914e0168d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  select: 1
+  compstate: 0
+  next: {fileID: 954947248}
+  TabR: {fileID: 2104301275}
+  upgrades:
+  - {fileID: 11400000, guid: 0ffd5b4e6fb3b4ddca675a8d6f5c157b, type: 2}
+  - {fileID: 11400000, guid: 2de43202dfdc549139c3b8720466e9cf, type: 2}
+  - {fileID: 11400000, guid: b78a2ea0382ab44d8aa01c3046b1f2db, type: 2}
+  - {fileID: 11400000, guid: 5d5722466d2d147078cd90fe6b738b2e, type: 2}
+  - {fileID: 11400000, guid: 681d62305d943432dbdca8fcbab6392e, type: 2}
+  components:
+  - {fileID: 11400000, guid: e8e1e55f8edbaf74fba7da128626e583, type: 2}
+  - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
+  - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
+  - {fileID: 11400000, guid: c52e59bdc3da7304a8acd53ddf433688, type: 2}
 --- !u!1 &1743853732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,12 +1050,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rows: 0
   cols: 0
-  upgrades:
-  - {fileID: 11400000, guid: 0ffd5b4e6fb3b4ddca675a8d6f5c157b, type: 2}
-  - {fileID: 11400000, guid: b78a2ea0382ab44d8aa01c3046b1f2db, type: 2}
-  - {fileID: 11400000, guid: 681d62305d943432dbdca8fcbab6392e, type: 2}
+  upgrades: []
   components: []
   isWeapons: 0
+  next: {fileID: 0}
+  prev: {fileID: 954947248}
+  prevalt: {fileID: 0}
+  panel: {fileID: 1363006386}
+  ack: 0
   coru: 1
   selectState: 0
 --- !u!1 &2112286536
