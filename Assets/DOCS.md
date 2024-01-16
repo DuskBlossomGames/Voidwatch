@@ -63,17 +63,18 @@ Level Play can run by itself, but it is populated by the spawning scene, so when
 	 - `Gun Handler : MB` `NS()` = Implements a basic gun, soon to be replaced with the component system when the author has sufficient time. Don't expect it to remain for the player, but is a go to for making enemies. Variables are mostly self explanatory, and hopefully the functions make sense.
 	 - `Minimap Icon : MB` `NS()` = Gives the player a minimap icon
 	 - `Upgradeable : MB` `NS()` = Root of upgrade system which is currently in progress.
- - `Main Camera` = 
- - `Planet` = 
-	 - `Forcefield` = 
-		 - `Generator` = 
- - `Boundry Circle` = 
- - `Minimap Handler + Canvas` = 
-	 - `Minimap Cam`
-	 - `Canvas` = See [Play Scene Canvas]() section
- - `Defenses` = 
-	 - `CoilCannon` = 
- - `Enemy Spawner` = 
+ - `Main Camera` = Holds the `Follow Player` script which manages the camera's movement. Objects which wish to align with the camera should set their rotation to match it in a `Late Update`
+	 - `Follow Player : MB` `NS(Player)` = Creates the Camera's zoom and pan based on mouse position, and manages the camera's occasional stagnancy when the player moves in a tight circle. Likely to be rewritten soon to be less scuffed and more controllable.
+ - `Planet` = Runs `Planet Setup` which just sets its sprite. Holds the Scene's `Gravity Emitter`, which creates gravitation for `gravitable` objects.
+	 - `Forcefield` = Partially translucent cover over the planet which vanishes when all generators are destroyed. Part of the plan to implement a better planetary attack system.
+		 - `Generator` = Just a destroyable static target as of right now.
+ - `Boundry Circle` = Mostly vestigial object which makes the play area black, and outside red.
+ - `Minimap Handler + Canvas` = Parent Object
+	 - `Minimap Cam` = Appears in the top right and provides a top down perspective of the whole play area. Objects with `Minimap Icon` will appear here, dependent on how their configured. 
+	 - `Canvas` = See [Play Scene Canvas](play-scene-canvas) section
+ - `Defenses` = Manages and spawns `CoilCannon`s, with the hope of adding other's in the future. 
+	 - `CoilCannon` = A simple turret with high powered bullets that will shoot and kill any player outside of the play area for too long. Indestructible.
+ - `Enemy Spawner` = The Magic blackbox of enemy spawning, See [Enemy Spawning]()
 
 ```mermaid
 flowchart LR;
@@ -89,12 +90,35 @@ flowchart LR;
 	SU([Script:Upgradeable])
 
 	scale{{_scaling}}
-	P --o SM & SDC & SCRB & SPD & SEPA & SMI & SU & SGH & SS
+	P --o SM & SCRB & SPD & SEPA & SMI & SU & SGH & SS
 	SS --> SGH
 	SM --> scale
 	SPD -.-o SSD
-	SGH -.-x|spawns| Bullet
+	SGH -.-x |spawns| Bullet
 	SCRB --o SRB([Script:Rigidbody_2D])
 	
+	MC[Main_Camera]
+	Pl[Planet]
+	FF[Force_Field]
+	G[Generator]
+	BC[Boundry_Circle]
+	MMHC[Minimap_Handler_+_Canvas]
+	MMC[Minimap_Cam]
+	C[Canvas]
+	D[Defenses]
+	CC[CoilCannon]
+	ES[Enemy_Spawner]
 	
+	Pl --o FF -----o G
+	Bullet -.-x |Hits| G
+	MMHC --o MMC & C
+	D ---o CC -.-x |Targets| P
+	
+	SFP([Script:Follow_Player])
+	SPS([Script:Planet_Setup])
+	SGE([Script:Gravity_Emitter])
+
+	MC --o SFP -.-> P
+	Pl --o SPS & SGE
 ```
+## Play Scene Canvas
