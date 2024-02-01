@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 582754640268470002}
   - component: {fileID: 6725564530229344085}
   - component: {fileID: -810703383415305791}
+  - component: {fileID: 8614088855332405689}
   m_Layer: 8
   m_Name: Missiler
   m_TagString: Untagged
@@ -110,7 +111,8 @@ MonoBehaviour:
   shootInterval: 2
   engageDist: 20
   amt: 1
-  shoot: {fileID: 0}
+  isShootin: 0
+  animationState: {fileID: 8614088855332405689}
 --- !u!114 &1114353160703292457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,3 +307,37 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &8614088855332405689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430136990600543352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ba044ba34c548d7a59f8a00cc0f06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - frames:
+    - {fileID: -1358975380, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    name: idle
+  - frames:
+    - {fileID: -1358975380, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 506202324, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 1930811699, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: -540213954, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 1140926428, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 723133261, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 1413685730, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 1280395223, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: -521900071, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 451390065, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 725225349, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    - {fileID: 1863664637, guid: dd50de61391000b40a753484f74b5372, type: 3}
+    name: fire
+  framesPerSecond: 20
+  loop: 0
+  destroyWhenDone: 0
+  timePerFrame: 0
