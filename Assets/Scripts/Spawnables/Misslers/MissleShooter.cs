@@ -26,7 +26,7 @@ public class MissleShooter : MonoBehaviour
     {
         _timer -= Time.deltaTime;
 
-        if (_timer < startFrames * animationState.timePerFrame && !isShootin){
+        if (_timer < startFrames * animationState.timePerFrame && !isShootin&& (target.transform.position - transform.position).sqrMagnitude < engageDist * engageDist){
 
             animationState.SwapState("fire");
             isShootin = true;

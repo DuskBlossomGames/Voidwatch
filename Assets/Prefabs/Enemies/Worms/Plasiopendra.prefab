@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   length: 10
-  headSprite: {fileID: 21300000, guid: f6f46a2f16cfde14ba987d4c077b3bde, type: 3}
-  bodySprite: {fileID: 21300000, guid: 0b810c0fc5826fa4c9dbdfd164e6ac4a, type: 3}
-  tailSprite: {fileID: 21300000, guid: 5577c43f1153c5e4a9f7c31b664f3973, type: 3}
+  headSprite: {fileID: 21300000, guid: 4c7b9a68cef5b4aab9b127e4a368b8bb, type: 3}
+  bodySprite: {fileID: 21300000, guid: a4009969f5ad84ba5a44e861b36de98f, type: 3}
+  tailSprite: {fileID: 21300000, guid: f4619f675876c4321b96e9dffd3da7ab, type: 3}
   segmentPrefab: {fileID: 7633799158591997125, guid: 6c78abdf5b286a04cbf5b3ac8164d0fc, type: 3}
 --- !u!114 &1464698736710944844
 MonoBehaviour:

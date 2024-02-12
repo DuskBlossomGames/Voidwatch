@@ -109,10 +109,12 @@ MonoBehaviour:
   target: {fileID: 0}
   missilePrefab: {fileID: 6806080452472767513, guid: d4516a8c4b644684bb357c7373096270, type: 3}
   shootInterval: 2
-  engageDist: 20
+  engageDist: 30
   amt: 1
   isShootin: 0
   animationState: {fileID: 8614088855332405689}
+  startFrames: 8
+  endFrames: 6
 --- !u!114 &1114353160703292457
 MonoBehaviour:
   m_ObjectHideFlags: 0

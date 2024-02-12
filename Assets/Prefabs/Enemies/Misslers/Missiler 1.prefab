@@ -108,10 +108,12 @@ MonoBehaviour:
   target: {fileID: 0}
   missilePrefab: {fileID: 6806080452472767513, guid: d4516a8c4b644684bb357c7373096270, type: 3}
   shootInterval: 3
-  engageDist: 20
+  engageDist: 30
   amt: 5
   isShootin: 0
   animationState: {fileID: 3600005745741968676}
+  startFrames: 6
+  endFrames: 8
 --- !u!114 &1114353160703292457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +320,7 @@ MonoBehaviour:
     - {fileID: 766811283, guid: 35b8837fb6e474b3d872bb6e33cd509d, type: 3}
     - {fileID: 265604586, guid: 35b8837fb6e474b3d872bb6e33cd509d, type: 3}
     name: fire
-  framesPerSecond: 16
+  framesPerSecond: 24
   loop: 0
   destroyWhenDone: 0
   timePerFrame: 0

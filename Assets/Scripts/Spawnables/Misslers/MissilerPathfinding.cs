@@ -6,17 +6,19 @@ public class MissilerPathfinding : MonoBehaviour
     public GameObject target;
     public float minDist;
 
+
     private Vector3 _tar;
     private bool _moving = false;
     private CustomRigidbody2D _rigid;
-    
+
+
     void Start()
     {
         if (target == null) target = GameObject.FindGameObjectWithTag("Player");
         _rigid = GetComponent<CustomRigidbody2D>();
     }
 
-    
+
     void Update()
     {
         if (!_moving) {
