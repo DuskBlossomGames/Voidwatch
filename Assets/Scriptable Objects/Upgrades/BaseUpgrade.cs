@@ -50,30 +50,21 @@ namespace Scriptable_Objects.Upgrades
             Legendary
         }
 
-        public enum Component
-        {
-            Weapon,
-            Engine,
-            Shield,
-        }
-
         public new string name;
         public int weight;
         public Sprite sprite;
         public Rarity rarity;
         public Component component;
-        public bool enabled;
-        public int? weaponID;//assigned on equip, only allows weapon upgrades to affect that weapon
-        public abstract void OnEvent(Upgradeable upgradeable, IUpgradeableEvent evt, int? callerweaponID = null);
+        public bool isWeaponBased;
+        public abstract void OnEvent(Upgradeable upgradeable, IUpgradeableEvent evt);
         public abstract Type GetEventType();
     }
 
     public abstract class BaseUpgrade<T> : BaseUpgrade where T : IUpgradeableEvent
     {        
-        public override void OnEvent(Upgradeable upgradeable, IUpgradeableEvent evt, int? callerWeaponID = null)
+        public override void OnEvent(Upgradeable upgradeable, IUpgradeableEvent evt)
         {
-            if (evt.GetType() != typeof(T) || !enabled) return;
-            if (callerWeaponID != null && callerWeaponID != weaponID) return;
+            if (evt.GetType() != typeof(T)) return;
             
             OnEvent(upgradeable, (T) evt);
         }

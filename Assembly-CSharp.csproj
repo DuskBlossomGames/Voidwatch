@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Spawnables\Bullets\DestroyOffScreen.cs" />
+    <Compile Include="Assets\Scripts\Util\NSpriteAnimation.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\BaseUpgrade.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Gravitatable.cs" />
     <Compile Include="Assets\Scripts\Player\ComponentManager.cs" />
@@ -102,8 +103,10 @@
     <Compile Include="Assets\Scripts\LevelSelect\MapController.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeGridGenerator.cs" />
     <Compile Include="Assets\Scripts\Spawnables\DamageResistances.cs" />
+    <Compile Include="Assets\Scriptable Objects\Upgrades\UpgradeInstance.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\DamageIncrease.cs" />
     <Compile Include="Assets\Scripts\Spawnables\IPathfinder.cs" />
+    <Compile Include="Assets\UpgradeHandler.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\SpeedIncrease.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\MapUtil.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\FastDodgeCooldown.cs" />

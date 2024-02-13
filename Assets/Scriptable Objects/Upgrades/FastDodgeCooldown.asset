@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: FastDodgeCooldown
   m_EditorClassIdentifier: 
   name: Regenerative Thrusters
-  weight: 0
+  weight: 10
   sprite: {fileID: 0}
   rarity: 0
+  component: {fileID: 0}
+  isWeaponBased: 0
   cooldownModifier: 0

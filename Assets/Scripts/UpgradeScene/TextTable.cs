@@ -64,7 +64,7 @@ public class TextTable : MonoBehaviour
     private uint _curPos;
     private BaseWeapon?[] _equippedWeapons;
 
-    public List<BaseUpgrade> upgrades;
+    public List<UpgradeInstance> upgrades;
     public List<BaseComponent> components;
     public bool isWeapons;
     public TextTable next;
@@ -117,14 +117,19 @@ public class TextTable : MonoBehaviour
             for (int i = 0; i < upgrades.Count; i++)
             {
                 var upgrade = upgrades[i];
-                string name = upgrade.name;
+                //Debug.Log(upgrade.upgrade);
+                string name = upgrade.upgrade.name;
                 name = (name.Length <= _cWidths[0] - 3)
                     ? name.Center(_cWidths[0] - 3)
                     : name.Substring(0, (int)_cWidths[0] - 6) + "...";
                 string ind = (i == _curPos)
                     ? selectState switch { Select.None => "   ", Select.Selected => ">> ", Select.Current => ">  ", _ => "?? " }
                     : "   ";
-                nstr += "| " + ind + name + " | " + upgrade.weight.ToString().Right(_cWidths[1]) + " |     |\n";
+                var upstatus = (upgrade.enabled)
+                    ? (upgrade.weaponID?.ToString() ?? "X")
+                    : " ";
+                upstatus = (upgrade.upgrade.isWeaponBased ? "-" : "(") + upstatus + (upgrade.upgrade.isWeaponBased ? "-" : ")");
+                nstr += "| " + ind + name + " | " + upgrade.upgrade.weight.ToString().Right(_cWidths[1]) + " | "+ upstatus+" |\n";
             }
         } else if (coru == CorU.Component)
         {
@@ -183,8 +188,8 @@ public class TextTable : MonoBehaviour
     {
         if(selectState == Select.Current)
         {
-            _filteredComps = components.Where(x => CompStateEq(x.compType, prevalt.compstate)).ToList();
-            panel.objName = coru == CorU.Component ? _filteredComps[(int)_curPos].compName : upgrades[(int)_curPos].name;
+            _filteredComps = components;
+            panel.objName = coru == CorU.Component ? _filteredComps[(int)_curPos].compName : upgrades[(int)_curPos].upgrade.name;
 
             if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -219,22 +224,44 @@ public class TextTable : MonoBehaviour
                 }
 
             }
+            if (coru == CorU.Upgrade && upgrades[(int)_curPos].upgrade.isWeaponBased)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (Input.GetKeyDown((i + 1).ToString()))
+                    {
+                        upgrades[(int)_curPos].weaponID = i + 1;
+                        upgrades[(int)_curPos].enabled = true;
+                    }
+                }
+                if (Input.GetKeyDown("0"))
+                {
+                    upgrades[(int)_curPos].weaponID = null;
+                    upgrades[(int)_curPos].enabled = false;
+                }
+
+            }
 
             if (ack && Input.GetKeyDown(KeyCode.Return) && next != null)
             {
-                selectState = Select.Selected;
+                selectState = Select.None;
                 next.selectState = Select.Current;
             }
-            if(ack && Input.GetKeyDown(KeyCode.Escape) && prev != null)
+            if (ack && Input.GetKeyDown(KeyCode.Space) && next == null && coru == CorU.Upgrade && !upgrades[(int)_curPos].upgrade.isWeaponBased)
+            {
+                upgrades[(int)_curPos].weaponID = null;
+                upgrades[(int)_curPos].enabled = !upgrades[(int)_curPos].enabled;
+            }
+            if (ack && Input.GetKeyDown(KeyCode.Escape) && prev != null)
             {
                 selectState = Select.None;
                 prev.selectState = Select.Current;
             }
-            if(ack && Input.GetKeyDown(KeyCode.Escape) && prevalt != null)
+            /*if(ack && Input.GetKeyDown(KeyCode.Escape) && prevalt != null)
             {
                 selectState = Select.None;
                 prevalt.select = Select.Current;
-            }
+            }*/
             ack = true;
         } else
         {

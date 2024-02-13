@@ -10,6 +10,9 @@ namespace Scriptable_Objects
         public float playerShieldRegenRate;
         public float playerMaxShieldDebt;
 
+        public System.Collections.Generic.List<UpgradeInstance> upgrades;
+        public System.Collections.Generic.List<BaseComponent> weapons;
+
         [NonSerialized] public float? Health = null;
         [NonSerialized] public float Scrap;
     }

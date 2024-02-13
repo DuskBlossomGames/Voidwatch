@@ -20,7 +20,7 @@ public class ComponentSelecter : MonoBehaviour
     public TextTable TabR;
     private Text[] _texts;
 
-    public List<BaseUpgrade> upgrades;
+    public List<UpgradeInstance> upgrades;
     public List<BaseComponent> components;
 
     private void Start()

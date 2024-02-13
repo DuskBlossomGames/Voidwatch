@@ -16,3 +16,10 @@ MonoBehaviour:
   playerMaxShield: 100
   playerShieldRegenRate: 50
   playerMaxShieldDebt: 500
+  upgrades:
+  - {fileID: 0}
+  weapons:
+  - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
+  - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
+  - {fileID: 11400000, guid: e8e1e55f8edbaf74fba7da128626e583, type: 2}
+  - {fileID: 11400000, guid: c52e59bdc3da7304a8acd53ddf433688, type: 2}
