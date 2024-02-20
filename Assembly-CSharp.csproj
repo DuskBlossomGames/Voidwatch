@@ -27,7 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;USG0001</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,7 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;USG0001</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -76,6 +76,8 @@
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissilerPathfinding.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\ComponentSelecter.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Defenses\PointAtTargets.cs" />
+    <Compile Include="Assets\ShopUpgradeSlot.cs" />
+    <Compile Include="Assets\ShopSceneManager.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormSegmentBuilder.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\Weapons\KineticWeapon.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Boids\BoidHandler.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Assets\Scriptable Objects\Upgrades\BulletSpread.cs" />
     <Compile Include="Assets\Scripts\Spawnables\PositionHinter.cs" />
     <Compile Include="Assets\Scripts\Spawnables\GunHandler.cs" />
+    <Compile Include="Assets\BootManager.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormSegment.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\PlanetSetup.cs" />
     <Compile Include="Assets\Scripts\Spawnables\MiniMapIcon.cs" />
@@ -113,6 +116,7 @@
     <Compile Include="Assets\Scripts\Util\TextScalar.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormBeamAttack.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleShooter.cs" />
+    <Compile Include="Assets\Scriptable Objects\MerchantData.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Bullets\BulletCollision.cs" />
     <Compile Include="Assets\Scripts\Static Objects or Misc\GravityEmitter.cs" />
     <Compile Include="Assets\Scriptable Objects\PlayerData.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="Assets\Scripts\UpgradeScene\TextTable.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\BaseComponent.cs" />
     <Compile Include="Assets\Scripts\Player\Upgradeable.cs" />
+    <Compile Include="Assets\ScaleRect.cs" />
     <Compile Include="Assets\Scripts\Util\Exceptions.cs" />
     <Compile Include="Assets\Scripts\Util\UtilFuncs.cs" />
     <Compile Include="Assets\Scriptable Objects\LevelSelectData.cs" />

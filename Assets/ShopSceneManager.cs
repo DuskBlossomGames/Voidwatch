@@ -66,10 +66,11 @@ public class ShopSceneManager : MonoBehaviour
             rt.anchorMin = new Vector2(rt.anchorMin.x, .8f - .2f * i);
             rt.anchorMax = new Vector2(rt.anchorMax.x, 1f - .2f * i);
 
-            if(good?.originalPrice != good?.currentPrice)
-            {
-                curr.transform.GetChild(0).GetChild(2).gameObject.En
-            }
+            var shs = transform.GetChild(0).GetChild(i).GetComponent<ShopUpgradeSlot>();
+            shs.oldPrice = (float) good?.originalPrice;
+            shs.currPrice = (float)good?.currentPrice;
+            shs.objName = good?.name;
+            shs.state = 1;
         }
         Destroy(sampleSlot);
     }
@@ -103,7 +104,17 @@ public class ShopSceneManager : MonoBehaviour
                 uos = Merchant.Good.GoodType.Service,
                 serviceFunc = null,
             });
-        
+        ret.goods.Add(
+            new Merchant.Good
+            {
+                name = "Repair",
+                desc = "Repair your ship restoring full health",
+                currentPrice = 50,
+                originalPrice = 100,
+                uos = Merchant.Good.GoodType.Service,
+                serviceFunc = null,
+            });
+
 
         return ret;
     }
