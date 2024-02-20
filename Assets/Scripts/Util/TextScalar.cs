@@ -9,7 +9,9 @@ public class TextScalar : MonoBehaviour
 
     public int CurrFontSize()
     {
-        return Mathf.RoundToInt(fontSizeAt1920 * (float)Camera.main.pixelWidth / 1920);
+        float screenscale = (float)Camera.main.pixelWidth / 1920;
+        screenscale = Mathf.Min(screenscale, (float)Camera.main.pixelHeight / 1080);
+        return Mathf.RoundToInt(fontSizeAt1920 * screenscale);
     }
     void Start()
     {
