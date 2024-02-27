@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   merchantData: {fileID: 11400000, guid: e5798128377a1494db19712c92488237, type: 2}
+  playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
 --- !u!4 &749922241
 Transform:
   m_ObjectHideFlags: 0

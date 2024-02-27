@@ -47,8 +47,10 @@ public class WormBeamAttack : MonoBehaviour
         Destroy(ray);
 
         GetComponent<WormSegment>().speed *= 4;
+        GetComponent<WormSegment>().speed = Mathf.Max(5, GetComponent<WormSegment>().speed);
 
-        List<GameObject> beams =  new List<GameObject>();
+
+        List <GameObject> beams =  new List<GameObject>();
 
         float dmg = baseDmg;
 

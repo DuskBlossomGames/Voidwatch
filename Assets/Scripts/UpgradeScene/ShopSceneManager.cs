@@ -181,11 +181,11 @@ public class ShopSceneManager : MonoBehaviour
             new Merchant.Good
             {
                 name = "Repair",
-                desc = "Repair your ship restoring full health",
+                desc = "Repair your ship restoring full health 2",
                 currentPrice = 100,
                 originalPrice = 100,
                 uos = Merchant.Good.GoodType.Service,
-                serviceFunc = null,
+                serviceFunc = new Repairer(),
             });
 
 
