@@ -112,7 +112,7 @@ namespace LevelSelect
                 if (!_selection.HasValue) return;
                 
                 data.CurrentPlanet = _selection!.Value;
-                SceneManager.LoadScene("LevelPlay");
+                SceneManager.LoadScene(data.Levels[data.CurrentPlanet].Type == LevelType.SpaceStation ? "Shop" : "LevelPlay");
             };
         }
 
