@@ -9,6 +9,12 @@ public class UpgradeInstance
     public bool enabled;
     public int? weaponID;
 
+    public UpgradeInstance(BaseUpgrade serviceUpgrade)
+    {
+        upgrade = serviceUpgrade;
+    }
+
+    public UpgradeInstance() { }
 
     public void OnEvent(Player.Upgradeable upgradeable, IUpgradeableEvent evt, int? callerWeaponID)
     {

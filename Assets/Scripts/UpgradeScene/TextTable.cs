@@ -257,6 +257,10 @@ public class TextTable : MonoBehaviour
                 selectState = Select.None;
                 prev.selectState = Select.Current;
             }
+            if(ack && Input.GetKeyDown(KeyCode.Escape) && coru == CorU.Component)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("LevelSelect");
+            }
             /*if(ack && Input.GetKeyDown(KeyCode.Escape) && prevalt != null)
             {
                 selectState = Select.None;

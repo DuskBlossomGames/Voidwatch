@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Spawnables\Bullets\DestroyOffScreen.cs" />
     <Compile Include="Assets\Scripts\Util\NSpriteAnimation.cs" />
+    <Compile Include="Assets\Scripts\UpgradeScene\ScaleRect.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\BaseUpgrade.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Gravitatable.cs" />
     <Compile Include="Assets\Scripts\Player\ComponentManager.cs" />
@@ -76,10 +77,9 @@
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissilerPathfinding.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\ComponentSelecter.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Defenses\PointAtTargets.cs" />
-    <Compile Include="Assets\ShopUpgradeSlot.cs" />
-    <Compile Include="Assets\ShopSceneManager.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormSegmentBuilder.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\Weapons\KineticWeapon.cs" />
+    <Compile Include="Assets\Scripts\UpgradeScene\ShopUpgradeSlot.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Boids\BoidHandler.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\Weapons\BaseWeapon.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeItem.cs" />
@@ -98,7 +98,6 @@
     <Compile Include="Assets\Scriptable Objects\Upgrades\BulletSpread.cs" />
     <Compile Include="Assets\Scripts\Spawnables\PositionHinter.cs" />
     <Compile Include="Assets\Scripts\Spawnables\GunHandler.cs" />
-    <Compile Include="Assets\BootManager.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormSegment.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\PlanetSetup.cs" />
     <Compile Include="Assets\Scripts\Spawnables\MiniMapIcon.cs" />
@@ -109,9 +108,9 @@
     <Compile Include="Assets\Scriptable Objects\Upgrades\UpgradeInstance.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\DamageIncrease.cs" />
     <Compile Include="Assets\Scripts\Spawnables\IPathfinder.cs" />
-    <Compile Include="Assets\UpgradeHandler.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\SpeedIncrease.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\MapUtil.cs" />
+    <Compile Include="Assets\Scripts\UpgradeScene\UpgradeHandler.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\FastDodgeCooldown.cs" />
     <Compile Include="Assets\Scripts\Util\TextScalar.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Worms\WormBeamAttack.cs" />
@@ -130,11 +129,12 @@
     <Compile Include="Assets\Scripts\UpgradeScene\TextTable.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\BaseComponent.cs" />
     <Compile Include="Assets\Scripts\Player\Upgradeable.cs" />
-    <Compile Include="Assets\ScaleRect.cs" />
+    <Compile Include="Assets\Scripts\UpgradeScene\BootManager.cs" />
     <Compile Include="Assets\Scripts\Util\Exceptions.cs" />
     <Compile Include="Assets\Scripts\Util\UtilFuncs.cs" />
     <Compile Include="Assets\Scriptable Objects\LevelSelectData.cs" />
     <Compile Include="Assets\Scripts\Spawnables\DirectPathfinding.cs" />
+    <Compile Include="Assets\Scripts\UpgradeScene\ShopSceneManager.cs" />
     <Compile Include="Assets\Scripts\Util\CustomRigidbody2D.cs" />
     <Compile Include="Assets\Scripts\Util\Selectable.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeManager.cs" />

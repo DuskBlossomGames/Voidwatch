@@ -11,5 +11,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelPlay.unity
     guid: 7f1362dd51b71cf468b634116ad5c662
+  - enabled: 1
+    path: Assets/Scenes/Boot.unity
+    guid: a7934984dc716e5439bbe056698377ee
+  - enabled: 1
+    path: Assets/Scenes/Shop.unity
+    guid: 8a1ef65ea5b4dc843a0e9c75f5f3152d
+  - enabled: 1
+    path: Assets/Scenes/Upgrades2.unity
+    guid: b9f69853431f0ec48872d19e98aa5459
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 8faad699bc580443dbc94dd5d0d2cb8d, type: 2}
