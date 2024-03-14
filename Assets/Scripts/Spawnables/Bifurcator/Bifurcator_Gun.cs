@@ -7,6 +7,7 @@ public class Bifurcator_Gun : MonoBehaviour
 {
     public GameObject target;
     public EnemyGunHandler gun;
+    public GameObject parent;
     MagicRigidBody _crb;
 
     Vector3 _opos;
@@ -32,5 +33,9 @@ public class Bifurcator_Gun : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * dir);
 
         gun.Shoot(0);
+    }
+    private void OnDestroy()
+    {
+        Destroy(parent);
     }
 }
