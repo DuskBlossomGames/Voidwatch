@@ -60,6 +60,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Util\DestroyAfterX.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Bullets\DestroyOffScreen.cs" />
     <Compile Include="Assets\Scripts\Util\NSpriteAnimation.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\ScaleRect.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\Scripts\Player\Movement.cs" />
     <Compile Include="Assets\Scripts\Static Objects or Misc\SizeMinimap.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\MoreBullets.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Platelins\PlatelinManager.cs" />
     <Compile Include="Assets\Scripts\Spawning Scripts\DefenseSpawner.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissilerPathfinding.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\ComponentSelecter.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Assets\Scripts\LevelSelect\MiniPlayerController.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\GenerateMap.cs" />
     <Compile Include="Assets\Scripts\Player\Shoot.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\AreaDamager.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Misslers\MissleAim2.cs" />
     <Compile Include="Assets\Scriptable Objects\Upgrades\BulletSpread.cs" />
     <Compile Include="Assets\Scripts\Spawnables\PositionHinter.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="Assets\Scripts\Spawning Scripts\EnemySpawner\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\TextTable.cs" />
     <Compile Include="Assets\Scriptable Objects\Components\BaseComponent.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Platelins\PlatelinController.cs" />
     <Compile Include="Assets\Scripts\Player\Upgradeable.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\BootManager.cs" />
     <Compile Include="Assets\Scripts\Util\Exceptions.cs" />

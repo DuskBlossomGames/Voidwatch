@@ -13,7 +13,7 @@ namespace Spawnables
         protected virtual float Health { get; set; }
         protected virtual float MaxHealth { get; }
         
-        private GameObject _healthBar;
+        protected GameObject _healthBar;
 
         private float _barVisibility;
 
@@ -25,7 +25,7 @@ namespace Spawnables
             _healthBar = Instantiate(healthBarPrefab);
         }
 
-        private void OnDestroy()
+        protected void OnDestroy()
         {
             Destroy(_healthBar);
         }
@@ -57,6 +57,7 @@ namespace Spawnables
         
             if (Health <= 0)
             {
+                Destroy(_healthBar);
                 Destroy(gameObject);
             }
         
