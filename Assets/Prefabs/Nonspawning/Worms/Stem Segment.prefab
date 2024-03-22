@@ -272,7 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   appearsAsSelf: 1
   miniSprite: {fileID: 0}
-  miniColor: {r: 0, g: 0, b: 0, a: 0}
+  miniColor: {r: 0.70032597, g: 0.09732112, b: 0.764151, a: 0}
   size: 5
   inheritsRotation: 0
   staticRot: {x: 0, y: 0, z: 0}

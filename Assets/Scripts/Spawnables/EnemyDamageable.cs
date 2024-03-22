@@ -35,6 +35,8 @@ namespace Spawnables
                     rigid.velocity = Random.insideUnitCircle*5;
                 }
             }
+            base.OnDestroy();
+            Destroy(_healthBar);
         }
     }
 }

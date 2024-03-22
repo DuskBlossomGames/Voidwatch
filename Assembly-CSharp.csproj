@@ -45,10 +45,12 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.11f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets/Scripts/Util/DestroyAfterX.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Bullets/DestroyOffScreen.cs" />
      <Compile Include="Assets/Scripts/Util/NSpriteAnimation.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/ScaleRect.cs" />
      <Compile Include="Assets/Scriptable Objects/Upgrades/BaseUpgrade.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/Bifurcator/LazerSpawn.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Gravitatable.cs" />
      <Compile Include="Assets/Scripts/Player/ComponentManager.cs" />
      <Compile Include="Assets/Scripts/Player/EnforcePlayArea.cs" />
@@ -58,14 +60,18 @@
      <Compile Include="Assets/Scripts/Player/Movement.cs" />
      <Compile Include="Assets/Scripts/Static Objects or Misc/SizeMinimap.cs" />
      <Compile Include="Assets/Scriptable Objects/Upgrades/MoreBullets.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/Platelins/PlatelinManager.cs" />
      <Compile Include="Assets/Scripts/Spawning Scripts/DefenseSpawner.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissilerPathfinding.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/ComponentSelecter.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Defenses/PointAtTargets.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Worms/WormSegmentBuilder.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/Bifurcator/Bifurcator_Gun.cs" />
      <Compile Include="Assets/Scriptable Objects/Components/Weapons/KineticWeapon.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/ShopUpgradeSlot.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Boids/BoidHandler.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/EnemyGunHandler.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/Bifurcator/Bifurcator_Move.cs" />
      <Compile Include="Assets/Scriptable Objects/Components/Weapons/BaseWeapon.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/UpgradeItem.cs" />
      <Compile Include="Assets/Scripts/Player/PlayerDamageable.cs" />
@@ -80,6 +86,7 @@
      <Compile Include="Assets/Scripts/LevelSelect/MiniPlayerController.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/GenerateMap.cs" />
      <Compile Include="Assets/Scripts/Player/Shoot.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/AreaDamager.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleAim2.cs" />
      <Compile Include="Assets/Scriptable Objects/Upgrades/BulletSpread.cs" />
      <Compile Include="Assets/Scripts/Spawnables/PositionHinter.cs" />
@@ -87,6 +94,7 @@
      <Compile Include="Assets/Scripts/Spawnables/GunHandler.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Worms/WormSegment.cs" />
      <Compile Include="Assets/Scripts/Spawning Scripts/PlanetSetup.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/Bifurcator/MagicRigidBody.cs" />
      <Compile Include="Assets/Scripts/Spawnables/MiniMapIcon.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Damageable.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/MapController.cs" />
@@ -118,6 +126,7 @@
      <Compile Include="Assets/Scripts/Spawning Scripts/EnemySpawner/EnemySpawner.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/TextTable.cs" />
      <Compile Include="Assets/Scriptable Objects/Components/BaseComponent.cs" />
+     <Compile Include="Assets/Scripts/Spawnables/Platelins/PlatelinController.cs" />
      <Compile Include="Assets/Scripts/Player/Upgradeable.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/BootManager.cs" />
      <Compile Include="Assets/Scripts/Util/Exceptions.cs" />
@@ -136,13 +145,16 @@
      <Compile Include="Assets/Scripts/Spawnables/Worms/MultiDamageable.cs" />
      <Folder Include="Assets" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
+     <Folder Include="Assets/Scripts/Spawnables/Bifurcator" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets/Scriptable Objects/Upgrades" />
      <Folder Include="Assets/TextMesh Pro/Sprites" />
      <Folder Include="Assets/Scripts/UpgradeScene" />
      <Folder Include="Assets/Scripts/Spawnables/Boids" />
+     <Folder Include="Assets/Prefabs/Enemies/Bifurcators" />
      <Folder Include="Assets/Scripts" />
      <Folder Include="Assets/Prefabs/Enemies/Misslers" />
+     <Folder Include="Assets/Scripts/Spawnables/Platelins" />
      <Folder Include="Assets/TextMesh Pro/Resources/Sprite Assets" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
      <Folder Include="Assets/Scripts/Bosses/Worm" />
@@ -160,6 +172,7 @@
      <Folder Include="Assets/Scriptable Objects" />
      <Folder Include="Assets/Scriptable Objects/Components" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
+     <Folder Include="Assets/Prefabs/Enemies/Platelins" />
      <Folder Include="Assets/Resources" />
      <Folder Include="Assets/TextMesh Pro" />
      <Folder Include="Assets/Fonts" />

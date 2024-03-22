@@ -70,6 +70,23 @@ namespace Util
             return ((1 - t) * a + t * b);
         }
 
+        public static float MinUnsigned(float x, float y)
+        {
+            if (Mathf.Abs(x) < Mathf.Abs(y))
+            {
+                return x;
+            }
+            else
+            {
+                return y;
+            }
+        }
+
+        public static float SmallestAngleDist(float orig, float tar)
+        {
+            return MinUnsigned(MinUnsigned(tar - orig, tar + 2 * Mathf.PI - orig), tar - 2 * Mathf.PI - orig);
+        }
+
         [System.Serializable]
         public class IRef<T> : ISerializationCallbackReceiver where T : class
         {
