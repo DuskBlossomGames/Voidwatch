@@ -156,7 +156,7 @@ namespace LevelSelect
             
             _panelEndRenderer.flipX = _prevSide < 0;
 
-            var xTranslate = _side * 7 / height; // 7 px border, just taken from sprite
+            var xTranslate = _side * 7 / height; // 7 px border, just taken from squareSprite
             var xFactor = width / height;
             var yFactor = 1 / _textureScale.y;
 

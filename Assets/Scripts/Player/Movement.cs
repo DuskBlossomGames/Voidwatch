@@ -63,7 +63,7 @@ namespace Player
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (_dodgeCooldownTimer.IsFinished() && Input.GetKey(KeyCode.Space))
+            if (_dodgeCooldownTimer.IsFinished && Input.GetKey(KeyCode.Space))
             {
                 var evt = new DodgeEvent
                 {
@@ -79,11 +79,11 @@ namespace Player
                 _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
             }
 
-            var wasDodging = !_dodgeTimer.IsFinished();
+            var wasDodging = !_dodgeTimer.IsFinished;
             _dodgeTimer.FixedUpdate();
             _dodgeCooldownTimer.FixedUpdate();
             _afterImageTimer.FixedUpdate();
-            var dodging = !_dodgeTimer.IsFinished();
+            var dodging = !_dodgeTimer.IsFinished;
 
             
             CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
@@ -94,7 +94,7 @@ namespace Player
             
             if (dodging)
             {
-                if (_afterImageTimer.IsFinished())
+                if (_afterImageTimer.IsFinished)
                 {
                     _afterImageTimer.Value = afterImageSpacing / dodgeVelocity;
                     

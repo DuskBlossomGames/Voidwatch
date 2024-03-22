@@ -29,7 +29,7 @@ public class UpgradeSlot : MonoBehaviour
         _spriteRenderer.enabled = true;
         switch (mode){
             case Mode.Space:
-                //_spriteRenderer.sprite = emptySprite;
+                //_spriteRenderer.squareSprite = emptySprite;
                 _spriteRenderer.enabled = false;
                 _spriteRenderer.color = emptyColor;
                 break;

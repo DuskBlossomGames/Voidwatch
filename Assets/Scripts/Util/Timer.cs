@@ -6,21 +6,17 @@ namespace Util
     {
         private float _maxValue;
         private float _value;
-
+        
         public float Value
         {
             get => _value;
             set => _maxValue = _value = value;
         }
 
-        public bool IsActive()
-        {
-            return _value < _maxValue;
-        }
-        public bool IsFinished()
-        {
-            return _value == 0;
-        }
+        public float Progress => _value / _maxValue;
+        public bool IsActive => _value < _maxValue;
+        public bool IsFinished => _value == 0;
+        
 
         public void Update(int direction = -1)
         {

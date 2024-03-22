@@ -73,6 +73,7 @@
      <Compile Include="Assets/Scripts/UpgradeScene/UpgradeSlot.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Boids/BoidSpawner.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Worms/WormDamageable.cs" />
+     <Compile Include="Assets/Scripts/Bosses/Worm/LaserController.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleAim.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/ExpandOnHover.cs" />
      <Compile Include="Assets/Scripts/Player/FollowPlayer.cs" />
@@ -82,6 +83,7 @@
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleAim2.cs" />
      <Compile Include="Assets/Scriptable Objects/Upgrades/BulletSpread.cs" />
      <Compile Include="Assets/Scripts/Spawnables/PositionHinter.cs" />
+     <Compile Include="Assets/Scripts/Bosses/Worm/SummonWorm.cs" />
      <Compile Include="Assets/Scripts/Spawnables/GunHandler.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Worms/WormSegment.cs" />
      <Compile Include="Assets/Scripts/Spawning Scripts/PlanetSetup.cs" />
@@ -89,6 +91,7 @@
      <Compile Include="Assets/Scripts/Spawnables/Damageable.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/MapController.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/UpgradeGridGenerator.cs" />
+     <Compile Include="Assets/Scripts/Util/DestroyAfter.cs" />
      <Compile Include="Assets/Scripts/Spawnables/DamageResistances.cs" />
      <Compile Include="Assets/Scriptable Objects/Upgrades/UpgradeInstance.cs" />
      <Compile Include="Assets/Scriptable Objects/Upgrades/DamageIncrease.cs" />
@@ -98,8 +101,10 @@
      <Compile Include="Assets/Scripts/UpgradeScene/UpgradeHandler.cs" />
      <Compile Include="Assets/Scriptable Objects/Upgrades/FastDodgeCooldown.cs" />
      <Compile Include="Assets/Scripts/Util/TextScalar.cs" />
+     <Compile Include="Assets/Scripts/Bosses/Worm/BurrowController.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Worms/WormBeamAttack.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Misslers/MissleShooter.cs" />
+     <Compile Include="Assets/Scripts/Bosses/Worm/ShootLaser.cs" />
      <Compile Include="Assets/Scriptable Objects/MerchantData.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Bullets/BulletCollision.cs" />
      <Compile Include="Assets/Scripts/Static Objects or Misc/GravityEmitter.cs" />
@@ -117,12 +122,14 @@
      <Compile Include="Assets/Scripts/UpgradeScene/BootManager.cs" />
      <Compile Include="Assets/Scripts/Util/Exceptions.cs" />
      <Compile Include="Assets/Scripts/Util/UtilFuncs.cs" />
+     <Compile Include="Assets/Scripts/Bosses/Worm/TailController.cs" />
      <Compile Include="Assets/Scriptable Objects/LevelSelectData.cs" />
      <Compile Include="Assets/Scripts/Spawnables/DirectPathfinding.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/ShopSceneManager.cs" />
      <Compile Include="Assets/Scripts/Util/CustomRigidbody2D.cs" />
      <Compile Include="Assets/Scripts/Util/Selectable.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/UpgradeManager.cs" />
+     <Compile Include="Assets/Scripts/Bosses/Worm/WormBrain.cs" />
      <Compile Include="Assets/Scripts/Spawnables/IDamageable.cs" />
      <Compile Include="Assets/Scripts/Util/Button.cs" />
      <Compile Include="Assets/Scripts/LevelSelect/LevelInfoController.cs" />
@@ -138,6 +145,7 @@
      <Folder Include="Assets/Prefabs/Enemies/Misslers" />
      <Folder Include="Assets/TextMesh Pro/Resources/Sprite Assets" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
+     <Folder Include="Assets/Scripts/Bosses/Worm" />
      <None Include="Assets/Resources/BillingMode.json" />
      <Folder Include="Assets/Scripts/Spawnables/Bullets" />
      <Folder Include="Assets/Prefabs/Enemies/Chasers" />
@@ -167,6 +175,7 @@
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
      <Folder Include="Assets/Prefabs/Nonspawning" />
+     <Folder Include="Assets/Scripts/Bosses" />
      <Folder Include="Assets/Prefabs/Enemies/Worms" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />

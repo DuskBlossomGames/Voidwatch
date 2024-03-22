@@ -26,7 +26,7 @@ namespace Spawnables.Player
         {
             _outOfBoundsTimer.Update(gameObject.transform.position.sqrMagnitude > 75 * 75 ? -1 : 1);
 
-            if (_outOfBoundsTimer.IsActive())
+            if (_outOfBoundsTimer.IsActive)
             {
                 warningText.GetComponent<TextMeshProUGUI>().enabled = true;
                 RectTransform rt = warningSlider.GetComponent<RectTransform>();
@@ -42,7 +42,7 @@ namespace Spawnables.Player
                 warningBack.GetComponent<Image>().enabled = false;
             }
             
-            attackable = _outOfBoundsTimer.IsFinished();
+            attackable = _outOfBoundsTimer.IsFinished;
         }
     }
 }
