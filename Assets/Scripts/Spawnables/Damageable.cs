@@ -48,7 +48,7 @@ namespace Spawnables
             }
         }
 
-        public void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
+        public virtual void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
         {
             damage -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
             damage *= dmgRes.dmgMod[(int)dmgType];

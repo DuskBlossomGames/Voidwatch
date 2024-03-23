@@ -113,6 +113,7 @@
     <Compile Include="Assets\Scripts\Spawnables\MiniMapIcon.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Damageable.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\MapController.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Chasers\ChaserDamageable.cs" />
     <Compile Include="Assets\Scripts\UpgradeScene\UpgradeGridGenerator.cs" />
     <Compile Include="Assets\Scripts\Util\DestroyAfter.cs" />
     <Compile Include="Assets\Scripts\Spawnables\DamageResistances.cs" />
