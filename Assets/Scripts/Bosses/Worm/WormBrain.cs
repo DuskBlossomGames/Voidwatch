@@ -12,8 +12,10 @@ namespace Bosses.Worm
         public Vector3 targetPosition;
 
         private GameObject[] _segments;
-        private Rigidbody2D _rigid;
+        private Rigidbody2D _headRigid;
         private float _speed;
+        private Vector2 _targetMovePos;
+        private float _segmentDist;
 
         private void Start()
         {
@@ -33,22 +35,51 @@ namespace Bosses.Worm
                 segment.SetParent(transform);
 
                 var pos = _segments[i - 1].transform.localPosition;
-                pos.x -= segment.localScale.x;
+
+                pos.x -= (_segmentDist = segment.localScale.x);
                 segment.localPosition = pos;
             }
             
             _speed = 2;
-            _rigid = head.GetComponent<Rigidbody2D>();
+            _headRigid = head.GetComponent<Rigidbody2D>();
         }
 
         private void Update()
         {
-            // var dir = pathfinder.PathDirNorm(transform.position, targetPosition);
-            //
-            // var angle = Mathf.Atan2(dir.y, dir.x);
-            // transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * angle);
-            //
-            // _rigid.velocity = _speed * dir;
+            var dir = pathfinder.PathDirNorm(transform.position, _targetMovePos);
+            
+            _headRigid.velocity = _speed * dir;
+            RippleSegments();
+        }
+
+        private void RippleSegments()
+        {
+            for (var i = 1; i < middleLength + 1; i++)
+            {
+                Vector3 nextSegmentPos = _segments[i - 1].transform.position;
+                Vector3 currSegmentPos = _segments[i].transform.position;
+                Vector3 prevSegmentPos = _segments[i + 1].transform.position;
+
+                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
+                _segments[i].transform.position = currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+
+                Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
+                Vector3 meanDir = .5f * (prev2curr + curr2next);
+
+                var angle = Mathf.Atan2(meanDir.y, meanDir.x);
+                _segments[i].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+            }
+
+            { //Scope naming stuffs
+                Vector3 nextSegmentPos = _segments[^2].transform.position;
+                Vector3 currSegmentPos = _segments[^1].transform.position;
+
+                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
+                _segments[^1].transform.position = currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+
+                var angle = Mathf.Atan2(curr2next.y, curr2next.x);
+                _segments[^1].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+            }
         }
     }
 }
