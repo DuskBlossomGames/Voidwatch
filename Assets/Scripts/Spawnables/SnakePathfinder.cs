@@ -47,6 +47,24 @@ public class SnakePathfinder : MonoBehaviour, IPathfinder
         return MinUnsigned(MinUnsigned(tar - orig, tar + 2 * Mathf.PI - orig), tar - 2 * Mathf.PI - orig);
     }
 
+    public Vector2 ClampAngle(Vector2 dir, Vector2 axis, float anglewidth)
+    {
+        Vector2 varAxis = new Vector2(axis.x, -axis.y);
+        Vector2 rotDir = dir.x * varAxis + dir.y * Vector2.Perpendicular(varAxis);
+
+        float angle = Mathf.Atan2(rotDir.y, rotDir.x);
+        angle = Mathf.Clamp(angle, -anglewidth, anglewidth);
+
+        Vector2 retVec = AngleToVector(angle);
+        retVec = retVec.x * axis + retVec.y * Vector2.Perpendicular(axis);
+        return retVec;
+    }
+
+    public Vector2 AngleToVector(float angle)
+    {
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+    }
+
     private void Update()
     {
         _currSnakeTime = (_currSnakeTime + Time.deltaTime) % snaketime;

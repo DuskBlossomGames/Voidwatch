@@ -87,6 +87,23 @@ namespace Util
             return MinUnsigned(MinUnsigned(tar - orig, tar + 2 * Mathf.PI - orig), tar - 2 * Mathf.PI - orig);
         }
 
+        public static Vector2 TangentPointOnCircleFromPoint(Vector2 circleCenter, float radius, Vector2 externalPoint)
+        {
+            Vector2 diff = circleCenter - externalPoint;
+            Vector2 norm = diff.normalized;
+            Vector2 perp = Vector2.Perpendicular(norm);
+
+            float sqMag = diff.sqrMagnitude;
+            float mag = diff.magnitude;
+            float sqRadius = radius * radius;
+
+            float magic = sqMag - sqRadius;
+            float xdiv = radius * mag;
+            float ydiv = sqMag;
+
+            return externalPoint + (norm * (magic / xdiv) + perp * Mathf.Sqrt(magic / ydiv)) * radius;
+        }
+
         [System.Serializable]
         public class IRef<T> : ISerializationCallbackReceiver where T : class
         {

@@ -10,12 +10,25 @@ namespace Bosses.Worm
         public SnakePathfinder pathfinder;
 
         public Vector3 targetPosition;
+        public GameObject player;
+
+        public float maxTurnAngleDeg;
 
         private GameObject[] _segments;
         private Rigidbody2D _headRigid;
         private float _speed;
         private Vector2 _targetMovePos;
         private float _segmentDist;
+        private float _ouroborosRadius;
+        private Vector2 _currdir;
+
+        public enum MoveMode
+        {
+            Direct,
+            Circle,
+            Wander,
+        } 
+        private MoveMode _moveMode;
 
         private void Start()
         {
@@ -29,6 +42,8 @@ namespace Bosses.Worm
             tailPos.x -= middle.transform.localScale.x * (middleLength - 1);
             tail.transform.localPosition = tailPos;
 
+            float totallength = head.transform.localScale.x + tail.transform.localScale.x;
+
             for (var i = 2; i < middleLength + 1; i++)
             {
                 var segment = (_segments[i] = Instantiate(middle)).transform;
@@ -36,20 +51,51 @@ namespace Bosses.Worm
 
                 var pos = _segments[i - 1].transform.localPosition;
 
-                pos.x -= (_segmentDist = segment.localScale.x);
+                totallength += _segmentDist = segment.localScale.x;
+                pos.x -= _segmentDist;
                 segment.localPosition = pos;
             }
+
+            _ouroborosRadius = totallength / (2 * Mathf.PI);
             
-            _speed = 2;
             _headRigid = head.GetComponent<Rigidbody2D>();
+            _moveMode = MoveMode.Wander;
         }
 
         private void Update()
         {
-            var dir = pathfinder.PathDirNorm(transform.position, _targetMovePos);
-            
-            _headRigid.velocity = _speed * dir;
-            RippleSegments();
+
+            _speed = 20;
+
+            {
+                switch (_moveMode)
+                {
+                    case MoveMode.Wander:
+                        if ((head.transform.position - targetPosition).sqrMagnitude < 120)
+                        {
+                            targetPosition = UnityEngine.Random.Range(20, 70) * pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f));
+                        }
+                        break;
+                    case MoveMode.Direct:
+                        targetPosition = player.transform.position;
+                        break;
+                    case MoveMode.Circle:
+                        targetPosition = Util.UtilFuncs.TangentPointOnCircleFromPoint(Vector2.zero, 20, head.transform.position);
+                        break;
+                }
+                _targetMovePos = targetPosition;
+                var dir = pathfinder.PathDirNorm(_segments[0].transform.position, _targetMovePos);
+                Vector2 prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[1].transform.rotation.eulerAngles.z);
+                dir = pathfinder.ClampAngle(dir, prevAngle, Mathf.Deg2Rad * maxTurnAngleDeg);
+
+                _currdir = dir = (.1f / Time.deltaTime * _currdir + dir).normalized;
+
+                _headRigid.velocity = _speed * dir;
+
+                var angle = Mathf.Atan2(dir.y, dir.x);
+                _segments[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+                RippleSegments();
+            }
         }
 
         private void RippleSegments()
@@ -61,7 +107,12 @@ namespace Bosses.Worm
                 Vector3 prevSegmentPos = _segments[i + 1].transform.position;
 
                 Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-                _segments[i].transform.position = currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+                currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+                if(((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
+                {
+                    currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
+                }
+                _segments[i].transform.position = currSegmentPos;
 
                 Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
                 Vector3 meanDir = .5f * (prev2curr + curr2next);

@@ -933,7 +933,8 @@ GameObject:
   - component: {fileID: 490401129}
   - component: {fileID: 490401132}
   - component: {fileID: 490401131}
-  m_Layer: 8
+  - component: {fileID: 490401133}
+  m_Layer: 14
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1070,6 +1071,24 @@ MonoBehaviour:
     freezeX: 0
     freezeY: 0
     freezeRotation: 0
+--- !u!114 &490401133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490401127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appearsAsSelf: 1
+  miniSprite: {fileID: 0}
+  miniColor: {r: 1, g: 1, b: 1, a: 1}
+  size: 5
+  inheritsRotation: 0
+  staticRot: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,7 +1155,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 14327
+    m_Bits: 30711
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1328,7 +1347,7 @@ GameObject:
   - component: {fileID: 877449873}
   - component: {fileID: 877449872}
   - component: {fileID: 877449874}
-  m_Layer: 8
+  m_Layer: 14
   m_Name: Worm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1342,7 +1361,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877449871}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c8357e67b8e4f4491464dc2b2a0afd4, type: 3}
   m_Name: 
@@ -1350,9 +1369,11 @@ MonoBehaviour:
   head: {fileID: 1362879762}
   middle: {fileID: 1757615603}
   tail: {fileID: 490401127}
-  middleLength: 5
+  middleLength: 20
   pathfinder: {fileID: 877449874}
   targetPosition: {x: 0, y: 30, z: 0}
+  player: {fileID: 2086174079}
+  maxTurnAngleDeg: 70
 --- !u!4 &877449873
 Transform:
   m_ObjectHideFlags: 0
@@ -1383,8 +1404,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d4d169d436b534784dbe3223ce433d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snakeyness: 0.8
-  snaketime: 2
+  snakeyness: 0.9
+  snaketime: 4
 --- !u!1 &1220764936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1945,7 +1966,8 @@ GameObject:
   - component: {fileID: 1362879764}
   - component: {fileID: 1362879768}
   - component: {fileID: 1362879767}
-  m_Layer: 8
+  - component: {fileID: 1362879769}
+  m_Layer: 14
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2097,6 +2119,24 @@ MonoBehaviour:
     freezeX: 0
     freezeY: 0
     freezeRotation: 0
+--- !u!114 &1362879769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362879762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appearsAsSelf: 1
+  miniSprite: {fileID: 0}
+  miniColor: {r: 1, g: 1, b: 1, a: 1}
+  size: 5
+  inheritsRotation: 0
+  staticRot: {x: 0, y: 0, z: 0}
 --- !u!1 &1368600121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,7 +2696,8 @@ GameObject:
   - component: {fileID: 1757615605}
   - component: {fileID: 1757615608}
   - component: {fileID: 1757615607}
-  m_Layer: 8
+  - component: {fileID: 1757615609}
+  m_Layer: 14
   m_Name: Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2793,6 +2834,24 @@ MonoBehaviour:
     freezeX: 0
     freezeY: 0
     freezeRotation: 0
+--- !u!114 &1757615609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757615603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appearsAsSelf: 1
+  miniSprite: {fileID: 0}
+  miniColor: {r: 1, g: 1, b: 1, a: 1}
+  size: 5
+  inheritsRotation: 0
+  staticRot: {x: 0, y: 0, z: 0}
 --- !u!1 &1780276282
 GameObject:
   m_ObjectHideFlags: 0
