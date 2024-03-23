@@ -59,13 +59,13 @@ namespace Bosses.Worm
             _ouroborosRadius = totallength / (2 * Mathf.PI);
             
             _headRigid = head.GetComponent<Rigidbody2D>();
-            _moveMode = MoveMode.Wander;
+            _moveMode = MoveMode.Direct;
         }
 
         private void Update()
         {
 
-            _speed = 20;
+            _speed = 50;
 
             {
                 switch (_moveMode)
@@ -73,7 +73,8 @@ namespace Bosses.Worm
                     case MoveMode.Wander:
                         if ((head.transform.position - targetPosition).sqrMagnitude < 120)
                         {
-                            targetPosition = UnityEngine.Random.Range(20, 70) * pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f));
+                            while ((head.transform.position - targetPosition).sqrMagnitude < 4000)
+                                targetPosition = UnityEngine.Random.Range(20, 70) * pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f));
                         }
                         break;
                     case MoveMode.Direct:
