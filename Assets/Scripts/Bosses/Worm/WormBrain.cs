@@ -81,7 +81,7 @@ namespace Bosses.Worm
                         targetPosition = player.transform.position;
                         break;
                     case MoveMode.Circle:
-                        targetPosition = Util.UtilFuncs.TangentPointOnCircleFromPoint(Vector2.zero, 20, head.transform.position);
+                        targetPosition = Util.UtilFuncs.TangentPointOnCircleFromPoint(Vector2.zero, _ouroborosRadius, head.transform.position);
                         break;
                 }
                 _targetMovePos = targetPosition;
