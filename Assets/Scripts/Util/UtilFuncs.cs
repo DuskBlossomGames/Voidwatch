@@ -104,6 +104,16 @@ namespace Util
             return externalPoint + (norm * (magic / xdiv) + perp * Mathf.Sqrt(magic / ydiv)) * radius;
         }
 
+        public static Vector2 Rot(Vector2 vec, float angle)
+        {
+            return new Vector2(vec.x * Mathf.Cos(angle) - vec.y * Mathf.Sin(angle), vec.x * Mathf.Sin(angle) + vec.y * Mathf.Cos(angle));
+        }
+
+        public static Vector2 Rot(Vector2 vec, Vector2 angle)
+        {
+            return vec.x * angle + vec.y * Vector2.Perpendicular(angle);
+        }
+
         [System.Serializable]
         public class IRef<T> : ISerializationCallbackReceiver where T : class
         {
