@@ -176,7 +176,7 @@ namespace Bosses.Worm
         }
         private void TailSwipe()
         {
-            if(MoveMode == MoveMode.Wander)
+            if(_moveMode == MoveMode.Wander)
             {
                 _swipe = 4 * swipetime;
             } else
