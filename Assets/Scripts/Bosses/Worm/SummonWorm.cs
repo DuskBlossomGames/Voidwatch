@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
@@ -26,7 +27,6 @@ namespace Bosses.Worm
         private float _segLength;
         private int _numSegs;
 
-        private Transform _maskObj;
         private Transform _summoning;
 
         private void Start()
@@ -37,13 +37,16 @@ namespace Bosses.Worm
             _numSegs = builder.length;
             _wormLength = builder.segmentPrefab.GetComponent<WormSegment>().segLength * (_numSegs+1);
 
-            _maskObj = new GameObject("Worm mask").transform;
-            _maskObj.SetParent(transform);
+            var maskObj = new GameObject("Worm mask").transform;
+            maskObj.SetParent(transform);
             var scale = transform.lossyScale;
-            _maskObj.localScale = new Vector3(segScale.x / scale.x, segScale.y / scale.y, 1);
-            _maskObj.localPosition = new Vector3(scale.x / 4 - _segLength / scale.x / 2, 0, 0);
+            var pos = transform.position;
+            maskObj.localRotation = Quaternion.identity;
+            maskObj.localScale = new Vector3(segScale.x / scale.x, segScale.y / scale.y, 1);
             
-            var mask = _maskObj.gameObject.AddComponent<SpriteMask>();
+            maskObj.position = transform.rotation * new Vector3((scale.x-segScale.x) / 2, 0, 0) + transform.position;
+            
+            var mask = maskObj.gameObject.AddComponent<SpriteMask>();
             mask.sprite = squareSprite;
             mask.backSortingOrder = (mask.frontSortingOrder = 639) - 1;
             mask.isCustomRangeActive = true;
@@ -51,8 +54,8 @@ namespace Bosses.Worm
 
         private void SetupSegment(int idx, bool enabled, bool masked)
         {
-            var seg = _summoning.GetChild(idx).gameObject;
-            foreach (var sRenderer in seg.GetComponentsInChildren<SpriteRenderer>())
+            var obj = _summoning.GetChild(idx).gameObject;
+            foreach (var sRenderer in obj.GetComponentsInChildren<SpriteRenderer>())
             {
                 sRenderer.enabled = enabled;
                 sRenderer.maskInteraction = masked
@@ -61,7 +64,8 @@ namespace Bosses.Worm
                 sRenderer.sortingOrder = masked ? 639 : 0;
 
             }
-            seg.GetComponent<Collider2D>().enabled = enabled;
+            obj.GetComponent<Collider2D>().enabled = enabled;
+            obj.GetComponent<MiniMapIcon>().enabled = enabled;
         }
 
         private void UpdateWorm()

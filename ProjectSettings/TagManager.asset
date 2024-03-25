@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Health Bar
+    uniqueID: 411503061
+    locked: 0
   - name: HUD
     uniqueID: 808956487
     locked: 0
