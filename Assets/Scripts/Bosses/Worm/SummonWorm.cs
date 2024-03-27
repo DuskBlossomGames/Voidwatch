@@ -27,13 +27,15 @@ namespace Bosses.Worm
         private float _segLength;
         private int _numSegs;
 
+        private System.Collections.Generic.List<Vector3> _oldSegPos;
+
         private Transform _summoning;
 
         private void Start()
         {
             var builder = wormPrefab.GetComponent<WormSegmentBuilder>();
             var segScale = builder.segmentPrefab.transform.localScale;
-            _segLength = segScale.x;
+            _segLength = builder.segmentPrefab.GetComponent<WormSegment>().segLength;
             _numSegs = builder.length;
             _wormLength = builder.segmentPrefab.GetComponent<WormSegment>().segLength * (_numSegs+1);
 
@@ -69,6 +71,65 @@ namespace Bosses.Worm
         }
 
         private void UpdateWorm()
+        {
+            var head = _summoning.GetChild(0).GetComponent<WormSegment>();
+            if (head.enabled)
+            {
+                _oldSegPos = new System.Collections.Generic.List<Vector3>();
+                for (var i = 0; i < _numSegs; i++) { 
+                    SetupSegment(i, false, true);
+                    _summoning.GetChild(i).GetComponent<WormSegment>().enabled = false;
+                    _oldSegPos.Add(_summoning.GetChild(i).transform.position);
+                }
+            }
+            head.enabled = false;
+
+            var headRigid = head.GetComponent<CustomRigidbody2D>();
+            var angle = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+            int segID = Mathf.FloorToInt((1 - _summonTimer.Progress) * _numSegs);
+            float segProg = (1-_summonTimer.Progress) * _numSegs % 1;
+
+            if (_summonTimer.IsFinished)
+            {
+                for (var i = 0; i < _numSegs; i++)
+                {
+                    _summoning.GetChild(i).GetComponent<WormSegment>().enabled = true;
+                }
+
+                headRigid.velocity = Vector2.zero;
+
+                _summoning.SetParent(null, true);
+                _summoning = null;
+                _summonTimer.Value = 0;
+                return;
+            }
+
+            _summoning.GetChild(segID).localPosition = new Vector3(-.2f - _segLength * segProg, 0, 0);
+            for (int i = segID - 1; i >= 0; i--)
+            {
+                var lpi = _summoning.GetChild(i).position;
+                var lpj = _summoning.GetChild(i + 1).position;
+                var prevrot = (_summoning.GetChild(i+1).rotation.eulerAngles.z-90) * Mathf.Deg2Rad;
+
+                var tarpot = lpj + -_segLength * (Vector3)UtilFuncs.AngleToVector(prevrot + .5f * Mathf.Cos(2 * Time.time));
+                var rpot = UtilFuncs.LerpSafe(lpi, tarpot, Time.deltaTime);
+                rpot += .1f * (_oldSegPos[i] - _summoning.GetChild(i).position);
+
+                _summoning.GetChild(i).position = lpi = lpj + _segLength * (rpot-lpj).normalized;
+                _summoning.GetChild(i).rotation = Quaternion.Euler(0, 0, Mathf.Atan2(-(rpot - lpj).y, -(rpot - lpj).x) * Mathf.Rad2Deg + 90);
+
+            }
+
+            SetupSegment(segID, false, true);
+            if(segID+1 < _numSegs) SetupSegment(segID+1, true, false);
+
+            for (var i = 0; i < _numSegs; i++)
+            {
+                SetupSegment(i, (float)i / _numSegs < 1 - _summonTimer.Progress, !_summonTimer.IsFinished);
+                _oldSegPos[i] = _summoning.GetChild(i).position;
+            }
+        }
+        private void OldUpdateWorm()
         {
             var head = _summoning.GetChild(0).GetComponent<WormSegment>();
             head.enabled = false;

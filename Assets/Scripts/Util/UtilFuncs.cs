@@ -114,6 +114,11 @@ namespace Util
             return vec.x * angle + vec.y * Vector2.Perpendicular(angle);
         }
 
+        public static Vector2 AngleToVector(float angle)
+        {
+            return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        }
+
         [System.Serializable]
         public class IRef<T> : ISerializationCallbackReceiver where T : class
         {

@@ -85,7 +85,7 @@ public class WormSegment : MonoBehaviour
             if (form == Form.Middle)
             {
                 Vector2 nextToCurr = (next.transform.position - transform.position).normalized;
-                Vector2 avg = (nextToCurr + currToPrev) / 2;
+                Vector2 avg = -(nextToCurr + currToPrev) / 2;
                 float angle = Mathf.Atan2(avg.y, avg.x);
                 bend = Vector2.Dot(nextToCurr, currToPrev);
                 transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * angle);
