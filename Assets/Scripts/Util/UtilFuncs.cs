@@ -4,6 +4,22 @@ namespace Util
 {
     public class UtilFuncs
     {
+        public static bool FullyContains(Bounds container, Bounds obj)
+        {
+            for (var x = -1; x <= 1; x += 2)
+            {
+                for (var y = -1; y <= 1; y += 2)
+                {
+                    if (!container.Contains(obj.center + new Vector3(obj.extents.x * x, obj.extents.y * y, 0)))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+        
         public static Vector2 LeadShotNorm(Vector2 relPos, Vector2 relVel, float bulletVel)
         {
             float a = bulletVel * bulletVel - relVel.sqrMagnitude;

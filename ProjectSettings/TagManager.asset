@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - GravitySource
+  - Burrowable
+  - BurrowableEnd
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Self-Colliding Enemies
   - Goo
   - Bosses
-  - 
+  - Triggers
   - 
   - 
   - 
@@ -47,4 +49,7 @@ TagManager:
     locked: 0
   - name: HUD
     uniqueID: 808956487
+    locked: 0
+  - name: Temp Masks
+    uniqueID: 2859883669
     locked: 0

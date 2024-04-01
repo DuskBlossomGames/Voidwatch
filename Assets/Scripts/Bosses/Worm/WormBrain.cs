@@ -81,6 +81,12 @@ namespace Bosses.Worm
             
             _headRigid = head.GetComponent<Rigidbody2D>();
             _moveMode = MoveMode.Wander;
+            
+            // activate all the worm summoners
+            foreach (var c in GetComponentsInChildren<SummonWorm>())
+            {
+                c.active = true;
+            }
         }
 
         private void Update()

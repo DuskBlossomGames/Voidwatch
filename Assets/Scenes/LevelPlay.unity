@@ -934,6 +934,7 @@ GameObject:
   - component: {fileID: 490401132}
   - component: {fileID: 490401131}
   - component: {fileID: 490401133}
+  - component: {fileID: 490401134}
   m_Layer: 14
   m_Name: Tail
   m_TagString: Untagged
@@ -1089,6 +1090,21 @@ MonoBehaviour:
   size: 5
   inheritsRotation: 0
   staticRot: {x: 0, y: 0, z: 0}
+--- !u!114 &490401134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490401127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3118f5442c274abc8287e3a7da116777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tail: 1
+  sortingLayer: Temp Masks
+  squareSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,7 +1171,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 30711
+    m_Bits: 63479
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1347,8 +1363,9 @@ GameObject:
   - component: {fileID: 877449873}
   - component: {fileID: 877449872}
   - component: {fileID: 877449874}
+  - component: {fileID: 877449875}
   m_Layer: 14
-  m_Name: Worm
+  m_Name: Worm Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1361,7 +1378,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877449871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c8357e67b8e4f4491464dc2b2a0afd4, type: 3}
   m_Name: 
@@ -1396,7 +1413,7 @@ Transform:
   m_GameObject: {fileID: 877449871}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48.88, y: 9.21, z: -10}
+  m_LocalPosition: {x: 34.5, y: 9.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1419,6 +1436,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snakeyness: 0.9
   snaketime: 4
+--- !u!114 &877449875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877449871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe05ce46b45445ca9e6b9c1b096bce61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  riftPrefab: {fileID: 8617256005898937446, guid: 006500951efc345a4a1fe415d3b76136, type: 3}
+  test: 0
+  entering: 0
+  dist: 0
 --- !u!1 &924343554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,7 +1553,7 @@ MonoBehaviour:
   emergeTime: 7
   summonCooldown: 40
   summonChance: 0.005
-  active: 1
+  active: 0
   squareSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
 --- !u!1 &1174730199
 GameObject:
@@ -1608,7 +1641,7 @@ MonoBehaviour:
   emergeTime: 7
   summonCooldown: 40
   summonChance: 0.005
-  active: 1
+  active: 0
   squareSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
 --- !u!4 &1174730202
 Transform:
@@ -2186,6 +2219,7 @@ GameObject:
   - component: {fileID: 1362879768}
   - component: {fileID: 1362879767}
   - component: {fileID: 1362879769}
+  - component: {fileID: 1362879770}
   m_Layer: 14
   m_Name: Head
   m_TagString: Untagged
@@ -2357,6 +2391,21 @@ MonoBehaviour:
   size: 5
   inheritsRotation: 0
   staticRot: {x: 0, y: 0, z: 0}
+--- !u!114 &1362879770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362879762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3118f5442c274abc8287e3a7da116777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tail: 0
+  sortingLayer: Temp Masks
+  squareSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
 --- !u!1 &1368600121
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,6 +3112,7 @@ GameObject:
   - component: {fileID: 1757615608}
   - component: {fileID: 1757615607}
   - component: {fileID: 1757615609}
+  - component: {fileID: 1757615610}
   m_Layer: 14
   m_Name: Middle
   m_TagString: Untagged
@@ -3220,6 +3270,21 @@ MonoBehaviour:
   size: 5
   inheritsRotation: 0
   staticRot: {x: 0, y: 0, z: 0}
+--- !u!114 &1757615610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757615603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3118f5442c274abc8287e3a7da116777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tail: 0
+  sortingLayer: Temp Masks
+  squareSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
 --- !u!1 &1780276282
 GameObject:
   m_ObjectHideFlags: 0
