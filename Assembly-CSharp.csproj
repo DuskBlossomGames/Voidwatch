@@ -70,6 +70,7 @@
      <Compile Include="Assets/Scripts/Spawnables/Bifurcator/Bifurcator_Gun.cs" />
      <Compile Include="Assets/Scriptable Objects/Components/Weapons/KineticWeapon.cs" />
      <Compile Include="Assets/Scripts/UpgradeScene/ShopUpgradeSlot.cs" />
+     <Compile Include="Assets/Scripts/Bosses/Worm/JawGrab.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Boids/BoidHandler.cs" />
      <Compile Include="Assets/Scripts/Spawnables/EnemyGunHandler.cs" />
      <Compile Include="Assets/Scripts/Spawnables/Bifurcator/Bifurcator_Move.cs" />
