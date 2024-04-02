@@ -7,3 +7,4 @@ Library/
 UserSettings/
 Packages/packages-lock.json
 ProjectSettings/ProjectVersion.txt
+Assembly-CSharp.csproj
