@@ -5,6 +5,7 @@ public class MissilerPathfinding : MonoBehaviour
 {
     public GameObject target;
     public float minDist;
+    public float speed = 10;
 
 
     private Vector3 _tar;
@@ -36,8 +37,8 @@ public class MissilerPathfinding : MonoBehaviour
                 _moving = false;
             }
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(dif.y,dif.x));
-            _rigid.AddRelativeForce(new Vector2(10,0));
-            _rigid.velocity = Vector2.ClampMagnitude(_rigid.velocity, 10);
+            _rigid.AddRelativeForce(new Vector2(speed, 0));
+            _rigid.velocity = Vector2.ClampMagnitude(_rigid.velocity, speed);
         }
     }
 }

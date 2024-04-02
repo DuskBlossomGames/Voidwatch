@@ -7,6 +7,7 @@ public class MissleShooter : MonoBehaviour
     public GameObject missilePrefab;
     public float shootInterval;
     public float engageDist;
+    public float shootForce = 1000;
     public int amt = 3;
     public bool isShootin = false;
     public NSpriteAnimation animationState;
@@ -42,7 +43,7 @@ public class MissleShooter : MonoBehaviour
                 {
                     GameObject missile = Instantiate(missilePrefab, transform.position, transform.rotation);
                     missile.GetComponent<MissleAim>().target = target;
-                    missile.GetComponent<CustomRigidbody2D>().AddForce(1000 * Random.insideUnitCircle);
+                    missile.GetComponent<CustomRigidbody2D>().AddForce(shootForce * Random.insideUnitCircle);
                 }
             }
 
