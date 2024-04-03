@@ -12,6 +12,8 @@ public class MIRVController : MonoBehaviour
     public float scatterForce;
     public float prepTime = 1;
 
+    bool _canPop = false;
+
     Util.Timer _timer;
 
     Util.CustomRigidbody2D _crb;
@@ -36,6 +38,7 @@ public class MIRVController : MonoBehaviour
             {
                 target = _ma.target.transform;
                 _timer.Value = prepTime;
+                _canPop = true;
             }
             else
             {
@@ -45,7 +48,7 @@ public class MIRVController : MonoBehaviour
 
         _timer.Update();
 
-        if (_timer.IsFinished && (transform.position - target.position).sqrMagnitude < splitDist * splitDist)
+        if (_canPop && _timer.IsFinished && (transform.position - target.position).sqrMagnitude < splitDist * splitDist)
         {
             for (int i = 0; i < splitCount; i++)
             {

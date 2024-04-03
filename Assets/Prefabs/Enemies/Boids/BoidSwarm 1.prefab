@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c7deeaa2a87ea4f88935a16f9654d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boidCount: 7
+  boidCount: 5
 --- !u!114 &5597069691401805074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,4 +352,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 9
+  cost: 7

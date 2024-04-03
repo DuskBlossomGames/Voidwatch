@@ -109,7 +109,7 @@ MonoBehaviour:
   centeringFactor: 0.02
   avoidFactor: 1
   targettingFactor: 0.05
-  maxSpeed: 13
+  maxSpeed: 19.5
   minSpeed: 10
   target: {fileID: 0}
   gravitySource: {fileID: 0}
@@ -352,4 +352,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 3
+  cost: 2

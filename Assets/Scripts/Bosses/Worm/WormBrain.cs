@@ -56,6 +56,7 @@ namespace Bosses.Worm
             Burrow,
             Tailspike,
             Idle,
+            Ouroboros,
         }
         public MoveMode _moveMode;
         public ActionGoal actionGoal;
@@ -65,7 +66,8 @@ namespace Bosses.Worm
         private void Start()
         {
             _actionAbandonTimer = new Util.Timer();
-            actionGoal = ActionGoal.Tailspike;
+            _actionUtilTimer = new Util.Timer();
+            actionGoal = ActionGoal.Idle;
             _segments = new GameObject[middleLength + 2];
 
             _segments[0] = head;
@@ -108,11 +110,15 @@ namespace Bosses.Worm
 
             var _snakiness = pathfinder.snakeyness;
 
-            _speed = Mathf.Clamp(_speed + 5 * Time.deltaTime * MathF.Sign(_tarSpeed - _speed), Mathf.Min(_speed, _tarSpeed), Mathf.Max(_speed, _tarSpeed));
-            pathfinder.snakeyness = Mathf.Clamp(_snakiness + .1f * Time.deltaTime * MathF.Sign(_tarSnakines - _snakiness), Mathf.Min(_snakiness, _tarSnakines), Mathf.Max(_snakiness, _tarSnakines));
-            maxTurnAngleDeg = Mathf.Clamp(maxTurnAngleDeg + 10 * Time.deltaTime * MathF.Sign(_tarTurnAngle - maxTurnAngleDeg), Mathf.Min(maxTurnAngleDeg, _tarTurnAngle), Mathf.Max(maxTurnAngleDeg, _tarTurnAngle));
+            
+            /* Code for managing speeding up and slowing down, too small to really need a function especially since it occurs once */{
+                _speed = Mathf.Clamp(_speed + 5 * Time.deltaTime * MathF.Sign(_tarSpeed - _speed), Mathf.Min(_speed, _tarSpeed), Mathf.Max(_speed, _tarSpeed));
+                pathfinder.snakeyness = Mathf.Clamp(_snakiness + .1f * Time.deltaTime * MathF.Sign(_tarSnakines - _snakiness), Mathf.Min(_snakiness, _tarSnakines), Mathf.Max(_snakiness, _tarSnakines));
+                maxTurnAngleDeg = Mathf.Clamp(maxTurnAngleDeg + 10 * Time.deltaTime * MathF.Sign(_tarTurnAngle - maxTurnAngleDeg), Mathf.Min(maxTurnAngleDeg, _tarTurnAngle), Mathf.Max(maxTurnAngleDeg, _tarTurnAngle));
+            }
 
-            if (_swipe < -20) TailSwipe();
+            _actionAbandonTimer.Update();
+            _actionUtilTimer.Update();
         }
 
         private void RippleSegments()

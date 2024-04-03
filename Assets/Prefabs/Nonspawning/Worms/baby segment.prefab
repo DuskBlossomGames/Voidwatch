@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: -630066795176946171}
   - component: {fileID: 4405246181603560970}
   - component: {fileID: 8290449300364683273}
-  m_Layer: 8
+  - component: {fileID: -1397827291772245333}
+  m_Layer: 12
   m_Name: baby segment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a4009969f5ad84ba5a44e861b36de98f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fbd1f535193f04e1289f2aa3f1c57061, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 1000000
+  mass: 0.1
   collisionDetection: 0
   constraints:
     freezeX: 0
@@ -215,7 +216,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -244,7 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  maxHealth: 1000
+  maxHealth: 50
   heathOpacityCurve:
     serializedVersion: 2
     m_Curve:
@@ -306,3 +307,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7d822bc273fdd479601481e939a2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1397827291772245333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633799158591997125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57fe1ddaa031c9745b33a24da9d80ef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePerSecond: 1
+  entryDamage: 2
+  canOnlyHurtPlayer: 1
+  dmgType: 0

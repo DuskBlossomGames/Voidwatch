@@ -10229,7 +10229,7 @@ MonoBehaviour:
   splitCount: 10
   splitPrefab: {fileID: 8644291156443323015, guid: cf79d3bdb10edc941b0b30c3e77eaca6, type: 3}
   scatterForce: 1000
-  prepTime: 0.5
+  prepTime: 0.6
 --- !u!114 &8820121920070568506
 MonoBehaviour:
   m_ObjectHideFlags: 0

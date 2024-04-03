@@ -7,6 +7,7 @@ public class AreaDamager : MonoBehaviour
 {
     public float damagePerSecond;
     public float entryDamage;
+    public bool canOnlyHurtPlayer = false;
     public IDamageable.DmgType dmgType;
 
     void OnTriggerStay2D(Collider2D other)
@@ -14,7 +15,7 @@ public class AreaDamager : MonoBehaviour
         //Debug.Log(other.gameObject.name);
 
         IDamageable dmg;
-        if ((dmg = other.gameObject.GetComponent<IDamageable>()) != null)
+        if ((dmg = other.gameObject.GetComponent<IDamageable>()) != null && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             dmg.Damage(damagePerSecond * Time.deltaTime, dmgType, 0);
             //Debug.LogFormat("{0} Component found as {1}", other.gameObject.name, dmg.ToString());
@@ -29,7 +30,7 @@ public class AreaDamager : MonoBehaviour
         //Debug.Log(other.gameObject.name);
 
         IDamageable dmg;
-        if ((dmg = other.gameObject.GetComponent<IDamageable>()) != null)
+        if ((dmg = other.gameObject.GetComponent<IDamageable>()) != null && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             dmg.Damage(entryDamage, dmgType, 0);
             //Debug.LogFormat("{0} Component found as {1}", other.gameObject.name, dmg.ToString());
