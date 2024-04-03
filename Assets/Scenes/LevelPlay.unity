@@ -1378,7 +1378,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877449871}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c8357e67b8e4f4491464dc2b2a0afd4, type: 3}
   m_Name: 
@@ -2038,7 +2038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1331667013
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9025,6 +9025,63 @@ MonoBehaviour:
     freezeX: 1
     freezeY: 1
     freezeRotation: 1
+--- !u!1001 &6379923571754333293
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.374954
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.4583054
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 552488138339804172, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7566320265735268650, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
+      propertyPath: m_Name
+      value: Plasiopendra baby
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5faf39cec1fb64cdc87de13189947bef, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -9037,3 +9094,4 @@ SceneRoots:
   - {fileID: 1661085911}
   - {fileID: 1780276284}
   - {fileID: 877449873}
+  - {fileID: 6379923571754333293}
