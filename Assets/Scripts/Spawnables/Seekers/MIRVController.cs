@@ -21,10 +21,8 @@ public class MIRVController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        target = null;
         _ma = GetComponent<MissleAim>();
-        if (_ma.target != null) {
-            target = _ma.target.transform;
-        }
         _crb = GetComponent<Util.CustomRigidbody2D>();
         _timer = new Util.Timer();
     }
