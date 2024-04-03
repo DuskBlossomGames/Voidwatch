@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877449871}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c8357e67b8e4f4491464dc2b2a0afd4, type: 3}
   m_Name: 
@@ -1675,10 +1675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe05ce46b45445ca9e6b9c1b096bce61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  riftPrefab: {fileID: 8617256005898937446, guid: 006500951efc345a4a1fe415d3b76136, type: 3}
-  test: 0
-  entering: 0
-  dist: 0
 --- !u!1 &924343554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,7 +1775,7 @@ MonoBehaviour:
   wormPrefab: {fileID: 7455740270890831396, guid: c161bb06027a88f459755f266a61a8c8, type: 3}
   emergeTime: 7
   summonCooldown: 40
-  summonChance: 0.005
+  summonChance: 0.0015
   active: 0
   squareSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
 --- !u!1 &1057170238
@@ -1997,7 +1993,7 @@ MonoBehaviour:
   wormPrefab: {fileID: 7455740270890831396, guid: c161bb06027a88f459755f266a61a8c8, type: 3}
   emergeTime: 7
   summonCooldown: 40
-  summonChance: 0.005
+  summonChance: 0.0015
   active: 0
   squareSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
 --- !u!4 &1174730202

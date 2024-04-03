@@ -27,6 +27,7 @@ namespace Bosses.Worm
         public float tailmomentum;
 
         public float pursueSpeed;
+        public float rushSpeed;
         public float pursueSnakiness;
         public float pursueTurnAngle;
 
@@ -48,11 +49,23 @@ namespace Bosses.Worm
             Direct,
             Circle,
             Wander,
-        } 
+        }
+        public enum ActionGoal
+        {
+            Rush,
+            Burrow,
+            Tailspike,
+            Idle,
+        }
         public MoveMode _moveMode;
+        public ActionGoal actionGoal;
+        private Util.Timer _actionAbandonTimer;
+        private Util.Timer _actionUtilTimer;
 
         private void Start()
         {
+            _actionAbandonTimer = new Util.Timer();
+            actionGoal = ActionGoal.Tailspike;
             _segments = new GameObject[middleLength + 2];
 
             _segments[0] = head;
