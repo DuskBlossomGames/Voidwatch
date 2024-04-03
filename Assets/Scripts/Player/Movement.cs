@@ -8,6 +8,8 @@ namespace Player
 {
     public class Movement : MonoBehaviour
     {
+        public bool inputBlocked;
+        
         public float driftCorrection;
         public float speedLimit;
         public float acceleration;
@@ -24,7 +26,7 @@ namespace Player
         private CustomRigidbody2D _rigid;
         private Camera _camera;
     
-        private Vector2 _velocity;
+        private Vector2 _preDodgeVel;
         private float _acceleration;
 
         private Vector2 _forwards;
@@ -55,15 +57,22 @@ namespace Player
             _trails = GetComponentsInChildren<TrailRenderer>();
             _upgradeable = GetComponent<Upgradeable>();
         }
+
+        private bool GetKey(KeyCode code)
+        {
+            return !inputBlocked && Input.GetKey(code);
+        }
     
         private void FixedUpdate()
         {
+            var velocity = _rigid.velocity;
+
             var tar = _camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             _forwards = ((Vector2) tar).normalized;
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (_dodgeCooldownTimer.IsFinished && Input.GetKey(KeyCode.Space))
+            if (_dodgeCooldownTimer.IsFinished && GetKey(KeyCode.Space))
             {
                 var evt = new DodgeEvent
                 {
@@ -73,6 +82,7 @@ namespace Player
                 };
                 if (_upgradeable) _upgradeable.HandleEvent(evt, null);
 
+                _preDodgeVel = velocity;
                 _dodgeTimeLength = evt.dodgeDistance / evt.dodgeVelocity;
                 _dodgeTimer.Value = _dodgeTimeLength;
                 _dodgeCooldownTimer.Value = evt.dodgeDistance / evt.dodgeVelocity + evt.dodgeCooldown;
@@ -121,43 +131,43 @@ namespace Player
                 _afterImages.ForEach(Destroy);
                 _afterImages.Clear();
                 
-                _velocity = _forwards * _velocity.magnitude;
+                velocity = _forwards * _preDodgeVel.magnitude;
             }
             
-            if (Input.GetKey("w"))
+            if (GetKey(KeyCode.W))
             {
                 var evt = new MoveEvent { speedLimit = speedLimit, acceleration = acceleration };
                 if (_upgradeable) _upgradeable.HandleEvent(evt, null);
                 
                 var dv = evt.speedLimit * evt.speedLimit / 100;
-                var eff = 1 / (1 + Mathf.Exp(_velocity.sqrMagnitude / 100 - dv));
-                if (_velocity.sqrMagnitude > (evt.speedLimit + 5) * (evt.speedLimit + 5)){
+                var eff = 1 / (1 + Mathf.Exp(velocity.sqrMagnitude / 100 - dv));
+                if (velocity.sqrMagnitude > (evt.speedLimit + 5) * (evt.speedLimit + 5)){
                     _acceleration = 0;
                 } else {
                     _acceleration = 10 * evt.acceleration * eff;
                 }
             
-                var vm = _velocity.magnitude;
-                _velocity += driftCorrection * Time.fixedDeltaTime * Push(_velocity, _forwards);
-                _velocity *= (.01f + vm) / (.01f+_velocity.magnitude);
+                var vm = velocity.magnitude;
+                velocity += driftCorrection * Time.fixedDeltaTime * Push(velocity, _forwards);
+                velocity *= (.01f + vm) / (.01f+velocity.magnitude);
 
-                /*if (Input.GetKey("a"))
+                /*if (GetKey("a"))
                 {
                     _velocity = _or
                 }*/
 
-            } else if (Input.GetKey("s")) {
-                _velocity *= Mathf.Pow(.2f, Time.fixedDeltaTime);
+            } else if (GetKey(KeyCode.S)) {
+                velocity *= Mathf.Pow(.2f, Time.fixedDeltaTime);
             } else {
                 _acceleration = 0;
             }
             
             //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.freezeRotation), Mathf.Cos(Mathf.Deg2Rad * rigid.freezeRotation));
 
-            _velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
-            _velocity *= Mathf.Pow(.99f, Time.fixedDeltaTime);
+            velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
+            velocity *= Mathf.Pow(.99f, Time.fixedDeltaTime);
 
-            _rigid.velocity = _velocity;
+            _rigid.velocity = velocity;
         }
     
         private static Vector2 Push(Vector2 target, Vector2 line)
