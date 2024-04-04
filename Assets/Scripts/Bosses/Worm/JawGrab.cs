@@ -9,6 +9,7 @@ namespace Bosses.Worm
     public class JawGrab : MonoBehaviour
     {
         public float grabDamage, grabTime, holdTime, targetRot, ejectionVel;
+        public WormBrain wm;
 
         private Transform _leftJaw, _rightJaw, _player;
         private readonly Timer _clampTimer = new();
@@ -34,6 +35,9 @@ namespace Bosses.Worm
 
         private void OnTriggerExit2D(Collider2D other)
         {
+            _player.GetComponent<Player.Movement>().inputBlocked = false;
+            _player.GetComponent<CustomRigidbody2D>().velocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
+            _holdTimer.Value = 0;
             _player = null;
         }
 
@@ -45,7 +49,7 @@ namespace Bosses.Worm
             if (_holdTimer.IsActive && _holdTimer.IsFinished)
             {
                 _player.GetComponent<Player.Movement>().inputBlocked = false;
-                _player.GetComponent<CustomRigidbody2D>().velocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
+                _player.GetComponent<CustomRigidbody2D>().velocity += (Vector2)(transform.rotation * new Vector3(ejectionVel, 0, 0));
                 _player = null;
                 
                 _holdTimer.Value = 0;
@@ -62,7 +66,8 @@ namespace Bosses.Worm
                     _player.GetComponent<Player.Movement>().inputBlocked = true;
                     _player.GetComponent<CustomRigidbody2D>().velocity = Vector2.zero;
                     _player.GetComponent<PlayerDamageable>().Damage(grabDamage, IDamageable.DmgType.Concussive);
-                    
+                    wm.BiteCallback();
+
                     _holdTimer.Value = holdTime;
                 }
             }

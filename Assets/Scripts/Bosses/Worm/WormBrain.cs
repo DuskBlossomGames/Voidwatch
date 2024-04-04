@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Bosses.Worm
 {
@@ -60,12 +61,11 @@ namespace Bosses.Worm
         }
         public MoveMode _moveMode;
         public ActionGoal actionGoal;
-        private Util.Timer _actionAbandonTimer;
         private Util.Timer _actionUtilTimer;
+        private bool _isStageTwo = false;
 
         private void Start()
         {
-            _actionAbandonTimer = new Util.Timer();
             _actionUtilTimer = new Util.Timer();
             actionGoal = ActionGoal.Idle;
             _segments = new GameObject[middleLength + 2];
@@ -112,13 +112,73 @@ namespace Bosses.Worm
 
             
             /* Code for managing speeding up and slowing down, too small to really need a function especially since it occurs once */{
-                _speed = Mathf.Clamp(_speed + 5 * Time.deltaTime * MathF.Sign(_tarSpeed - _speed), Mathf.Min(_speed, _tarSpeed), Mathf.Max(_speed, _tarSpeed));
+                _speed = Mathf.Clamp(_speed + 10 * Time.deltaTime * MathF.Sign(_tarSpeed - _speed), Mathf.Min(_speed, _tarSpeed), Mathf.Max(_speed, _tarSpeed));
                 pathfinder.snakeyness = Mathf.Clamp(_snakiness + .1f * Time.deltaTime * MathF.Sign(_tarSnakines - _snakiness), Mathf.Min(_snakiness, _tarSnakines), Mathf.Max(_snakiness, _tarSnakines));
                 maxTurnAngleDeg = Mathf.Clamp(maxTurnAngleDeg + 10 * Time.deltaTime * MathF.Sign(_tarTurnAngle - maxTurnAngleDeg), Mathf.Min(maxTurnAngleDeg, _tarTurnAngle), Mathf.Max(maxTurnAngleDeg, _tarTurnAngle));
             }
 
-            _actionAbandonTimer.Update();
             _actionUtilTimer.Update();
+            if (_actionUtilTimer.IsFinished)
+            {
+                if(actionGoal == ActionGoal.Tailspike)
+                {
+                    TailSwipe();
+                }
+
+                if (!_isStageTwo)
+                {
+                    float rand = UnityEngine.Random.Range(0f, 1f);
+                    switch (rand)
+                    {
+                        case < .15f:
+                            /*Do burrow*/
+                            goto default;
+                        
+                        case < .50f:
+                            /*Do Rush*/
+                            actionGoal = ActionGoal.Rush;
+                            _actionUtilTimer.Value = Random.Range(5f, 10f);
+                            break;
+                        
+                        case < 1.0f:
+                            /*Do Tailspike*/
+                            actionGoal = ActionGoal.Tailspike;
+                            _actionUtilTimer.Value = Random.Range(1f, 4f);
+                            goto default;
+                        
+                        default:
+                            actionGoal = ActionGoal.Idle;
+                            _actionUtilTimer.Value = Random.Range(5f, 8f);
+                            break;
+                    }
+                }
+            }
+            switch (actionGoal)
+            {
+                case ActionGoal.Rush:
+                    if (player.GetComponent<Player.Movement>().inputBlocked)
+                    {
+                        actionGoal = ActionGoal.Idle;
+                        goto case ActionGoal.Idle;
+                    }
+                    _moveMode = MoveMode.Direct;
+                    break;
+
+                case ActionGoal.Idle:
+                case ActionGoal.Tailspike:
+                    _moveMode = MoveMode.Wander;
+                    break;
+
+                case ActionGoal.Ouroboros:
+                    _moveMode = MoveMode.Circle;
+                    break;
+
+                case ActionGoal.Burrow:
+                    _moveMode = MoveMode.Wander;
+                    break;
+
+            }
+
         }
 
         private void RippleSegments()
@@ -211,6 +271,11 @@ namespace Bosses.Worm
             
         }
 
+        public void BiteCallback()
+        {
+            actionGoal = ActionGoal.Idle;
+        }
+
         private void UpdateMovement()
         {
             switch (_moveMode)
@@ -226,7 +291,15 @@ namespace Bosses.Worm
                     }
                     break;
                 case MoveMode.Direct:
-                    _tarSpeed = pursueSpeed;
+                    if ((targetPosition - head.transform.position).sqrMagnitude < 30*30)
+                    {
+                        if(_speed < _tarSpeed)
+                            _speed *= Mathf.Pow(1.10f,Time.deltaTime);
+                        _tarSpeed = rushSpeed;
+                    }
+                    else {
+                        _tarSpeed = pursueSpeed;
+                    }
                     _tarTurnAngle = pursueTurnAngle;
                     _tarSnakines = pursueSnakiness;
                     targetPosition = player.transform.position;

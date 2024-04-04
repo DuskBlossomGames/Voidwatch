@@ -1266,6 +1266,7 @@ MonoBehaviour:
   holdTime: 7
   targetRot: -5
   ejectionVel: 20
+  wm: {fileID: 877449872}
 --- !u!61 &528326390
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1621,9 +1622,10 @@ MonoBehaviour:
   swipetime: 0.2
   swipeangle: 0.5
   tailmomentum: 0.5
-  pursueSpeed: 25
-  pursueSnakiness: 0.5
-  pursueTurnAngle: 25
+  pursueSpeed: 35
+  rushSpeed: 50
+  pursueSnakiness: 0.3
+  pursueTurnAngle: 35
   ouroborosSpeed: 15
   ouroborosSnakiness: 0
   ouroborosTurnAngle: 80
@@ -1631,6 +1633,7 @@ MonoBehaviour:
   wanderSnakiness: 0.8
   wanderTurnAngle: 40
   _moveMode: 0
+  actionGoal: 0
 --- !u!4 &877449873
 Transform:
   m_ObjectHideFlags: 0
