@@ -190,6 +190,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   dmgRes: {fileID: 11400000, guid: de2060ee01175134cab3ccc903df4371, type: 2}
   maxHealth: 20
+  ScrapCount: 0
+  ScrapPrefab: {fileID: 0}
 --- !u!114 &301863512397517819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,3 +289,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 7
+  ScrapCount: 0
+  ScrapPrefab: {fileID: 0}

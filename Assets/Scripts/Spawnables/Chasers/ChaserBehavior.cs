@@ -28,7 +28,6 @@ public class ChaserBehavior : MonoBehaviour
     private void Update()
     {
         _driftTimer.Update();
-        Debug.LogFormat("{0}", _driftTimer.Value);
         if (_driftTimer.IsFinished)
         {
             Vector2 diff = (target.transform.position - transform.position);

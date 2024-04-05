@@ -110,6 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 15
+  ScrapCount: 0
+  ScrapPrefab: {fileID: 0}
 --- !u!114 &6828568907730358304
 MonoBehaviour:
   m_ObjectHideFlags: 0
