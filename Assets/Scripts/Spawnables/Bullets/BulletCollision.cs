@@ -15,6 +15,7 @@ public class BulletCollision : MonoBehaviour
     public int weaponID;
 
     private bool _leftOwner;
+    public bool isKinetic;
     private Upgradeable _upgradeable;
 
     private void Start()
@@ -46,7 +47,9 @@ public class BulletCollision : MonoBehaviour
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
                 //Debug.Log(string.Format(".05 * dmg * mass * sqrSpeed = .05 * {0} * {1} * {2} = {3}",dmg,mass,sqrSpeed,.05f * dmg * mass * sqrSpeed));
-                damageable.Damage(.5f * evt.damage * mass * sqrSpeed, dmgType);
+                if (isKinetic) { damageable.Damage(.5f * evt.damage * mass * sqrSpeed, dmgType); }
+                else {           damageable.Damage(evt.damage * mass, dmgType); }
+                
             }
 
             Destroy(gameObject);

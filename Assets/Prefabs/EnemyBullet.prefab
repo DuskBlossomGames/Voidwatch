@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidMass: 1
+  mass: 1
   collisionDetection: 1
   constraints:
     freezeX: 0
@@ -191,3 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmg: 10
+  owner: {fileID: 0}
+  dmgType: 0
+  weaponID: 0
+  isKinetic: 1

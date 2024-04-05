@@ -259,6 +259,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   maxHealth: 5000
+  varientParent: {fileID: 0}
 --- !u!61 &48853191
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8844,6 +8845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletText: {fileID: 266863374}
+  playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
 --- !u!61 &2086174085
 BoxCollider2D:
   m_ObjectHideFlags: 0

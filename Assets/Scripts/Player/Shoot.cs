@@ -6,6 +6,7 @@ namespace Player
     public class Shoot : MonoBehaviour
     {
         public TextMeshProUGUI bulletText;
+        public Scriptable_Objects.PlayerData playerData;
 
         GunHandler _gun;
         private void Start()
@@ -19,7 +20,7 @@ namespace Player
             {
                 _gun.Shoot(0);
             }
-            bulletText.text = string.Format("Clips: {0}/{1}\nAmmo: {2}/{3}\nStatus: {4}", _gun.CurrClipCount(), _gun.clipCount, _gun.CurrClipCap(), _gun.clipCap,_gun.status);
+            bulletText.text = string.Format("Clips: {0}/{1}\nAmmo: {2}/{3}\nStatus: {4}\n{5} S.C.R.A.P.", _gun.CurrClipCount(), _gun.clipCount, _gun.CurrClipCap(), _gun.clipCap,_gun.status,playerData.Scrap);
         }
     }
 }

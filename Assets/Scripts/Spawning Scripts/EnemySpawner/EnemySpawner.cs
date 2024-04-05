@@ -78,7 +78,7 @@ namespace EnemySpawner
             {
                 if (++_wave == level.Waves.Length)
                 {
-                    _timeTillExit = 20;
+                    _timeTillExit = 3;
                     _isTerminal = true;
                 }
                 else

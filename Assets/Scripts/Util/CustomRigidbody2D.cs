@@ -78,8 +78,8 @@ namespace Util
                 (constraints.freezeY ? RigidbodyConstraints2D.FreezePositionY : RigidbodyConstraints2D.None) |
                 (constraints.freezeRotation ? RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.None);
             _rigid.angularDrag = 0;
-            
-            ScalingChange += _eventHandler = (oldScaling, newScaling) => _rigid.velocity *= newScaling / oldScaling;
+
+            ScalingChange += _eventHandler = (oldScaling, newScaling) => { _rigid.velocity *= newScaling / oldScaling; /*Debug.LogFormat("Scaling fac is {0}", newScaling / oldScaling);*/ };
         }
 
         private void OnDestroy()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2888671870210862598}
   - component: {fileID: 7699309688129205248}
   - component: {fileID: 5909538919005981747}
-  - component: {fileID: 1157909472847522318}
+  - component: {fileID: 6224011031004606219}
   m_Layer: 0
   m_Name: Scrap
   m_TagString: Untagged
@@ -104,7 +104,7 @@ MonoBehaviour:
     freezeX: 0
     freezeY: 0
     freezeRotation: 0
---- !u!114 &1157909472847522318
+--- !u!114 &6224011031004606219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,3 +116,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5402905b606ec5e4fbf1d95589baf7d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  value: 1
+  playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
+  spriteVals:
+  - value: 1
+    sprites:
+    - {fileID: 21300000, guid: 43fe9e33c0865bc42ab7a55e6ea3e3c7, type: 3}
+  - value: 2
+    sprites:
+    - {fileID: 21300000, guid: d81c131ded7fb2d46ba4173ec660ac90, type: 3}
+    - {fileID: 21300000, guid: 73bb1ed983fe21f40804c4efc473ac4a, type: 3}
+  - value: 3
+    sprites:
+    - {fileID: 21300000, guid: 73fb888106225ea4ea1d380837de356b, type: 3}
+    - {fileID: 21300000, guid: 30da62aa12bf2ba4991a0e8ef5b96fd0, type: 3}
+  - value: 10
+    sprites:
+    - {fileID: 21300000, guid: 32307970a1048024fbc90808b2665633, type: 3}
