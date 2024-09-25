@@ -1634,7 +1634,8 @@ MonoBehaviour:
   wanderSnakiness: 0.8
   wanderTurnAngle: 40
   _moveMode: 0
-  actionGoal: 0
+  actionGoal: 1
+  _isStageTwo: 1
 --- !u!4 &877449873
 Transform:
   m_ObjectHideFlags: 0
@@ -1679,6 +1680,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe05ce46b45445ca9e6b9c1b096bce61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  riftPrefab: {fileID: 8617256005898937446, guid: 006500951efc345a4a1fe415d3b76136, type: 3}
+  test: 1
+  entering: 1
+  dist: 10
 --- !u!1 &924343554
 GameObject:
   m_ObjectHideFlags: 0
