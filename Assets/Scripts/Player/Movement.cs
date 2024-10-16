@@ -96,8 +96,8 @@ namespace Player
             var dodging = !_dodgeTimer.IsFinished;
 
             
-            CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
-            //CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
+            // CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
+            CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
             _collider.enabled = !dodging;
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;

@@ -13,6 +13,8 @@ namespace Util
             get => _scaling;
             set
             {
+                if (_scaling == value) return;
+                
                 ScalingChange?.Invoke(_scaling, value);
                 _scaling = value;
             }
@@ -78,8 +80,8 @@ namespace Util
                 (constraints.freezeY ? RigidbodyConstraints2D.FreezePositionY : RigidbodyConstraints2D.None) |
                 (constraints.freezeRotation ? RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.None);
             _rigid.angularDrag = 0;
-
-            ScalingChange += _eventHandler = (oldScaling, newScaling) => { _rigid.velocity *= newScaling / oldScaling; /*Debug.LogFormat("Scaling fac is {0}", newScaling / oldScaling);*/ };
+            
+            ScalingChange += _eventHandler = (oldScaling, newScaling) => _rigid.velocity *= newScaling / oldScaling;
         }
 
         private void OnDestroy()

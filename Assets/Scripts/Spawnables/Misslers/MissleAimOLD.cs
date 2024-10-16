@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Util;
 
-public class MissleAim2 : MonoBehaviour
+public class MissleAimOLD : MonoBehaviour
 {
     public GameObject target;
     public float accel;

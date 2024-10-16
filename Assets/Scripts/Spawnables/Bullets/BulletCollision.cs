@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Player;
 using Scriptable_Objects;
 using Scriptable_Objects.Upgrades;
@@ -13,6 +14,10 @@ public class BulletCollision : MonoBehaviour
     public GameObject owner;
     public IDamageable.DmgType dmgType;
     public int weaponID;
+    
+    [CanBeNull] public GameObject explosion;
+    public float explosionRange;
+    public float explosionDmg;
 
     private bool _leftOwner;
     public bool isKinetic;
@@ -46,14 +51,34 @@ public class BulletCollision : MonoBehaviour
                 Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
-                //Debug.Log(string.Format(".05 * dmg * mass * sqrSpeed = .05 * {0} * {1} * {2} = {3}",dmg,mass,sqrSpeed,.05f * dmg * mass * sqrSpeed));
+
                 if (isKinetic) { damageable.Damage(.5f * evt.damage * mass * sqrSpeed, dmgType); }
                 else {           damageable.Damage(evt.damage * mass, dmgType); }
                 
             }
 
+            if (explosion)
+            {
+                explosion.transform.parent = null;
+                explosion.GetComponent<ExplosionHandler>().Run();
+                explosion.GetComponent<ParticleSystem>().Play();
+                
+                const int rayNum = 16;
+                for (var i = 0; i < rayNum; i++)
+                {
+                    var raydir = new Vector2(Mathf.Cos(2 * Mathf.PI * i / rayNum),
+                        Mathf.Sin(2 * Mathf.PI * i / rayNum));
+                    LayerMask mask = 1 << LayerMask.NameToLayer("Enemies") | 1 << LayerMask.NameToLayer("Player") |
+                                     1 << LayerMask.NameToLayer("Scene Objects");
+                    var hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + explosionRange * raydir,
+                        mask);
+                    if (hit.collider == null || hit.collider == otherCollider) continue;
+                    
+                    hit.transform.GetComponent<IDamageable>()?.Damage(explosionDmg, dmgType);
+                }
+            }
+
             Destroy(gameObject);
         }
-        
     }
 }
