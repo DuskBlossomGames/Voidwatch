@@ -29,6 +29,7 @@ namespace LevelSelect
             Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
             {
                 // only re-generate if it doesn't already exist
+                Debug.LogFormat("CurrentPlanet = {0}", data.CurrentPlanet);
                 if (data.CurrentPlanet == -1) GenerateGalaxy(handle.Result);
                 
                 playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 1.5f);

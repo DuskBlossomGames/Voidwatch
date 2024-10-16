@@ -87,6 +87,7 @@ namespace EnemySpawner
                     
                     //1.
                     List<GameObject> enemies = GetSpawnedEnemies(level.Waves[_wave]);
+                    int[] spts = new int[enemies.Count];
                     int pointWidth = 0;
                     foreach (var enemy in enemies) pointWidth += enemy.GetComponent<EnemyVariant>().cost;
 
@@ -126,12 +127,13 @@ namespace EnemySpawner
                         //Just a fancy way to find which enemy falls on the right side of the partition
 
                         //5.
-                        enemies[j].GetComponent<EnemyVariant>().ScrapCount += amt;
+                        spts[j] += amt;
                         //Debug.LogFormat("Enemy ({0}) has scrap count ({1})", enemies[j].name, enemies[j].GetComponent<EnemyVariant>().ScrapCount);
                         enemies[j].GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
                     }
 
                     //Older code
+                    int ind = 0;
                     foreach (var enemy in enemies)
                     {
                         var boundarySize = boundaryCircle.transform.localScale / 2;
@@ -144,6 +146,7 @@ namespace EnemySpawner
                             Quaternion.identity);
 
                         //Debug.LogFormat("Late Enemy ({0}) has scrap count ({1})", enemy.name, enemy.GetComponent<EnemyVariant>().ScrapCount);
+                        enemyObj.GetComponent<EnemyVariant>().ScrapCount = spts[ind++];
 
                         _spawnedEnemies.Add(enemyObj);
                     }

@@ -42,7 +42,7 @@ public class ScrapController : MonoBehaviour
         var dist = ((Vector2)_player.transform.position - (Vector2)transform.position);
         Vector2 norm = dist.normalized;
         _crb.velocity = norm * _crb.velocity.magnitude;
-        _crb.velocity += 10 * norm * Time.deltaTime;
+        _crb.velocity += 30 * norm * Time.deltaTime;
 
         if(4 * _crb.velocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude)
         {

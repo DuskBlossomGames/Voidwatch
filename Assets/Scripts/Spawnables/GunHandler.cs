@@ -55,7 +55,8 @@ public class GunHandler : MonoBehaviour
             _bulletAngle = angle;
             StartCoroutine(_Fire());
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
@@ -70,8 +71,9 @@ public class GunHandler : MonoBehaviour
         _readyToFire = false;
         status = "Shooting";
         //Debug.Log("started");
-        
-        var evt = new ShootEvent {
+
+        var evt = new ShootEvent
+        {
             bulletsPerShot = bulletsPerShot,
             bulletsPerShotVarience = bulletsPerShotVarience,
             shotForce = shotForce,
@@ -84,7 +86,7 @@ public class GunHandler : MonoBehaviour
         };
         if (_upgradeable) _upgradeable.HandleEvent(evt, null);
 
-        for (int rep = 0; rep < evt.repeats+1; rep++)
+        for (int rep = 0; rep < evt.repeats + 1; rep++)
         {
             if (rep > 0)//only delay between repeats
             {
@@ -101,7 +103,8 @@ public class GunHandler : MonoBehaviour
                 {
                     latOff = evt.lateralSeperation * (2 * i - bullets + 1) / (bullets - 1);
                     verOff = evt.verticalSeperation * (1 - Mathf.Abs(2 * ((float)i / (bullets - 1)) - 1));
-                } else
+                }
+                else
                 {
                     latOff = verOff = 0;
                 }
@@ -136,7 +139,7 @@ public class GunHandler : MonoBehaviour
             _currClipCap = clipCap;
             //Debug.Log("Reloaded");
         }
-        
+
 
         if (_currClipCount <= 0)//should never be less than 0
         {

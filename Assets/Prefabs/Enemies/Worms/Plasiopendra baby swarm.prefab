@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 6490916878961884351}
   - component: {fileID: 5522919353149486386}
   - component: {fileID: 6828568907730358304}
+  - component: {fileID: -8652910980731800103}
   m_Layer: 0
   m_Name: Plasiopendra baby swarm
   m_TagString: Untagged
@@ -125,3 +126,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childcount: 5
+--- !u!114 &-8652910980731800103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7455740270890831396}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782e6bbb22f98477eb312180482b1954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 0}
+  heathOpacityCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dmgRes: {fileID: 0}
+  maxHealth: 0
+  varientParent: {fileID: 0}
