@@ -39,19 +39,19 @@ namespace Bosses.Worm
             _numSegs = builder.length;
             _wormLength = builder.segmentPrefab.GetComponent<WormSegment>().segLength * (_numSegs+1);
 
-            var maskObj = new GameObject("Worm mask").transform;
-            maskObj.SetParent(transform);
-            var scale = transform.lossyScale;
-            var pos = transform.position;
-            maskObj.localRotation = Quaternion.identity;
-            maskObj.localScale = new Vector3(segScale.x / scale.x, segScale.y / scale.y, 1);
+            //var maskObj = new GameObject("Worm mask").transform;
+            //maskObj.SetParent(transform);
+            //var scale = transform.lossyScale;
+            //var pos = transform.position;
+            //maskObj.localRotation = Quaternion.identity;
+            //maskObj.localScale = new Vector3(segScale.x / scale.x, segScale.y / scale.y, 1);
             
-            maskObj.position = transform.rotation * new Vector3((scale.x-segScale.x) / 2, 0, 0) + transform.position;
+            //maskObj.position = transform.rotation * new Vector3((scale.x-segScale.x) / 2, 0, 0) + transform.position;
             
-            var mask = maskObj.gameObject.AddComponent<SpriteMask>();
-            mask.sprite = squareSprite;
-            mask.backSortingOrder = (mask.frontSortingOrder = 639) - 1;
-            mask.isCustomRangeActive = true;
+            //var mask = maskObj.gameObject.AddComponent<SpriteMask>();
+            //mask.sprite = squareSprite;
+            //mask.backSortingOrder = (mask.frontSortingOrder = 639) - 1;
+            //mask.isCustomRangeActive = true;
         }
 
         private void SetupSegment(int idx, bool enabled, bool masked)
@@ -77,7 +77,7 @@ namespace Bosses.Worm
             {
                 _oldSegPos = new System.Collections.Generic.List<Vector3>();
                 for (var i = 0; i < _numSegs; i++) { 
-                    SetupSegment(i, false, true);
+                    SetupSegment(i, enabled: false, masked: true);
                     _summoning.GetChild(i).GetComponent<WormSegment>().enabled = false;
                     _oldSegPos.Add(_summoning.GetChild(i).transform.position);
                 }
@@ -120,12 +120,12 @@ namespace Bosses.Worm
 
             }
 
-            SetupSegment(segID, false, true);
-            if(segID+1 < _numSegs) SetupSegment(segID+1, true, false);
+            SetupSegment(segID, enabled: false, masked: true);
+            if(segID+1 < _numSegs) SetupSegment(segID+1, enabled: true, masked: false);
 
             for (var i = 0; i < _numSegs; i++)
             {
-                SetupSegment(i, (float)i / _numSegs < 1 - _summonTimer.Progress, !_summonTimer.IsFinished);
+                SetupSegment(i, enabled: (float)i / _numSegs < 1 - _summonTimer.Progress, masked: !_summonTimer.IsFinished);
                 _oldSegPos[i] = _summoning.GetChild(i).position;
             }
         }
@@ -188,6 +188,7 @@ namespace Bosses.Worm
                     _summoning.localRotation = Quaternion.Euler(0, 0, 180);
                     _summoning.localScale = new Vector3(1 / scale.x, 1 / scale.y, 0);
                     _summoning.localPosition = new Vector3(scale.x / 4 - _segLength / scale.x / 2, 0, 0);
+                    _summoning.localPosition = Vector3.zero;
 
                     _summoning.GetComponent<WormSegmentBuilder>().buildCallback = UpdateWorm;
                 }
