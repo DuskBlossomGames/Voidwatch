@@ -28,7 +28,7 @@ namespace Bosses.Worm
         {
             if (!IsBurrowable(other)) return;
             
-            Debug.Log(other.transform.parent.gameObject.name + " " + other.GetInstanceID());
+            // Debug.Log(other.transform.parent.gameObject.name + " " + other.GetInstanceID());
         }
 
         // on fully enter

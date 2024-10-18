@@ -969,7 +969,7 @@ GameObject:
   - component: {fileID: 272954350}
   - component: {fileID: 272954349}
   m_Layer: 15
-  m_Name: Burrow Rift
+  m_Name: Rift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1966,8 +1966,11 @@ GameObject:
   m_Component:
   - component: {fileID: 924343555}
   - component: {fileID: 924343556}
-  m_Layer: 0
-  m_Name: Worm Summoner Left
+  - component: {fileID: 924343557}
+  - component: {fileID: 924343558}
+  - component: {fileID: 924343559}
+  m_Layer: 8
+  m_Name: Left Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2041,6 +2044,128 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &924343557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924343554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782e6bbb22f98477eb312180482b1954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  heathOpacityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.8490565
+      outSlope: 3.8490565
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.041666668
+    - serializedVersion: 3
+      time: 0.90964067
+      value: 0.9854063
+      inSlope: -0.18168122
+      outSlope: -0.18168122
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.9182255
+    - serializedVersion: 3
+      time: 1
+      value: 0.514151
+      inSlope: -8.207553
+      outSlope: -8.207553
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.25331143
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  maxHealth: 100
+  varientParent: {fileID: 0}
+--- !u!60 &924343558
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924343554}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 0.5, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.031249994, y: -0.15175089}
+      - {x: 0.057788175, y: -0.08411346}
+      - {x: 0.06806297, y: 0.06335116}
+      - {x: 0.0059884936, y: 0.17743793}
+      - {x: -0.052863516, y: 0.13633873}
+      - {x: -0.077526934, y: 0.04187908}
+      - {x: -0.08050286, y: -0.07110318}
+      - {x: -0.037451282, y: -0.16716321}
+  m_UseDelaunayMesh: 0
+--- !u!114 &924343559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924343554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad6ef9b3a1f24d9459b183b4715f02b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 1
+  collisionDetection: 0
+  constraints:
+    freezeX: 1
+    freezeY: 1
+    freezeRotation: 1
+  velocity: {x: 0, y: 0}
+  position: {x: 0, y: 0}
 --- !u!1 &1057170238
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,8 +2306,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1174730202}
   - component: {fileID: 1174730200}
-  m_Layer: 0
-  m_Name: Worm Summoner Right
+  - component: {fileID: 1174730203}
+  - component: {fileID: 1174730204}
+  - component: {fileID: 1174730205}
+  m_Layer: 8
+  m_Name: Right Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2256,6 +2384,128 @@ Transform:
   - {fileID: 167522441}
   m_Father: {fileID: 1757615606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &1174730203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174730199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782e6bbb22f98477eb312180482b1954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  heathOpacityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.8490565
+      outSlope: 3.8490565
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.041666668
+    - serializedVersion: 3
+      time: 0.90964067
+      value: 0.9854063
+      inSlope: -0.18168122
+      outSlope: -0.18168122
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.9182255
+    - serializedVersion: 3
+      time: 1
+      value: 0.514151
+      inSlope: -8.207553
+      outSlope: -8.207553
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.25331143
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  maxHealth: 100
+  varientParent: {fileID: 0}
+--- !u!60 &1174730204
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174730199}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 0.5, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.031249994, y: -0.15175089}
+      - {x: 0.057788175, y: -0.08411346}
+      - {x: 0.06806297, y: 0.06335116}
+      - {x: 0.0059884936, y: 0.17743793}
+      - {x: -0.052863516, y: 0.13633873}
+      - {x: -0.077526934, y: 0.04187908}
+      - {x: -0.08050286, y: -0.07110318}
+      - {x: -0.037451282, y: -0.16716321}
+  m_UseDelaunayMesh: 0
+--- !u!114 &1174730205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174730199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad6ef9b3a1f24d9459b183b4715f02b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 1
+  collisionDetection: 0
+  constraints:
+    freezeX: 1
+    freezeY: 1
+    freezeRotation: 1
+  velocity: {x: 0, y: 0}
+  position: {x: 0, y: 0}
 --- !u!1 &1220764936
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,7 +4156,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.7}
   m_EdgeRadius: 0
 --- !u!114 &1757615608
 MonoBehaviour:
@@ -3959,63 +4209,6 @@ MonoBehaviour:
   tail: 0
   sortingLayer: Temp Masks
   squareSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
---- !u!1 &1780276282
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1780276284}
-  - component: {fileID: 1780276283}
-  m_Layer: 0
-  m_Name: Enemy Spawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1780276283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780276282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80e01d494ff164a77818764c89b4396c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
-  difficultyToLootTiers: 070000000f0000001900000032000000
-  scrapCountTiers: 02000000050000000a0000000f000000
-  scrapChanceTiers:
-  - 0.075
-  - 0.1
-  - 0.2
-  - 0.5
-  variantLabel:
-    m_LabelString: enemies
-  groupBudgetTiers: 03000000050000000a000000140000002300000032000000
-  boundaryCircle: {fileID: 1480058251}
-  data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
---- !u!4 &1780276284
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780276282}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1931579709
 GameObject:
   m_ObjectHideFlags: 0
@@ -9914,7 +10107,7 @@ GameObject:
   - component: {fileID: 184885500929261477}
   - component: {fileID: 3292317750685420052}
   m_Layer: 15
-  m_Name: Burrow Rift
+  m_Name: Rift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9930,5 +10123,4 @@ SceneRoots:
   - {fileID: 1480058253}
   - {fileID: 1562156499}
   - {fileID: 1661085911}
-  - {fileID: 1780276284}
   - {fileID: 877449873}

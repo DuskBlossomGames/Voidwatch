@@ -48,6 +48,7 @@ public class BulletCollision : MonoBehaviour
             var damageable = other.GetComponent<IDamageable>();
             if (damageable != null)
             {
+                print(damageable);
                 Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
