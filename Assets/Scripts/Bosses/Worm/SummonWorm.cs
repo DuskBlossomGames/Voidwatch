@@ -188,7 +188,7 @@ namespace Bosses.Worm
                     _summoning.localRotation = Quaternion.Euler(0, 0, 180);
                     _summoning.localScale = new Vector3(1 / scale.x, 1 / scale.y, 0);
                     _summoning.localPosition = new Vector3(scale.x / 4 - _segLength / scale.x / 2, 0, 0);
-                    _summoning.localPosition = Vector3.zero;
+                    _summoning.localPosition = Vector3.zero; //Dont remove, breaks everything
 
                     _summoning.GetComponent<WormSegmentBuilder>().buildCallback = UpdateWorm;
                 }

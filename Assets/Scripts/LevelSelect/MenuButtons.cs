@@ -11,6 +11,7 @@ public class MenuButtons : MonoBehaviour
     {
         Debug.Log("Restart");
         playerData.Scrap = 0;
+        playerData.Health = playerData.playerMaxHealth;
         merchantData.currentShopID = 0;
         merchantData.shops = new SerializedDict<uint, MerchantData.MerchantObj>();
         SceneManager.LoadScene("LevelSelect");

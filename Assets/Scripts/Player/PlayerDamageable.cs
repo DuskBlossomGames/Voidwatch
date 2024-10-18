@@ -18,7 +18,7 @@ namespace Spawnables.Player
         protected override float ShieldMaxPower => playerData.playerMaxShield;
         protected override float ShieldMaxDebt => playerData.playerMaxShieldDebt;
 
-        private void OnDestroy()
+        protected override void OnDeath()
         {
             SceneManager.LoadScene("Menu");
         }

@@ -130,16 +130,22 @@ namespace Spawnables
             bleed -= reduceMod * bodyDmgRes.dmgReduce[(int)dmgType];
             bleed *= bodyDmgRes.dmgMod[(int)dmgType];
 
-            Health -= bleed > 0 ? bleed : 0;
-
-            if (Health <= 0)
+            if (bleed > 0)
             {
-                Destroy(_shieldBar);
-                Destroy(_healthBar);
-                Destroy(gameObject);
+                Health -= bleed > 0 ? bleed : 0;
+
+                if (Health < 0)
+                {
+                    this.OnDeath();
+                    Destroy(_shieldBar);
+                    Destroy(_healthBar);
+                    Destroy(gameObject);
+                }
             }
 
             _barVisibility = _barVisibilityShield = 1;
         }
+
+        protected virtual void OnDeath() { }
     }
 }
