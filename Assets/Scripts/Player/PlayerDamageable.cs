@@ -1,4 +1,5 @@
 using Scriptable_Objects;
+using UnityEngine.SceneManagement;
 
 namespace Spawnables.Player
 {
@@ -16,5 +17,10 @@ namespace Spawnables.Player
         protected override float ShieldRegenRate => playerData.playerShieldRegenRate;
         protected override float ShieldMaxPower => playerData.playerMaxShield;
         protected override float ShieldMaxDebt => playerData.playerMaxShieldDebt;
+
+        private void OnDestroy()
+        {
+            SceneManager.LoadScene("Menu");
+        }
     }
 }

@@ -12,7 +12,7 @@ public class BootManager : MonoBehaviour
         playerData.Scrap = 0;
         merchantData.currentShopID = 0;
         merchantData.shops = new SerializedDict<uint, MerchantData.MerchantObj>();
-        SceneManager.LoadScene("Shop");
+        SceneManager.LoadScene("LevelSelect");
     }
 }
 

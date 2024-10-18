@@ -19,5 +19,6 @@ public class MenuButtons : MonoBehaviour
     public void Quit()
     {
         UnityEngine.Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 }
