@@ -1892,7 +1892,7 @@ MonoBehaviour:
   pathfinder: {fileID: 877449874}
   targetPosition: {x: 0, y: 30, z: 0}
   player: {fileID: 2086174079}
-  maxTurnAngleDeg: 20
+  maxTurnAngleDeg: 40
   swipetime: 0.2
   swipeangle: 0.5
   tailmomentum: 0.5
@@ -1953,6 +1953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   riftPrefab: {fileID: 8617256005898937446, guid: 006500951efc345a4a1fe415d3b76136, type: 3}
+  _rift: {fileID: 0}
   test: 1
   entering: 1
   dist: 10
