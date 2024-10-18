@@ -87,16 +87,16 @@ namespace Bosses.Worm
 
                 var pos = _segments[i - 1].transform.localPosition;
 
-                totallength += _segmentDist = segment.localScale.x;
+                totallength += _segmentDist = segment.localScale.x * 0.9f;
                 pos.x -= _segmentDist;
                 segment.localPosition = pos;
             }
 
             _ouroborosRadius = totallength / (2 * Mathf.PI);
-            
+
             _headRigid = head.GetComponent<Rigidbody2D>();
             _moveMode = MoveMode.Wander;
-            
+
             // activate all the worm summoners
             foreach (var c in GetComponentsInChildren<SummonWorm>())
             {
@@ -110,7 +110,7 @@ namespace Bosses.Worm
 
             var _snakiness = pathfinder.snakeyness;
 
-            
+
             /* Code for managing speeding up and slowing down, too small to really need a function especially since it occurs once */{
                 _speed = Mathf.Clamp(_speed + 10 * Time.deltaTime * MathF.Sign(_tarSpeed - _speed), Mathf.Min(_speed, _tarSpeed), Mathf.Max(_speed, _tarSpeed));
                 pathfinder.snakeyness = Mathf.Clamp(_snakiness + .1f * Time.deltaTime * MathF.Sign(_tarSnakines - _snakiness), Mathf.Min(_snakiness, _tarSnakines), Mathf.Max(_snakiness, _tarSnakines));
@@ -133,19 +133,19 @@ namespace Bosses.Worm
                         case < .15f:
                             /*Do burrow*/
                             goto default;
-                        
+
                         case < .50f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
                             _actionUtilTimer.Value = Random.Range(5f, 10f);
                             break;
-                        
+
                         case < 1.0f:
                             /*Do Tailspike*/
                             actionGoal = ActionGoal.Tailspike;
                             _actionUtilTimer.Value = Random.Range(1f, 4f);
                             goto default;
-                        
+
                         default:
                             actionGoal = ActionGoal.Idle;
                             _actionUtilTimer.Value = Random.Range(5f, 8f);
@@ -268,7 +268,7 @@ namespace Bosses.Worm
             {
                 _swipe = 0;
             }
-            
+
         }
 
         public void BiteCallback()
