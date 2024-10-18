@@ -144,7 +144,7 @@ namespace Bosses.Worm
                             /*Do Tailspike*/
                             actionGoal = ActionGoal.Tailspike;
                             _actionUtilTimer.Value = Random.Range(1f, 4f);
-                            goto default;
+                            break;
 
                         default:
                             actionGoal = ActionGoal.Idle;

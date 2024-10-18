@@ -1,4 +1,5 @@
 using Scriptable_Objects;
+using UnityEngine.ResourceManagement.Diagnostics;
 using UnityEngine.SceneManagement;
 
 namespace Spawnables.Player
@@ -11,7 +12,11 @@ namespace Spawnables.Player
         protected override float Health
         {
             get => playerData.Health ?? MaxHealth;
-            set => playerData.Health = value;
+            set
+            {
+                playerData.Health = value;
+                if (value <= 0) OnDeath();
+            }
         }
 
         protected override float ShieldRegenRate => playerData.playerShieldRegenRate;

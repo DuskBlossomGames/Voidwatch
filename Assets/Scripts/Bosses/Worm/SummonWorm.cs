@@ -9,6 +9,7 @@ namespace Bosses.Worm
     public class SummonWorm : MonoBehaviour
     {
         public GameObject wormPrefab;
+        public GameObject rift;
 
         public float emergeTime;
         
@@ -30,7 +31,7 @@ namespace Bosses.Worm
         private System.Collections.Generic.List<Vector3> _oldSegPos;
 
         private Transform _summoning;
-
+        
         private void Start()
         {
             var builder = wormPrefab.GetComponent<WormSegmentBuilder>();
@@ -38,20 +39,6 @@ namespace Bosses.Worm
             _segLength = builder.segmentPrefab.GetComponent<WormSegment>().segLength;
             _numSegs = builder.length;
             _wormLength = builder.segmentPrefab.GetComponent<WormSegment>().segLength * (_numSegs+1);
-
-            //var maskObj = new GameObject("Worm mask").transform;
-            //maskObj.SetParent(transform);
-            //var scale = transform.lossyScale;
-            //var pos = transform.position;
-            //maskObj.localRotation = Quaternion.identity;
-            //maskObj.localScale = new Vector3(segScale.x / scale.x, segScale.y / scale.y, 1);
-            
-            //maskObj.position = transform.rotation * new Vector3((scale.x-segScale.x) / 2, 0, 0) + transform.position;
-            
-            //var mask = maskObj.gameObject.AddComponent<SpriteMask>();
-            //mask.sprite = squareSprite;
-            //mask.backSortingOrder = (mask.frontSortingOrder = 639) - 1;
-            //mask.isCustomRangeActive = true;
         }
 
         private void SetupSegment(int idx, bool enabled, bool masked)
@@ -97,10 +84,11 @@ namespace Bosses.Worm
                 }
 
                 headRigid.velocity = Vector2.zero;
-
+                
                 _summoning.SetParent(null, true);
                 _summoning = null;
                 _summonTimer.Value = 0;
+                rift.SetActive(false);
                 return;
             }
 
@@ -129,31 +117,6 @@ namespace Bosses.Worm
                 _oldSegPos[i] = _summoning.GetChild(i).position;
             }
         }
-        private void OldUpdateWorm()
-        {
-            var head = _summoning.GetChild(0).GetComponent<WormSegment>();
-            head.enabled = false;
-
-            var rigid = head.GetComponent<CustomRigidbody2D>();
-            var angle = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-            var velocity = _wormLength / emergeTime;
-            rigid.velocity = velocity * new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-
-            for (var i = 0; i < _numSegs; i++)
-            {
-                SetupSegment(i, (float)i / _numSegs < 1 - _summonTimer.Progress, !_summonTimer.IsFinished);
-            }
-
-            if (_summonTimer.IsFinished)
-            {
-                head.enabled = true;
-                rigid.velocity = Vector2.zero;
-
-                _summoning.SetParent(null, true);
-                _summoning = null;
-                _summonTimer.Value = 0;
-            }
-        }
         
         private void Update()
         {
@@ -170,6 +133,7 @@ namespace Bosses.Worm
                 else
                 {
                     _summonTimer.Value = 0;
+                    rift.SetActive(false);
                 }
             }
             
@@ -182,6 +146,8 @@ namespace Bosses.Worm
                     _summonTimer.Value = emergeTime;
                     _cooldownTimer.Value = summonCooldown + emergeTime;
 
+                    rift.SetActive(true);
+                    
                     var scale = transform.lossyScale;
 
                     _summoning = Instantiate(wormPrefab, transform).transform;

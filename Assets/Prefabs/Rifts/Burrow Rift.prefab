@@ -152,6 +152,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3136008702813058089}
   - component: {fileID: 379933654431357311}
+  - component: {fileID: -6464014333987411250}
+  - component: {fileID: 678711868352028543}
   m_Layer: 15
   m_Name: Burrow Rift
   m_TagString: Untagged
@@ -169,7 +171,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 2, y: 14, z: 1}
+  m_LocalScale: {x: 10, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 496176657602294920}
@@ -216,8 +218,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10000
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: -1427799488, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -227,3 +229,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6464014333987411250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617256005898937446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ba044ba34c548d7a59f8a00cc0f06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - frames:
+    - {fileID: -1427799488, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 707276803, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 436023454, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 691381245, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 629777568, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 1417191495, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: -1039257601, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 1933494283, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 1076009617, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: -1545008599, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 20711733, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: -405444073, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: -1396875920, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: -1719657572, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: -349015804, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: -1443674990, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: -656266118, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    - {fileID: 895351525, guid: 09bffb6a10ee14be2b8874890c6cd21d, type: 3}
+    name: idle
+  framesPerSecond: 12
+  loop: 1
+  destroyWhenDone: 0
+  timePerFrame: 0
+--- !u!114 &678711868352028543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617256005898937446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6ca8cc1232042afa48acfe56e41adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationState: {fileID: -6464014333987411250}
