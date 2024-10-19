@@ -76,7 +76,9 @@ namespace Bosses.Worm
 
             var tailPos = tail.transform.localPosition;
             tailPos.x -= middle.transform.localScale.x * (middleLength - 1);
+
             tail.transform.localPosition = tailPos;
+
 
             float totallength = head.transform.localScale.x + tail.transform.localScale.x;
 
@@ -102,10 +104,13 @@ namespace Bosses.Worm
             {
                 c.active = true;
             }
+
+
         }
 
         private void Update()
         {
+
             UpdateMovement();
 
             var _snakiness = pathfinder.snakeyness;
