@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -44,6 +45,7 @@ namespace Bosses.Worm
         private float _tarSnakines;
         private float _tarTurnAngle;
 
+        private TailController _tailController;
 
         public enum MoveMode
         {
@@ -66,6 +68,8 @@ namespace Bosses.Worm
 
         private void Start()
         {
+            _tailController = GetComponentInChildren<TailController>();
+            
             _actionUtilTimer = new Util.Timer();
             actionGoal = ActionGoal.Idle;
             _segments = new GameObject[middleLength + 2];
@@ -138,7 +142,7 @@ namespace Bosses.Worm
                         case < .15f:
                             /*Do burrow*/
                             goto default;
-
+                        
                         case < .50f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
@@ -281,6 +285,7 @@ namespace Bosses.Worm
             actionGoal = ActionGoal.Idle;
         }
 
+        private int _spikesReleased = 0;
         private void UpdateMovement()
         {
             switch (_moveMode)
@@ -335,13 +340,29 @@ namespace Bosses.Worm
             else if (_swipe > swipetime)
             {
                 RippleSegmentsWithSwipe(-swipeangle, 16);
+                
+                if (_spikesReleased < 3 && _swipe - swipetime < swipetime - swipetime/6/3 * _spikesReleased)
+                {
+                    _tailController.ReleaseSpike(_spikesReleased++);
+                }
             }
             else if (_swipe > 0)
             {
                 RippleSegmentsWithSwipe(swipeangle, 16);
+
+                if (_spikesReleased < 6 && _swipe < swipetime - swipetime/6/3 * (_spikesReleased-3))
+                {
+                    _tailController.ReleaseSpike(_spikesReleased++);
+                }
+
             }
             else
             {
+                if (_spikesReleased != 0)
+                {
+                    StartCoroutine(_tailController.RegrowSpikes());
+                    _spikesReleased = 0;
+                }
                 RippleSegments();
             }
             _swipe -= Time.deltaTime;

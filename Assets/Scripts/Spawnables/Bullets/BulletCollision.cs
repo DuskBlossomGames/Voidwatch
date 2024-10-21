@@ -39,6 +39,7 @@ public class BulletCollision : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
         var other = otherCollider.gameObject;
+        if (other.layer == LayerMask.NameToLayer("Bullet Detector")) return;
 
         if (_leftOwner || other != owner)
         {
