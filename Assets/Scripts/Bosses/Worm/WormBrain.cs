@@ -27,6 +27,7 @@ namespace Bosses.Worm
         public float swipetime;
         public float swipeangle;
         public float tailmomentum;
+        public int swipestartindex;
 
         public float pursueSpeed;
         public float rushSpeed;
@@ -46,6 +47,7 @@ namespace Bosses.Worm
         private float _tarTurnAngle;
 
         private TailController _tailController;
+        private SpikeLinkedList _headSpike;
 
         public enum MoveMode
         {
@@ -85,11 +87,23 @@ namespace Bosses.Worm
 
 
             float totallength = head.transform.localScale.x + tail.transform.localScale.x;
+            SpikeLinkedList? prevNode = null;
 
             for (var i = 2; i < middleLength + 1; i++)
             {
                 var segment = (_segments[i] = Instantiate(middle)).transform;
                 segment.SetParent(transform);
+                
+                segment.GetChild(2).GetComponent<SpikeLinkedList>().previous = prevNode;
+                if (prevNode == null)
+                {
+                    _headSpike = prevNode = segment.GetChild(2).GetComponent<SpikeLinkedList>();
+                } else {
+                    prevNode = prevNode.next = segment.GetChild(2).GetComponent<SpikeLinkedList>();
+                }
+                
+                segment.GetChild(3).GetComponent<SpikeLinkedList>().previous = prevNode;
+                prevNode = prevNode.next = segment.GetChild(3).GetComponent<SpikeLinkedList>();
 
                 var pos = _segments[i - 1].transform.localPosition;
 
@@ -136,6 +150,7 @@ namespace Bosses.Worm
 
                 if (!_isStageTwo)
                 {
+                    StartCoroutine(_headSpike.TriggerDown());
                     float rand = UnityEngine.Random.Range(0f, 1f);
                     switch (rand)
                     {
@@ -335,11 +350,11 @@ namespace Bosses.Worm
 
             if (_swipe > 2 * swipetime)
             {
-                RippleSegmentsWithSwipe(swipeangle, 16);
+                RippleSegmentsWithSwipe(swipeangle, swipestartindex);
             }
             else if (_swipe > swipetime)
             {
-                RippleSegmentsWithSwipe(-swipeangle, 16);
+                RippleSegmentsWithSwipe(-swipeangle, swipestartindex);
                 
                 if (_spikesReleased < 3 && _swipe - swipetime < swipetime - swipetime/6/3 * _spikesReleased)
                 {
@@ -348,7 +363,7 @@ namespace Bosses.Worm
             }
             else if (_swipe > 0)
             {
-                RippleSegmentsWithSwipe(swipeangle, 16);
+                RippleSegmentsWithSwipe(swipeangle, swipestartindex);
 
                 if (_spikesReleased < 6 && _swipe < swipetime - swipetime/6/3 * (_spikesReleased-3))
                 {
