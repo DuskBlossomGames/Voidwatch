@@ -15,7 +15,7 @@ namespace Bosses.Worm
         private readonly Timer _clampTimer = new();
         private readonly Timer _holdTimer = new();
         private float _initialRot;
-        
+
         private void Start()
         {
             _leftJaw = transform.GetChild(0);
@@ -29,7 +29,7 @@ namespace Bosses.Worm
             var player = other.GetComponent<Player.Movement>();
             if (!player || player.inputBlocked) return;
             _player = player.transform;
-            
+
             _clampTimer.Value = grabTime;
         }
 
@@ -51,7 +51,7 @@ namespace Bosses.Worm
                 _player.GetComponent<Player.Movement>().inputBlocked = false;
                 _player.GetComponent<CustomRigidbody2D>().velocity += (Vector2)(transform.rotation * new Vector3(ejectionVel, 0, 0));
                 _player = null;
-                
+
                 _holdTimer.Value = 0;
                 return;
             }
@@ -60,6 +60,8 @@ namespace Bosses.Worm
             {
                 RotJaw(_leftJaw, 1);
                 RotJaw(_rightJaw, -1);
+                //_leftJaw.position -= new Vector3(0.03f,0.02f,0);
+                //_rightJaw.position -= new Vector3(0.03f,0.02f,0);
 
                 if (_clampTimer.IsFinished)
                 {
@@ -80,6 +82,7 @@ namespace Bosses.Worm
                              jaw.localToWorldMatrix.MultiplyVector(new Vector3(-0.5f, 0, 0)),
                 Vector3.forward,
                 angleSign * _clampTimer.LastStepProgress * (_initialRot - targetRot));
+
         }
     }
 }
