@@ -404,7 +404,8 @@ namespace Bosses.Worm
 
         private void RippleSegmentsWithTeleport()
         {
-
+            if (portalID > middleLength) return;
+            
             _segments[portalID + 1].transform.position = PortalOutofTransform(_segments[portalID + 1].transform.position);
             //Ripple forwards
             for (var i = 1; i <= portalID; i++)
