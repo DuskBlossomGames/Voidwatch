@@ -51,6 +51,7 @@ namespace Bosses.Worm
 
         public enum MoveMode
         {
+            Portal,
             Direct,
             Circle,
             Wander,
@@ -67,6 +68,17 @@ namespace Bosses.Worm
         public ActionGoal actionGoal;
         private Util.Timer _actionUtilTimer;
         private bool _isStageTwo = false;
+
+
+        public Vector2 portalIn;
+        public Vector2 portalOut;
+        public Vector2 pInNorm;
+        public Vector2 pOutNorm;
+        public Transform mirrorMiddle;
+        public Transform mirrorMiddle2;
+        public int portalID;
+
+
 
         private void Start()
         {
@@ -239,6 +251,7 @@ namespace Bosses.Worm
                 _segments[^1].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
             }
         }
+
         private void RippleSegmentsWithSwipe(float swipeAngle, int startpos)
         {
             for (var i = 1; i < middleLength + 1; i++)
@@ -305,7 +318,10 @@ namespace Bosses.Worm
         {
             switch (_moveMode)
             {
+                case MoveMode.Portal:
+                    goto wander;
                 case MoveMode.Wander:
+                wander:
                     _tarSpeed = wanderSpeed;
                     _tarTurnAngle = wanderTurnAngle;
                     _tarSnakines = wanderSnakiness;
@@ -343,6 +359,7 @@ namespace Bosses.Worm
 
             _currdir = dir = (.1f / Time.deltaTime * _currdir + dir).normalized;
 
+            //_headRigid.AddForce(_speed * dir, ForceMode.VelocityChange)
             _headRigid.velocity = _speed * dir;
 
             var angle = Mathf.Atan2(dir.y, dir.x);
@@ -378,9 +395,185 @@ namespace Bosses.Worm
                     StartCoroutine(_tailController.RegrowSpikes());
                     _spikesReleased = 0;
                 }
-                RippleSegments();
+                /////////////////////////////////////////////////////
+                //RippleSegments();
+                RippleSegmentsWithTeleport();
             }
             _swipe -= Time.deltaTime;
+        }
+
+        private void RippleSegmentsWithTeleport()
+        {
+
+            _segments[portalID + 1].transform.position = PortalOutofTransform(_segments[portalID + 1].transform.position);
+            //Ripple forwards
+            for (var i = 1; i <= portalID; i++)
+            {
+                Vector3 nextSegmentPos = _segments[i - 1].transform.position;
+                Vector3 currSegmentPos = _segments[i].transform.position;
+                Vector3 prevSegmentPos = _segments[i + 1].transform.position;
+
+                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
+                currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+                if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
+                {
+                    currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
+                }
+                _segments[i].transform.position = currSegmentPos;
+
+                Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
+                Vector3 meanDir = .5f * (prev2curr + curr2next);
+
+                var angle = Mathf.Atan2(meanDir.y, meanDir.x);
+                _segments[i].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+            }
+
+            _segments[portalID + 1].transform.position = PortalIntoTransform(_segments[portalID + 1].transform.position);
+            _segments[portalID + 1].transform.position = Vector3.Lerp(_segments[portalID + 1].transform.position, AlignwithInPortal(_segments[portalID + 1].transform.position), .01f);
+            //_segments[portalID + 2].transform.position = Vector3.Lerp(_segments[portalID + 2].transform.position, AlignwithInPortal(_segments[portalID + 2].transform.position), .2f);
+
+
+            Vector3 truemidpos = _segments[portalID].transform.position = AlignwithOutPortal(_segments[portalID].transform.position);
+
+            //Ripple backwards
+            for (var i = portalID - 1; i >= 1; i--)
+            {
+                Vector3 nextSegmentPos = _segments[i + 1].transform.position;
+                Vector3 currSegmentPos = _segments[i].transform.position;
+                Vector3 prevSegmentPos = _segments[i - 1].transform.position;
+
+                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
+                currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+                if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
+                {
+                    currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
+                }
+                _segments[i].transform.position = currSegmentPos;
+
+                Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
+                Vector3 meanDir = .5f * (prev2curr + curr2next);
+
+                var angle = Mathf.Atan2(meanDir.y, meanDir.x);
+                _segments[i].transform.rotation = Quaternion.Euler(0, 0, 180 + Mathf.Rad2Deg * angle);
+            }
+
+            mirrorMiddle.position = _segments[portalID].transform.position = PortalIntoTransform(_segments[portalID].transform.position);
+            mirrorMiddle.rotation = PortalInRotation(_segments[portalID].transform.rotation);
+            for (var i = portalID + 1; i < middleLength + 1; i++)
+            {
+                Vector3 nextSegmentPos = _segments[i - 1].transform.position;
+                Vector3 currSegmentPos = _segments[i].transform.position;
+                Vector3 prevSegmentPos = _segments[i + 1].transform.position;
+
+                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
+                currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+                if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
+                {
+                    currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
+                }
+                _segments[i].transform.position = currSegmentPos;
+
+                Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
+                Vector3 meanDir = .5f * (prev2curr + curr2next);
+
+                var angle = Mathf.Atan2(meanDir.y, meanDir.x);
+                _segments[i].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+            }
+
+            mirrorMiddle2.position = PortalOutofTransform(_segments[portalID + 1].transform.position);
+            mirrorMiddle2.rotation = PortalOutRotation(_segments[portalID + 1].transform.rotation);
+
+            { //Scope naming stuffs
+                Vector3 nextSegmentPos = _segments[^2].transform.position;
+                Vector3 currSegmentPos = _segments[^1].transform.position;
+
+                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
+                _segments[^1].transform.position = currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+
+                var angle = Mathf.Atan2(curr2next.y, curr2next.x);
+                _segments[^1].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+            }
+
+            { //Scope naming stuffs
+                Vector3 nextSegmentPos = _segments[0].transform.position;
+                Vector3 currSegmentPos = _segments[1].transform.position;
+
+                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
+                _segments[0].transform.position = currSegmentPos + _segmentDist * curr2next;
+            }
+
+            _segments[portalID].transform.position = truemidpos;
+            if (PortalOutAmt(mirrorMiddle2.position) > 0)
+            {
+                _segments[portalID + 1].transform.position = mirrorMiddle2.position;
+                portalID += 1;
+                
+            }
+        }
+
+        //Stolen from ChatGPT
+        private static Vector2 RotateVector(Vector2 vector, float angle)
+        {
+            float cos = Mathf.Cos(angle);
+            float sin = Mathf.Sin(angle);
+
+            float newX = vector.x * cos - vector.y * sin;
+            float newY = vector.x * sin + vector.y * cos;
+
+            return new Vector2(newX, newY);
+        }
+
+        private Vector3 PortalIntoTransform(Vector3 orig)
+        {
+            float z = orig.z;
+            float ang = Mathf.Deg2Rad * Vector2.SignedAngle(pInNorm, pOutNorm);
+            Vector2 delta = (Vector2)orig - portalOut;
+            Vector2 rotdelt = RotateVector(delta, -ang);
+            return new Vector3(rotdelt.x + portalIn.x, rotdelt.y + portalIn.y, z);
+        }
+
+        private Vector3 PortalOutofTransform(Vector3 orig)
+        {
+            float z = orig.z;
+            float ang = Mathf.Deg2Rad * Vector2.SignedAngle(pInNorm, pOutNorm);
+            Vector2 delta = (Vector2)orig - portalIn;
+            Vector2 rotdelt = RotateVector(delta, ang);
+            return new Vector3(rotdelt.x + portalOut.x, rotdelt.y + portalOut.y, z);
+        }
+
+        private Vector3 AlignwithOutPortal(Vector3 orig)
+        {
+            float z = orig.z;
+            Vector2 delta = (Vector2)orig - portalOut;
+            Vector2 mdelt = pOutNorm * Vector2.Dot(pOutNorm, delta);
+            return new Vector3(mdelt.x + portalOut.x, mdelt.y + portalOut.y, z);
+        }
+
+        private Vector3 AlignwithInPortal(Vector3 orig)
+        {
+            float z = orig.z;
+            Vector2 delta = (Vector2)orig - portalIn;
+            Vector2 mdelt = pInNorm * Vector2.Dot(pInNorm, delta);
+            return new Vector3(mdelt.x + portalIn.x, mdelt.y + portalIn.y, z);
+        }
+
+        private float PortalOutAmt(Vector3 orig)
+        {
+            float z = orig.z;
+            Vector2 delta = (Vector2)orig - portalOut;
+            return Vector2.Dot(pOutNorm, delta);
+        }
+
+        private Quaternion PortalOutRotation(Quaternion rots)
+        {
+            float ang = (Vector2.SignedAngle(pInNorm, pOutNorm));
+            return rots * Quaternion.AngleAxis(ang, Vector3.forward);
+        }
+
+        private Quaternion PortalInRotation(Quaternion rots)
+        {
+            float ang = (Vector2.SignedAngle(pInNorm, pOutNorm));
+            return rots * Quaternion.AngleAxis(-ang, Vector3.forward);
         }
     }
 }
