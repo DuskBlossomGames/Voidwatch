@@ -53,3 +53,6 @@ TagManager:
   - name: Temp Masks
     uniqueID: 2859883669
     locked: 0
+  - name: Boss
+    uniqueID: 745683909
+    locked: 0

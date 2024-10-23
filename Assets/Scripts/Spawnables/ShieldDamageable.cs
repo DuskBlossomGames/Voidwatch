@@ -100,7 +100,7 @@ namespace Spawnables
 
         }
 
-        public void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
+        public virtual void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
         {
             float bleed = damage * shieldDmgRes.dmgBleed[(int)dmgType];
             damage -= bleed;//some damage leaks through
