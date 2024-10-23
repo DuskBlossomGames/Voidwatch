@@ -16,6 +16,7 @@ public class PlayerGunHandler : MonoBehaviour
     public int clipCap;
     public int bulletsPerShot;
     public int bulletsPerShotVarience;
+    public float fireTime;
     public float reloadTime;
     public float refillTime;
     public float shotForce;
@@ -37,7 +38,7 @@ public class PlayerGunHandler : MonoBehaviour
 
     private Upgradeable _upgradeable;
     private CustomRigidbody2D _rb;
-
+    
     private void Start()
     {
         if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
@@ -138,6 +139,8 @@ public class PlayerGunHandler : MonoBehaviour
 
             }
         }
+        
+        yield return new WaitForSeconds(fireTime);
 
         if (_currClipCap <= 0)//should never be less than 0
         {

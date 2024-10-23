@@ -14,6 +14,7 @@ public class BulletCollision : MonoBehaviour
     public GameObject owner;
     public IDamageable.DmgType dmgType;
     public int weaponID;
+    public bool ignoresOwner;
     
     [CanBeNull] public GameObject explosion;
     public float explosionRange;
@@ -75,6 +76,7 @@ public class BulletCollision : MonoBehaviour
                     var hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + explosionRange * raydir,
                         mask);
                     if (hit.collider == null || hit.collider == otherCollider) continue;
+                    if (ignoresOwner && hit.collider == owner.GetComponent<Collider2D>()) continue;
                     
                     hit.transform.GetComponent<IDamageable>()?.Damage(explosionDmg, dmgType);
                 }

@@ -5087,13 +5087,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmg: 50
+  dmg: 350
   owner: {fileID: 0}
   dmgType: 0
   weaponID: 0
+  ignoresOwner: 1
   explosion: {fileID: 182738664676941915}
-  explosionRange: 5
-  explosionDmg: 50
+  explosionRange: 8
+  explosionDmg: 200
   isKinetic: 0
 --- !u!58 &7286235609993334573
 CircleCollider2D:
