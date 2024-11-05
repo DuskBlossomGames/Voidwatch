@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.IO;
 
 namespace Util
 {
@@ -19,7 +21,7 @@ namespace Util
 
             return true;
         }
-        
+
         public static Vector2 LeadShotNorm(Vector2 relPos, Vector2 relVel, float bulletVel)
         {
             float a = bulletVel * bulletVel - relVel.sqrMagnitude;
@@ -163,5 +165,20 @@ namespace Util
             void ISerializationCallbackReceiver.OnBeforeSerialize() => this.OnValidate();
             void ISerializationCallbackReceiver.OnAfterDeserialize() { }
         }
+
+        public static void WriteToFile(string FileName, string Text)
+        {
+
+        // Set a variable to the Documents path.
+        string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        Debug.Log(Path.Combine(docPath, FileName));
+        // Append "text" to an existing file named "FileName".
+        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, FileName), true))
+        {
+            outputFile.WriteLine(Text);
+        }
+      }
+
     }
 }

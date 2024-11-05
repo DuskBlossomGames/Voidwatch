@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+using Util;
 
 namespace EnemySpawner
 {
@@ -16,22 +17,26 @@ namespace EnemySpawner
         public List<int> difficultyToLootTiers;
         public List<int> scrapCountTiers;
         public List<float> scrapChanceTiers;
-        
+
         public AssetLabelReference variantLabel;
         public List<int> groupBudgetTiers;
 
         public GameObject boundaryCircle;
         public LevelSelectData data;
-        
+        public LevelData level;
+
         private readonly Dictionary<string, List<EnemyVariant>> _groups = new();
-        
+
         private readonly Dictionary<string, bool> _loadedVariants = new();
-        
+
+        public float levelTimer = 0.0f;
+        public bool dataWritingOn = true;
+
         private void Awake()
         {
             _isTerminal = false;
             groupBudgetTiers.Sort();
-            
+
             // dunno if this is the best way to do this, but it works
             Addressables.LoadResourceLocationsAsync(variantLabel).Completed += locHandle =>
             {
@@ -48,6 +53,9 @@ namespace EnemySpawner
                     };
                 }
             };
+
+          level = data.Levels[data.CurrentPlanet];
+          print(Mathf.Floor(level.DifficultyScore/data.MaxDifficultyScore *5 *2)/2);
         }
 
         private readonly List<GameObject> _spawnedEnemies = new();
@@ -57,13 +65,14 @@ namespace EnemySpawner
 
         private void Update()
         {
+          levelTimer+= Time.deltaTime;
             // TODO: debug
             if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
             if (Input.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 
             if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
 
-            var level = data.Levels[data.CurrentPlanet];
+            //var level = data.Levels[data.CurrentPlanet];
 
             if (_isTerminal)
             {
@@ -78,13 +87,24 @@ namespace EnemySpawner
             {
                 if (++_wave == level.Waves.Length)
                 {
+
+                    if(dataWritingOn){
+
+                    level = data.Levels[data.CurrentPlanet];
+                    var difficultyLocal = Mathf.Floor(level.DifficultyScore/data.MaxDifficultyScore *5 *2)/2;
+                    var finalTime = levelTimer;
+                    string concoconatedDifficultyTimer = "" + difficultyLocal + "," + finalTime;
+                    UtilFuncs.WriteToFile("DataScience/LevelClearData.csv",concoconatedDifficultyTimer);
+                    dataWritingOn = false;
+                    }
+
                     _timeTillExit = 3;
                     _isTerminal = true;
                 }
                 else
                 {
                     //See this link for explanation: https://docs.google.com/presentation/d/1N-m9xBT6kNj14Usj7dzI-zluJXPPxZCACTUyHBboIYs/edit#slide=id.p
-                    
+
                     //1.
                     List<GameObject> enemies = GetSpawnedEnemies(level.Waves[_wave]);
                     int[] spts = new int[enemies.Count];
@@ -112,8 +132,8 @@ namespace EnemySpawner
 
                     //2.
                     for (int i = 0; i < enemies.Count - 1; i++) partitions.Add(Random.Range(1, enemies.Count));
-                    
-                    
+
+
                     for (int i = 0; i < partitions.Count - 1; i++)
                     {
                         //3.
@@ -164,14 +184,14 @@ namespace EnemySpawner
             while (groups.Count > 0 && budget > groupBudgetTiers[0])
             {
                 budgets.RemoveAll(b => b > budget);
-                
+
                 var group = Random.Range(0, groups.Count);
                 budget -= groupBudgets[groups[group]] = budgets[Random.Range(0, budgets.Count)];
-                
+
                 groups.RemoveAt(group);
             }
-            
-            
+
+
             var enemies = new List<GameObject>();
             foreach (var group in groupBudgets.Keys)
             {
@@ -182,12 +202,12 @@ namespace EnemySpawner
                 {
                     var variant = variants[Random.Range(0, variants.Count)];
                     enemies.Add(variant.gameObject);
-                    
+
                     groupBudget -= variant.cost;
                     variants.RemoveAll(v => v.cost > groupBudget);
                 }
             }
-            
+
             return enemies;
         }
     }

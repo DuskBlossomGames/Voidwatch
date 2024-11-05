@@ -24,13 +24,13 @@ namespace LevelSelect
         {
             Description = description;
         }
-        
+
         // TODO: warp (wormhole)
         // TODO: hidden?
         // TODO: other NPCs
 
     }
-    
+
     public class LevelData
     {
         public LevelType Type;
@@ -52,7 +52,7 @@ namespace LevelSelect
         public string Name;
         public string LoreText;
     }
-    
+
     public class LevelSelectData : ScriptableObject
     {
         public float baseDifficulty;
@@ -63,10 +63,10 @@ namespace LevelSelect
         public int[] minBudgetPerWave;
 
         // based on how difficultyScore is generated below
-        public float MaxDifficultyScore => baseDifficulty + 
-                                           levelModifier * (Levels.Length - 1);
+        public float MaxDifficultyScore => baseDifficulty +
+                                           levelModifier * (Levels.Length - 1) + 2 * randomModifier;
 
-        
+
         [NonSerialized] private int _currentPlanet = -1;
         public int CurrentPlanet
         {
@@ -75,18 +75,18 @@ namespace LevelSelect
             {
                 _currentPlanet = value;
                 if (value < 0) return;
-                
+
                 _visitedPlanets.Add(value);
                 foreach (var idx in Levels[value].Connections)
                 {
                     var level = Levels[idx];
                     if (level.Waves != null) continue;
-                    
+
                     var difficultyScore = level.Type == LevelType.Boss ? MaxDifficultyScore :
                         baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 2) * randomModifier;
                     var difficultyBudget = (int) (gameDifficultyModifier * (difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/));
                     List<int> waves = new();
-                
+
                     // start with as many waves as possible given min budget
                     while (true)
                     {
@@ -96,7 +96,7 @@ namespace LevelSelect
                             difficultyBudget += budget;
                             break;
                         }
-                    
+
                         waves.Add(budget);
                     }
                     // distribute the rest randomly
@@ -104,7 +104,7 @@ namespace LevelSelect
                     {
                         var addition = difficultyBudget < 5 ? difficultyBudget :
                             Random.Range(0, difficultyBudget);
-                        
+
                         waves[Random.Range(0, waves.Count - 1)] += addition;
                         difficultyBudget -= addition;
                     }
@@ -118,10 +118,10 @@ namespace LevelSelect
 
         [NonSerialized] private readonly List<int> _visitedPlanets = new();
         public ReadOnlyCollection<int> VisitedPlanets => new(_visitedPlanets);
-        
+
         public LevelData[] Levels { get; private set; }
         public Tuple<int, int>[] Connections { get; private set; }
-        
+
         public void PopulateData(LevelData[] levels, Tuple<int, int>[] connections)
         {
             Levels = levels;
