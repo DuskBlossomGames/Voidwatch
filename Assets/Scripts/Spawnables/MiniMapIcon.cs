@@ -13,26 +13,24 @@ public class MiniMapIcon : MonoBehaviour
 
     //TODO: implement uncertain icons (position is "blurry")
 
-    void Start()
+    void Awake()
     {
         float sizeX, sizeY;
         if (appearsAsSelf)
         {
             inheritsRotation = true;
-            sizeX = transform.lossyScale.x;
-            sizeY = transform.lossyScale.x;
+            sizeX = 1;
+            sizeY = 1;
             miniSprite = transform.GetComponent<SpriteRenderer>().sprite;
             miniColor = transform.GetComponent<SpriteRenderer>().color;
 
             _miniIcon = new GameObject(gameObject.name + "-SMMI");
         } else {
-            sizeX = sizeY = size;
+            sizeX = size / transform.lossyScale.x;
+            sizeY = size / transform.lossyScale.y;
             _miniIcon = new GameObject(gameObject.name + "-MMI");
         }
-
-        sizeX /= transform.lossyScale.x; //divide off the scale of parent to make size indep of parent
-        sizeY /= transform.lossyScale.y; 
-
+        
         _miniIcon.transform.parent = transform;//adopt child
         _miniIcon.transform.localPosition = Vector3.zero;
         _miniIcon.transform.position += -10 * Vector3.forward;//spawn with offset z component

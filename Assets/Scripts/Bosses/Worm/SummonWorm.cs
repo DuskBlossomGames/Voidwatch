@@ -13,18 +13,8 @@ namespace Bosses.Worm
 
         public float emergeTime;
         
-        public float summonCooldown;
-        public float summonChance;
-        
-        public bool active;
-
-        public Sprite squareSprite;
-
         private readonly Timer _summonTimer = new();
-        private readonly Timer _cooldownTimer = new();
-        private readonly Timer _summonChanceCooldown = new();
 
-        private float _wormLength;
         private float _segLength;
         private int _numSegs;
 
@@ -35,10 +25,8 @@ namespace Bosses.Worm
         private void Start()
         {
             var builder = wormPrefab.GetComponent<WormSegmentBuilder>();
-            var segScale = builder.segmentPrefab.transform.localScale;
             _segLength = builder.segmentPrefab.GetComponent<WormSegment>().segLength;
             _numSegs = builder.length;
-            _wormLength = builder.segmentPrefab.GetComponent<WormSegment>().segLength * (_numSegs+1);
         }
 
         private void SetupSegment(int idx, bool enabled, bool masked)
@@ -86,7 +74,6 @@ namespace Bosses.Worm
                 headRigid.velocity = Vector2.zero;
                 
                 _summoning.SetParent(null, true);
-                _summoning = null;
                 _summonTimer.Value = 0;
                 rift.SetActive(false);
                 return;
@@ -120,9 +107,7 @@ namespace Bosses.Worm
         
         private void Update()
         {
-            _cooldownTimer.Update();
             _summonTimer.Update();
-            _summonChanceCooldown.Update();
 
             if (_summonTimer.IsActive)
             {
@@ -136,29 +121,25 @@ namespace Bosses.Worm
                     rift.SetActive(false);
                 }
             }
+        }
+
+        public void TrySummon()
+        {
+            if (_summoning != null) return;
             
-            if (_summonChanceCooldown.IsFinished && _cooldownTimer.IsFinished && active)
-            {
-                _summonChanceCooldown.Value = 1;
+            _summonTimer.Value = emergeTime;
 
-                if (Random.value < summonChance)
-                {
-                    _summonTimer.Value = emergeTime;
-                    _cooldownTimer.Value = summonCooldown + emergeTime;
-
-                    rift.SetActive(true);
+            rift.SetActive(true);
                     
-                    var scale = transform.lossyScale;
+            var scale = transform.lossyScale;
 
-                    _summoning = Instantiate(wormPrefab, transform).transform;
-                    _summoning.localRotation = Quaternion.Euler(0, 0, 180);
-                    _summoning.localScale = new Vector3(1 / scale.x, 1 / scale.y, 0);
-                    _summoning.localPosition = new Vector3(scale.x / 4 - _segLength / scale.x / 2, 0, 0);
-                    _summoning.localPosition = Vector3.zero; //Dont remove, breaks everything
+            _summoning = Instantiate(wormPrefab, transform).transform;
+            _summoning.localRotation = Quaternion.Euler(0, 0, 180);
+            _summoning.localScale = new Vector3(1 / scale.x, 1 / scale.y, 0);
+            _summoning.localPosition = new Vector3(scale.x / 4 - _segLength / scale.x / 2, 0, 0);
+            _summoning.localPosition = Vector3.zero; //Dont remove, breaks everything
 
-                    _summoning.GetComponent<WormSegmentBuilder>().buildCallback = UpdateWorm;
-                }
-            }
+            _summoning.GetComponent<WormSegmentBuilder>().buildCallback = UpdateWorm;
         }
     }
 }
