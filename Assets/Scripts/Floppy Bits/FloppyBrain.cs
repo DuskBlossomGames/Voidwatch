@@ -34,7 +34,7 @@ public class FloppyBrain : MonoBehaviour
     }
 
     void Update(){
-
+/*
       Vector3 positions = new Vector3[];
       positions[0] = segments[0].position;
       positions[1] = segments[1].position;
@@ -46,8 +46,8 @@ public class FloppyBrain : MonoBehaviour
 
 
       }
-      
 
+*/
     }
 
 
