@@ -20,8 +20,7 @@ public class GenerateUniformFloppy : MonoBehaviour
     void Start()
     {
       brain.segments.Add(anchor.transform);
-
-    //  brain.segments.Add(this.gameObject);
+      brain.segments.Add(this.gameObject.transform);
 
       GameObject child,oldChild;
       oldChild = this.gameObject;
@@ -38,14 +37,14 @@ public class GenerateUniformFloppy : MonoBehaviour
       child.transform.localPosition = relPos;
       child.GetComponent<FloppySegmentRotation>().rigidity = rigidity;
       child.GetComponent<FloppySegmentRotation>().target = oldChild.transform;
+      child.GetComponent<FloppySegmentRotation>().segLength = segLength;
       if(degredation){
       child.transform.localScale -= degredationScale;
       degredationScale += new Vector3 (degredationMagnitude,degredationMagnitude,0);
       rigidity -=rigidityDegredation;
-      segLength += degredationMagnitude* segmentPrefab.GetComponent<FloppySegmentRotation>().segLength;
-
-      brain.segments.Add(child.transform);
+      segLength -= degredationMagnitude;
     }
+    brain.segments.Add(child.transform);
 
 
       oldChild = child;

@@ -1028,6 +1028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2086174079}
+  baseSize: 12
   jump: 0.1
   shipPull: 0.35
   camLaziness: 1
@@ -2305,6 +2306,8 @@ MonoBehaviour:
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
+  levelTimer: 0
+  dataWritingOn: 0
 --- !u!4 &1780276284
 Transform:
   m_ObjectHideFlags: 0
@@ -7821,20 +7824,20 @@ MonoBehaviour:
   playRadius: 75
   gravitySource: {fileID: 1331667012}
   clipCount: 5
-  clipCap: 50
-  bulletsPerShot: 5
+  clipCap: 100
+  bulletsPerShot: 2
   bulletsPerShotVarience: 0
-  fireTime: 0
+  fireTime: 0.1
   reloadTime: 1
   refillTime: 1
-  shotForce: 1500
-  forceVarience: 20
-  lateralSeperation: 50
+  shotForce: 2125
+  forceVarience: 5
+  lateralSeperation: 20
   verticalSeperation: 200
   misfireChance: 0
-  repeats: 0
-  repeatSeperation: 0.05
-  dmgMod: 10
+  repeats: 2
+  repeatSeperation: 0.08
+  dmgMod: 15
   status: 
 --- !u!114 &2086174095
 MonoBehaviour:

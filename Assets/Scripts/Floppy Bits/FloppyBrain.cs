@@ -7,15 +7,15 @@ public class FloppyBrain : MonoBehaviour
 
   public int length;
   public LineRenderer lineRend;
-  public Vector2[] segmentPoses;
-  private Vector2[] _segmentV;
+  public Vector3[] segmentPoses;
+  private Vector3[] _segmentV;
 
   public Transform targetDir;
   public float targetDist;
   public float smoothSpeed;
   public float baseRigidity;
   public float flopSpeed;
-  public float rotspeed;
+  public float rotSpeed;
   //public float wiggleSpeed;
   //public float wiggleMagnitude;
   //public Transform wiggleDir;
@@ -26,28 +26,40 @@ public class FloppyBrain : MonoBehaviour
     void Start()
     {
       lineRend.positionCount = length;
-      segmentPoses = new Vector2[length];
-      _segmentV = new Vector2[length];
+      segmentPoses = new Vector3[length];
+      _segmentV = new Vector3[length];
 
 
 
     }
 
     void Update(){
-/*
-      Vector3 positions = new Vector3[];
-      positions[0] = segments[0].position;
-      positions[1] = segments[1].position;
 
-      for(int i = 2; i<segments.Count; i++){
-
-        tarDir = (segments[i-1] - segments[i-2]).normalized;
-        tarPos = tarDir*segments[i-1].GetComponent<FloppySegmentRotation>().segLength; + segments[i];
-
-
+      List<Vector3> positions = new List<Vector3>();
+      for(int i = 0;i < segments.Count-1;i++){
+        positions.Add(segments[i].position);
       }
 
-*/
+      for(int i = 2; i<segments.Count-1; i++){
+
+        Vector3 tarDir = (positions[i-1] - positions[i-2]).normalized;
+        Vector3 tarPos = tarDir * segments[i].GetComponent<FloppySegmentRotation>().segLength + positions[i];
+        Vector3 currDir = (positions[i] - positions[i-1]).normalized;
+        Vector3 snapPos = currDir * segments[i].GetComponent<FloppySegmentRotation>().segLength + positions[i];
+        positions[i] = Vector3.SmoothDamp(snapPos,tarPos,ref _segmentV[i],smoothSpeed);
+      }
+
+      for(int i = 0; i<segments.Count-2;i++){
+          segments[i].position = (positions[i] + positions[i+1])/2;
+
+
+          Quaternion tarRot = Quaternion.identity;
+          tarRot.eulerAngles = new Vector3(0,0,Mathf.Atan2((positions[i+1]-positions[i]).x,(positions[i+1]-positions[i]).y));
+
+          segments[i].rotation = Quaternion.Slerp(segments[i].rotation,tarRot,rotSpeed);
+      }
+
+
     }
 
 
@@ -66,7 +78,7 @@ public class FloppyBrain : MonoBehaviour
       //brainRot.eulerAngles -= Quaternion.Euler(0,0,segments[0].gameObject.GetComponent<FloppySegmentRotation>().rigidity * baseRigidity).eulerAngles;
       brainRot.eulerAngles += new Vector3(0,0,baseRigidity * segments[0].gameObject.GetComponent<FloppySegmentRotation>().rigidity);
       //Quaternion.RotateTowards(segments[0].rotation,brainRot,singleStep);
-      segments[0].rotation = Quaternion.Slerp(segments[0].rotation,brainRot,rotspeed);
+      segments[0].rotation = Quaternion.Slerp(segments[0].rotation,brainRot,rotSpeed);
       //segments[0].rotation = brainRot;
 
       for( int i = 1; i<segments.Count;i++){
@@ -80,7 +92,7 @@ public class FloppyBrain : MonoBehaviour
         modRotation.eulerAngles += new Vector3(0,0,baseRigidity*segments[i].gameObject.GetComponent<FloppySegmentRotation>().rigidity);
         //Quaternion.RotateTowards(segments[i].rotation,modRotation,singleStep);
 
-        segments[i].rotation = Quaternion.Slerp(segments[i].rotation,modRotation,rotspeed);
+        segments[i].rotation = Quaternion.Slerp(segments[i].rotation,modRotation,rotSpeed);
         //segments[i].rotation = modRotation;
 
       }

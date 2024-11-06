@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2851b5e8e031439b96092e5fc1667f1f, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  playerMaxHealth: 1000
-  playerMaxShield: 100
+  playerMaxHealth: 2000
+  playerMaxShield: 200
   playerShieldRegenRate: 50
   playerMaxShieldDebt: 500
   weapons:

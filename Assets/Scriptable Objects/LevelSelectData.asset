@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LevelSelectData
   m_EditorClassIdentifier: 
   baseDifficulty: 5
-  gameDifficultyModifier: 1
+  gameDifficultyModifier: 2
   levelModifier: 2
   randomModifier: 3
   galaxyModifier: 0
