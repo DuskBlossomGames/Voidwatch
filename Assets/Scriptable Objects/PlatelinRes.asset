@@ -24,7 +24,7 @@ MonoBehaviour:
   conDmgReduce: 0
   conDmgBleed: 0
   _123456787: 0
-  corrDmgMod: 1
+  corrDmgMod: 0.5
   corrDmgReduce: 0
   corrDmgBleed: 0
   _123456786: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
   - 1
   - 1
   - 2
-  - 0.3
+  - 1
   - 5
   dmgReduce:
   - 0

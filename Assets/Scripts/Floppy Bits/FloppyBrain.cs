@@ -1,62 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FloppyBrain : MonoBehaviour
 {
 
   public int length;
-  public LineRenderer lineRend;
-  public Vector3[] segmentPoses;
   private Vector3[] _segmentV;
-
-  public Transform targetDir;
   public float targetDist;
   public float smoothSpeed;
-  public float baseRigidity;
-  public float flopSpeed;
   public float rotSpeed;
   //public float wiggleSpeed;
   //public float wiggleMagnitude;
   //public Transform wiggleDir;
+  public float segLenthScale;
+
 
   public List<Transform> segments;
+  List<Vector3> positions = new List<Vector3>();
+
+  public GameObject anchorForward;
+
+  public GameObject anchorBase;
+
+[SerializeField] public AnimationCurve speedMultiplier; // this should have positive slope
 
     // Start is called before the first frame update
-    void Start()
+    public void Ready()
     {
-      lineRend.positionCount = length;
-      segmentPoses = new Vector3[length];
-      _segmentV = new Vector3[length];
+      //_segmentV = new Vector3[length];
+
+      positions.Add(Vector3.zero);
+      for(int i = 0;i < segments.Count;i++){
+        positions.Add(segments[i].position);
+      }
 
 
 
     }
 
     void Update(){
+      positions[0] = anchorBase.transform.position;
+      positions[1] = anchorForward.transform.position;
 
-      List<Vector3> positions = new List<Vector3>();
-      for(int i = 0;i < segments.Count-1;i++){
-        positions.Add(segments[i].position);
-      }
+      for(int i = 2; i<positions.Count; i++){
 
-      for(int i = 2; i<segments.Count-1; i++){
+        if(segments[i-1] == null){
+          print("aofhja;sjhdf" + i);
+        }
+        float localSegLength = segments[i-1].GetComponent<FloppySegmentRotation>().segLength;
+
 
         Vector3 tarDir = (positions[i-1] - positions[i-2]).normalized;
-        Vector3 tarPos = tarDir * segments[i].GetComponent<FloppySegmentRotation>().segLength + positions[i];
+        Vector3 tarPos = tarDir * segLenthScale* localSegLength + positions[i-1];
         Vector3 currDir = (positions[i] - positions[i-1]).normalized;
-        Vector3 snapPos = currDir * segments[i].GetComponent<FloppySegmentRotation>().segLength + positions[i];
-        positions[i] = Vector3.SmoothDamp(snapPos,tarPos,ref _segmentV[i],smoothSpeed);
+        Vector3 snapPos = currDir * segLenthScale* localSegLength + positions[i-1];
+        //positions[i] = Vector3.SmoothDamp(snapPos,tarPos,ref _segmentV[i],smoothSpeed * speedMultiplier.Evaluate(localSegLength));
+        positions[i]= Vector3.Lerp(snapPos,tarPos,smoothSpeed * speedMultiplier.Evaluate(localSegLength));
+        //positions[i]= snapPos;
       }
 
-      for(int i = 0; i<segments.Count-2;i++){
+      for(int i = 0; i<segments.Count;i++){
           segments[i].position = (positions[i] + positions[i+1])/2;
 
 
           Quaternion tarRot = Quaternion.identity;
-          tarRot.eulerAngles = new Vector3(0,0,Mathf.Atan2((positions[i+1]-positions[i]).x,(positions[i+1]-positions[i]).y));
+          tarRot.eulerAngles = new Vector3(0,0,Mathf.Atan2((positions[i+1]-positions[i]).y,(positions[i+1]-positions[i]).x)*Mathf.Rad2Deg);
 
-          segments[i].rotation = Quaternion.Slerp(segments[i].rotation,tarRot,rotSpeed);
+          //segments[i].rotation = Quaternion.Slerp(segments[i].rotation,tarRot,rotSpeed);
+          segments[i].rotation = tarRot;
       }
 
 

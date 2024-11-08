@@ -8,8 +8,12 @@ public class PlatelinController : MonoBehaviour
     public float spawndelay;
     public float swellsize;
     public float swelltime;
+    public bool isSpore;
+    public float sporeHealingPerSecond;
     public GameObject goo;
     public GameObject gravitySource;
+    public NSpriteAnimation animationState;
+
 
     float _spawntimer;
     float _swelltimer;
@@ -23,16 +27,21 @@ public class PlatelinController : MonoBehaviour
 
     public Mode mode;
 
-    void Start()
+    void OnEnable()
     {
+        isSpore = false;
         mode = Mode.Immature;
+        animationState.SwapState("Maturation");
         _spawntimer += 3 * spawndelay;
-        GetComponent<SpriteRenderer>().color = Color.blue;
+        //GetComponent<SpriteRenderer>().color = Color.blue;
     }
 
-    
+
     void Update()
     {
+        if(isSpore){
+          GetComponent<Spawnables.EnemyDamageable>().EnemyHeal(sporeHealingPerSecond*Time.deltaTime);
+        }
 
         if(transform.position.sqrMagnitude > 75 * 75)
         {
@@ -42,11 +51,19 @@ public class PlatelinController : MonoBehaviour
         if (mode == Mode.Immature)
         {
             _spawntimer -= Time.deltaTime;
+
+            if(_spawntimer <=3.0f && isSpore){
+                animationState.SwapState("Maturation");
+                isSpore = false;
+            }
+
             if (_spawntimer <= 0)
             {
+                animationState.SwapState("Idle");
                 mode = Mode.Idle;
-                _spawntimer = spawndelay;
-                GetComponent<SpriteRenderer>().color = Color.white;
+
+                _spawntimer = spawndelay + Random.Range(-0.5f,0.5f);
+                //GetComponent<SpriteRenderer>().color = Color.white;
             }
         }
 
@@ -75,6 +92,10 @@ public class PlatelinController : MonoBehaviour
                 {
                     copy.GetComponent<CustomRigidbody2D>().AddForce(10000 * Random.insideUnitCircle);
                     copy.GetComponent<PlatelinController>()._spawntimer += 5;
+                    copy.GetComponent<PlatelinController>().animationState.SwapState("Dormant");
+                    copy.GetComponent<PlatelinController>().isSpore = true;
+                    print("sporegen");
+
                 }
             }
         }
@@ -83,6 +104,6 @@ public class PlatelinController : MonoBehaviour
     private void OnDestroy()
     {
         var goo2 = Instantiate(goo, transform.position, transform.rotation);
-        
+
     }
 }
