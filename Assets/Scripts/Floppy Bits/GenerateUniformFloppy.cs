@@ -20,6 +20,8 @@ public class GenerateUniformFloppy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      int startingOrder = length;
+
       brain.segments.Add(anchor.transform);
       brain.segments.Add(this.gameObject.transform);
 
@@ -39,6 +41,8 @@ public class GenerateUniformFloppy : MonoBehaviour
         child.GetComponent<FloppySegmentRotation>().rigidity = rigidity;
         child.GetComponent<FloppySegmentRotation>().target = oldChild.transform;
         child.GetComponent<FloppySegmentRotation>().segLength = segLength;
+        child.GetComponent<SpriteRenderer>().sortingOrder = startingOrder;
+        startingOrder--;
         if(flippedY){
           child.GetComponent<SpriteRenderer>().flipY = true;
         }
