@@ -75,7 +75,7 @@ namespace LevelSelect
                     LoreText = "Lore text goes here, idk how long it'll be but decently I would think. Maybe a bit more? How about a teeeensy bit more."
                 });
 
-                if (Random.value < 1/(1+Mathf.Exp(5-levels.Count/2.5f))) break;
+                if (levels.Count >= 3 && Random.value < 1/(1+Mathf.Exp(5-levels.Count/2.5f))) break;
             }
 
             var connections = new List<Tuple<int, int>>();
