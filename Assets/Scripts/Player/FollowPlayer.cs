@@ -9,6 +9,7 @@ namespace Player
         public float baseSize = 12;
         public float jump = 0.01f;
         public float shipPull = .35f;
+        public float mouseZoomScale = 5;
         public float camLaziness = 1f;
         
         private Vector3 _camOffset;
@@ -62,7 +63,7 @@ namespace Player
 
             sqM = (mousePos-playerPos).sqrMagnitude/500;
             scale = sqM / (1 + sqM);
-            _mainCamera.orthographicSize = baseSize +  5 * scale;
+            _mainCamera.orthographicSize = baseSize +  mouseZoomScale * scale;
         }
         
         private static int Hash(int input)

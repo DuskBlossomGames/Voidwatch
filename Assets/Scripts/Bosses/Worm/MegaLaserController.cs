@@ -6,11 +6,9 @@ using Util;
 
 namespace Bosses.Worm
 {
-    public class LaserController : MonoBehaviour
+    public class MegaLaserController : MonoBehaviour
     {
-        public float width, length, timeToLive, fadeTime, damage;
-        public Vector2 targetPos;
-        public Sprite sprite;
+        public float timeToLive, fadeTime, damage;
 
         private BoxCollider2D _collider;
         private SpriteRenderer _spriteRenderer;
@@ -19,9 +17,6 @@ namespace Bosses.Worm
         
         private void Start()
         {
-            _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-            _spriteRenderer.sprite = sprite;
-            
             _collider = gameObject.AddComponent<BoxCollider2D>();
 
             _aliveTimer.Value = timeToLive;
@@ -34,8 +29,8 @@ namespace Bosses.Worm
             var parentScale = parent == null ? new Vector3(1, 1, 1) : parent.localScale;
 
             transform.localRotation = Quaternion.identity;
-            transform.localScale = new Vector2(length / parentScale.x, width / parentScale.y);
-            transform.localPosition = new Vector2(length / 2 / parentScale.x, 0);
+            // transform.localScale = new Vector2(length / parentScale.x, width / parentScale.y);
+            // transform.localPosition = new Vector2(length / 2 / parentScale.x, 0);
             
             _aliveTimer.Update();
             if (_aliveTimer.IsFinished) _fadeTimer.Update();
