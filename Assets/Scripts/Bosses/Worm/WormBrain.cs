@@ -94,6 +94,7 @@ namespace Bosses.Worm
             public int pairID;
         }
 
+        private int exportals;
         public int numportals = 1;
         PortalPair[] _portals = new PortalPair[10];
         PortalID[] _portalIDs = new PortalID[10];
@@ -240,7 +241,7 @@ namespace Bosses.Worm
                 }
             }
 
-            actionGoal = ActionGoal.Burrow;
+            //actionGoal = ActionGoal.Burrow;
 
             _actionUtilTimer.Update();
             if (_actionUtilTimer.IsFinished)
@@ -258,7 +259,10 @@ namespace Bosses.Worm
                     {
                         case < .15f:
                             /*Do burrow*/
-                            goto default;
+                            actionGoal = ActionGoal.Burrow;
+                            _actionUtilTimer.Value = Random.Range(10f, 20f);
+                            exportals = Random.Range(2, 5); 
+                            break;
                         case < .50f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
@@ -335,7 +339,7 @@ namespace Bosses.Worm
                     break;
 
                 case ActionGoal.Burrow:
-                    _moveMode = MoveMode.Wander;
+                    _moveMode = MoveMode.Portal;
                     break;
 
             }
@@ -566,11 +570,11 @@ namespace Bosses.Worm
 
                 for (int idx = 0; idx < numportals; idx++)
                 {
-                    print("loop");
+                    //print("loop");
                     PortalID id = _portalIDs[idx];
                     if (id.segID == i)
                     {
-                        print("Ran");
+                        //print("Ran");
                         var pair = _portals[id.pairID];
                         currSegmentPos = OutofPortal(pair, currSegmentPos);
                     }
