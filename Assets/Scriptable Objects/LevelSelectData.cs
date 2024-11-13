@@ -39,13 +39,7 @@ namespace LevelSelect
         public int[] Waves;
         public Sprite Sprite;
         public List<int> Connections;
-
-        private Sprite _hiddenSprite;
-        public Sprite HiddenSprite
-        {
-            get => _hiddenSprite ?? Sprite;
-            set => _hiddenSprite = value;
-        }
+        public Sprite HiddenSprite;
 
         public Vector3 WorldPosition;
 
