@@ -18,11 +18,15 @@ namespace LevelSelect
         public GameObject planetPrefab;
         public AssetLabelReference spriteLabel;
         public LevelSelectData data;
-        public Sprite hiddenSprite, spaceStationSprite,
-            hiddenElite, bossSprite, entranceSprite;
+        public Sprite hiddenSprite, spaceStationSprite, bossSprite, entranceSprite;
         public MiniPlayerController playerMini;
         public MapController mapController;
-        public Selector selector;
+
+        public int mapGridSize;
+        public int minLevels, avgLevels, expScale;
+        public int maxPlanetConnections;
+        public int minFurthestPlanetDist;
+        public int minElites, maxElites;
 
         private void Start()
         {
@@ -37,11 +41,7 @@ namespace LevelSelect
                 mapController.Instantiate();
             };
         }
-
-        // TODO: debug
-        private bool _revealMap;
-
-        // TODO: in the name of all that is holy, add some variables lmao
+        
         private void GenerateGalaxy(IList<Sprite> sprites)
         {
             var levels = new List<LevelData>();
@@ -56,11 +56,11 @@ namespace LevelSelect
                 Vector2 position;
                 do
                 {
-                    position = new Vector2(Random.Range(-3, 4), Random.Range(-3, 4));
+                    position = new Vector2(Random.Range(-mapGridSize, mapGridSize+1), Random.Range(-mapGridSize, mapGridSize+1));
                 } while (usedGridPositions.Contains(position));
                 usedGridPositions.Add(position);
 
-                // TODO: generate basically everything better
+                // TODO: every planet is shown as hidden (without connections), once a planet does have a connection it is unhidden
                 levels.Add(new LevelData
                 {
                     Type = levels.Count == 0 ? LevelType.Entrance : LevelType.Normal,
@@ -75,19 +75,19 @@ namespace LevelSelect
                     LoreText = "Lore text goes here, idk how long it'll be but decently I would think. Maybe a bit more? How about a teeeensy bit more."
                 });
 
-                if (levels.Count >= 3 && Random.value < 1/(1+Mathf.Exp(5-levels.Count/2.5f))) break;
+                if (levels.Count >= minLevels && Random.value < 1/(1+Mathf.Exp(expScale*(avgLevels-levels.Count)))) break;
             }
 
             var connections = new List<Tuple<int, int>>();
             for (var level = 0; level < levels.Count; level++)
             {
-                var connectionsLeft = Random.Range(1, 4) - levels[level].Connections.Count;
+                var connectionsLeft = Random.Range(1, maxPlanetConnections+1) - levels[level].Connections.Count;
 
                 var validConnections = levels
                     .Select((_, i) => i)
                     .Where(i =>
                         i != level &&
-                        levels[i].Connections.Count < 3 &&
+                        levels[i].Connections.Count < maxPlanetConnections &&
                         !levels[level].Connections.Contains(i) &&
                         !connections.Any(c => MapUtil.Intersect(levels[i].WorldPosition, levels[level].WorldPosition, levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
                         !levels.Any(l => l != levels[i] && l != levels[level] && MapUtil.SegmentAndCircleIntersect(levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition, planetRadius*2)))
@@ -109,7 +109,6 @@ namespace LevelSelect
                 }
             }
 
-            // idk if this is a great way to do it but *should* work...
             List<int> pathless = new();
             for (var level = 1; level < levels.Count; level++)
             {
@@ -131,30 +130,26 @@ namespace LevelSelect
                                 levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition,
                                 planetRadius * 2))).ToList();
 
-                if (validConnections.Any(i => levels[i].Connections.Count < 3))
+                if (validConnections.Any(i => levels[i].Connections.Count < maxPlanetConnections))
                 {
-                    validConnections = validConnections.Where(i => levels[i].Connections.Count < 3).ToList();
+                    validConnections = validConnections.Where(i => levels[i].Connections.Count < maxPlanetConnections).ToList();
                 }
 
-                if (validConnections.Count == 0) continue;
+                if (validConnections.Count == 0)
+                {
+                    // cannot be fixed :( we must redo regeneration
+                    GenerateGalaxy(sprites);
+                    return;
+                }
+                
                 var other = validConnections[Random.Range(0, validConnections.Count-1)];
                 connections.Add(new Tuple<int, int>(level, other));
 
                 levels[level].Connections.Add(other);
                 levels[other].Connections.Add(level);
             }
-
-            // TODO: just for now, to make sure the above works fine
-            for (var level = 1; level < levels.Count; level++)
-            {
-                if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) == null)
-                {
-                    Debug.LogError("!! PATHLESS EXIST !!");
-                    _revealMap = true;
-                }
-            }
-
-            // TODO: do level type generation better
+            
+            // make the furthest planet be the boss
             var furthestPlanet = 0;
             var furthestPlanetDist = 0;
             for (var i = 1; i < levels.Count; i++)
@@ -168,26 +163,28 @@ namespace LevelSelect
                 }
             }
 
+            if (furthestPlanetDist < minFurthestPlanetDist)
+            {
+                GenerateGalaxy(sprites);
+                return;
+            }
+
             levels[furthestPlanet].Type = LevelType.Boss;
             levels[furthestPlanet].Sprite = bossSprite;
-            levels[furthestPlanet].HiddenSprite = null;
 
-            int stationIdx;
-            do stationIdx = Random.Range(1, levels.Count);
-            while (stationIdx == furthestPlanet);
+            var stationIdx = Random.Range(1, levels.Count-1);
+            if (stationIdx >= furthestPlanet) stationIdx++;
 
             levels[stationIdx].Type = LevelType.SpaceStation;
             levels[stationIdx].Sprite = spaceStationSprite;
-            levels[stationIdx].HiddenSprite = null;
 
-            for (var i = 0; i < Random.Range(0, 2); i++)
+            for (var i = 0; i < Random.Range(minElites, maxElites); i++)
             {
-                int eliteIdx;
-                do eliteIdx = Random.Range(1, levels.Count);
-                while (eliteIdx == stationIdx || eliteIdx == furthestPlanet);
+                var eliteIdx = Random.Range(1, levels.Count-2);
+                if (eliteIdx >= Mathf.Min(stationIdx, furthestPlanet)) {eliteIdx++;}
+                if (eliteIdx >= Mathf.Max(stationIdx, furthestPlanet)) eliteIdx++;
 
                 levels[eliteIdx].Type = LevelType.Elite;
-                levels[eliteIdx].HiddenSprite = hiddenElite;
             }
 
             data.PopulateData(levels.ToArray(), connections.ToArray());
@@ -195,14 +192,14 @@ namespace LevelSelect
 
         private void RenderGalaxy()
         {
-            var shownPlanets = new HashSet<int>();
+            var revealed = new HashSet<int>();
             foreach (var connection in data.Connections)
             {
-                if (!_revealMap && !data.VisitedPlanets.Contains(connection.Item1) &&
+                if (!data.VisitedPlanets.Contains(connection.Item1) &&
                     !data.VisitedPlanets.Contains(connection.Item2)) continue;
 
-                shownPlanets.Add(connection.Item1);
-                shownPlanets.Add(connection.Item2);
+                revealed.Add(connection.Item1);
+                revealed.Add(connection.Item2);
 
                 var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();
                 line.transform.SetParent(transform);
@@ -216,20 +213,19 @@ namespace LevelSelect
 
             }
 
-            foreach (var planet in shownPlanets)
+            foreach (var (level, idx) in data.Levels.Select((l,i) => (l,i)))
             {
-                var level = data.Levels[planet];
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
-                planetObj.GetComponent<SpriteRenderer>().sprite = _revealMap || data.VisitedPlanets.Contains(planet)
+                planetObj.SetActive(true);
+                planetObj.GetComponent<SpriteRenderer>().sprite = revealed.Contains(idx)
                     ? level.Sprite
                     : level.HiddenSprite;
-                if (level.Type == LevelType.Elite && (_revealMap || data.VisitedPlanets.Contains(planet)))
+                
+                if (revealed.Contains(idx))
                 {
-                    planetObj.transform.GetChild(0).gameObject.SetActive(true);
+                    if (!data.VisitedPlanets.Contains(idx)) planetObj.GetComponent<Selectable>().clickable = true;
+                    if (level.Type == LevelType.Elite) planetObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
-
-                var selectable = planetObj.GetComponent<Selectable>();
-                selectable.selector = selector;
             }
         }
     }
