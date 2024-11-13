@@ -26,7 +26,6 @@ namespace LevelSelect
         }
 
         // TODO: warp (wormhole)
-        // TODO: hidden?
         // TODO: other NPCs
 
     }
@@ -45,6 +44,8 @@ namespace LevelSelect
 
         public string Name;
         public string LoreText;
+
+        public bool IsBoss;
     }
 
     public class LevelSelectData : ScriptableObject

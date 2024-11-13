@@ -532,7 +532,7 @@ namespace Bosses.Worm
                     _spikesReleased = 0;
                 }
                 /////////////////////////////////////////////////////
-                //RippleSegments();
+                // RippleSegments();
                 RippleSegmentsWithTeleport();
             }
             _swipe -= Time.deltaTime;
