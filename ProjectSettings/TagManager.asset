@@ -56,3 +56,6 @@ TagManager:
   - name: Boss
     uniqueID: 745683909
     locked: 0
+  - name: Teleport
+    uniqueID: 3891662635
+    locked: 0

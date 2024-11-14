@@ -449,9 +449,9 @@ SpriteMask:
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7,
     type: 3}
   m_MaskAlphaCutoff: 0.2
-  m_FrontSortingLayerID: 745683909
+  m_FrontSortingLayerID: -403304661
   m_BackSortingLayerID: -1435083627
-  m_FrontSortingLayer: 4
+  m_FrontSortingLayer: 5
   m_BackSortingLayer: 3
   m_FrontSortingOrder: 1000
   m_BackSortingOrder: -10
@@ -3788,9 +3788,9 @@ SpriteMask:
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7,
     type: 3}
   m_MaskAlphaCutoff: 0.2
-  m_FrontSortingLayerID: 745683909
+  m_FrontSortingLayerID: -403304661
   m_BackSortingLayerID: -1435083627
-  m_FrontSortingLayer: 4
+  m_FrontSortingLayer: 5
   m_BackSortingLayer: 3
   m_FrontSortingOrder: 1000
   m_BackSortingOrder: -10
@@ -3806,6 +3806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 690077938}
   - component: {fileID: 690077939}
+  - component: {fileID: 690077940}
   m_Layer: 0
   m_Name: Entrance
   m_TagString: Untagged
@@ -3880,6 +3881,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &690077940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690077937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appearsAsSelf: 1
+  miniSprite: {fileID: 0}
+  miniColor: {r: 0, g: 0, b: 0, a: 0}
+  size: 5
+  inheritsRotation: 0
+  staticRot: {x: 0, y: 0, z: 0}
 --- !u!1 &692115587
 GameObject:
   m_ObjectHideFlags: 0
@@ -4276,8 +4295,8 @@ MonoBehaviour:
   wanderTurnAngle: 40
   _moveMode: 0
   actionGoal: 0
-  _isStageTwo: 1
-  numportals: 1
+  _isStageTwo: 0
+  numportals: 0
   secondsPerSummon: 7
   portalIn: {fileID: 1492972550}
   portalOut: {fileID: 889434323}
@@ -4289,7 +4308,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877449871}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.4617484, w: 0.887011}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -59.1, y: -30.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4298,7 +4317,7 @@ Transform:
   - {fileID: 1757615606}
   - {fileID: 490401130}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 55}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &877449874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4413,7 +4432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &889434323
 Transform:
   m_ObjectHideFlags: 0
@@ -7666,7 +7685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1492972550
 Transform:
   m_ObjectHideFlags: 0
@@ -9775,6 +9794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1957567728}
   - component: {fileID: 1957567729}
+  - component: {fileID: 1957567730}
   m_Layer: 0
   m_Name: Entrance
   m_TagString: Untagged
@@ -9849,6 +9869,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1957567730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957567727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appearsAsSelf: 1
+  miniSprite: {fileID: 0}
+  miniColor: {r: 0, g: 0, b: 0, a: 0}
+  size: 5
+  inheritsRotation: 0
+  staticRot: {x: 0, y: 0, z: 0}
 --- !u!1 &1982076008
 GameObject:
   m_ObjectHideFlags: 0
