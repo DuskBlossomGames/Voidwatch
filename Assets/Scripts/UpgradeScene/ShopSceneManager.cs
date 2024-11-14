@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LevelSelect;
 using UnityEngine;
 using UnityEngine.UI;
 using Scriptable_Objects.Upgrades;
@@ -33,7 +34,7 @@ public class ShopSceneManager : MonoBehaviour
         public List<Good?> goods;
     }
 
-    public uint shopID; //Supplied by Scene spawner
+    public LevelSelectData levelSelectData; // gotta keep this loaded
     public MerchantData data;
     public Scriptable_Objects.PlayerData playerData;
     public GameObject selectIcon;
@@ -46,17 +47,16 @@ public class ShopSceneManager : MonoBehaviour
         selectIcon = transform.GetChild(0).GetChild(1).gameObject;
         MerchantData.MerchantObj shop = new MerchantData.MerchantObj();
         Debug.LogFormat("Shop is {0}",data.currentShopID);
-        Debug.LogFormat("Shops is {0}", data.shops);
+        Debug.LogFormat("Shops is {0}", data.Shops);
 
-        bool succ = data.shops.TryGetValue(data.currentShopID, out shop);
+        bool succ = data.Shops.TryGetValue(data.currentShopID, out shop);
         if (!succ)
         {
             shop = CreateNewShop();
             Debug.Log("Created New Shop");
-            data.shops.Add(data.currentShopID, shop);
+            data.Shops.Add(data.currentShopID, shop);
         }
 
-        shopID = data.currentShopID;
 
         _shop = shop;
         CreateScene();

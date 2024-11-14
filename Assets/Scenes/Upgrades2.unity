@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311935, g: 0.38074002, b: 0.3587273, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,9 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b60cd6129163e4b8efcaca95b66862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelSelectData: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   defFastDodgeCooldown: {fileID: 11400000, guid: b78a2ea0382ab44d8aa01c3046b1f2db, type: 2}
   playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
-  upgrades: []
   components:
   - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
   - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
@@ -484,7 +484,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rows: 0
   cols: 0
-  upgrades: []
   components: []
   isWeapons: 1
   next: {fileID: 2104301275}
@@ -717,7 +716,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rows: 0
   cols: 0
-  upgrades: []
   components: []
   isWeapons: 0
   next: {fileID: 0}

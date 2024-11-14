@@ -3278,6 +3278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
+  merchantData: {fileID: 11400000, guid: e5798128377a1494db19712c92488237, type: 2}
   lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   planetPrefab: {fileID: 1680533821085019361}
   spriteLabel:

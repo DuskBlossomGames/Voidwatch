@@ -1031,6 +1031,7 @@ MonoBehaviour:
   baseSize: 12
   jump: 0.1
   shipPull: 0.35
+  mouseZoomScale: 5
   camLaziness: 1
 --- !u!1 &749960843
 GameObject:
@@ -1697,7 +1698,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a90a10ea035f4aa9bd83f065b8606b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  merchantData: {fileID: 11400000, guid: e5798128377a1494db19712c92488237, type: 2}
+  data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   forceField: {fileID: 2146917946}
 --- !u!114 &1331667020
 MonoBehaviour:
