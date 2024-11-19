@@ -14,6 +14,7 @@ namespace LevelSelect
     {
         // has to have PlayerData so that it is initialized
         public PlayerData playerData;
+        public MerchantData merchantData; // gotta keep it loaded
 
         public Material lineMaterial;
         public GameObject planetPrefab;
@@ -29,6 +30,15 @@ namespace LevelSelect
         public int minBossStartDist;
         public int minElites, maxElites;
         public int minEligibleBosses;
+        
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.LeftBracket))
+            {
+                for (var i = 1; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
+                RenderGalaxy(true);
+            }
+        }
 
         private void Start()
         {
@@ -190,12 +200,12 @@ namespace LevelSelect
             data.PopulateData(levels.ToArray(), connections.ToArray());
         }
 
-        private void RenderGalaxy()
+        private void RenderGalaxy(bool revealAll = false)
         {
             var revealed = new HashSet<int>();
             foreach (var connection in data.Connections)
             {
-                var reveal = data.VisitedPlanets.Contains(connection.Item1) ||
+                var reveal = revealAll || data.VisitedPlanets.Contains(connection.Item1) ||
                     data.VisitedPlanets.Contains(connection.Item2);
 
                 if (reveal)
@@ -213,7 +223,6 @@ namespace LevelSelect
 
                 line.SetPosition(0, data.Levels[connection.Item1].WorldPosition);
                 line.SetPosition(1, data.Levels[connection.Item2].WorldPosition);
-
             }
 
             foreach (var (level, idx) in data.Levels.Select((l,i) => (l,i)))

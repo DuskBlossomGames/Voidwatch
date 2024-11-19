@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using LevelSelect;
 using UnityEngine;
 using Scriptable_Objects.Upgrades;
 
 public class UpgradeHandler : MonoBehaviour
 {
+    public LevelSelectData levelSelectData; // gotta keep this loaded
     public FastDodgeCooldown defFastDodgeCooldown;
     public Scriptable_Objects.PlayerData playerData;
 

@@ -13,7 +13,7 @@ public class MenuButtons : MonoBehaviour
         playerData.Scrap = 0;
         playerData.Health = playerData.playerMaxHealth;
         merchantData.currentShopID = 0;
-        merchantData.shops = new SerializedDict<uint, MerchantData.MerchantObj>();
+        merchantData.Shops = new SerializedDict<uint, MerchantData.MerchantObj>();
         playerData.Health = playerData.playerMaxHealth;
         SceneManager.LoadScene("LevelSelect");
     }

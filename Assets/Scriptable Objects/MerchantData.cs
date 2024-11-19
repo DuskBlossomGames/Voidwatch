@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DMG", menuName = "ScriptableObjects/MerchantData", order = 1)]
 public class MerchantData : ScriptableObject
 {
-    [SerializeField] public SerializedDict<uint, MerchantObj> shops;
+    public SerializedDict<uint, MerchantObj> Shops;
     public uint currentShopID;
     public struct MerchantObj
     {
