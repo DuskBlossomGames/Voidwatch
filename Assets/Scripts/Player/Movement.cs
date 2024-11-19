@@ -9,7 +9,7 @@ namespace Player
     public class Movement : MonoBehaviour
     {
         public bool inputBlocked;
-        
+
         public float driftCorrection;
         public float speedLimit;
         public float acceleration;
@@ -19,13 +19,14 @@ namespace Player
         public float dodgeTimeDilation;
         public AnimationCurve dodgeTimeDilationCurve;
         public float afterImageSpacing;
+        public Sprite afterImageSprite;
 
         private Collider2D _collider;
         private SpriteRenderer _sprite;
         private TrailRenderer[] _trails;
         private CustomRigidbody2D _rigid;
         private Camera _camera;
-    
+
         private Vector2 _preDodgeVel;
         private float _acceleration;
 
@@ -47,7 +48,7 @@ namespace Player
         private readonly List<GameObject> _afterImages = new();
 
         private Upgradeable _upgradeable;
-        
+
         private void Start()
         {
             _camera = Camera.main;
@@ -62,7 +63,7 @@ namespace Player
         {
             return !inputBlocked && Input.GetKey(code);
         }
-    
+
         private void FixedUpdate()
         {
             var velocity = _rigid.velocity;
@@ -95,19 +96,19 @@ namespace Player
             _afterImageTimer.FixedUpdate();
             var dodging = !_dodgeTimer.IsFinished;
 
-            
+
             // CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
             CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
             _collider.enabled = !dodging;
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
-            
+
             if (dodging)
             {
                 if (_afterImageTimer.IsFinished)
                 {
                     _afterImageTimer.Value = afterImageSpacing / dodgeVelocity;
-                    
+
                     var afterImage = new GameObject
                     {
                         transform =
@@ -116,10 +117,12 @@ namespace Player
                             rotation = transform.rotation
                         }
                     };
-                    
+
                     var sprite = afterImage.AddComponent<SpriteRenderer>();
-                    sprite.sprite = _sprite.sprite;
-                    sprite.color = new Color(1, 1, 1, 0.225f);
+                    sprite.sprite = afterImageSprite;
+                    Color tempColor = Color.HSVToRGB(Random.Range(0.75f,0.85f), 0.5f, 0.5f);
+                    tempColor.a = 0.5f;
+                    sprite.color = tempColor;
 
                     _afterImages.Add(afterImage);
                 }
@@ -130,15 +133,15 @@ namespace Player
             {
                 _afterImages.ForEach(Destroy);
                 _afterImages.Clear();
-                
+
                 velocity = _forwards * _preDodgeVel.magnitude;
             }
-            
+
             if (GetKey(KeyCode.W))
             {
                 var evt = new MoveEvent { speedLimit = speedLimit, acceleration = acceleration };
                 if (_upgradeable) _upgradeable.HandleEvent(evt, null);
-                
+
                 var dv = evt.speedLimit * evt.speedLimit / 100;
                 var eff = 1 / (1 + Mathf.Exp(velocity.sqrMagnitude / 100 - dv));
                 if (velocity.sqrMagnitude > (evt.speedLimit + 5) * (evt.speedLimit + 5)){
@@ -146,7 +149,7 @@ namespace Player
                 } else {
                     _acceleration = 10 * evt.acceleration * eff;
                 }
-            
+
                 var vm = velocity.magnitude;
                 velocity += driftCorrection * Time.fixedDeltaTime * Push(velocity, _forwards);
                 velocity *= (.01f + vm) / (.01f+velocity.magnitude);
@@ -161,7 +164,7 @@ namespace Player
             } else {
                 _acceleration = 0;
             }
-            
+
             //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.freezeRotation), Mathf.Cos(Mathf.Deg2Rad * rigid.freezeRotation));
 
             velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
@@ -169,7 +172,7 @@ namespace Player
 
             _rigid.velocity = velocity;
         }
-    
+
         private static Vector2 Push(Vector2 target, Vector2 line)
         {
             var length = target.magnitude;
