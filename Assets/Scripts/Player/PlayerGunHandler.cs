@@ -12,22 +12,7 @@ public class PlayerGunHandler : MonoBehaviour
     public float playRadius;
     public GameObject gravitySource;
 
-    public int clipCount;
-    public int clipCap;
-    public int bulletsPerShot;
-    public int bulletsPerShotVarience;
-    public float fireTime;
-    public float reloadTime;
-    public float refillTime;
-    public float shotForce;
-    public float forceVarience;
-    public float lateralSeperation;
-    public float verticalSeperation;
-    public float misfireChance;
-    public int repeats;
-    public float repeatSeperation;
-
-    public float dmgMod;
+    public BulletInfo gunInfo;
 
     private int _currClipCount;
     private int _currClipCap;
@@ -42,8 +27,8 @@ public class PlayerGunHandler : MonoBehaviour
     private void Start()
     {
         if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
-        _currClipCount = clipCount;
-        _currClipCap = clipCap;
+        _currClipCount = gunInfo.clipCount;
+        _currClipCap = gunInfo.clipCap;
         _readyToFire = true;
         status = "Ready To Fire";
         _rb = GetComponent<CustomRigidbody2D>();
@@ -67,7 +52,7 @@ public class PlayerGunHandler : MonoBehaviour
 
     public float ExpectedVelocity()
     {
-        return shotForce / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
+        return gunInfo.shotForce / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
     }
     IEnumerator _Fire()
     {
@@ -82,15 +67,15 @@ public class PlayerGunHandler : MonoBehaviour
 
         var evt = new ShootEvent
         {
-            bulletsPerShot = bulletsPerShot,
-            bulletsPerShotVarience = bulletsPerShotVarience,
-            shotForce = shotForce,
-            forceVarience = forceVarience,
-            lateralSeperation = lateralSeperation,
-            verticalSeperation = verticalSeperation,
-            misfireChance = misfireChance,
-            repeats = repeats,
-            repeatSeperation = repeatSeperation
+            bulletsPerShot = gunInfo.bulletsPerShot,
+            bulletsPerShotVarience = gunInfo.bulletsPerShotVarience,
+            shotForce = gunInfo.shotForce,
+            forceVarience = gunInfo.forceVarience,
+            lateralSeperation = gunInfo.lateralSeperation,
+            verticalSeperation = gunInfo.verticalSeperation,
+            misfireChance = gunInfo.misfireChance,
+            repeats = gunInfo.repeats,
+            repeatSeperation = gunInfo.repeatSeperation
         };
         //if (_upgradeable) _upgradeable.HandleEvent(evt, null);
 
@@ -131,7 +116,7 @@ public class PlayerGunHandler : MonoBehaviour
                     float vertForce = evt.shotForce + Random.Range(-evt.forceVarience, evt.forceVarience) + verOff;
                     float latForce = Random.Range(-evt.forceVarience, evt.forceVarience) + latOff;
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
-                    bullet.GetComponent<BulletCollision>().dmg = dmgMod;
+                    bullet.GetComponent<BulletCollision>().dmg = gunInfo.dmgMod;
                     bullet.GetComponent<BulletCollision>().owner = gameObject;
 
                     Debug.LogFormat("Actual velocity: {0}", bullet.GetComponent<CustomRigidbody2D>().velocity.magnitude);
@@ -140,15 +125,15 @@ public class PlayerGunHandler : MonoBehaviour
             }
         }
         
-        yield return new WaitForSeconds(fireTime);
+        yield return new WaitForSeconds(gunInfo.fireTime);
 
         if (_currClipCap <= 0)//should never be less than 0
         {
             //Debug.Log("Reloading");
             status = "Reloading";
-            yield return new WaitForSeconds(reloadTime);
+            yield return new WaitForSeconds(gunInfo.reloadTime);
             _currClipCount -= 1;
-            _currClipCap = clipCap;
+            _currClipCap = gunInfo.clipCap;
             //Debug.Log("Reloaded");
         }
 
@@ -157,8 +142,8 @@ public class PlayerGunHandler : MonoBehaviour
         {
             //Debug.Log("Refilling");
             status = "Refilling";
-            yield return new WaitForSeconds(refillTime);
-            _currClipCount = clipCount;
+            yield return new WaitForSeconds(gunInfo.refillTime);
+            _currClipCount = gunInfo.clipCount;
             //Debug.Log("Refilled");
         }
 
