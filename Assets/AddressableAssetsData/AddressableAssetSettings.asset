@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: b0ae79841bd6e4f5386bff506e0dea46
   m_currentHash:
     serializedVersion: 2
-    Hash: 36cb221c28a31cbd459aae266709ec23
+    Hash: 8a7e9053af0502d9bf7c1cf9952eccd6
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -89,6 +89,7 @@ MonoBehaviour:
     - default
     - enemies
     - planets
+    - mini-bosses
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 1951f15ecbeb0452a9f4b4bb83dcfe57, type: 2}

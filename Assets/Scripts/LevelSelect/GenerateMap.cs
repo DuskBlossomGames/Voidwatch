@@ -36,6 +36,7 @@ namespace LevelSelect
             if (Input.GetKeyUp(KeyCode.LeftBracket))
             {
                 for (var i = 1; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
+                data.RevealAll();
                 RenderGalaxy(true);
             }
         }

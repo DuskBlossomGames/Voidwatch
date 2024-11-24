@@ -2295,6 +2295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e01d494ff164a77818764c89b4396c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 2086174079}
   scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
   difficultyToLootTiers: 070000000f0000001900000032000000
   scrapCountTiers: 02000000050000000a0000000f000000
@@ -2305,6 +2306,7 @@ MonoBehaviour:
   - 0.5
   variantLabel:
     m_LabelString: enemies
+  miniBossesGroup: Mini-Bosses
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
