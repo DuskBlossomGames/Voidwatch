@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   merchantData: {fileID: 11400000, guid: e5798128377a1494db19712c92488237, type: 2}
   playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
+  def: {fileID: 11400000, guid: 041d1fa9308b1a94b9ff7f1b5f7dcf65, type: 2}
+  curr: {fileID: 11400000, guid: 36c6b0b41f54690448eb1a5c0b0970b8, type: 2}
 --- !u!4 &749922241
 Transform:
   m_ObjectHideFlags: 0

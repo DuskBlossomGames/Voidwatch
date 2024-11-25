@@ -7,8 +7,11 @@ public class BootManager : MonoBehaviour
 {
     public MerchantData merchantData;
     public Scriptable_Objects.PlayerData playerData;
+    public BulletInfo def;
+    public BulletInfo curr;
     void Start()
     {
+        curr = def;
         playerData.Scrap = 0;
         merchantData.currentShopID = 0;
         merchantData.Shops = new SerializedDict<uint, MerchantData.MerchantObj>();

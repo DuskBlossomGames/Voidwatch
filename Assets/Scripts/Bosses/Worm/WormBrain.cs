@@ -251,7 +251,7 @@ namespace Bosses.Worm
                             /*Do burrow*/
                             actionGoal = ActionGoal.Burrow;
                             _actionUtilTimer.Value = Random.Range(8f, 12f);
-                            exportals = Random.Range(2, 5);
+                            exportals = Random.Range(1, 3);
                             SpawnPortal();
                             break;
                         case < .50f:
@@ -495,7 +495,7 @@ namespace Bosses.Worm
             }
             _targetMovePos = targetPosition;
             var dir = pathfinder.PathDirNorm(_segments[0].transform.position, _targetMovePos);
-            Vector2 prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[1].transform.rotation.eulerAngles.z);
+            Vector2 prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[0].transform.rotation.eulerAngles.z);
             dir = pathfinder.ClampAngle(dir, prevAngle, Mathf.Deg2Rad * maxTurnAngleDeg);
 
             _currdir = dir = (.1f / Time.deltaTime * _currdir + dir).normalized;
@@ -545,22 +545,22 @@ namespace Bosses.Worm
 
         public void SpawnPortal()
         {
-            Transform head = transform.GetChild(0);
             var newPin = Instantiate(portalIn);
             var newPout = Instantiate(portalOut);
             newPin.gameObject.SetActive(true);
             newPout.gameObject.SetActive(true);
 
             float oldZ = newPin.position.z;
-            Vector3 newpos = (Vector3)(Vector2)head.position + Random.Range(20, 80) * head.right + oldZ * Vector3.forward;
+            Vector3 newpos = (Vector3)(Vector2)head.transform.position + Random.Range(20, 80) * head.transform.right + oldZ * Vector3.forward;
             newPin.position = newpos;
-            newPin.rotation = head.rotation;
-            //Debug.LogFormat("Newposition is {0}", newpos);
+            newPin.rotation = head.transform.rotation;
+            Debug.LogFormat("Head rot is {0}", head.transform.rotation.eulerAngles.z);
 
 
             do newpos = (Vector3)(Random.Range(20, 70) * pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f))) + oldZ * Vector3.forward;
-                while ((head.position - newpos).sqrMagnitude < 4000);
+                while ((head.transform.position - newpos).sqrMagnitude < 4000);
             newPout.position = newpos;
+            newPout.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * Mathf.Atan2(newpos.y, newpos.x));
 
             var pair = new PortalPair { pin = newPin , pout = newPout};
             _portals[numportals] = pair;
@@ -590,7 +590,7 @@ namespace Bosses.Worm
                     if (along > 0)
                     {
                         currSegmentPos = OutofPortal(pair, currSegmentPos);
-                        head.transform.rotation = Quaternion.Euler(0, 0, 90-pair.pout.rotation.z);
+                        head.transform.rotation = Quaternion.Euler(0, 0, 180+pair.pout.rotation.z);
                         //Debug.LogFormat("Head Along: {0}", along);
                         _portalIDs[idx].segID += 1;
                         teled = true;
@@ -669,6 +669,7 @@ namespace Bosses.Worm
                 var angle = Mathf.Atan2(curr2next.y, curr2next.x);
                 _segments[^1].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
             }
+
             if (teled && exportals > 0) SpawnPortal();
 
             for (var i = 0; i < middleLength + 2; i++)
