@@ -18,11 +18,8 @@ namespace Spawnables.Carcadon
 
         public float attackCooldownMin, attackCooldownMax;
 
-        public float lockRadius;
-        public float attackRadius;
-        
-        public float rotMoveSpeed, linMoveSpeed; // deg/s, u/s
-        public float baseRotMoveSpeed; // rotation of base seg
+        public float timeToOpen, timeToClose, timeToReturn;
+        private float _attackProgress;
         
         private GameObject[] _segments;
         private Vector2[] _inverseJoints; // doesn't exist for claw
@@ -97,52 +94,13 @@ namespace Spawnables.Carcadon
             return _foldDirection == 1 ? (int)a : Mathf.CeilToInt(a - 1);
         }
 
-        private float GetRotation(int seg, float target, float finalTarget=float.NaN)
-        {
-            var curRot = NormRot(_segments[seg].transform.rotation.eulerAngles.z - _origRots[seg]);
-            var targRot = NormRot(target);
-            var finalTargRot = NormRot(float.IsNaN(finalTarget) ? target : finalTarget);
-            
-            var forbidden = NormRot(foldRotations[seg]);
-            var forbidden2 = NormRot(Mathf.Sign(foldRotations[seg]) * -180 + foldRotations[seg]);
-                        
-            var forbiddenMin = Mathf.Min(forbidden, forbidden2);
-            var forbiddenMax = Mathf.Max(forbidden, forbidden2);
-                        
-            // counterclockwise (positive) rotation
-            var ccwTargRot = targRot < curRot ? targRot + 360 : targRot;
-            var ccwOpt = ccwTargRot - curRot;
-
-            var a = curRot < forbiddenMin;
-            var b = finalTargRot < forbiddenMin;
-            var c = curRot < finalTargRot;
-            var ccwAllowed = a && (b && c) || !a && (b || c);
-            
-            var ccwFinalDist = ccwAllowed ? 0 : Mathf.Abs(forbiddenMin - finalTargRot);
-
-            // clockwise (negative) rotation
-            var cwTargRot = targRot > curRot ? targRot - 360 : targRot;
-            var cwOpt = cwTargRot - curRot;
-            
-            a = curRot > forbiddenMax;
-            b = finalTargRot > forbiddenMax;
-            c = curRot > finalTargRot;
-            var cwAllowed = a && (b && c) || !a && (b || c);
-            
-            var cwFinalDist = cwAllowed ? 0 : Mathf.Abs(forbiddenMax - finalTargRot);
-            
-            return ccwFinalDist < cwFinalDist ? ccwOpt : cwOpt;
-        }
-
-        private Vector2? _oldEnd;
+        private bool _folded;
         private void Update()
         {
             _attackCooldown.Update();
-
-            var evaluatedDefault = (Vector2)transform.parent.TransformPoint(_defaultPos);
-
+            
             // fold
-            if (_foldDirection != 0 && (GetJoint(0) - evaluatedDefault).magnitude < 0.5f)
+            if (_attackProgress == 0 && _foldDirection != 0)
             {
                 var currentSeg = FloorOrCeil(_foldProgress);
                 var rotation = _foldDirection * Mathf.Sign(foldRotations[currentSeg]) * _foldSpeed * Time.deltaTime;
@@ -154,124 +112,56 @@ namespace Spawnables.Carcadon
                 if (_foldProgress <= 0 || _foldProgress >= _segments.Length)
                 {
                     _foldProgress = Mathf.Clamp(_foldProgress, 0, _segments.Length);
+                    _folded = _foldDirection == 1;
                     _foldDirection = 0;
                 }
             }
-            else
+
+            var xBound = transform.parent.InverseTransformPoint(GetJoint(0)).x;
+            var yBound = transform.parent.InverseTransformPoint(GetJoint(_segments.Length - 1)).y;
+            var playerPos = transform.parent.InverseTransformPoint(_player.transform.position);
+            
+            var inXBound = (int) Mathf.Sign(playerPos.x) == (int) Mathf.Sign(xBound) && Mathf.Abs(playerPos.x) < Mathf.Abs(xBound);
+            var inYBound = playerPos.y > yBound && playerPos.y - yBound <= 0.35f;
+            
+            if (!_folded && _attackCooldown.IsFinished && ((inXBound && inYBound) || _attackProgress != 0))
             {
-                // attack
-                var target = /*_target ?? */(Vector2) Player.transform.position;
+                if (_attackProgress == 0) _clawDamage.Active = true;
+                
+                var openBase = (Mathf.Sign(foldRotations[^1]) * -180 + foldRotations[^1]) * 3/4;
+                var openNext = Mathf.Sign(foldRotations[^2]) * -180 + foldRotations[^2];
 
-                if (_attackCooldown.IsFinished && !_target.HasValue && (target - GetJoint(0)).sqrMagnitude < lockRadius * lockRadius)
-                {
-                    _target = target;
-                } else if (_attackCooldown.IsFinished && !_attacking && (target - GetJoint(0)).sqrMagnitude < attackRadius * attackRadius)
-                {
-                    _attacking = _clawDamage.Active = true;
-                }
+                var returnNext = -openNext;
+                var foldLast = foldRotations[^3]/2;
+                var foldClaw = foldRotations[0]/2;
 
-                if (_attacking)
+                var returnBase = -openBase;
+                var returnLast = -foldLast;
+                var returnClaw = -foldClaw;
+                
+                if (_attackProgress < timeToOpen)
                 {
-                    var theta = GetRotation(0, _origRots[0] + foldRotations[0]*3/4);
-                    RotateAboutJoint(0, 0, theta * rotMoveSpeed * Time.deltaTime);
-
-                    if (Mathf.Abs(theta) < 2) // close enough, call it done
-                    {
-                        _attacking = _clawDamage.Active = false;
-                        _target = _oldEnd = null;
-                        _attackCooldown.Value = Random.Range(attackCooldownMin, attackCooldownMax);
-                    }
-                }
-                else if (!_attackCooldown.IsFinished || (target - GetJoint(_segments.Length - 1)).sqrMagnitude > _totalLengthNoClaw * _totalLengthNoClaw)
+                    RotateJoint(_segments.Length - 1, openBase / timeToOpen * Time.deltaTime);
+                    RotateJoint(_segments.Length - 2, openNext / timeToOpen * Time.deltaTime);
+                } else if (_attackProgress - timeToOpen < timeToClose)
                 {
-                    if (_target.HasValue) _target = null;
-                    
-                    for (var i = 0; i < _segments.Length; i++)
-                    {
-                        var theta = GetRotation(i, 0);
-                        RotateAboutJoint(i, i, theta * Time.deltaTime);
-                        
-                        if (i < _segments.Length - 1)
-                        {
-                            var disp = _origDisps[i] - (Vector2) _segments[i].transform.localPosition;
-                            _segments[i].transform.position += (Vector3) disp * (linMoveSpeed * Time.deltaTime);
-                        }
-                    }
-                    
-                    for (var i = _segments.Length - 2; i >= 0; i--)
-                    {
-                        target = GetInverseJoint(i+1);
-                        var armStart = GetJoint(i);
-                        
-                        var dist = target - armStart;
-                        _segments[i].transform.position += (Vector3) dist;
-                    }
+                    RotateJoint(_segments.Length - 2, returnNext / timeToClose * Time.deltaTime);
+                    RotateJoint(_segments.Length - 3, foldLast / timeToClose * Time.deltaTime);
+                    RotateJoint(0, foldClaw / timeToClose * Time.deltaTime);
+                } else if (_attackProgress - timeToOpen - timeToClose < timeToReturn)
+                {
+                    RotateJoint(_segments.Length - 1, returnBase / timeToReturn * Time.deltaTime);
+                    RotateJoint(_segments.Length - 3, returnLast / timeToReturn * Time.deltaTime);
+                    RotateJoint(0, returnClaw / timeToReturn * Time.deltaTime);
                 }
                 else
                 {
-                    // only target if player is in front of the base joint
-                    if (transform.parent.InverseTransformPoint(target).y < transform.parent.InverseTransformPoint(GetJoint(_segments.Length - 1)).y)
-                    {
-                        if (_target.HasValue) _target = null;
-                        return;
-                    }
-                    
-                    if ((GetJoint(0) - _oldEnd)?.magnitude < 0.001f)
-                    {
-                        _attacking = true;
-                        return;
-                    }
-                    _oldEnd = GetJoint(0);
-                    
-                    { // rotate claw open
-                        var theta = GetRotation(0, _origRots[0] + Mathf.Sign(foldRotations[0]) * -180 + foldRotations[0]);
-                        RotateAboutJoint(0, 0, theta * rotMoveSpeed * Time.deltaTime);
-                    }
-                    
-                    var origTarget = target;
-                    for (var i = 1; i < _segments.Length; i++)
-                    {
-                        var armStart = GetJoint(i);
-                        var armEnd = GetInverseJoint(i);
-                        
-                        var arm = armEnd - armStart;
-                        var displ = target - armStart;
-
-                        var theta = (Mathf.Atan2(displ.y, displ.x) - Mathf.Atan2(arm.y, arm.x)) * Mathf.Rad2Deg;
-
-                        var pDisp = origTarget - armStart;
-                        var playerTheta = (Mathf.Atan2(pDisp.y, pDisp.x) - Mathf.Atan2(arm.y, arm.x)) * Mathf.Rad2Deg;
-                        
-                        theta = GetRotation(i, _segments[i].transform.localRotation.eulerAngles.z + theta - _origRots[i], _segments[i].transform.localRotation.eulerAngles.z + playerTheta - _origRots[i]);
-                        
-                        var rotSpeed = i == _segments.Length - 1 ? baseRotMoveSpeed : rotMoveSpeed;
-                        if (i == 1) RotateJoint(i, (float)Math.Cbrt(theta) * rotSpeed * Time.deltaTime);
-                        else RotateAboutJoint(i, i, (float)Math.Cbrt(theta) * rotSpeed * Time.deltaTime);
-                        
-                        if (i < _segments.Length - 1)
-                        {
-                            var dist = target - armEnd;
-                            var magMod = Mathf.Pow(dist.magnitude, -2/3f);  // mag => cbrt(mag)
-                            if (float.IsInfinity(magMod)) magMod = 0;
-                            if (i == 1) _segments[0].transform.position += (Vector3) dist * (magMod * linMoveSpeed * Time.deltaTime);
-                            _segments[i].transform.position += (Vector3) dist * (magMod * linMoveSpeed * Time.deltaTime);
-                        }
-
-                        target = GetJoint(i);
-                    }
-
-                    target = GetInverseJoint(_segments.Length - 1);
-                    for (var i = _segments.Length - 2; i >= 1; i--)
-                    {
-                        var armStart = GetJoint(i);
-
-                        var dist = target - armStart;
-                        if (i == 1) _segments[0].transform.position += (Vector3) dist;
-                        _segments[i].transform.position += (Vector3) dist;
-
-                        target = GetInverseJoint(i);
-                    }
+                    _clawDamage.Active = false;
+                    _attackProgress = 0;
+                    _attackCooldown.Value = Random.Range(attackCooldownMin, attackCooldownMax);
                 }
+
+                _attackProgress += Time.deltaTime;
             }
         }
         
@@ -310,15 +200,15 @@ namespace Spawnables.Carcadon
 
         private bool RotateAboutJoint(int seg, int joint, float degrees)
         {
-            if (seg == joint)
-            {
-                var newAngle = NormRot((_segments[seg].transform.rotation.eulerAngles.z - _origRots[seg]) + degrees);
-                
-                var forbidden = NormRot(foldRotations[seg]);
-                var forbidden2 = NormRot(Mathf.Sign(foldRotations[seg]) * -180 + foldRotations[seg]);
-
-                if (newAngle < Mathf.Max(forbidden, forbidden2) && newAngle > Mathf.Min(forbidden, forbidden2)) return false;
-            }
+            // if (seg == joint)
+            // {
+            //     var newAngle = NormRot((_segments[seg].transform.rotation.eulerAngles.z - _origRots[seg]) + degrees);
+            //     
+            //     var forbidden = NormRot(foldRotations[seg]);
+            //     var forbidden2 = NormRot(Mathf.Sign(foldRotations[seg]) * -180 + foldRotations[seg]);
+            //
+            //     if (newAngle < Mathf.Max(forbidden, forbidden2) && newAngle > Mathf.Min(forbidden, forbidden2)) return false;
+            // }
             
             _segments[seg].transform.RotateAround(GetJoint(joint), Vector3.forward, degrees);
 

@@ -23,6 +23,11 @@ namespace Spawnables.Carcadon
         public float stealthAcc;
         public float stealthLowAccTime;
 
+        public float attackAccel, dashAccel;
+        public float attackCircleRadius;
+        public float attackCircleSpeed; // deg/s
+        public float attackDashSpeed;   // m/s
+
         private EnemySpawner.EnemySpawner _enemySpawner;
         private IEnumerable<SpriteRenderer> _baseSpriteRenderers;
         private List<SpriteRenderer> _stackedSpriteRenderers = new();
@@ -55,6 +60,10 @@ namespace Spawnables.Carcadon
         private int _opacityDir;
         private readonly Timer _stealthTimer = new();
         private readonly Timer _stealthAccTimer = new();
+        private readonly Timer _attackTimer = new();
+
+        private Vector2 _pointOnCircle;
+        private bool _isDashing;
         private void Update()
         {
             var vel = _rb.velocity;
@@ -69,7 +78,7 @@ namespace Spawnables.Carcadon
 
                 _stealthAccTimer.Update();
                 var trueAccel = _stealthAccTimer.IsFinished ? accel : stealthAcc;
-                _currSpeed = UtilFuncs.LerpSafe(_currSpeed, Mathf.Min(trueMax, _currSpeed+accel), Time.deltaTime);
+                _currSpeed = UtilFuncs.LerpSafe(_currSpeed, Mathf.Min(trueMax, _currSpeed+trueAccel), Time.deltaTime);
 
                 var w = _currSpeed / stealthRadius; // angular velocity
                 
@@ -85,12 +94,40 @@ namespace Spawnables.Carcadon
             {
                 _currSpeed = Mathf.Min(maxSpeed, _currSpeed + accel * Time.deltaTime);
 
-                var target = (Vector2)_player.transform.position;// + _player.velocity;
+                var target = (Vector2)_player.transform.position;
                 
                 var dist = target - (Vector2) transform.position;
                 if (dist.magnitude < 19) SetVisualStealth(false);
+                if (!_stealth && dist.magnitude < attackCircleRadius) _mode = Mode.Attack;
                 
                 dir = dist.normalized;
+            } else if (_mode == Mode.Attack)
+            {
+                _attackTimer.Update();
+
+                var playerDist = (_player.transform.position - transform.position).magnitude;
+
+                if (_pointOnCircle.sqrMagnitude == 0) _pointOnCircle = (transform.position - _player.transform.position).normalized * attackCircleRadius;
+
+                if (_attackTimer.IsFinished)
+                {
+                    _pointOnCircle = Quaternion.Euler(0, 0, 180) * _pointOnCircle; // target through the player
+                    _attackTimer.Value = 5;
+                    _isDashing = true;
+                }
+                
+                if (!_isDashing)
+                {
+                    _pointOnCircle = Quaternion.Euler(0, 0, attackCircleSpeed * Time.deltaTime) * _pointOnCircle;
+                }
+                
+                var targPoint = _pointOnCircle + (Vector2) _player.transform.position;
+                var dist = targPoint - (Vector2) transform.position;
+                dir = dist.normalized;
+                
+                _isDashing &= dist.magnitude > 1;
+                                                                            // angular to linear velocity
+                _currSpeed = UtilFuncs.LerpSafe(_currSpeed, _isDashing ? attackDashSpeed : Mathf.Min(attackCircleSpeed * Mathf.Deg2Rad * Mathf.Max(playerDist, attackCircleRadius), _currSpeed + (_isDashing ? dashAccel : attackAccel)), Time.deltaTime);
             }
             
             _rb.velocity = UtilFuncs.LerpSafe(vel, dir * _currSpeed, 10 * Time.deltaTime);
@@ -137,12 +174,13 @@ namespace Spawnables.Carcadon
             SetVisualStealth(true);
             // TODO: _enemySpawner.SpawnWave();
         }
-        
+
+        private bool _stealth;
         private void SetVisualStealth(bool stealth)
         {
-            var newDir = stealth ? -1 : 1;
-            if (_opacityDir == newDir) return;
-            _opacityDir = newDir;
+            if (_stealth == stealth) return;
+            _stealth = stealth;
+            _opacityDir = stealth ? -1 : 1;
             
             foreach (var ac in _armControllers)
             {
