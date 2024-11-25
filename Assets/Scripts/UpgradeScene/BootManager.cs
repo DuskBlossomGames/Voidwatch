@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Reflection;
 
 public class BootManager : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class BootManager : MonoBehaviour
     public BulletInfo curr;
     void Start()
     {
+        foreach (FieldInfo fi in def.GetType().GetFields())
+        {
+            fi.SetValue(curr, fi.GetValue(def));
+        }
         curr = def;
         playerData.Scrap = 0;
         merchantData.currentShopID = 0;
