@@ -16,6 +16,9 @@ namespace EnemySpawner
     public class EnemySpawner : MonoBehaviour
     {
         public GameObject player;
+
+        public GameObject HUD, fadeIn;
+        public PlanetSetup planet;
         
         public GameObject scrapPrefab;
         public List<int> difficultyToLootTiers;
@@ -69,6 +72,8 @@ namespace EnemySpawner
 
           level = data.Levels[data.CurrentPlanet];
           print(Mathf.Floor(level.DifficultyScore/data.MaxDifficultyScore *5 *2)/2);
+
+          if (level.Type != LevelType.Elite) fadeIn.SetActive(false);
         }
 
         private readonly List<GameObject> _spawnedEnemies = new();
@@ -91,19 +96,14 @@ namespace EnemySpawner
             {
                 if (_spawnedEnemies.Count == 0 && _loadedVariants[miniBossesGroup])
                 {
-                    var boundarySize = boundaryCircle.transform.localScale / 2;
-                    var rad = Random.Range(0, 2 * Mathf.PI);
-
                     var obj = Instantiate(
                         _miniBosses[/*TODO: !!!! Random.Range(0, _miniBosses.Count) !!!!*/0],
                         transform.position +
-                        new Vector3(boundarySize.x * Mathf.Cos(rad), boundarySize.y * Mathf.Sin(rad), 0),
+                        new Vector3(-35, 0, 0),
                         Quaternion.identity);
                     obj.GetComponent<MiniBoss>().enemySpawner = this;
                     _spawnedEnemies.Add(obj);
                 }
-
-                return;
             }
             
             levelTimer+= Time.deltaTime;
@@ -141,7 +141,7 @@ namespace EnemySpawner
                     _timeTillExit = 3;
                     _isTerminal = true;
                 }
-                else
+                else if (level.Type != LevelType.Elite)
                 {
                     SpawnWave();
                 }
