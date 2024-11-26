@@ -6342,13 +6342,14 @@ GameObject:
   - component: {fileID: 1331667016}
   - component: {fileID: 1331667019}
   - component: {fileID: 1331667018}
+  - component: {fileID: 1331667021}
   m_Layer: 9
   m_Name: Planet
   m_TagString: GravitySource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1331667013
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6390,7 +6391,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ca2bb1da91a5ae9408bd6e12ffb29433, type: 3}
+  m_Sprite: {fileID: 1520366884, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6398,7 +6399,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1331667014
@@ -6478,7 +6479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appearsAsSelf: 1
-  miniSprite: {fileID: 0}
+  miniSprite: {fileID: 1520366884, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
   miniColor: {r: 0, g: 0, b: 0, a: 0}
   size: 5
   inheritsRotation: 0
@@ -6516,6 +6517,41 @@ MonoBehaviour:
     freezeX: 1
     freezeY: 1
     freezeRotation: 1
+--- !u!114 &1331667021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331667012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ba044ba34c548d7a59f8a00cc0f06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - frames:
+    - {fileID: -1844119520, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: -2060182486, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: -1218233515, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: 825962965, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: -1985537702, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: -657198301, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: -623864492, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: 960762094, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: -537557032, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: 579653490, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: -1499044010, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: 1648763403, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: 157840274, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: 193463358, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: -814751735, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    - {fileID: 1520366884, guid: fe20ae78c5e9e48b4a65bae0c8aa4e40, type: 3}
+    name: 
+  framesPerSecond: 8
+  loop: 1
+  destroyWhenDone: 0
+  timePerFrame: 0
 --- !u!1 &1362879762
 GameObject:
   m_ObjectHideFlags: 0
@@ -10129,7 +10165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2146917947
 Transform:
   m_ObjectHideFlags: 0
