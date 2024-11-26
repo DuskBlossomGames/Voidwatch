@@ -25,6 +25,7 @@ namespace Spawnables.Carcadon
         public float minRandStealthTime, maxRandStealthTime, minUnstealthDist;
         public float stealthAcc;
         public float stealthLowAccTime;
+        public float destealthRadius;
 
         public float attackAccel, attackSpeed;
         public float attackRadius;
@@ -122,7 +123,7 @@ namespace Spawnables.Carcadon
                 var target = (Vector2)_player.transform.position;
                 
                 var dist = target - (Vector2) transform.position;
-                if (dist.magnitude < 19) SetVisualStealth(false);
+                if (dist.magnitude < destealthRadius) SetVisualStealth(false);
                 if (!_stealth && dist.magnitude < attackRadius) _mode = Mode.Attack;
                 
                 dir = dist.normalized;

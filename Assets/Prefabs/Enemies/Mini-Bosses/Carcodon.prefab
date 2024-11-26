@@ -1972,6 +1972,7 @@ MonoBehaviour:
   minUnstealthDist: 50
   stealthAcc: 9
   stealthLowAccTime: 2
+  destealthRadius: 22.5
   attackAccel: 8
   attackSpeed: 20
   attackRadius: 5
