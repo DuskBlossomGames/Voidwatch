@@ -244,7 +244,7 @@ namespace Spawnables.Carcadon
         public float timeBeforeReveal, timeBeforeUnfurl;
         public float finalDistAbovePlayer;
         public float camExpandTime, camExpandAmt, camMoveAmt;
-        public float pauseTime;
+        public float shakeTime, shakeIntensity, pauseTime;
         public float headstartTime;
         private bool _inCutscene = true;
         private bool _forceStealth = true;
@@ -266,7 +266,7 @@ namespace Spawnables.Carcadon
             // set up camera
             var cam = Camera.main;
             var camFp = cam!.GetComponent<FollowPlayer>();
-            camFp.enabled = false;
+            camFp.Enabled = false;
             cam.transform.position = (Vector3) (Vector2) _player.transform.position + new Vector3(camDistAbovePlayer, 0, cam.transform.position.z);
             cam.transform.rotation = Quaternion.Euler(0, 0, -90);
             cam.orthographicSize = camFp.baseSize;
@@ -374,6 +374,8 @@ namespace Spawnables.Carcadon
             }
 
             // hold
+            camFp.ScreenShake(shakeTime, shakeIntensity);
+            GetComponentInChildren<SpitController>().Spit(shakeTime);
             if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForSeconds(pauseTime);
             
             _mode = Mode.Stealth;
@@ -403,7 +405,7 @@ namespace Spawnables.Carcadon
             _enemySpawner.SpawnWave();
             _player.GetComponent<Shoot>().enabled = true;
             _player.GetComponent<Movement>().inputBlocked = false;
-            camFp.enabled = true;
+            camFp.Enabled = true;
         }
     }
 }

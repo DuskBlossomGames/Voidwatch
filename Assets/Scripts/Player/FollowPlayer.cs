@@ -1,4 +1,8 @@
+using System;
+using System.Timers;
 using UnityEngine;
+using Random = UnityEngine.Random;
+using Timer = Util.Timer;
 
 namespace Player
 {
@@ -11,6 +15,8 @@ namespace Player
         public float shipPull = .35f;
         public float mouseZoomScale = 5;
         public float camLaziness = 1f;
+
+        [NonSerialized] public bool Enabled = true;
         
         private Vector3 _camOffset;
         
@@ -20,24 +26,38 @@ namespace Player
         private float _timeSubStep;
         private Vector3 _oldOffset;
 
+        private Timer _screenShake = new();
+        private Vector2 _shakeOffset;
+        private float _shakeIntensity;
+
         private void Start()
         {
             _mainCamera = Camera.main;
             _cameraComponent = transform.GetComponent<Camera>();
         }
-        /*private void Update()
+
+        public void ScreenShake(float duration, float intensity)
         {
-            if (_timeSubStep == 0)
-            {
-                _oldOffset = transform.position;
-            }
-            _timeSubStep += Time.deltaTime;
-            Vector3 realOffset = Lerp(_oldOffset, _moddedOffset, _timeSubStep/Time.fixedDeltaTime);
-            transform.position = realOffset;
-        }*/
+            _screenShake.Value = duration;
+            _shakeIntensity = intensity;
+        }
 
         private void FixedUpdate()
         {
+            _screenShake.FixedUpdate();
+            if (!_screenShake.IsFinished)
+            {
+                transform.position -= (Vector3) _shakeOffset;
+                _shakeOffset = _shakeIntensity * Random.insideUnitCircle;
+                transform.position += (Vector3) _shakeOffset;
+            } else if (_shakeOffset.sqrMagnitude != 0)
+            {
+                transform.position -= (Vector3) _shakeOffset;
+                _shakeOffset = Vector3.zero;
+            }
+
+            if (!Enabled) return;
+            
             var playerPosition = player.transform.position;
             var cameraPosition = transform.position;
             
