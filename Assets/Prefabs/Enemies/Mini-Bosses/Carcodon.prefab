@@ -1986,14 +1986,14 @@ MonoBehaviour:
   timeBetweenPasses: 1.3
   distAboveScreen: 5
   timeBeforeExpand: 0.8
-  timeBeforeReveal: 2.35
+  timeBeforeReveal: 2.7
   timeBeforeUnfurl: 3.5
   finalDistAbovePlayer: 12
   camExpandTime: 4.5
   camExpandAmt: 10
   camMoveAmt: 5
   pauseTime: 0.8
-  headstartTime: 5.5
+  headstartTime: 3.7
 --- !u!114 &-9101354916200461371
 MonoBehaviour:
   m_ObjectHideFlags: 0

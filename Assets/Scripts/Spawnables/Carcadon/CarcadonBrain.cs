@@ -35,6 +35,8 @@ namespace Spawnables.Carcadon
         private ArmController[] _armControllers;
         private CustomRigidbody2D _rb;
 
+        private BoxCollider2D[] _colliders;
+
         private enum Mode { Stealth, Rush, Attack }
 
         private Mode _mode = Mode.Stealth;
@@ -53,6 +55,8 @@ namespace Spawnables.Carcadon
         private float _forceFieldRadius;
         private void Start()
         {
+            _colliders = GetComponentsInChildren<BoxCollider2D>();
+            
             _mouthSr = GetComponent<SpriteRenderer>();
             _numMouthFrames = texture.width / texture.height;
             _mouthSprites = new Sprite[_numMouthFrames];
@@ -177,6 +181,8 @@ namespace Spawnables.Carcadon
                 {
                     _isOpaque = _opacityDir > 0;
                     _opacityDir = 0;
+                    
+                    foreach (var col in _colliders) col.enabled = _isOpaque;
                 }
             }
             
@@ -371,8 +377,17 @@ namespace Spawnables.Carcadon
             SetVisualStealth(true);
             _inCutscene = false;
 
-            // hold
-            yield return new WaitForSeconds(headstartTime);
+            // make camera go back
+            camOrigPos = cam.transform.position.x;
+            camTargPos = _player.transform.position.x;
+            var targSize = origSize;
+            origSize = cam.orthographicSize;
+            for (float t = 0; t < headstartTime; t += Time.fixedDeltaTime)
+            {
+                cam.transform.position = new Vector3(Mathf.SmoothStep(camOrigPos, camTargPos, t / headstartTime),
+                    cam.transform.position.y, cam.transform.position.z);
+                cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);
+            }
             
             for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount - 1; i++)
             {
