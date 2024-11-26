@@ -204,6 +204,8 @@ namespace Spawnables.Carcadon
 
         public void TakeDamage(float oldHealth, float newHealth)
         {
+            print(oldHealth+" vs "+newHealth+" ("+_maxHealth+")");
+            print(Mathf.Min((int) (oldHealth / _maxHealth * LevelSelectData.ELITE_WAVES), LevelSelectData.ELITE_WAVES-1)+" vs "+(int) (newHealth / _maxHealth * LevelSelectData.ELITE_WAVES));
             if (Mathf.Min((int) (oldHealth / _maxHealth * LevelSelectData.ELITE_WAVES), LevelSelectData.ELITE_WAVES-1) != (int) (newHealth / _maxHealth * LevelSelectData.ELITE_WAVES))
             {
                 _mode = Mode.Stealth;
@@ -247,7 +249,7 @@ namespace Spawnables.Carcadon
         private bool _forceStealth = true;
         private IEnumerator Cutscene()
         {
-            yield return new WaitForEndOfFrame();
+            if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForEndOfFrame();
 
             _stackedSpriteRenderers.AddRange(transform.GetChild(0).GetComponentsInChildren<SpriteRenderer>());
             _stackedSpriteRenderers.AddRange(transform.GetChild(2).GetComponentsInChildren<SpriteRenderer>());
@@ -288,20 +290,20 @@ namespace Spawnables.Carcadon
             var fadeImg = _enemySpawner.fadeIn.GetComponent<Image>();
             for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
             {
-                yield return new WaitForFixedUpdate();
+                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
                 fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, Mathf.SmoothStep(1, 0, t / fadeInTime));
             }
             _enemySpawner.fadeIn.SetActive(false);
             
             // hold
-            yield return new WaitForSeconds(waitTime);
+            if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForSeconds(waitTime);
             
             // move right
             var origPos = transform.position.y;
             var targPos = origPos - (2 * cam.orthographicSize * cam.aspect + length + 2*distOffScreen);
             for (float t = 0; t < flyAcrossScreenTime; t += Time.fixedDeltaTime)
             {
-                yield return new WaitForFixedUpdate();
+                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
                 transform.position = new Vector3(transform.position.x,
                     Mathf.SmoothStep(origPos, targPos, t / flyAcrossScreenTime), transform.position.z);
             }
@@ -309,7 +311,7 @@ namespace Spawnables.Carcadon
             // slide down
             for (float t = 0; t < timeBetweenPasses; t += Time.fixedDeltaTime)
             {
-                yield return new WaitForFixedUpdate();
+                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
                 cam.transform.position = new Vector3(_player.transform.position.x + Mathf.SmoothStep(camDistAbovePlayer, -camDistAbovePlayer, t/timeBetweenPasses),
                     cam.transform.position.y, cam.transform.position.z);
             }
@@ -321,13 +323,13 @@ namespace Spawnables.Carcadon
             targPos = origPos + (2 * cam.orthographicSize * cam.aspect + length + 2*distOffScreen);
             for (float t = 0; t < flyAcrossScreenTime; t += Time.fixedDeltaTime)
             {
-                yield return new WaitForFixedUpdate();
+                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
                 transform.position = new Vector3(transform.position.x,
                     Mathf.SmoothStep(origPos, targPos, t / flyAcrossScreenTime), transform.position.z);
             }
             
             // hold
-            yield return new WaitForSeconds(timeBeforeExpand);
+            if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForSeconds(timeBeforeExpand);
 
             // slide up
             transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, transform.position.z)
@@ -342,7 +344,7 @@ namespace Spawnables.Carcadon
             var unfurled = false;
             for (float t = 0; t < camExpandTime; t += Time.fixedDeltaTime)
             {
-                yield return new WaitForFixedUpdate();
+                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
                 if (t >= timeBeforeReveal)
                 {
                     foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-(t-timeBeforeReveal)/opacityTime) * (1-stealthOpacity));
@@ -371,7 +373,7 @@ namespace Spawnables.Carcadon
             }
 
             // hold
-            yield return new WaitForSeconds(pauseTime);
+            if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForSeconds(pauseTime);
             
             _mode = Mode.Stealth;
             _stealthTimer.Value = Random.Range(minRandStealthTime, maxRandStealthTime);
@@ -385,7 +387,7 @@ namespace Spawnables.Carcadon
             origSize = cam.orthographicSize;
             for (float t = 0; t < headstartTime; t += Time.fixedDeltaTime)
             {
-                yield return new WaitForFixedUpdate();
+                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
                 cam.transform.position = new Vector3(Mathf.SmoothStep(camOrigPos, camTargPos, t / headstartTime),
                     cam.transform.position.y, cam.transform.position.z);
                 cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);

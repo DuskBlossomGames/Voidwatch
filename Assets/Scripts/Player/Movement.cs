@@ -23,7 +23,7 @@ namespace Player
         public float afterImageSpacing;
         public Sprite afterImageSprite;
 
-        public bool Dodging => _dodgeTimer.IsFinished;
+        public bool Dodging => !_dodgeTimer.IsFinished;
         
         private Collider2D _collider;
         private SpriteRenderer _sprite;

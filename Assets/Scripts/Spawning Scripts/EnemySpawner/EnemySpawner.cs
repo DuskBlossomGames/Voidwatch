@@ -111,6 +111,7 @@ namespace EnemySpawner
             levelTimer+= Time.deltaTime;
             // TODO: debug
             if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
+            if (level.Type == LevelType.Elite && Input.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
             if (Input.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 
             if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;

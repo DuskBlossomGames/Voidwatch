@@ -44,11 +44,13 @@ namespace Spawnables.Carcadon
         }
         
         private ClawDamage _clawDamage;
+        private PolygonCollider2D _collider;
 
         private readonly Timer _attackCooldown = new();
         
         private void Start()
         {
+            _collider = GetComponent<PolygonCollider2D>();
             _clawDamage = GetComponentInChildren<ClawDamage>();
             
             _segments = new [] {transform.GetChild(3).gameObject, transform.GetChild(2).gameObject,
@@ -112,16 +114,28 @@ namespace Spawnables.Carcadon
             }
 
             if (!hasAttack) return;
-
-            var xBound = transform.parent.InverseTransformPoint(GetJoint(0)).x;
-            var yBound = transform.parent.InverseTransformPoint(GetJoint(_segments.Length - 2)).y;
-            var playerPos = transform.parent.InverseTransformPoint(_player.transform.position);
             
-            var inXBound = (int) Mathf.Sign(playerPos.x) == (int) Mathf.Sign(xBound) && Mathf.Abs(playerPos.x) < Mathf.Abs(xBound);
-            var inYBound = playerPos.y > yBound && playerPos.y - yBound <= 1;
-            
-            if (!_folded && _attackCooldown.IsFinished && ((inXBound && inYBound) || _attackProgress != 0))
+            if (!_folded && _attackCooldown.IsFinished && (_collider.OverlapPoint(_player.transform.position) || _attackProgress != 0))
             {
+                if (!_player.GetComponent<Movement>().Dodging)
+                {
+                    // avoid player going through them
+                    for (var i = 0; i < _segments.Length; i++)
+                    {
+                        var myCol = _segments[i].GetComponentInChildren<BoxCollider2D>();
+                        var playerCol = _player.GetComponentInChildren<BoxCollider2D>();
+                        if (myCol.bounds.Intersects(playerCol.bounds))
+                        {
+                            var arm = (Vector2) _segments[i].transform.position - GetJoint(i);
+                            var normalAngle = Mathf.Atan2(arm.y, arm.x) * Mathf.Rad2Deg + 90;
+
+                            var playerDist = (Quaternion.Euler(0, 0, -normalAngle) * (_player.transform.position - _segments[i].transform.position)).x;
+                        
+                            _player.transform.position += Quaternion.Euler(0, 0, normalAngle) * new Vector3(myCol.transform.lossyScale.x*myCol.size.x/2 + playerCol.transform.lossyScale.x*playerCol.size.x/2 - playerDist, 0, 0);
+                        }
+                    }
+                }
+                
                 if (_attackProgress == 0)
                 {
                     _clawDamage.Active = true;
@@ -179,20 +193,7 @@ namespace Spawnables.Carcadon
 
         private void RotateAboutJoint(int seg, int joint, float degrees)
         {
-            var armDispBefore = (Vector2) _segments[seg].transform.position - GetJoint(seg);
-            var playerDispBefore = (Vector2) _player.transform.position - GetJoint(seg);
-            
             _segments[seg].transform.RotateAround(GetJoint(joint), Vector3.forward, degrees);
-            
-            var armDispAfter = (Vector2) _segments[seg].transform.position - GetJoint(seg);
-            var playerDispAfter = (Vector2)_player.transform.position - GetJoint(seg);
-
-            if (!_player.GetComponent<Movement>().Dodging && _attackProgress != 0 &&
-                Mathf.Atan2(playerDispBefore.y, playerDispBefore.x) < Mathf.Atan2(armDispBefore.y, armDispBefore.x) !=
-                Mathf.Atan2(playerDispAfter.y, playerDispAfter.x) < Mathf.Atan2(armDispAfter.y, armDispAfter.x))
-            {
-                _player.transform.RotateAround(GetJoint(joint), Vector3.forward, degrees);
-            }
         }
     }
 }
