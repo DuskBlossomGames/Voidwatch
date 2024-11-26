@@ -223,7 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782e6bbb22f98477eb312180482b1954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237,
+    type: 3}
   heathOpacityCurve:
     serializedVersion: 2
     m_Curve:
@@ -1372,7 +1373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a529c336df2817a4ba03498576d43383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6569384808679381653, guid: 98a54129725e66b4e84020c9947fdc6e, type: 3}
+  bulletPrefab: {fileID: 6569384808679381653, guid: 98a54129725e66b4e84020c9947fdc6e,
+    type: 3}
   playRadius: 150
   gravitySource: {fileID: 1331667012}
   target: {fileID: 2086174082}
@@ -1939,7 +1941,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2296,11 +2299,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e01d494ff164a77818764c89b4396c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gun: {fileID: 11400000, guid: 36c6b0b41f54690448eb1a5c0b0970b8, type: 2}
+  playerDamager: {fileID: 2086174091}
   player: {fileID: 2086174079}
   HUD: {fileID: 1562156498}
   fadeIn: {fileID: 1781870393}
   planet: {fileID: 1331667019}
-  scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
+  scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8,
+    type: 3}
   difficultyToLootTiers: 070000000f0000001900000032000000
   scrapCountTiers: 02000000050000000a0000000f000000
   scrapChanceTiers:
@@ -7805,7 +7811,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appearsAsSelf: 0
-  miniSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  miniSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224,
+    type: 3}
   miniColor: {r: 1, g: 0, b: 0, a: 1}
   size: 5
   inheritsRotation: 1
@@ -7822,8 +7829,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6fc2b787f5664dcd8b93639b559eee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  shieldBarPrefab: {fileID: 6640671108004503463, guid: 676d94c475dd6c6408461914a753155c, type: 3}
+  healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237,
+    type: 3}
+  shieldBarPrefab: {fileID: 6640671108004503463, guid: 676d94c475dd6c6408461914a753155c,
+    type: 3}
   heathOpacityCurve:
     serializedVersion: 2
     m_Curve:
@@ -7903,7 +7912,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356abe5ba08c65247a7bdf3269e9b0ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243, type: 3}
+  bulletPrefab: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243,
+    type: 3}
   playRadius: 75
   gravitySource: {fileID: 1331667012}
   gunInfo: {fileID: 11400000, guid: 36c6b0b41f54690448eb1a5c0b0970b8, type: 2}
@@ -7920,7 +7930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356abe5ba08c65247a7bdf3269e9b0ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6569384808679381653, guid: def303003056d41c08423a159b65ee18, type: 3}
+  bulletPrefab: {fileID: 6569384808679381653, guid: def303003056d41c08423a159b65ee18,
+    type: 3}
   playRadius: 75
   gravitySource: {fileID: 1331667012}
   gunInfo: {fileID: 11400000, guid: 36c6b0b41f54690448eb1a5c0b0970b8, type: 2}
@@ -8015,7 +8026,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 0.759434, g: 1, b: 0.98912084, a: 0.64705884}
   m_FlipX: 0
   m_FlipY: 0

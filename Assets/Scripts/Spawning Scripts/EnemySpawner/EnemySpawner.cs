@@ -20,6 +20,8 @@ namespace EnemySpawner
         public GameObject HUD, fadeIn;
         public PlanetSetup planet;
         
+        public BulletInfo gun;
+        public Spawnables.Player.PlayerDamageable playerDamager;
         public GameObject scrapPrefab;
         public List<int> difficultyToLootTiers;
         public List<int> scrapCountTiers;
@@ -118,7 +120,11 @@ namespace EnemySpawner
             if (_isTerminal)
             {
                 _timeTillExit -= Time.deltaTime;
-                if(_timeTillExit<0) SceneManager.LoadScene("LevelSelect");
+                if (_timeTillExit < 0)
+                {
+                    UpgradePlayer.Upgrade(gun, playerDamager, UpgradePlayer.Upgrades.Overcharge);
+                    SceneManager.LoadScene("LevelSelect");
+                }
                 return;
             }
 
