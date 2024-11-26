@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,10 +17,14 @@ public class BootManager : MonoBehaviour
         {
             fi.SetValue(curr, fi.GetValue(def));
         }
-        curr = def;
+
         playerData.Scrap = 0;
         merchantData.currentShopID = 0;
         merchantData.Shops = new SerializedDict<uint, MerchantData.MerchantObj>();
+    }
+
+    private void LateUpdate()
+    {
         SceneManager.LoadScene("LevelSelect");
     }
 }

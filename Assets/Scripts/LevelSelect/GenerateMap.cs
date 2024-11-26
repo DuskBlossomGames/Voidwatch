@@ -14,6 +14,7 @@ namespace LevelSelect
     {
         // has to have PlayerData so that it is initialized
         public PlayerData playerData;
+        public BulletInfo bulletData; // gotta keep it loaded
         public MerchantData merchantData; // gotta keep it loaded
 
         public Material lineMaterial;

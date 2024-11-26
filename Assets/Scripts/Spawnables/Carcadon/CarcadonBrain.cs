@@ -127,15 +127,14 @@ namespace Spawnables.Carcadon
 
             if (_mode == Mode.Stealth) // don't want to make it snake, so shouldn't have an arbitrary min turn radius
             {
-                _rb.velocity = Vector3.RotateTowards(_rb.velocity, _currSpeed * dir, 4 * Time.deltaTime, 15 * Time.deltaTime);
-                // _rb.velocity = UtilFuncs.LerpSafe(_rb.velocity, _currSpeed * dir, 10 * Time.deltaTime);
+                _rb.velocity = UtilFuncs.LerpSafe(_rb.velocity, _currSpeed * dir, 5 * Time.deltaTime);
             }
             else
             {
                 _rb.velocity = Vector3.RotateTowards(_rb.velocity, _currSpeed * dir, 1.5f * Time.deltaTime, 15 * Time.deltaTime);                
             }
             
-            transform.rotation = UtilFuncs.RotFromNorm(_rb.velocity);
+            transform.rotation = Quaternion.Lerp(transform.rotation, UtilFuncs.RotFromNorm(_rb.velocity), 5 * Time.deltaTime);
 
             if (!_stealth && _opacityDir == 0)
             {
@@ -334,9 +333,9 @@ namespace Spawnables.Carcadon
             {
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
             }
-            // _forceStealth = false;
+            _forceStealth = false;
             for (var ac = 0; ac < 2; ac++) _armControllers[ac].hasAttack = true;
-            // _enemySpawner.SpawnWave();
+            _enemySpawner.SpawnWave();
             _player.GetComponent<Shoot>().enabled = true;
             _player.GetComponent<Movement>().inputBlocked = false;
             camFp.enabled = true;
