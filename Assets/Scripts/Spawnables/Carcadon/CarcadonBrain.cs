@@ -384,6 +384,7 @@ namespace Spawnables.Carcadon
             origSize = cam.orthographicSize;
             for (float t = 0; t < headstartTime; t += Time.fixedDeltaTime)
             {
+                yield return new WaitForFixedUpdate();
                 cam.transform.position = new Vector3(Mathf.SmoothStep(camOrigPos, camTargPos, t / headstartTime),
                     cam.transform.position.y, cam.transform.position.z);
                 cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);
