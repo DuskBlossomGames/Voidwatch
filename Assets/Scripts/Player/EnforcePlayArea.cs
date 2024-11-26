@@ -24,7 +24,9 @@ namespace Spawnables.Player
 
         void Update()
         {
-            _outOfBoundsTimer.Update(gameObject.transform.position.sqrMagnitude > 75 * 75 ? -1 : 1);
+            var boundary = GameObject.FindGameObjectWithTag("Circle");
+            var range = boundary.transform.localScale.x / 2;
+            _outOfBoundsTimer.Update(gameObject.transform.position.sqrMagnitude > range * range ? -1 : 1);
 
             if (_outOfBoundsTimer.IsActive)
             {

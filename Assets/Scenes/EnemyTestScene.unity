@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311935, g: 0.38074002, b: 0.3587273, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5908,6 +5908,75 @@ MonoBehaviour:
   dmgRes: {fileID: 0}
   maxHealth: 500
   varientParent: {fileID: 0}
+--- !u!1001 &667042437
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 301863512397517819, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: drag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 301863512397517819, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: suction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 301863512397517819, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: tendonLength
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077276900865238909, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7663828382742004186, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
+      propertyPath: m_Name
+      value: Platelin Cluster
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1069652595b10f34b94ee72a7215ac75, type: 3}
 --- !u!1 &1073413699
 GameObject:
   m_ObjectHideFlags: 0
@@ -6110,7 +6179,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   bodyDmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
-  playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
   godmode: 0
 --- !u!61 &1073413706
 BoxCollider2D:
@@ -6170,7 +6238,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletText: {fileID: 1534816971}
-  playerData: {fileID: 0}
 --- !u!114 &1073413708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6216,6 +6283,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   afterImageSpacing: 1.7
+  afterImageSprite: {fileID: 0}
 --- !u!212 &1073413710
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7277,7 +7345,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   merchantData: {fileID: 0}
-  data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   forceField: {fileID: 465859996}
 --- !u!58 &1793643160
 CircleCollider2D:
@@ -7926,3 +7993,4 @@ SceneRoots:
   - {fileID: 1498985066}
   - {fileID: 1793643164}
   - {fileID: 1801595983}
+  - {fileID: 667042437}

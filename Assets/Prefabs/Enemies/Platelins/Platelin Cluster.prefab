@@ -208,9 +208,13 @@ MonoBehaviour:
   swellsize: 3
   swelltime: 0.6181264
   isSpore: 0
+  sporeHealingPerSecond: 0
   goo: {fileID: 4581651336289718121, guid: cba4d0a7dda536f428413af7665338d9, type: 3}
   gravitySource: {fileID: 0}
   animationState: {fileID: 3726635049977287167}
+  tendonLength: 5
+  drag: 0.5
+  suction: 1
   mode: 0
 --- !u!114 &8772780823410768721
 MonoBehaviour:
