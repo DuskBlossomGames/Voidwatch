@@ -16,12 +16,16 @@ namespace EnemySpawner
 
         private void Start()
         {
-            var spv = ScrapPrefab.GetComponent<ScrapController>().spriteVals;
-            _scrapvals = new int[spv.Length];
-            for (int i = 0; i < spv.Length; i++)
+            if (ScrapPrefab != null)
             {
-                _scrapvals[i] = spv[i].value;
+                var spv = ScrapPrefab.GetComponent<ScrapController>().spriteVals;
+                _scrapvals = new int[spv.Length];
+                for (int i = 0; i < spv.Length; i++)
+                {
+                    _scrapvals[i] = spv[i].value;
+                }
             }
+
             _spawned = false;
             _spawntar = FindDmgable(gameObject);
             _spawntar.GetComponent<Spawnables.EnemyDamageable>().varientParent = gameObject;
@@ -29,6 +33,8 @@ namespace EnemySpawner
 
         public void SpawnScrap(Vector3 pos)
         {
+            if (ScrapPrefab == null) return;
+            
             if (!_spawned) { 
                 _spawned = true;
                 bool run = true;

@@ -1146,7 +1146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &210672841
 Transform:
   m_ObjectHideFlags: 0
@@ -2670,6 +2670,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1362395923931163341, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
   m_PrefabInstance: {fileID: 684921950}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &528394105 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 288120715808517032, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+  m_PrefabInstance: {fileID: 684921950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528394084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &531959191
 GameObject:
   m_ObjectHideFlags: 0
@@ -10562,7 +10573,7 @@ MonoBehaviour:
   numSpikes: 6
   arcAngle: 170
   arcDist: 8
-  player: {fileID: 0}
+  player: {fileID: 528394105}
 --- !u!70 &7964499745855583316
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -47,6 +47,8 @@ namespace Bosses.Worm
 
         private void UpdateWorm()
         {
+            if (_summoning.childCount == 0) return; // not formed yet
+            
             var head = _summoning.GetChild(0).GetComponent<WormSegment>();
             if (head.enabled)
             {

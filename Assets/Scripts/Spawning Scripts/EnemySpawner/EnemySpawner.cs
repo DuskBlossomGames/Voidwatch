@@ -92,20 +92,20 @@ namespace EnemySpawner
             }
         }
 
+        private bool _spawnedElite;
         private void Update()
         {
-            if (level.Type == LevelType.Elite)
+            if (level.Type == LevelType.Elite && !_spawnedElite && _loadedVariants[miniBossesGroup])
             {
-                if (_spawnedEnemies.Count == 0 && _loadedVariants[miniBossesGroup])
-                {
-                    var obj = Instantiate(
-                        _miniBosses[/*TODO: !!!! Random.Range(0, _miniBosses.Count) !!!!*/0],
-                        transform.position +
-                        new Vector3(-35, 0, 0),
-                        Quaternion.identity);
-                    obj.GetComponent<MiniBoss>().enemySpawner = this;
-                    _spawnedEnemies.Add(obj);
-                }
+                var obj = Instantiate(
+                    _miniBosses[/*TODO: !!!! Random.Range(0, _miniBosses.Count) !!!!*/0],
+                    transform.position +
+                    new Vector3(-35, 0, 0),
+                    Quaternion.identity);
+                obj.GetComponent<MiniBoss>().enemySpawner = this;
+                _spawnedEnemies.Add(obj);
+
+                _spawnedElite = true;
             }
             
             levelTimer+= Time.deltaTime;
