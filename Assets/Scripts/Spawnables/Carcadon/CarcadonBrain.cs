@@ -19,7 +19,6 @@ namespace Spawnables.Carcadon
         public float accel, maxSpeed;
         
         public float stealthRadius, stealthScaling, stealthScaleMaxRad; // increase in max speed per unit closeness
-        public float enterStealthDamage;
         public float minRandStealthTime, maxRandStealthTime, minUnstealthDist;
         public float stealthAcc;
         public float stealthLowAccTime;
@@ -40,12 +39,13 @@ namespace Spawnables.Carcadon
         private Timer _opacityTimer = new();
 
         private CustomRigidbody2D _player;
-        
-        private int _maxHealthTier;
+
+        private float _maxHealth;
         private float _forceFieldRadius;
         private void Start()
         {
-            _maxHealthTier = (int) (GetComponent<EnemyDamageable>().maxHealth / enterStealthDamage) - 1;
+            _maxHealth = GetComponent<EnemyDamageable>().maxHealth;
+            
             _opacityTimer.Value = opacityTime;
             _rb = GetComponent<CustomRigidbody2D>();
             _armControllers = GetComponentsInChildren<ArmController>();
@@ -164,7 +164,7 @@ namespace Spawnables.Carcadon
 
         public void TakeDamage(float oldHealth, float newHealth)
         {
-            if (Math.Min((int)(oldHealth / enterStealthDamage), _maxHealthTier) != (int)(newHealth / enterStealthDamage))
+            if (Mathf.Min((int) (oldHealth / _maxHealth * LevelSelectData.ELITE_WAVES), LevelSelectData.ELITE_WAVES-1) != (int) (newHealth / _maxHealth * LevelSelectData.ELITE_WAVES))
             {
                 _mode = Mode.Stealth;
                 _rb.velocity = Vector2.zero; _currSpeed = 0;

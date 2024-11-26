@@ -62,7 +62,7 @@ namespace LevelSelect
         public float MaxDifficultyScore => baseDifficulty +
                                            levelModifier * (Levels.Length - 1) + 2 * randomModifier;
 
-        private const int ELITE_WAVES = 3;
+        public static readonly int ELITE_WAVES = 3;
         private float EliteDifficultyBonus => minBudgetPerWave.Select((b, i) => i < ELITE_WAVES ? b : 0).Sum();
 
 
