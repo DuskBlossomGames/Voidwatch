@@ -1444,7 +1444,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 200
-  m_Sprite: {fileID: 1559991079, guid: 56d5e5933486345bab95fca6a0a7d972, type: 3}
+  m_Sprite: {fileID: -392216076, guid: 56d5e5933486345bab95fca6a0a7d972, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1704,7 +1704,6 @@ MonoBehaviour:
   stealthRadius: 63
   stealthScaling: 0.03
   stealthScaleMaxRad: 30
-  enterStealthDamage: 400
   minRandStealthTime: 7
   maxRandStealthTime: 18
   minUnstealthDist: 50

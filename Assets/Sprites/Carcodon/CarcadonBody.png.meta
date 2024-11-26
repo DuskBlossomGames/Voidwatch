@@ -137,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba251b29b939e4d6882e3546dababc56
-      internalID: -1082527727
+      spriteID: e3bfd12c504b94b848629752b2207281
+      internalID: -1732995252
       vertices: []
       indices: 
       edges: []
@@ -158,8 +158,134 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 550dca3e95d6d40e9a06ce85aef49bfd
-      internalID: 1559991079
+      spriteID: bb0cb1bbbd3b64ea5b0c549e17c207f2
+      internalID: 1382379292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarcadonBody_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 639b33c7127b742c8945e2ea95d7880f
+      internalID: -1154947242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarcadonBody_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4b8110e9bf8e486185460a1585da3e9
+      internalID: -1378655498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarcadonBody_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c54676590faf64451a663c5fbc91775c
+      internalID: 923921890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarcadonBody_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c207b473cc92e4e92a19d6c3a25ea390
+      internalID: 2002619200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarcadonBody_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d53647889d0fd40ba9480523156a4e7b
+      internalID: 1519897571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarcadonBody_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d6e3d3977fb84d90b84b77464e5e299
+      internalID: -392216076
       vertices: []
       indices: 
       edges: []
@@ -167,7 +293,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: aa71aed49ef844ad0a12ff39e9f3b8da
+    spriteID: a63a80360970a42c0a9bb3cdb32d5778
     internalID: 0
     vertices: []
     indices: 
@@ -175,8 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      CarcadonBody_0: -1082527727
-      CarcadonBody_1: 1559991079
+      CarcadonBody_0: -1732995252
+      CarcadonBody_1: 1382379292
+      CarcadonBody_2: -1154947242
+      CarcadonBody_3: -1378655498
+      CarcadonBody_4: 923921890
+      CarcadonBody_5: 2002619200
+      CarcadonBody_6: 1519897571
+      CarcadonBody_7: -392216076
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
