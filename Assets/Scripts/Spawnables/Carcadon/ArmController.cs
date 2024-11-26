@@ -121,7 +121,11 @@ namespace Spawnables.Carcadon
             
             if (!_folded && _attackCooldown.IsFinished && ((inXBound && inYBound) || _attackProgress != 0))
             {
-                if (_attackProgress == 0) _clawDamage.Active = true;
+                if (_attackProgress == 0)
+                {
+                    _clawDamage.Active = true;
+                    _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(true); // enable trail renderer
+                }
                 
                 var openBase = (Mathf.Sign(foldRotations[^1]) * -180 + foldRotations[^1]) * 3/4;
                 var openNext = Mathf.Sign(foldRotations[^2]) * -180 + foldRotations[^2];
@@ -152,6 +156,7 @@ namespace Spawnables.Carcadon
                 else
                 {
                     _clawDamage.Active = false;
+                    _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(false); // disable trail renderer
                     _attackProgress = 0;
                     _attackCooldown.Value = attackCooldown;
                 }

@@ -122,7 +122,7 @@ namespace EnemySpawner
                 _timeTillExit -= Time.deltaTime;
                 if (_timeTillExit < 0)
                 {
-                    UpgradePlayer.Upgrade(gun, playerDamager, UpgradePlayer.Upgrades.Overcharge);
+                    // UpgradePlayer.Upgrade(gun, playerDamager, UpgradePlayer.Upgrades.Overcharge);
                     SceneManager.LoadScene("LevelSelect");
                 }
                 return;
