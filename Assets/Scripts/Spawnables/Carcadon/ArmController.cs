@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Player;
 using Spawnables.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -178,7 +179,20 @@ namespace Spawnables.Carcadon
 
         private void RotateAboutJoint(int seg, int joint, float degrees)
         {
+            var armDispBefore = (Vector2) _segments[seg].transform.position - GetJoint(seg);
+            var playerDispBefore = (Vector2) _player.transform.position - GetJoint(seg);
+            
             _segments[seg].transform.RotateAround(GetJoint(joint), Vector3.forward, degrees);
+            
+            var armDispAfter = (Vector2) _segments[seg].transform.position - GetJoint(seg);
+            var playerDispAfter = (Vector2)_player.transform.position - GetJoint(seg);
+
+            if (!_player.GetComponent<Movement>().Dodging && _attackProgress != 0 &&
+                Mathf.Atan2(playerDispBefore.y, playerDispBefore.x) < Mathf.Atan2(armDispBefore.y, armDispBefore.x) !=
+                Mathf.Atan2(playerDispAfter.y, playerDispAfter.x) < Mathf.Atan2(armDispAfter.y, armDispAfter.x))
+            {
+                _player.transform.RotateAround(GetJoint(joint), Vector3.forward, degrees);
+            }
         }
     }
 }

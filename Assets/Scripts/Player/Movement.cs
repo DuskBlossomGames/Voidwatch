@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Scriptable_Objects.Upgrades;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Util;
+using Random = UnityEngine.Random;
 
 namespace Player
 {
@@ -21,6 +23,8 @@ namespace Player
         public float afterImageSpacing;
         public Sprite afterImageSprite;
 
+        public bool Dodging => _dodgeTimer.IsFinished;
+        
         private Collider2D _collider;
         private SpriteRenderer _sprite;
         private TrailRenderer[] _trails;

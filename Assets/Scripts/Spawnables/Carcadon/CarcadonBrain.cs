@@ -198,7 +198,7 @@ namespace Spawnables.Carcadon
                     _mouthDirection = 0;
                 }
 
-                _mouthSr.sprite = _mouthSprites[_mouthDirection != -1 ? (int)_mouthProgress : Mathf.CeilToInt(_mouthProgress - 1)];
+                _mouthSr.sprite = _mouthSprites[Mathf.Clamp(_mouthDirection == 1 ? (int)_mouthProgress : Mathf.CeilToInt(_mouthProgress - 1), 0, _numMouthFrames-1)];
             }
         }
 
