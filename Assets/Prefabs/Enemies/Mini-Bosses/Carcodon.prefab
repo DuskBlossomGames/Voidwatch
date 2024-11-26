@@ -103,13 +103,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 482418748830581604}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.04536297, w: 0.9989706}
+  m_LocalRotation: {x: 0, y: 0, z: 0.0026179885, w: 0.9999966}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99965656, y: 0.9995854, z: 1}
+  m_LocalScale: {x: 3.5, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3281111091097378519}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 5.2}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.3}
 --- !u!61 &622694250105233740
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -142,7 +142,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.013786314, y: 0.0075673163}
+  m_Offset: {x: -0.015, y: 0.001}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -153,7 +153,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.07242738, y: 0.4782824}
+  m_Size: {x: 0.07, y: 0.48}
   m_EdgeRadius: 0
 --- !u!114 &3986592165974471160
 MonoBehaviour:
@@ -328,65 +328,56 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 3.8208501
-        outSlope: 3.8208501
+        time: 0.0027499795
+        value: 1
+        inSlope: -0.0788404
+        outSlope: -0.0788404
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 1
-      - serializedVersion: 3
-        time: 0.09482135
-        value: 0.40737522
-        inSlope: -0.9817772
-        outSlope: -0.9817772
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.19363593
+        outWeight: 0.15702249
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -0.000019237954
-        outSlope: -0.000019237954
+        inSlope: -0.29841822
+        outSlope: -0.29841822
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.13966483
+        inWeight: 0.18852028
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.7971698, g: 1, b: 0.99045503, a: 1}
-      key1: {r: 0.8443396, g: 0.99758667, b: 1, a: 1}
-      key2: {r: 1, g: 1, b: 1, a: 0}
-      key3: {r: 1, g: 0.9771088, b: 0.7877358, a: 0}
-      key4: {r: 1, g: 0.9156661, b: 0.7216981, a: 0}
-      key5: {r: 1, g: 0.695505, b: 0.5613208, a: 0}
-      key6: {r: 1, g: 0.4292453, b: 0.4292453, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.8207547, g: 0.15098791, b: 0.26974618, a: 1}
+      key1: {r: 0.8207547, g: 0.15098791, b: 0.26974618, a: 1}
+      key2: {r: 1, g: 1, b: 1, a: 1}
+      key3: {r: 1, g: 1, b: 1, a: 0}
+      key4: {r: 1, g: 0.9771088, b: 0.7877358, a: 0}
+      key5: {r: 1, g: 0.9156661, b: 0.7216981, a: 0}
+      key6: {r: 1, g: 0.695505, b: 0.5613208, a: 0}
+      key7: {r: 1, g: 0.4292453, b: 0.4292453, a: 0}
       ctime0: 0
-      ctime1: 6168
-      ctime2: 16384
-      ctime3: 31226
-      ctime4: 43176
-      ctime5: 57632
-      ctime6: 65535
-      ctime7: 0
-      atime0: 0
-      atime1: 65535
-      atime2: 0
+      ctime1: 65535
+      ctime2: 44525
+      ctime3: 16384
+      ctime4: 31226
+      ctime5: 43176
+      ctime6: 57632
+      ctime7: 65535
+      atime0: 13878
+      atime1: 15998
+      atime2: 19468
       atime3: 0
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_ColorSpace: 0
-      m_NumColorKeys: 7
-      m_NumAlphaKeys: 2
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
@@ -394,7 +385,7 @@ TrailRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.02
+  m_MinVertexDistance: 2
   m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
@@ -738,65 +729,56 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 3.8208501
-        outSlope: 3.8208501
+        time: 0.0027499795
+        value: 1
+        inSlope: -0.0788404
+        outSlope: -0.0788404
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 1
-      - serializedVersion: 3
-        time: 0.09482135
-        value: 0.40737522
-        inSlope: -0.9817772
-        outSlope: -0.9817772
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.19363593
+        outWeight: 0.15702249
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -0.000019237954
-        outSlope: -0.000019237954
+        inSlope: -0.29841822
+        outSlope: -0.29841822
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.13966483
+        inWeight: 0.18852028
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.7971698, g: 1, b: 0.99045503, a: 1}
-      key1: {r: 0.8443396, g: 0.99758667, b: 1, a: 1}
-      key2: {r: 1, g: 1, b: 1, a: 0}
-      key3: {r: 1, g: 0.9771088, b: 0.7877358, a: 0}
-      key4: {r: 1, g: 0.9156661, b: 0.7216981, a: 0}
-      key5: {r: 1, g: 0.695505, b: 0.5613208, a: 0}
-      key6: {r: 1, g: 0.4292453, b: 0.4292453, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.8207547, g: 0.15098791, b: 0.26974618, a: 1}
+      key1: {r: 0.8207547, g: 0.15098791, b: 0.26974618, a: 1}
+      key2: {r: 1, g: 1, b: 1, a: 1}
+      key3: {r: 1, g: 1, b: 1, a: 0}
+      key4: {r: 1, g: 0.9771088, b: 0.7877358, a: 0}
+      key5: {r: 1, g: 0.9156661, b: 0.7216981, a: 0}
+      key6: {r: 1, g: 0.695505, b: 0.5613208, a: 0}
+      key7: {r: 1, g: 0.4292453, b: 0.4292453, a: 0}
       ctime0: 0
-      ctime1: 6168
-      ctime2: 16384
-      ctime3: 31226
-      ctime4: 43176
-      ctime5: 57632
-      ctime6: 65535
-      ctime7: 0
-      atime0: 0
-      atime1: 65535
-      atime2: 0
+      ctime1: 65535
+      ctime2: 44525
+      ctime3: 16384
+      ctime4: 31226
+      ctime5: 43176
+      ctime6: 57632
+      ctime7: 65535
+      atime0: 13878
+      atime1: 15998
+      atime2: 19468
       atime3: 0
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_ColorSpace: 0
-      m_NumColorKeys: 7
-      m_NumAlphaKeys: 2
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
@@ -804,7 +786,7 @@ TrailRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.02
+  m_MinVertexDistance: 2
   m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
@@ -2020,7 +2002,7 @@ MonoBehaviour:
   stealthAcc: 9
   stealthLowAccTime: 2
   attackAccel: 8
-  attackSpeed: 30
+  attackSpeed: 20
   attackRadius: 5
   editorNote: Cutscene Variables
   fadeInTime: 1.7
@@ -3651,7 +3633,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.0026179885, w: 0.9999966}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9994002, y: 0.9998427, z: 1}
+  m_LocalScale: {x: 3.5, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 446398472568808147}
@@ -3688,7 +3670,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.019658366, y: 0.008206025}
+  m_Offset: {x: 0.015, y: 0.001}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3699,7 +3681,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.07468541, y: 0.48209774}
+  m_Size: {x: 0.07, y: 0.48}
   m_EdgeRadius: 0
 --- !u!114 &4376536874597662092
 MonoBehaviour:
