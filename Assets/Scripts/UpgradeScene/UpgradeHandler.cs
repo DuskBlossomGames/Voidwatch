@@ -4,11 +4,10 @@ using LevelSelect;
 using UnityEngine;
 using Scriptable_Objects.Upgrades;
 
+using static Static_Info.PlayerData;
 public class UpgradeHandler : MonoBehaviour
 {
-    public LevelSelectData levelSelectData; // gotta keep this loaded
     public FastDodgeCooldown defFastDodgeCooldown;
-    public Scriptable_Objects.PlayerData playerData;
 
     public List<UpgradeInstance> upgrades;
     public List<BaseComponent> components;
@@ -19,21 +18,21 @@ public class UpgradeHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerData.upgrades = new List<UpgradeInstance>();
-        if(true || playerData.upgrades.Count == 0)
+        PlayerDataInstance.Upgrades = new List<UpgradeInstance>();
+        if(true || PlayerDataInstance.Upgrades.Count == 0)
         {
-            playerData.upgrades.Clear();
+            PlayerDataInstance.Upgrades.Clear();
             var nui = new UpgradeInstance()
             {
                 upgrade = defFastDodgeCooldown,
                 enabled = false,
                 weaponID = null
             };
-            playerData.upgrades.Add(nui);
+            PlayerDataInstance.Upgrades.Add(nui);
         }
 
-        cTable.components = playerData.weapons;
-        uTable.upgrades = playerData.upgrades;
+        cTable.components = PlayerDataInstance.weapons;
+        uTable.upgrades = PlayerDataInstance.Upgrades;
 
     }
 }

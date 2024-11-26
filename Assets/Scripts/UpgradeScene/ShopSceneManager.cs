@@ -4,7 +4,10 @@ using LevelSelect;
 using UnityEngine;
 using UnityEngine.UI;
 using Scriptable_Objects.Upgrades;
+using Static_Info;
 
+using static Static_Info.PlayerData;
+using static Static_Info.MerchantData;
 public class ShopSceneManager : MonoBehaviour
 {
     public class Merchant
@@ -34,27 +37,24 @@ public class ShopSceneManager : MonoBehaviour
         public List<Good?> goods;
     }
 
-    public LevelSelectData levelSelectData; // gotta keep this loaded
-    public MerchantData data;
-    public Scriptable_Objects.PlayerData playerData;
     public GameObject selectIcon;
-    MerchantData.MerchantObj _shop;
+    MerchantObj _shop;
     public int cPos = 0;
     public int mPos = 0;
 
     private void Start()
     {
         selectIcon = transform.GetChild(0).GetChild(1).gameObject;
-        MerchantData.MerchantObj shop = new MerchantData.MerchantObj();
-        Debug.LogFormat("Shop is {0}",data.currentShopID);
-        Debug.LogFormat("Shops is {0}", data.Shops);
+        MerchantObj shop = new MerchantObj();
+        Debug.LogFormat("Shop is {0}",MerchantDataInstance.currentShopID);
+        Debug.LogFormat("Shops is {0}", MerchantDataInstance.Shops);
 
-        bool succ = data.Shops.TryGetValue(data.currentShopID, out shop);
+        bool succ = MerchantDataInstance.Shops.TryGetValue(MerchantDataInstance.currentShopID, out shop);
         if (!succ)
         {
             shop = CreateNewShop();
             Debug.Log("Created New Shop");
-            data.Shops.Add(data.currentShopID, shop);
+            MerchantDataInstance.Shops.Add(MerchantDataInstance.currentShopID, shop);
         }
 
 
@@ -65,7 +65,7 @@ public class ShopSceneManager : MonoBehaviour
     public void Update()
     {
         var currMerchant = _shop.merchants[(int)_shop.merchantID];
-        transform.GetChild(2).GetChild(2).GetComponent<Text>().text = playerData.Scrap.ToString();
+        transform.GetChild(2).GetChild(2).GetComponent<Text>().text = PlayerDataInstance.Scrap.ToString();
         mPos = currMerchant.goods.Count - 1;
         if (Input.GetKeyDown("s"))
         {
@@ -78,19 +78,19 @@ public class ShopSceneManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             var item = currMerchant.goods[cPos];
-            if (item.HasValue && item?.currentPrice <= playerData.Scrap)
+            if (item.HasValue && item?.currentPrice <= PlayerDataInstance.Scrap)
             {
-                playerData.Scrap -= (float) item?.currentPrice;
+                PlayerDataInstance.Scrap -= (float) item?.currentPrice;
                 switch (item?.uos)
                 {
                     case Merchant.Good.GoodType.Service:
                         item?.serviceFunc.Invoke(this);
                         break;
                     case Merchant.Good.GoodType.Upgrade:
-                        playerData.upgrades.Add(new UpgradeInstance(item?.serviceUpgrade));
+                        PlayerDataInstance.Upgrades.Add(new UpgradeInstance(item?.serviceUpgrade));
                         break;
                     case Merchant.Good.GoodType.Weapon:
-                        playerData.weapons.Add(item?.serviceWeapon);
+                        PlayerDataInstance.weapons.Add(item?.serviceWeapon);
                         break;
                 }
                 currMerchant.goods[cPos] = null;
@@ -152,9 +152,9 @@ public class ShopSceneManager : MonoBehaviour
     }
 
 
-    MerchantData.MerchantObj CreateNewShop()
+    MerchantObj CreateNewShop()
     {
-        MerchantData.MerchantObj ret = new MerchantData.MerchantObj();
+        MerchantObj ret = new MerchantObj();
         ret.merchants = new List<Merchant>();
         for (int i = 0; i < 5; i++)
         {
@@ -199,7 +199,7 @@ public class ShopSceneManager : MonoBehaviour
     {
         public void Invoke(ShopSceneManager caller)
         {
-            caller.playerData.Health = caller.playerData.playerMaxHealth;
+            PlayerDataInstance.Health = PlayerDataInstance.playerMaxHealth;
         }
     }
 

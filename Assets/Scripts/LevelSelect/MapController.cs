@@ -1,11 +1,11 @@
 using UnityEngine;
 using Util;
 
+using static Static_Info.LevelSelectData;
 namespace LevelSelect
 {
     public class MapController : MonoBehaviour
     {
-        public LevelSelectData data;
         public new Camera camera;
         public float camSizeDragRatio;
         public float scrollSpeed, minCamSize, maxCamSize;
@@ -19,7 +19,7 @@ namespace LevelSelect
         
         public void Instantiate()
         {
-            foreach (var level in data.Levels)
+            foreach (var level in LevelSelectDataInstance.Levels)
             {
                 _minScroll = Vector3.Min(level.WorldPosition, _minScroll);
                 _maxScroll = Vector3.Max(level.WorldPosition, _maxScroll);
@@ -27,7 +27,7 @@ namespace LevelSelect
 
             var camTransform = camera.transform;
             
-            var pos = data.Levels[data.CurrentPlanet].WorldPosition;
+            var pos = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].WorldPosition;
             pos.z = camTransform.position.z;
 
             camTransform.position = pos;
@@ -38,7 +38,7 @@ namespace LevelSelect
 
         private void DrawPathToPlanet(Vector3? planet)
         {
-            var current = data.Levels[data.CurrentPlanet];
+            var current = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 
             foreach (var line in GetComponentsInChildren<LineRenderer>())
             {
@@ -48,7 +48,7 @@ namespace LevelSelect
             if (!planet.HasValue || current.WorldPosition == planet.Value) return;
 
             // TODO: undiscovered paths
-            var path = MapUtil.GetShortestPath(data.Levels, current, planet.Value, data.VisitedPlanets);
+            var path = MapUtil.GetShortestPath(LevelSelectDataInstance.Levels, current, planet.Value, LevelSelectDataInstance.VisitedPlanets);
             for (var i = 0; i < path.Length-1; i++)
             {
                 var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();

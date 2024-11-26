@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Util;
 
+using static Static_Info.PlayerData;
 public class ScrapController : MonoBehaviour
 {
     public int value = 1;
-    public Scriptable_Objects.PlayerData playerData;
 
     CustomRigidbody2D _crb;
     GameObject _player;
@@ -46,7 +46,7 @@ public class ScrapController : MonoBehaviour
 
         if(4 * _crb.velocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude)
         {
-            playerData.Scrap += value;
+            PlayerDataInstance.Scrap += value;
             Destroy(gameObject);
         }
     }

@@ -1,15 +1,15 @@
+using Static_Info;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
 
-// TODO: revisit what happens when one switching directly from one to another
+using static Static_Info.LevelSelectData;
 namespace LevelSelect
 {
     public class LevelInfoController : MonoBehaviour
     {
         public Selector selector;
-        public LevelSelectData data;
         
         public float secondsToSlide;
         
@@ -67,21 +67,21 @@ namespace LevelSelect
                 }
 
                 LevelData level = null;
-                for (var i = 0; i < data.Levels.Length; i++)
+                for (var i = 0; i < LevelSelectDataInstance.Levels.Length; i++)
                 {
-                    if (data.Levels[i].WorldPosition != planet) continue;
+                    if (LevelSelectDataInstance.Levels[i].WorldPosition != planet) continue;
 
-                    level = data.Levels[i];
+                    level = LevelSelectDataInstance.Levels[i];
                     _selection = i;
                     break;
                 }
                 
-                _side = data.Levels[_selection!.Value].WorldPosition.x > camera.transform.position.x ? -1 : 1;
+                _side = LevelSelectDataInstance.Levels[_selection!.Value].WorldPosition.x > camera.transform.position.x ? -1 : 1;
                 if (!_previousSelection.HasValue) _prevSide = _side;
 
                 planetName.GetComponent<TextMeshPro>().text = level!.Name;
-                eliteOverlay.gameObject.SetActive(level!.Type == LevelType.Elite && data.VisitedPlanets.Contains(_selection.Value));
-                planetSprite.GetComponent<SpriteRenderer>().sprite = data.VisitedPlanets.Contains(_selection.Value) ? level!.Sprite : level!.HiddenSprite;
+                eliteOverlay.gameObject.SetActive(level!.Type == LevelType.Elite && LevelSelectDataInstance.VisitedPlanets.Contains(_selection.Value));
+                planetSprite.GetComponent<SpriteRenderer>().sprite = LevelSelectDataInstance.VisitedPlanets.Contains(_selection.Value) ? level!.Sprite : level!.HiddenSprite;
                 // TODO: this can somehow get stuck sometimes... ?
                 clickInstructions.gameObject.SetActive(
                     planetSprite.GetComponent<ExpandOnHover>().enabled = 
@@ -91,8 +91,8 @@ namespace LevelSelect
                 loreText.GetComponent<TextMeshPro>().text = level!.LoreText;
 
                 // assumes 5 indicators that go from empty to half to full
-                var difficulty = (int) (level!.DifficultyScore / data.MaxDifficultyScore * 10) / 2f;
-                Debug.Log("score: " + level!.DifficultyScore + " / " + data.MaxDifficultyScore+" ("+difficulty+")");
+                var difficulty = (int) (level!.DifficultyScore / LevelSelectDataInstance.MaxDifficultyScore * 10) / 2f;
+                Debug.Log("score: " + level!.DifficultyScore + " / " + LevelSelectDataInstance.MaxDifficultyScore+" ("+difficulty+")");
                 var loot = level!.Loot / 4 / 2f;
 
                 for (var i = 0; i < 5; i++)
@@ -111,8 +111,8 @@ namespace LevelSelect
             {
                 if (!_selection.HasValue) return;
                 
-                data.CurrentPlanet = _selection!.Value;
-                SceneManager.LoadScene(data.Levels[data.CurrentPlanet].IsBoss ? "LevelBoss" : data.Levels[data.CurrentPlanet].Type == LevelType.SpaceStation ? "Shop" : "LevelPlay");
+                LevelSelectDataInstance.CurrentPlanet = _selection!.Value;
+                SceneManager.LoadScene(LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].IsBoss ? "LevelBoss" : LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].Type == LevelType.SpaceStation ? "Shop" : "LevelPlay");
             };
         }
 

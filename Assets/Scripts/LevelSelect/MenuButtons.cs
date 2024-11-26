@@ -1,21 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Static_Info;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using static Static_Info.PlayerData;
+using static Static_Info.MerchantData;
+using static Static_Info.LevelSelectData;
 public class MenuButtons : MonoBehaviour
 {
-    public MerchantData merchantData;
-    public Scriptable_Objects.PlayerData playerData;
     public void Restart()
     {
         Debug.Log("Restart");
-        playerData.Scrap = 0;
-        playerData.Health = playerData.playerMaxHealth;
-        merchantData.currentShopID = 0;
-        merchantData.Shops = new SerializedDict<uint, MerchantData.MerchantObj>();
-        playerData.Health = playerData.playerMaxHealth;
-        SceneManager.LoadScene("LevelSelect");
+        Destroy(StaticInfoHolder.instance.gameObject); // reset static info
+        SceneManager.LoadScene("Boot"); // return to boot
     }
 
     public void Quit()

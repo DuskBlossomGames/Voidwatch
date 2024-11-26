@@ -6,7 +6,6 @@ namespace Player
     public class Shoot : MonoBehaviour
     {
         public TextMeshProUGUI bulletText;
-        public Scriptable_Objects.PlayerData playerData;
 
         PlayerGunHandler _gun;
         private void Start()

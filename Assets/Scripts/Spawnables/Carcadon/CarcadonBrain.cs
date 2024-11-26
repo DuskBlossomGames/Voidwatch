@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LevelSelect;
 using Player;
+using Static_Info;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;

@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices;
-using LevelSelect;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-namespace LevelSelect
+namespace Static_Info
 {
     public class LevelType
     {
@@ -49,8 +46,10 @@ namespace LevelSelect
         public bool IsBoss;
     }
 
-    public class LevelSelectData : ScriptableObject
+    public class LevelSelectData : MonoBehaviour
     {
+        public static LevelSelectData LevelSelectDataInstance => StaticInfoHolder.instance.GetCachedComponent<LevelSelectData>();
+        
         public float baseDifficulty;
         public float gameDifficultyModifier;
         public float levelModifier;
@@ -127,7 +126,7 @@ namespace LevelSelect
             }
         }
 
-        [NonSerialized] private readonly List<int> _visitedPlanets = new();
+        private readonly List<int> _visitedPlanets = new();
         public ReadOnlyCollection<int> VisitedPlanets => new(_visitedPlanets);
 
         public LevelData[] Levels { get; private set; }
@@ -140,13 +139,6 @@ namespace LevelSelect
 
             _visitedPlanets.Clear();
             CurrentPlanet = 0;
-        }
-
-        public void ClearData()
-        {
-            _currentPlanet = -1;
-            Levels = null;
-            Connections = null;
         }
     }
 }

@@ -2,25 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Scriptable_Objects;
+using Static_Info;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
 using Util;
 using Random = UnityEngine.Random;
+using static Static_Info.LevelSelectData;
 
 namespace LevelSelect
 {
     public class GenerateMap : MonoBehaviour
     {
-        // has to have PlayerData so that it is initialized
-        public PlayerData playerData;
-        public BulletInfo bulletData; // gotta keep it loaded
-        public MerchantData merchantData; // gotta keep it loaded
-
         public Material lineMaterial;
         public GameObject planetPrefab;
         public AssetLabelReference spriteLabel;
-        public LevelSelectData data;
         public Sprite hiddenSprite, spaceStationSprite, entranceSprite;
         public MiniPlayerController playerMini;
         public MapController mapController;
@@ -37,7 +33,7 @@ namespace LevelSelect
             if (Input.GetKeyUp(KeyCode.LeftBracket))
             {
                 for (var i = 1; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
-                data.RevealAll();
+                LevelSelectDataInstance.RevealAll();
                 RenderGalaxy(true);
             }
         }
@@ -47,8 +43,8 @@ namespace LevelSelect
             Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
             {
                 // only re-generate if it doesn't already exist
-                Debug.LogFormat("CurrentPlanet = {0}", data.CurrentPlanet);
-                if (data.CurrentPlanet == -1) GenerateGalaxy(handle.Result);
+                Debug.LogFormat("CurrentPlanet = {0}", LevelSelectDataInstance.CurrentPlanet);
+                if (LevelSelectDataInstance.CurrentPlanet == -1) GenerateGalaxy(handle.Result);
 
                 playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 1.5f);
                 RenderGalaxy();
@@ -199,16 +195,16 @@ namespace LevelSelect
                 levels[eliteIdx].Type = LevelType.Elite;
             }
 
-            data.PopulateData(levels.ToArray(), connections.ToArray());
+            LevelSelectDataInstance.PopulateData(levels.ToArray(), connections.ToArray());
         }
 
         private void RenderGalaxy(bool revealAll = false)
         {
             var revealed = new HashSet<int>();
-            foreach (var connection in data.Connections)
+            foreach (var connection in LevelSelectDataInstance.Connections)
             {
-                var reveal = revealAll || data.VisitedPlanets.Contains(connection.Item1) ||
-                    data.VisitedPlanets.Contains(connection.Item2);
+                var reveal = revealAll || LevelSelectDataInstance.VisitedPlanets.Contains(connection.Item1) ||
+                    LevelSelectDataInstance.VisitedPlanets.Contains(connection.Item2);
 
                 if (reveal)
                 {
@@ -223,11 +219,11 @@ namespace LevelSelect
                 line.startColor = line.endColor = reveal ? Color.red : new Color(0.2f, 0.2f, 0.2f);
                 line.startWidth = line.endWidth = 3f;
 
-                line.SetPosition(0, data.Levels[connection.Item1].WorldPosition);
-                line.SetPosition(1, data.Levels[connection.Item2].WorldPosition);
+                line.SetPosition(0, LevelSelectDataInstance.Levels[connection.Item1].WorldPosition);
+                line.SetPosition(1, LevelSelectDataInstance.Levels[connection.Item2].WorldPosition);
             }
 
-            foreach (var (level, idx) in data.Levels.Select((l,i) => (l,i)))
+            foreach (var (level, idx) in LevelSelectDataInstance.Levels.Select((l,i) => (l,i)))
             {
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
                 planetObj.SetActive(true);
@@ -237,7 +233,7 @@ namespace LevelSelect
                 
                 if (revealed.Contains(idx))
                 {
-                    if (!data.VisitedPlanets.Contains(idx)) planetObj.GetComponent<Selectable>().clickable = true;
+                    if (!LevelSelectDataInstance.VisitedPlanets.Contains(idx)) planetObj.GetComponent<Selectable>().clickable = true;
                     if (level.Type == LevelType.Elite) planetObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
                 if (level.IsBoss) planetObj.transform.GetChild(1).gameObject.SetActive(true);
