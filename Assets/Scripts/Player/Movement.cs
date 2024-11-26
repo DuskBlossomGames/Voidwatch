@@ -169,6 +169,10 @@ namespace Player
                 _acceleration = 0;
             }
 
+            if (velocity.sqrMagnitude > speedLimit * speedLimit)
+            {
+                velocity *= Mathf.Pow(speedLimit * speedLimit / velocity.sqrMagnitude, Time.fixedDeltaTime);
+            }
             //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.freezeRotation), Mathf.Cos(Mathf.Deg2Rad * rigid.freezeRotation));
 
             velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
