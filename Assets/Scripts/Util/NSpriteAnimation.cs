@@ -33,8 +33,13 @@ public class NSpriteAnimation : MonoBehaviour
     int frame = 0;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start() { Init(); }
+
+    private bool _inited;
+    void Init()
     {
+        _inited = true;
+        
         sRenderer = GetComponent<SpriteRenderer>();
         animationStates = new Dictionary<string, Sprite[]>();
         for (int x = 0; x < states.Length; x++)
@@ -46,7 +51,9 @@ public class NSpriteAnimation : MonoBehaviour
 
     }
 
-    public void SwapState(string stateName){
+    public void SwapState(string stateName)
+    {
+        if (!_inited) Init();
         if(!animationStates.TryGetValue(stateName, out Sprite[] newFrames))
         {
             throw new System.Exception("Multiple Animator: There isn't a state named \"" + stateName + "\" are you sure you spelt it correctly?");

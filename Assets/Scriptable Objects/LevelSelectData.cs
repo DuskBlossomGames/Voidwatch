@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using LevelSelect;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -61,7 +62,17 @@ namespace LevelSelect
         public float MaxDifficultyScore => baseDifficulty +
                                            levelModifier * (Levels.Length - 1) + 2 * randomModifier;
 
+        public static readonly int ELITE_WAVES = 3;
+        private float EliteDifficultyBonus => minBudgetPerWave.Select((b, i) => i < ELITE_WAVES ? b : 0).Sum();
 
+
+        // TODO: temporary, debug
+        public void RevealAll()
+        {
+            List<int> old = new(_visitedPlanets);
+            for (var i = 0; i < Levels.Length; i++) CurrentPlanet = i;
+            _visitedPlanets.Clear(); _visitedPlanets.AddRange(old);
+        }
         [NonSerialized] private int _currentPlanet = -1;
         public int CurrentPlanet
         {
@@ -79,7 +90,10 @@ namespace LevelSelect
 
                     var difficultyScore = level.Type == LevelType.Boss ? MaxDifficultyScore :
                         baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 2) * randomModifier;
-                    var difficultyBudget = (int) (gameDifficultyModifier * (difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/));
+                    
+                    var difficultyBudget = (int) (gameDifficultyModifier * (difficultyScore +
+                                                                            (level.Type == LevelType.Elite ? EliteDifficultyBonus : 0) +
+                                                                            0/*TODO: galaxyNumber * galaxyModifier*/));
                     List<int> waves = new();
 
                     // start with as many waves as possible given min budget
@@ -93,6 +107,8 @@ namespace LevelSelect
                         }
 
                         waves.Add(budget);
+
+                        if (level.Type == LevelType.Elite && waves.Count == ELITE_WAVES) break;
                     }
                     // distribute the rest randomly
                     while (difficultyBudget > 0)

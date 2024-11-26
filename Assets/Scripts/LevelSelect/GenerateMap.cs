@@ -14,6 +14,7 @@ namespace LevelSelect
     {
         // has to have PlayerData so that it is initialized
         public PlayerData playerData;
+        public BulletInfo bulletData; // gotta keep it loaded
         public MerchantData merchantData; // gotta keep it loaded
 
         public Material lineMaterial;
@@ -36,6 +37,7 @@ namespace LevelSelect
             if (Input.GetKeyUp(KeyCode.LeftBracket))
             {
                 for (var i = 1; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
+                data.RevealAll();
                 RenderGalaxy(true);
             }
         }

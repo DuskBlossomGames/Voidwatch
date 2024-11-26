@@ -20,7 +20,7 @@ namespace Player
             {
                 _gun.Shoot(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
-            bulletText.text = string.Format("Clips: {0}/{1}\nAmmo: {2}/{3}\nStatus: {4}\n{5} S.C.R.A.P.", _gun.CurrClipCount(), _gun.clipCount, _gun.CurrClipCap(), _gun.clipCap,_gun.status,playerData.Scrap);
+            //bulletText.text = string.Format("Clips: {0}/{1}\nAmmo: {2}/{3}\nStatus: {4}\n{5} S.C.R.A.P.", _gun.CurrClipCount(), _gun.clipCount, _gun.CurrClipCap(), _gun.clipCap,_gun.status,playerData.Scrap);
         }
     }
 }

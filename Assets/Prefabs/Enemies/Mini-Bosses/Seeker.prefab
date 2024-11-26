@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 7365739571443271180}
   - component: {fileID: 7999954347094555490}
   - component: {fileID: 8186915714191357486}
-  - component: {fileID: 384547335402469024}
   - component: {fileID: 206434496878846055}
   - component: {fileID: 8306229153065358870}
   - component: {fileID: 7095550594125409051}
   - component: {fileID: 3929583644001541024}
+  - component: {fileID: 1198270764218241165}
   m_Layer: 8
   m_Name: Seeker
   m_TagString: Untagged
@@ -205,21 +205,6 @@ MonoBehaviour:
   loop: 1
   destroyWhenDone: 0
   timePerFrame: 0
---- !u!114 &384547335402469024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7576292861332806775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cost: 25
-  ScrapCount: 17
-  ScrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
 --- !u!114 &206434496878846055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,3 +323,16 @@ MonoBehaviour:
   size: 5
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
+--- !u!114 &1198270764218241165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576292861332806775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf4e2507712492a937ec36a4c02ee70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpawner: {fileID: 0}

@@ -247,11 +247,11 @@ namespace Bosses.Worm
                 {
                     switch (rand)
                     {
-                        case < .45f:
+                        case < .15f:
                             /*Do burrow*/
                             actionGoal = ActionGoal.Burrow;
                             _actionUtilTimer.Value = Random.Range(8f, 12f);
-                            exportals = Random.Range(2, 5);
+                            exportals = Random.Range(1, 3);
                             SpawnPortal();
                             break;
                         case < .50f:
