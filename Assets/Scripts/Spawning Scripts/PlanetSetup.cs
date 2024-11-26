@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlanetSetup : MonoBehaviour
 {
+    public MerchantData merchantData; // gotta keep it loaded
+    
     public LevelSelectData data;
     public GameObject forceField;
 

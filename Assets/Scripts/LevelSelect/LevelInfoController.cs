@@ -87,7 +87,7 @@ namespace LevelSelect
                     planetSprite.GetComponent<ExpandOnHover>().enabled = 
                         planetSprite.GetComponent<CircleCollider2D>().enabled = 
                             level!.Type != LevelType.Entrance);
-                levelDescription.GetComponent<TextMeshPro>().text = level!.Type.Description;
+                levelDescription.GetComponent<TextMeshPro>().text = (level!.IsBoss ? LevelType.Boss : level!.Type).Description;
                 loreText.GetComponent<TextMeshPro>().text = level!.LoreText;
 
                 // assumes 5 indicators that go from empty to half to full
@@ -112,7 +112,7 @@ namespace LevelSelect
                 if (!_selection.HasValue) return;
                 
                 data.CurrentPlanet = _selection!.Value;
-                SceneManager.LoadScene(data.Levels[data.CurrentPlanet].Type == LevelType.SpaceStation ? "Shop" : "LevelPlay");
+                SceneManager.LoadScene(data.Levels[data.CurrentPlanet].IsBoss ? "LevelBoss" : data.Levels[data.CurrentPlanet].Type == LevelType.SpaceStation ? "Shop" : "LevelPlay");
             };
         }
 

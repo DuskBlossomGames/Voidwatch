@@ -4,6 +4,7 @@ using System.Linq;
 using Scriptable_Objects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Serialization;
 using Util;
 using Random = UnityEngine.Random;
 
@@ -13,20 +14,31 @@ namespace LevelSelect
     {
         // has to have PlayerData so that it is initialized
         public PlayerData playerData;
+        public MerchantData merchantData; // gotta keep it loaded
 
         public Material lineMaterial;
         public GameObject planetPrefab;
         public AssetLabelReference spriteLabel;
         public LevelSelectData data;
-        public Sprite hiddenSprite, spaceStationSprite, bossSprite, entranceSprite;
+        public Sprite hiddenSprite, spaceStationSprite, entranceSprite;
         public MiniPlayerController playerMini;
         public MapController mapController;
 
         public int mapGridSize;
         public int minLevels, avgLevels, expScale;
         public int maxPlanetConnections;
-        public int minFurthestPlanetDist;
+        public int minBossStartDist;
         public int minElites, maxElites;
+        public int minEligibleBosses;
+        
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.LeftBracket))
+            {
+                for (var i = 1; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
+                RenderGalaxy(true);
+            }
+        }
 
         private void Start()
         {
@@ -60,7 +72,6 @@ namespace LevelSelect
                 } while (usedGridPositions.Contains(position));
                 usedGridPositions.Add(position);
 
-                // TODO: every planet is shown as hidden (without connections), once a planet does have a connection it is unhidden
                 levels.Add(new LevelData
                 {
                     Type = levels.Count == 0 ? LevelType.Entrance : LevelType.Normal,
@@ -150,30 +161,29 @@ namespace LevelSelect
             }
             
             // make the furthest planet be the boss
-            var furthestPlanet = 0;
-            var furthestPlanetDist = 0;
+            var eligibleBosses = new List<int>();
             for (var i = 1; i < levels.Count; i++)
             {
                 var dist = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[0].WorldPosition)?.Length ?? 0;
 
-                if (dist > furthestPlanetDist)
-                {
-                    furthestPlanetDist = dist;
-                    furthestPlanet = i;
-                }
+                if (dist >= minBossStartDist) eligibleBosses.Add(i);
             }
 
-            if (furthestPlanetDist < minFurthestPlanetDist)
+            if (eligibleBosses.Count < minEligibleBosses)
             {
                 GenerateGalaxy(sprites);
                 return;
             }
 
-            levels[furthestPlanet].Type = LevelType.Boss;
-            levels[furthestPlanet].Sprite = bossSprite;
+            var bossPlanet = eligibleBosses[Random.Range(0, eligibleBosses.Count)];
+            levels[bossPlanet].IsBoss = true;
 
-            var stationIdx = Random.Range(1, levels.Count-1);
-            if (stationIdx >= furthestPlanet) stationIdx++;
+            int stationIdx;
+            do
+            {
+                stationIdx = Random.Range(1, levels.Count - 1);
+                if (stationIdx >= bossPlanet) stationIdx++;
+            } while (levels[stationIdx].Connections.Contains(0));
 
             levels[stationIdx].Type = LevelType.SpaceStation;
             levels[stationIdx].Sprite = spaceStationSprite;
@@ -181,8 +191,8 @@ namespace LevelSelect
             for (var i = 0; i < Random.Range(minElites, maxElites); i++)
             {
                 var eliteIdx = Random.Range(1, levels.Count-2);
-                if (eliteIdx >= Mathf.Min(stationIdx, furthestPlanet)) {eliteIdx++;}
-                if (eliteIdx >= Mathf.Max(stationIdx, furthestPlanet)) eliteIdx++;
+                if (eliteIdx >= Mathf.Min(stationIdx, bossPlanet)) eliteIdx++;
+                if (eliteIdx >= Mathf.Max(stationIdx, bossPlanet)) eliteIdx++;
 
                 levels[eliteIdx].Type = LevelType.Elite;
             }
@@ -190,27 +200,29 @@ namespace LevelSelect
             data.PopulateData(levels.ToArray(), connections.ToArray());
         }
 
-        private void RenderGalaxy()
+        private void RenderGalaxy(bool revealAll = false)
         {
             var revealed = new HashSet<int>();
             foreach (var connection in data.Connections)
             {
-                if (!data.VisitedPlanets.Contains(connection.Item1) &&
-                    !data.VisitedPlanets.Contains(connection.Item2)) continue;
+                var reveal = revealAll || data.VisitedPlanets.Contains(connection.Item1) ||
+                    data.VisitedPlanets.Contains(connection.Item2);
 
-                revealed.Add(connection.Item1);
-                revealed.Add(connection.Item2);
+                if (reveal)
+                {
+                    revealed.Add(connection.Item1);
+                    revealed.Add(connection.Item2);
+                }
 
                 var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();
                 line.transform.SetParent(transform);
 
                 line.material = lineMaterial;
-                line.startColor = line.endColor = Color.red;
+                line.startColor = line.endColor = reveal ? Color.red : new Color(0.2f, 0.2f, 0.2f);
                 line.startWidth = line.endWidth = 3f;
 
                 line.SetPosition(0, data.Levels[connection.Item1].WorldPosition);
                 line.SetPosition(1, data.Levels[connection.Item2].WorldPosition);
-
             }
 
             foreach (var (level, idx) in data.Levels.Select((l,i) => (l,i)))
@@ -226,6 +238,7 @@ namespace LevelSelect
                     if (!data.VisitedPlanets.Contains(idx)) planetObj.GetComponent<Selectable>().clickable = true;
                     if (level.Type == LevelType.Elite) planetObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
+                if (level.IsBoss) planetObj.transform.GetChild(1).gameObject.SetActive(true);
             }
         }
     }
