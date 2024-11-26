@@ -1679,7 +1679,6 @@ GameObject:
   - component: {fileID: 2114887070369948202}
   - component: {fileID: 7690703784297350714}
   - component: {fileID: 3927662753016850058}
-  - component: {fileID: 83327947508867059}
   - component: {fileID: 1255680601979146769}
   - component: {fileID: 6272981081284203452}
   - component: {fileID: -5548867977713206262}
@@ -1874,36 +1873,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7d822bc273fdd479601481e939a2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &83327947508867059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4353281618518814614}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fd8e6567b3e62d45944c1a741be60b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6569384808679381653, guid: 116573cd1e8558d468ec2a5d067e03cd, type: 3}
-  playRadius: 75
-  gravitySource: {fileID: 0}
-  clipCount: 1
-  clipCap: 3
-  bulletsPerShot: 3
-  bulletsPerShotVarience: 0
-  reloadTime: 1
-  refillTime: 0
-  shotForce: 2000
-  forceVarience: 100
-  lateralSeperation: 0
-  verticalSeperation: 0
-  misfireChance: 0.05
-  repeats: 0
-  repeatSeperation: 0.05
-  dmgMod: 40
-  status: 
 --- !u!61 &1255680601979146769
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2006,6 +1975,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3823aea91abb437dbafa5f07a0eb8f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  texture: {fileID: 2800000, guid: 56d5e5933486345bab95fca6a0a7d972, type: 3}
+  mouthTimeToOpen: 0.6
   stealthOpacity: 0.15
   stackedStealthOpacity: 0.05
   opacityTime: 0.6
@@ -2033,13 +2004,14 @@ MonoBehaviour:
   timeBetweenPasses: 1.3
   distAboveScreen: 5
   timeBeforeExpand: 0.8
-  timeBeforeReveal: 2.8
+  timeBeforeReveal: 2.35
+  timeBeforeUnfurl: 3.5
   finalDistAbovePlayer: 12
-  camExpandTime: 4
+  camExpandTime: 4.5
   camExpandAmt: 10
   camMoveAmt: 5
   pauseTime: 0.8
-  headstartTime: 2
+  headstartTime: 5.5
 --- !u!114 &-9101354916200461371
 MonoBehaviour:
   m_ObjectHideFlags: 0

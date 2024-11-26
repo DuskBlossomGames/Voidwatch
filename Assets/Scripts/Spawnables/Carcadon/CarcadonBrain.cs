@@ -14,6 +14,9 @@ namespace Spawnables.Carcadon
 {
     public class CarcadonBrain : MonoBehaviour
     {
+        public Texture2D texture;
+        public float mouthTimeToOpen;
+        
         public float stealthOpacity, stackedStealthOpacity;
         public float opacityTime;
         public float accel, maxSpeed;
@@ -38,12 +41,27 @@ namespace Spawnables.Carcadon
         private float _currSpeed;
         private Timer _opacityTimer = new();
 
+        private Sprite[] _mouthSprites;
+        private int _numMouthFrames;
+        private int _mouthDirection; // 1 = open, -1 = close
+        private float _mouthProgress;
+        private SpriteRenderer _mouthSr;
+
         private CustomRigidbody2D _player;
 
         private float _maxHealth;
         private float _forceFieldRadius;
         private void Start()
         {
+            _mouthSr = GetComponent<SpriteRenderer>();
+            _numMouthFrames = texture.width / texture.height;
+            _mouthSprites = new Sprite[_numMouthFrames];
+            for (var i = 0; i < _numMouthFrames; i++)
+            {
+                _mouthSprites[i] = Sprite.Create(texture, new Rect(i*texture.height, 0, texture.height, texture.height), new Vector2(0.5f, 0.5f), texture.height);
+            }
+            _mouthProgress = _numMouthFrames;
+            
             _maxHealth = GetComponent<EnemyDamageable>().maxHealth;
             
             _opacityTimer.Value = opacityTime;
@@ -136,6 +154,7 @@ namespace Spawnables.Carcadon
             
             transform.rotation = Quaternion.Lerp(transform.rotation, UtilFuncs.RotFromNorm(_rb.velocity), 5 * Time.deltaTime);
 
+            // opacity
             if (!_stealth && _opacityDir == 0)
             {
                 if (((Vector2)transform.position).magnitude < _forceFieldRadius)
@@ -160,6 +179,20 @@ namespace Spawnables.Carcadon
                     _opacityDir = 0;
                 }
             }
+            
+            // mouth
+            if (_mouthDirection != 0)
+            {
+                _mouthProgress += _mouthDirection * Time.deltaTime * _numMouthFrames/mouthTimeToOpen;
+            
+                if (_mouthProgress <= 0 || _mouthProgress >= _numMouthFrames)
+                {
+                    _mouthProgress = Mathf.Clamp(_mouthProgress, 0, _numMouthFrames);
+                    _mouthDirection = 0;
+                }
+
+                _mouthSr.sprite = _mouthSprites[_mouthDirection != -1 ? (int)_mouthProgress : Mathf.CeilToInt(_mouthProgress - 1)];
+            }
         }
 
         public void TakeDamage(float oldHealth, float newHealth)
@@ -181,7 +214,7 @@ namespace Spawnables.Carcadon
         {
             if (_stealth == stealth) return;
             _stealth = stealth;
-            _opacityDir = stealth ? -1 : 1;
+            _mouthDirection = _opacityDir = stealth ? -1 : 1;
             
             foreach (var ac in _armControllers)
             {
@@ -198,7 +231,7 @@ namespace Spawnables.Carcadon
         public float timeBetweenPasses;
         public float distAboveScreen;
         public float timeBeforeExpand;
-        public float timeBeforeReveal;
+        public float timeBeforeReveal, timeBeforeUnfurl;
         public float finalDistAbovePlayer;
         public float camExpandTime, camExpandAmt, camMoveAmt;
         public float pauseTime;
@@ -233,6 +266,7 @@ namespace Spawnables.Carcadon
             }
 
             // set up carcadon
+            _mouthSr.sprite = _mouthSprites[0];
             foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, stealthOpacity);
             foreach (var sr in _stackedSpriteRenderers) sr.color = new Color(1, 1, 1, stackedStealthOpacity);
             foreach (var ac in _armControllers)
@@ -297,19 +331,30 @@ namespace Spawnables.Carcadon
             var camOrigPos = cam.transform.position.x;
             var camTargPos = camOrigPos + 2*camDistAbovePlayer + camMoveAmt;
             var origSize = cam.orthographicSize;
-            var revealed = false;
+            float mouthProgress = 0;
+            var unfurled = false;
             for (float t = 0; t < camExpandTime; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
                 if (t >= timeBeforeReveal)
                 {
-                    if (!revealed)
-                    {
-                        revealed = true;
-                        foreach (var ac in _armControllers) ac.FoldOpen();
-                    }
                     foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-(t-timeBeforeReveal)/opacityTime) * (1-stealthOpacity));
                     foreach (var sr in _stackedSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-(t-timeBeforeReveal)/opacityTime) * (1-stackedStealthOpacity));
+                }
+
+                if (t >= timeBeforeUnfurl)
+                {
+                    if (!unfurled)
+                    {
+                        unfurled = true;
+                        foreach (var ac in _armControllers) ac.FoldOpen();
+                    }
+
+                    if (mouthProgress < _numMouthFrames)
+                    {
+                        mouthProgress += Time.fixedDeltaTime * _numMouthFrames/mouthTimeToOpen;
+                        _mouthSr.sprite = _mouthSprites[Mathf.Min((int)mouthProgress, _numMouthFrames-1)];
+                    }
                 }
                 transform.position = new Vector3(Mathf.SmoothStep(origPos, targPos, t/camExpandTime),
                     transform.position.y, transform.position.z);
