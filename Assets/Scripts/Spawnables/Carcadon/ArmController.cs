@@ -34,11 +34,11 @@ namespace Spawnables.Carcadon
         private GameObject _player;
         public GameObject Player
         {
-            get => _player;
             set
             {
                 _player = value;
-                if (hasAttack) GetComponentInChildren<ClawDamage>().Player = value.GetComponent<PlayerDamageable>();
+                var cd = GetComponentInChildren<ClawDamage>();
+                if (cd != null) cd.Player = value.GetComponent<PlayerDamageable>();
             }
         }
         
