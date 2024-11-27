@@ -242,7 +242,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 50de81a97a800614ca510573f38cb722, type: 3}
+  m_Sprite: {fileID: -810062340, guid: cde6125cc0d214d11a087a64bebe0a9f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -348,7 +348,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletText: {fileID: 0}
-  playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
 --- !u!61 &5470078729422443169
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -385,7 +384,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -443,7 +442,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   bodyDmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
-  playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
   godmode: 0
 --- !u!114 &1428599344170491721
 MonoBehaviour:
@@ -537,7 +535,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243, type: 3}
   playRadius: 75
   gravitySource: {fileID: 0}
-  gunInfo: {fileID: 11400000, guid: 36c6b0b41f54690448eb1a5c0b0970b8, type: 2}
   status: 
 --- !u!114 &6517574593632805756
 MonoBehaviour:
@@ -554,7 +551,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6569384808679381653, guid: def303003056d41c08423a159b65ee18, type: 3}
   playRadius: 75
   gravitySource: {fileID: 0}
-  gunInfo: {fileID: 11400000, guid: 36c6b0b41f54690448eb1a5c0b0970b8, type: 2}
   status: 
 --- !u!1 &6003794264972008175
 GameObject:
