@@ -3573,6 +3573,10 @@ PrefabInstance:
       propertyPath: gravitySource
       value: 
       objectReference: {fileID: 1331667012}
+    - target: {fileID: 8279655053268107252, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: dodgeDistance
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 9038072507043348681, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: bulletText
       value: 
