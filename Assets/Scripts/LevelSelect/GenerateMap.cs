@@ -23,8 +23,8 @@ namespace LevelSelect
 
         public int mapGridSize;
         public int minLevels, avgLevels, expScale;
-        public int maxPlanetConnections;
-        public int minBossStartDist;
+        public int minPlanetConnections, maxPlanetConnections;
+        public int minBossStartDist, minBossShopDist;
         public int minElites, maxElites;
         public int minEligibleBosses;
         
@@ -90,12 +90,12 @@ namespace LevelSelect
             var connections = new List<Tuple<int, int>>();
             for (var level = 0; level < levels.Count; level++)
             {
-                var connectionsLeft = Random.Range(1, maxPlanetConnections+1) - levels[level].Connections.Count;
+                var connectionsLeft = level == 0 ? 1 : Random.Range(minPlanetConnections, maxPlanetConnections+1) - levels[level].Connections.Count;
 
                 var validConnections = levels
                     .Select((_, i) => i)
                     .Where(i =>
-                        i != level &&
+                        i != level && i != 0 &&
                         levels[i].Connections.Count < maxPlanetConnections &&
                         !levels[level].Connections.Contains(i) &&
                         !connections.Any(c => MapUtil.Intersect(levels[i].WorldPosition, levels[level].WorldPosition, levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
@@ -117,21 +117,17 @@ namespace LevelSelect
                     connectionsLeft--;
                 }
             }
-
-            List<int> pathless = new();
+            
             for (var level = 1; level < levels.Count; level++)
             {
-                if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) == null) pathless.Add(level);
-            }
-            foreach (var level in pathless)
-            {
-                if (MapUtil.GetShortestPath(levels.ToArray(), levels[level], levels[0].WorldPosition) != null) continue;
+                if (levels[level].Connections.Count >= minPlanetConnections) continue;
 
                 var validConnections = levels
                     .Select((_, i) => i)
                     .Where(i =>
-                        i != level &&
-                        !pathless.Contains(i) &&
+                        i != level && i != 0 &&
+                        levels[i].Connections.Count > 0 && levels[i].Connections.Count < maxPlanetConnections &&
+                        !levels[level].Connections.Contains(i) &&
                         !connections.Any(c => MapUtil.Intersect(levels[i].WorldPosition, levels[level].WorldPosition,
                             levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
                         !levels.Any(l =>
@@ -139,32 +135,44 @@ namespace LevelSelect
                                 levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition,
                                 planetRadius * 2))).ToList();
 
-                if (validConnections.Any(i => levels[i].Connections.Count < maxPlanetConnections))
+                for (var i = 0; i < minPlanetConnections - levels[level].Connections.Count; i++)
                 {
-                    validConnections = validConnections.Where(i => levels[i].Connections.Count < maxPlanetConnections).ToList();
+                    if (validConnections.Count == 0) break;
+                    
+                    var other = validConnections[Random.Range(0, validConnections.Count-1)];
+                    validConnections.Remove(other);
+                    
+                    connections.Add(new Tuple<int, int>(level, other));
+
+                    levels[level].Connections.Add(other);
+                    levels[other].Connections.Add(level);
                 }
 
-                if (validConnections.Count == 0)
+                if (levels[level].Connections.Count < minPlanetConnections)
                 {
-                    // cannot be fixed :( we must redo regeneration
+                    // couldn't be fixed :( we must redo regeneration
                     GenerateGalaxy(sprites);
                     return;
                 }
-                
-                var other = validConnections[Random.Range(0, validConnections.Count-1)];
-                connections.Add(new Tuple<int, int>(level, other));
-
-                levels[level].Connections.Add(other);
-                levels[other].Connections.Add(level);
             }
+            
+            int stationIdx;
+            do
+            {
+                stationIdx = Random.Range(1, levels.Count - 1);
+            } while (levels[stationIdx].Connections.Contains(0));
+
+            levels[stationIdx].Type = LevelType.SpaceStation;
+            levels[stationIdx].Sprite = spaceStationSprite;
             
             // make the furthest planet be the boss
             var eligibleBosses = new List<int>();
             for (var i = 1; i < levels.Count; i++)
             {
-                var dist = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[0].WorldPosition)?.Length ?? 0;
-
-                if (dist >= minBossStartDist) eligibleBosses.Add(i);
+                var distStart = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[0].WorldPosition)?.Length ?? 0;
+                var distShop = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[stationIdx].WorldPosition)?.Length ?? 0;
+                
+                if (distStart >= minBossStartDist && distShop >= minBossShopDist) eligibleBosses.Add(i);
             }
 
             if (eligibleBosses.Count < minEligibleBosses)
@@ -175,17 +183,7 @@ namespace LevelSelect
 
             var bossPlanet = eligibleBosses[Random.Range(0, eligibleBosses.Count)];
             levels[bossPlanet].IsBoss = true;
-
-            int stationIdx;
-            do
-            {
-                stationIdx = Random.Range(1, levels.Count - 1);
-                if (stationIdx >= bossPlanet) stationIdx++;
-            } while (levels[stationIdx].Connections.Contains(0));
-
-            levels[stationIdx].Type = LevelType.SpaceStation;
-            levels[stationIdx].Sprite = spaceStationSprite;
-
+            
             for (var i = 0; i < Random.Range(minElites, maxElites); i++)
             {
                 var eliteIdx = Random.Range(1, levels.Count-2);
