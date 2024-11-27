@@ -2430,7 +2430,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selector: {fileID: 1229988540}
-  data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   secondsToSlide: 0.7
   xPercent: 0.35
   yPercent: 0.85
@@ -3194,7 +3193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbcbd0bcc18941168712c1ad6be9703f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   camera: {fileID: 743845641}
   camSizeDragRatio: 300
   scrollSpeed: 15
@@ -3277,14 +3275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 494ad1902f8546d698cba2b81a63f8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: d6e114af31cb2455387fe5ae6c4dcc32, type: 2}
-  bulletData: {fileID: 11400000, guid: 36c6b0b41f54690448eb1a5c0b0970b8, type: 2}
-  merchantData: {fileID: 11400000, guid: e5798128377a1494db19712c92488237, type: 2}
   lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   planetPrefab: {fileID: 1680533821085019361}
   spriteLabel:
     m_LabelString: planets
-  data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   hiddenSprite: {fileID: 21300000, guid: 9be96e015369c43edae8d4f7a511c4bf, type: 3}
   spaceStationSprite: {fileID: 21300000, guid: 2bda11fe986974445b5f06ae3ffa0169, type: 3}
   entranceSprite: {fileID: 21300000, guid: e758bd15639d74ba888c3b34e56e38a7, type: 3}
@@ -3294,8 +3288,10 @@ MonoBehaviour:
   minLevels: 15
   avgLevels: 20
   expScale: 1
-  maxPlanetConnections: 3
-  minBossStartDist: 6
+  minPlanetConnections: 2
+  maxPlanetConnections: 4
+  minBossStartDist: 7
+  minBossShopDist: 7
   minElites: 1
   maxElites: 3
   minEligibleBosses: 3

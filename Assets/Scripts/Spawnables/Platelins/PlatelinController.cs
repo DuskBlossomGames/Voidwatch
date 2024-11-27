@@ -14,6 +14,9 @@ public class PlatelinController : MonoBehaviour
     public GameObject gravitySource;
     public NSpriteAnimation animationState;
 
+    public float tendonLength;
+    public float drag;
+    public float suction;
 
     float _spawntimer;
     float _swelltimer;
@@ -41,6 +44,21 @@ public class PlatelinController : MonoBehaviour
     {
         if(isSpore){
           GetComponent<Spawnables.EnemyDamageable>().EnemyHeal(sporeHealingPerSecond*Time.deltaTime);
+        } else
+        {
+            for (int i = 0; i < transform.parent.childCount; i++)
+            {
+                var plate = transform.parent.GetChild(i);
+                if ((plate.position - transform.position).sqrMagnitude < tendonLength * tendonLength)
+                {
+                    var rigid = GetComponent<CustomRigidbody2D>();
+                    var diffVel = plate.GetComponent<CustomRigidbody2D>().velocity - rigid.velocity;
+                    rigid.AddForce(diffVel.normalized * diffVel.sqrMagnitude * drag);
+                    var diffPos = plate.position - transform.position;
+                    rigid.AddForce(diffPos.normalized * suction);
+
+                }
+            }
         }
 
         if(transform.position.sqrMagnitude > 75 * 75)

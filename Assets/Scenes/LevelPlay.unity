@@ -1238,7 +1238,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   merchantData: {fileID: 11400000, guid: e5798128377a1494db19712c92488237, type: 2}
-  data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   forceField: {fileID: 2146917946}
 --- !u!114 &1331667020
 MonoBehaviour:
@@ -1431,7 +1430,7 @@ GameObject:
   - component: {fileID: 1480058256}
   m_Layer: 0
   m_Name: Boundry Circle
-  m_TagString: Untagged
+  m_TagString: Circle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1838,7 +1837,6 @@ MonoBehaviour:
   HUD: {fileID: 1562156498}
   fadeIn: {fileID: 1781870393}
   planet: {fileID: 1331667019}
-  gun: {fileID: 11400000, guid: 36c6b0b41f54690448eb1a5c0b0970b8, type: 2}
   playerDamager: {fileID: 2086174091}
   scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
   difficultyToLootTiers: 070000000f0000001900000032000000
@@ -1853,7 +1851,6 @@ MonoBehaviour:
   miniBossesGroup: Mini-Bosses
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
-  data: {fileID: 11400000, guid: 8f49228680b984e7daec3eb6f9ddddf6, type: 2}
   levelTimer: 0
   dataWritingOn: 0
 --- !u!4 &1780276284
