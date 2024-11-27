@@ -227,10 +227,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c74f9719304183a13de893beefbc24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMaxHealth: 2000
-  playerMaxShield: 200
-  playerShieldRegenRate: 50
-  playerMaxShieldDebt: 500
+  maxHealth: 2000
+  maxShield: 200
+  shieldRegenRate: 50
+  maxShieldDebt: 500
+  maxDodgeJuice: 100
+  dodgeJuiceRegenRate: 25
   weapons:
   - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
   - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}

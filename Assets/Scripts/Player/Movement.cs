@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using ProgressBars;
 using Scriptable_Objects.Upgrades;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Util;
 using Random = UnityEngine.Random;
+using static Static_Info.PlayerData;
 
 namespace Player
 {
@@ -15,6 +17,9 @@ namespace Player
         public float driftCorrection;
         public float speedLimit;
         public float acceleration;
+        public GeneralBar dodgeBar;
+        public float dodgeRedirectPercentage;
+        public float dodgeJuiceCost;
         public float dodgeVelocity;
         public float dodgeDistance;
         public float dodgeCooldown;
@@ -43,8 +48,10 @@ namespace Player
             Vector2 _orbitPoint;
         };
         private OrbitState _orbitState;
-
+        
+        private bool _redirectDodge;
         private float _dodgeTimeLength;
+        private float _dodgeJuice;
         private readonly Timer _dodgeTimer = new();
         private readonly Timer _dodgeCooldownTimer = new();
         private readonly Timer _afterImageTimer = new();
@@ -55,6 +62,7 @@ namespace Player
 
         private void Start()
         {
+            _dodgeJuice = PlayerDataInstance.maxDodgeJuice;
             _camera = Camera.main;
             _rigid = GetComponent<CustomRigidbody2D>();
             _collider = GetComponent<Collider2D>();
@@ -67,6 +75,15 @@ namespace Player
         {
             return !inputBlocked && Input.GetKey(code);
         }
+        private bool GetKeyDown(KeyCode code)
+        {
+            return !inputBlocked && Input.GetKeyDown(code);
+        }
+
+        private void Update()
+        {
+            _redirectDodge |= GetKeyDown(KeyCode.Space) && _dodgeTimer.Progress <= dodgeRedirectPercentage;
+        }
 
         private void FixedUpdate()
         {
@@ -76,8 +93,8 @@ namespace Player
             _forwards = ((Vector2) tar).normalized;
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
-
-            if (_dodgeCooldownTimer.IsFinished && GetKey(KeyCode.Space))
+            
+            if (_dodgeJuice >= dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && GetKey(KeyCode.Space))
             {
                 var evt = new DodgeEvent
                 {
@@ -94,11 +111,17 @@ namespace Player
                 _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
             }
 
+            var wasFirstHalf = _dodgeTimer.Progress > dodgeRedirectPercentage;
             var wasDodging = !_dodgeTimer.IsFinished;
             _dodgeTimer.FixedUpdate();
             _dodgeCooldownTimer.FixedUpdate();
             _afterImageTimer.FixedUpdate();
             var dodging = !_dodgeTimer.IsFinished;
+
+            if (_dodgeTimer.Progress <= dodgeRedirectPercentage && wasFirstHalf && _redirectDodge)
+            {
+                _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
+            } 
 
 
             // CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
@@ -107,6 +130,9 @@ namespace Player
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
 
+            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate : -dodgeJuiceCost/_dodgeTimeLength*dodgeTimeDilation) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
+            dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice);
+            
             if (dodging)
             {
                 if (_afterImageTimer.IsFinished)
@@ -137,6 +163,7 @@ namespace Player
             {
                 _afterImages.ForEach(Destroy);
                 _afterImages.Clear();
+                _redirectDodge = false;
 
                 velocity = _forwards * _preDodgeVel.magnitude;
             }

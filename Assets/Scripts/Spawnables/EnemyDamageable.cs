@@ -25,13 +25,10 @@ namespace Spawnables
         private void OnDestroy()
         {
             if(varientParent != null) varientParent.GetComponent<EnemyVariant>().SpawnScrap(transform.position);
-            base.OnDestroy();
-            Destroy(_healthBar);
         }
 
-        public void EnemyHeal(float x){
-          _health += x;
-
+        public void EnemyHeal(float x){ 
+            _health += x;
         }
     }
 }

@@ -199,7 +199,7 @@ public class ShopSceneManager : MonoBehaviour
     {
         public void Invoke(ShopSceneManager caller)
         {
-            PlayerDataInstance.Health = PlayerDataInstance.playerMaxHealth;
+            PlayerDataInstance.Health = PlayerDataInstance.maxHealth;
         }
     }
 
