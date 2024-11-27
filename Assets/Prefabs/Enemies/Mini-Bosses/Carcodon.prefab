@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb7bd7146a74fd896cd4a3fdcdda9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 500
+  damage: 300
 --- !u!1 &604200661684765982
 GameObject:
   m_ObjectHideFlags: 0
@@ -3825,7 +3825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb7bd7146a74fd896cd4a3fdcdda9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 500
+  damage: 300
 --- !u!1 &7179891106518875428
 GameObject:
   m_ObjectHideFlags: 0

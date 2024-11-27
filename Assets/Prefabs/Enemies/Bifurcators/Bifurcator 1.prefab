@@ -783,8 +783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe1ddaa031c9745b33a24da9d80ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerSecond: 1500
-  entryDamage: 500
+  damagePerSecond: 150
+  entryDamage: 300
   canOnlyHurtPlayer: 0
   dmgType: 1
 --- !u!60 &1997713199156744106
