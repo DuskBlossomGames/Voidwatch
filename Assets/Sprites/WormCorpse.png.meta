@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aa89c7e183c9744529c6941d597291b7
+guid: 0d5725cb20c124dc583c528eca9bfd88
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: platelinCorpse_0
+      name: WormCorpse_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bffb0d98dc8c948ba947743f76cb4917
-      internalID: 917325303
+      spriteID: e6e3cbe92d50e435d9b8a0a24012ab6e
+      internalID: -164018351
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: platelinCorpse_1
+      name: WormCorpse_1
       rect:
         serializedVersion: 2
         x: 16
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d937e377325f1474080100a52857a1cb
-      internalID: 444040296
+      spriteID: dbc194cbee21347b991297ed04df6700
+      internalID: 557039658
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: platelinCorpse_2
+      name: WormCorpse_2
       rect:
         serializedVersion: 2
         x: 32
@@ -179,8 +179,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b75ef236c7b640c2adf6d23d9903678
-      internalID: -89155140
+      spriteID: b588d444dbf7b4528b761c8533d58048
+      internalID: 951273129
       vertices: []
       indices: 
       edges: []
@@ -188,7 +188,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f61c7e83f5e8c4fdcae0a937c86c9f79
+    spriteID: 8afa4da18db574e8c92bbce9ff350080
     internalID: 0
     vertices: []
     indices: 
@@ -196,9 +196,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      platelinCorpse_0: 917325303
-      platelinCorpse_1: 444040296
-      platelinCorpse_2: -89155140
+      WormCorpse_0: -164018351
+      WormCorpse_1: 557039658
+      WormCorpse_2: 951273129
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
