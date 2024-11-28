@@ -20,7 +20,11 @@ namespace Util
         public float LastStepProgress => _lastStep / _maxValue;
 
         private float _lastStep;
-        
+
+        public void SetValue(float value)
+        {
+            _value = value;
+        }
 
         public void Update(int direction = -1)
         {

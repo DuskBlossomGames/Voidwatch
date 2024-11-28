@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ProgressBars;
 using Scriptable_Objects;
 using Static_Info;
@@ -12,6 +14,10 @@ namespace Spawnables.Player
 {
     public class PlayerDamageable : Damageable
     {
+        public Q_Vignette_Single vignette;
+        public AnimationCurve vignetteCurve;
+        public float vignetteDuration, vignettePeak;
+        
         public ProgressBar healthBar, shieldBar;
         public DamageResistances shieldDmgRes;
         
@@ -33,24 +39,56 @@ namespace Spawnables.Player
         protected float ShieldMaxDebt => PlayerDataInstance.maxShieldDebt;
         protected float ShieldPower;
 
+        private readonly Timer _vignetteTimer = new();
+        private readonly List<float> _vignetteCacheKeys = new();
+        private readonly List<float> _vignetteCacheValues = new();
+        
         public new void Start()
         {
             base.Start();
             Destroy(_healthBar);
             ShieldPower = ShieldMaxPower;
+
+            for (float t = 0; t <= vignettePeak * vignetteDuration; t += Time.fixedDeltaTime)
+            {
+                var alpha = vignetteCurve.Evaluate(t / vignetteDuration);
+                _vignetteCacheKeys.Add(alpha);
+                _vignetteCacheValues.Add(vignetteDuration - t);
+            }
         }
         
         private void Update()
         {
             ShieldPower = Mathf.Clamp(ShieldPower + ShieldRegenRate * Time.deltaTime, -ShieldMaxDebt, ShieldMaxPower);
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
-            
+        }
+
+        private void FixedUpdate()
+        {
+            _vignetteTimer.FixedUpdate();
+            vignette.mainColor.a = vignetteCurve.Evaluate(1-_vignetteTimer.Progress);
         }
 
         public override void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
         {
             if (godmode) return;
 
+            if (_vignetteTimer.IsFinished)
+            {
+                _vignetteTimer.Value = vignetteDuration;
+            } else if (1 - _vignetteTimer.Progress >= vignettePeak)
+            {
+                for (var i = 0; i < _vignetteCacheKeys.Count; i++) // pick the closest from before peak
+                {
+                    if (_vignetteCacheKeys[i] > vignette.mainColor.a)
+                    {
+                        _vignetteTimer.SetValue(_vignetteCacheValues[i - 1]);
+                        break;
+                    }
+                }
+
+            }
+            
             float bleed = damage * shieldDmgRes.dmgBleed[(int)dmgType];
             damage -= bleed;//some damage leaks through
 
