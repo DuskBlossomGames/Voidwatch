@@ -16,7 +16,7 @@ namespace Spawnables
         protected override float Health { get => _health; set => _health = value; }
         protected override float MaxHealth => maxHealth;
 
-        private new void Start()
+        public new void Start()
         {
             base.Start();
             Health = maxHealth;
