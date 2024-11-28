@@ -36,6 +36,7 @@ namespace Spawnables.Player
         public new void Start()
         {
             base.Start();
+            Destroy(_healthBar);
             ShieldPower = ShieldMaxPower;
         }
         

@@ -24,6 +24,7 @@ namespace Spawnables.Carcadon
             TimeToLive -= Time.deltaTime;
 
             _sr.color = new Color(_sr.color.r, _sr.color.g, _sr.color.b, UtilFuncs.LerpSafe(0, _startAlpha, TimeToLive / fadeTime));
+            if (TimeToLive <= 0) Destroy(gameObject);
         }
     }
 }

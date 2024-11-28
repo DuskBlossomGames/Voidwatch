@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LevelSelect;
 using Player;
+using ProgressBars;
 using Static_Info;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -32,7 +33,7 @@ namespace Spawnables.Carcadon
         public float attackRadius;
 
         private EnemySpawner.EnemySpawner _enemySpawner;
-        private IEnumerable<SpriteRenderer> _baseSpriteRenderers;
+        private SpriteRenderer[] _baseSpriteRenderers;
         private List<SpriteRenderer> _stackedSpriteRenderers = new();
         private ArmController[] _armControllers;
         private CustomRigidbody2D _rb;
@@ -257,8 +258,10 @@ namespace Spawnables.Carcadon
             _stackedSpriteRenderers.AddRange(transform.GetChild(3).GetComponentsInChildren<SpriteRenderer>());
             _stackedSpriteRenderers.AddRange(transform.GetChild(4).GetComponentsInChildren<SpriteRenderer>());
             _stackedSpriteRenderers.AddRange(transform.GetChild(5).GetComponentsInChildren<SpriteRenderer>());
-            _baseSpriteRenderers = GetComponentsInChildren<SpriteRenderer>().Where(sr=>!_stackedSpriteRenderers.Contains(sr));
-            
+            _baseSpriteRenderers = GetComponentsInChildren<SpriteRenderer>().Where(sr=>
+                !_stackedSpriteRenderers.Contains(sr) &&
+                sr.GetComponent<ProgressBar>() == null &&
+                sr.transform.parent?.GetComponent<ProgressBar>() == null).ToArray();
             
             _player.GetComponent<Shoot>().enabled = false;
             _player.GetComponent<Movement>().inputBlocked = true;
