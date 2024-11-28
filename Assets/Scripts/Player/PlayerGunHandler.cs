@@ -62,7 +62,6 @@ public class PlayerGunHandler : MonoBehaviour
         Vector2 mVel = Vector2.zero;
         Vector2 relPos = _mPos - (Vector2)transform.position;
         float angCorr = UtilFuncs.LeadShot(relPos, mVel - _rb.velocity, ExpectedVelocity());
-        Debug.LogFormat("Expected velocity: {0}", ExpectedVelocity());
 
         var evt = new ShootEvent
         {
@@ -117,8 +116,6 @@ public class PlayerGunHandler : MonoBehaviour
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
                     bullet.GetComponent<BulletCollision>().dmg = GunInfoInstance.dmgMod;
                     bullet.GetComponent<BulletCollision>().owner = gameObject;
-
-                    Debug.LogFormat("Actual velocity: {0}", bullet.GetComponent<CustomRigidbody2D>().velocity.magnitude);
                 }
 
             }
