@@ -17,6 +17,9 @@ namespace Spawnables.Player
         public Q_Vignette_Single vignette;
         public AnimationCurve vignetteCurve;
         public float vignetteDuration, vignettePeak;
+        public float sigmoidStart, sigmoidEnd;
+        public float minVignetteAlpha, maxVignetteAlpha;
+        public float minVignetteScale, maxVignetteScale;
         
         public ProgressBar healthBar, shieldBar;
         public DamageResistances shieldDmgRes;
@@ -42,6 +45,7 @@ namespace Spawnables.Player
         private readonly Timer _vignetteTimer = new();
         private readonly List<float> _vignetteCacheKeys = new();
         private readonly List<float> _vignetteCacheValues = new();
+        private float _vignettePeakAlpha;
         
         public new void Start()
         {
@@ -54,8 +58,7 @@ namespace Spawnables.Player
 
             for (float t = 0; t <= vignettePeak * vignetteDuration; t += Time.fixedDeltaTime)
             {
-                var alpha = vignetteCurve.Evaluate(t / vignetteDuration);
-                _vignetteCacheKeys.Add(alpha);
+                _vignetteCacheKeys.Add(vignetteCurve.Evaluate(t / vignetteDuration));
                 _vignetteCacheValues.Add(vignetteDuration - t);
             }
         }
@@ -69,7 +72,7 @@ namespace Spawnables.Player
         private void FixedUpdate()
         {
             _vignetteTimer.FixedUpdate();
-            vignette.mainColor.a = vignetteCurve.Evaluate(1-_vignetteTimer.Progress);
+            vignette.mainColor.a = _vignettePeakAlpha * vignetteCurve.Evaluate(1-_vignetteTimer.Progress);
         }
 
         public override void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
@@ -86,18 +89,18 @@ namespace Spawnables.Player
                 _vignetteTimer.Value = vignetteDuration;
             } else if (1 - _vignetteTimer.Progress >= vignettePeak)
             {
+                var curve = vignetteCurve.Evaluate(1 - _vignetteTimer.Progress);
                 for (var i = 0; i < _vignetteCacheKeys.Count; i++) // pick the closest from before peak
                 {
-                    if (_vignetteCacheKeys[i] > vignette.mainColor.a)
+                    if (_vignetteCacheKeys[i] > curve)
                     {
                         _vignetteTimer.SetValue(_vignetteCacheValues[i - 1]);
                         break;
                     }
                 }
-
             }
-
-            var od = damage;
+            vignette.mainScale = (maxVignetteScale - minVignetteScale) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteScale;
+            _vignettePeakAlpha = (maxVignetteAlpha - minVignetteAlpha) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteAlpha;
             
             float bleed = damage * shieldDmgRes.dmgBleed[(int)dmgType];
             damage -= bleed;//some damage leaks through

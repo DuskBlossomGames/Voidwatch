@@ -5410,12 +5410,21 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.16948119
       value: 0.25734594
-      inSlope: 1.162176
-      outSlope: 1.162176
+      inSlope: 4.7943273
+      outSlope: 4.7943273
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.042882532
+      outWeight: 0.08775445
+    - serializedVersion: 3
+      time: 0.3452245
+      value: 0.77837855
+      inSlope: 3.3160403
+      outSlope: 3.3160403
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.121229135
     - serializedVersion: 3
       time: 1.0001831
       value: 0
@@ -5429,7 +5438,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   vignetteDuration: 0.5
-  vignettePeak: 0.42
+  vignettePeak: 0.31
+  sigmoidStart: 30
+  sigmoidEnd: 150
+  minVignetteAlpha: 0.25
+  maxVignetteAlpha: 0.45
+  minVignetteScale: 2.5
+  maxVignetteScale: 3.8
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
   shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
