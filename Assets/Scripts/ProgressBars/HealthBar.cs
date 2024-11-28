@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ProgressBars
 {
-    public class HealthBar : GeneralBar
+    public class HealthBar : ProgressBar
     {
         public float radius;
         public AnimationCurve opacityCurve;

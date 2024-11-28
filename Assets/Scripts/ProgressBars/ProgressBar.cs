@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ProgressBars
 {
-    public class GeneralBar : MonoBehaviour
+    public class ProgressBar : MonoBehaviour
     {
         private Transform _underneath;
 

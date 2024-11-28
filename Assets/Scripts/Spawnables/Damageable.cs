@@ -12,12 +12,12 @@ namespace Spawnables
         protected virtual float Health { get; set; }
         protected virtual float MaxHealth { get; }
         
-        protected GeneralBar _healthBar;
+        protected ProgressBar _healthBar;
         
         public void Start()
         {
             dmgRes.Ready();
-            _healthBar = Instantiate(healthBarPrefab).GetComponent<GeneralBar>();
+            _healthBar = Instantiate(healthBarPrefab).GetComponent<ProgressBar>();
             _healthBar.transform.SetParent(transform, true);
         }
 

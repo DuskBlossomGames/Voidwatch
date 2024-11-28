@@ -17,7 +17,7 @@ namespace Player
         public float driftCorrection;
         public float speedLimit;
         public float acceleration;
-        public GeneralBar dodgeBar;
+        public ProgressBar dodgeBar;
         public float dodgeRedirectPercentage;
         public float dodgeJuiceCost;
         public float dodgeVelocity;

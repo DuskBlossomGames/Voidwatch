@@ -12,7 +12,7 @@ namespace Spawnables.Player
 {
     public class PlayerDamageable : Damageable
     {
-        public GeneralBar healthBar, shieldBar;
+        public ProgressBar healthBar, shieldBar;
         public DamageResistances shieldDmgRes;
         
         public bool godmode = false;
