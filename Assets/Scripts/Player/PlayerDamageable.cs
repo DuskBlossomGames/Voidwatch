@@ -45,6 +45,9 @@ namespace Spawnables.Player
         
         public new void Start()
         {
+            healthBar.UpdatePercentage(Health, MaxHealth);
+            
+            shieldDmgRes.Ready();
             base.Start();
             Destroy(_healthBar);
             ShieldPower = ShieldMaxPower;
@@ -71,6 +74,11 @@ namespace Spawnables.Player
 
         public override void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
         {
+            Damage(damage, 0, dmgType, reduceMod);
+        }
+
+        public void Damage(float damage, float trueDamage, IDamageable.DmgType dmgType, float reduceMod = 1f)
+        {
             if (godmode) return;
 
             if (_vignetteTimer.IsFinished)
@@ -88,12 +96,11 @@ namespace Spawnables.Player
                 }
 
             }
+
+            var od = damage;
             
             float bleed = damage * shieldDmgRes.dmgBleed[(int)dmgType];
             damage -= bleed;//some damage leaks through
-
-            damage -= reduceMod * shieldDmgRes.dmgReduce[(int)dmgType];
-            damage *= shieldDmgRes.dmgMod[(int)dmgType];
             
             if (damage > 0)
             {
@@ -103,6 +110,10 @@ namespace Spawnables.Player
                 }
                 else
                 {
+                    // only apply shield dmg res if it goes to shield
+                    damage -= reduceMod * shieldDmgRes.dmgReduce[(int)dmgType];
+                    damage *= shieldDmgRes.dmgMod[(int)dmgType];
+
                     ShieldPower -= damage;
                     ShieldPower -= 1;
                     if (ShieldPower < -ShieldMaxDebt)
@@ -111,9 +122,16 @@ namespace Spawnables.Player
                         ShieldPower += overDebt;
                         bleed += overDebt;//excess damage overflows to bleeded damage
                     }
+
+                    bleed += trueDamage;
                 }
             }
+            else
+            {
+                bleed += trueDamage;
+            }
 
+            print("dealing " + bleed +" and "+damage+" from original " + od + " and " + trueDamage);
             bleed -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
             bleed *= dmgRes.dmgMod[(int)dmgType];
 

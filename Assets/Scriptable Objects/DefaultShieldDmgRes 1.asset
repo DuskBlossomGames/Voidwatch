@@ -20,7 +20,7 @@ MonoBehaviour:
   engDmgReduce: 0.5
   engDmgBleed: 0.05
   _123456788: 0
-  conDmgMod: 5
+  conDmgMod: 3
   conDmgReduce: 0
   conDmgBleed: 0.05
   _123456787: 0

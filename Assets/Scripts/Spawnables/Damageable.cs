@@ -9,6 +9,8 @@ namespace Spawnables
         public GameObject healthBarPrefab;
         public DamageResistances dmgRes;
 
+        public bool IsDead => Health <= 0;
+        
         protected virtual float Health { get; set; }
         protected virtual float MaxHealth { get; }
         
@@ -27,7 +29,7 @@ namespace Spawnables
             damage *= dmgRes.dmgMod[(int)dmgType];
             Health -= damage>0 ? damage : 0;
         
-            if (Health <= 0)
+            if (IsDead)
             {
                 OnDeath();
                 Destroy(gameObject);
