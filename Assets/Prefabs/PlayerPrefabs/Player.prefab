@@ -4952,7 +4952,7 @@ GameObject:
   - component: {fileID: 4378284913297470698}
   - component: {fileID: 5639456596236743434}
   - component: {fileID: 5223156429669482665}
-  m_Layer: 10
+  m_Layer: 18
   m_Name: Contact Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4990,7 +4990,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 0
   m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2

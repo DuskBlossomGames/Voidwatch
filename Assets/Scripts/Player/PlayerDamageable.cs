@@ -131,7 +131,6 @@ namespace Spawnables.Player
                 bleed += trueDamage;
             }
 
-            print("dealing " + bleed +" and "+damage+" from original " + od + " and " + trueDamage);
             bleed -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
             bleed *= dmgRes.dmgMod[(int)dmgType];
 
