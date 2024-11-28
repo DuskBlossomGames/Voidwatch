@@ -53,8 +53,7 @@ namespace Player
             }
             else
             {
-                var playerDmg = playerMod * vel;
-                _dmgable.Damage(playerDmg, trueDamageMod * playerDmg, IDamageable.DmgType.Concussive);                    
+                _dmgable.Damage(playerMod * vel, trueDamageMod * vel, IDamageable.DmgType.Concussive);                    
             }
                 
             _cooldownTimer.Value = cooldown;
