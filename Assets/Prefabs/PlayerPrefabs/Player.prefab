@@ -411,6 +411,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  vignette: {fileID: 0}
+  vignetteCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.16948119
+      value: 0.25734594
+      inSlope: 1.162176
+      outSlope: 1.162176
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.042882532
+    - serializedVersion: 3
+      time: 1.0001831
+      value: 0
+      inSlope: -0.9189948
+      outSlope: -0.9189948
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.6367001
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  vignetteDuration: 0.5
+  vignettePeak: 0.42
+  _dmg: 0
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
   shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
@@ -536,6 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf58cae5392a4bfda803ce5b50f16597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageMod: 4
 --- !u!1 &6003794264972008175
 GameObject:
   m_ObjectHideFlags: 0
