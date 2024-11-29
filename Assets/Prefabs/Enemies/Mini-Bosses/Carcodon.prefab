@@ -2067,6 +2067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawner: {fileID: 0}
+  type: 1
 --- !u!114 &2306016957590154251
 MonoBehaviour:
   m_ObjectHideFlags: 0

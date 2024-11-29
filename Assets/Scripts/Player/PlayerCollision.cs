@@ -3,7 +3,6 @@ using Spawnables;
 using Spawnables.Player;
 using UnityEngine;
 using Util;
-using static Static_Info.PlayerData;
 
 namespace Player
 {
@@ -12,8 +11,6 @@ namespace Player
         public float enemyMod, playerMod;
         public float trueDamageMod;
         public float cooldown;
-        public float minExplosionVel;
-        public GameObject explosionObj;
 
         private readonly Timer _cooldownTimer = new();
         private Movement _movement;
@@ -41,17 +38,7 @@ namespace Player
             var vel = (other.attachedRigidbody.velocity - _rb.velocity).magnitude;
             damageable.Damage(enemyMod * vel, IDamageable.DmgType.Concussive);
 
-            if (_rb.velocity.magnitude >= minExplosionVel && damageable.IsDead)
-            {
-                var explosion = Instantiate(explosionObj);
-                explosion.SetActive(true);
-                explosion.transform.position = damageable.transform.position;
-                explosion.transform.localScale = new Vector3(damageable.transform.lossyScale.x,
-                    1, damageable.transform.lossyScale.y);
-                explosion.GetComponent<ExplosionHandler>().Run();
-                explosion.GetComponent<ParticleSystem>().Play();
-            }
-            else
+            if (!damageable.IsDead)
             {
                 _dmgable.Damage(playerMod * vel, trueDamageMod * vel, IDamageable.DmgType.Concussive);
                 _cooldownTimer.Value = cooldown;

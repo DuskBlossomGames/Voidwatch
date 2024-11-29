@@ -25,6 +25,8 @@ namespace Spawnables
 
         public virtual void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
         {
+            if (IsDead) return;
+            
             damage -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
             damage *= dmgRes.dmgMod[(int)dmgType];
             Health -= damage>0 ? damage : 0;

@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   cost: 15
   ScrapCount: 0
   ScrapPrefab: {fileID: 0}
@@ -139,12 +140,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  heathOpacityCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   dmgRes: {fileID: 0}
   maxHealth: 0
   varientParent: {fileID: 0}

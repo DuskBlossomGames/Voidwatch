@@ -4,7 +4,7 @@ using Util;
 
 namespace Spawnables.Carcadon
 {
-    public class SpitFade : MonoBehaviour
+    public class FadeToDeath : MonoBehaviour
     {
         public float fadeTime;
         

@@ -22,7 +22,6 @@ namespace ProgressBars
         {
             var empty = (1 - cur / max) * 270;
 
-            print("rotating to: " + -empty);
             quadIVMask.RotateAround(transform.position, Vector3.forward, -Mathf.Min(empty, 90) - quadIVMask.localRotation.eulerAngles.z);
             quadIIIMask.RotateAround(transform.position, Vector3.forward, -Mathf.Min(empty, 180) - quadIIIMask.localRotation.eulerAngles.z);
             quadIIMask.RotateAround(transform.position, Vector3.forward, -empty - quadIIMask.localRotation.eulerAngles.z);

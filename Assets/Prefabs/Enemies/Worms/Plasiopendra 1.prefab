@@ -93,12 +93,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  heathOpacityCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   dmgRes: {fileID: 0}
   maxHealth: 0
   varientParent: {fileID: 0}
+  explosion: {fileID: 0}
+  bitOptions:
+  - {fileID: -164018351, guid: 0d5725cb20c124dc583c528eca9bfd88, type: 3}
+  - {fileID: 557039658, guid: 0d5725cb20c124dc583c528eca9bfd88, type: 3}
+  - {fileID: 951273129, guid: 0d5725cb20c124dc583c528eca9bfd88, type: 3}
+  numBits: 4
+  explosionScale: 0
+  bitScale: 1.5
