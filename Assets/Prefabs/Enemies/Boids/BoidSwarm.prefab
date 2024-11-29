@@ -198,6 +198,14 @@ MonoBehaviour:
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   maxHealth: 50
   varientParent: {fileID: 0}
+  explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+  bitOptions:
+  - {fileID: 717642507, guid: f0d388b170c0845958e53eed29d784e3, type: 3}
+  - {fileID: 1901221327, guid: f0d388b170c0845958e53eed29d784e3, type: 3}
+  - {fileID: 355704663, guid: f0d388b170c0845958e53eed29d784e3, type: 3}
+  numBits: 2
+  explosionScale: 0.1
+  bitScale: 0.75
 --- !u!114 &988408655905092487
 MonoBehaviour:
   m_ObjectHideFlags: 0
