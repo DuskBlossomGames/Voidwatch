@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
@@ -20,7 +21,7 @@ namespace Spawnables.Carcadon
 
         public void Spit(float duration)
         {
-            _active.Value = duration - travelTime; // last ones should finish by end of duration
+            _active.Value = duration;
         }
         
         private Dictionary<GameObject, float> _spawned = new();
@@ -43,9 +44,15 @@ namespace Spawnables.Carcadon
                 
                 _spawned.Add(obj, Random.Range(minSpeed, maxSpeed) * Time.deltaTime);
             }
-
-            foreach (var kvp in _spawned)
+            
+            foreach (var kvp in new Dictionary<GameObject, float>(_spawned))
             {
+                if (kvp.Key == null)
+                {
+                    _spawned.Remove(kvp.Key);
+                    continue;
+                }
+                
                 kvp.Key.transform.position += kvp.Value * kvp.Key.transform.up;
             }
         }
