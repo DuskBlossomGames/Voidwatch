@@ -268,13 +268,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2894d6ba2614e6f82e3ba795429e268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clipCount: 5
-  clipCap: 100
+  ammoCount: 50
+  noShootRefillTime: 1.5
+  emptyRefillTime: 0.5
+  timeToRefillFully: 2
   bulletsPerShot: 2
   bulletsPerShotVarience: 0
   fireTime: 0.1
-  reloadTime: 1
-  refillTime: 1
   shotForce: 2125
   forceVarience: 5
   lateralSeperation: 20

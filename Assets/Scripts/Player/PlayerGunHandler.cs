@@ -1,26 +1,37 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Player;
+using ProgressBars;
 using Scriptable_Objects;
 using Scriptable_Objects.Upgrades;
 using UnityEngine;
 using Util;
 using static Static_Info.GunInfo;
+using Random = UnityEngine.Random;
 
 public class PlayerGunHandler : MonoBehaviour
 {
+    public ProgressBar ammoBar;
+    
     public GameObject bulletPrefab;
     public float playRadius;
     public GameObject gravitySource;
+<<<<<<< HEAD
 
     private int _currClipCount;
     private int _currClipCap;
+=======
+    
+    private float _curAmmo;
+>>>>>>> 8aa6cc4b555155095e4e8db0e12c79f59e79e33a
 
-    private bool _readyToFire;
+    private readonly Timer _noShootRefillTimer = new();
+    private readonly Timer _emptyRefillTimer = new();
+
+    private bool _emptyRefilling;
+    private bool _isFiring;
     private Vector2 _mPos;
-    public string status;
-
-    private Upgradeable _upgradeable;
     private CustomRigidbody2D _rb;
     public AudioSource audioPlayer;
     public AudioClip PlayerShootLaserGeneric;
@@ -28,26 +39,28 @@ public class PlayerGunHandler : MonoBehaviour
     private void Start()
     {
         if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
-        _currClipCount = GunInfoInstance.clipCount;
-        _currClipCap = GunInfoInstance.clipCap;
-        _readyToFire = true;
-        status = "Ready To Fire";
+        _curAmmo = GunInfoInstance.ammoCount;
         _rb = GetComponent<CustomRigidbody2D>();
-
-        _upgradeable = GetComponent<Upgradeable>();
     }
 
-    public bool Shoot(Vector2 worldMousePos)//returns if could start the shoot coroutine
+    public void Shoot(Vector2 worldMousePos)//returns if could start the shoot coroutine
     {
-        if (_readyToFire)
+        _emptyRefilling &= _curAmmo < GunInfoInstance.ammoCount;
+        if (_isFiring || _curAmmo <= 0 || _emptyRefilling) return;
+        
+        _mPos = worldMousePos;
+        StartCoroutine(_Fire());
+    }
+
+    private void Update()
+    {
+        _noShootRefillTimer.Update();
+        _emptyRefillTimer.Update();
+
+        if (_noShootRefillTimer.IsFinished || (_emptyRefilling && _emptyRefillTimer.IsFinished))
         {
-            _mPos = worldMousePos;
-            StartCoroutine(_Fire());
-            return true;
-        }
-        else
-        {
-            return false;
+            _curAmmo = Mathf.Clamp(_curAmmo + GunInfoInstance.ammoCount / GunInfoInstance.timeToRefillFully * Time.deltaTime, 0, GunInfoInstance.ammoCount);
+            ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
         }
     }
 
@@ -57,9 +70,9 @@ public class PlayerGunHandler : MonoBehaviour
     }
     IEnumerator _Fire()
     {
-        _readyToFire = false;
-        status = "Shooting";
-        //Debug.Log("started");
+        _noShootRefillTimer.Value = GunInfoInstance.noShootRefillTime;
+        
+        _isFiring = true;
 
         Vector2 mVel = Vector2.zero;
         Vector2 relPos = _mPos - (Vector2)transform.position;
@@ -77,18 +90,19 @@ public class PlayerGunHandler : MonoBehaviour
             repeats = GunInfoInstance.repeats,
             repeatSeperation = GunInfoInstance.repeatSeperation
         };
-        //if (_upgradeable) _upgradeable.HandleEvent(evt, null);
 
-        for (int rep = 0; rep < evt.repeats + 1; rep++)
+        for (int rep = 0; rep <= evt.repeats; rep++)
         {
             if (rep > 0)//only delay between repeats
             {
                 yield return new WaitForSeconds(evt.repeatSeperation);
             }
 
-            int bullets = Mathf.Min(_currClipCap, evt.bulletsPerShot + Random.Range(-evt.bulletsPerShotVarience, evt.bulletsPerShotVarience + 1));
-            //Debug.Log(string.Format("bullets: {0}",bullets));
-            _currClipCap -= bullets;
+            _curAmmo = (int)_curAmmo;
+            int bullets = Mathf.Min((int) _curAmmo, evt.bulletsPerShot + Random.Range(-evt.bulletsPerShotVarience, evt.bulletsPerShotVarience + 1));
+            _curAmmo -= bullets;
+            ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
+            
             for (int i = 0; i < bullets; i++)
             {
                 float latOff, verOff;
@@ -128,36 +142,12 @@ public class PlayerGunHandler : MonoBehaviour
 
         yield return new WaitForSeconds(GunInfoInstance.fireTime);
 
-        if (_currClipCap <= 0)//should never be less than 0
+        if (_curAmmo <= 0)
         {
-            //Debug.Log("Reloading");
-            status = "Reloading";
-            yield return new WaitForSeconds(GunInfoInstance.reloadTime);
-            _currClipCount -= 1;
-            _currClipCap = GunInfoInstance.clipCap;
-            //Debug.Log("Reloaded");
+            _emptyRefillTimer.Value = GunInfoInstance.emptyRefillTime;
+            _emptyRefilling = true;
         }
-
-
-        if (_currClipCount <= 0)//should never be less than 0
-        {
-            //Debug.Log("Refilling");
-            status = "Refilling";
-            yield return new WaitForSeconds(GunInfoInstance.refillTime);
-            _currClipCount = GunInfoInstance.clipCount;
-            //Debug.Log("Refilled");
-        }
-
-        _readyToFire = true;
-        status = "Ready To Fire";
-        //Debug.Log("ended");
-    }
-    public int CurrClipCount()
-    {
-        return _currClipCount;
-    }
-    public int CurrClipCap()
-    {
-        return _currClipCap;
+        
+        _isFiring = false;
     }
 }
