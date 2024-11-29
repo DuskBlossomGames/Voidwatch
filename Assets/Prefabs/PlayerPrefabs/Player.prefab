@@ -5898,6 +5898,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243, type: 3}
   playRadius: 75
   gravitySource: {fileID: 0}
+  audioPlayer: {fileID: 0}
+  PlayerShootLaserGeneric: {fileID: 8300000, guid: 14c32d8e6c5514fbba442fc3b666ef5e, type: 3}
 --- !u!114 &6517574593632805756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5914,6 +5916,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6569384808679381653, guid: def303003056d41c08423a159b65ee18, type: 3}
   playRadius: 75
   gravitySource: {fileID: 0}
+  audioPlayer: {fileID: 0}
+  PlayerShootLaserGeneric: {fileID: 0}
 --- !u!58 &4196548031175783819
 CircleCollider2D:
   m_ObjectHideFlags: 0

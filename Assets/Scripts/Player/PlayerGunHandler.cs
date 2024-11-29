@@ -29,12 +29,14 @@ public class PlayerGunHandler : MonoBehaviour
     private CustomRigidbody2D _rb;
     public AudioSource audioPlayer;
     public AudioClip PlayerShootLaserGeneric;
+    private float _AudioPlayerPitchStatic;
 
     private void Start()
     {
         if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
         _curAmmo = GunInfoInstance.ammoCount;
         _rb = GetComponent<CustomRigidbody2D>();
+        _AudioPlayerPitchStatic = audioPlayer.pitch;
     }
 
     public void Shoot(Vector2 worldMousePos)//returns if could start the shoot coroutine
@@ -131,6 +133,7 @@ public class PlayerGunHandler : MonoBehaviour
                 }
 
             }
+            audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f);
             audioPlayer.PlayOneShot(PlayerShootLaserGeneric);
         }
 

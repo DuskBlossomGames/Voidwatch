@@ -268,10 +268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2894d6ba2614e6f82e3ba795429e268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoCount: 50
-  noShootRefillTime: 1.5
+  ammoCount: 100
+  noShootRefillTime: 1
   emptyRefillTime: 0.5
-  timeToRefillFully: 2
+  timeToRefillFully: 1
   bulletsPerShot: 2
   bulletsPerShotVarience: 0
   fireTime: 0.1

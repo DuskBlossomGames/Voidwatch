@@ -12,7 +12,7 @@ namespace ProgressBars
         {
             _cam = Camera.main;
         }
-        
+
         private void Update()
         {
             transform.rotation = _cam.transform.rotation;
