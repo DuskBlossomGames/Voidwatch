@@ -5835,6 +5835,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
   shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
+  audioPlayer: {fileID: 0}
+  PlayerHitShield: {fileID: 8300000, guid: 1cef1ad2ec7414efbaaa914c0e0b7df7, type: 3}
   godmode: 0
 --- !u!114 &1428599344170491721
 MonoBehaviour:

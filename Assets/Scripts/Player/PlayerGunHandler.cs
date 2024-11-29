@@ -133,7 +133,7 @@ public class PlayerGunHandler : MonoBehaviour
                 }
 
             }
-            audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f);
+            audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
             audioPlayer.PlayOneShot(PlayerShootLaserGeneric);
         }
 
