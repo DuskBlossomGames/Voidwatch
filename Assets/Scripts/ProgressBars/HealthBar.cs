@@ -20,10 +20,11 @@ namespace ProgressBars
 
         private void Update()
         {
+            _opacityPos = Mathf.Clamp01(_opacityPos - 0.7f * Time.deltaTime);
             foreach (var sr in _srs)
             {
                 var color = sr.color;
-                color.a = opacityCurve.Evaluate(_opacityPos -= 0.7f * Time.deltaTime); // magic constant: speed
+                color.a = opacityCurve.Evaluate(_opacityPos); // magic constant: speed
                 sr.color = color;
             }
 
@@ -31,8 +32,6 @@ namespace ProgressBars
             transform.position = transform.parent.position + radius * new Vector3(Mathf.Cos(camAngle) / transform.parent.lossyScale.x,
                 Mathf.Sin(camAngle) / transform.parent.lossyScale.y, 0);
             transform.rotation = _camera.transform.rotation;
-            
-            
         }
 
         public override void UpdatePercentage(float cur, float max)

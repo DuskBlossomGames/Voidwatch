@@ -5296,6 +5296,39 @@ MonoBehaviour:
   quadIIMask: {fileID: 8380990879101399197}
   quadIIIMask: {fileID: 7574062641910099526}
   quadIVMask: {fileID: 5092580433167615517}
+  opacityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.8490565
+      outSlope: 3.8490565
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.041666668
+    - serializedVersion: 3
+      time: 0.90964067
+      value: 0.9854063
+      inSlope: -0.18168122
+      outSlope: -0.18168122
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.9182255
+    - serializedVersion: 3
+      time: 1
+      value: 0.514151
+      inSlope: -8.207553
+      outSlope: -8.207553
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.25331143
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3418487204485194726
 GameObject:
   m_ObjectHideFlags: 0
@@ -5381,8 +5414,6 @@ MonoBehaviour:
   playerMod: 1.5
   trueDamageMod: 1.2
   cooldown: 0.15
-  minExplosionVel: 10
-  explosionObj: {fileID: 1590450694551336149}
 --- !u!1 &5328117465565166959
 GameObject:
   m_ObjectHideFlags: 0

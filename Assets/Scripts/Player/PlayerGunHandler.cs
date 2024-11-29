@@ -53,7 +53,7 @@ public class PlayerGunHandler : MonoBehaviour
         _noShootRefillTimer.Update();
         _emptyRefillTimer.Update();
 
-        if (_noShootRefillTimer.IsFinished || (_emptyRefilling && _emptyRefillTimer.IsFinished))
+        if (_curAmmo < GunInfoInstance.ammoCount && (_noShootRefillTimer.IsFinished || (_emptyRefilling && _emptyRefillTimer.IsFinished)))
         {
             _curAmmo = Mathf.Clamp(_curAmmo + GunInfoInstance.ammoCount / GunInfoInstance.timeToRefillFully * Time.deltaTime, 0, GunInfoInstance.ammoCount);
             ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
