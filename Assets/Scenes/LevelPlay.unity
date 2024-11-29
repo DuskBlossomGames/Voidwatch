@@ -447,9 +447,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 14c32d8e6c5514fbba442fc3b666ef5e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: abc313d8558cb49c4896fc7c829d432d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.15
+  m_Volume: 0.2
   m_Pitch: 0.6
   Loop: 0
   Mute: 0
@@ -2720,7 +2720,7 @@ PrefabInstance:
     - target: {fileID: 7806520410933609926, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: PlayerShootLaserGeneric
       value: 
-      objectReference: {fileID: 8300000, guid: 14c32d8e6c5514fbba442fc3b666ef5e, type: 3}
+      objectReference: {fileID: 8300000, guid: abc313d8558cb49c4896fc7c829d432d, type: 3}
     - target: {fileID: 8279655053268107252, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: dodgeBar
       value: 

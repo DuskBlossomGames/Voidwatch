@@ -5899,7 +5899,7 @@ MonoBehaviour:
   playRadius: 75
   gravitySource: {fileID: 0}
   audioPlayer: {fileID: 0}
-  PlayerShootLaserGeneric: {fileID: 8300000, guid: 14c32d8e6c5514fbba442fc3b666ef5e, type: 3}
+  PlayerShootLaserGeneric: {fileID: 8300000, guid: abc313d8558cb49c4896fc7c829d432d, type: 3}
 --- !u!114 &6517574593632805756
 MonoBehaviour:
   m_ObjectHideFlags: 0
