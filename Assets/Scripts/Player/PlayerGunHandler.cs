@@ -13,18 +13,12 @@ using Random = UnityEngine.Random;
 public class PlayerGunHandler : MonoBehaviour
 {
     public ProgressBar ammoBar;
-    
+
     public GameObject bulletPrefab;
     public float playRadius;
     public GameObject gravitySource;
-<<<<<<< HEAD
 
-    private int _currClipCount;
-    private int _currClipCap;
-=======
-    
     private float _curAmmo;
->>>>>>> 8aa6cc4b555155095e4e8db0e12c79f59e79e33a
 
     private readonly Timer _noShootRefillTimer = new();
     private readonly Timer _emptyRefillTimer = new();
@@ -47,7 +41,7 @@ public class PlayerGunHandler : MonoBehaviour
     {
         _emptyRefilling &= _curAmmo < GunInfoInstance.ammoCount;
         if (_isFiring || _curAmmo <= 0 || _emptyRefilling) return;
-        
+
         _mPos = worldMousePos;
         StartCoroutine(_Fire());
     }
@@ -71,7 +65,7 @@ public class PlayerGunHandler : MonoBehaviour
     IEnumerator _Fire()
     {
         _noShootRefillTimer.Value = GunInfoInstance.noShootRefillTime;
-        
+
         _isFiring = true;
 
         Vector2 mVel = Vector2.zero;
@@ -102,7 +96,7 @@ public class PlayerGunHandler : MonoBehaviour
             int bullets = Mathf.Min((int) _curAmmo, evt.bulletsPerShot + Random.Range(-evt.bulletsPerShotVarience, evt.bulletsPerShotVarience + 1));
             _curAmmo -= bullets;
             ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
-            
+
             for (int i = 0; i < bullets; i++)
             {
                 float latOff, verOff;
@@ -147,7 +141,7 @@ public class PlayerGunHandler : MonoBehaviour
             _emptyRefillTimer.Value = GunInfoInstance.emptyRefillTime;
             _emptyRefilling = true;
         }
-        
+
         _isFiring = false;
     }
 }
