@@ -12,7 +12,7 @@ public class PlayerGunHandler : MonoBehaviour
     public GameObject bulletPrefab;
     public float playRadius;
     public GameObject gravitySource;
-    
+
     private int _currClipCount;
     private int _currClipCap;
 
@@ -22,7 +22,9 @@ public class PlayerGunHandler : MonoBehaviour
 
     private Upgradeable _upgradeable;
     private CustomRigidbody2D _rb;
-    
+    public AudioSource audioPlayer;
+    public AudioClip PlayerShootLaserGeneric;
+
     private void Start()
     {
         if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
@@ -116,11 +118,14 @@ public class PlayerGunHandler : MonoBehaviour
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
                     bullet.GetComponent<BulletCollision>().dmg = GunInfoInstance.dmgMod;
                     bullet.GetComponent<BulletCollision>().owner = gameObject;
+
+
                 }
 
             }
+            audioPlayer.PlayOneShot(PlayerShootLaserGeneric);
         }
-        
+
         yield return new WaitForSeconds(GunInfoInstance.fireTime);
 
         if (_currClipCap <= 0)//should never be less than 0
