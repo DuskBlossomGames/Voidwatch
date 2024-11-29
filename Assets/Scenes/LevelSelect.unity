@@ -3420,6 +3420,7 @@ MonoBehaviour:
   maxPlanetConnections: 4
   minBossStartDist: 7
   minBossShopDist: 7
+  minEliteDist: 3
   minElites: 1
   maxElites: 3
   minEligibleBosses: 3

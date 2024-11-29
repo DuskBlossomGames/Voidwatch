@@ -24,7 +24,7 @@ namespace LevelSelect
         public int mapGridSize;
         public int minLevels, avgLevels, expScale;
         public int minPlanetConnections, maxPlanetConnections;
-        public int minBossStartDist, minBossShopDist;
+        public int minBossStartDist, minBossShopDist, minEliteDist;
         public int minElites, maxElites;
         public int minEligibleBosses;
         
@@ -186,9 +186,13 @@ namespace LevelSelect
             
             for (var i = 0; i < Random.Range(minElites, maxElites); i++)
             {
-                var eliteIdx = Random.Range(1, levels.Count-2);
-                if (eliteIdx >= Mathf.Min(stationIdx, bossPlanet)) eliteIdx++;
-                if (eliteIdx >= Mathf.Max(stationIdx, bossPlanet)) eliteIdx++;
+                int eliteIdx;
+                do
+                {
+                    eliteIdx = Random.Range(1, levels.Count - 2);
+                    if (eliteIdx >= Mathf.Min(stationIdx, bossPlanet)) eliteIdx++;
+                    if (eliteIdx >= Mathf.Max(stationIdx, bossPlanet)) eliteIdx++;
+                } while ((MapUtil.GetShortestPath(levels.ToArray(), levels[eliteIdx], levels[0].WorldPosition)?.Length ?? 0) < minEliteDist);
 
                 levels[eliteIdx].Type = LevelType.Elite;
             }
