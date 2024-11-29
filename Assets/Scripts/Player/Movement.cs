@@ -50,6 +50,9 @@ namespace Player
         private OrbitState _orbitState;
         
         private bool _redirectDodge;
+        private bool _redirected;
+        private bool _stealthKeyUp;
+        private Vector2 _redirectDirection;
         private float _dodgeTimeLength;
         private float _dodgeJuice;
         private readonly Timer _dodgeTimer = new();
@@ -82,7 +85,13 @@ namespace Player
 
         private void Update()
         {
-            _redirectDodge |= GetKeyDown(KeyCode.Space) && _dodgeTimer.Progress <= dodgeRedirectPercentage;
+            if (!_stealthKeyUp && !_dodgeTimer.IsFinished && Input.GetKeyUp(KeyCode.Space)) _stealthKeyUp = true;
+            
+            if (_stealthKeyUp && !_redirectDodge && GetKeyDown(KeyCode.Space))
+            {
+                _redirectDodge = true;
+                _redirectDirection = new Vector2(_forwards.x, _forwards.y);
+            }
         }
 
         private void FixedUpdate()
@@ -111,16 +120,17 @@ namespace Player
                 _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
             }
 
-            var wasFirstHalf = _dodgeTimer.Progress > dodgeRedirectPercentage;
             var wasDodging = !_dodgeTimer.IsFinished;
             _dodgeTimer.FixedUpdate();
             _dodgeCooldownTimer.FixedUpdate();
             _afterImageTimer.FixedUpdate();
             var dodging = !_dodgeTimer.IsFinished;
 
-            if (_dodgeTimer.Progress <= dodgeRedirectPercentage && wasFirstHalf && _redirectDodge)
+            if (1-_dodgeTimer.Progress >= dodgeRedirectPercentage && !_redirected && _redirectDodge)
             {
-                _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
+                _redirected = true;
+                _dodgeTimer.SetValue(_dodgeTimeLength / 2);
+                _dodgeDirection = _redirectDirection;
             } 
 
 
@@ -163,7 +173,7 @@ namespace Player
             {
                 _afterImages.ForEach(Destroy);
                 _afterImages.Clear();
-                _redirectDodge = false;
+                _redirectDodge = _redirected = _stealthKeyUp = false;
 
                 velocity = _forwards * _preDodgeVel.magnitude;
             }
