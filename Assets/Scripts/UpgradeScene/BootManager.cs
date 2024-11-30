@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Reflection;
-using Static_Info;
+using static Static_Info.PlayerData;
 
 public class BootManager : MonoBehaviour
 {
+    public string destination;
     void Start()
     {
-        SceneManager.LoadScene("LevelSelect");
+        PlayerDataInstance.Health = PlayerDataInstance.playerMaxHealth;
+        SceneManager.LoadScene(destination);
     }
 }
 

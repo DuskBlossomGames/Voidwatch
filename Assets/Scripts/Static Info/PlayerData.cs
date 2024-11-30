@@ -15,7 +15,12 @@ namespace Static_Info
         public System.Collections.Generic.List<BaseComponent> weapons;
         
         [NonSerialized] public System.Collections.Generic.List<UpgradeInstance> Upgrades;
-        [NonSerialized] public float? Health = null;
+        [NonSerialized] public float Health;
         [NonSerialized] public float Scrap;
+
+        [NonSerialized] public short healthBoosts = 0;
+        [NonSerialized] public short damageBoosts = 0;
+        [NonSerialized] public short speedBoosts = 0;
+        
     }
 }

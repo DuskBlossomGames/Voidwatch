@@ -42,7 +42,7 @@ public class UpgradePlayer
                 PlayerDataInstance.playerMaxShield = Mathf.CeilToInt(2f * PlayerDataInstance.playerMaxHealth);
                 PlayerDataInstance.playerMaxShieldDebt *= .2f;
                 PlayerDataInstance.playerMaxHealth = Mathf.CeilToInt(.7f * PlayerDataInstance.playerMaxHealth);
-                PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health.Value, PlayerDataInstance.playerMaxHealth);
+                PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.playerMaxHealth);
                 break;
         }
     }
