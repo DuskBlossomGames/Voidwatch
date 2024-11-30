@@ -5836,7 +5836,8 @@ MonoBehaviour:
   shieldBar: {fileID: 0}
   shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
   audioPlayer: {fileID: 0}
-  PlayerHitShield: {fileID: 8300000, guid: 1cef1ad2ec7414efbaaa914c0e0b7df7, type: 3}
+  PlayerHitShield: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
+  PlayerHitDamage: {fileID: 8300000, guid: a5ac4e7b3681b458a894b4481f2fb3da, type: 3}
   godmode: 0
 --- !u!114 &1428599344170491721
 MonoBehaviour:

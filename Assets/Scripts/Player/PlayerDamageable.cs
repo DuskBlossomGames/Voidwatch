@@ -28,6 +28,7 @@ namespace Spawnables.Player
         public AudioClip PlayerHitShield;
         private float _AudioPlayerShieldVolumeStatic;
         private float _AudioPlayerPitchStatic;
+        public AudioClip PlayerHitDamage;
 
         public bool godmode = false;
 
@@ -118,6 +119,14 @@ namespace Spawnables.Player
                 if (ShieldPower < 0)
                 {
                     bleed += damage;
+                    audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+                    audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
+
+                    audioPlayer.PlayOneShot(PlayerHitShield);
+                    audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
+                    audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
+                    audioPlayer.PlayOneShot(PlayerHitDamage);
+                    Debug.Log("AUDIO PLAYED!!");
                 }
                 else
                 {
@@ -139,7 +148,6 @@ namespace Spawnables.Player
                     audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
                     audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
                     audioPlayer.PlayOneShot(PlayerHitShield);
-                    Debug.Log("AUDIO PLAYED!!");
 
                 }
             }
