@@ -7,7 +7,7 @@ namespace ProgressBars
     {
         private RectMask2D _mask;
         
-        public void Start()
+        public void Awake()
         {
             _mask = transform.GetChild(transform.childCount-1).GetComponent<RectMask2D>();
         }

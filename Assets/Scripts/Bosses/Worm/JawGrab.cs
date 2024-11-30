@@ -35,7 +35,8 @@ namespace Bosses.Worm
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            _player.GetComponent<Player.Movement>().inputBlocked = false;
+            if (!other.TryGetComponent<Player.Movement>(out var movement)) return;
+            movement.inputBlocked = false;
             _player.GetComponent<CustomRigidbody2D>().velocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
             _holdTimer.Value = 0;
             _player = null;
