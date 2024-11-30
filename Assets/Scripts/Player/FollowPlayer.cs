@@ -17,6 +17,8 @@ namespace Player
         public float camLaziness = 1f;
 
         [NonSerialized] public bool Enabled = true;
+
+        public bool suppres = false;
         
         private Vector3 _camOffset;
         
@@ -65,10 +67,12 @@ namespace Player
             
             var playerPos = new Vector3(playerPosition.x, playerPosition.y, cameraPosition.z);
             var mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            if (suppres) mousePos = playerPos;
             var mouseToPlayer = mousePos - playerPos;
             var sqM = (mouseToPlayer - (cameraPosition - playerPos)).sqrMagnitude/camLaziness;
             var mouseInf = mouseToPlayer.sqrMagnitude / 10;
             var scale = (sqM + mouseInf) / (1 + sqM + mouseInf);
+            if (suppres) scale = 1;
             //camOffset = Lerp((transform.position - playerpos), mouse2player * shipPull, jump * scale);
 
             //transform.position = playerpos + camOffset;

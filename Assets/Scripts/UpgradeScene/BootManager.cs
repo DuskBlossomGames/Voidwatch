@@ -11,7 +11,7 @@ public class BootManager : MonoBehaviour
     public string destination;
     void Start()
     {
-        PlayerDataInstance.Health = PlayerDataInstance.playerMaxHealth;
+        PlayerDataInstance.Health = PlayerDataInstance.maxHealth;
         SceneManager.LoadScene(destination);
     }
 }

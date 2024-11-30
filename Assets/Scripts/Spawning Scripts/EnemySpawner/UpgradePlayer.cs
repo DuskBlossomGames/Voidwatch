@@ -38,11 +38,11 @@ public class UpgradePlayer
                 PlayerDataInstance.shieldRegenRate *= 1.5f;
                 break;
             case Upgrades.Overcharge: //Decrease health, decrease debt, massively increase regen and shields
-                PlayerDataInstance.playerShieldRegenRate *= 2f;
-                PlayerDataInstance.playerMaxShield = Mathf.CeilToInt(2f * PlayerDataInstance.playerMaxHealth);
-                PlayerDataInstance.playerMaxShieldDebt *= .2f;
-                PlayerDataInstance.playerMaxHealth = Mathf.CeilToInt(.7f * PlayerDataInstance.playerMaxHealth);
-                PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.playerMaxHealth);
+                PlayerDataInstance.shieldRegenRate *= 2f;
+                PlayerDataInstance.maxShield = Mathf.CeilToInt(2f * PlayerDataInstance.maxHealth);
+                PlayerDataInstance.maxShieldDebt *= .2f;
+                PlayerDataInstance.maxHealth = Mathf.CeilToInt(.7f * PlayerDataInstance.maxHealth);
+                PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.maxHealth);
                 break;
         }
     }
