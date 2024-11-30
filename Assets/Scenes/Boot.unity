@@ -229,11 +229,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2000
-  maxShield: 200
-  shieldRegenRate: 50
+  maxShield: 350
+  shieldRegenRate: 30
   maxShieldDebt: 500
   maxDodgeJuice: 100
-  dodgeJuiceRegenRate: 25
+  dodgeJuiceRegenRate: 20
   weapons:
   - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
   - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
