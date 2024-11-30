@@ -48,7 +48,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -126,7 +126,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb7bd7146a74fd896cd4a3fdcdda9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 500
+  damage: 300
 --- !u!1 &604200661684765982
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,20 +753,20 @@ TrailRenderer:
       serializedVersion: 2
       key0: {r: 0.8207547, g: 0.15098791, b: 0.26974618, a: 1}
       key1: {r: 0.8207547, g: 0.15098791, b: 0.26974618, a: 1}
-      key2: {r: 1, g: 1, b: 1, a: 1}
-      key3: {r: 1, g: 1, b: 1, a: 0}
-      key4: {r: 1, g: 0.9771088, b: 0.7877358, a: 0}
-      key5: {r: 1, g: 0.9156661, b: 0.7216981, a: 0}
-      key6: {r: 1, g: 0.695505, b: 0.5613208, a: 0}
-      key7: {r: 1, g: 0.4292453, b: 0.4292453, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 1}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 44525
-      ctime3: 16384
-      ctime4: 31226
-      ctime5: 43176
-      ctime6: 57632
-      ctime7: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
       atime0: 13878
       atime1: 15998
       atime2: 19468
@@ -776,7 +776,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 1
-      m_ColorSpace: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 3
     numCornerVertices: 0
@@ -1673,7 +1673,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2017,7 +2017,7 @@ MonoBehaviour:
   texture: {fileID: 2800000, guid: 56d5e5933486345bab95fca6a0a7d972, type: 3}
   mouthTimeToOpen: 0.6
   stealthOpacity: 0.075
-  stackedStealthOpacity: 0.025
+  stackedStealthOpacity: 0.03
   opacityTime: 0.6
   accel: 15
   maxSpeed: 40
@@ -2032,7 +2032,7 @@ MonoBehaviour:
   destealthRadius: 22.5
   attackAccel: 8
   attackSpeed: 20
-  attackRadius: 5
+  attackRadius: 10
   editorNote: Cutscene Variables
   fadeInTime: 1.7
   waitTime: 0.3
@@ -2067,6 +2067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawner: {fileID: 0}
+  type: 1
 --- !u!114 &2306016957590154251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2080,39 +2081,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  heathOpacityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 3.8490565
-      outSlope: 3.8490565
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.041666668
-    - serializedVersion: 3
-      time: 0.90964067
-      value: 0.9854063
-      inSlope: -0.18168122
-      outSlope: -0.18168122
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.9182255
-    - serializedVersion: 3
-      time: 1
-      value: 0.514151
-      inSlope: -8.207553
-      outSlope: -8.207553
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.25331143
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   dmgRes: {fileID: 11400000, guid: de2060ee01175134cab3ccc903df4371, type: 2}
   maxHealth: 1200
   varientParent: {fileID: 0}
@@ -2164,7 +2132,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2292,7 +2260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74c5f96adc3b43b186640faf72bf047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 40
+  length: 45
   degredation: 1
   degredationMagnitude: 0.02
   masterRigidity: 1
@@ -2313,7 +2281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8484135e5b4284355a2396bc274034dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 40
+  length: 45
   targetDist: 0.2
   smoothSpeed: 0.8
   rotSpeed: 0.02
@@ -3505,7 +3473,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3784,7 +3752,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3825,7 +3793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb7bd7146a74fd896cd4a3fdcdda9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 500
+  damage: 300
 --- !u!1 &7179891106518875428
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,7 +4149,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -4290,7 +4258,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 261111
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -4678,7 +4646,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -4872,7 +4840,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 261111
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

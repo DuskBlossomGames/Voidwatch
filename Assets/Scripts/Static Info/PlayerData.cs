@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Util;
 
 namespace Static_Info
@@ -8,10 +9,12 @@ namespace Static_Info
     {
         public static PlayerData PlayerDataInstance => StaticInfoHolder.instance.GetCachedComponent<PlayerData>();
         
-        public int playerMaxHealth;
-        public float playerMaxShield;
-        public float playerShieldRegenRate;
-        public float playerMaxShieldDebt;
+        public int maxHealth;
+        public float maxShield;
+        public float shieldRegenRate;
+        public float maxShieldDebt;
+        public float maxDodgeJuice;
+        public float dodgeJuiceRegenRate;
         public System.Collections.Generic.List<BaseComponent> weapons;
         
         [NonSerialized] public System.Collections.Generic.List<UpgradeInstance> Upgrades;

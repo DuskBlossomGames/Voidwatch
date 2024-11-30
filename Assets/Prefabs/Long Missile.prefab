@@ -339,6 +339,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   maxHealth: 10
+  varientParent: {fileID: 0}
 --- !u!114 &5345334240102758022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5212,8 +5213,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 84c03ae98e9643e4c91d4aef5879ea05, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.1
+  m_Pitch: 0.7
   Loop: 0
   Mute: 0
   Spatialize: 0

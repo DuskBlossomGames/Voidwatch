@@ -25,17 +25,17 @@ public class UpgradePlayer
                 GunInfoInstance.lateralSeperation *= 1.1f;
                 break;
             case Upgrades.Solidify: //general health boost
-                PlayerDataInstance.playerMaxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.playerMaxHealth);
-                PlayerDataInstance.Health += Mathf.CeilToInt(0.1f * PlayerDataInstance.playerMaxHealth);
-                PlayerDataInstance.playerMaxShield = Mathf.CeilToInt(1.05f * PlayerDataInstance.playerMaxShield);
+                PlayerDataInstance.maxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
+                PlayerDataInstance.Health += Mathf.CeilToInt(0.1f * PlayerDataInstance.maxHealth);
+                PlayerDataInstance.maxShield = Mathf.CeilToInt(1.05f * PlayerDataInstance.maxShield);
                 break;
             case Upgrades.Tank: //Shield boost but reduce regen
-                PlayerDataInstance.playerMaxShield = Mathf.CeilToInt(1.2f * PlayerDataInstance.playerMaxHealth);
-                PlayerDataInstance.playerMaxShieldDebt *= 1.5f;
-                PlayerDataInstance.playerShieldRegenRate *= .8f;
+                PlayerDataInstance.maxShield = Mathf.CeilToInt(1.2f * PlayerDataInstance.maxHealth);
+                PlayerDataInstance.maxShieldDebt *= 1.5f;
+                PlayerDataInstance.shieldRegenRate *= .8f;
                 break;
             case Upgrades.Surge: //Increase shield regen speed
-                PlayerDataInstance.playerShieldRegenRate *= 1.5f;
+                PlayerDataInstance.shieldRegenRate *= 1.5f;
                 break;
             case Upgrades.Overcharge: //Decrease health, decrease debt, massively increase regen and shields
                 PlayerDataInstance.playerShieldRegenRate *= 2f;

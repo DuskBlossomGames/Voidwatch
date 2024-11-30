@@ -48,7 +48,7 @@ MonoBehaviour:
   speed: 1
   target: {fileID: 0}
   rigidity: 20
-  segLength: 1
+  segLength: 1.4
 --- !u!212 &736833534224875852
 SpriteRenderer:
   m_ObjectHideFlags: 0

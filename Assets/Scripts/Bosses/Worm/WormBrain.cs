@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using ProgressBars;
 using Unity.VersionControl.Git.ICSharpCode.SharpZipLib.Zip;
 using UnityEditor;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Bosses.Worm
 {
     public class WormBrain : MonoBehaviour
     {
+        public ProgressBar bossBar;
+        
         public GameObject head, middle, tail;
         public int middleLength;
         public SnakePathfinder pathfinder;
@@ -106,8 +109,12 @@ namespace Bosses.Worm
         public Transform portalIn;
         public Transform portalOut;
 
+        private int _eyesAlive;
+        
         private void Start()
         {
+            _eyesAlive = 2 * middleLength;
+            
             _tailController = GetComponentInChildren<TailController>();
 
             _ouroborosProgressTimer = new Timer();
@@ -163,6 +170,14 @@ namespace Bosses.Worm
 
             _headRigid = head.GetComponent<Rigidbody2D>();
             _moveMode = MoveMode.Wander;
+        }
+
+        public void EyeDead()
+        {
+            _eyesAlive--;
+            if (_eyesAlive == 0) _isStageTwo = true;
+
+            bossBar.UpdatePercentage(middleLength*2 + _eyesAlive, middleLength * 4);
         }
 
         private void Update()
@@ -254,13 +269,13 @@ namespace Bosses.Worm
                             exportals = Random.Range(0, 0);
                             SpawnPortal();
                             break;
-                        case < .50f:
+                        case < .25f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
                             _actionUtilTimer.Value = Random.Range(5f, 10f);
                             break;
 
-                        case < 1.0f:
+                        case < .5f:
                             /*Do Tailspike*/
                             actionGoal = ActionGoal.Tailspike;
                             _actionUtilTimer.Value = Random.Range(1f, 4f);

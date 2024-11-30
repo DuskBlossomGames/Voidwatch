@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
@@ -20,7 +21,7 @@ namespace Spawnables.Carcadon
 
         public void Spit(float duration)
         {
-            _active.Value = duration - travelTime; // last ones should finish by end of duration
+            _active.Value = duration;
         }
         
         private Dictionary<GameObject, float> _spawned = new();
@@ -38,14 +39,20 @@ namespace Spawnables.Carcadon
                 obj.transform.localScale = new Vector3(Random.Range(minWidth, maxWidth), Random.Range(minHeight, maxHeight), 1);
                 obj.transform.position = transform.position;
                 obj.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, Random.Range(minAngle, maxAngle));
-                obj.GetComponent<SpitFade>().TimeToLive = travelTime;
+                obj.GetComponent<FadeToDeath>().TimeToLive = travelTime;
                 obj.SetActive(true);
                 
                 _spawned.Add(obj, Random.Range(minSpeed, maxSpeed) * Time.deltaTime);
             }
-
-            foreach (var kvp in _spawned)
+            
+            foreach (var kvp in new Dictionary<GameObject, float>(_spawned))
             {
+                if (kvp.Key == null)
+                {
+                    _spawned.Remove(kvp.Key);
+                    continue;
+                }
+                
                 kvp.Key.transform.position += kvp.Value * kvp.Key.transform.up;
             }
         }

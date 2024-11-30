@@ -228,10 +228,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c74f9719304183a13de893beefbc24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMaxHealth: 2000
-  playerMaxShield: 200
-  playerShieldRegenRate: 50
-  playerMaxShieldDebt: 500
+  maxHealth: 2000
+  maxShield: 200
+  shieldRegenRate: 50
+  maxShieldDebt: 500
+  maxDodgeJuice: 100
+  dodgeJuiceRegenRate: 25
   weapons:
   - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
   - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
@@ -267,13 +269,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2894d6ba2614e6f82e3ba795429e268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clipCount: 5
-  clipCap: 100
+  ammoCount: 100
+  noShootRefillTime: 1
+  emptyRefillTime: 0.5
+  timeToRefillFully: 1
   bulletsPerShot: 2
   bulletsPerShotVarience: 0
   fireTime: 0.1
-  reloadTime: 1
-  refillTime: 1
   shotForce: 2125
   forceVarience: 5
   lateralSeperation: 20
