@@ -46,4 +46,28 @@ public class UpgradePlayer
                 break;
         }
     }
+
+    public static string UpName(Upgrades upgrade)
+    {
+        return upgrade switch
+        {
+            Upgrades.Wave => "Waveshot",
+            Upgrades.Solidify => "Solidify",
+            Upgrades.Tank => "Tank",
+            Upgrades.Surge => "Surge",
+            Upgrades.Overcharge => "Overcharge",
+        };
+    }
+
+    public static string UpBody(Upgrades upgrade)
+    {
+        return upgrade switch
+        {
+            Upgrades.Wave => "+ Bullets\n+ Spread",
+            Upgrades.Solidify => "+ Health\n+ Shield",
+            Upgrades.Tank => "+ Health\n+ Debt\n- Shield",
+            Upgrades.Surge => "++ Recharge",
+            Upgrades.Overcharge => "+++ Recharge\n+++ Shield\n---- Debt\n-- Health",
+        };
+    }
 }

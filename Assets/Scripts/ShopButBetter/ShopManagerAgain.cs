@@ -70,9 +70,23 @@ public class ShopManagerAgain : MonoBehaviour
         mbut.text = $"67% Repair\n{_repairs[1]:# ### ###} SCRAP";
         rbut.text = $"Full Repair\n{_repairs[2]:# ### ###} SCRAP";
 
-        hbo.text = $"Lvl {_roman[PDI.healthBoosts]}: +{boostPercentages[PDI.healthBoosts]}%\n{boostCost} SCRAP";
-        wbo.text = $"Lvl {_roman[PDI.damageBoosts]}: +{boostPercentages[PDI.damageBoosts]}%\n{boostCost} SCRAP";
-        sbo.text = $"Lvl {_roman[PDI.speedBoosts]}: +{boostPercentages[PDI.speedBoosts]}%\n{boostCost} SCRAP";
+        if (PDI.healthBoosts < 5) {
+            hbo.text = $"Lvl {_roman[PDI.healthBoosts]}: +{boostPercentages[PDI.healthBoosts]}%\n{boostCost} SCRAP";
+        } else {
+            hbo.text = $"Max Lvl";
+        }
+
+        if (PDI.healthBoosts < 5) {
+            wbo.text = $"Lvl {_roman[PDI.damageBoosts]}: +{boostPercentages[PDI.damageBoosts]}%\n{boostCost} SCRAP";
+        } else {
+            wbo.text = $"Max Lvl";
+        }
+
+        if (PDI.healthBoosts < 5) {
+            sbo.text = $"Lvl {_roman[PDI.speedBoosts]}: +{boostPercentages[PDI.speedBoosts]}%\n{boostCost} SCRAP";
+        } else {
+            sbo.text = $"Max Lvl";
+        }
     }
 
 
@@ -113,7 +127,7 @@ public class ShopManagerAgain : MonoBehaviour
         var PDI = PlayerDataInstance;
         if (PDI.healthBoosts >= 5 || PDI.Scrap < boostCost) return;
         float per = PDI.Health / PDI.maxHealth;
-        PDI.maxHealth *= Mathf.CeilToInt(1f + boostPercentages[PDI.healthBoosts] / 100f);
+        PDI.maxHealth = Mathf.CeilToInt(PDI.maxHealth * (1f + boostPercentages[PDI.healthBoosts] / 100f));
         PDI.Health = PDI.maxHealth * per;
         PDI.healthBoosts += 1;
         PDI.Scrap -= boostCost;
@@ -123,7 +137,7 @@ public class ShopManagerAgain : MonoBehaviour
     {
         var PDI = PlayerDataInstance;
         if (PDI.damageBoosts >= 5 || PDI.Scrap < boostCost) return;
-        GunInfoInstance.dmgMod *= Mathf.CeilToInt(1f + boostPercentages[PDI.damageBoosts] / 100f);
+        GunInfoInstance.dmgMod *= 1f + boostPercentages[PDI.damageBoosts] / 100f;
         PDI.damageBoosts += 1;
         PDI.Scrap -= boostCost;
     }

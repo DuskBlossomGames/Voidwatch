@@ -13,6 +13,7 @@ namespace Player
     public class Movement : MonoBehaviour
     {
         public bool inputBlocked;
+        public bool autoPilot;
 
         public float driftCorrection;
         public float speedLimit;
@@ -200,11 +201,13 @@ namespace Player
                     _velocity = _or
                 }*/
 
-            } else if (GetKey(KeyCode.S)) {
+            } else if (GetKey(KeyCode.S) || autoPilot) {
                 velocity *= Mathf.Pow(.2f, Time.fixedDeltaTime);
             } else {
                 _acceleration = 0;
             }
+
+            if (autoPilot && ((Vector2)transform.position).sqrMagnitude > 60 * 60) velocity -= (Vector2)transform.position * (2 * Time.fixedDeltaTime);
 
             if (velocity.sqrMagnitude > speedLimit * speedLimit)
             {

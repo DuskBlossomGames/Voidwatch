@@ -43,6 +43,8 @@ namespace EnemySpawner
         public float levelTimer = 0.0f;
         public bool dataWritingOn = true;
 
+        public NewUpgradeManager nUpMan;
+
         private void Awake()
         {
             _isTerminal = false;
@@ -123,8 +125,10 @@ namespace EnemySpawner
                 _timeTillExit -= Time.deltaTime;
                 if (_timeTillExit < 0)
                 {
+                    _timeTillExit = 10000000000000000f;
                     // UpgradePlayer.Upgrade(gun, playerDamager, UpgradePlayer.Upgrades.Overcharge);
-                    SceneManager.LoadScene("LevelSelect");
+                    nUpMan.Show();
+                    //SceneManager.LoadScene("LevelSelect");
                 }
                 return;
             }

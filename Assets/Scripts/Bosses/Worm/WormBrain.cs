@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using ProgressBars;
-using Unity.VersionControl.Git.ICSharpCode.SharpZipLib.Zip;
+//using Unity.VersionControl.Git.ICSharpCode.SharpZipLib.Zip;
 using UnityEditor;
 using UnityEngine;
 using Util;

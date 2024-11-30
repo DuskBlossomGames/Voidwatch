@@ -93,7 +93,7 @@ namespace LevelSelect
                 // assumes 5 indicators that go from empty to half to full
                 var difficulty = (int) (level!.DifficultyScore / LevelSelectDataInstance.MaxDifficultyScore * 10) / 2f;
                 Debug.Log("score: " + level!.DifficultyScore + " / " + LevelSelectDataInstance.MaxDifficultyScore+" ("+difficulty+")");
-                var loot = level!.Loot / 4 / 2f;
+                var loot = level!.Loot / 16 / 2f;
 
                 for (var i = 0; i < 5; i++)
                 {

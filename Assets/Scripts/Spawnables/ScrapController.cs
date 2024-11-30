@@ -46,7 +46,8 @@ public class ScrapController : MonoBehaviour
 
         if(4 * _crb.velocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude)
         {
-            PlayerDataInstance.Scrap += value;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<ScrapDisplayController>().Collect(value);
+            //PlayerDataInstance.Scrap += value;
             Destroy(gameObject);
         }
     }
