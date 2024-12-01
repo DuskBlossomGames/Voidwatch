@@ -74,6 +74,7 @@ namespace Spawnables.Player
 
         private void Update()
         {
+          
             ShieldPower = Mathf.Clamp(ShieldPower + ShieldRegenRate * Time.deltaTime, -ShieldMaxDebt, ShieldMaxPower);
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
         }
