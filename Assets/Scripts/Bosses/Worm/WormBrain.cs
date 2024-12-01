@@ -1,16 +1,13 @@
 using System;
 using System.Collections;
-using System.Linq;
 using System.Collections.Generic;
-using System.Net;
-using JetBrains.Annotations;
+using System.Linq;
+using Player;
 using ProgressBars;
 using Spawnables;
-using TMPro;
-//using Unity.VersionControl.Git.ICSharpCode.SharpZipLib.Zip;
-using UnityEditor;
 using UnityEngine;
 using Util;
+//using Unity.VersionControl.Git.ICSharpCode.SharpZipLib.Zip;
 using Random = UnityEngine.Random;
 
 namespace Bosses.Worm
@@ -85,7 +82,7 @@ namespace Bosses.Worm
         }
         public MoveMode _moveMode;
         public ActionGoal actionGoal;
-        private Util.Timer _actionUtilTimer;
+        private Timer _actionUtilTimer;
         private Timer _teleportTimer = new();
         public bool _isStageTwo = false;
 
@@ -100,7 +97,7 @@ namespace Bosses.Worm
         List<PortalPair> _portals = new();
         List<int> _portalIDs = new();
 
-        public int secondsPerSummon;
+        public float secondsPerSummon;
         private SummonWorm[] _wormSummoners;
         private Timer _summonTimer;
 
@@ -122,7 +119,7 @@ namespace Bosses.Worm
 
             _jawGrab = GetComponentInChildren<JawGrab>();
 
-            _actionUtilTimer = new Util.Timer();
+            _actionUtilTimer = new Timer();
             actionGoal = ActionGoal.Idle;
             _segments = new GameObject[middleLength + 2];
 
@@ -180,6 +177,13 @@ namespace Bosses.Worm
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.RightBracket))
+            {
+                foreach (var dmgable in GetComponentsInChildren<Damageable>())
+                {
+                    dmgable.Damage(float.PositiveInfinity, IDamageable.DmgType.Black, 0); // kill, triggering OnDeath
+                }
+            }
 
             UpdateMovement();
 
@@ -190,7 +194,7 @@ namespace Bosses.Worm
             {
                 _speed = Mathf.Clamp(_speed + 10 * Time.deltaTime * MathF.Sign(_tarSpeed - _speed), Mathf.Min(_speed, _tarSpeed), Mathf.Max(_speed, _tarSpeed));
                 pathfinder.snakeyness = Mathf.Clamp(_snakiness + .1f * Time.deltaTime * MathF.Sign(_tarSnakines - _snakiness), Mathf.Min(_snakiness, _tarSnakines), Mathf.Max(_snakiness, _tarSnakines));
-                maxTurnAngleDeg = Mathf.Clamp(maxTurnAngleDeg + 10 * Time.deltaTime * MathF.Sign(_tarTurnAngle - maxTurnAngleDeg), Mathf.Min(maxTurnAngleDeg, _tarTurnAngle), Mathf.Max(maxTurnAngleDeg, _tarTurnAngle));
+                maxTurnAngleDeg = Mathf.Clamp(maxTurnAngleDeg + 40 * Time.deltaTime * MathF.Sign(_tarTurnAngle - maxTurnAngleDeg), Mathf.Min(maxTurnAngleDeg, _tarTurnAngle), Mathf.Max(maxTurnAngleDeg, _tarTurnAngle));
             }
 
             if (!_isStageTwo)
@@ -243,9 +247,7 @@ namespace Bosses.Worm
                     }
                 }
             }
-
-            //actionGoal = ActionGoal.Burrow;
-
+            
             _actionUtilTimer.Update();
             if (_actionUtilTimer.IsFinished)
             {
@@ -265,7 +267,7 @@ namespace Bosses.Worm
                         case < .20f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
-                            _actionUtilTimer.Value = Random.Range(5f, 10f);
+                            _actionUtilTimer.Value = Random.Range(12f, 18f);
 
                             portalable = true;
                             break;
@@ -296,10 +298,10 @@ namespace Bosses.Worm
                     bool portalable = false;
                     switch (rand)
                     {
-                        case < .15f:
+                        // case < .15f:
                             /*Do Central laser*/
-                            goto default;
-                        case < .45f:
+                            // goto default;
+                        case < 0.69f://.45f:
                             /*Do Ouroboros*/
                             actionGoal = ActionGoal.Ouroboros;
                             _actionUtilTimer.Value = ouroborosTime;
@@ -313,7 +315,7 @@ namespace Bosses.Worm
                         case < .70f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
-                            _actionUtilTimer.Value = Random.Range(5f, 10f);
+                            _actionUtilTimer.Value = Random.Range(12f, 18f);
                             
                             portalable = true;
                             break;
@@ -345,7 +347,7 @@ namespace Bosses.Worm
             switch (actionGoal)
             {
                 case ActionGoal.Rush:
-                    if (player.GetComponent<Player.Movement>().inputBlocked)
+                    if (player.GetComponent<Movement>().inputBlocked)
                     {
                         actionGoal = ActionGoal.Idle;
                         goto case ActionGoal.Idle;
@@ -375,7 +377,7 @@ namespace Bosses.Worm
         {
             if (_moveMode == MoveMode.Wander)
             {
-                _swipe = 4 * swipetime;
+                _swipe = 2.5f * swipetime;
             } else
             {
                 _swipe = 0;
@@ -391,17 +393,17 @@ namespace Bosses.Worm
         private int _spikesReleased;
         private void UpdateMovement()
         {
-            if (numportals > 0 && _portalIDs[numportals - 1] <= 4)
+            if (numportals > 0 && _portalIDs[numportals - 1] <= 3)
             {
                 if (_portalIDs[numportals - 1] > 0 || _fakeSegs[numportals-1] != null) // continue straight out
                 {
-                    targetPosition = FromLocalSpace(_portals[numportals - 1].pout, 4 * _segmentDist * Vector3.left);;
+                    targetPosition = FromLocalSpace(_portals[numportals - 1].pout, 3 * _segmentDist * Vector3.left);;
                 }
                 else
                 {
                     targetPosition = _portals[numportals - 1].pin.position;
                 }
-                _tarSpeed = rushSpeed;
+                _tarSpeed = pursueSpeed;
                 _tarTurnAngle = pursueTurnAngle;
                 _tarSnakines = 0;
             }
@@ -416,8 +418,8 @@ namespace Bosses.Worm
                         if ((head.transform.position - targetPosition).sqrMagnitude < 120)
                         {
                             while ((head.transform.position - targetPosition).sqrMagnitude < 4000)
-                                targetPosition = UnityEngine.Random.Range(20, 70) *
-                                                 pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f));
+                                targetPosition = Random.Range(20, 70) *
+                                                 pathfinder.AngleToVector(Random.Range(0, 6.28f));
                         }
 
                         break;
@@ -431,6 +433,10 @@ namespace Bosses.Worm
                         }
                         else
                         {
+                            if ((int) _tarSpeed == (int) rushSpeed) // if we had our chance, cancel
+                            {
+                                actionGoal = ActionGoal.Idle;
+                            }
                             _tarSpeed = pursueSpeed;
                         }
 
@@ -439,13 +445,20 @@ namespace Bosses.Worm
                         break;
                     case MoveMode.Circle:
                         _tarSpeed = _isInCircle ? circleSpeed : ouroborosSpeed;
-                        _tarTurnAngle = ouroborosTurnAngle;
+                        _tarTurnAngle = _isInCircle ? 360 : ouroborosTurnAngle;
                         _tarSnakines = ouroborosSnakiness;
-                        targetPosition = Util.UtilFuncs.TangentPointOnCircleFromPoint(Vector2.zero, _ouroborosRadius,
-                            head.transform.position);
+                        // targetPosition = UtilFuncs.TangentPointOnCircleFromPoint(Vector2.zero, _ouroborosRadius,
+                            // head.transform.position);
+
+                        var radPerSec = _tarSpeed / _ouroborosRadius; // angular velocity
+                        targetPosition = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * (Time.deltaTime * radPerSec + Mathf.Asin(_segmentDist / _ouroborosRadius))) *
+                                         ((Vector2) head.transform.position).normalized * _ouroborosRadius;
+                        // targetPosition = (Vector3) (((Vector2) (targetPosition - head.transform.position)).normalized * _segmentDist) + head.transform.position;
                         break;
                 }
             }
+
+            transform.Find("TEST").transform.position = targetPosition;
             
             var dir = pathfinder.PathDirNorm(_segments[0].transform.position, targetPosition);
             Vector2 prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[0].transform.rotation.eulerAngles.z);
@@ -501,7 +514,7 @@ namespace Bosses.Worm
             newPin.position = newpos;
             newPin.rotation = head.transform.rotation;
             
-            do newpos = (Vector3)(Random.Range(20, 70) * pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f))) + oldZ * Vector3.forward;
+            do newpos = (Vector3)(Random.Range(20, 70) * pathfinder.AngleToVector(Random.Range(0, 6.28f))) + oldZ * Vector3.forward;
             while ((head.transform.position - newpos).sqrMagnitude < 4000 || (newpos - newPin.position).sqrMagnitude < 4000);
             newPout.position = newpos;
             newPout.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * Mathf.Atan2(newpos.y, newpos.x));
