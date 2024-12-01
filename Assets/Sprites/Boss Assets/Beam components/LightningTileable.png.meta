@@ -137,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ada829b4264624d4d834319f804a6837
-      internalID: 1626964113
+      spriteID: 5713ca439d25d433a91d314911f6b10b
+      internalID: 1712694267
       vertices: []
       indices: 
       edges: []
@@ -158,8 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b89fa12688f9d4301a8f7ec148a27fd9
-      internalID: -1409304394
+      spriteID: 71482b40c8433415fbfe96bde440e7f5
+      internalID: 2067656634
       vertices: []
       indices: 
       edges: []
@@ -179,8 +179,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb391b455e9534d8ea33b2ce391b191b
-      internalID: -1720107485
+      spriteID: 5fa1e587ef954455a9ab89bf8ba1dd36
+      internalID: -1047697603
       vertices: []
       indices: 
       edges: []
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9418e27bd170470c8ebaf0ff121ec0c
-      internalID: -1892040658
+      spriteID: e4d124717269b4e4192c73271d783796
+      internalID: -1661307443
       vertices: []
       indices: 
       edges: []
@@ -221,8 +221,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 145add2a470334bd680c952269231667
-      internalID: 370748945
+      spriteID: b759f64973d174a35ad467b4fdec639e
+      internalID: 1172814518
       vertices: []
       indices: 
       edges: []
@@ -230,7 +230,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 9e89d38309e504f2290ce7f18e5f624e
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -238,11 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LightningTileable_0: 1626964113
-      LightningTileable_1: -1409304394
-      LightningTileable_2: -1720107485
-      LightningTileable_3: -1892040658
-      LightningTileable_4: 370748945
+      LightningTileable_0: 1712694267
+      LightningTileable_1: 2067656634
+      LightningTileable_2: -1047697603
+      LightningTileable_3: -1661307443
+      LightningTileable_4: 1172814518
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
