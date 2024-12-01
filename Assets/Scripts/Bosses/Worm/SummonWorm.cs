@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Util;
@@ -18,7 +19,7 @@ namespace Bosses.Worm
         private float _segLength;
         private int _numSegs;
 
-        private System.Collections.Generic.List<Vector3> _oldSegPos;
+        private List<Vector3> _oldSegPos;
 
         private Transform _summoning;
         
@@ -38,6 +39,7 @@ namespace Bosses.Worm
                 sRenderer.maskInteraction = masked
                     ? SpriteMaskInteraction.VisibleOutsideMask
                     : SpriteMaskInteraction.None;
+                sRenderer.sortingLayerName = "Boss";
                 sRenderer.sortingOrder = masked ? 639 : 0;
 
             }
@@ -106,7 +108,7 @@ namespace Bosses.Worm
                 _oldSegPos[i] = _summoning.GetChild(i).position;
             }
         }
-        
+
         private void Update()
         {
             _summonTimer.Update();

@@ -13,7 +13,7 @@ public class MiniMapIcon : MonoBehaviour
 
     //TODO: implement uncertain icons (position is "blurry")
 
-    void Awake()
+    void Start() // used to be Awake, if problems start happening
     {
         float sizeX, sizeY;
         if (appearsAsSelf)

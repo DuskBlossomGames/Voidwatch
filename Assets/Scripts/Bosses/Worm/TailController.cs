@@ -22,7 +22,7 @@ namespace Bosses.Worm
 
         private Sprite[] _origSprites;
         
-        private void OnEnable()
+        private void Start()
         {
             _origSprites = spikes.Select(o => o.GetComponent<SpriteRenderer>().sprite).ToArray();
             positionOffsets = positionOffsets.Select(v => transform.localScale * v).ToArray();

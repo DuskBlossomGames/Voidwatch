@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,13 +20,40 @@ public class FloppyBrain : MonoBehaviour
 
 
   public List<Transform> segments;
-  List<Vector3> positions = new List<Vector3>();
+  [NonSerialized] public List<Vector3> positions = new List<Vector3>();
 
   public GameObject anchorForward;
 
   public GameObject anchorBase;
 
 [SerializeField] public AnimationCurve speedMultiplier; // this should have positive slope
+
+private Transform GetCorresponding(FloppyBrain otherBrain, Transform other)
+{
+  var childIndices = new List<int>();
+  do
+  {
+    childIndices.Insert(0, other.GetSiblingIndex());
+    other = other.transform.parent;
+  } while (other != otherBrain.transform.parent);
+
+  return childIndices.Aggregate(transform.parent, (current, idx) => current.GetChild(idx));
+}
+
+public void Clone(FloppyBrain other)
+{
+  length = other.length;
+  _segmentV = other._segmentV;
+  targetDist = other.targetDist;
+  smoothSpeed = other.smoothSpeed;
+  rotSpeed = other.rotSpeed;
+  segLenthScale = other.segLenthScale;
+  segments = other.segments.Select(t => GetCorresponding(other, t)).ToList();
+  positions = new (other.positions);
+  anchorForward = GetCorresponding(other, other.anchorForward.transform).gameObject;
+  anchorBase = GetCorresponding(other, other.anchorBase.transform).gameObject;
+  speedMultiplier = other.speedMultiplier;
+}
 
     // Start is called before the first frame update
     public void Ready()
@@ -72,6 +101,8 @@ public class FloppyBrain : MonoBehaviour
           segments[i].rotation = tarRot;
       }
 
+      
+      
 
     }
 

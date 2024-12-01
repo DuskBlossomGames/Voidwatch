@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Net;
 using JetBrains.Annotations;
 using ProgressBars;
+using Spawnables;
+using TMPro;
 //using Unity.VersionControl.Git.ICSharpCode.SharpZipLib.Zip;
 using UnityEditor;
 using UnityEngine;
@@ -38,6 +40,9 @@ namespace Bosses.Worm
         public float tailmomentum;
         public int swipestartindex;
 
+        public float teleportCooldown;
+        public float teleportChance;
+        
         public float pursueSpeed;
         public float rushSpeed;
         public float pursueSnakiness;
@@ -67,7 +72,6 @@ namespace Bosses.Worm
 
         public enum MoveMode
         {
-            Portal,
             Direct,
             Circle,
             Wander,
@@ -75,7 +79,6 @@ namespace Bosses.Worm
         public enum ActionGoal
         {
             Rush,
-            Burrow,
             Tailspike,
             Idle,
             Ouroboros,
@@ -83,6 +86,7 @@ namespace Bosses.Worm
         public MoveMode _moveMode;
         public ActionGoal actionGoal;
         private Util.Timer _actionUtilTimer;
+        private Timer _teleportTimer = new();
         public bool _isStageTwo = false;
 
         struct PortalPair
@@ -90,17 +94,11 @@ namespace Bosses.Worm
             public Transform pin;
             public Transform pout;
         };
-
-        struct PortalID
-        {
-            public int segID;
-            public int pairID;
-        }
-
+        
         private int exportals;
         public int numportals = 0;
-        PortalPair[] _portals = new PortalPair[10];
-        PortalID[] _portalIDs = new PortalID[10];
+        List<PortalPair> _portals = new();
+        List<int> _portalIDs = new();
 
         public int secondsPerSummon;
         private SummonWorm[] _wormSummoners;
@@ -257,45 +255,51 @@ namespace Bosses.Worm
                 }
 
                 StartCoroutine(_headSpike.TriggerDown());
-                float rand = UnityEngine.Random.Range(0f, 1f);
+                float rand = Random.value;
                 if (!_isStageTwo)
                 {
-                    rand = 0; // TEMP: force burrow
+                    bool portalable = false;
+                    
                     switch (rand)
                     {
                         case < .20f:
-                            /*Do burrow*/
-                            actionGoal = ActionGoal.Burrow;
-                            _actionUtilTimer.Value = Random.Range(8f, 12f);
-                            exportals = Random.Range(0, 0);
-                            SpawnPortal();
-                            break;
-                        case < .35f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
                             _actionUtilTimer.Value = Random.Range(5f, 10f);
-                            break;
 
-                        case < .60f:
+                            portalable = true;
+                            break;
+                        case < .45f:
                             /*Do Tailspike*/
                             actionGoal = ActionGoal.Tailspike;
                             _actionUtilTimer.Value = Random.Range(1f, 4f);
-                            break;
 
+                            portalable = true;
+                            break;
                         default:
                             actionGoal = ActionGoal.Idle;
                             _actionUtilTimer.Value = Random.Range(5f, 8f);
+
+                            portalable = true;
                             break;
+                    }
+                    
+                    if (portalable && _teleportTimer.IsFinished && Random.value < teleportChance)
+                    {
+                        _teleportTimer.Value = teleportCooldown;
+                        exportals = Random.Range(0, 0);
+                        SpawnPortal();
                     }
                 }
                 else
                 {
+                    bool portalable = false;
                     switch (rand)
                     {
                         case < .15f:
                             /*Do Central laser*/
                             goto default;
-                        case < .50f:
+                        case < .45f:
                             /*Do Ouroboros*/
                             actionGoal = ActionGoal.Ouroboros;
                             _actionUtilTimer.Value = ouroborosTime;
@@ -306,22 +310,35 @@ namespace Bosses.Worm
                             _jawGrab.enabled = false;
                             StartCoroutine(EnableJaw());
                             break;
-                        case < .75f:
+                        case < .70f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
                             _actionUtilTimer.Value = Random.Range(5f, 10f);
+                            
+                            portalable = true;
                             break;
 
                         case < 1.0f:
                             /*Do Tailspike*/
                             actionGoal = ActionGoal.Tailspike;
                             _actionUtilTimer.Value = Random.Range(1f, 4f);
+                            
+                            portalable = true;
                             break;
 
                         default:
                             actionGoal = ActionGoal.Idle;
                             _actionUtilTimer.Value = Random.Range(5f, 8f);
+                            
+                            portalable = true;
                             break;
+                    }
+                    
+                    if (portalable && _teleportTimer.IsFinished && Random.value < teleportChance)
+                    {
+                        _teleportTimer.Value = teleportCooldown;
+                        exportals = Random.Range(0, 0);
+                        SpawnPortal();
                     }
                 }
             }
@@ -344,11 +361,6 @@ namespace Bosses.Worm
                 case ActionGoal.Ouroboros:
                     _moveMode = MoveMode.Circle;
                     break;
-
-                case ActionGoal.Burrow:
-                    _moveMode = MoveMode.Portal;
-                    break;
-
             }
 
         }
@@ -359,85 +371,6 @@ namespace Bosses.Worm
             _jawGrab.enabled = true;
         }
 
-        private void RippleSegments()
-        {
-            for (var i = 1; i < middleLength + 1; i++)
-            {
-                Vector3 nextSegmentPos = _segments[i - 1].transform.position;
-                Vector3 currSegmentPos = _segments[i].transform.position;
-                Vector3 prevSegmentPos = _segments[i + 1].transform.position;
-
-                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-                currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-                if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
-                {
-                    currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
-                }
-                _segments[i].transform.position = currSegmentPos;
-
-                Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
-                Vector3 meanDir = .5f * (prev2curr + curr2next);
-
-                var angle = Mathf.Atan2(meanDir.y, meanDir.x);
-                _segments[i].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-            }
-
-            { //Scope naming stuffs
-                Vector3 nextSegmentPos = _segments[^2].transform.position;
-                Vector3 currSegmentPos = _segments[^1].transform.position;
-
-                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-                _segments[^1].transform.position = currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-
-                var angle = Mathf.Atan2(curr2next.y, curr2next.x);
-                _segments[^1].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-            }
-        }
-
-        private void RippleSegmentsWithSwipe(float swipeAngle, int startpos)
-        {
-            for (var i = 1; i < middleLength + 1; i++)
-            {
-                Vector3 nextSegmentPos = _segments[i - 1].transform.position;
-                Vector3 currSegmentPos = _segments[i].transform.position;
-                Vector3 prevSegmentPos = _segments[i + 1].transform.position;
-
-                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-                if (i >= startpos)
-                {
-                    Vector2 next2nnext = (_segments[i - 2].transform.position - nextSegmentPos).normalized;
-                    Vector2 tarcurr2next = Util.UtilFuncs.Rot(next2nnext, swipeAngle);
-                    curr2next = (tailmomentum * .03f / Time.deltaTime * curr2next + (Vector3)tarcurr2next).normalized;
-                }
-                currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-                if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
-                {
-                    currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
-                }
-                _segments[i].transform.position = currSegmentPos;
-
-                Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
-                Vector3 meanDir = .5f * (prev2curr + curr2next);
-
-                var angle = Mathf.Atan2(meanDir.y, meanDir.x);
-                _segments[i].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-            }
-
-            { //Scope naming stuffs
-                Vector3 nextSegmentPos = _segments[^2].transform.position;
-                Vector3 currSegmentPos = _segments[^1].transform.position;
-
-                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-                Vector2 next2nnext = (_segments[^3].transform.position - nextSegmentPos).normalized;
-                Vector2 tarcurr2next = Util.UtilFuncs.Rot(next2nnext, swipeAngle);
-                curr2next = (tailmomentum * .03f / Time.deltaTime * curr2next + (Vector3)tarcurr2next).normalized;
-
-                _segments[^1].transform.position = currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-
-                var angle = Mathf.Atan2(curr2next.y, curr2next.x);
-                _segments[^1].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-            }
-        }
         private void TailSwipe()
         {
             if (_moveMode == MoveMode.Wander)
@@ -455,94 +388,84 @@ namespace Bosses.Worm
             actionGoal = ActionGoal.Idle;
         }
 
-        private int _spikesReleased = 0;
+        private int _spikesReleased;
         private void UpdateMovement()
         {
-            if (_moveMode != MoveMode.Portal && numportals != 0)
+            if (numportals > 0 && _portalIDs[numportals - 1] <= 4)
             {
-                for (int i = 0; i < numportals; i++)
+                if (_portalIDs[numportals - 1] > 0 || _fakeSegs[numportals-1] != null) // continue straight out
                 {
-                    Destroy(_portals[i].pin.gameObject);
-                    Destroy(_portals[i].pout.gameObject);
+                    targetPosition = FromLocalSpace(_portals[numportals - 1].pout, 4 * _segmentDist * Vector3.left);;
                 }
-                _portals = new PortalPair[10];
-                numportals = 0;
+                else
+                {
+                    targetPosition = _portals[numportals - 1].pin.position;
+                }
+                _tarSpeed = rushSpeed;
+                _tarTurnAngle = pursueTurnAngle;
+                _tarSnakines = 0;
             }
-            switch (_moveMode)
+            else
             {
-                case MoveMode.Portal:
-                    if (_portalIDs[numportals - 1].segID > 0) // continue straight out
-                    {
-                        targetPosition = FromLocalSpace(_portals[numportals - 1].pout, 3 * _segmentDist * Vector3.left);
-                    }
-                    else if (_portalIDs[numportals - 1].segID > 3) // after some of the worm goes through, can move on
-                    {
-                        if (targetPosition == _portals[numportals - 1].pin.position) targetPosition = Random.Range(20, 70) * Random.insideUnitCircle.normalized;
-                        goto wander;
-                    }
-                    else
-                    {
-                        targetPosition = _portals[numportals - 1].pin.position;
-                    }
-                    _tarSpeed = rushSpeed;
-                    _tarTurnAngle = pursueTurnAngle;
-                    _tarSnakines = 0;
-                    break;
-                case MoveMode.Wander: 
-                wander:
-                    _tarSpeed = wanderSpeed;
-                    _tarTurnAngle = wanderTurnAngle;
-                    _tarSnakines = wanderSnakiness;
-                    if ((head.transform.position - targetPosition).sqrMagnitude < 120)
-                    {
-                        while ((head.transform.position - targetPosition).sqrMagnitude < 4000)
-                            targetPosition = UnityEngine.Random.Range(20, 70) * pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f));
-                    }
-                    break;
-                case MoveMode.Direct:
-                    targetPosition = player.transform.position;
-                    if ((targetPosition - head.transform.position).sqrMagnitude < 30 * 30)
-                    {
-                        if (_speed < _tarSpeed)
-                            _speed *= Mathf.Pow(1.10f, Time.deltaTime);
-                        _tarSpeed = rushSpeed;
-                    }
-                    else {
-                        _tarSpeed = pursueSpeed;
-                    }
-                    _tarTurnAngle = pursueTurnAngle;
-                    _tarSnakines = pursueSnakiness;
-                    break;
-                case MoveMode.Circle:
-                    _tarSpeed = _isInCircle ? circleSpeed : ouroborosSpeed;
-                    _tarTurnAngle = ouroborosTurnAngle;
-                    _tarSnakines = ouroborosSnakiness;
-                    targetPosition = Util.UtilFuncs.TangentPointOnCircleFromPoint(Vector2.zero, _ouroborosRadius, head.transform.position);
-                    break;
+                switch (_moveMode)
+                {
+                    case MoveMode.Wander:
+                        _tarSpeed = wanderSpeed;
+                        _tarTurnAngle = wanderTurnAngle;
+                        _tarSnakines = wanderSnakiness;
+                        if ((head.transform.position - targetPosition).sqrMagnitude < 120)
+                        {
+                            while ((head.transform.position - targetPosition).sqrMagnitude < 4000)
+                                targetPosition = UnityEngine.Random.Range(20, 70) *
+                                                 pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f));
+                        }
+
+                        break;
+                    case MoveMode.Direct:
+                        targetPosition = player.transform.position;
+                        if ((targetPosition - head.transform.position).sqrMagnitude < 30 * 30)
+                        {
+                            if (_speed < _tarSpeed)
+                                _speed *= Mathf.Pow(1.10f, Time.deltaTime);
+                            _tarSpeed = rushSpeed;
+                        }
+                        else
+                        {
+                            _tarSpeed = pursueSpeed;
+                        }
+
+                        _tarTurnAngle = pursueTurnAngle;
+                        _tarSnakines = pursueSnakiness;
+                        break;
+                    case MoveMode.Circle:
+                        _tarSpeed = _isInCircle ? circleSpeed : ouroborosSpeed;
+                        _tarTurnAngle = ouroborosTurnAngle;
+                        _tarSnakines = ouroborosSnakiness;
+                        targetPosition = Util.UtilFuncs.TangentPointOnCircleFromPoint(Vector2.zero, _ouroborosRadius,
+                            head.transform.position);
+                        break;
+                }
             }
+            
             var dir = pathfinder.PathDirNorm(_segments[0].transform.position, targetPosition);
             Vector2 prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[0].transform.rotation.eulerAngles.z);
-            dir = pathfinder.ClampAngle(dir, prevAngle, Mathf.Deg2Rad * maxTurnAngleDeg);
+            dir = Vector3.RotateTowards(prevAngle, dir, Mathf.Deg2Rad * maxTurnAngleDeg * Time.deltaTime, 1);
+            // dir = pathfinder.ClampAngle(dir, prevAngle, Mathf.Deg2Rad * maxTurnAngleDeg);
 
-            _currdir = dir = (.1f / Time.deltaTime * _currdir + dir).normalized;
+            // _currdir = dir = (.1f / Time.deltaTime * _currdir + dir).normalized;
 
             //_headRigid.AddForce(_speed * dir, ForceMode.VelocityChange)
             _headRigid.velocity = _speed * dir;
 
-            if (numportals == 0 || _portalIDs[numportals - 1].segID > 0)
+            if (numportals == 0 || _portalIDs[numportals - 1] > 0)
             {
                 var angle = Mathf.Atan2(dir.y, dir.x);
                 _segments[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
             }
 
-            if (_swipe > 2 * swipetime)
+            RippleSegments();
+            if (_swipe > swipetime)
             {
-                RippleSegmentsWithSwipe(swipeangle, swipestartindex);
-            }
-            else if (_swipe > swipetime)
-            {
-                RippleSegmentsWithSwipe(-swipeangle, swipestartindex);
-
                 if (_spikesReleased < 3 && _swipe - swipetime < swipetime - swipetime / 6 / 3 * _spikesReleased)
                 {
                     _tailController.ReleaseSpike(_spikesReleased++);
@@ -550,13 +473,10 @@ namespace Bosses.Worm
             }
             else if (_swipe > 0)
             {
-                RippleSegmentsWithSwipe(swipeangle, swipestartindex);
-
                 if (_spikesReleased < 6 && _swipe < swipetime - swipetime / 6 / 3 * (_spikesReleased - 3))
                 {
                     _tailController.ReleaseSpike(_spikesReleased++);
                 }
-
             }
             else
             {
@@ -565,11 +485,8 @@ namespace Bosses.Worm
                     StartCoroutine(_tailController.RegrowSpikes());
                     _spikesReleased = 0;
                 }
-                /////////////////////////////////////////////////////
-                // RippleSegments();
-                RippleSegmentsWithTeleport();
             }
-            _swipe -= Time.deltaTime;
+            if (_swipe > 0) _swipe -= Time.deltaTime;
         }
 
         public void SpawnPortal()
@@ -580,21 +497,20 @@ namespace Bosses.Worm
             newPout.gameObject.SetActive(true);
 
             float oldZ = newPin.position.z;
-            Vector3 newpos = (Vector3)(Vector2)head.transform.position + Random.Range(20, 80) * head.transform.right + oldZ * Vector3.forward;
+            Vector3 newpos = (Vector3)(Vector2)head.transform.position + Random.Range(30, 80) * head.transform.right + oldZ * Vector3.forward;
             newPin.position = newpos;
             newPin.rotation = head.transform.rotation;
-            Debug.LogFormat("Head rot is {0}", head.transform.rotation.eulerAngles.z);
-
-
+            
             do newpos = (Vector3)(Random.Range(20, 70) * pathfinder.AngleToVector(UnityEngine.Random.Range(0, 6.28f))) + oldZ * Vector3.forward;
-                while ((head.transform.position - newpos).sqrMagnitude < 4000);
+            while ((head.transform.position - newpos).sqrMagnitude < 4000 || (newpos - newPin.position).sqrMagnitude < 4000);
             newPout.position = newpos;
             newPout.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * Mathf.Atan2(newpos.y, newpos.x));
 
             var pair = new PortalPair { pin = newPin , pout = newPout};
-            _portals[numportals] = pair;
-            var id = new PortalID { segID = 0, pairID = numportals };
-            _portalIDs[numportals] = id;
+            _portals.Add(pair);
+            _portalIDs.Add(0);
+
+            _fakeSegs.Add(null);
             
             numportals += 1;
             exportals -= 1;
@@ -602,49 +518,125 @@ namespace Bosses.Worm
             targetPosition = _portals[numportals - 1].pin.position;
         }
 
-        private readonly GameObject[] _fakeSegs = new GameObject[10];
+        private readonly List<GameObject> _fakeSegs = new();
+        private GameObject _headFake;
         private void IncrementPortalSeg(int portalID)
         {
             if (_fakeSegs[portalID] != null) Destroy(_fakeSegs[portalID]);
-            var newSeg = ++_portalIDs[portalID].segID;
+
+            foreach (var summoner in _segments[_portalIDs[portalID]].GetComponentsInChildren<SummonWorm>()) summoner.enabled = true;
+            var newSeg = ++_portalIDs[portalID];
+            foreach (var summoner in _segments[newSeg].GetComponentsInChildren<SummonWorm>()) summoner.enabled = false;
 
             _fakeSegs[portalID] = Instantiate(_segments[newSeg], null, true);
             
-            _segments[newSeg].transform.rotation = _portals[portalID].pout.rotation;
-            _segments[newSeg].transform.position = FromLocalSpace(_portals[portalID].pout, _segmentDist * Vector3.right);
+            _segments[newSeg].transform.rotation = Quaternion.Euler(0, 0, 180 + _portals[portalID].pout.rotation.eulerAngles.z);
+            _segments[newSeg].transform.position = FromLocalSpace(_portals[portalID].pout, _segmentDist/2 * Vector3.right);
+            
+            foreach (var rend in _fakeSegs[portalID].GetComponentsInChildren<SpriteRenderer>())
+            {
+                rend.sortingLayerName = "Teleport In";
+            }
+
+            foreach (var mask in _fakeSegs[portalID].GetComponentsInChildren<SpriteMask>())
+            {
+                mask.backSortingLayerID = mask.frontSortingLayerID = SortingLayer.NameToID("Teleport In");
+            }
+
+            foreach (var mmi in _fakeSegs[portalID].GetComponentsInChildren<MiniMapIcon>()) Destroy(mmi);
+            foreach (var hb in _fakeSegs[portalID].GetComponentsInChildren<HealthBar>()) Destroy(hb);
+            foreach (var dmgable in _fakeSegs[portalID].GetComponentsInChildren<Damageable>()) Destroy(dmgable);
+            foreach (var summoner in _fakeSegs[portalID].GetComponentsInChildren<SummonWorm>()) Destroy(summoner);
+            foreach (var tail in _fakeSegs[portalID].GetComponentsInChildren<TailController>()) Destroy(tail);
         }
         
-        public void RippleSegmentsWithTeleport()
+        public void RippleSegments()
         {
-            if (numportals > 0) print(_portalIDs[numportals-1].segID);
-            
-            //RippleSegments();
+            var swipeAngle = swipeangle * Mathf.Pow(-1, (int)(_swipe / swipetime));
+                
+            var nextSegment = _segments[0];
             Vector3 currSegmentPos = _segments[0].transform.position;
             bool teled = false;
             for (int idx = 0; idx < numportals; idx++)
             {
-                PortalID id = _portalIDs[idx];
-                if (id.segID == 0)
+                var segID = _portalIDs[idx];
+                if (segID == 0)
                 {
-                    var pair = _portals[id.pairID];
-                    //currSegmentPos = OutofPortal(pair, currSegmentPos);
-                    currSegmentPos = SnapAlongPortal(pair.pin, currSegmentPos);
-                    head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.Euler(0, 0, pair.pin.rotation.eulerAngles.z), 10 * Time.deltaTime);
-                    float along = ValueAlongPortal(pair.pin, currSegmentPos);
-                    //Debug.LogFormat("Along: {0}", along);
-                    if (along > _segmentDist/2)
+                    var pair = _portals[idx];
+
+                    var pairHeadIsAt = _fakeSegs[idx] == null ? pair.pin : pair.pout;
+                    currSegmentPos = SnapAlongPortal(pairHeadIsAt, currSegmentPos);
+                    head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.Euler(0, 0, (pairHeadIsAt == pair.pout ? 180 : 0) + pairHeadIsAt.rotation.eulerAngles.z), 5 * Time.deltaTime);
+                    float along = ValueAlongPortal(pairHeadIsAt, currSegmentPos);
+                    
+                    // this has to be set up to correctly instantiate the fake one
+                    _segments[0].transform.position = currSegmentPos;
+
+                    if (_fakeSegs[idx] == null)
                     {
-                        currSegmentPos = OutofPortal(pair, currSegmentPos);
-                        head.transform.rotation = Quaternion.Euler(0, 0, 180 + pair.pout.rotation.eulerAngles.z);
-                        //Debug.LogFormat("Head Along: {0}", along);
-                        IncrementPortalSeg(idx);
-                        teled = true;
+                        if (along > -_segmentDist*3/2)
+                        {
+                            nextSegment = _fakeSegs[idx] = Instantiate(_segments[0], null, true);
+                            nextSegment.transform.position = currSegmentPos;
+
+                            foreach (var gen in _fakeSegs[idx].GetComponentsInChildren<GenerateUniformFloppy>()) Destroy(gen);
+                            int i = 0;
+                            foreach (var fb in _fakeSegs[idx].GetComponentsInChildren<FloppyBrain>())
+                            {
+                                fb.Clone(head.GetComponentsInChildren<FloppyBrain>()[i++]);
+                                for (var j = 0; j < fb.segments.Count; j++) fb.positions[j] = fb.segments[j].position;
+                            }
+                            Destroy(_fakeSegs[idx].GetComponent<CustomRigidbody2D>());
+                            Destroy(_fakeSegs[idx].GetComponent<Rigidbody2D>());
+                            Destroy(_fakeSegs[idx].GetComponentInChildren<JawGrab>());
+                            
+                            _segments[0].transform.RotateAround(head.transform.position, Vector3.forward, 180 + pair.pout.rotation.eulerAngles.z - head.transform.rotation.eulerAngles.z);
+                            _segments[0].transform.position = OutofPortal(pair, currSegmentPos);
+                            
+                            foreach (var fb in head.GetComponentsInChildren<FloppyBrain>())
+                            {
+                                for (var j = 0; j < fb.segments.Count; j++) fb.positions[j] = fb.segments[j].position;
+                            }
+                            
+                            _currdir = pathfinder.AngleToVector(Mathf.Deg2Rad * head.transform.rotation.eulerAngles.z);
+
+                            foreach (var rend in _fakeSegs[idx].GetComponentsInChildren<SpriteRenderer>())
+                            {
+                                rend.sortingLayerName = "Teleport In";
+                            }
+                        }
                     }
+                    else
+                    {
+                        nextSegment = _fakeSegs[idx];
+                        _fakeSegs[idx].transform.position = IntoPortal(pair, currSegmentPos);
+                        
+                        if (along < -_segmentDist/2)
+                        {
+                            foreach (var col in _fakeSegs[idx].GetComponentsInChildren<Collider2D>()) Destroy(col);
+                            _headFake = _fakeSegs[idx];
+                            _fakeSegs[idx] = null;
+                            IncrementPortalSeg(idx);
+                            teled = true;
+                        }
+                    }
+                    
                     break;
                 }
             }
-            _segments[0].transform.position = currSegmentPos;
-            var nextSegment = _segments[0];
+
+            if (_headFake != null)
+            {
+                _headFake.transform.position = SnapAlongPortal(_portals[numportals-1].pin,
+                    IntoPortal(_portals[numportals - 1], currSegmentPos));
+                
+                var along = ValueAlongPortal(_portals[numportals - 1].pout, currSegmentPos);
+                if (along < -_segmentDist * 4)
+                {
+                    Destroy(_headFake);
+                }
+            }
+
             for (var i = 1; i < middleLength + 1; i++)
             {
                 Vector3 nextSegmentPos = nextSegment.transform.position;
@@ -652,30 +644,28 @@ namespace Bosses.Worm
                 Vector3 prevSegmentPos = _segments[i + 1].transform.position;
                 
                 nextSegment = _segments[i]; // for next iteration
-                
-                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-                currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-                
+
+                bool exitingPortal = false;
+                PortalPair? portalPair = null;
                 for (int idx = 0; idx < numportals; idx++)
                 {
-                    PortalID id = _portalIDs[idx];
-                    if (id.segID == i)
+                    var segID = _portalIDs[idx];
+                    if (segID == i)
                     {
-                        var pair = _portals[id.pairID];
-                        // currSegmentPos = IntoPortal(pair, currSegmentPos);
-                        // curr2next = ((Vector3)IntoPortal(pair, nextSegmentPos) - currSegmentPos).normalized;
-                        currSegmentPos = SnapAlongPortal(pair.pout, currSegmentPos);
+                        var pair = _portals[idx];
+
+                        portalPair = pair;
+                        exitingPortal = true;
+                        var oc = currSegmentPos;
+                        currSegmentPos = FromLocalSpace(pair.pout, new Vector2(
+                            IntoLocalSpace(pair.pout, currSegmentPos).x - Time.deltaTime * _headRigid.velocity.magnitude, 0));
+                        
                         _fakeSegs[idx].transform.position = IntoPortal(pair, currSegmentPos);
                         float along = ValueAlongPortal(pair.pin, _fakeSegs[idx].transform.position);
-                        //Debug.LogFormat("Along: {0}", along);
+
                         if (along > _segmentDist/2)
                         {
-                            //Debug.LogFormat("Seg_{1} Along: {0}", along, i);
                             IncrementPortalSeg(idx);
-                            if (_portalIDs[idx].segID > middleLength)
-                            {
-                                actionGoal = ActionGoal.Idle;
-                            }
                         }
                         else
                         {
@@ -683,14 +673,49 @@ namespace Bosses.Worm
                         }
                         break;
                     }
-                    if (id.segID == i + 1)
+                }
+                Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
+
+                if (!exitingPortal)
+                {
+                    if (_swipe > 0 && i >= swipestartindex && _portalIDs.All(j => j < i))
                     {
-                        var pair = _portals[id.pairID];
-                        prevSegmentPos = OutofPortal(pair, prevSegmentPos);
+                        Vector2 next2nnext = (_segments[i - 2].transform.position - nextSegmentPos).normalized;
+                        Vector2 tarcurr2next = UtilFuncs.Rot(next2nnext, swipeAngle);
+                        curr2next = (tailmomentum * .03f / Time.deltaTime * curr2next + (Vector3)tarcurr2next).normalized;
+                    }
+                    currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+                }
+                else
+                {
+                    // if `i` is stuck in a portal, snap everything in front to it
+                    for (int j = i - 1; j >= 1; j--)
+                    {
+                        var curPos = _segments[j].transform.position;
+                        var nextPos = _segments[j-1].transform.position;
+                        var prevPos = _segments[j+1].transform.position;
+                        
+                        var curr2prev = (curPos - prevPos).normalized;
+                        var next2curr = (nextPos - curPos).normalized;
+
+                        _segments[j].transform.position = prevPos + _segmentDist * curr2prev;
+
+                        var mean = 0.5f * (curr2prev + next2curr);
+                        var deg = Mathf.Atan2(mean.y, mean.x) * Mathf.Rad2Deg;
+                        _segments[j].transform.rotation = Quaternion.Euler(0, 0, deg);
+                    }
+
+                    {
+                        var curPos = _segments[0].transform.position;
+                        var prevPos = _segments[1].transform.position;
+                        
+                        var curr2prev = (curPos - prevPos).normalized;
+                        
+                        _segments[0].transform.position = prevPos + _segmentDist * curr2prev;
                     }
                 }
 
-                if (_moveMode == MoveMode.Circle && ((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
+                if (numportals == 0 && _moveMode == MoveMode.Circle && ((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
                 {
                     currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
                 }
@@ -700,18 +725,60 @@ namespace Bosses.Worm
                 Vector3 meanDir = .5f * (prev2curr + curr2next);
 
                 var angle = Mathf.Atan2(meanDir.y, meanDir.x);
-                _segments[i].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+                _segments[i].transform.rotation = portalPair != null ? Quaternion.Euler(0, 0, 180 + portalPair.Value.pout.rotation.eulerAngles.z) : Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
             }
 
             { //Scope naming stuffs
-                Vector3 nextSegmentPos = _segments[^2].transform.position;
+                Vector3 nextSegmentPos = nextSegment.transform.position;
                 currSegmentPos = _segments[^1].transform.position;
-
+                
                 Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-                _segments[^1].transform.position = currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
 
+                if (_swipe > 0 && _portalIDs.All(j => j < _segments.Length - 1))
+                {
+                    Vector2 next2nnext = (_segments[^3].transform.position - nextSegmentPos).normalized;
+                    Vector2 tarcurr2next = UtilFuncs.Rot(next2nnext, swipeAngle);
+                    curr2next = (tailmomentum * .03f / Time.deltaTime * curr2next + (Vector3)tarcurr2next).normalized;
+                }
+                currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
+                
+                PortalPair? portalPair = null;
+                for (int idx = 0; idx < numportals; idx++)
+                {
+                    var segID = _portalIDs[idx];
+                    if (segID == _segments.Length - 1)
+                    {
+                        var pair = _portals[idx];
+
+                        portalPair = pair;
+                        currSegmentPos = SnapAlongPortal(pair.pout, currSegmentPos);
+                        _fakeSegs[idx].transform.position = IntoPortal(pair, currSegmentPos);
+                        float along = ValueAlongPortal(pair.pin, _fakeSegs[idx].transform.position);
+
+                        if (along > _segmentDist/2)
+                        {
+                            Destroy(pair.pin.gameObject);
+                            Destroy(pair.pout.gameObject);
+                            Destroy(_fakeSegs[idx]);
+
+                            _portals.RemoveAt(idx);
+                            _portalIDs.RemoveAt(idx);
+                            _fakeSegs.RemoveAt(idx);
+                            
+                            numportals--;
+                        }
+                        break;
+                    }
+                }
+
+                if (_moveMode == MoveMode.Circle && ((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
+                {
+                    currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
+                }
+                _segments[^1].transform.position = currSegmentPos;
+                
                 var angle = Mathf.Atan2(curr2next.y, curr2next.x);
-                _segments[^1].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+                _segments[^1].transform.rotation = portalPair != null ? Quaternion.Euler(0, 0, 180 + portalPair.Value.pout.rotation.eulerAngles.z) : Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
             }
 
             if (teled && exportals > 0) SpawnPortal();
@@ -721,9 +788,11 @@ namespace Bosses.Worm
                 foreach (var rend in _segments[i].GetComponentsInChildren<SpriteRenderer>())
                 {
                     rend.sortingLayerName = "Boss";
+                    if (i == 0 && _headFake != null) rend.sortingLayerName = "Teleport Out";
+                    
                     for (int idx = 0; idx < numportals; idx++)
                     {
-                        if (_portalIDs[idx].segID == i) rend.sortingLayerName = "Teleport";
+                        if (_portalIDs[idx] == i) rend.sortingLayerName = "Teleport Out";
                     }
                 }
             }
@@ -775,182 +844,5 @@ namespace Bosses.Worm
             Vector2 y = perp * position.y;
             return x + y + (Vector2)transform.position;
         }
-
-        /*
-        //private void RippleSegmentsWithTeleport()
-        //{
-        //    if (portalID > middleLength) return;
-
-        //    _segments[portalID + 1].transform.position = PortalOutofTransform(_segments[portalID + 1].transform.position);
-        //    //Ripple forwards
-        //    for (var i = 1; i <= portalID; i++)
-        //    {
-        //        Vector3 nextSegmentPos = _segments[i - 1].transform.position;
-        //        Vector3 currSegmentPos = _segments[i].transform.position;
-        //        Vector3 prevSegmentPos = _segments[i + 1].transform.position;
-
-        //        Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-        //        currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-        //        if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
-        //        {
-        //            currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
-        //        }
-        //        _segments[i].transform.position = currSegmentPos;
-
-        //        Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
-        //        Vector3 meanDir = .5f * (prev2curr + curr2next);
-
-        //        var angle = Mathf.Atan2(meanDir.y, meanDir.x);
-        //        _segments[i].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-        //    }
-
-        //    _segments[portalID + 1].transform.position = PortalIntoTransform(_segments[portalID + 1].transform.position);
-        //    _segments[portalID + 1].transform.position = Vector3.Lerp(_segments[portalID + 1].transform.position, AlignwithInPortal(_segments[portalID + 1].transform.position), .01f);
-        //    //_segments[portalID + 2].transform.position = Vector3.Lerp(_segments[portalID + 2].transform.position, AlignwithInPortal(_segments[portalID + 2].transform.position), .2f);
-
-
-        //    Vector3 truemidpos = _segments[portalID].transform.position = AlignwithOutPortal(_segments[portalID].transform.position);
-
-        //    //Ripple backwards
-        //    for (var i = portalID - 1; i >= 1; i--)
-        //    {
-        //        Vector3 nextSegmentPos = _segments[i + 1].transform.position;
-        //        Vector3 currSegmentPos = _segments[i].transform.position;
-        //        Vector3 prevSegmentPos = _segments[i - 1].transform.position;
-
-        //        Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-        //        currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-        //        if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
-        //        {
-        //            currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
-        //        }
-        //        _segments[i].transform.position = currSegmentPos;
-
-        //        Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
-        //        Vector3 meanDir = .5f * (prev2curr + curr2next);
-
-        //        var angle = Mathf.Atan2(meanDir.y, meanDir.x);
-        //        _segments[i].transform.rotation = Quaternion.Euler(0, 0, 180 + Mathf.Rad2Deg * angle);
-        //    }
-
-        //    mirrorMiddle.position = _segments[portalID].transform.position = PortalIntoTransform(_segments[portalID].transform.position);
-        //    mirrorMiddle.rotation = PortalInRotation(_segments[portalID].transform.rotation);
-        //    for (var i = portalID + 1; i < middleLength + 1; i++)
-        //    {
-        //        Vector3 nextSegmentPos = _segments[i - 1].transform.position;
-        //        Vector3 currSegmentPos = _segments[i].transform.position;
-        //        Vector3 prevSegmentPos = _segments[i + 1].transform.position;
-
-        //        Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-        //        currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-        //        if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
-        //        {
-        //            currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
-        //        }
-        //        _segments[i].transform.position = currSegmentPos;
-
-        //        Vector3 prev2curr = (currSegmentPos - prevSegmentPos).normalized;
-        //        Vector3 meanDir = .5f * (prev2curr + curr2next);
-
-        //        var angle = Mathf.Atan2(meanDir.y, meanDir.x);
-        //        _segments[i].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-        //    }
-
-        //    mirrorMiddle2.position = PortalOutofTransform(_segments[portalID + 1].transform.position);
-        //    mirrorMiddle2.rotation = PortalOutRotation(_segments[portalID + 1].transform.rotation);
-
-        //    { //Scope naming stuffs
-        //        Vector3 nextSegmentPos = _segments[^2].transform.position;
-        //        Vector3 currSegmentPos = _segments[^1].transform.position;
-
-        //        Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-        //        _segments[^1].transform.position = currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-
-        //        var angle = Mathf.Atan2(curr2next.y, curr2next.x);
-        //        _segments[^1].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-        //    }
-
-        //    { //Scope naming stuffs
-        //        Vector3 nextSegmentPos = _segments[0].transform.position;
-        //        Vector3 currSegmentPos = _segments[1].transform.position;
-
-        //        Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
-        //        _segments[0].transform.position = currSegmentPos + _segmentDist * curr2next;
-        //    }
-
-        //    _segments[portalID].transform.position = truemidpos;
-        //    if (PortalOutAmt(mirrorMiddle2.position) > 0)
-        //    {
-        //        _segments[portalID + 1].transform.position = mirrorMiddle2.position;
-        //        portalID += 1;
-
-        //    }
-        //}
-
-        ////Stolen from ChatGPT
-        //private static Vector2 RotateVector(Vector2 vector, float angle)
-        //{
-        //    float cos = Mathf.Cos(angle);
-        //    float sin = Mathf.Sin(angle);
-
-        //    float newX = vector.x * cos - vector.y * sin;
-        //    float newY = vector.x * sin + vector.y * cos;
-
-        //    return new Vector2(newX, newY);
-        //}
-
-        //private Vector3 PortalIntoTransform(Vector3 orig)
-        //{
-        //    float z = orig.z;
-        //    float ang = Mathf.Deg2Rad * Vector2.SignedAngle(pInNorm, pOutNorm);
-        //    Vector2 delta = (Vector2)orig - portalOut;
-        //    Vector2 rotdelt = RotateVector(delta, -ang);
-        //    return new Vector3(rotdelt.x + portalIn.x, rotdelt.y + portalIn.y, z);
-        //}
-
-        //private Vector3 PortalOutofTransform(Vector3 orig)
-        //{
-        //    float z = orig.z;
-        //    float ang = Mathf.Deg2Rad * Vector2.SignedAngle(pInNorm, pOutNorm);
-        //    Vector2 delta = (Vector2)orig - portalIn;
-        //    Vector2 rotdelt = RotateVector(delta, ang);
-        //    return new Vector3(rotdelt.x + portalOut.x, rotdelt.y + portalOut.y, z);
-        //}
-
-        //private Vector3 AlignwithOutPortal(Vector3 orig)
-        //{
-        //    float z = orig.z;
-        //    Vector2 delta = (Vector2)orig - portalOut;
-        //    Vector2 mdelt = pOutNorm * Vector2.Dot(pOutNorm, delta);
-        //    return new Vector3(mdelt.x + portalOut.x, mdelt.y + portalOut.y, z);
-        //}
-
-        //private Vector3 AlignwithInPortal(Vector3 orig)
-        //{
-        //    float z = orig.z;
-        //    Vector2 delta = (Vector2)orig - portalIn;
-        //    Vector2 mdelt = pInNorm * Vector2.Dot(pInNorm, delta);
-        //    return new Vector3(mdelt.x + portalIn.x, mdelt.y + portalIn.y, z);
-        //}
-
-        //private float PortalOutAmt(Vector3 orig)
-        //{
-        //    float z = orig.z;
-        //    Vector2 delta = (Vector2)orig - portalOut;
-        //    return Vector2.Dot(pOutNorm, delta);
-        //}
-
-        //private Quaternion PortalOutRotation(Quaternion rots)
-        //{
-        //    float ang = (Vector2.SignedAngle(pInNorm, pOutNorm));
-        //    return rots * Quaternion.AngleAxis(ang, Vector3.forward);
-        //}
-
-        //private Quaternion PortalInRotation(Quaternion rots)
-        //{
-        //    float ang = (Vector2.SignedAngle(pInNorm, pOutNorm));
-        //    return rots * Quaternion.AngleAxis(-ang, Vector3.forward);
-        //}
-        */
     }
 }
