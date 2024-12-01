@@ -38,6 +38,9 @@ public class MiniMapIcon : MonoBehaviour
         _miniIcon.transform.localScale = new Vector3(sizeX, sizeY, 1);
         var renderer = _miniIcon.AddComponent<SpriteRenderer>();
         renderer.sprite = miniSprite;
+        renderer.sortingOrder = transform.GetComponent<SpriteRenderer>().sortingOrder;
+        renderer.sortingLayerID = transform.GetComponent<SpriteRenderer>().sortingLayerID;
+        renderer.maskInteraction = transform.GetComponent<SpriteRenderer>().maskInteraction;
         renderer.color = miniColor;
         _miniIcon.layer = LayerMask.NameToLayer("Minimap");
     }

@@ -123,7 +123,7 @@ namespace Spawnables.Carcadon
                     for (var i = 0; i < _segments.Length; i++)
                     {
                         var myCol = _segments[i].GetComponentInChildren<BoxCollider2D>();
-                        var playerCol = _player.GetComponentInChildren<BoxCollider2D>();
+                        var playerCol = _player.GetComponentInChildren<CircleCollider2D>();
                         if (myCol.bounds.Intersects(playerCol.bounds))
                         {
                             var arm = (Vector2) _segments[i].transform.position - GetJoint(i);
@@ -131,7 +131,7 @@ namespace Spawnables.Carcadon
 
                             var playerDist = (Quaternion.Euler(0, 0, -normalAngle) * (_player.transform.position - _segments[i].transform.position)).x;
                         
-                            _player.transform.position += Quaternion.Euler(0, 0, normalAngle) * new Vector3(myCol.transform.lossyScale.x*myCol.size.x/2 + playerCol.transform.lossyScale.x*playerCol.size.x/2 - playerDist, 0, 0);
+                            _player.transform.position += Quaternion.Euler(0, 0, normalAngle) * new Vector3(myCol.transform.lossyScale.x*myCol.size.x/2 + playerCol.transform.lossyScale.x*playerCol.radius/2 - playerDist, 0, 0);
                         }
                     }
                 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using System.Net;
 using JetBrains.Annotations;
 using ProgressBars;
 //using Unity.VersionControl.Git.ICSharpCode.SharpZipLib.Zip;
@@ -28,7 +29,6 @@ namespace Bosses.Worm
         private GameObject[] _segments;
         private Rigidbody2D _headRigid;
         private float _speed;
-        private Vector2 _targetMovePos;
         private float _segmentDist;
         private float _ouroborosRadius;
         private Vector2 _currdir;
@@ -260,22 +260,23 @@ namespace Bosses.Worm
                 float rand = UnityEngine.Random.Range(0f, 1f);
                 if (!_isStageTwo)
                 {
+                    rand = 0; // TEMP: force burrow
                     switch (rand)
                     {
-                        case < 0 * .15f: //Disabled till fixed
+                        case < .20f:
                             /*Do burrow*/
                             actionGoal = ActionGoal.Burrow;
                             _actionUtilTimer.Value = Random.Range(8f, 12f);
                             exportals = Random.Range(0, 0);
                             SpawnPortal();
                             break;
-                        case < .25f:
+                        case < .35f:
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
                             _actionUtilTimer.Value = Random.Range(5f, 10f);
                             break;
 
-                        case < .5f:
+                        case < .60f:
                             /*Do Tailspike*/
                             actionGoal = ActionGoal.Tailspike;
                             _actionUtilTimer.Value = Random.Range(1f, 4f);
@@ -470,13 +471,24 @@ namespace Bosses.Worm
             switch (_moveMode)
             {
                 case MoveMode.Portal:
-                    //targetPosition = _portals[numportals-1].pin.position;
+                    if (_portalIDs[numportals - 1].segID > 0) // continue straight out
+                    {
+                        targetPosition = FromLocalSpace(_portals[numportals - 1].pout, 3 * _segmentDist * Vector3.left);
+                    }
+                    else if (_portalIDs[numportals - 1].segID > 3) // after some of the worm goes through, can move on
+                    {
+                        if (targetPosition == _portals[numportals - 1].pin.position) targetPosition = Random.Range(20, 70) * Random.insideUnitCircle.normalized;
+                        goto wander;
+                    }
+                    else
+                    {
+                        targetPosition = _portals[numportals - 1].pin.position;
+                    }
                     _tarSpeed = rushSpeed;
-                    _tarTurnAngle = 40;
+                    _tarTurnAngle = pursueTurnAngle;
                     _tarSnakines = 0;
-                    targetPosition = _portals[numportals - 1].pin.position;
                     break;
-                case MoveMode.Wander:
+                case MoveMode.Wander: 
                 wander:
                     _tarSpeed = wanderSpeed;
                     _tarTurnAngle = wanderTurnAngle;
@@ -508,8 +520,7 @@ namespace Bosses.Worm
                     targetPosition = Util.UtilFuncs.TangentPointOnCircleFromPoint(Vector2.zero, _ouroborosRadius, head.transform.position);
                     break;
             }
-            _targetMovePos = targetPosition;
-            var dir = pathfinder.PathDirNorm(_segments[0].transform.position, _targetMovePos);
+            var dir = pathfinder.PathDirNorm(_segments[0].transform.position, targetPosition);
             Vector2 prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[0].transform.rotation.eulerAngles.z);
             dir = pathfinder.ClampAngle(dir, prevAngle, Mathf.Deg2Rad * maxTurnAngleDeg);
 
@@ -518,8 +529,11 @@ namespace Bosses.Worm
             //_headRigid.AddForce(_speed * dir, ForceMode.VelocityChange)
             _headRigid.velocity = _speed * dir;
 
-            var angle = Mathf.Atan2(dir.y, dir.x);
-            _segments[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+            if (numportals == 0 || _portalIDs[numportals - 1].segID > 0)
+            {
+                var angle = Mathf.Atan2(dir.y, dir.x);
+                _segments[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+            }
 
             if (_swipe > 2 * swipetime)
             {
@@ -587,8 +601,23 @@ namespace Bosses.Worm
 
             targetPosition = _portals[numportals - 1].pin.position;
         }
+
+        private readonly GameObject[] _fakeSegs = new GameObject[10];
+        private void IncrementPortalSeg(int portalID)
+        {
+            if (_fakeSegs[portalID] != null) Destroy(_fakeSegs[portalID]);
+            var newSeg = ++_portalIDs[portalID].segID;
+
+            _fakeSegs[portalID] = Instantiate(_segments[newSeg], null, true);
+            
+            _segments[newSeg].transform.rotation = _portals[portalID].pout.rotation;
+            _segments[newSeg].transform.position = FromLocalSpace(_portals[portalID].pout, _segmentDist * Vector3.right);
+        }
+        
         public void RippleSegmentsWithTeleport()
         {
+            if (numportals > 0) print(_portalIDs[numportals-1].segID);
+            
             //RippleSegments();
             Vector3 currSegmentPos = _segments[0].transform.position;
             bool teled = false;
@@ -600,37 +629,29 @@ namespace Bosses.Worm
                     var pair = _portals[id.pairID];
                     //currSegmentPos = OutofPortal(pair, currSegmentPos);
                     currSegmentPos = SnapAlongPortal(pair.pin, currSegmentPos);
+                    head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.Euler(0, 0, pair.pin.rotation.eulerAngles.z), 10 * Time.deltaTime);
                     float along = ValueAlongPortal(pair.pin, currSegmentPos);
                     //Debug.LogFormat("Along: {0}", along);
-                    if (along > 0)
+                    if (along > _segmentDist/2)
                     {
                         currSegmentPos = OutofPortal(pair, currSegmentPos);
-                        head.transform.rotation = Quaternion.Euler(0, 0, 180+pair.pout.rotation.z);
+                        head.transform.rotation = Quaternion.Euler(0, 0, 180 + pair.pout.rotation.eulerAngles.z);
                         //Debug.LogFormat("Head Along: {0}", along);
-                        _portalIDs[idx].segID += 1;
+                        IncrementPortalSeg(idx);
                         teled = true;
                     }
                     break;
                 }
             }
             _segments[0].transform.position = currSegmentPos;
+            var nextSegment = _segments[0];
             for (var i = 1; i < middleLength + 1; i++)
             {
-                Vector3 nextSegmentPos = _segments[i - 1].transform.position;
+                Vector3 nextSegmentPos = nextSegment.transform.position;
                 currSegmentPos = _segments[i].transform.position;
                 Vector3 prevSegmentPos = _segments[i + 1].transform.position;
-
-                for (int idx = 0; idx < numportals; idx++)
-                {
-                    //print("loop");
-                    PortalID id = _portalIDs[idx];
-                    if (id.segID == i)
-                    {
-                        //print("Ran");
-                        var pair = _portals[id.pairID];
-                        currSegmentPos = OutofPortal(pair, currSegmentPos);
-                    }
-                }
+                
+                nextSegment = _segments[i]; // for next iteration
                 
                 Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
                 currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
@@ -641,16 +662,24 @@ namespace Bosses.Worm
                     if (id.segID == i)
                     {
                         var pair = _portals[id.pairID];
-                        currSegmentPos = IntoPortal(pair, currSegmentPos);
-                        curr2next = ((Vector3)IntoPortal(pair, nextSegmentPos) - currSegmentPos).normalized;
-                        currSegmentPos = SnapAlongPortal(pair.pin, currSegmentPos);
-                        float along = ValueAlongPortal(pair.pin, currSegmentPos);
+                        // currSegmentPos = IntoPortal(pair, currSegmentPos);
+                        // curr2next = ((Vector3)IntoPortal(pair, nextSegmentPos) - currSegmentPos).normalized;
+                        currSegmentPos = SnapAlongPortal(pair.pout, currSegmentPos);
+                        _fakeSegs[idx].transform.position = IntoPortal(pair, currSegmentPos);
+                        float along = ValueAlongPortal(pair.pin, _fakeSegs[idx].transform.position);
                         //Debug.LogFormat("Along: {0}", along);
-                        if (along > 0)
+                        if (along > _segmentDist/2)
                         {
-                            currSegmentPos = OutofPortal(pair, currSegmentPos);
                             //Debug.LogFormat("Seg_{1} Along: {0}", along, i);
-                            _portalIDs[idx].segID += 1;
+                            IncrementPortalSeg(idx);
+                            if (_portalIDs[idx].segID > middleLength)
+                            {
+                                actionGoal = ActionGoal.Idle;
+                            }
+                        }
+                        else
+                        {
+                            nextSegment = _fakeSegs[idx]; // only set it to fake seg if that's still this one
                         }
                         break;
                     }
@@ -661,7 +690,7 @@ namespace Bosses.Worm
                     }
                 }
 
-                if (((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
+                if (_moveMode == MoveMode.Circle && ((Vector2)currSegmentPos).sqrMagnitude <= _ouroborosRadius * _ouroborosRadius)
                 {
                     currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
                 }

@@ -2067,7 +2067,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawner: {fileID: 0}
-  type: 1
 --- !u!114 &2306016957590154251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2084,6 +2083,11 @@ MonoBehaviour:
   dmgRes: {fileID: 11400000, guid: de2060ee01175134cab3ccc903df4371, type: 2}
   maxHealth: 1200
   varientParent: {fileID: 0}
+  explosion: {fileID: 0}
+  bitOptions: []
+  numBits: 0
+  explosionScale: 0
+  bitScale: 0
 --- !u!1 &4413525710197146119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3337,7 +3341,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1735368020285887761}
   - component: {fileID: 6314636313167225234}
-  - component: {fileID: 1158774859498658910}
+  - component: {fileID: 8151159292660794550}
   m_Layer: 17
   m_Name: GameObject
   m_TagString: Untagged
@@ -3412,7 +3416,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1158774859498658910
+--- !u!114 &8151159292660794550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3421,7 +3425,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6543758382973887294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2587f5f6654f4502a0380b86c984fcbc, type: 3}
+  m_Script: {fileID: 11500000, guid: 809b76802648a40da91ee31b0ea5dba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fadeTime: 0.06

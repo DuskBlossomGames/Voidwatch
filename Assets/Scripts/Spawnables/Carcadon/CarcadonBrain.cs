@@ -156,7 +156,7 @@ namespace Spawnables.Carcadon
             }
             else
             {
-                _rb.velocity = Vector3.RotateTowards(_rb.velocity, _currSpeed * dir, 1.5f * Time.deltaTime, 15 * Time.deltaTime);                
+                _rb.velocity = Vector3.RotateTowards(_rb.velocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 8 : 1.5f) * Time.deltaTime, 15 * Time.deltaTime);                
             }
             
             transform.rotation = Quaternion.Lerp(transform.rotation, UtilFuncs.RotFromNorm(_rb.velocity), 5 * Time.deltaTime);
