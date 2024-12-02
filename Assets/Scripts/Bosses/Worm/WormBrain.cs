@@ -58,7 +58,7 @@ namespace Bosses.Worm
         public float wanderSpeed;
         public float wanderSnakiness;
         public float wanderTurnAngle;
-
+        
         private float _tarSpeed;
         private float _tarSnakines;
         private float _tarTurnAngle;
@@ -79,6 +79,7 @@ namespace Bosses.Worm
             Tailspike,
             Idle,
             Ouroboros,
+            Laser,
         }
         public MoveMode _moveMode;
         public ActionGoal actionGoal;
@@ -104,10 +105,13 @@ namespace Bosses.Worm
         public Transform portalIn;
         public Transform portalOut;
 
+        private MegaLaserController _mlc;
+        
         private int _eyesAlive;
         
         private void Start()
         {
+            _mlc = GetComponentInChildren<MegaLaserController>();
             _eyesAlive = 2 * middleLength;
             
             _tailController = GetComponentInChildren<TailController>();
@@ -296,12 +300,17 @@ namespace Bosses.Worm
                 else
                 {
                     bool portalable = false;
+                    rand = 0;
                     switch (rand)
                     {
-                        // case < .15f:
+                        case < .15f:
                             /*Do Central laser*/
-                            // goto default;
-                        case < 0.69f://.45f:
+                            _mlc.Shoot(4 * player.GetComponent<PlayerGunHandler>().playRadius);
+                            _actionUtilTimer.Value = _mlc.laserBuildupTime + _mlc.beamBuildupTime + _mlc.beamLoopTime;
+                            
+                            actionGoal = ActionGoal.Laser;
+                            break;
+                        case < .45f:
                             /*Do Ouroboros*/
                             actionGoal = ActionGoal.Ouroboros;
                             _actionUtilTimer.Value = ouroborosTime;
@@ -362,6 +371,11 @@ namespace Bosses.Worm
 
                 case ActionGoal.Ouroboros:
                     _moveMode = MoveMode.Circle;
+                    break;
+                case ActionGoal.Laser:
+                    _moveMode = _mlc.TimeToLightning - (_actionUtilTimer.MaxValue - _actionUtilTimer.Value) < 3f
+                        ? MoveMode.Direct
+                        : MoveMode.Wander;
                     break;
             }
 
@@ -441,7 +455,7 @@ namespace Bosses.Worm
                         }
 
                         _tarTurnAngle = pursueTurnAngle;
-                        _tarSnakines = pursueSnakiness;
+                        _tarSnakines = actionGoal == ActionGoal.Laser ? 0 : pursueSnakiness;
                         break;
                     case MoveMode.Circle:
                         _tarSpeed = _isInCircle ? circleSpeed : ouroborosSpeed;
@@ -457,8 +471,6 @@ namespace Bosses.Worm
                         break;
                 }
             }
-
-            transform.Find("TEST").transform.position = targetPosition;
             
             var dir = pathfinder.PathDirNorm(_segments[0].transform.position, targetPosition);
             Vector2 prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[0].transform.rotation.eulerAngles.z);

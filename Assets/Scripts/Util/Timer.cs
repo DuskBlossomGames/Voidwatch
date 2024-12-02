@@ -13,6 +13,8 @@ namespace Util
             set => _maxValue = _value = value;
         }
 
+        public float MaxValue => _maxValue;
+
         public float Progress => _value / _maxValue;
         public bool IsActive => _value < _maxValue;
         public bool IsFinished => _value == 0;

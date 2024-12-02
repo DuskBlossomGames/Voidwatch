@@ -40,6 +40,7 @@ public class MiniMapIcon : MonoBehaviour
         renderer.sprite = miniSprite;
         renderer.sortingOrder = transform.GetComponent<SpriteRenderer>().sortingOrder;
         renderer.sortingLayerID = transform.GetComponent<SpriteRenderer>().sortingLayerID;
+        renderer.drawMode = transform.GetComponent<SpriteRenderer>().drawMode;
         renderer.maskInteraction = transform.GetComponent<SpriteRenderer>().maskInteraction;
         renderer.color = miniColor;
         _miniIcon.layer = LayerMask.NameToLayer("Minimap");
