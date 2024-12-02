@@ -15,7 +15,7 @@ namespace Bosses.Worm
     public class WormBrain : MonoBehaviour
     {
         public ProgressBar bossBar;
-        
+
         public GameObject head, middle, tail;
         public int middleLength;
         public SnakePathfinder pathfinder;
@@ -39,7 +39,7 @@ namespace Bosses.Worm
 
         public float teleportCooldown;
         public float teleportChance;
-        
+
         public float pursueSpeed;
         public float rushSpeed;
         public float pursueSnakiness;
@@ -58,7 +58,7 @@ namespace Bosses.Worm
         public float wanderSpeed;
         public float wanderSnakiness;
         public float wanderTurnAngle;
-        
+
         private float _tarSpeed;
         private float _tarSnakines;
         private float _tarTurnAngle;
@@ -86,13 +86,14 @@ namespace Bosses.Worm
         private Timer _actionUtilTimer;
         private Timer _teleportTimer = new();
         public bool _isStageTwo = false;
+        public bool IsStageTwo => _isStageTwo;
 
         struct PortalPair
         {
             public Transform pin;
             public Transform pout;
         };
-        
+
         private int exportals;
         public int numportals = 0;
         List<PortalPair> _portals = new();
@@ -106,14 +107,17 @@ namespace Bosses.Worm
         public Transform portalOut;
 
         private MegaLaserController _mlc;
-        
+
         private int _eyesAlive;
-        
+
+        public static WormBrain instance;
+
         private void Start()
         {
+            instance = this;
             _mlc = GetComponentInChildren<MegaLaserController>();
             _eyesAlive = 2 * middleLength;
-            
+
             _tailController = GetComponentInChildren<TailController>();
 
             _ouroborosProgressTimer = new Timer();
@@ -251,7 +255,7 @@ namespace Bosses.Worm
                     }
                 }
             }
-            
+
             _actionUtilTimer.Update();
             if (_actionUtilTimer.IsFinished)
             {
@@ -265,7 +269,7 @@ namespace Bosses.Worm
                 if (!_isStageTwo)
                 {
                     bool portalable = false;
-                    
+
                     switch (rand)
                     {
                         case < .20f:
@@ -289,7 +293,7 @@ namespace Bosses.Worm
                             portalable = true;
                             break;
                     }
-                    
+
                     if (portalable && _teleportTimer.IsFinished && Random.value < teleportChance)
                     {
                         _teleportTimer.Value = teleportCooldown;
@@ -307,7 +311,7 @@ namespace Bosses.Worm
                             /*Do Central laser*/
                             _mlc.Shoot(4 * player.GetComponent<PlayerGunHandler>().playRadius);
                             _actionUtilTimer.Value = _mlc.laserBuildupTime + _mlc.beamBuildupTime + _mlc.beamLoopTime;
-                            
+
                             actionGoal = ActionGoal.Laser;
                             break;
                         case < .45f:
@@ -325,7 +329,7 @@ namespace Bosses.Worm
                             /*Do Rush*/
                             actionGoal = ActionGoal.Rush;
                             _actionUtilTimer.Value = Random.Range(12f, 18f);
-                            
+
                             portalable = true;
                             break;
 
@@ -333,18 +337,18 @@ namespace Bosses.Worm
                             /*Do Tailspike*/
                             actionGoal = ActionGoal.Tailspike;
                             _actionUtilTimer.Value = Random.Range(1f, 4f);
-                            
+
                             portalable = true;
                             break;
 
                         default:
                             actionGoal = ActionGoal.Idle;
                             _actionUtilTimer.Value = Random.Range(5f, 8f);
-                            
+
                             portalable = true;
                             break;
                     }
-                    
+
                     if (portalable && _teleportTimer.IsFinished && Random.value < teleportChance)
                     {
                         _teleportTimer.Value = teleportCooldown;
@@ -471,7 +475,7 @@ namespace Bosses.Worm
                         break;
                 }
             }
-            
+
             var dir = pathfinder.PathDirNorm(_segments[0].transform.position, targetPosition);
             Vector2 prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[0].transform.rotation.eulerAngles.z);
             dir = Vector3.RotateTowards(prevAngle, dir, Mathf.Deg2Rad * maxTurnAngleDeg * Time.deltaTime, 1);
@@ -525,7 +529,7 @@ namespace Bosses.Worm
             Vector3 newpos = (Vector3)(Vector2)head.transform.position + Random.Range(30, 80) * head.transform.right + oldZ * Vector3.forward;
             newPin.position = newpos;
             newPin.rotation = head.transform.rotation;
-            
+
             do newpos = (Vector3)(Random.Range(20, 70) * pathfinder.AngleToVector(Random.Range(0, 6.28f))) + oldZ * Vector3.forward;
             while ((head.transform.position - newpos).sqrMagnitude < 4000 || (newpos - newPin.position).sqrMagnitude < 4000);
             newPout.position = newpos;
@@ -536,7 +540,7 @@ namespace Bosses.Worm
             _portalIDs.Add(0);
 
             _fakeSegs.Add(null);
-            
+
             numportals += 1;
             exportals -= 1;
 
@@ -554,10 +558,10 @@ namespace Bosses.Worm
             foreach (var summoner in _segments[newSeg].GetComponentsInChildren<SummonWorm>()) summoner.enabled = false;
 
             _fakeSegs[portalID] = Instantiate(_segments[newSeg], null, true);
-            
+
             _segments[newSeg].transform.rotation = Quaternion.Euler(0, 0, 180 + _portals[portalID].pout.rotation.eulerAngles.z);
             _segments[newSeg].transform.position = FromLocalSpace(_portals[portalID].pout, _segmentDist/2 * Vector3.right);
-            
+
             foreach (var rend in _fakeSegs[portalID].GetComponentsInChildren<SpriteRenderer>())
             {
                 rend.sortingLayerName = "Teleport In";
@@ -574,11 +578,11 @@ namespace Bosses.Worm
             foreach (var summoner in _fakeSegs[portalID].GetComponentsInChildren<SummonWorm>()) Destroy(summoner);
             foreach (var tail in _fakeSegs[portalID].GetComponentsInChildren<TailController>()) Destroy(tail);
         }
-        
+
         public void RippleSegments()
         {
             var swipeAngle = swipeangle * Mathf.Pow(-1, (int)(_swipe / swipetime));
-                
+
             var nextSegment = _segments[0];
             Vector3 currSegmentPos = _segments[0].transform.position;
             bool teled = false;
@@ -593,7 +597,7 @@ namespace Bosses.Worm
                     currSegmentPos = SnapAlongPortal(pairHeadIsAt, currSegmentPos);
                     head.transform.rotation = Quaternion.Lerp(head.transform.rotation, Quaternion.Euler(0, 0, (pairHeadIsAt == pair.pout ? 180 : 0) + pairHeadIsAt.rotation.eulerAngles.z), 5 * Time.deltaTime);
                     float along = ValueAlongPortal(pairHeadIsAt, currSegmentPos);
-                    
+
                     // this has to be set up to correctly instantiate the fake one
                     _segments[0].transform.position = currSegmentPos;
 
@@ -614,15 +618,15 @@ namespace Bosses.Worm
                             Destroy(_fakeSegs[idx].GetComponent<CustomRigidbody2D>());
                             Destroy(_fakeSegs[idx].GetComponent<Rigidbody2D>());
                             Destroy(_fakeSegs[idx].GetComponentInChildren<JawGrab>());
-                            
+
                             _segments[0].transform.RotateAround(head.transform.position, Vector3.forward, 180 + pair.pout.rotation.eulerAngles.z - head.transform.rotation.eulerAngles.z);
                             _segments[0].transform.position = OutofPortal(pair, currSegmentPos);
-                            
+
                             foreach (var fb in head.GetComponentsInChildren<FloppyBrain>())
                             {
                                 for (var j = 0; j < fb.segments.Count; j++) fb.positions[j] = fb.segments[j].position;
                             }
-                            
+
                             _currdir = pathfinder.AngleToVector(Mathf.Deg2Rad * head.transform.rotation.eulerAngles.z);
 
                             foreach (var rend in _fakeSegs[idx].GetComponentsInChildren<SpriteRenderer>())
@@ -635,7 +639,7 @@ namespace Bosses.Worm
                     {
                         nextSegment = _fakeSegs[idx];
                         _fakeSegs[idx].transform.position = IntoPortal(pair, currSegmentPos);
-                        
+
                         if (along < -_segmentDist/2)
                         {
                             foreach (var col in _fakeSegs[idx].GetComponentsInChildren<Collider2D>()) Destroy(col);
@@ -645,7 +649,7 @@ namespace Bosses.Worm
                             teled = true;
                         }
                     }
-                    
+
                     break;
                 }
             }
@@ -654,7 +658,7 @@ namespace Bosses.Worm
             {
                 _headFake.transform.position = SnapAlongPortal(_portals[numportals-1].pin,
                     IntoPortal(_portals[numportals - 1], currSegmentPos));
-                
+
                 var along = ValueAlongPortal(_portals[numportals - 1].pout, currSegmentPos);
                 if (along < -_segmentDist * 4)
                 {
@@ -667,7 +671,7 @@ namespace Bosses.Worm
                 Vector3 nextSegmentPos = nextSegment.transform.position;
                 currSegmentPos = _segments[i].transform.position;
                 Vector3 prevSegmentPos = _segments[i + 1].transform.position;
-                
+
                 nextSegment = _segments[i]; // for next iteration
 
                 bool exitingPortal = false;
@@ -684,7 +688,7 @@ namespace Bosses.Worm
                         var oc = currSegmentPos;
                         currSegmentPos = FromLocalSpace(pair.pout, new Vector2(
                             IntoLocalSpace(pair.pout, currSegmentPos).x - Time.deltaTime * _headRigid.velocity.magnitude, 0));
-                        
+
                         _fakeSegs[idx].transform.position = IntoPortal(pair, currSegmentPos);
                         float along = ValueAlongPortal(pair.pin, _fakeSegs[idx].transform.position);
 
@@ -719,7 +723,7 @@ namespace Bosses.Worm
                         var curPos = _segments[j].transform.position;
                         var nextPos = _segments[j-1].transform.position;
                         var prevPos = _segments[j+1].transform.position;
-                        
+
                         var curr2prev = (curPos - prevPos).normalized;
                         var next2curr = (nextPos - curPos).normalized;
 
@@ -733,9 +737,9 @@ namespace Bosses.Worm
                     {
                         var curPos = _segments[0].transform.position;
                         var prevPos = _segments[1].transform.position;
-                        
+
                         var curr2prev = (curPos - prevPos).normalized;
-                        
+
                         _segments[0].transform.position = prevPos + _segmentDist * curr2prev;
                     }
                 }
@@ -756,7 +760,7 @@ namespace Bosses.Worm
             { //Scope naming stuffs
                 Vector3 nextSegmentPos = nextSegment.transform.position;
                 currSegmentPos = _segments[^1].transform.position;
-                
+
                 Vector3 curr2next = (nextSegmentPos - currSegmentPos).normalized;
 
                 if (_swipe > 0 && _portalIDs.All(j => j < _segments.Length - 1))
@@ -766,7 +770,7 @@ namespace Bosses.Worm
                     curr2next = (tailmomentum * .03f / Time.deltaTime * curr2next + (Vector3)tarcurr2next).normalized;
                 }
                 currSegmentPos = nextSegmentPos + -_segmentDist * curr2next;
-                
+
                 PortalPair? portalPair = null;
                 for (int idx = 0; idx < numportals; idx++)
                 {
@@ -789,7 +793,7 @@ namespace Bosses.Worm
                             _portals.RemoveAt(idx);
                             _portalIDs.RemoveAt(idx);
                             _fakeSegs.RemoveAt(idx);
-                            
+
                             numportals--;
                         }
                         break;
@@ -801,7 +805,7 @@ namespace Bosses.Worm
                     currSegmentPos += .1f * (Vector3)((Vector2)currSegmentPos).normalized;
                 }
                 _segments[^1].transform.position = currSegmentPos;
-                
+
                 var angle = Mathf.Atan2(curr2next.y, curr2next.x);
                 _segments[^1].transform.rotation = portalPair != null ? Quaternion.Euler(0, 0, 180 + portalPair.Value.pout.rotation.eulerAngles.z) : Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
             }
@@ -814,7 +818,7 @@ namespace Bosses.Worm
                 {
                     rend.sortingLayerName = "Boss";
                     if (i == 0 && _headFake != null) rend.sortingLayerName = "Teleport Out";
-                    
+
                     for (int idx = 0; idx < numportals; idx++)
                     {
                         if (_portalIDs[idx] == i) rend.sortingLayerName = "Teleport Out";
