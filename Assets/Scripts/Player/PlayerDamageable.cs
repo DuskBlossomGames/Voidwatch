@@ -74,7 +74,7 @@ namespace Spawnables.Player
 
         private void Update()
         {
-          
+
             ShieldPower = Mathf.Clamp(ShieldPower + ShieldRegenRate * Time.deltaTime, -ShieldMaxDebt, ShieldMaxPower);
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
         }
@@ -120,13 +120,18 @@ namespace Spawnables.Player
                 if (ShieldPower < 0)
                 {
                     bleed += damage;
-                    audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+
+                  /*  audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
                     audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
 
-                    audioPlayer.PlayOneShot(PlayerHitShield);
-                    audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
-                    audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
-                    audioPlayer.PlayOneShot(PlayerHitDamage);
+                  audioPlayer.PlayOneShot(PlayerHitShield);*/
+
+                  audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+                  audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
+
+                    audioPlayer.clip = PlayerHitShield;
+                    if(damage > 5){
+                      audioPlayer.Play();}
                     Debug.Log("AUDIO PLAYED!!");
                 }
                 else
@@ -147,8 +152,12 @@ namespace Spawnables.Player
                     bleed += trueDamage;
 
                     audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-                    audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
-                    audioPlayer.PlayOneShot(PlayerHitShield);
+                    audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/13f; //volume of hit modulates logarithmically with damage dealth
+                    audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
+                    audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
+
+                    audioPlayer.clip = PlayerHitDamage;
+                    audioPlayer.Play();
 
                 }
             }
