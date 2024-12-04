@@ -2034,7 +2034,7 @@ MonoBehaviour:
   attackSpeed: 20
   attackRadius: 10
   editorNote: Cutscene Variables
-  fadeInTime: 1.7
+  fadeInTime: 3
   waitTime: 0.3
   camDistAbovePlayer: 5
   distAbovePlayer: 10

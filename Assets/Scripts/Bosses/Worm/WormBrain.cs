@@ -373,7 +373,7 @@ namespace Bosses.Worm
                     _moveMode = MoveMode.Circle;
                     break;
                 case ActionGoal.Laser:
-                    _moveMode = _mlc.TimeToLightning - (_actionUtilTimer.MaxValue - _actionUtilTimer.Value) < 3f
+                    _moveMode = _mlc.TimeToLightning - (_actionUtilTimer.MaxValue - _actionUtilTimer.Value) < 5f
                         ? MoveMode.Direct
                         : MoveMode.Wander;
                     break;

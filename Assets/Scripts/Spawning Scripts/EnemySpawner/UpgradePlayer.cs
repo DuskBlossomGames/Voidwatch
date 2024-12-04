@@ -25,8 +25,8 @@ public class UpgradePlayer
                 GunInfoInstance.lateralSeperation *= 1.1f;
                 break;
             case Upgrades.Solidify: //general health boost
-                PlayerDataInstance.maxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.Health += Mathf.CeilToInt(0.1f * PlayerDataInstance.maxHealth);
+                PlayerDataInstance.maxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxShield = Mathf.CeilToInt(1.05f * PlayerDataInstance.maxShield);
                 break;
             case Upgrades.Tank: //Shield boost but reduce regen

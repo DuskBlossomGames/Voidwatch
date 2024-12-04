@@ -127,7 +127,6 @@ namespace Spawnables.Player
                     audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
                     audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
                     audioPlayer.PlayOneShot(PlayerHitDamage);
-                    Debug.Log("AUDIO PLAYED!!");
                 }
                 else
                 {

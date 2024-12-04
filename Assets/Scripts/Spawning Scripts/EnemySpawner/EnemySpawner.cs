@@ -77,7 +77,7 @@ namespace EnemySpawner
           _level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
           print(Mathf.Floor(_level.DifficultyScore/LevelSelectDataInstance.MaxDifficultyScore *5 *2)/2);
 
-          if (_level.Type != LevelType.Elite) fadeIn.SetActive(false);
+          if (_level.Type == LevelType.Elite) fadeIn.SetActive(true);
         }
 
         private readonly List<GameObject> _spawnedEnemies = new();
@@ -125,10 +125,8 @@ namespace EnemySpawner
                 _timeTillExit -= Time.deltaTime;
                 if (_timeTillExit < 0)
                 {
-                    _timeTillExit = 10000000000000000f;
-                    // UpgradePlayer.Upgrade(gun, playerDamager, UpgradePlayer.Upgrades.Overcharge);
                     nUpMan.Show();
-                    //SceneManager.LoadScene("LevelSelect");
+                    Destroy(gameObject);
                 }
                 return;
             }
@@ -136,7 +134,7 @@ namespace EnemySpawner
             // TODO: do spawning waves better
             if (SpawnedEnemies.Count == 0)
             {
-                if (_wave == _level.Waves.Length-1)
+                if (_level.Type == LevelType.Elite || _wave == _level.Waves.Length-1)
                 {
 
                     if(dataWritingOn){

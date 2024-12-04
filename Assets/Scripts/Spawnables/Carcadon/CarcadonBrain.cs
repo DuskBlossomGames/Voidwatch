@@ -251,7 +251,7 @@ namespace Spawnables.Carcadon
         private bool _forceStealth = true;
         private IEnumerator Cutscene()
         {
-            if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
 
             _stackedSpriteRenderers.AddRange(transform.GetChild(0).GetComponentsInChildren<SpriteRenderer>());
             _stackedSpriteRenderers.AddRange(transform.GetChild(2).GetComponentsInChildren<SpriteRenderer>());
@@ -278,6 +278,8 @@ namespace Spawnables.Carcadon
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(false);
             }
 
+            _enemySpawner.fadeIn.SetActive(true);
+
             // set up carcadon
             _mouthSr.sprite = _mouthSprites[0];
             foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, stealthOpacity);
@@ -289,25 +291,24 @@ namespace Spawnables.Carcadon
             }
             transform.rotation = Quaternion.Euler(0, 0, 180);
             transform.position = new Vector3(_player.transform.position.x+distAbovePlayer, _player.transform.position.y + cam.orthographicSize * cam.aspect + distOffScreen, transform.position.z);
-            
+
             // fade in
             var fadeImg = _enemySpawner.fadeIn.GetComponent<Image>();
             for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
             {
-                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
+                yield return new WaitForFixedUpdate();
                 fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, Mathf.SmoothStep(1, 0, t / fadeInTime));
             }
-            _enemySpawner.fadeIn.SetActive(false);
             
             // hold
-            if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(waitTime);
             
             // move right
             var origPos = transform.position.y;
             var targPos = origPos - (2 * cam.orthographicSize * cam.aspect + length + 2*distOffScreen);
             for (float t = 0; t < flyAcrossScreenTime; t += Time.fixedDeltaTime)
             {
-                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
+                yield return new WaitForFixedUpdate();
                 transform.position = new Vector3(transform.position.x,
                     Mathf.SmoothStep(origPos, targPos, t / flyAcrossScreenTime), transform.position.z);
             }
@@ -315,7 +316,7 @@ namespace Spawnables.Carcadon
             // slide down
             for (float t = 0; t < timeBetweenPasses; t += Time.fixedDeltaTime)
             {
-                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
+                yield return new WaitForFixedUpdate();
                 cam.transform.position = new Vector3(_player.transform.position.x + Mathf.SmoothStep(camDistAbovePlayer, -camDistAbovePlayer, t/timeBetweenPasses),
                     cam.transform.position.y, cam.transform.position.z);
             }
@@ -327,13 +328,13 @@ namespace Spawnables.Carcadon
             targPos = origPos + (2 * cam.orthographicSize * cam.aspect + length + 2*distOffScreen);
             for (float t = 0; t < flyAcrossScreenTime; t += Time.fixedDeltaTime)
             {
-                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
+                yield return new WaitForFixedUpdate();
                 transform.position = new Vector3(transform.position.x,
                     Mathf.SmoothStep(origPos, targPos, t / flyAcrossScreenTime), transform.position.z);
             }
             
             // hold
-            if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForSeconds(timeBeforeExpand);
+            yield return new WaitForSeconds(timeBeforeExpand);
 
             // slide up
             transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, transform.position.z)
@@ -348,7 +349,7 @@ namespace Spawnables.Carcadon
             var unfurled = false;
             for (float t = 0; t < camExpandTime; t += Time.fixedDeltaTime)
             {
-                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
+                yield return new WaitForFixedUpdate();
                 if (t >= timeBeforeReveal)
                 {
                     foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-(t-timeBeforeReveal)/opacityTime) * (1-stealthOpacity));
@@ -379,7 +380,7 @@ namespace Spawnables.Carcadon
             // hold
             camFp.ScreenShake(shakeTime, shakeIntensity);
             GetComponentInChildren<SpitController>().Spit(shakeTime);
-            if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForSeconds(pauseTime);
+            yield return new WaitForSeconds(pauseTime);
             
             _mode = Mode.Stealth;
             _stealthTimer.Value = Random.Range(minRandStealthTime, maxRandStealthTime);
@@ -393,7 +394,7 @@ namespace Spawnables.Carcadon
             origSize = cam.orthographicSize;
             for (float t = 0; t < headstartTime; t += Time.fixedDeltaTime)
             {
-                if (!Input.GetKey(KeyCode.Backslash)) yield return new WaitForFixedUpdate();
+                yield return new WaitForFixedUpdate();
                 cam.transform.position = new Vector3(Mathf.SmoothStep(camOrigPos, camTargPos, t / headstartTime),
                     cam.transform.position.y, cam.transform.position.z);
                 cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);
@@ -403,6 +404,7 @@ namespace Spawnables.Carcadon
             {
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
             }
+            DestroyImmediate(_enemySpawner.fadeIn);
             _forceStealth = false;
             for (var ac = 0; ac < 2; ac++) _armControllers[ac].hasAttack = true;
             _enemySpawner.SpawnWave();
