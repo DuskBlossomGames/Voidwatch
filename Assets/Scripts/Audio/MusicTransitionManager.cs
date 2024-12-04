@@ -46,19 +46,12 @@ public class MusicTransitionManager : MonoBehaviour
 
     void Update(){
       if(SceneManager.GetActiveScene().name == "LevelPlay"){
-
-        print("I am in level play");
-
+        
           if(audioPlayer.clip != battleIntro && audioPlayer.clip != battleLoop){
-
-              print("I am in level play and it is playing the wrong thing!");
-
-
             if(audioPlayer.isPlaying && audioPlayer.volume > 0.01f){
 
               audioPlayer.volume -= 1/timeInterpolate * Time.deltaTime;
               Mathf.Clamp(audioPlayer.volume,0f,staticMusicVolume);
-              print("Curret volume " + audioPlayer.volume);
 
             } else{
 
@@ -135,19 +128,13 @@ public class MusicTransitionManager : MonoBehaviour
 
 
       } else{
-
-        print("I am in level select" + audioPlayer.clip);
-
+        
         if(audioPlayer.clip != menuIntro && audioPlayer.clip != menuLoop){
-            print("I am in level select and it is not playing the right clips");
-
           if(audioPlayer.isPlaying && audioPlayer.volume > 0.01f){
 
             audioPlayer.volume -= 1/timeInterpolate * Time.deltaTime;
             Mathf.Clamp(audioPlayer.volume,0f,staticMusicVolume);
-
-            //print("big audio " + audioPlayer.volume);
-
+            
           } else{
 
             audioPlayer.clip = menuIntro;
