@@ -2031,7 +2031,7 @@ MonoBehaviour:
   stealthLowAccTime: 2
   destealthRadius: 22.5
   attackAccel: 8
-  attackSpeed: 20
+  attackSpeed: 27
   attackRadius: 10
   editorNote: Cutscene Variables
   fadeInTime: 3
