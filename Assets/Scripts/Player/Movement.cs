@@ -30,7 +30,7 @@ namespace Player
         public Sprite afterImageSprite;
 
         public bool Dodging => !_dodgeTimer.IsFinished;
-        
+
         private Collider2D _collider;
         private SpriteRenderer _sprite;
         private TrailRenderer[] _trails;
@@ -49,7 +49,7 @@ namespace Player
             Vector2 _orbitPoint;
         };
         private OrbitState _orbitState;
-        
+
         private bool _redirectDodge;
         private bool _redirected;
         private bool _stealthKeyUp;
@@ -87,7 +87,7 @@ namespace Player
         private void Update()
         {
             if (!_stealthKeyUp && !_dodgeTimer.IsFinished && Input.GetKeyUp(KeyCode.Space)) _stealthKeyUp = true;
-            
+
             if (_stealthKeyUp && !_redirectDodge && GetKeyDown(KeyCode.Space))
             {
                 _redirectDodge = true;
@@ -103,7 +103,7 @@ namespace Player
             _forwards = ((Vector2) tar).normalized;
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
-            
+
             if (_dodgeJuice >= dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && GetKey(KeyCode.Space))
             {
                 var evt = new DodgeEvent
@@ -132,7 +132,7 @@ namespace Player
                 _redirected = true;
                 _dodgeTimer.SetValue(_dodgeTimeLength / 2);
                 _dodgeDirection = _redirectDirection;
-            } 
+            }
 
 
             // CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
@@ -143,7 +143,7 @@ namespace Player
 
             _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate : -dodgeJuiceCost/_dodgeTimeLength*dodgeTimeDilation) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
             dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice);
-            
+
             if (dodging)
             {
                 if (_afterImageTimer.IsFinished)

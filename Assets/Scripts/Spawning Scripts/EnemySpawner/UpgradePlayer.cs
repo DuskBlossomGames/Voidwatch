@@ -21,7 +21,7 @@ public class UpgradePlayer
         switch (upgrade)
         {
             case Upgrades.Wave:
-                GunInfoInstance.bulletsPerShot = Mathf.CeilToInt(1.1f * GunInfoInstance.bulletsPerShot);
+                GunInfoInstance.bulletsPerShot = Mathf.Max(2,Mathf.CeilToInt(1.1f * GunInfoInstance.bulletsPerShot));
                 GunInfoInstance.lateralSeperation *= 1.1f;
                 break;
             case Upgrades.Solidify: //general health boost
@@ -51,11 +51,11 @@ public class UpgradePlayer
     {
         return upgrade switch
         {
-            Upgrades.Wave => "Waveshot",
-            Upgrades.Solidify => "Solidify",
-            Upgrades.Tank => "Tank",
-            Upgrades.Surge => "Surge",
-            Upgrades.Overcharge => "Overcharge",
+            Upgrades.Wave => "High Yield Plasma Coils",
+            Upgrades.Solidify => "Metastructural Supports",
+            Upgrades.Tank => "Shieldgen Batteries",
+            Upgrades.Surge => "Efficient Generators",
+            Upgrades.Overcharge => "Externalized Shield Capacitors",
         };
     }
 
@@ -63,11 +63,11 @@ public class UpgradePlayer
     {
         return upgrade switch
         {
-            Upgrades.Wave => "+ Bullets\n+ Spread",
-            Upgrades.Solidify => "+ Health\n+ Shield",
-            Upgrades.Tank => "+ Health\n+ Debt\n- Shield",
-            Upgrades.Surge => "++ Recharge",
-            Upgrades.Overcharge => "+++ Recharge\n+++ Shield\n---- Debt\n-- Health",
+            Upgrades.Wave => "Increases Bullets per shot",
+            Upgrades.Solidify => "Increases Hull Integrity and Shield Capacity",
+            Upgrades.Tank => "Increases Shield Capacity but decreases Shield Regeneration",
+            Upgrades.Surge => "Greatly increases Shield Regenration",
+            Upgrades.Overcharge => "Massively increases Shield Capacity and Regeneration but decreases Hull Integrity",
         };
     }
 }
