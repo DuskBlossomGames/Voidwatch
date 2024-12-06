@@ -15,15 +15,7 @@ namespace Player
         public bool inputBlocked;
         public bool autoPilot;
 
-        public float driftCorrection;
-        public float speedLimit;
-        public float acceleration;
         public ProgressBar dodgeBar;
-        public float dodgeRedirectPercentage;
-        public float dodgeJuiceCost;
-        public float dodgeVelocity;
-        public float dodgeDistance;
-        public float dodgeCooldown;
         public float dodgeTimeDilation;
         public AnimationCurve dodgeTimeDilationCurve;
         public float afterImageSpacing;
@@ -104,13 +96,13 @@ namespace Player
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (_dodgeJuice >= dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && GetKey(KeyCode.Space))
+            if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && GetKey(KeyCode.Space))
             {
                 var evt = new DodgeEvent
                 {
-                    dodgeCooldown = dodgeCooldown,
-                    dodgeDistance = dodgeDistance,
-                    dodgeVelocity = dodgeVelocity
+                    dodgeCooldown = PlayerDataInstance.dodgeCooldown,
+                    dodgeDistance = PlayerDataInstance.dodgeDistance,
+                    dodgeVelocity = PlayerDataInstance.dodgeVelocity
                 };
                 if (_upgradeable) _upgradeable.HandleEvent(evt, null);
 
@@ -127,7 +119,7 @@ namespace Player
             _afterImageTimer.FixedUpdate();
             var dodging = !_dodgeTimer.IsFinished;
 
-            if (1-_dodgeTimer.Progress >= dodgeRedirectPercentage && !_redirected && _redirectDodge)
+            if (1-_dodgeTimer.Progress >= PlayerDataInstance.dodgeRedirectPercentage && !_redirected && _redirectDodge)
             {
                 _redirected = true;
                 _dodgeTimer.SetValue(_dodgeTimeLength / 2);
@@ -141,14 +133,14 @@ namespace Player
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
 
-            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate : -dodgeJuiceCost/_dodgeTimeLength*dodgeTimeDilation) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
+            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate : -PlayerDataInstance.dodgeJuiceCost/_dodgeTimeLength*dodgeTimeDilation) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
             dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice);
 
             if (dodging)
             {
                 if (_afterImageTimer.IsFinished)
                 {
-                    _afterImageTimer.Value = afterImageSpacing / dodgeVelocity;
+                    _afterImageTimer.Value = afterImageSpacing / PlayerDataInstance.dodgeVelocity;
 
                     var afterImage = new GameObject
                     {
@@ -167,7 +159,7 @@ namespace Player
 
                     _afterImages.Add(afterImage);
                 }
-                _rigid.velocity = _dodgeDirection * dodgeVelocity;
+                _rigid.velocity = _dodgeDirection * PlayerDataInstance.dodgeVelocity;
                 return;
             }
             if (wasDodging)
@@ -181,7 +173,7 @@ namespace Player
 
             if (GetKey(KeyCode.W))
             {
-                var evt = new MoveEvent { speedLimit = speedLimit, acceleration = acceleration };
+                var evt = new MoveEvent { speedLimit = PlayerDataInstance.speedLimit, acceleration = PlayerDataInstance.acceleration };
                 if (_upgradeable) _upgradeable.HandleEvent(evt, null);
 
                 var dv = evt.speedLimit * evt.speedLimit / 100;
@@ -193,7 +185,7 @@ namespace Player
                 }
 
                 var vm = velocity.magnitude;
-                velocity += driftCorrection * Time.fixedDeltaTime * Push(velocity, _forwards);
+                velocity += PlayerDataInstance.driftCorrection * Time.fixedDeltaTime * Push(velocity, _forwards);
                 velocity *= (.01f + vm) / (.01f+velocity.magnitude);
 
                 /*if (GetKey("a"))
@@ -209,9 +201,9 @@ namespace Player
 
             if (autoPilot && ((Vector2)transform.position).sqrMagnitude > 60 * 60) velocity -= (Vector2)transform.position * (2 * Time.fixedDeltaTime);
 
-            if (velocity.sqrMagnitude > speedLimit * speedLimit)
+            if (velocity.sqrMagnitude > PlayerDataInstance.speedLimit * PlayerDataInstance.speedLimit)
             {
-                velocity *= Mathf.Pow(speedLimit * speedLimit / velocity.sqrMagnitude, Time.fixedDeltaTime);
+                velocity *= Mathf.Pow(PlayerDataInstance.speedLimit * PlayerDataInstance.speedLimit / velocity.sqrMagnitude, Time.fixedDeltaTime);
             }
             //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.freezeRotation), Mathf.Cos(Mathf.Deg2Rad * rigid.freezeRotation));
 

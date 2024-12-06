@@ -15,6 +15,14 @@ namespace Static_Info
         public float maxShieldDebt;
         public float maxDodgeJuice;
         public float dodgeJuiceRegenRate;
+        public float driftCorrection;
+        public float speedLimit;
+        public float acceleration;
+        public float dodgeRedirectPercentage;
+        public float dodgeJuiceCost;
+        public float dodgeVelocity;
+        public float dodgeDistance;
+        public float dodgeCooldown;
         public System.Collections.Generic.List<BaseComponent> weapons;
 
         [NonSerialized] public System.Collections.Generic.List<UpgradeInstance> Upgrades;
