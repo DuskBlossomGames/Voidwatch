@@ -234,6 +234,14 @@ MonoBehaviour:
   maxShieldDebt: 500
   maxDodgeJuice: 100
   dodgeJuiceRegenRate: 20
+  driftCorrection: 5
+  speedLimit: 25
+  acceleration: 4
+  dodgeRedirectPercentage: 0.6
+  dodgeJuiceCost: 45
+  dodgeVelocity: 120
+  dodgeDistance: 11
+  dodgeCooldown: 0.35
   weapons:
   - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
   - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
