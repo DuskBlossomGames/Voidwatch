@@ -152,7 +152,7 @@ public class ShopManagerAgain : MonoBehaviour
         var PDI = PlayerDataInstance;
         var rbc = boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
         if (PDI.speedBoosts >= 5 || PDI.Scrap < rbc) return;
-        PlayerDataInstance.speed *= 1f + boostPercentages[PDI.damageBoosts] / 100f;
+        PlayerDataInstance.speedLimit *= 1f + boostPercentages[PDI.speedBoosts] / 100f;
         PDI.damageBoosts += 1;
         PDI.Scrap -= rbc;
     }
