@@ -404,7 +404,8 @@ namespace Spawnables.Carcadon
             {
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
             }
-            DestroyImmediate(_enemySpawner.fadeIn);
+            //DestroyImmediate(_enemySpawner.fadeIn);
+            _enemySpawner.fadeIn.SetActive(false);
             _forceStealth = false;
             for (var ac = 0; ac < 2; ac++) _armControllers[ac].hasAttack = true;
             _enemySpawner.SpawnWave();

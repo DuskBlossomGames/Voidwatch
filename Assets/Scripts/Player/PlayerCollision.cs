@@ -40,7 +40,7 @@ namespace Player
 
             if (!damageable.IsDead)
             {
-                _dmgable.Damage(playerMod * vel, trueDamageMod * vel, IDamageable.DmgType.Concussive);
+                _dmgable.Damage(playerMod * vel, IDamageable.DmgType.Concussive);
                 _cooldownTimer.Value = cooldown;
             }
             

@@ -175,7 +175,7 @@ namespace EnemySpawner
                 );
 
             int[] pts = new int[pointWidth];
-            float rate = (float)_level.Loot / (float)pointWidth;
+            float rate = (float)_level.Loot / (float)pointWidth / _level.Waves.Length;
             float debt = 0;
             for (int i = 0; i < pointWidth; i++)
             {

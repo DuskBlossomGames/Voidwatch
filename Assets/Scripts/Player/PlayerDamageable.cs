@@ -2,19 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ProgressBars;
+using JetBrains.Annotations;
 using Scriptable_Objects;
 using Static_Info;
 using UnityEngine;
 using UnityEngine.ResourceManagement.Diagnostics;
+using UnityEngine.Serialization;
 using UnityEngine.SceneManagement;
 using Util;
+using System.Collections;
+using RootPlayer = Player;
 
 using static Static_Info.PlayerData;
+using Random = UnityEngine.Random;
 namespace Spawnables.Player
 {
     public class PlayerDamageable : Damageable
     {
         public Q_Vignette_Single vignette;
+        public GameObject fadeOut;
+        public float fadeouttime = 1;
         public AnimationCurve vignetteCurve;
         public float vignetteDuration, vignettePeak;
         public float sigmoidStart, sigmoidEnd;
@@ -31,6 +38,15 @@ namespace Spawnables.Player
         public AudioClip PlayerHitDamage;
 
         public bool godmode = false;
+
+        private const float BIT_TTL = 1;
+        private const float BIT_FADE = 1.5f;
+        private const float BIT_VEL = 3.5f;
+
+        [CanBeNull] public GameObject explosion; // only put if you want an explosion
+        public Sprite[] bitOptions;
+        public int numBits;
+        public float explosionScale, bitScale;
 
         protected override float MaxHealth => PlayerDataInstance.maxHealth;
         protected override float Health
@@ -86,11 +102,6 @@ namespace Spawnables.Player
         }
 
         public override void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
-        {
-            Damage(damage, 0, dmgType, reduceMod);
-        }
-
-        public void Damage(float damage, float trueDamage, IDamageable.DmgType dmgType, float reduceMod = 1f)
         {
             if (godmode) return;
 
@@ -149,8 +160,6 @@ namespace Spawnables.Player
                         bleed += overDebt;//excess damage overflows to bleeded damage
                     }
 
-                    bleed += trueDamage;
-
                     audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
                     audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/13f; //volume of hit modulates logarithmically with damage dealth
                     audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
@@ -160,10 +169,6 @@ namespace Spawnables.Player
                     audioPlayer.Play();
 
                 }
-            }
-            else
-            {
-                bleed += trueDamage;
             }
 
             bleed -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
@@ -176,7 +181,8 @@ namespace Spawnables.Player
                 if (Health < 0)
                 {
                     OnDeath();
-                    Destroy(gameObject);
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    godmode = true;
                 }
             }
 
@@ -186,6 +192,52 @@ namespace Spawnables.Player
 
         protected override void OnDeath()
         {
+
+            StartCoroutine(DeathFade());
+            var angleOffset = Random.Range(0, 360f);
+            for (var i = 0; i < numBits; i++)
+            {
+                var sprite = bitOptions[i < bitOptions.Length ? i : Random.Range(0, bitOptions.Length)];
+                
+                var sr = new GameObject().AddComponent<SpriteRenderer>();
+                sr.sprite = sprite;
+
+                var rb = sr.gameObject.AddComponent<Rigidbody2D>();
+                var angle = 2*Mathf.PI / numBits * Random.Range(i, i + 1f) + angleOffset;
+                rb.velocity = BIT_VEL * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
+                rb.gravityScale = 0;
+
+                var ftd = rb.gameObject.AddComponent<Carcadon.FadeToDeath>();
+                ftd.fadeTime = BIT_FADE;
+                ftd.TimeToLive = BIT_TTL;
+
+                ftd.transform.position = transform.position;
+                ftd.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360f));
+                ftd.transform.localScale = new Vector2(bitScale, bitScale);
+            }
+
+            if (explosion != null)
+            {
+                var explosionObj = Instantiate(explosion, null, true);
+                explosionObj.SetActive(true);
+                explosionObj.transform.position = transform.position;
+                explosionObj.transform.localScale = explosionScale * Vector3.one;
+                explosionObj.GetComponent<ExplosionHandler>().Run();
+                explosionObj.GetComponent<ParticleSystem>().Play();
+            }
+        }
+
+        IEnumerator DeathFade()
+        {
+            GetComponent<RootPlayer.Movement>().inputBlocked = true;
+            fadeOut.SetActive(true);
+            fadeOut.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0);
+            for (int i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
+            {
+                yield return new WaitForSecondsRealtime(.01f);
+                var prog = i / (100 * fadeouttime);
+                fadeOut.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, Mathf.Pow(prog, .5f));
+            }
             SceneManager.LoadScene("Menu");
         }
     }
