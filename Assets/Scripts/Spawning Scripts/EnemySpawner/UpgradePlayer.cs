@@ -54,8 +54,8 @@ public class UpgradePlayer
                 PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.maxHealth);
                 break;
             case Upgrades.Lance:
-                GunInfoInstance.dmgMod *= 1.2;
-                GunInfoInstance.shotForce *=1.2;
+                GunInfoInstance.dmgMod *= 1.2f;
+                GunInfoInstance.shotForce *=1.2f;
                 GunInfoInstance.fireTime += 0.5f;
                 break;
             case Upgrades.Juicesqueezer:
@@ -68,10 +68,10 @@ public class UpgradePlayer
                 PlayerDataInstance.maxDodgeJuice *= 1.3f;
                 break;
             case Upgrades.Reload:
-                GunInfoInstance.fireTime *= 0.8;
+                GunInfoInstance.fireTime *= 0.8f;
                 break;
             case Upgrades.Repeater:
-                GunInfoInstance.repeats = Mathf.Max(Mathf.CeilToInt(1.5) * PlayerDataInstance.repeats,1);
+                GunInfoInstance.repeats = Mathf.Max(Mathf.CeilToInt(1.5f * GunInfoInstance.repeats),1);
                 break;
             case Upgrades.Speedboost:
                 PlayerDataInstance.speedLimit *= 1.2f;
@@ -91,10 +91,10 @@ public class UpgradePlayer
         {
             Upgrades.Wave => "High Yield Plasma Coils",
             Upgrades.Solidify => "Metastructural Supports",
-            Upgrades.Tank => "Shieldgen Batteries",
+            Upgrades.Tank => "Statishield Batteries",
             Upgrades.Surge => "Hyperefficient Generators",
             Upgrades.Overcharge => "Externalized Shield Capacitors",
-            Upgrades.Lance =>"Plasma Lance",
+            Upgrades.Lance =>"HyperNova Acceleration Lance",
             Upgrades.Juicesqueezer => "Voidwrought Accummulator",
             Upgrades.Juicedynamic => "Void Laminar Plating",
             Upgrades.Juicebox =>"Void Containment Matrix",
