@@ -6,6 +6,7 @@ namespace EnemySpawner
 {
     public class EnemyVariant : MonoBehaviour
     {
+        public bool hazardObject;
         public int cost;
         public int ScrapCount;
         public GameObject ScrapPrefab;

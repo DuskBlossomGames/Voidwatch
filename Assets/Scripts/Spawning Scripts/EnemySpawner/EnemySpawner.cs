@@ -36,6 +36,7 @@ namespace EnemySpawner
         private LevelData _level;
 
         private readonly Dictionary<string, List<EnemyVariant>> _groups = new();
+        private readonly Dictionary<string, List<EnemyVariant>> _hazardObjects = new();
         private readonly List<GameObject> _miniBosses = new();
         
         private readonly Dictionary<string, bool> _loadedVariants = new();
@@ -56,7 +57,6 @@ namespace EnemySpawner
                 foreach (var variant in locHandle.Result)
                 {
                     var group = variant.PrimaryKey.Split("/")[^2];
-                    if (!_groups.ContainsKey(group)) _groups[group] = new List<EnemyVariant>();
                     
                     _loadedVariants[group] = false;
                     Addressables.LoadAssetAsync<GameObject>(variant).Completed += dataHandle =>
@@ -67,7 +67,19 @@ namespace EnemySpawner
                         }
                         else
                         {
-                            _groups[group].Add(dataHandle.Result.GetComponent<EnemyVariant>());                            
+                            var variant = dataHandle.Result.GetComponent<EnemyVariant>();
+                            if (variant.hazardObject)
+                            {
+                                if (!_hazardObjects.ContainsKey(group)) _hazardObjects[group] = new List<EnemyVariant>();
+
+                                _hazardObjects[group].Add(variant);
+                            }
+                            else
+                            {
+                                if (!_groups.ContainsKey(group)) _groups[group] = new List<EnemyVariant>();
+
+                                _groups[group].Add(variant);
+                            }    
                         }
                         _loadedVariants[group] = true;
                     };
