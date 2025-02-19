@@ -304,7 +304,6 @@ namespace Bosses.Worm
                 else
                 {
                     bool portalable = false;
-                    rand = 0;
                     switch (rand)
                     {
                         case < .15f:

@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2000
-  maxShield: 350
+  maxShield: 500
   shieldRegenRate: 30
   maxShieldDebt: 500
   maxDodgeJuice: 100
@@ -279,11 +279,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoCount: 100
   noShootRefillTime: 1
-  emptyRefillTime: 0.5
+  emptyRefillTime: 1
   timeToRefillFully: 1
   bulletsPerShot: 2
   bulletsPerShotVarience: 0
-  fireTime: 0.1
+  fireTime: 0.17
   shotForce: 2125
   forceVarience: 5
   lateralSeperation: 20

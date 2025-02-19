@@ -71,19 +71,22 @@ public class ShopManagerAgain : MonoBehaviour
         rbut.text = $"Full Repair\n{_repairs[2]:# ### ###} SCRAP";
 
         if (PDI.healthBoosts < 5) {
-            hbo.text = $"Lvl {_roman[PDI.healthBoosts]}: +{boostPercentages[PDI.healthBoosts]}%\n{boostCost} SCRAP";
+            var rbc = boostCost * (PDI.healthBoosts + 1) * (PDI.healthBoosts + 1);
+            hbo.text = $"Lvl {_roman[PDI.healthBoosts]}: +{boostPercentages[PDI.healthBoosts]}%\n{rbc} SCRAP";
         } else {
             hbo.text = $"Max Lvl";
         }
 
-        if (PDI.healthBoosts < 5) {
-            wbo.text = $"Lvl {_roman[PDI.damageBoosts]}: +{boostPercentages[PDI.damageBoosts]}%\n{boostCost} SCRAP";
+        if (PDI.damageBoosts < 5) {
+            var rbc = boostCost * (PDI.damageBoosts + 1) * (PDI.damageBoosts + 1);
+            wbo.text = $"Lvl {_roman[PDI.damageBoosts]}: +{boostPercentages[PDI.damageBoosts]}%\n{rbc} SCRAP";
         } else {
             wbo.text = $"Max Lvl";
         }
 
-        if (PDI.healthBoosts < 5) {
-            sbo.text = $"Lvl {_roman[PDI.speedBoosts]}: +{boostPercentages[PDI.speedBoosts]}%\n{boostCost} SCRAP";
+        if (PDI.speedBoosts < 5) {
+            var rbc = boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
+            sbo.text = $"Lvl {_roman[PDI.speedBoosts]}: +{boostPercentages[PDI.speedBoosts]}%\n{rbc} SCRAP";
         } else {
             sbo.text = $"Max Lvl";
         }
@@ -125,26 +128,33 @@ public class ShopManagerAgain : MonoBehaviour
     public void HBoost()
     {
         var PDI = PlayerDataInstance;
-        if (PDI.healthBoosts >= 5 || PDI.Scrap < boostCost) return;
+        var rbc = boostCost * (PDI.healthBoosts + 1) * (PDI.healthBoosts + 1);
+        if (PDI.healthBoosts >= 5 || PDI.Scrap < rbc) return;
         float per = PDI.Health / PDI.maxHealth;
         PDI.maxHealth = Mathf.CeilToInt(PDI.maxHealth * (1f + boostPercentages[PDI.healthBoosts] / 100f));
         PDI.Health = PDI.maxHealth * per;
         PDI.healthBoosts += 1;
-        PDI.Scrap -= boostCost;
+        PDI.Scrap -= rbc;
     }
 
     public void WBoost()
     {
         var PDI = PlayerDataInstance;
-        if (PDI.damageBoosts >= 5 || PDI.Scrap < boostCost) return;
+        var rbc = boostCost * (PDI.damageBoosts + 1) * (PDI.damageBoosts + 1);
+        if (PDI.damageBoosts >= 5 || PDI.Scrap < rbc) return;
         GunInfoInstance.dmgMod *= 1f + boostPercentages[PDI.damageBoosts] / 100f;
         PDI.damageBoosts += 1;
-        PDI.Scrap -= boostCost;
+        PDI.Scrap -= rbc;
     }
 
     public void SBoost()
     {
-        Debug.LogWarning("Unimplemented");
+        var PDI = PlayerDataInstance;
+        var rbc = boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
+        if (PDI.speedBoosts >= 5 || PDI.Scrap < rbc) return;
+        PlayerDataInstance.speedLimit *= 1f + boostPercentages[PDI.speedBoosts] / 100f;
+        PDI.damageBoosts += 1;
+        PDI.Scrap -= rbc;
     }
 
     public void Draw()

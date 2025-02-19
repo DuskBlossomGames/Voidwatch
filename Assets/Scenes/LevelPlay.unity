@@ -4806,6 +4806,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: fadeOut
+      value: 
+      objectReference: {fileID: 1781870393}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: vignette
       value: 
       objectReference: {fileID: 1626291421}
@@ -4821,6 +4825,10 @@ PrefabInstance:
       propertyPath: audioPlayer
       value: 
       objectReference: {fileID: 138731955}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: fadeouttime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: PlayerHitDamage
       value: 

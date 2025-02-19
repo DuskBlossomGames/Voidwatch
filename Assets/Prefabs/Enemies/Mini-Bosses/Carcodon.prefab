@@ -2081,7 +2081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dmgRes: {fileID: 11400000, guid: de2060ee01175134cab3ccc903df4371, type: 2}
-  maxHealth: 1200
+  maxHealth: 2000
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []

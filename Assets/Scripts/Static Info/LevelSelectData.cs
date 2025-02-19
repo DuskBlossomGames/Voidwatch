@@ -49,7 +49,7 @@ namespace Static_Info
     public class LevelSelectData : MonoBehaviour
     {
         public static LevelSelectData LevelSelectDataInstance => StaticInfoHolder.instance.GetCachedComponent<LevelSelectData>();
-        
+
         public float baseDifficulty;
         public float gameDifficultyModifier;
         public float levelModifier;
@@ -89,7 +89,7 @@ namespace Static_Info
 
                     var difficultyScore = level.Type == LevelType.Boss ? MaxDifficultyScore :
                         baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 2) * randomModifier;
-                    
+
                     var difficultyBudget = (int) (gameDifficultyModifier * (difficultyScore +
                                                                             (level.Type == LevelType.Elite ? EliteDifficultyBonus : 0) +
                                                                             0/*TODO: galaxyNumber * galaxyModifier*/));
@@ -119,7 +119,7 @@ namespace Static_Info
                         difficultyBudget -= addition;
                     }
 
-                    level.Loot = 4 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
+                    level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
                     level.DifficultyScore = (int) difficultyScore;
                     level.Waves = waves.ToArray();
                 }

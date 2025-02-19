@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2066,16 +2066,16 @@ MonoBehaviour:
   mf: 1
   rf: 1
   boostCost: 20
-  scrapPerThouHp: 50
+  scrapPerThouHp: 200
   cheapDiscount: 0.2
   midDiscount: 0.55
   honestFactor: 0.35
   boostPercentages:
-  - 2
-  - 3
   - 5
+  - 7.5
   - 10
-  - 15
+  - 12.5
+  - 20
 --- !u!1 &546503424
 GameObject:
   m_ObjectHideFlags: 0

@@ -5682,15 +5682,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputBlocked: 0
-  driftCorrection: 5
-  speedLimit: 25
-  acceleration: 4
+  autoPilot: 0
   dodgeBar: {fileID: 0}
-  dodgeRedirectPercentage: 0.6
-  dodgeJuiceCost: 45
-  dodgeVelocity: 120
-  dodgeDistance: 11
-  dodgeCooldown: 0.35
   dodgeTimeDilation: 0.25
   dodgeTimeDilationCurve:
     serializedVersion: 2
@@ -5782,6 +5775,8 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   vignette: {fileID: 0}
+  fadeOut: {fileID: 0}
+  fadeouttime: 1
   vignetteCurve:
     serializedVersion: 2
     m_Curve:
@@ -5839,6 +5834,14 @@ MonoBehaviour:
   PlayerHitShield: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
   PlayerHitDamage: {fileID: 8300000, guid: a5ac4e7b3681b458a894b4481f2fb3da, type: 3}
   godmode: 0
+  explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+  bitOptions:
+  - {fileID: 717642507, guid: f0d388b170c0845958e53eed29d784e3, type: 3}
+  - {fileID: 1901221327, guid: f0d388b170c0845958e53eed29d784e3, type: 3}
+  - {fileID: 355704663, guid: f0d388b170c0845958e53eed29d784e3, type: 3}
+  numBits: 5
+  explosionScale: 0.2
+  bitScale: 1
 --- !u!114 &1428599344170491721
 MonoBehaviour:
   m_ObjectHideFlags: 0
