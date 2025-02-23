@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -35,15 +36,14 @@ namespace EnemySpawner
         public GameObject boundaryCircle;
         private LevelData _level;
 
+        private bool _spawnedHazards;
+
         private readonly Dictionary<string, List<EnemyVariant>> _groups = new();
         private readonly Dictionary<string, List<EnemyVariant>> _hazardObjects = new();
         private readonly List<GameObject> _miniBosses = new();
         
         private readonly Dictionary<string, bool> _loadedVariants = new();
-
-        public float levelTimer = 0.0f;
-        public bool dataWritingOn = true;
-
+        
         public NewUpgradeManager nUpMan;
 
         private void Awake()
@@ -68,6 +68,8 @@ namespace EnemySpawner
                         else
                         {
                             var variant = dataHandle.Result.GetComponent<EnemyVariant>();
+                            if (variant == null) return;
+                            
                             if (variant.hazardObject)
                             {
                                 if (!_hazardObjects.ContainsKey(group)) _hazardObjects[group] = new List<EnemyVariant>();
@@ -122,13 +124,37 @@ namespace EnemySpawner
                 _spawnedElite = true;
             }
             
-            levelTimer+= Time.deltaTime;
             // TODO: debug
             if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
             if (_level.Type == LevelType.Elite && Input.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
             if (Input.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 
             if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
+            if (!_spawnedHazards)
+            {
+                _spawnedHazards = true;
+                var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
+
+                var sectorSize = 2*Mathf.PI / hazards.Count;
+                for (var sector = 0; sector < hazards.Count; sector++)
+                {
+                    var idx = Random.Range(0, hazards.Count);
+                    var hazard = hazards[idx];
+                    hazards.RemoveAt(idx);
+                    
+                    var offset = Random.Range(-sectorSize/3, sectorSize/3);
+
+                    var theta = sectorSize/2 + sector * sectorSize + offset;
+                    var r = Random.Range(planet.forceField.transform.localScale.x / 2 + 30,
+                        boundaryCircle.transform.localScale.x / 2 - 20);
+                    
+                    var hazardObj = Instantiate(
+                        hazard,
+                        transform.position +  
+                            new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0),
+                        Quaternion.identity);
+                }
+            }
 
             //var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 
@@ -148,17 +174,6 @@ namespace EnemySpawner
             {
                 if (_level.Type == LevelType.Elite || _wave == _level.Waves.Length-1)
                 {
-
-                    if(dataWritingOn){
-
-                    _level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
-                    var difficultyLocal = Mathf.Floor(_level.DifficultyScore/LevelSelectDataInstance.MaxDifficultyScore *5 *2)/2;
-                    var finalTime = levelTimer;
-                    string concoconatedDifficultyTimer = "" + difficultyLocal + "," + finalTime;
-                    UtilFuncs.WriteToFile("DataScience/LevelClearLevelSelectDataInstance.csv",concoconatedDifficultyTimer);
-                    dataWritingOn = false;
-                    }
-
                     _timeTillExit = 3;
                     _isTerminal = true;
                 }
@@ -243,11 +258,12 @@ namespace EnemySpawner
             }
         }
 
-        private List<GameObject> GetSpawnedEnemies(int budget)
+        private List<GameObject> GetSpawnedEnemies(int budget, bool hazards = false)
         {
             var groupBudgets = new Dictionary<string, int>();
 
-            var groups = _groups.Keys.ToList();
+            var enemyGroups = hazards ? _hazardObjects : _groups;
+            var groups = enemyGroups.Keys.ToList();
             var budgets = new List<int>(groupBudgetTiers);
             while (groups.Count > 0 && budget > groupBudgetTiers[0])
             {
@@ -259,12 +275,21 @@ namespace EnemySpawner
                 groups.RemoveAt(group);
             }
 
+            // randomly add in the rest
+            while (budget > 0)
+            {
+                var amt = Random.Range(Mathf.Min(budget, 3), Mathf.Min(budget, 10));
+
+                groupBudgets[groupBudgets.Keys.ToList()[Random.Range(0, groupBudgets.Count)]] += amt;
+                budget -= amt;
+            }
+
 
             var enemies = new List<GameObject>();
             foreach (var group in groupBudgets.Keys)
             {
                 var groupBudget = groupBudgets[group];
-                var variants = new List<EnemyVariant>(_groups[group]);
+                var variants = new List<EnemyVariant>(enemyGroups[group]);
 
                 while (variants.Count > 0 && groupBudget > 0)
                 {

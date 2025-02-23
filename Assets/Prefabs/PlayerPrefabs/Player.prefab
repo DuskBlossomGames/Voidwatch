@@ -5833,7 +5833,7 @@ MonoBehaviour:
   audioPlayer: {fileID: 0}
   PlayerHitShield: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
   PlayerHitDamage: {fileID: 8300000, guid: a5ac4e7b3681b458a894b4481f2fb3da, type: 3}
-  godmode: 0
+  godmode: 1
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
   - {fileID: 717642507, guid: f0d388b170c0845958e53eed29d784e3, type: 3}

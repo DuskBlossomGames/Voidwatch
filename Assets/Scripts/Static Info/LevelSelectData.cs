@@ -33,6 +33,7 @@ namespace Static_Info
         public LevelType Type;
         public int Loot;
         public int DifficultyScore;
+        public int HazardBudget;
         public int[] Waves;
         public Sprite Sprite;
         public List<int> Connections;
@@ -95,6 +96,9 @@ namespace Static_Info
                                                                             0/*TODO: galaxyNumber * galaxyModifier*/));
                     List<int> waves = new();
 
+                    // TODO
+                    level.HazardBudget = (int) (30 + 50 * difficultyScore/MaxDifficultyScore);
+
                     // start with as many waves as possible given min budget
                     while (true)
                     {
@@ -115,7 +119,13 @@ namespace Static_Info
                         var addition = difficultyBudget < 5 ? difficultyBudget :
                             Random.Range(0, difficultyBudget);
 
-                        waves[Random.Range(0, waves.Count - 1)] += addition;
+                        // don't allow waves to go past the next wave's min value
+                        var validWaves = minBudgetPerWave.Select((_, i) =>
+                            i < waves.Count && (
+                                i == waves.Count - 1
+                                || waves[i] + addition < minBudgetPerWave[i + 1]
+                            ) ? i : -1).Where(i=>i!=-1).ToList();
+                        waves[validWaves[Random.Range(0, validWaves.Count)]] += addition;
                         difficultyBudget -= addition;
                     }
 
