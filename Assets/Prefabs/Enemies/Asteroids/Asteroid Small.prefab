@@ -79,6 +79,9 @@ MonoBehaviour:
   - {fileID: 1261275619952868859, guid: 69b1986ab2e144e3f823cc647b7051f8, type: 3}
   - {fileID: 1261275619952868859, guid: 3381aafca01014efeba60dd8d2649826, type: 3}
   - {fileID: 1261275619952868859, guid: b32c268038f004ea79e4d1cf40c44729, type: 3}
+  - {fileID: 1261275619952868859, guid: 28717f6f2780741a4a2f5dd2bed8e455, type: 3}
+  - {fileID: 1261275619952868859, guid: e5e9b38e081e6424a9ba8f9674ccdfb7, type: 3}
+  - {fileID: 1261275619952868859, guid: dbb7d8c15429e4891830b22781838d56, type: 3}
   nextSize: {fileID: 0}
   startVel: {x: 0, y: 0}
 --- !u!114 &-8967648618552505094
