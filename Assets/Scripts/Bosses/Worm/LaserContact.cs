@@ -14,7 +14,7 @@ namespace Bosses.Worm
             var player = other.GetComponent<PlayerDamageable>();
             if (!player) return;
             
-            player.Damage(damage, IDamageable.DmgType.Physical);
+            player.Damage(damage, IDamageable.DmgType.Physical, gameObject);
         }
     }
 }

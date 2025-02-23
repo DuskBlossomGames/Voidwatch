@@ -68,7 +68,7 @@ namespace Bosses.Worm
                 {
                     _player.GetComponent<Player.Movement>().inputBlocked = true;
                     _player.GetComponent<CustomRigidbody2D>().velocity = Vector2.zero;
-                    _player.GetComponent<PlayerDamageable>().Damage(grabDamage, IDamageable.DmgType.Concussive);
+                    _player.GetComponent<PlayerDamageable>().Damage(grabDamage, IDamageable.DmgType.Concussive, gameObject);
                     wm.BiteCallback();
 
                     _holdTimer.Value = holdTime;

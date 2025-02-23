@@ -51,11 +51,11 @@ namespace Spawnables.Player
         protected override float MaxHealth => PlayerDataInstance.maxHealth;
         protected override float Health
         {
-            get {return PlayerDataInstance.Health; }
+            get => PlayerDataInstance.Health;
             set
             {
                 PlayerDataInstance.Health = value;
-                if (value <= 0) OnDeath();
+                if (value <= 0) OnDeath(null);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Spawnables.Player
             vignette.mainColor.a = _vignettePeakAlpha * vignetteCurve.Evaluate(1-_vignetteTimer.Progress);
         }
 
-        public override void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
+        public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1f)
         {
             if (godmode) return;
 
@@ -180,7 +180,7 @@ namespace Spawnables.Player
 
                 if (Health < 0)
                 {
-                    OnDeath();
+                    OnDeath(source);
                     GetComponent<SpriteRenderer>().enabled = false;
                     godmode = true;
                 }
@@ -190,7 +190,7 @@ namespace Spawnables.Player
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
         }
 
-        protected override void OnDeath()
+        protected override void OnDeath(GameObject source)
         {
 
             StartCoroutine(DeathFade());

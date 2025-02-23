@@ -15,7 +15,7 @@ namespace Spawnables.Carcadon
         {
             if (Active && other.gameObject == Player.gameObject)
             {
-                Player.Damage(damage, IDamageable.DmgType.Physical);
+                Player.Damage(damage, IDamageable.DmgType.Physical, gameObject);
                 Active = false;
             }
         }
@@ -24,7 +24,7 @@ namespace Spawnables.Carcadon
         {
             if (Active && other.gameObject == Player.gameObject)
             {
-                Player.Damage(damage, IDamageable.DmgType.Physical);
+                Player.Damage(damage, IDamageable.DmgType.Physical, gameObject);
                 Active = false;
             }
         }

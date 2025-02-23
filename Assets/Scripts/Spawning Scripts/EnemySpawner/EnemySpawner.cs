@@ -61,6 +61,7 @@ namespace EnemySpawner
                     _loadedVariants[group] = false;
                     Addressables.LoadAssetAsync<GameObject>(variant).Completed += dataHandle =>
                     {
+                        _loadedVariants[group] = true;
                         if (group == miniBossesGroup)
                         {
                             _miniBosses.Add(dataHandle.Result);
@@ -83,7 +84,6 @@ namespace EnemySpawner
                                 _groups[group].Add(variant);
                             }    
                         }
-                        _loadedVariants[group] = true;
                     };
                 }
             };

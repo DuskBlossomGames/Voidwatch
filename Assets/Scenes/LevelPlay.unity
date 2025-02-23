@@ -1633,7 +1633,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 194551
+    m_Bits: 718839
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3920,8 +3920,6 @@ MonoBehaviour:
   miniBossesGroup: Mini-Bosses
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
-  levelTimer: 0
-  dataWritingOn: 0
   nUpMan: {fileID: 682528864}
 --- !u!4 &1780276284
 Transform:

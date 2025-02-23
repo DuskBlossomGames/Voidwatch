@@ -14,9 +14,9 @@ public class WormDamageable : EnemyDamageable
         base.Start();
     }
     
-    protected override void OnDeath()
+    protected override void OnDeath(GameObject source)
     {
-        base.OnDeath();
+        base.OnDeath(source);
         Destroy(root);
     }
 }

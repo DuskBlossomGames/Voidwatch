@@ -36,11 +36,11 @@ namespace Player
             if (damageable.GetComponent<MissleAim>() != null) return;
                 
             var vel = (other.attachedRigidbody.velocity - _rb.velocity).magnitude;
-            damageable.Damage(enemyMod * vel, IDamageable.DmgType.Concussive);
+            damageable.Damage(enemyMod * vel, IDamageable.DmgType.Concussive, gameObject);
 
             if (!damageable.IsDead)
             {
-                _dmgable.Damage(playerMod * vel, IDamageable.DmgType.Concussive);
+                _dmgable.Damage(playerMod * vel, IDamageable.DmgType.Concussive, gameObject);
                 _cooldownTimer.Value = cooldown;
             }
             

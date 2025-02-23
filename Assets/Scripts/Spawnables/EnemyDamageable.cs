@@ -44,7 +44,7 @@ namespace Spawnables
             _health += x;
         }
 
-        protected override void OnDeath()
+        protected override void OnDeath(GameObject source)
         {
             var angleOffset = Random.Range(0, 360f);
             for (var i = 0; i < numBits; i++)

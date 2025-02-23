@@ -1,4 +1,5 @@
 using Spawnables;
+using UnityEngine;
 
 namespace Bosses.Worm
 {
@@ -6,9 +7,9 @@ namespace Bosses.Worm
     {
         public WormBrain brain;
         
-        protected override void OnDeath()
+        protected override void OnDeath(GameObject source)
         {
-            base.OnDeath();
+            base.OnDeath(source);
             brain.EyeDead();
         }
     }

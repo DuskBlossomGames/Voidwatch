@@ -17,7 +17,7 @@ public class AreaDamager : MonoBehaviour
         IDamageable dmg;
         if ((dmg = other.gameObject.GetComponent<IDamageable>()) != null && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            dmg.Damage(damagePerSecond * Time.deltaTime, dmgType, 0);
+            dmg.Damage(damagePerSecond * Time.deltaTime, dmgType, gameObject, 0);
             //Debug.LogFormat("{0} Component found as {1}", other.gameObject.name, dmg.ToString());
         } else
         {
@@ -32,7 +32,7 @@ public class AreaDamager : MonoBehaviour
         IDamageable dmg;
         if ((dmg = other.gameObject.GetComponent<IDamageable>()) != null && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            dmg.Damage(entryDamage, dmgType, 0);
+            dmg.Damage(entryDamage, dmgType, gameObject, 0);
             //Debug.LogFormat("{0} Component found as {1}", other.gameObject.name, dmg.ToString());
         }
         else

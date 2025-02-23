@@ -54,8 +54,8 @@ public class BulletCollision : MonoBehaviour
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
 
-                if (isKinetic) { damageable.Damage(.5f * evt.damage * mass * sqrSpeed, dmgType); }
-                else {           damageable.Damage(evt.damage * mass, dmgType); }
+                if (isKinetic) { damageable.Damage(.5f * evt.damage * mass * sqrSpeed, dmgType, gameObject); }
+                else {           damageable.Damage(evt.damage * mass, dmgType, gameObject); }
                 
             }
 
@@ -77,7 +77,7 @@ public class BulletCollision : MonoBehaviour
                     if (hit.collider == null || hit.collider == otherCollider) continue;
                     if (ignoresOwner && hit.collider == owner.GetComponent<Collider2D>()) continue;
                     
-                    hit.transform.GetComponent<IDamageable>()?.Damage(explosionDmg, dmgType);
+                    hit.transform.GetComponent<IDamageable>()?.Damage(explosionDmg, dmgType, gameObject);
                 }
             }
 

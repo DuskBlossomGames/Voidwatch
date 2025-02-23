@@ -111,7 +111,7 @@ public class MissleAim : MonoBehaviour
                 var dmgable = tar.GetComponent<IDamageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(dmg / rayNum, IDamageable.DmgType.Physical);
+                    dmgable.Damage(dmg / rayNum, IDamageable.DmgType.Physical, gameObject);
                 }
             }
             //Debug.LogFormat("Ray {0} end", i);

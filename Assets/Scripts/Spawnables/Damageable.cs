@@ -23,7 +23,7 @@ namespace Spawnables
             _healthBar.transform.SetParent(transform, true);
         }
 
-        public virtual void Damage(float damage, IDamageable.DmgType dmgType, float reduceMod = 1f)
+        public virtual void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1f)
         {
             if (IsDead) return;
             
@@ -33,13 +33,13 @@ namespace Spawnables
         
             if (IsDead)
             {
-                OnDeath();
+                OnDeath(source);
                 Destroy(gameObject);
             }
 
             _healthBar.UpdatePercentage(Health, MaxHealth);
         }
         
-        protected virtual void OnDeath() { }
+        protected virtual void OnDeath(GameObject source) { }
     }
 }

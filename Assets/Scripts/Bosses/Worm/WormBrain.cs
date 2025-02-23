@@ -189,7 +189,7 @@ namespace Bosses.Worm
             {
                 foreach (var dmgable in GetComponentsInChildren<Damageable>())
                 {
-                    dmgable.Damage(float.PositiveInfinity, IDamageable.DmgType.Black, 0); // kill, triggering OnDeath
+                    dmgable.Damage(float.PositiveInfinity, IDamageable.DmgType.Black, gameObject, 0); // kill, triggering OnDeath
                 }
             }
 
