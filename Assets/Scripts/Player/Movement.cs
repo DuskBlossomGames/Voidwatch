@@ -23,6 +23,8 @@ namespace Player
 
         public bool Dodging => !_dodgeTimer.IsFinished;
 
+        [NonSerialized] public Vector2? DodgeOnceDir = null;
+        
         private Collider2D _collider;
         private SpriteRenderer _sprite;
         private TrailRenderer[] _trails;
@@ -96,7 +98,7 @@ namespace Player
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && GetKey(KeyCode.Space))
+            if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(KeyCode.Space) || DodgeOnceDir != null))
             {
                 var evt = new DodgeEvent
                 {
@@ -110,7 +112,9 @@ namespace Player
                 _dodgeTimeLength = evt.dodgeDistance / evt.dodgeVelocity;
                 _dodgeTimer.Value = _dodgeTimeLength;
                 _dodgeCooldownTimer.Value = evt.dodgeDistance / evt.dodgeVelocity + evt.dodgeCooldown;
-                _dodgeDirection = new Vector2(_forwards.x, _forwards.y);
+                _dodgeDirection = DodgeOnceDir ?? new Vector2(_forwards.x, _forwards.y);
+
+                DodgeOnceDir = null;
             }
 
             var wasDodging = !_dodgeTimer.IsFinished;

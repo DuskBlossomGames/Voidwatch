@@ -6,6 +6,7 @@ using Player;
 using ProgressBars;
 using Spawnables;
 using UnityEngine;
+using UnityEngine.UI;
 using Util;
 //using Unity.VersionControl.Git.ICSharpCode.SharpZipLib.Zip;
 using Random = UnityEngine.Random;
@@ -62,6 +63,8 @@ namespace Bosses.Worm
         private float _tarSpeed;
         private float _tarSnakines;
         private float _tarTurnAngle;
+
+        private bool _inCutscene = true;
 
         private TailController _tailController;
         private SpikeLinkedList _headSpike, _tailSpike;
@@ -173,6 +176,8 @@ namespace Bosses.Worm
 
             _headRigid = head.GetComponent<Rigidbody2D>();
             _moveMode = MoveMode.Wander;
+
+            StartCoroutine(Cutscene());
         }
 
         public void EyeDead()
@@ -194,6 +199,7 @@ namespace Bosses.Worm
             }
 
             UpdateMovement();
+            if (_inCutscene) return;
 
             var _snakiness = pathfinder.snakeyness;
 
@@ -871,6 +877,112 @@ namespace Bosses.Worm
             Vector2 x = norm * position.x;
             Vector2 y = perp * position.y;
             return x + y + (Vector2)transform.position;
+        }
+
+        public string editorNote = "Cutscene Variables";
+        public GameObject fadeIn, portal, planet;
+        public float fadeInTime;
+        public float waitForZoomTime;
+        public float zoomTime, zoomCamSize;
+        public float waitForPortalTime;
+        public float waitForLaserTime;
+        public float waitForPanTime;
+        public float panTime;
+        private IEnumerator Cutscene()
+        {
+            yield return new WaitForEndOfFrame();
+
+            // setup
+            var cam = Camera.main;
+            var camFp = cam!.GetComponent<FollowPlayer>();
+            camFp.Enabled = false;
+            cam.transform.position = (Vector3) (Vector2) player.transform.position + new Vector3(0, 0, cam.transform.position.z);
+            cam.transform.rotation = Quaternion.Euler(0, 0, -45);
+            cam.orthographicSize = camFp.baseSize;
+            for (var i = 0; i < fadeIn.transform.parent.childCount; i++)
+            {
+                fadeIn.transform.parent.GetChild(i).gameObject.SetActive(false);
+            }
+            fadeIn.SetActive(true);
+            player.GetComponent<Shoot>().enabled = false;
+            player.GetComponent<Movement>().inputBlocked = true;
+            var playerDist = player.transform.position.magnitude;
+            var playerDir = player.transform.position.normalized;
+            
+            // fade in
+            var fadeImg = fadeIn.GetComponent<Image>();
+            for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, Mathf.SmoothStep(1, 0, t / fadeInTime));
+            }
+            fadeIn.SetActive(false);
+
+            yield return new WaitForSeconds(waitForZoomTime);
+            
+            // zoom out
+            for (float t = 0; t < zoomTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                cam.orthographicSize = Mathf.SmoothStep(camFp.baseSize, zoomCamSize, t / zoomTime);
+            }
+            
+            yield return new WaitForSeconds(waitForPortalTime);
+            
+            // spawn portal
+            portal.SetActive(true);
+
+            yield return new WaitForSeconds(waitForLaserTime);
+
+            // mega laser sequence
+            var mlc = portal.GetComponentInChildren<MegaLaserController>();
+            mlc.Shoot(portal.transform.GetChild(1).position.magnitude, mlc.TimeToLightning);
+
+            yield return new WaitForSeconds((mlc.laserBuildupTime - mlc.TimeToLightning)*3/4);
+            
+            // dodge as mega laser laserifies
+            player.GetComponent<Movement>().DodgeOnceDir = Quaternion.Euler(0, 0, 90) * playerDir;
+
+            yield return new WaitForSeconds((mlc.laserBuildupTime - mlc.TimeToLightning)*1/4);
+
+            // TODO: stand-in for more durations later
+            camFp.ScreenShake(panTime+1000, 1);
+            
+            yield return new WaitForSeconds(waitForPanTime);
+
+            // camera follows laser to planet
+            var start = cam.transform.position;
+            var dir = -playerDir;
+            for (float t = 0; t < panTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                cam.transform.position = start + (Vector3) camFp.ShakeOffset + dir * Mathf.SmoothStep(0, playerDist, t / panTime);
+            }
+            
+            // planet => black hole animation (camera pulses w/ black hole?) (screen shake?)
+            
+
+            // black hole sends out shockwave, camera zooms out, all enemies destroyed, player dodges
+            
+            
+            // worm emerges from black hole, circles
+            
+            
+            // as worm approaches player, camera pans back over and zooms in
+            
+            
+            // boss shriek
+            
+            
+            // cleanup
+            // for (var i = 0; i < fadeIn.transform.parent.childCount; i++)
+            // {
+            // fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
+            // }
+            // camFp.Enabled = true;
+            // DestroyImmediate(portal);
+            // player.GetComponent<Shoot>().enabled = true;
+            // player.GetComponent<Movement>().inputBlocked = false;
         }
     }
 }

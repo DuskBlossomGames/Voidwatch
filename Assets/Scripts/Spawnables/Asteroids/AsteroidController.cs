@@ -38,7 +38,7 @@ namespace Spawnables.Asteroids
 
         public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1)
         {
-            if (LayerMask.LayerToName(source.layer) == "Enemies") return;
+            if (LayerMask.LayerToName(source.layer) == "Enemies") return; // prevent bifurcator from incinerating them
             
             base.Damage(damage, dmgType, source, reduceMod);
         }

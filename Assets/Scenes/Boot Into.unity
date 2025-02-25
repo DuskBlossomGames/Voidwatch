@@ -123,6 +123,143 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &365002693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 365002699}
+  - component: {fileID: 365002698}
+  - component: {fileID: 365002697}
+  - component: {fileID: 365002696}
+  - component: {fileID: 365002695}
+  - component: {fileID: 365002694}
+  m_Layer: 0
+  m_Name: Static Info
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &365002694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365002693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f5dc81266804614be57277340d765b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentShopID: 0
+--- !u!114 &365002695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365002693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2894d6ba2614e6f82e3ba795429e268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoCount: 100
+  noShootRefillTime: 1
+  emptyRefillTime: 1
+  timeToRefillFully: 1
+  bulletsPerShot: 2
+  bulletsPerShotVarience: 0
+  fireTime: 0.17
+  shotForce: 2125
+  forceVarience: 5
+  lateralSeperation: 20
+  verticalSeperation: 200
+  misfireChance: 0
+  repeats: 2
+  repeatSeperation: 0.08
+  dmgMod: 15
+--- !u!114 &365002696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365002693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdec2710e854e13873978fd0b36045f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDifficulty: 5
+  gameDifficultyModifier: 2
+  levelModifier: 2
+  randomModifier: 3
+  galaxyModifier: 0
+  minBudgetPerWave: 050000000a0000000f00000014000000190000001e00000023000000
+--- !u!114 &365002697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365002693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c74f9719304183a13de893beefbc24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 2000
+  maxShield: 500
+  shieldRegenRate: 30
+  maxShieldDebt: 500
+  maxDodgeJuice: 100
+  dodgeJuiceRegenRate: 20
+  driftCorrection: 5
+  speedLimit: 25
+  acceleration: 4
+  dodgeRedirectPercentage: 0.6
+  dodgeJuiceCost: 45
+  dodgeVelocity: 120
+  dodgeDistance: 11
+  dodgeCooldown: 0.35
+  weapons:
+  - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
+  - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
+  - {fileID: 11400000, guid: e8e1e55f8edbaf74fba7da128626e583, type: 2}
+  - {fileID: 11400000, guid: c52e59bdc3da7304a8acd53ddf433688, type: 2}
+--- !u!114 &365002698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365002693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5620a1ce4c14ce2baa873a4320047b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &365002699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365002693}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &749922239
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85c63a28d1cdcf468af7f887fee7c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: LevelSelect
+  destination: LevelBoss
 --- !u!4 &749922241
 Transform:
   m_ObjectHideFlags: 0
@@ -168,138 +305,9 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &997416592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 997416594}
-  - component: {fileID: 997416593}
-  - component: {fileID: 997416595}
-  - component: {fileID: 997416596}
-  - component: {fileID: 997416597}
-  - component: {fileID: 997416598}
-  m_Layer: 0
-  m_Name: Static Info
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &997416593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997416592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5620a1ce4c14ce2baa873a4320047b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &997416594
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997416592}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &997416595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997416592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6c74f9719304183a13de893beefbc24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 2000
-  maxShield: 200
-  shieldRegenRate: 50
-  maxShieldDebt: 500
-  maxDodgeJuice: 100
-  dodgeJuiceRegenRate: 25
-  weapons:
-  - {fileID: 11400000, guid: 6d8bd73527d3d68459f4bfa12cd71d5d, type: 2}
-  - {fileID: 11400000, guid: 3030eedec209e2e48834dca8509a0f79, type: 2}
-  - {fileID: 11400000, guid: e8e1e55f8edbaf74fba7da128626e583, type: 2}
-  - {fileID: 11400000, guid: c52e59bdc3da7304a8acd53ddf433688, type: 2}
---- !u!114 &997416596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997416592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bdec2710e854e13873978fd0b36045f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseDifficulty: 5
-  gameDifficultyModifier: 2
-  levelModifier: 2
-  randomModifier: 3
-  galaxyModifier: 0
-  minBudgetPerWave: 050000000a0000000f00000014000000190000001e00000023000000
---- !u!114 &997416597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997416592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2894d6ba2614e6f82e3ba795429e268, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoCount: 100
-  noShootRefillTime: 1
-  emptyRefillTime: 0.5
-  timeToRefillFully: 1
-  bulletsPerShot: 2
-  bulletsPerShotVarience: 0
-  fireTime: 0.1
-  shotForce: 2125
-  forceVarience: 5
-  lateralSeperation: 20
-  verticalSeperation: 200
-  misfireChance: 0
-  repeats: 2
-  repeatSeperation: 0.08
-  dmgMod: 15
---- !u!114 &997416598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997416592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f5dc81266804614be57277340d765b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentShopID: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 749922241}
-  - {fileID: 997416594}
+  - {fileID: 365002699}

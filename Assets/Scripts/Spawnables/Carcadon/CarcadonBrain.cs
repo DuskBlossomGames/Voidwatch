@@ -273,7 +273,7 @@ namespace Spawnables.Carcadon
             cam.transform.position = (Vector3) (Vector2) _player.transform.position + new Vector3(camDistAbovePlayer, 0, cam.transform.position.z);
             cam.transform.rotation = Quaternion.Euler(0, 0, -90);
             cam.orthographicSize = camFp.baseSize;
-            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount - 1; i++)
+            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount; i++)
             {
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(false);
             }
@@ -400,7 +400,7 @@ namespace Spawnables.Carcadon
                 cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);
             }
             
-            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount - 1; i++)
+            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount; i++)
             {
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
             }

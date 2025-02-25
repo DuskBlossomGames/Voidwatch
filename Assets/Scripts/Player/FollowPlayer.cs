@@ -30,6 +30,7 @@ namespace Player
 
         private Timer _screenShake = new();
         private Vector2 _shakeOffset;
+        public Vector2 ShakeOffset => _shakeOffset;
         private float _shakeIntensity;
 
         private void Start()

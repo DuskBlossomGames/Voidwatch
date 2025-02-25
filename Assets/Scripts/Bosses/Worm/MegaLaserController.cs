@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
 namespace Bosses.Worm
 {
@@ -47,9 +48,9 @@ namespace Bosses.Worm
             _timeElapsed = laserBuildupTime + beamBuildupTime + beamLoopTime; // just start it at the end
         }
 
-        public void Shoot(float length)
+        public void Shoot(float length, float start=0)
         {
-            _timeElapsed = 0;
+            _timeElapsed = start;
             _horizTiles = (length-originSr.transform.lossyScale.y/2) / laserSr.transform.lossyScale.y;
             laserSr.transform.localPosition = new Vector3(0, 0.5f + 0.25f * _horizTiles, 0);
         }
@@ -88,7 +89,7 @@ namespace Bosses.Worm
                 originSr.sprite = laserSr.sprite = null;
                 return;
             }
-            
+
             originSr.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = originSr.sprite =
                 originAnim.Sprites[originFrame % originAnim.NumFrames];
             laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.sprite =
