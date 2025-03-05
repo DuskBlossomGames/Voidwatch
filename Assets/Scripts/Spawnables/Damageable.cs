@@ -19,13 +19,13 @@ namespace Spawnables
         public void Start()
         {
             dmgRes.Ready();
-            _healthBar = Instantiate(healthBarPrefab).GetComponent<ProgressBar>();
-            _healthBar.transform.SetParent(transform, true);
+            _healthBar = healthBarPrefab == null ? null : Instantiate(healthBarPrefab).GetComponent<ProgressBar>();
+            _healthBar?.transform.SetParent(transform, true);
         }
 
         public virtual void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1f)
         {
-            if (IsDead) return;
+            if (!enabled || IsDead) return;
             
             damage -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
             damage *= dmgRes.dmgMod[(int)dmgType];
@@ -37,7 +37,7 @@ namespace Spawnables
                 Destroy(gameObject);
             }
 
-            _healthBar.UpdatePercentage(Health, MaxHealth);
+            _healthBar?.UpdatePercentage(Health, MaxHealth);
         }
         
         protected virtual void OnDeath(GameObject source) { }

@@ -32,7 +32,7 @@ namespace Spawnables
         public new void Start()
         {
             base.Start();
-            Health = maxHealth;
+            Health = MaxHealth;
         }
 
         private void OnDestroy()

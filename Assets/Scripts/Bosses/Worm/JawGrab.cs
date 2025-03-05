@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Spawnables;
 using Spawnables.Player;
+using TMPro;
 using UnityEngine;
 using Util;
 
@@ -17,6 +18,8 @@ namespace Bosses.Worm
         private readonly Timer _holdTimer = new();
         private float _initialRot;
 
+        public bool HasPlayer => _player != null;
+
         private void Start()
         {
             _leftJaw = transform.GetChild(0);
@@ -27,15 +30,20 @@ namespace Bosses.Worm
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (!enabled) return;
+            
             var player = other.GetComponent<Player.Movement>();
-            if (!player || player.inputBlocked) return;
+            if (!player || player.inputBlocked || player.Dodging) return;
             _player = player.transform;
-
+            
             _clampTimer.Value = grabTime;
+            wm.BiteStart();
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
+            if (!enabled) return;
+            
             if (_player == null || !other.TryGetComponent<Player.Movement>(out var movement)) return;
             movement.inputBlocked = false;
             _player.GetComponent<CustomRigidbody2D>().velocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
@@ -45,7 +53,7 @@ namespace Bosses.Worm
 
         private void Update()
         {
-            _clampTimer.Update(_player != null ? -1 : 1);
+            _clampTimer.Update(HasPlayer ? -1 : 1);
             _holdTimer.Update();
 
             if (_holdTimer.IsActive && _holdTimer.IsFinished)
@@ -69,7 +77,7 @@ namespace Bosses.Worm
                     _player.GetComponent<Player.Movement>().inputBlocked = true;
                     _player.GetComponent<CustomRigidbody2D>().velocity = Vector2.zero;
                     _player.GetComponent<PlayerDamageable>().Damage(grabDamage, IDamageable.DmgType.Concussive, gameObject);
-                    wm.BiteCallback();
+                    wm.BiteFinish();
 
                     _holdTimer.Value = holdTime;
                 }

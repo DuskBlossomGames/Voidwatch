@@ -19,6 +19,7 @@ namespace Bosses.Worm
         public SpriteRenderer originSr, laserSr;
 
         public float TimeToLightning => lightningStartFrame / _fps;
+        public bool IsShooting => _timeElapsed < laserBuildupTime + beamBuildupTime + beamLoopTime;
         
         public void Start()
         {
@@ -77,7 +78,7 @@ namespace Bosses.Worm
             }
             else
             {
-                originSr.sprite = laserSr.sprite = null;
+                originSr.sprite = originSr.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.sprite = null;
                 return;
             }
 
