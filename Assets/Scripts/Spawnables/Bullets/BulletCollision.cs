@@ -24,6 +24,8 @@ public class BulletCollision : MonoBehaviour
     public bool isKinetic;
     private Upgradeable _upgradeable;
 
+    public bool isEnabled = true;
+
     private void Start()
     {
         _upgradeable = owner.GetComponent<Upgradeable>();
@@ -31,6 +33,8 @@ public class BulletCollision : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D otherCollider)
     {
+        if (!isEnabled) return;
+        
         if (otherCollider.gameObject == owner)
         {
             _leftOwner = true;
@@ -39,6 +43,8 @@ public class BulletCollision : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
+        if (!isEnabled) return;
+        
         var other = otherCollider.gameObject;
         if (other.layer == LayerMask.NameToLayer("Bullet Detector")) return;
 

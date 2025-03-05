@@ -33,7 +33,7 @@ namespace Bosses.Worm
             var orig = spikes[index];
 
             var spike = Instantiate(orig, null);
-            spike.GetComponent<BulletCollision>().enabled = true;
+            spike.GetComponent<BulletCollision>().isEnabled = true;
             spike.GetComponent<SpriteRenderer>().sortingLayerName = "Temp Masks";
             spike.transform.localScale = orig.transform.lossyScale;
             spike.transform.localRotation = orig.transform.rotation;

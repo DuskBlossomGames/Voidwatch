@@ -2219,7 +2219,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369090540}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
@@ -2233,6 +2233,7 @@ MonoBehaviour:
   explosionRange: 0
   explosionDmg: 0
   isKinetic: 0
+  isEnabled: 0
 --- !u!60 &369090547
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5585,7 +5586,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995742465}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
@@ -5599,6 +5600,7 @@ MonoBehaviour:
   explosionRange: 0
   explosionDmg: 0
   isKinetic: 0
+  isEnabled: 0
 --- !u!60 &995742472
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6283,7 +6285,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073859039}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
@@ -6297,6 +6299,7 @@ MonoBehaviour:
   explosionRange: 0
   explosionDmg: 0
   isKinetic: 0
+  isEnabled: 0
 --- !u!60 &1073859046
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6464,7 +6467,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108519877}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
@@ -6478,6 +6481,7 @@ MonoBehaviour:
   explosionRange: 0
   explosionDmg: 0
   isKinetic: 0
+  isEnabled: 0
 --- !u!60 &1108519884
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -10328,7 +10332,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1591632608}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
@@ -10342,6 +10346,7 @@ MonoBehaviour:
   explosionRange: 0
   explosionDmg: 0
   isKinetic: 0
+  isEnabled: 0
 --- !u!60 &1591632615
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -12381,7 +12386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990071515}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
@@ -12395,6 +12400,7 @@ MonoBehaviour:
   explosionRange: 0
   explosionDmg: 0
   isKinetic: 0
+  isEnabled: 0
 --- !u!60 &1990071522
 PolygonCollider2D:
   m_ObjectHideFlags: 0

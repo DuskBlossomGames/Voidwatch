@@ -1097,20 +1097,16 @@ namespace Bosses.Worm
             camFp.ScreenShake(spitTime, 1.5f);
             GetComponentInChildren<SpitController>().Spit(spitTime);
             
+            yield return new WaitForSeconds(0.2f);
+            player.GetComponent<CustomRigidbody2D>().velocity = playerMoveVel * ((Vector2) (player.transform.position - head.transform.position)).normalized;
+            player.GetComponent<Movement>().autoPilot = true;
+            
             float oldRot = 0;
-            var movedPlayer = false;
-            for (float t = 0; t < spitTime; t += Time.fixedDeltaTime)
+            for (float t = 0; t < spitTime-0.2f; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
-
-                if (t >= 0.2f && !movedPlayer)
-                {
-                    player.GetComponent<CustomRigidbody2D>().velocity = playerMoveVel * ((Vector2) (player.transform.position - head.transform.position)).normalized;
-                    player.GetComponent<Movement>().autoPilot = true;
-                    movedPlayer = true;
-                }
-
-                var rot = wiggleScale * jawWiggle.Evaluate(t / spitTime);
+                
+                var rot = wiggleScale * jawWiggle.Evaluate(t / (spitTime-0.2f));
                 _jawGrab.RotBy(rot - oldRot);
                 
                 oldRot = rot;
