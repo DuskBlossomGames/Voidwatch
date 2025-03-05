@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Spawnables;
 using Spawnables.Player;
 using UnityEngine;
@@ -59,8 +60,7 @@ namespace Bosses.Worm
 
             if (!_holdTimer.IsActive && _clampTimer.IsActive)
             {
-                RotJaw(_leftJaw, 1);
-                RotJaw(_rightJaw, -1);
+                RotBy(_clampTimer.LastStepProgress * (_initialRot - targetRot));
                 //_leftJaw.position -= new Vector3(0.03f,0.02f,0);
                 //_rightJaw.position -= new Vector3(0.03f,0.02f,0);
 
@@ -75,15 +75,20 @@ namespace Bosses.Worm
                 }
             }
         }
-
-        private void RotJaw(Transform jaw, int angleSign)
+        
+        public void RotBy(float angle)
         {
-            jaw.RotateAround(
-                jaw.position +
-                             jaw.localToWorldMatrix.MultiplyVector(new Vector3(-0.5f, 0, 0)),
+            _leftJaw.RotateAround(
+                _leftJaw.position +
+                _leftJaw.localToWorldMatrix.MultiplyVector(new Vector3(-0.5f, 0, 0)),
                 Vector3.forward,
-                angleSign * _clampTimer.LastStepProgress * (_initialRot - targetRot));
-
+                angle);
+            
+            _rightJaw.RotateAround(
+                _rightJaw.position +
+                _rightJaw.localToWorldMatrix.MultiplyVector(new Vector3(-0.5f, 0, 0)),
+                Vector3.forward,
+                -angle);
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Linq;
 using Player;
 using ProgressBars;
 using Spawnables;
+using Spawnables.Carcadon;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 using Util;
@@ -27,7 +29,7 @@ namespace Bosses.Worm
         public float maxTurnAngleDeg;
 
         private GameObject[] _segments;
-        private Rigidbody2D _headRigid;
+        private CustomRigidbody2D _headRigid;
         private float _speed;
         private float _segmentDist;
         private float _ouroborosRadius;
@@ -74,7 +76,7 @@ namespace Bosses.Worm
         {
             Direct,
             Circle,
-            Wander,
+            Wander
         }
         public enum ActionGoal
         {
@@ -174,7 +176,7 @@ namespace Bosses.Worm
 
             _ouroborosRadius = totallength / (2 * Mathf.PI);
 
-            _headRigid = head.GetComponent<Rigidbody2D>();
+            _headRigid = head.GetComponent<CustomRigidbody2D>();
             _moveMode = MoveMode.Wander;
 
             StartCoroutine(Cutscene());
@@ -190,6 +192,8 @@ namespace Bosses.Worm
 
         private void Update()
         {
+            if (_inCutscene) return;
+            
             if (Input.GetKeyDown(KeyCode.RightBracket))
             {
                 foreach (var dmgable in GetComponentsInChildren<Damageable>())
@@ -199,7 +203,6 @@ namespace Bosses.Worm
             }
 
             UpdateMovement();
-            if (_inCutscene) return;
 
             var _snakiness = pathfinder.snakeyness;
 
@@ -210,7 +213,7 @@ namespace Bosses.Worm
                 pathfinder.snakeyness = Mathf.Clamp(_snakiness + .1f * Time.deltaTime * MathF.Sign(_tarSnakines - _snakiness), Mathf.Min(_snakiness, _tarSnakines), Mathf.Max(_snakiness, _tarSnakines));
                 maxTurnAngleDeg = Mathf.Clamp(maxTurnAngleDeg + 40 * Time.deltaTime * MathF.Sign(_tarTurnAngle - maxTurnAngleDeg), Mathf.Min(maxTurnAngleDeg, _tarTurnAngle), Mathf.Max(maxTurnAngleDeg, _tarTurnAngle));
             }
-
+            
             if (!_isStageTwo)
             {
                 _summonTimer.Update();
@@ -523,22 +526,22 @@ namespace Bosses.Worm
             if (_swipe > 0) _swipe -= Time.deltaTime;
         }
 
-        public void SpawnPortal()
+        public void SpawnPortal(Vector2? inPos=null, Vector2? outPos=null)
         {
             var newPin = Instantiate(portalIn);
             var newPout = Instantiate(portalOut);
             newPin.gameObject.SetActive(true);
             newPout.gameObject.SetActive(true);
 
-            float oldZ = newPin.position.z;
-            Vector3 newpos = (Vector3)(Vector2)head.transform.position + Random.Range(30, 80) * head.transform.right + oldZ * Vector3.forward;
+            var oldZ = newPin.position.z;
+            var newpos = (Vector3) (inPos ?? (Vector3)(Vector2)head.transform.position + Random.Range(30, 80) * head.transform.right) + oldZ * Vector3.forward;
             newPin.position = newpos;
             newPin.rotation = head.transform.rotation;
 
-            do newpos = (Vector3)(Random.Range(20, 70) * pathfinder.AngleToVector(Random.Range(0, 6.28f))) + oldZ * Vector3.forward;
+            do newpos = (Vector3) (outPos ?? (Vector3)(Random.Range(20, 70) * pathfinder.AngleToVector(Random.Range(0, 6.28f)))) + oldZ * Vector3.forward;
             while ((head.transform.position - newpos).sqrMagnitude < 4000 || (newpos - newPin.position).sqrMagnitude < 4000);
             newPout.position = newpos;
-            newPout.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * Mathf.Atan2(newpos.y, newpos.x));
+            newPout.rotation = Quaternion.Euler(0, 0, ((Vector2) newpos).sqrMagnitude == 0 ? 210 : -Mathf.Rad2Deg * Mathf.Atan2(newpos.y, newpos.x));
 
             var pair = new PortalPair { pin = newPin , pout = newPout};
             _portals.Add(pair);
@@ -880,7 +883,10 @@ namespace Bosses.Worm
         }
 
         public string editorNote = "Cutscene Variables";
-        public GameObject fadeIn, portal, planet;
+        public GameObject fadeIn, portal, planet, gradient, defenses, boundaryCircle;
+        public ParticleSystem particleSystem;
+        public Texture2D destructionSprite;
+        public float destructionFps;
         public float fadeInTime;
         public float waitForZoomTime;
         public float zoomTime, zoomCamSize;
@@ -888,10 +894,33 @@ namespace Bosses.Worm
         public float waitForLaserTime;
         public float waitForPanTime;
         public float panTime;
+        public float zoomOutTime, zoomOutCamSize;
+        public Vector2[] endpoints;
+        public float[] segmentSpeeds;
+        public float maxTurnAngle;
+        public float playerMoveVel;
+        public AnimationCurve jawWiggle;
+        public float wiggleScale;
+        public float spitTime;
         private IEnumerator Cutscene()
         {
+            var destructionAnim = new UtilFuncs.Anim();
+            UtilFuncs.SetupTexture(destructionSprite, destructionAnim, 128/196f);
+
             yield return new WaitForEndOfFrame();
 
+            _headRigid.velocity = 7*Vector2.right; // to make sure the floppies look good lol
+
+            var oldCircleScale = boundaryCircle.transform.localScale;
+            boundaryCircle.transform.localScale = new Vector3(1000, 1000, 1);
+
+            var emission = particleSystem.emission;
+            var shape = particleSystem.shape;
+            var main = particleSystem.main;
+            emission.rateOverTimeMultiplier *= 5;
+            shape.scale *= 5;
+            main.maxParticles *= 5;
+            
             // setup
             var cam = Camera.main;
             var camFp = cam!.GetComponent<FollowPlayer>();
@@ -942,14 +971,27 @@ namespace Bosses.Worm
             
             // dodge as mega laser laserifies
             player.GetComponent<Movement>().DodgeOnceDir = Quaternion.Euler(0, 0, 90) * playerDir;
-
+            
             yield return new WaitForSeconds((mlc.laserBuildupTime - mlc.TimeToLightning)*1/4);
+            
+            // setup planet sprite
+            planet.transform.rotation = Quaternion.Euler(0, 0, -45);
+            var planetAnim = planet.GetComponent<NSpriteAnimation>();
+            planetAnim.enabled = false;
+            var planetSr = planet.GetComponent<SpriteRenderer>();
+            var spriteRatio = destructionAnim.Sprites[0].textureRect.width / planetSr.sprite.rect.width;
+            
+            planetSr.sprite = destructionAnim.Sprites[0];
 
-            // TODO: stand-in for more durations later
-            camFp.ScreenShake(panTime+1000, 1);
+            camFp.ScreenShake(waitForPanTime+destructionAnim.NumFrames/destructionFps, 0.8f);
             
             yield return new WaitForSeconds(waitForPanTime);
 
+            planet.transform.localScale *= spriteRatio;
+            mlc.SetLength(portal.transform.GetChild(1).position.magnitude - planet.transform.localScale.y / 2 - 0.53f);
+            
+            float timeElapsed = 0;
+            
             // camera follows laser to planet
             var start = cam.transform.position;
             var dir = -playerDir;
@@ -957,32 +999,144 @@ namespace Bosses.Worm
             {
                 yield return new WaitForFixedUpdate();
                 cam.transform.position = start + (Vector3) camFp.ShakeOffset + dir * Mathf.SmoothStep(0, playerDist, t / panTime);
+
+                timeElapsed += Time.fixedDeltaTime;
+                planetSr.sprite = destructionAnim.Sprites[(int) (timeElapsed * destructionFps)];
             }
             
             // planet => black hole animation (camera pulses w/ black hole?) (screen shake?)
-            
+            while ((int)((timeElapsed+Time.fixedDeltaTime) * destructionFps) < destructionAnim.NumFrames)
+            {
+                yield return new WaitForFixedUpdate();
+                
+                timeElapsed += Time.fixedDeltaTime;
+                planetSr.sprite = destructionAnim.Sprites[(int) (timeElapsed * destructionFps)];
+            }
+
+            planetSr.sprite = planetAnim.states[0].frames[0];
+            planetAnim.enabled = true;
+            planet.transform.rotation = Quaternion.identity;
+            planet.transform.localScale /= spriteRatio;
 
             // black hole sends out shockwave, camera zooms out, all enemies destroyed, player dodges
-            
+            yield return new WaitForSeconds(2.5f);
             
             // worm emerges from black hole, circles
+            portal.SetActive(false);
             
+            defenses.SetActive(false);
+            gradient.SetActive(true);
             
-            // as worm approaches player, camera pans back over and zooms in
-            
-            
+            SpawnPortal(head.transform.position + 10*Vector3.right, Vector2.zero);
+            _portals[numportals-1].pout.GetChild(2).gameObject.SetActive(false); // disable portal visual
+            StartCoroutine(_headSpike.TriggerDown());
+
+            pathfinder.snakeyness = 0;
+            float curSpeed = 0;
+            var camStart = cam.transform.position;
+            var camDir = ((Vector2)(player.transform.position - camStart)).normalized;
+            var camDist = (player.transform.position - camStart).magnitude;
+            var camStartRot = cam.transform.rotation;
+            var camEndRot = Quaternion.Euler(new Vector3(0,0,-90+Mathf.Rad2Deg*Mathf.Atan2(player.transform.position.y,player.transform.position.x)));
+
+            float time = 0;
+            for (var i = 0; i <= endpoints.Length; i++)
+            {
+                var speed = i < endpoints.Length-1 ? segmentSpeeds[i] : 0;
+                if (curSpeed == 0) curSpeed = speed * 3/5;
+
+                float dist;
+                var targ = i < endpoints.Length ? endpoints[i] : (Vector2) player.transform.position;
+                var startDist = Vector2.Distance(head.transform.position, targ);
+
+                while ((dist = Vector2.Distance(head.transform.position, targ)) > (i == endpoints.Length ? 26 : 4))
+                {
+                    yield return new WaitForFixedUpdate();
+                    time += Time.fixedDeltaTime;
+
+                    // put this at the same time
+                    if (time < zoomOutTime)
+                    {
+                        cam.orthographicSize = Mathf.SmoothStep(zoomCamSize, zoomOutCamSize, time / zoomOutTime);
+                    }
+                    
+                    var toEndpoint = (targ - (Vector2) _segments[0].transform.position).normalized;
+                    var prevAngle = pathfinder.AngleToVector(Mathf.Deg2Rad * _segments[0].transform.rotation.eulerAngles.z);
+                    var finalDir = Vector3.RotateTowards(prevAngle, toEndpoint, Mathf.Deg2Rad * (i < 2 ? 120 : maxTurnAngle) * Time.deltaTime, 1);
+                    
+                    var angle = Mathf.Atan2(finalDir.y, finalDir.x);
+                    head.transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
+
+                    if (i == endpoints.Length)
+                    {
+                        var perc = 1 - (dist-15) / startDist;
+                        perc = Mathf.Clamp01(1.3f * perc - 0.3f);
+                        // perc = 1 / (1 + Mathf.Exp(4 - 7 * perc));
+                        
+                        curSpeed = Mathf.Lerp(segmentSpeeds[i - 1], 0, perc);
+                        
+                        cam.orthographicSize = Mathf.SmoothStep(zoomOutCamSize, camFp.baseSize, perc);
+                        cam.transform.position = camStart + (Vector3) camDir * Mathf.SmoothStep(0, camDist, perc);
+                        cam.transform.rotation = Quaternion.Slerp(camStartRot, camEndRot, perc);
+                    }
+                    else
+                    {
+                        curSpeed = Mathf.Clamp(curSpeed + 7 * Time.deltaTime * MathF.Sign(speed - curSpeed), Mathf.Min(curSpeed, speed), Mathf.Max(curSpeed, speed));
+                    }
+
+                    _headRigid.velocity = curSpeed * finalDir;
+                    
+                    RippleSegments();
+                }
+            }
+            _headRigid.velocity = Vector3.zero;
+            foreach (var c in GetComponentsInChildren<FloppyBrain>()) c.enabled = false;
+
             // boss shriek
+            // TODO: make jaws open some (wiggle maybe)
+            camFp.ScreenShake(spitTime, 1.5f);
+            GetComponentInChildren<SpitController>().Spit(spitTime);
             
+            float oldRot = 0;
+            var movedPlayer = false;
+            for (float t = 0; t < spitTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+
+                if (t >= 0.2f && !movedPlayer)
+                {
+                    player.GetComponent<CustomRigidbody2D>().velocity = playerMoveVel * ((Vector2) (player.transform.position - head.transform.position)).normalized;
+                    player.GetComponent<Movement>().autoPilot = true;
+                    movedPlayer = true;
+                }
+
+                var rot = wiggleScale * jawWiggle.Evaluate(t / spitTime);
+                _jawGrab.RotBy(rot - oldRot);
+                
+                oldRot = rot;
+            }
+            
+            yield return new WaitForSeconds(2);
             
             // cleanup
-            // for (var i = 0; i < fadeIn.transform.parent.childCount; i++)
-            // {
-            // fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
-            // }
-            // camFp.Enabled = true;
-            // DestroyImmediate(portal);
-            // player.GetComponent<Shoot>().enabled = true;
-            // player.GetComponent<Movement>().inputBlocked = false;
+            player.GetComponent<Movement>().autoPilot = false;
+            for (var i = 0; i < fadeIn.transform.parent.childCount; i++)
+            {
+                fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
+            }
+            camFp.Enabled = true;
+            foreach (var c in GetComponentsInChildren<FloppyBrain>()) c.enabled = true;
+            DestroyImmediate(portal);
+            player.GetComponent<Shoot>().enabled = true;
+            player.GetComponent<Movement>().inputBlocked = false;
+            gradient.SetActive(false);
+            defenses.SetActive(true);
+            boundaryCircle.transform.localScale = oldCircleScale;
+            emission.rateOverTimeMultiplier /= 5;
+            shape.scale /= 5;
+            main.maxParticles /= 5;
+            
+            _inCutscene = false;
         }
     }
 }

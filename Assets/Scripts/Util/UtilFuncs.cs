@@ -193,6 +193,19 @@ namespace Util
           return current;
       }
 
-
+      public class Anim
+      {
+          public Sprite[] Sprites;
+          public int NumFrames;
+      }
+      
+      public static void SetupTexture(Texture2D texture, Anim anim, float widthOverHeight=1)
+      {
+          var sliceWidth = widthOverHeight * texture.height;
+            
+          anim.NumFrames = (int) (texture.width / sliceWidth);
+          anim.Sprites = new Sprite[anim.NumFrames];
+          for (var i = 0; i < anim.NumFrames; i++) anim.Sprites[i] = Sprite.Create(texture, new Rect(i*sliceWidth, 0, sliceWidth, texture.height), new Vector2(0.5f, 0.5f), texture.height);
+      }
     }
 }

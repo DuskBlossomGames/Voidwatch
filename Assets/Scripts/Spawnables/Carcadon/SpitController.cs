@@ -32,7 +32,7 @@ namespace Spawnables.Carcadon
             if (_active.IsFinished) return;
 
             _wait.Update();
-            if (_wait.IsFinished)
+            if (_active.Value > travelTime && _wait.IsFinished)
             {
                 _wait.Value = Random.Range(minTime, maxTime);
                 var obj = Instantiate(transform.GetChild(0).gameObject, null);

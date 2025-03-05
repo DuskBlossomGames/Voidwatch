@@ -1,21 +1,16 @@
 using System;
 using UnityEngine;
+using Util;
 using Debug = System.Diagnostics.Debug;
 
 namespace Bosses.Worm
 {
     public class MegaLaserController : MonoBehaviour
     {
-        private class Anim
-        {
-            public Sprite[] Sprites;
-            public int NumFrames;
-        }
-
         public int lightningStartFrame, lightningEndFrame;
         public Texture2D laserBuildup, lightning, beamBuildup, beamBuildupTileable, beamLoop, beamLoopTileable;
         public float laserBuildupTime, beamBuildupTime, beamLoopTime;
-        private Anim _laserBuildup, _lightning, _beamBuildup, _beamBuildupTileable, _beamLoop, _beamLoopTileable;
+        private UtilFuncs.Anim _laserBuildup, _lightning, _beamBuildup, _beamBuildupTileable, _beamLoop, _beamLoopTileable;
 
         private float _timeElapsed;
         private float _fps;
@@ -25,23 +20,14 @@ namespace Bosses.Worm
 
         public float TimeToLightning => lightningStartFrame / _fps;
         
-        private void SetupTexture(Texture2D texture, Anim anim, float heightToWidth=1)
-        {
-            var sliceWidth = heightToWidth * texture.height;
-            
-            anim.NumFrames = (int) (texture.width / sliceWidth);
-            anim.Sprites = new Sprite[anim.NumFrames];
-            for (var i = 0; i < anim.NumFrames; i++) anim.Sprites[i] = Sprite.Create(texture, new Rect(i*sliceWidth, 0, sliceWidth, texture.height), new Vector2(0.5f, 0.5f), texture.height);
-        }
-        
         public void Start()
         {
-            SetupTexture(laserBuildup, _laserBuildup = new());   
-            SetupTexture(lightning, _lightning = new(), 0.5f);   
-            SetupTexture(beamBuildup, _beamBuildup = new());   
-            SetupTexture(beamBuildupTileable, _beamBuildupTileable = new());   
-            SetupTexture(beamLoop, _beamLoop = new());   
-            SetupTexture(beamLoopTileable, _beamLoopTileable = new());
+            UtilFuncs.SetupTexture(laserBuildup, _laserBuildup = new());   
+            UtilFuncs.SetupTexture(lightning, _lightning = new(), 0.5f);   
+            UtilFuncs.SetupTexture(beamBuildup, _beamBuildup = new());   
+            UtilFuncs.SetupTexture(beamBuildupTileable, _beamBuildupTileable = new());   
+            UtilFuncs.SetupTexture(beamLoop, _beamLoop = new());   
+            UtilFuncs.SetupTexture(beamLoopTileable, _beamLoopTileable = new());
 
             _fps = _laserBuildup.NumFrames / laserBuildupTime;
 
@@ -51,6 +37,11 @@ namespace Bosses.Worm
         public void Shoot(float length, float start=0)
         {
             _timeElapsed = start;
+            SetLength(length);
+        }
+
+        public void SetLength(float length)
+        {
             _horizTiles = (length-originSr.transform.lossyScale.y/2) / laserSr.transform.lossyScale.y;
             laserSr.transform.localPosition = new Vector3(0, 0.5f + 0.25f * _horizTiles, 0);
         }
@@ -59,7 +50,7 @@ namespace Bosses.Worm
         {
             var currentFrame = (int) (_timeElapsed * _fps);
 
-            Anim originAnim, laserAnim;
+            UtilFuncs.Anim originAnim, laserAnim;
             int originFrame, laserFrame;
             float _vertTiles = 1;
 
