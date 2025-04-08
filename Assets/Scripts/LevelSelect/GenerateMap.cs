@@ -235,7 +235,7 @@ namespace LevelSelect
                 
                 if (revealed.Contains(idx))
                 {
-                    if (!LevelSelectDataInstance.VisitedPlanets.Contains(idx)) planetObj.GetComponent<Selectable>().clickable = true;
+                    if (level.Type == LevelType.SpaceStation || !LevelSelectDataInstance.VisitedPlanets.Contains(idx)) planetObj.GetComponent<Selectable>().clickable = true;
                     if (level.Type == LevelType.Elite) planetObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
                 if (level.IsBoss) planetObj.transform.GetChild(1).gameObject.SetActive(true);

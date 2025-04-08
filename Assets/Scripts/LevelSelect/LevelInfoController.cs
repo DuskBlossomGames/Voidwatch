@@ -112,7 +112,7 @@ namespace LevelSelect
                 if (!_selection.HasValue) return;
                 
                 LevelSelectDataInstance.CurrentPlanet = _selection!.Value;
-                SceneManager.LoadScene(LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].IsBoss ? "LevelBoss" : LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].Type == LevelType.SpaceStation ? "ShopAgain" : "LevelPlay");
+                SceneManager.LoadScene(LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].IsBoss ? "LevelBoss" : LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].Type == LevelType.SpaceStation ? "Shop" : "LevelPlay");
             };
         }
 

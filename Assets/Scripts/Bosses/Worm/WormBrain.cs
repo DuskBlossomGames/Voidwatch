@@ -1161,7 +1161,6 @@ namespace Bosses.Worm
             foreach (var c in GetComponentsInChildren<FloppyBrain>()) c.enabled = false;
 
             // boss shriek
-            // TODO: make jaws open some (wiggle maybe)
             camFp.ScreenShake(spitTime, 1.5f);
             GetComponentInChildren<SpitController>().Spit(spitTime);
             

@@ -3990,7 +3990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: godmode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: vignette
@@ -4798,7 +4798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8357e67b8e4f4491464dc2b2a0afd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phaseTwoMaxHealth: 7500
+  phaseTwoMaxHealth: 15000
   bossBar: {fileID: 8707691364904411844}
   head: {fileID: 1362879762}
   middle: {fileID: 1757615603}
@@ -8541,7 +8541,7 @@ MonoBehaviour:
   explosionScale: 0
   bitScale: 0
   root: {fileID: 877449871}
-  dmgMod: 2
+  dmgMod: 10
 --- !u!1 &1368600121
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ShopButBetter;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,9 +15,6 @@ public class ShopManagerAgain : MonoBehaviour
     public RectTransform mhp;
     public RectTransform rhp;
     public RectTransform hpBar;
-    public RectTransform hpbBar;
-    public RectTransform dmgbBar;
-    public RectTransform spdbBar;
     public TMP_Text lbut;
     public TMP_Text mbut;
     public TMP_Text rbut;
@@ -27,6 +25,8 @@ public class ShopManagerAgain : MonoBehaviour
     public bool lf = true;
     public bool mf = true;
     public bool rf = true;
+
+    public ChainController dmgChain, hpChain, speedChain;
 
     public float boostCost;
     public float scrapPerThouHp;
@@ -66,30 +66,31 @@ public class ShopManagerAgain : MonoBehaviour
         _repairs[1] = min = RoundPrice(mul * MHP * scrapPerThouHp / 1000f * midDiscount, min); // 2/3 Cost
         _repairs[2] = min = RoundPrice(mul * MHP * scrapPerThouHp / 1000f, min); // Full Cost
 
-        lbut.text = $"33% Repair\n{_repairs[0]:# ### ###} SCRAP";
-        mbut.text = $"67% Repair\n{_repairs[1]:# ### ###} SCRAP";
-        rbut.text = $"Full Repair\n{_repairs[2]:# ### ###} SCRAP";
+        lbut.text = $"{_repairs[0]:# ### ###}";
+        mbut.text = $"{_repairs[1]:# ### ###}";
+        rbut.text = $"{_repairs[2]:# ### ###}";
 
-        if (PDI.healthBoosts < 5) {
-            var rbc = boostCost * (PDI.healthBoosts + 1) * (PDI.healthBoosts + 1);
-            hbo.text = $"Lvl {_roman[PDI.healthBoosts]}: +{boostPercentages[PDI.healthBoosts]}%\n{rbc} SCRAP";
-        } else {
-            hbo.text = $"Max Lvl";
-        }
-
-        if (PDI.damageBoosts < 5) {
-            var rbc = boostCost * (PDI.damageBoosts + 1) * (PDI.damageBoosts + 1);
-            wbo.text = $"Lvl {_roman[PDI.damageBoosts]}: +{boostPercentages[PDI.damageBoosts]}%\n{rbc} SCRAP";
-        } else {
-            wbo.text = $"Max Lvl";
-        }
-
-        if (PDI.speedBoosts < 5) {
-            var rbc = boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
-            sbo.text = $"Lvl {_roman[PDI.speedBoosts]}: +{boostPercentages[PDI.speedBoosts]}%\n{rbc} SCRAP";
-        } else {
-            sbo.text = $"Max Lvl";
-        }
+        // TODO: show cost (and maybe boost) somewhere...
+        // if (PDI.healthBoosts < 5) {
+        //     var rbc = boostCost * (PDI.healthBoosts + 1) * (PDI.healthBoosts + 1);
+        //     hbo.text = $"Lvl {_roman[PDI.healthBoosts]}: +{boostPercentages[PDI.healthBoosts]}%\n{rbc} SCRAP";
+        // } else {
+        //     hbo.text = $"Max Lvl";
+        // }
+        //
+        // if (PDI.damageBoosts < 5) {
+        //     var rbc = boostCost * (PDI.damageBoosts + 1) * (PDI.damageBoosts + 1);
+        //     wbo.text = $"Lvl {_roman[PDI.damageBoosts]}: +{boostPercentages[PDI.damageBoosts]}%\n{rbc} SCRAP";
+        // } else {
+        //     wbo.text = $"Max Lvl";
+        // }
+        //
+        // if (PDI.speedBoosts < 5) {
+        //     var rbc = boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
+        //     sbo.text = $"Lvl {_roman[PDI.speedBoosts]}: +{boostPercentages[PDI.speedBoosts]}%\n{rbc} SCRAP";
+        // } else {
+        //     sbo.text = $"Max Lvl";
+        // }
     }
 
 
@@ -153,7 +154,7 @@ public class ShopManagerAgain : MonoBehaviour
         var rbc = boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
         if (PDI.speedBoosts >= 5 || PDI.Scrap < rbc) return;
         PlayerDataInstance.speedLimit *= 1f + boostPercentages[PDI.speedBoosts] / 100f;
-        PDI.damageBoosts += 1;
+        PDI.speedBoosts += 1;
         PDI.Scrap -= rbc;
     }
 
@@ -161,20 +162,24 @@ public class ShopManagerAgain : MonoBehaviour
     {
         var PDI = PlayerDataInstance;
         var prog = PDI.Health / PDI.maxHealth;
-        hpBar.anchorMax = new Vector2(prog, hpBar.anchorMax.y);
-        lhp.anchorMin = new Vector2(.02f + .96f * (1- 2*(1-prog)/3), lhp.anchorMax.y);
-        lhp.anchorMax = new Vector2(.02f + .96f * (1 - 2* (1 - prog) / 3), lhp.anchorMax.y);
-        mhp.anchorMin = new Vector2(.02f + .96f * (1 - 1 * (1 - prog) / 3), lhp.anchorMax.y);
-        mhp.anchorMax = new Vector2(.02f + .96f * (1 - 1 * (1 - prog) / 3), lhp.anchorMax.y);
-        rhp.anchorMin = new Vector2(.02f + .96f * (1f), lhp.anchorMax.y);
-        rhp.anchorMax = new Vector2(.02f + .96f * (1f), lhp.anchorMax.y);
+        hpBar.anchorMin = new Vector2(prog, hpBar.anchorMin.y);
+        
+        // magic constants visually derived
+        lhp.anchorMin = new Vector2(.09f + .77f * (1 - 2 * (1 - prog) / 3), lhp.anchorMin.y);
+        lhp.anchorMax = new Vector2(.15f + .77f * (1 - 2 * (1 - prog) / 3), lhp.anchorMax.y);
+        
+        mhp.anchorMin = new Vector2(.09f + .77f * (1 - 1 * (1 - prog) / 3), mhp.anchorMin.y);
+        mhp.anchorMax = new Vector2(.15f + .77f * (1 - 1 * (1 - prog) / 3), mhp.anchorMax.y);
+        
+        rhp.anchorMin = new Vector2(.09f + .77f * (1f), rhp.anchorMin.y);
+        rhp.anchorMax = new Vector2(.15f + .77f * (1f), rhp.anchorMax.y);
+        
+        scrapDisplay.text = $"{PDI.Scrap:### ### ### ##0}";
 
-        hpbBar.anchorMax = new Vector2(PDI.healthBoosts / 5f, hpBar.anchorMax.y);
-        dmgbBar.anchorMax = new Vector2(PDI.damageBoosts / 5f, hpBar.anchorMax.y);
-        spdbBar.anchorMax = new Vector2(PDI.speedBoosts / 5f, hpBar.anchorMax.y);
-
-        scrapDisplay.text = $"{PDI.Scrap:### ### ### ##0} SCRAP";
-
+        dmgChain.Unlocked = PDI.damageBoosts;
+        hpChain.Unlocked = PDI.healthBoosts;
+        speedChain.Unlocked = PDI.speedBoosts;
+        
         SetPrices();
     }
 
