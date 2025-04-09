@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85c63a28d1cdcf468af7f887fee7c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: LevelSelect
+  onPlayDest: LevelSelect
+  tutorialDest: Tutorial
 --- !u!4 &749922241
 Transform:
   m_ObjectHideFlags: 0

@@ -25,6 +25,9 @@ namespace Static_Info
         public float dodgeCooldown;
         public System.Collections.Generic.List<BaseComponent> weapons;
 
+        [NonSerialized] public bool isInTutorial;
+        [NonSerialized] public bool gotoTitle = true;
+
         [NonSerialized] public System.Collections.Generic.List<UpgradeInstance> Upgrades;
         [NonSerialized] public float Health;
         [NonSerialized] public float Scrap;
