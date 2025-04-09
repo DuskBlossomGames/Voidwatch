@@ -79,12 +79,22 @@ namespace Bosses.Worm
                 
                 originFrame = laserFrame = currentFrame - _laserBuildup.NumFrames - _beamLoop.NumFrames;
 
-                _coll.size = new Vector2(_vertTiles, _horizTiles);
+                if (_coll)
+                {
+                    _coll.size = new Vector2(_vertTiles, _horizTiles);
+                    _coll.enabled = true;
+                }
             }
             else
             {
                 originSr.sprite = originSr.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.sprite = null;
-                _coll.size = Vector2.zero;
+
+                if (_coll)
+                {
+                    _coll.size = Vector2.zero;
+                    _coll.enabled = false;
+                }
+
                 return;
             }
 
