@@ -15,6 +15,7 @@ namespace Bosses.Worm
         private float _timeElapsed;
         private float _fps;
         private float _horizTiles;
+        private BoxCollider2D _coll;
 
         public SpriteRenderer originSr, laserSr;
 
@@ -33,6 +34,8 @@ namespace Bosses.Worm
             _fps = _laserBuildup.NumFrames / laserBuildupTime;
 
             _timeElapsed = laserBuildupTime + beamBuildupTime + beamLoopTime; // just start it at the end
+
+            _coll = laserSr.transform.GetChild(0).GetComponent<BoxCollider2D>();
         }
 
         public void Shoot(float length, float start=0)
@@ -75,10 +78,13 @@ namespace Bosses.Worm
                 laserAnim = _beamLoopTileable;
                 
                 originFrame = laserFrame = currentFrame - _laserBuildup.NumFrames - _beamLoop.NumFrames;
+
+                _coll.size = new Vector2(_vertTiles, _horizTiles);
             }
             else
             {
                 originSr.sprite = originSr.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.sprite = null;
+                _coll.size = Vector2.zero;
                 return;
             }
 
@@ -86,8 +92,8 @@ namespace Bosses.Worm
                 originAnim.Sprites[originFrame % originAnim.NumFrames];
             laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.sprite =
                 laserAnim?.Sprites[laserFrame % laserAnim.NumFrames];
-            laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().size = laserSr.size = laserSr.transform.GetChild(0).GetComponent<BoxCollider2D>().size =
-                new Vector2(_vertTiles, _horizTiles);
+            laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().size =
+                laserSr.size = new Vector2(_vertTiles, _horizTiles);
             
             _timeElapsed += Time.deltaTime;
         }
