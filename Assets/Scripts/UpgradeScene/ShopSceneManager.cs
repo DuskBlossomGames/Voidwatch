@@ -46,8 +46,6 @@ public class ShopSceneManager : MonoBehaviour
     {
         selectIcon = transform.GetChild(0).GetChild(1).gameObject;
         MerchantObj shop = new MerchantObj();
-        Debug.LogFormat("Shop is {0}",MerchantDataInstance.currentShopID);
-        Debug.LogFormat("Shops is {0}", MerchantDataInstance.Shops);
 
         bool succ = MerchantDataInstance.Shops.TryGetValue(MerchantDataInstance.currentShopID, out shop);
         if (!succ)

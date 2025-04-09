@@ -130,32 +130,32 @@ public class ShopManagerAgain : MonoBehaviour
     public void HBoost()
     {
         var PDI = PlayerDataInstance;
-        var rbc = boostCost * (PDI.healthBoosts + 1) * (PDI.healthBoosts + 1);
-        if (PDI.healthBoosts >= 5 || PDI.Scrap < rbc) return;
+        var rbc = boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1);
+        if (PDI.HealthBoosts >= 5 || PDI.Scrap < rbc) return;
         float per = PDI.Health / PDI.maxHealth;
-        PDI.maxHealth = Mathf.CeilToInt(PDI.maxHealth * (1f + boostPercentages[PDI.healthBoosts] / 100f));
+        PDI.maxHealth = Mathf.CeilToInt(PDI.maxHealth * (1f + boostPercentages[PDI.HealthBoosts] / 100f));
         PDI.Health = PDI.maxHealth * per;
-        PDI.healthBoosts += 1;
+        PDI.HealthBoosts += 1;
         PDI.Scrap -= rbc;
     }
 
     public void WBoost()
     {
         var PDI = PlayerDataInstance;
-        var rbc = boostCost * (PDI.damageBoosts + 1) * (PDI.damageBoosts + 1);
-        if (PDI.damageBoosts >= 5 || PDI.Scrap < rbc) return;
-        GunInfoInstance.dmgMod *= 1f + boostPercentages[PDI.damageBoosts] / 100f;
-        PDI.damageBoosts += 1;
+        var rbc = boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1);
+        if (PDI.DamageBoosts >= 5 || PDI.Scrap < rbc) return;
+        GunInfoInstance.dmgMod *= 1f + boostPercentages[PDI.DamageBoosts] / 100f;
+        PDI.DamageBoosts += 1;
         PDI.Scrap -= rbc;
     }
 
     public void SBoost()
     {
         var PDI = PlayerDataInstance;
-        var rbc = boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
-        if (PDI.speedBoosts >= 5 || PDI.Scrap < rbc) return;
-        PlayerDataInstance.speedLimit *= 1f + boostPercentages[PDI.speedBoosts] / 100f;
-        PDI.speedBoosts += 1;
+        var rbc = boostCost * (PDI.SpeedBoosts + 1) * (PDI.SpeedBoosts + 1);
+        if (PDI.SpeedBoosts >= 5 || PDI.Scrap < rbc) return;
+        PlayerDataInstance.speedLimit *= 1f + boostPercentages[PDI.SpeedBoosts] / 100f;
+        PDI.SpeedBoosts += 1;
         PDI.Scrap -= rbc;
     }
 
@@ -177,13 +177,13 @@ public class ShopManagerAgain : MonoBehaviour
         
         scrapDisplay.text = $"{PDI.Scrap:### ### ### ##0}";
 
-        dmgChain.Unlocked = PDI.damageBoosts;
-        hpChain.Unlocked = PDI.healthBoosts;
-        speedChain.Unlocked = PDI.speedBoosts;
+        dmgChain.Unlocked = PDI.DamageBoosts;
+        hpChain.Unlocked = PDI.HealthBoosts;
+        speedChain.Unlocked = PDI.SpeedBoosts;
         
-        dButton.interactable = PDI.Scrap >= boostCost * (PDI.damageBoosts + 1) * (PDI.damageBoosts + 1);
-        hButton.interactable = PDI.Scrap >= boostCost * (PDI.healthBoosts + 1) * (PDI.healthBoosts + 1);
-        sButton.interactable = PDI.Scrap >= boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
+        dButton.interactable = PDI.Scrap >= boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1);
+        hButton.interactable = PDI.Scrap >= boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1);
+        sButton.interactable = PDI.Scrap >= boostCost * (PDI.SpeedBoosts + 1) * (PDI.SpeedBoosts + 1);
         
         SetPrices();
     }

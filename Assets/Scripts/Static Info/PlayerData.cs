@@ -24,17 +24,14 @@ namespace Static_Info
         public float dodgeDistance;
         public float dodgeCooldown;
         public System.Collections.Generic.List<BaseComponent> weapons;
-
-        [NonSerialized] public bool isInTutorial;
-        [NonSerialized] public bool gotoTitle = true;
-
+        
         [NonSerialized] public System.Collections.Generic.List<UpgradeInstance> Upgrades;
         [NonSerialized] public float Health;
         [NonSerialized] public float Scrap;
 
-        [NonSerialized] public short healthBoosts = 0;
-        [NonSerialized] public short damageBoosts = 0;
-        [NonSerialized] public short speedBoosts = 0;
+        [NonSerialized] public short HealthBoosts = 0;
+        [NonSerialized] public short DamageBoosts = 0;
+        [NonSerialized] public short SpeedBoosts = 0;
 
     }
 }

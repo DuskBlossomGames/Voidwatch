@@ -9,15 +9,11 @@ public class Buttons : MonoBehaviour
 {
     public void Play()
     {
-        //PlayerDataInstance.isInTutorial = false;
-        //SceneManager.LoadScene("Boot");
         SceneManager.LoadScene("LevelSelect");
     }
 
     public void Tutorial()
     {
-        //PlayerDataInstance.isInTutorial = true;
-        //SceneManager.LoadScene("Boot");
         SceneManager.LoadScene("Tutorial");
     }
 
