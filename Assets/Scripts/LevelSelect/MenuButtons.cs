@@ -13,7 +13,7 @@ public class MenuButtons : MonoBehaviour
     {
         Debug.Log("Restart");
         Destroy(StaticInfoHolder.instance.gameObject); // reset static info
-        SceneManager.LoadScene("Boot"); // return to boot
+        SceneManager.LoadScene("TitleScreen"); // return to boot
     }
 
     public void Quit()

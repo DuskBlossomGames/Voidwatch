@@ -22,6 +22,7 @@ public class WormDamageable : EnemyDamageable
     public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1)
     {
         base.Damage(dmgMod*damage, dmgType, source, reduceMod);
+        print("damaged (now have "+Health+"/"+MaxHealth+")");
     }
 
     protected override void OnDeath(GameObject source)
