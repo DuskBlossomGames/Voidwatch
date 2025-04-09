@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5072864658dafd84cb54eb038f85e9f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  maxHealth: 200
 --- !u!1 &7455740270890831396
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  hazardObject: 0
   cost: 15
   ScrapCount: 0
   ScrapPrefab: {fileID: 0}
@@ -143,3 +143,8 @@ MonoBehaviour:
   dmgRes: {fileID: 0}
   maxHealth: 0
   varientParent: {fileID: 0}
+  explosion: {fileID: 0}
+  bitOptions: []
+  numBits: 0
+  explosionScale: 0
+  bitScale: 0
