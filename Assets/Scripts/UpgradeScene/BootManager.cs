@@ -8,11 +8,23 @@ using static Static_Info.PlayerData;
 
 public class BootManager : MonoBehaviour
 {
-    public string destination;
+    public string onPlayDest;
+    public string tutorialDest;
     void Start()
     {
         PlayerDataInstance.Health = PlayerDataInstance.maxHealth;
-        SceneManager.LoadScene(destination);
+        if (PlayerDataInstance.gotoTitle)
+        {
+            PlayerDataInstance.gotoTitle = false;
+            SceneManager.LoadScene("TitleScreen");
+        } else if (PlayerDataInstance.isInTutorial)
+        {
+            SceneManager.LoadScene(tutorialDest);
+        } else
+        {
+            SceneManager.LoadScene(onPlayDest);
+        }
+        
     }
 }
 
