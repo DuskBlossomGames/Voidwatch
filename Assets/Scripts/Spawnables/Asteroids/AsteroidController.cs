@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using Spawnables.Player;
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
@@ -38,34 +39,35 @@ namespace Spawnables.Asteroids
 
         public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1)
         {
-            if (LayerMask.LayerToName(source.layer) == "Enemies") return; // prevent bifurcator from incinerating them
+            if (LayerMask.LayerToName(source.layer) == "PlayerOnlyHazard") return; // prevent bifurcator from incinerating them
             
             base.Damage(damage, dmgType, source, reduceMod);
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (!other.gameObject.TryGetComponent<PlayerDamageable>(out var player)) return;
+            if (!other.gameObject.TryGetComponent<Damageable>(out var dmgable)) return;
+            if (other.gameObject.GetComponent<AsteroidController>() != null) return; // don't damage other asteroids
 
-            player.Damage(100, IDamageable.DmgType.Physical, gameObject);
+            dmgable.Damage(100, IDamageable.DmgType.Physical, gameObject);
         }
 
         protected override void OnDeath(GameObject source)
         {
-            // base.OnDeath(source); // spawn bits
+            // base.OnDeath(source); // TODO: spawn bits
 
             if (nextSize == null) return;
 
-            var vel = source.GetComponent<CustomRigidbody2D>()?.velocity ?? _rb.velocity;
+            var vel = (source.GetComponent<CustomRigidbody2D>()?.velocity.normalized ?? _rb.velocity.normalized) * _rb.velocity.magnitude;
 
             var vel1 = Quaternion.Euler(0, 0, -45) * vel;
             var vel2 = Quaternion.Euler(0, 0, 45) * vel;
             
-            var child1 = Instantiate(gameObject, transform.position + 3*vel1, transform.rotation);
+            var child1 = Instantiate(nextSize, transform.position + 2*vel1.normalized, transform.rotation);
             child1.GetComponent<AsteroidController>().startVel = vel1;
             
-            var child2 = Instantiate(gameObject, transform.position + 3*vel2, transform.rotation);
-            child1.GetComponent<AsteroidController>().startVel = vel2;
+            var child2 = Instantiate(nextSize, transform.position + 2*vel2.normalized, transform.rotation);
+            child2.GetComponent<AsteroidController>().startVel = vel2;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using Spawnables;
+using Spawnables.Asteroids;
 using Spawnables.Player;
 using UnityEngine;
 using Util;
@@ -38,7 +39,7 @@ namespace Player
             var vel = (other.attachedRigidbody.velocity - _rb.velocity).magnitude;
             damageable.Damage(enemyMod * vel, IDamageable.DmgType.Concussive, gameObject);
 
-            if (!damageable.IsDead)
+            if (!damageable.IsDead && other.gameObject.GetComponent<AsteroidController>() == null) // asteroid handles it itself
             {
                 _dmgable.Damage(playerMod * vel, IDamageable.DmgType.Concussive, gameObject);
                 _cooldownTimer.Value = cooldown;

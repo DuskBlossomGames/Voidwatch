@@ -21,6 +21,7 @@ public class ShopManagerAgain : MonoBehaviour
     public TMP_Text wbo;
     public TMP_Text hbo;
     public TMP_Text sbo;
+    public Button dButton, hButton, sButton; 
     public TMP_Text scrapDisplay;
     public bool lf = true;
     public bool mf = true;
@@ -179,6 +180,10 @@ public class ShopManagerAgain : MonoBehaviour
         dmgChain.Unlocked = PDI.damageBoosts;
         hpChain.Unlocked = PDI.healthBoosts;
         speedChain.Unlocked = PDI.speedBoosts;
+        
+        dButton.interactable = PDI.Scrap >= boostCost * (PDI.damageBoosts + 1) * (PDI.damageBoosts + 1);
+        hButton.interactable = PDI.Scrap >= boostCost * (PDI.healthBoosts + 1) * (PDI.healthBoosts + 1);
+        sButton.interactable = PDI.Scrap >= boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
         
         SetPrices();
     }

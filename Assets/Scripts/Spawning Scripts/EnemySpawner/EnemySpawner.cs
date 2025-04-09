@@ -130,31 +130,7 @@ namespace EnemySpawner
             if (Input.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 
             if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
-            if (!_spawnedHazards)
-            {
-                _spawnedHazards = true;
-                var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
-
-                var sectorSize = 2*Mathf.PI / hazards.Count;
-                for (var sector = 0; sector < hazards.Count; sector++)
-                {
-                    var idx = Random.Range(0, hazards.Count);
-                    var hazard = hazards[idx];
-                    hazards.RemoveAt(idx);
-                    
-                    var offset = Random.Range(-sectorSize/3, sectorSize/3);
-
-                    var theta = sectorSize/2 + sector * sectorSize + offset;
-                    var r = Random.Range(planet.forceField.transform.localScale.x / 2 + 30,
-                        boundaryCircle.transform.localScale.x / 2 - 20);
-                    
-                    var hazardObj = Instantiate(
-                        hazard,
-                        transform.position +  
-                            new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0),
-                        Quaternion.identity);
-                }
-            }
+            if (!_spawnedHazards && _level.Type != LevelType.Elite) SpawnHazards();
 
             //var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 
@@ -181,6 +157,32 @@ namespace EnemySpawner
                 {
                     SpawnWave();
                 }
+            }
+        }
+
+        public void SpawnHazards()
+        {
+            _spawnedHazards = true;
+            var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
+
+            var sectorSize = 2*Mathf.PI / hazards.Count;
+            for (var sector = 0; sector < hazards.Count; sector++)
+            {
+                var idx = Random.Range(0, hazards.Count);
+                var hazard = hazards[idx];
+                hazards.RemoveAt(idx);
+                    
+                var offset = Random.Range(-sectorSize/3, sectorSize/3);
+
+                var theta = sectorSize/2 + sector * sectorSize + offset;
+                var r = Random.Range(planet.forceField.transform.localScale.x / 2 + 30,
+                    boundaryCircle.transform.localScale.x / 2 - 20);
+                    
+                var hazardObj = Instantiate(
+                    hazard,
+                    transform.position +  
+                    new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0),
+                    Quaternion.identity);
             }
         }
 

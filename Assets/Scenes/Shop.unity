@@ -263,7 +263,6 @@ MonoBehaviour:
   circleDisableColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   textEnableColor: {r: 0.34117648, g: 0.34117648, b: 0.34117648, a: 1}
   textDisableColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-  debug: 4
 --- !u!1 &142417368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,7 +1921,6 @@ MonoBehaviour:
   circleDisableColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   textEnableColor: {r: 0.34117648, g: 0.34117648, b: 0.34117648, a: 1}
   textDisableColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-  debug: 1
 --- !u!1 &405645727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,19 +2164,22 @@ MonoBehaviour:
   mhp: {fileID: 239625499}
   rhp: {fileID: 1100555068}
   hpBar: {fileID: 5281943705215922252}
-  hpbBar: {fileID: 0}
-  dmgbBar: {fileID: 0}
-  spdbBar: {fileID: 0}
   lbut: {fileID: 1249015618}
   mbut: {fileID: 257506631}
   rbut: {fileID: 1661362540}
   wbo: {fileID: 0}
   hbo: {fileID: 0}
   sbo: {fileID: 0}
+  dButton: {fileID: 1187174952}
+  hButton: {fileID: 832247397}
+  sButton: {fileID: 788345806}
   scrapDisplay: {fileID: 631672051}
   lf: 1
   mf: 1
   rf: 1
+  dmgChain: {fileID: 1976780003}
+  hpChain: {fileID: 68898203}
+  speedChain: {fileID: 373791631}
   boostCost: 20
   scrapPerThouHp: 200
   cheapDiscount: 0.2
@@ -7708,7 +7709,6 @@ MonoBehaviour:
   circleDisableColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   textEnableColor: {r: 0.34117648, g: 0.34117648, b: 0.34117648, a: 1}
   textDisableColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-  debug: 2
 --- !u!1 &1987819758
 GameObject:
   m_ObjectHideFlags: 0

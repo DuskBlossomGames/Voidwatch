@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b4cd76265a4433ac2a6a4f2dd15c30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDriftVel: 5
-  maxDriftVel: 12
+  minDriftVel: 3
+  maxDriftVel: 8
   size: 20
   asteroids:
   - {fileID: 4661534520163306949, guid: 4451433ea321044f1ae32d37a4aca9c4, type: 3}

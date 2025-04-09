@@ -409,6 +409,7 @@ namespace Spawnables.Carcadon
             _forceStealth = false;
             for (var ac = 0; ac < 2; ac++) _armControllers[ac].hasAttack = true;
             _enemySpawner.SpawnWave();
+            _enemySpawner.SpawnHazards();
             _player.GetComponent<Shoot>().enabled = true;
             _player.GetComponent<Movement>().inputBlocked = false;
             camFp.Enabled = true;
