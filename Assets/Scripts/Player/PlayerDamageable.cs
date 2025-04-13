@@ -229,7 +229,7 @@ namespace Spawnables.Player
 
         IEnumerator DeathFade()
         {
-            GetComponent<RootPlayer.Movement>().inputBlocked = true;
+            GetComponent<RootPlayer.Movement>().SetInputBlocked(true);
             fadeOut.SetActive(true);
             fadeOut.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0);
             for (int i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)

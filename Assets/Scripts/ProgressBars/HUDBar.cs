@@ -14,6 +14,7 @@ namespace ProgressBars
         
         public override void UpdatePercentage(float cur, float max)
         {
+            if (!_mask) return;
             _mask.padding = new Vector4(0, 0, _mask.canvasRect.width * (1 - Mathf.Clamp(cur, 0, max) / max));
         }
     }

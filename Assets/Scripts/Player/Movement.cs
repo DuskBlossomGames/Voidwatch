@@ -24,7 +24,8 @@ namespace Player
         public bool Dodging => !_dodgeTimer.IsFinished;
 
         [NonSerialized] public Vector2? DodgeOnceDir = null;
-        
+
+        private Shoot _shoot;
         private Collider2D _collider;
         private SpriteRenderer _sprite;
         private TrailRenderer[] _trails;
@@ -60,6 +61,7 @@ namespace Player
 
         private void Start()
         {
+            _shoot = GetComponent<Shoot>();
             _dodgeJuice = PlayerDataInstance.maxDodgeJuice;
             _camera = Camera.main;
             _rigid = GetComponent<CustomRigidbody2D>();
@@ -69,13 +71,19 @@ namespace Player
             _upgradeable = GetComponent<Upgradeable>();
         }
 
+        public void SetInputBlocked(bool value)
+        {
+            inputBlocked = value;
+            (_shoot ?? GetComponent<Shoot>()).enabled = !value;
+        }
+
         private bool GetKey(KeyCode code)
         {
-            return !inputBlocked && Input.GetKey(code);
+            return !inputBlocked && !autoPilot && Input.GetKey(code);
         }
         private bool GetKeyDown(KeyCode code)
         {
-            return !inputBlocked && Input.GetKeyDown(code);
+            return !inputBlocked && !autoPilot && Input.GetKeyDown(code);
         }
 
         private void Update()

@@ -991,8 +991,7 @@ namespace Bosses.Worm
                 fadeIn.transform.parent.GetChild(i).gameObject.SetActive(false);
             }
             fadeIn.SetActive(true);
-            player.GetComponent<Shoot>().enabled = false;
-            player.GetComponent<Movement>().inputBlocked = true;
+            player.GetComponent<Movement>().SetInputBlocked(true);
             var playerDist = player.transform.position.magnitude;
             var playerDir = player.transform.position.normalized;
             
@@ -1001,7 +1000,7 @@ namespace Bosses.Worm
             for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
-                fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, Mathf.SmoothStep(1, 0, t / fadeInTime));
+                fadeImg.SetAlpha(Mathf.SmoothStep(1, 0, t / fadeInTime));
             }
             fadeIn.SetActive(false);
 
@@ -1200,8 +1199,7 @@ namespace Bosses.Worm
             camFp.Enabled = true;
             foreach (var c in GetComponentsInChildren<FloppyBrain>()) c.enabled = true;
             DestroyImmediate(portal);
-            player.GetComponent<Shoot>().enabled = true;
-            player.GetComponent<Movement>().inputBlocked = false;
+            player.GetComponent<Movement>().SetInputBlocked(false);
             gradient.SetActive(false);
             defenses.SetActive(true);
             boundaryCircle.transform.localScale = oldCircleScale;

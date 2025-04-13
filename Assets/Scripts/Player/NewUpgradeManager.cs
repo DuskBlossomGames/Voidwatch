@@ -45,7 +45,7 @@ public class NewUpgradeManager : MonoBehaviour
         _right.transform.GetChild(0).GetComponent<TMP_Text>().text = UpgradePlayer.UpName(_upgrades[2]);
         _right.transform.GetChild(1).GetComponent<TMP_Text>().text = UpgradePlayer.UpBody(_upgrades[2]);
 
-        playMov.inputBlocked = true;
+        playMov.SetInputBlocked(true);
         playMov.autoPilot = true;
         playMov.gameObject.GetComponent<Spawnables.Player.PlayerDamageable>().godmode = true;
         followPlayer.suppres = true;
