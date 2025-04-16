@@ -738,7 +738,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 487571307}
         m_TargetAssemblyTypeName: ShopManagerAgain, Assembly-CSharp
-        m_MethodName: SBoost
+        m_MethodName: HighHeal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1002,7 +1002,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 487571307}
         m_TargetAssemblyTypeName: ShopManagerAgain, Assembly-CSharp
-        m_MethodName: WBoost
+        m_MethodName: MiddleHeal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3509,7 +3509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.12673402, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5008,7 +5008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6829,7 +6829,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 487571307}
         m_TargetAssemblyTypeName: ShopManagerAgain, Assembly-CSharp
-        m_MethodName: HBoost
+        m_MethodName: LowerHeal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

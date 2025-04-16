@@ -82,7 +82,7 @@ public class TutorialController : MonoBehaviour
             }
         },
         {
-            Stage.Wrapup, new[]
+            Stage.Wrapup, new[] // TODO: collision damage (none if they die), level select (shop)
             {
                 ""
             }
