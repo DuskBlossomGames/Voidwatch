@@ -36,8 +36,10 @@ namespace Tutorial
 
             bestTime.text = "";
 
-            GetComponent<LineRenderer>().positionCount = _rings.Length;
-            GetComponent<LineRenderer>().SetPositions(_rings.Select(r => r.transform.position).ToArray());
+            GetComponent<LineRenderer>().positionCount = _rings.Length + 1;
+            var positions = _rings.Select(r => r.transform.position).ToList();
+            positions.Insert(0, new Vector3(35, 0, 0));
+            GetComponent<LineRenderer>().SetPositions(positions.ToArray());
 
             Reset();
         }

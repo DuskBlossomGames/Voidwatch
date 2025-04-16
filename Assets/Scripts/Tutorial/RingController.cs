@@ -30,7 +30,6 @@ namespace Tutorial
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            print("collided " + other);
             if (other.GetComponent<Movement>() == null) return;
 
             Completed = true;

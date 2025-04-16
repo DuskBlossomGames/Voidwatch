@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ namespace Tutorial
         public event Action Continue;
         
         private string _text;
-        private readonly List<int> _boldStartLocs = new(), _boldEndLocs = new();
+        private readonly Dictionary<int, string> _tagStartLocs = new(), _tagEndLocs = new();
         private bool _continuable;
         private readonly Timer _progress = new();
         private readonly Timer _periodPause = new();
@@ -70,12 +71,14 @@ namespace Tutorial
             _text = text.Replace("<b>", "").Replace("</b>", "");
             _continuable = continuable;
 
-            _boldStartLocs.Clear();
-            _boldEndLocs.Clear();
+            _tagStartLocs.Clear();
+            _tagEndLocs.Clear();
             for (var i = 0; i < text.Length-3; i++)
             {
-                if (text.Substring(i, 3) == "<b>") _boldStartLocs.Add(i);
-                else if (text.Substring(i, 4) == "</b>") _boldEndLocs.Add(i);
+                var open = new Regex("^(<[^/].*?>).*").Match(text, i);
+                var close = new Regex("^(</.+?>).*").Match(text, i);
+                if (open.Value != string.Empty) _tagStartLocs.Add(i, open.Groups[1].Value);
+                else if (close.Value != string.Empty) _tagEndLocs.Add(i, close.Groups[1].Value);
             }
             
             _progress.Value = (float) text.Replace("<b>", "").Replace("</b>", "").Length / charPerSec;
@@ -103,17 +106,17 @@ namespace Tutorial
             
             if (!_progress.IsFinished)
             {
-                _progress.Update();
-                
                 _periodPause.Update();
                 if (!_periodPause.IsFinished) return;
+                
+                _progress.Update();
 
                 var sub = _text[..Mathf.CeilToInt(_text.Length * (1 - _progress.Progress))];
                 var i = 0;
                 while (i <= sub.Length)
                 {
-                    if (_boldStartLocs.Contains(i)) sub = sub.Insert(i, "<b>");
-                    else if (_boldEndLocs.Contains(i)) sub = sub.Insert(i, "</b>");
+                    if (_tagStartLocs.TryGetValue(i, out var tagStart)) sub = sub.Insert(i, tagStart);
+                    else if (_tagEndLocs.TryGetValue(i, out var tagEnd)) sub = sub.Insert(i, tagEnd);
 
                     i++;
                 }

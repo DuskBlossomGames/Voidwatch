@@ -16,6 +16,7 @@ public class TutorialController : MonoBehaviour
     {
         Camera,
         Movement,
+        Dashing,
         Race,
         Minimap,
         Targets,
@@ -40,22 +41,32 @@ public class TutorialController : MonoBehaviour
                 "All movement is produced using the powerful rear thrusters. The ship will always accelerate in the direction it is facing, when the <b>W key</b> is pressed.",
                 "However, lack of air resistance enables pilots to cease acceleration while maintaining velocity. As such, ship orientation and velocity can be decoupled.",
                 "Deceleration is achieved through the braking apparatus, generating thrust backwards. Pilots can use the <b>S key</b> to slow down.",
-                "Finally, as a convenience to the pilot, the ship's onboard camera system will always orient 'down' as towards the nearest planet. <b>Practice the controls.</b>",
-                "When you feel comfortable, continue to the first training scenario."
+                "Finally, as a convenience to the pilot, the ship's camera system will always orient 'down' as towards the nearest planet. <b>Practice the accelerating and braking.</b>",
+                "When you feel comfortable, continue to see what makes this a Voidhawk-class starship."
                 
             }
         },
         {
+            Stage.Dashing, new []
+            {
+                "You'll notice a new readout on your HUD. Voidhawk ships contain an onboard Void Energy eXtractor (V.E.X.). This energy can be used to bridge the boundary between this world and <i>theirs</i>.",
+                "While it recharges over time, your ship only holds enough energy for about three dashes. During these jaunts into Voidspace, you are incorporeal to enemies and obstacles alike.",
+                "Press the <b>SPACE key</b> to dash. <b>Try dashing now.</b>",
+                "When you are ready, the simulation will load the first training exercise."
+            }
+        },
+        {   
             Stage.Race, new[]
             {
                 "A short track has been placed in orbit around this planet. <b>Fly through the rings and cross the finish line.</b>",
-                "Excellent. You may replay the track to attempt a faster time, if you wish. When you are comfortable, proceed to learn the minimap feature."
+                "Excellent work. You may replay the track to attempt a faster time, if you wish. When you are comfortable, proceed to learn the minimap feature."
             }
         },
         {
             Stage.Minimap, new[]
             {
-                ""
+                "Your minimap has now been activated, in the top right of your HUD. It gives an overview of the entire planet. Enemies will appear on the map, so you can hunt them down.",
+                "The safety border on the play area has also been disabled. When infiltrating a planet, you will have gotten past the "
             }
         },
         {
@@ -82,6 +93,12 @@ public class TutorialController : MonoBehaviour
     public Movement playerMovement;
     public float minStageWaitTime;
 
+    public GameObject dashBar;
+    public GameObject minimap;
+    public GameObject healthBar;
+
+    public GameObject securityBorder;
+    
     public GameObject raceCourse;
     private RaceController _raceController;
     
@@ -128,6 +145,10 @@ public class TutorialController : MonoBehaviour
                 _genFlag |= _playerRb.velocity.sqrMagnitude > 400; // greater than 20 u/s
                 if (_genFlag && _playerRb.velocity.sqrMagnitude < 25) Continue(); // less than 5 u/s
                 break;
+            case Stage.Dashing:
+                _genFlag |= playerMovement.Dodging;
+                if (_genFlag && !playerMovement.Dodging) Continue();
+                break;
             case Stage.Race:
                 if (_raceController.Completed) Continue();
                 break;
@@ -145,12 +166,27 @@ public class TutorialController : MonoBehaviour
         _textIdx += 1;
         if (_textIdx >= Text[_stage].Length)
         {
-            if (_stage == Stage.Camera) playerMovement.inputBlocked = false; // only blocked for camera stage (but shoot stays blocked)
-            else if (_stage == Stage.Race) raceCourse.SetActive(false);
-            else if (_stage == Stage.Minimap) playerMovement.SetInputBlocked(false); // enable player shoot
+            switch (_stage)
+            {
+                case Stage.Camera:
+                    playerMovement.inputBlocked = false; // only blocked for camera stage (but shoot stays blocked)
+                    break;
+                case Stage.Movement:
+                    dashBar.SetActive(true);
+                    break;
+                case Stage.Race:
+                    raceCourse.SetActive(false);
+                    minimap.SetActive(true);
+                    securityBorder.SetActive(false);
+                    break;
+                case Stage.Minimap:
+                    playerMovement.SetInputBlocked(false); // enable player shoot
+                    break;
+            }
             
             _stage += 1;
             _textIdx = 0;
+            _genFlag = false; // reset for the next stage to use
         }
 
         _waitingForAction = _textIdx == Text[_stage].Length - 2;
