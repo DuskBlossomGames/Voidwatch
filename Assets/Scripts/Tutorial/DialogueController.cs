@@ -68,20 +68,24 @@ namespace Tutorial
         
         public void ShowText(string text, bool continuable)
         {
-            _text = text.Replace("<b>", "").Replace("</b>", "");
+            var openRegex = "(<[^/].*?>)";
+            var closeRegex = "(</.+?>)";
+
+            _text = new Regex(closeRegex).Replace(new Regex(openRegex).Replace(text, ""), "");
             _continuable = continuable;
 
             _tagStartLocs.Clear();
             _tagEndLocs.Clear();
-            for (var i = 0; i < text.Length-3; i++)
+            
+            for (var i = 0; i < text.Length; i++)
             {
-                var open = new Regex("^(<[^/].*?>).*").Match(text, i);
-                var close = new Regex("^(</.+?>).*").Match(text, i);
+                var open = new Regex("^"+openRegex+".*").Match(text.Substring(i));
+                var close = new Regex("^"+closeRegex+".*").Match(text.Substring(i));
                 if (open.Value != string.Empty) _tagStartLocs.Add(i, open.Groups[1].Value);
                 else if (close.Value != string.Empty) _tagEndLocs.Add(i, close.Groups[1].Value);
             }
             
-            _progress.Value = (float) text.Replace("<b>", "").Replace("</b>", "").Length / charPerSec;
+            _progress.Value = (float) _text.Length / charPerSec;
             _periodPause.Value = 0;
             _idxPaused = -1;
             continueText.SetAlpha(0);
@@ -130,8 +134,9 @@ namespace Tutorial
             }
             else if (_continuable)
             {
-                continueText.SetAlpha(Mathf.Clamp01(continueText.color.a + _continueFlashDir * Time.deltaTime/continueFlashTime));
-                if (continueText.color.a % 1 == 0) _continueFlashDir *= -1;
+                var a = Mathf.Clamp01(continueText.color.a + _continueFlashDir * Time.deltaTime / continueFlashTime);
+                continueText.SetAlpha(a);
+                if (a % 1 == 0) _continueFlashDir *= -1;
             }
         }
 

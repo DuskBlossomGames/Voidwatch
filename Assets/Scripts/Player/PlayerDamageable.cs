@@ -11,6 +11,7 @@ using UnityEngine.Serialization;
 using UnityEngine.SceneManagement;
 using Util;
 using System.Collections;
+using UnityEditor.UI;
 using RootPlayer = Player;
 
 using static Static_Info.PlayerData;
@@ -19,6 +20,8 @@ namespace Spawnables.Player
 {
     public class PlayerDamageable : Damageable
     {
+        public bool isTutorial;
+        
         public Q_Vignette_Single vignette;
         public GameObject fadeOut;
         public float fadeouttime = 1;
@@ -69,8 +72,12 @@ namespace Spawnables.Player
         private readonly List<float> _vignetteCacheValues = new();
         private float _vignettePeakAlpha;
 
+        private Vector3 _startLoc;
+
         public new void Start()
         {
+            _startLoc = transform.position;
+            
             healthBar.UpdatePercentage(Health, MaxHealth);
 
             shieldDmgRes.Ready();
@@ -238,7 +245,19 @@ namespace Spawnables.Player
                 var prog = i / (100 * fadeouttime);
                 fadeOut.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, Mathf.Pow(prog, .5f));
             }
-            SceneManager.LoadScene("Menu");
+
+            if (!isTutorial)
+            {
+                SceneManager.LoadScene("Menu");
+            }
+            else
+            {
+                transform.position = _startLoc;
+                godmode = false;
+                GetComponent<SpriteRenderer>().enabled = true;
+                GetComponent<RootPlayer.Movement>().SetInputBlocked(false);
+                fadeOut.SetActive(false);
+            }
         }
     }
 }

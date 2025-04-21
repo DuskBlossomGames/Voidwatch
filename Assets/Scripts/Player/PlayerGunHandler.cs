@@ -18,6 +18,8 @@ public class PlayerGunHandler : MonoBehaviour
     public float playRadius;
     public GameObject gravitySource;
 
+    public bool EmptyRefilling => _emptyRefilling;
+    
     private float _curAmmo;
 
     private readonly Timer _noShootRefillTimer = new();
@@ -41,7 +43,6 @@ public class PlayerGunHandler : MonoBehaviour
 
     public void Shoot(Vector2 worldMousePos)//returns if could start the shoot coroutine
     {
-        _emptyRefilling &= _curAmmo < GunInfoInstance.ammoCount;
         if (_isFiring || _curAmmo <= 0 || _emptyRefilling) return;
 
         _mPos = worldMousePos;
@@ -50,6 +51,8 @@ public class PlayerGunHandler : MonoBehaviour
 
     private void Update()
     {
+        _emptyRefilling &= _curAmmo < GunInfoInstance.ammoCount;
+        
         _noShootRefillTimer.Update();
         _emptyRefillTimer.Update();
 

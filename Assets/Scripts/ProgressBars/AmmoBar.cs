@@ -10,7 +10,7 @@ namespace ProgressBars
 
         private SpriteRenderer[] _srs;
         private Camera _cam;
-        private float _opacityPos = 1;
+        private float _opacityPos = 0;
 
         public void Start()
         {

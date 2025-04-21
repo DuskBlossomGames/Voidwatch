@@ -26,7 +26,12 @@ namespace Tutorial
         public bool Completed { get; private set; }
 
         private void OnEnable() { timer.gameObject.SetActive(true); }
-        private void OnDisable() { timer.gameObject.SetActive(false); }
+
+        private void OnDisable()
+        {
+            timer.gameObject.SetActive(false);
+            player.inputBlocked = player.autoPilot = false;
+        }
 
         private void Start()
         {
@@ -83,7 +88,7 @@ namespace Tutorial
             }
             
             _time += Time.deltaTime;
-            timer.text = (_time/60).ToString("00") + ":" + ((int) (_time%60)).ToString("00") + "." + (100*(_time%1)).ToString("00");
+            timer.text = GetTimerText(_time, 17);
             ringCount.text = _rings.Sum(r=>r.Completed ? 1 : 0) + " / " + _rings.Length;
         }
 
@@ -100,9 +105,13 @@ namespace Tutorial
 
             if (_time < _bestTime || _bestTime == -1)
             {
-                _bestTime = _time;
-                bestTime.text = (_bestTime/60).ToString("00") + ":" + ((int) (_bestTime%60)).ToString("00") + "." + (100*(_bestTime%1)).ToString("00");
+                bestTime.text = GetTimerText(_bestTime = _time, 13);
             }
+        }
+
+        private string GetTimerText(float time, float mspace)
+        {
+            return $"<mspace={mspace}>{(_time/60).ToString("00")}</mspace>:<mspace={mspace}>{((int) (_bestTime%60)).ToString("00")}</mspace>.<mspace={mspace}>{(100*(_bestTime%1)).ToString("00")}";
         }
     }
 }
