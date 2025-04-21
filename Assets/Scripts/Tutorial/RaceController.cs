@@ -52,7 +52,7 @@ namespace Tutorial
         private void Reset()
         {
             _time = 0;
-            timer.text = "00.00";
+            timer.text = GetTimerText(0);
             ringCount.text = "0 / " + _rings.Length;
             _begun = false;
 
@@ -88,7 +88,7 @@ namespace Tutorial
             }
             
             _time += Time.deltaTime;
-            timer.text = GetTimerText(_time, 17);
+            timer.text = GetTimerText(_time);
             ringCount.text = _rings.Sum(r=>r.Completed ? 1 : 0) + " / " + _rings.Length;
         }
 
@@ -109,9 +109,9 @@ namespace Tutorial
             }
         }
 
-        private string GetTimerText(float time, float mspace)
+        private string GetTimerText(float time, float mspace=16)
         {
-            return $"<mspace={mspace}>{(_time/60).ToString("00")}</mspace>:<mspace={mspace}>{((int) (_bestTime%60)).ToString("00")}</mspace>.<mspace={mspace}>{(100*(_bestTime%1)).ToString("00")}";
+            return $"<mspace={mspace}>{(time/60).ToString("00")}</mspace>:<mspace={mspace}>{((int) (time%60)).ToString("00")}</mspace>.<mspace={mspace}>{(100*(time%1)).ToString("00")}";
         }
     }
 }
