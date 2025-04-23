@@ -21,7 +21,7 @@ public class ShopManagerAgain : MonoBehaviour
     public TMP_Text wbo;
     public TMP_Text hbo;
     public TMP_Text sbo;
-    public Button dButton, hButton, sButton; 
+    public Button dButton, hButton, sButton, lhButton, mhButton, hhButton; 
     public TMP_Text scrapDisplay;
     public bool lf = true;
     public bool mf = true;
@@ -159,6 +159,7 @@ public class ShopManagerAgain : MonoBehaviour
         PDI.Scrap -= rbc;
     }
 
+    private float _anchorMinStart = 0.065f, _anchorMaxStart = 0.125f, _anchorWidth = 0.765f;
     public void Draw()
     {
         var PDI = PlayerDataInstance;
@@ -166,20 +167,24 @@ public class ShopManagerAgain : MonoBehaviour
         hpBar.anchorMin = new Vector2(prog, hpBar.anchorMin.y);
         
         // magic constants visually derived
-        lhp.anchorMin = new Vector2(.09f + .77f * (1 - 2 * (1 - prog) / 3), lhp.anchorMin.y);
-        lhp.anchorMax = new Vector2(.15f + .77f * (1 - 2 * (1 - prog) / 3), lhp.anchorMax.y);
+        lhp.anchorMin = new Vector2(_anchorMinStart + _anchorWidth * (1 - 2 * (1 - prog) / 3), lhp.anchorMin.y);
+        lhp.anchorMax = new Vector2(_anchorMaxStart + _anchorWidth * (1 - 2 * (1 - prog) / 3), lhp.anchorMax.y);
         
-        mhp.anchorMin = new Vector2(.09f + .77f * (1 - 1 * (1 - prog) / 3), mhp.anchorMin.y);
-        mhp.anchorMax = new Vector2(.15f + .77f * (1 - 1 * (1 - prog) / 3), mhp.anchorMax.y);
+        mhp.anchorMin = new Vector2(_anchorMinStart + _anchorWidth * (1 - 1 * (1 - prog) / 3), mhp.anchorMin.y);
+        mhp.anchorMax = new Vector2(_anchorMaxStart + _anchorWidth * (1 - 1 * (1 - prog) / 3), mhp.anchorMax.y);
         
-        rhp.anchorMin = new Vector2(.09f + .77f * (1f), rhp.anchorMin.y);
-        rhp.anchorMax = new Vector2(.15f + .77f * (1f), rhp.anchorMax.y);
+        rhp.anchorMin = new Vector2(_anchorMinStart + _anchorWidth * (1f), rhp.anchorMin.y);
+        rhp.anchorMax = new Vector2(_anchorMaxStart + _anchorWidth * (1f), rhp.anchorMax.y);
         
         scrapDisplay.text = $"{PDI.Scrap:### ### ### ##0}";
 
         dmgChain.Unlocked = PDI.DamageBoosts;
         hpChain.Unlocked = PDI.HealthBoosts;
         speedChain.Unlocked = PDI.SpeedBoosts;
+
+        lhButton.interactable = lf && PDI.Scrap >= _repairs[0];
+        mhButton.interactable = mf && PDI.Scrap >= _repairs[1];
+        hhButton.interactable = rf && PDI.Scrap >= _repairs[2];
         
         dButton.interactable = PDI.Scrap >= boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1);
         hButton.interactable = PDI.Scrap >= boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1);

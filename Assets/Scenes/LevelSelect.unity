@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311935, g: 0.38074002, b: 0.3587273, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2836,12 +2836,6 @@ MonoBehaviour:
   bossOverlayPlayer: {fileID: 1623348292}
   bossPhase2Intro: {fileID: 8300000, guid: f81152f7813a2440193b31bf091c2831, type: 3}
   bossPhase2Loop: {fileID: 8300000, guid: f81152f7813a2440193b31bf091c2831, type: 3}
-  levelSelect:
-    m_Handle: 0
-  levelPlay:
-    m_Handle: 0
-  levelBoss:
-    m_Handle: 0
   timeInterpolate: 2
   staticMusicVolume: 0
 --- !u!1 &1645814813
@@ -4044,7 +4038,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!58 &3275128187205761392
