@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appearsAsSelf: 0
-  miniSprite: {fileID: 21300000, guid: e5e488f6b689d47459dbd2bcc0337512, type: 3}
-  miniColor: {r: 1, g: 1, b: 1, a: 1}
+  miniSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  miniColor: {r: 1, g: 0, b: 0, a: 1}
   size: 5
   inheritsRotation: 0
   staticRot: {x: 0, y: 0, z: 0}
@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hazardObject: 0
   cost: 5
   ScrapCount: 0
   ScrapPrefab: {fileID: 0}
