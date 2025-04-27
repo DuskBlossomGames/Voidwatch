@@ -52,13 +52,13 @@ namespace Spawnables.Worms
                 }
             };
             
-            _segLength = body.transform.lossyScale.y;
+            _segLength = body.transform.lossyScale.y * 3/4f;
 
             var localPos = Vector3.zero;
 
             for (var i = 0; i < length - 2; i++)
             {
-                localPos.y -= body.transform.localScale.y;
+                localPos.y -= body.transform.localScale.y * 3/4f;
 
                 var seg = Instantiate(body, transform);
                 seg.transform.localPosition = localPos;
@@ -116,7 +116,7 @@ namespace Spawnables.Worms
                     head.transform.rotation * Vector3.up,
                     _pathfinder.PathDirNorm(head.transform.position, tail.transform.position)
                 };
-                dir = Vector3.RotateTowards(vectors[_curlDir],vectors[(_curlDir+1) % 2], Time.deltaTime, 0);
+                dir = Vector3.RotateTowards(vectors[_curlDir],vectors[(_curlDir+1) % 2], 0.25f * Time.deltaTime, 0);
             }
             else
             {

@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2185569427790662929}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   juicePerSec: 40
-  length: 10
+  length: 12
   spread: 5
   acceleration: 7
   maxSpeed: 40
@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 6025681889313805236}
   - component: {fileID: 705142911058692419}
   - component: {fileID: 8291259561596216319}
+  - component: {fileID: 5953054369909028972}
   m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
@@ -116,7 +117,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5578839932147803988}
@@ -259,6 +260,24 @@ MonoBehaviour:
   bitScale: 0
   root: {fileID: 67814197549092420}
   dmgMod: 1
+--- !u!114 &5953054369909028972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899331777728928693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 1
+  collisionDetection: 0
+  constraints:
+    freezeX: 0
+    freezeY: 0
+    freezeRotation: 0
 --- !u!1 &2409627043472435659
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +310,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5578839932147803988}
@@ -477,6 +496,7 @@ GameObject:
   - component: {fileID: 3879666598934382991}
   - component: {fileID: 234582569196430476}
   - component: {fileID: 8250756893859279752}
+  - component: {fileID: 5538207632579746697}
   m_Layer: 12
   m_Name: Tail
   m_TagString: Untagged
@@ -494,7 +514,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5578839932147803988}
@@ -637,6 +657,24 @@ MonoBehaviour:
   bitScale: 0
   root: {fileID: 67814197549092420}
   dmgMod: 1
+--- !u!114 &5538207632579746697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951849249803381746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 1
+  collisionDetection: 0
+  constraints:
+    freezeX: 0
+    freezeY: 0
+    freezeRotation: 0
 --- !u!1 &7455740270890831396
 GameObject:
   m_ObjectHideFlags: 0
