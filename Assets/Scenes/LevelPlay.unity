@@ -2390,6 +2390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1368600124}
   - component: {fileID: 1368600123}
+  - component: {fileID: 1368600125}
   m_Layer: 0
   m_Name: Minimap Cam
   m_TagString: Untagged
@@ -2463,6 +2464,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1562156499}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1368600125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368600121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34030fd619e7b944bd2f31e457ed7dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2086174082}
 --- !u!1 &1446287944
 GameObject:
   m_ObjectHideFlags: 0
@@ -3730,6 +3744,7 @@ MonoBehaviour:
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   nUpMan: {fileID: 682528864}
+  debugEnemy: {fileID: 4353281618518814614, guid: 0cd5f2737366be748ae4df4fc5f5e77c, type: 3}
 --- !u!4 &1780276284
 Transform:
   m_ObjectHideFlags: 0
@@ -4412,6 +4427,26 @@ PrefabInstance:
       propertyPath: warningSlider
       value: 
       objectReference: {fileID: 1446287944}
+    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: miniSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c1e9c54a6f1868c4887f0b7ecb966774, type: 3}
+    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: miniColor.b
+      value: 0.8773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: miniColor.g
+      value: 0.8773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: miniColor.r
+      value: 0.8773585
+      objectReference: {fileID: 0}
     - target: {fileID: 5997792626973407928, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: m_Name
       value: Player

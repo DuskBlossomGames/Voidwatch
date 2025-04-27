@@ -45,6 +45,7 @@ namespace EnemySpawner
         private readonly Dictionary<string, bool> _loadedVariants = new();
         
         public NewUpgradeManager nUpMan;
+        public GameObject debugEnemy;
 
         private void Awake()
         {
@@ -126,6 +127,12 @@ namespace EnemySpawner
             
             // TODO: debug
             if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
+            if (Input.GetKeyUp(KeyCode.Backslash))
+            {
+                _spawnedEnemies.ForEach(Destroy);
+
+                _spawnedEnemies.Add(Instantiate(debugEnemy));
+            }
             if (_level.Type == LevelType.Elite && Input.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
             if (Input.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 
