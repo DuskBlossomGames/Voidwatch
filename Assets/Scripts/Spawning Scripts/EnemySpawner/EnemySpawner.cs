@@ -49,6 +49,8 @@ namespace EnemySpawner
 
         private void Awake()
         {
+            _isDebug = debugEnemy != null;
+            
             _isTerminal = false;
             groupBudgetTiers.Sort();
             
@@ -97,6 +99,7 @@ namespace EnemySpawner
 
         private readonly List<GameObject> _spawnedEnemies = new();
         private int _wave = -1;
+        private bool _isDebug;
         private float _timeTillExit;
         private bool _isTerminal;
 
@@ -127,12 +130,6 @@ namespace EnemySpawner
             
             // TODO: debug
             if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
-            if (Input.GetKeyUp(KeyCode.Backslash))
-            {
-                _spawnedEnemies.ForEach(Destroy);
-
-                _spawnedEnemies.Add(Instantiate(debugEnemy));
-            }
             if (_level.Type == LevelType.Elite && Input.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
             if (Input.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 
@@ -195,7 +192,8 @@ namespace EnemySpawner
 
         public void SpawnWave()
         {
-            if (_wave < _level.Waves.Length - 1) _wave++;
+            // if debug, only have one wave (_wave == -1)
+            if (_wave < _level.Waves.Length - 1 && (!_isDebug || _wave == -1)) _wave++;
             else return;
             
             //See this link for explanation: https://docs.google.com/presentation/d/1N-m9xBT6kNj14Usj7dzI-zluJXPPxZCACTUyHBboIYs/edit#slide=id.p
@@ -269,6 +267,8 @@ namespace EnemySpawner
 
         private List<GameObject> GetSpawnedEnemies(int budget, bool hazards = false)
         {
+            if (_isDebug) return new List<GameObject> { debugEnemy };
+            
             var groupBudgets = new Dictionary<string, int>();
 
             var enemyGroups = hazards ? _hazardObjects : _groups;

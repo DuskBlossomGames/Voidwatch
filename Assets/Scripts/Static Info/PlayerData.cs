@@ -7,7 +7,7 @@ namespace Static_Info
 {
     public class PlayerData : MonoBehaviour
     {
-        public static PlayerData PlayerDataInstance => StaticInfoHolder.instance.GetCachedComponent<PlayerData>();
+        public static PlayerData PlayerDataInstance => StaticInfoHolder.Instance.GetCachedComponent<PlayerData>();
 
         public int maxHealth;
         public float maxShield;

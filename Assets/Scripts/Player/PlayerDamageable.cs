@@ -81,7 +81,7 @@ namespace Spawnables.Player
             healthBar.UpdatePercentage(Health, MaxHealth);
 
             shieldDmgRes.Ready();
-            base.Start();
+            dmgRes.Ready();
             Destroy(_healthBar);
             ShieldPower = ShieldMaxPower;
 

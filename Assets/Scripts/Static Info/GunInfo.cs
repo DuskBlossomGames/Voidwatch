@@ -5,7 +5,7 @@ namespace Static_Info
 {
     public class GunInfo : MonoBehaviour
     {
-        public static GunInfo GunInfoInstance => StaticInfoHolder.instance.GetCachedComponent<GunInfo>();
+        public static GunInfo GunInfoInstance => StaticInfoHolder.Instance.GetCachedComponent<GunInfo>();
 
         public int ammoCount;
         public float noShootRefillTime;

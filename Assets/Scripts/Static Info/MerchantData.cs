@@ -6,7 +6,7 @@ namespace Static_Info
 {
     public class MerchantData : MonoBehaviour
     {
-        public static MerchantData MerchantDataInstance => StaticInfoHolder.instance.GetCachedComponent<MerchantData>();
+        public static MerchantData MerchantDataInstance => StaticInfoHolder.Instance.GetCachedComponent<MerchantData>();
         
         public SerializedDict<uint, MerchantObj> Shops;
         public uint currentShopID;

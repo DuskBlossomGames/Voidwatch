@@ -49,7 +49,7 @@ namespace Static_Info
 
     public class LevelSelectData : MonoBehaviour
     {
-        public static LevelSelectData LevelSelectDataInstance => StaticInfoHolder.instance.GetCachedComponent<LevelSelectData>();
+        public static LevelSelectData LevelSelectDataInstance => StaticInfoHolder.Instance.GetCachedComponent<LevelSelectData>();
 
         public float baseDifficulty;
         public float gameDifficultyModifier;

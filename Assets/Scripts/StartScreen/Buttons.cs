@@ -7,11 +7,6 @@ using static Static_Info.PlayerData;
 
 public class Buttons : MonoBehaviour
 {
-    private void Start()
-    {
-        PlayerDataInstance.Health = PlayerDataInstance.maxHealth;
-    }
-
     public void Play()
     {
         SceneManager.LoadScene("LevelSelect");

@@ -5772,8 +5772,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6fc2b787f5664dcd8b93639b559eee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  healthBarPrefab: {fileID: 0}
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  isTutorial: 0
   vignette: {fileID: 0}
   fadeOut: {fileID: 0}
   fadeouttime: 1
