@@ -133,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 3801896122326799239}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 30, z: -1}
+  m_LocalPosition: {x: -0, y: 42.5, z: -1}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -327,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 3852115693793858140}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 22, z: 0}
+  m_LocalPosition: {x: 0, y: 13, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -457,7 +457,7 @@ MonoBehaviour:
   lazer: {fileID: 8783412800550140137}
   innerCap: {fileID: 3852115693793858140}
   outerCap: {fileID: 2741034461977700117}
-  innerRad: 22
+  innerRad: 13
   outerRad: 72
 --- !u!114 &788439408942379800
 MonoBehaviour:
@@ -471,10 +471,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2cc1baf105219468296c3cde2e59e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 3801896122326799239}
-  target: {fileID: 0}
-  distMargin: 2
-  distSpeed: 3
   rotSpeed: 0.1
 --- !u!114 &7399155155839543350
 MonoBehaviour:
@@ -516,7 +512,7 @@ GameObject:
   - component: {fileID: 6578739519969363368}
   - component: {fileID: 232123086181545353}
   - component: {fileID: 2951386855508318790}
-  - component: {fileID: 6779653052984744601}
+  - component: {fileID: 5293203790975598915}
   - component: {fileID: 1997713199156744106}
   m_Layer: 21
   m_Name: Lazer_Segment_#1
@@ -534,7 +530,7 @@ Transform:
   m_GameObject: {fileID: 8783412800550140137}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 23, z: 0}
+  m_LocalPosition: {x: 0, y: 14, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -610,7 +606,7 @@ MonoBehaviour:
   size: 5
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
---- !u!114 &6779653052984744601
+--- !u!114 &5293203790975598915
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -619,13 +615,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8783412800550140137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57fe1ddaa031c9745b33a24da9d80ef9, type: 3}
+  m_Script: {fileID: 11500000, guid: d2ec139ad2a948dea22f6996898446a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerSecond: 100
-  entryDamage: 200
-  canOnlyHurtPlayer: 0
-  dmgType: 1
+  shieldDamagePerSecond: 175
+  stunTime: 2
 --- !u!60 &1997713199156744106
 PolygonCollider2D:
   m_ObjectHideFlags: 0

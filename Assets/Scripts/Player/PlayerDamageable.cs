@@ -108,6 +108,14 @@ namespace Spawnables.Player
             vignette.mainColor.a = _vignettePeakAlpha * vignetteCurve.Evaluate(1-_vignetteTimer.Progress);
         }
 
+        // returns true if the shields got broken
+        public bool TakeEMP(float damage)
+        {
+            ShieldPower = Mathf.Max(ShieldPower - damage, -ShieldMaxDebt);
+
+            return ShieldPower < 0;
+        }
+
         public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1f)
         {
             if (godmode) return;
