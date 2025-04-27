@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8224013232852632824}
   - component: {fileID: 1464698736710944844}
   - component: {fileID: 5522919353149486386}
-  - component: {fileID: 8537341181468141918}
   m_Layer: 0
   m_Name: Plasiopendra
   m_TagString: Untagged
@@ -81,27 +80,3 @@ MonoBehaviour:
   cost: 9
   ScrapCount: 0
   ScrapPrefab: {fileID: 0}
---- !u!114 &8537341181468141918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7455740270890831396}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 782e6bbb22f98477eb312180482b1954, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 0}
-  maxHealth: 0
-  varientParent: {fileID: 0}
-  explosion: {fileID: 0}
-  bitOptions:
-  - {fileID: -164018351, guid: 0d5725cb20c124dc583c528eca9bfd88, type: 3}
-  - {fileID: 557039658, guid: 0d5725cb20c124dc583c528eca9bfd88, type: 3}
-  - {fileID: 951273129, guid: 0d5725cb20c124dc583c528eca9bfd88, type: 3}
-  numBits: 4
-  explosionScale: 0
-  bitScale: 1.5

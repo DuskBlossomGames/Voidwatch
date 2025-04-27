@@ -20,6 +20,7 @@ public class ElectricArea : MonoBehaviour
         var wasStunned = !_stunTimer.IsFinished;
         _stunTimer.Update();
         
+        // TODO: more than just block input, slow down or make arc or something
         if (wasStunned) _player.SetInputBlocked(!_stunTimer.IsFinished);
     }
 

@@ -1,3 +1,4 @@
+using System.Transactions;
 using Spawnables;
 using Spawnables.Worms;
 using UnityEngine;
@@ -24,9 +25,14 @@ public class WormDamageable : EnemyDamageable
         base.Damage(dmgMod*damage, dmgType, source, reduceMod);
     }
 
-    protected override void OnDeath(GameObject source)
+    private void SpawnBits(GameObject source)
     {
         base.OnDeath(source);
+    }
+
+    protected override void OnDeath(GameObject source)
+    {
+        foreach (var dmg in root.GetComponentsInChildren<WormDamageable>()) dmg.SpawnBits(source);
         Destroy(root);
     }
 }
