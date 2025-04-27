@@ -86,6 +86,11 @@ namespace Player
             return !inputBlocked && !autoPilot && Input.GetKeyDown(code);
         }
 
+        public void DrainDodgeJuice(float amt)
+        {
+            _dodgeJuice = Mathf.Max(_dodgeJuice-amt, 0);
+        }
+
         private void Update()
         {
             if (!_stealthKeyUp && !_dodgeTimer.IsFinished && Input.GetKeyUp(KeyCode.Space)) _stealthKeyUp = true;
