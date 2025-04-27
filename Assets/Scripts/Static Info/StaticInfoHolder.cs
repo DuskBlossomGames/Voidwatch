@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Static_Info;
@@ -24,8 +25,16 @@ namespace Static_Info
                     _returnScene = SceneManager.GetActiveScene().name;
                     SceneManager.LoadScene("TitleScreen");
                 }
+                
                 return _instance;
             }
+        }
+
+        private static IEnumerator LoadInfo()
+        {
+            SceneManager.LoadScene("LevelSelect");
+            yield return new WaitForSeconds(0.1f);
+            SceneManager.LoadScene(_returnScene);
         }
         
         private readonly Dictionary<Type, MonoBehaviour> _behaviors = new();
@@ -43,9 +52,9 @@ namespace Static_Info
             
             PlayerDataInstance.Health = PlayerDataInstance.maxHealth;
             
-            if (_returnScene != null) SceneManager.LoadScene(_returnScene);
+            if (_returnScene != null) StartCoroutine(LoadInfo());
         }
-
+        
         public T GetCachedComponent<T>() where T : MonoBehaviour
         {
             if (!_behaviors.TryGetValue(typeof(T), out var ret))

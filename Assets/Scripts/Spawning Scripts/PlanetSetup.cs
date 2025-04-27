@@ -9,7 +9,7 @@ public class PlanetSetup : MonoBehaviour
     
     public GameObject forceField;
 
-    private void Awake()
+    private void Start()
     {
         var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 

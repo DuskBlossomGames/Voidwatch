@@ -90,8 +90,11 @@ namespace EnemySpawner
                     };
                 }
             };
-
-          _level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
+    
+          // if debug, it's probably being booted from nothing which will make CurrentPlanet 0 TODO: is debug 
+          if (_isDebug) LevelSelectDataInstance.CurrentPlanet = LevelSelectDataInstance.Levels[0].Connections[0];
+          
+          _level =  LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
           print(Mathf.Floor(_level.DifficultyScore/LevelSelectDataInstance.MaxDifficultyScore *5 *2)/2);
 
           if (_level.Type == LevelType.Elite) fadeIn.SetActive(true);
