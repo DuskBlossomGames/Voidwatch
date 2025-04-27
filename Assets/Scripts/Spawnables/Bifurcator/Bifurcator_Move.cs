@@ -5,7 +5,7 @@ using Util;
 
 public class Bifurcator_Move : MonoBehaviour
 {
-    public float rotSpeed = .1f; // radians per sec
+    public float rotSpeed; // degrees per sec
 
     float _rot;
     
@@ -18,8 +18,8 @@ public class Bifurcator_Move : MonoBehaviour
     }
 
     
-    void Update()
+    void FixedUpdate()
     {
-        transform.Rotate(0, 0, rotSpeed);
+        transform.Rotate(0, 0, rotSpeed * Time.fixedDeltaTime);
     }
 }
