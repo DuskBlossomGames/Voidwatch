@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   juicePerSec: 40
-  length: 12
+  length: 20
   spread: 5
   acceleration: 7
   maxSpeed: 40

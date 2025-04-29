@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6077276900865238909}
@@ -124,7 +124,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.45
 --- !u!114 &6199113845073035406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,16 +157,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dmgRes: {fileID: 11400000, guid: de2060ee01175134cab3ccc903df4371, type: 2}
-  maxHealth: 20
+  maxHealth: 150
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
   - {fileID: 917325303, guid: aa89c7e183c9744529c6941d597291b7, type: 3}
   - {fileID: 444040296, guid: aa89c7e183c9744529c6941d597291b7, type: 3}
   - {fileID: -89155140, guid: aa89c7e183c9744529c6941d597291b7, type: 3}
-  numBits: 1
+  numBits: 3
   explosionScale: 0
-  bitScale: 1
+  bitScale: 3
 --- !u!114 &301863512397517819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,18 +179,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9aad688cf243894dad95f0cb0e525cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawndelay: 1
+  maxColonySize: 10
+  normalSize: 5
+  leaderSize: 7.5
+  isLeader: 1
+  leaderChance: 0.05
+  explosionScaleMult: 2.5
+  gooSpawnTime: 1.25
+  speed: 6
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0000017038547
+      value: 0.25091422
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.56118786
+      value: 0.34318402
+      inSlope: 0.18820024
+      outSlope: 0.18820024
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06594316
+      outWeight: 0.06957713
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 5.2707114
+      outSlope: 5.2707114
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.025890203
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedCurveScale: 1.25
+  initialDelay: 3
+  spawndelay: 9
   swellsize: 3
   swelltime: 0.6181264
   isSpore: 0
   sporeHealingPerSecond: 0
   goo: {fileID: 4581651336289718121, guid: cba4d0a7dda536f428413af7665338d9, type: 3}
-  gravitySource: {fileID: 0}
   animationState: {fileID: 3726635049977287167}
   tendonLength: 5
   drag: 0.5
   suction: 1
-  mode: 0
+  mode: 1
 --- !u!114 &8772780823410768721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +311,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6077276900865238909}
-  - component: {fileID: 5526535292670623948}
   - component: {fileID: 4352720049731049132}
   m_Layer: 0
   m_Name: Platelin Cluster
@@ -294,20 +335,6 @@ Transform:
   - {fileID: 294215055825101008}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5526535292670623948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7663828382742004186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63075b485f735cb4a99d737b91baeb65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxchildren: 100
-  currchildren: 0
 --- !u!114 &4352720049731049132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hazardObject: 0
   cost: 7
   ScrapCount: 0
   ScrapPrefab: {fileID: 0}
