@@ -238,8 +238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  minDist: 5
-  speed: 10
+  moveAwayDist: 20
+  moveTowardsDist: 60
+  speed: 12
 --- !u!114 &582754640268470002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hazardObject: 0
   cost: 5
   ScrapCount: 0
   ScrapPrefab: {fileID: 0}

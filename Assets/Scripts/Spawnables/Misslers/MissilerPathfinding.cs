@@ -4,7 +4,7 @@ using Util;
 public class MissilerPathfinding : MonoBehaviour
 {
     public GameObject target;
-    public float minDist;
+    public float moveAwayDist, moveTowardsDist;
     public float speed = 10;
 
 
@@ -22,23 +22,18 @@ public class MissilerPathfinding : MonoBehaviour
 
     void Update()
     {
-        if (!_moving) {
-            if ((transform.position - target.transform.position).sqrMagnitude > minDist * minDist)
-            {
-                float mag = target.transform.position.magnitude;
-                _tar = mag * (transform.position + target.transform.position).normalized;
-                _moving = true;
-            }
-        } else
-        {
-            Vector3 dif = _tar - transform.position;
-            if (dif.sqrMagnitude < 10)
-            {
-                _moving = false;
-            }
-            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(dif.y,dif.x));
-            _rigid.AddRelativeForce(new Vector2(speed, 0));
-            _rigid.velocity = Vector2.ClampMagnitude(_rigid.velocity, speed);
-        }
+        var mult = 0;
+
+        var dif = (Vector2)(target.transform.position - transform.position);
+        
+        if (dif.sqrMagnitude > moveTowardsDist * moveTowardsDist) mult = 1;
+        else if (dif.sqrMagnitude < moveAwayDist * moveAwayDist) mult = -1;
+        
+        dif *= mult;
+
+        transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(dif.y,dif.x));
+        _rigid.AddRelativeForce(new Vector2(Mathf.Abs(mult)*speed, 0));
+        _rigid.velocity = Vector2.ClampMagnitude(_rigid.velocity, speed);
+        if (mult == 0) _rigid.velocity *= Mathf.Pow(0.3f, Time.deltaTime);
     }
 }

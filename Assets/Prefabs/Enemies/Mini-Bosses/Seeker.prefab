@@ -124,42 +124,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  heathOpacityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.9157274
-      value: 1.0027444
-      inSlope: 0.019228848
-      outSlope: 0.019228848
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.9977112
-      value: 0.0047187805
-      inSlope: -32.188797
-      outSlope: -32.188797
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.29660478
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   maxHealth: 500
   varientParent: {fileID: 0}
+  explosion: {fileID: 0}
+  bitOptions: []
+  numBits: 0
+  explosionScale: 0
+  bitScale: 0
 --- !u!114 &7999954347094555490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,33 +190,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  heathOpacityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   maxHealth: 500
   varientParent: {fileID: 0}
+  explosion: {fileID: 0}
+  bitOptions: []
+  numBits: 0
+  explosionScale: 0
+  bitScale: 0
 --- !u!114 &8306229153065358870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,8 +211,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  minDist: 5
-  speed: 4
+  moveAwayDist: 20
+  moveTowardsDist: 40
+  speed: 10
 --- !u!61 &7095550594125409051
 BoxCollider2D:
   m_ObjectHideFlags: 0
