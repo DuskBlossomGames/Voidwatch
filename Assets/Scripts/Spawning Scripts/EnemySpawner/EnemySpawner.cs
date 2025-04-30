@@ -121,7 +121,7 @@ namespace EnemySpawner
             if (_level.Type == LevelType.Elite && !_spawnedElite && _loadedVariants[miniBossesGroup])
             {
                 var obj = Instantiate(
-                    _miniBosses[/*TODO: !!!! Random.Range(0, _miniBosses.Count) !!!!*/0],
+                    _miniBosses[Random.Range(0, _miniBosses.Count)],
                     transform.position +
                     new Vector3(-35, 0, 0),
                     Quaternion.identity);
@@ -182,7 +182,7 @@ namespace EnemySpawner
                 var offset = Random.Range(-sectorSize/3, sectorSize/3);
 
                 var theta = sectorSize/2 + sector * sectorSize + offset;
-                var r = Random.Range(planet.forceField.transform.localScale.x / 2 + 30,
+                var r = Random.Range(planet.transform.localScale.x / 2 + 30,
                     boundaryCircle.transform.localScale.x / 2 - 20);
                     
                 var hazardObj = Instantiate(

@@ -173,5 +173,6 @@ public class PlatelinController : MonoBehaviour
     {
         _leader._subjects.Remove(gameObject);
         Instantiate(goo, transform.position, transform.rotation).transform.localScale *= explosionScaleMult;
+        if (transform.parent.childCount == 0) Destroy(transform.parent);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -121,7 +122,8 @@ public class UpgradePlayer
             Upgrades.Reload => "Increase Rate of Fire",
             Upgrades.Repeater =>"Shoot additional Rounds of Bullets per Shot",
             Upgrades.Speedboost => "Increases Movement Speed",
-
+            Upgrades.Handling => "Increases acceleration",
+            _ => throw new ArgumentOutOfRangeException(nameof(upgrade), upgrade, null)
         };
     }
 }
