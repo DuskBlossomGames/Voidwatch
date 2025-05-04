@@ -49,7 +49,7 @@ namespace Spawnables.Asteroids
             if (!other.gameObject.TryGetComponent<Damageable>(out var dmgable)) return;
             if (other.gameObject.GetComponent<AsteroidController>() != null) return; // don't damage other asteroids
 
-            dmgable.Damage(100, IDamageable.DmgType.Physical, gameObject);
+            dmgable.Damage(350, IDamageable.DmgType.Physical, gameObject);
         }
 
         protected override void OnDeath(GameObject source)

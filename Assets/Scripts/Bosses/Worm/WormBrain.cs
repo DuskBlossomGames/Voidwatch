@@ -133,7 +133,7 @@ namespace Bosses.Worm
 
         private MegaLaserController _mlc;
 
-        private int _eyesAlive;
+        private int _eyesAlive, _totalEyes;
 
         public static WormBrain instance;
 
@@ -143,7 +143,7 @@ namespace Bosses.Worm
             
             instance = this;
             _mlc = GetComponentInChildren<MegaLaserController>();
-            _eyesAlive = 2 * middleLength;
+            _eyesAlive = _totalEyes = 2 * middleLength;
 
             _tailController = GetComponentInChildren<TailController>();
 
@@ -172,6 +172,13 @@ namespace Bosses.Worm
             for (var i = 2; i < middleLength + 1; i++)
             {
                 var segment = (_segments[i] = Instantiate(middle)).transform;
+                if (i%2 == 0)
+                {
+                    Destroy(segment.GetChild(0).gameObject);
+                    Destroy(segment.GetChild(1).gameObject);
+                    _totalEyes = _eyesAlive -= 2;
+                }
+                
                 segment.SetParent(transform, false);
 
                 segment.GetChild(2).GetComponent<SpikeLinkedList>().previous = prevNode;
@@ -217,7 +224,7 @@ namespace Bosses.Worm
                 foreach (var dmgable in GetComponentsInChildren<WormDamageable>()) dmgable.enabled = true;
             }
 
-            bossBar.UpdatePercentage(middleLength*2 + _eyesAlive, middleLength * 4);
+            bossBar.UpdatePercentage(_totalEyes + _eyesAlive, _totalEyes * 2);
         }
 
         private void Update()
@@ -278,14 +285,15 @@ namespace Bosses.Worm
 
                             if (_ouroborosProgress >= 2 && _ouroborosProgress % 2 == 1)
                             {
-                                var laser = _segments[^(1 + _ouroborosProgress / 2)].GetComponentInChildren<MegaLaserController>();
+                                var lasers = _segments[^(1 + _ouroborosProgress / 2)].GetComponentsInChildren<MegaLaserController>();
 
-                                if (!laser.IsShooting)
+                                if (!lasers[0].IsShooting)
                                 {
-                                    laser.beamLoopTime = _actionUtilTimer.Value + 1 -
-                                                         (laser.laserBuildupTime - laser.TimeToLightning) -
-                                                         laser.beamBuildupTime;
-                                    laser.Shoot(boundaryCircle.transform.localScale.x/2 - _ouroborosRadius - middle.transform.lossyScale.y / 2, laser.TimeToLightning);
+                                    lasers[0].beamLoopTime = lasers[1].beamLoopTime = _actionUtilTimer.Value + 1 -
+                                        (lasers[0].laserBuildupTime - lasers[0].TimeToLightning) -
+                                        lasers[0].beamBuildupTime;
+                                    lasers[0].Shoot(boundaryCircle.transform.localScale.x/2 - _ouroborosRadius - middle.transform.lossyScale.y / 2, lasers[0].TimeToLightning);
+                                    lasers[1].Shoot(_ouroborosRadius - middle.transform.lossyScale.y / 2, lasers[0].TimeToLightning);
                                 }
                             }
 
@@ -324,7 +332,7 @@ namespace Bosses.Worm
 
                             portalable = true;
                             break;
-                        case < .55f:
+                        case < .75f:
                             /*Do Tailspike*/
                             actionGoal = ActionGoal.Tailspike;
                             _actionUtilTimer.Value = Random.Range(1f, 4f);
@@ -460,7 +468,7 @@ namespace Bosses.Worm
         
         public void BiteFinish()
         {
-            actionGoal = ActionGoal.Idle;
+            actionGoal = _mlc.IsShooting ? ActionGoal.Laser : ActionGoal.Idle;
         }
 
         private int _spikesReleased;

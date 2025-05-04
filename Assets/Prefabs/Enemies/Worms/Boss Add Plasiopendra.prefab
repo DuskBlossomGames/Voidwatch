@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1464698736710944844}
   - component: {fileID: 5522919353149486386}
   m_Layer: 0
-  m_Name: Plasiopendra
+  m_Name: Boss Add Plasiopendra
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33da0678499a4f429ef60bf55d3d204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 13
+  length: 10
   headSprite: {fileID: 21300000, guid: 4c7b9a68cef5b4aab9b127e4a368b8bb, type: 3}
   bodySprite: {fileID: 21300000, guid: a4009969f5ad84ba5a44e861b36de98f, type: 3}
   tailSprite: {fileID: 21300000, guid: f4619f675876c4321b96e9dffd3da7ab, type: 3}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5072864658dafd84cb54eb038f85e9f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 350
+  maxHealth: 200
 --- !u!114 &5522919353149486386
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,22 +37,24 @@ namespace Bosses.Worm
             _player = player.transform;
             
             _clampTimer.Value = grabTime;
-            wm.BiteStart();
+            StartCoroutine(wm.BiteStart());
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             if (!enabled) return;
             
-            if (_player == null || !other.TryGetComponent<Player.Movement>(out var movement)) return;
+            if (!other.TryGetComponent<Player.Movement>(out var movement)) return;
             movement.inputBlocked = false;
-            _player.GetComponent<CustomRigidbody2D>().velocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
+            if (HasPlayer) _player.GetComponent<CustomRigidbody2D>().velocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
             _holdTimer.Value = 0;
             _player = null;
         }
 
+        public bool hasPlayerDbg;
         private void Update()
         {
+            hasPlayerDbg = HasPlayer;
             _clampTimer.Update(HasPlayer ? -1 : 1);
             _holdTimer.Update();
 

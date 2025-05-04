@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6ef9b3a1f24d9459b183b4715f02b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 1
+  mass: 1000000
   collisionDetection: 0
   constraints:
     freezeX: 0

@@ -15,7 +15,7 @@ namespace Bosses.Worm
         private float _timeElapsed;
         private float _fps;
         private float _horizTiles;
-        private BoxCollider2D _coll;
+        private BoxCollider2D[] _coll;
 
         public SpriteRenderer originSr, laserSr;
 
@@ -35,7 +35,7 @@ namespace Bosses.Worm
 
             _timeElapsed = laserBuildupTime + beamBuildupTime + beamLoopTime; // just start it at the end
 
-            _coll = laserSr.transform.GetChild(0).GetComponent<BoxCollider2D>();
+            _coll = GetComponentsInChildren<BoxCollider2D>();
         }
 
         public void Shoot(float length, float start=0)
@@ -50,8 +50,11 @@ namespace Bosses.Worm
             laserSr.transform.localPosition = new Vector3(0, 0.5f + 0.25f * _horizTiles, 0);
         }
 
+        private float _startupTime = 0.5f; // wait for other things to set up like MMI and collision and stuff
         private void Update()
         {
+            if (_startupTime > 0) { _startupTime -= Time.deltaTime; return; }
+            
             var currentFrame = (int) (_timeElapsed * _fps);
 
             UtilFuncs.Anim originAnim, laserAnim;
@@ -79,26 +82,20 @@ namespace Bosses.Worm
                 
                 originFrame = laserFrame = currentFrame - _laserBuildup.NumFrames - _beamLoop.NumFrames;
 
-                if (_coll)
-                {
-                    _coll.size = new Vector2(_vertTiles, _horizTiles);
-                    _coll.enabled = true;
-                }
+                _coll[0].enabled = _coll[1].enabled = true;
+                _coll[1].size = new Vector2(_vertTiles, _horizTiles);
             }
             else
             {
-                originSr.sprite = originSr.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.sprite = null;
+                originSr.sprite = originSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.sprite = null;
 
-                if (_coll)
-                {
-                    _coll.size = Vector2.zero;
-                    _coll.enabled = false;
-                }
+                _coll[0].enabled = _coll[1].enabled = false;
+                _coll[1].size = Vector2.zero;
 
                 return;
             }
 
-            originSr.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = originSr.sprite =
+            originSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = originSr.sprite =
                 originAnim.Sprites[originFrame % originAnim.NumFrames];
             laserSr.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = laserSr.sprite =
                 laserAnim?.Sprites[laserFrame % laserAnim.NumFrames];
