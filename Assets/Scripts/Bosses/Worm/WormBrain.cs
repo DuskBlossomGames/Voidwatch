@@ -87,6 +87,8 @@ namespace Bosses.Worm
         private SpikeLinkedList _headSpike, _tailSpike;
         private JawGrab _jawGrab;
 
+        public BlackHolePulse bhp;
+
         public enum MoveMode
         {
             Direct,
@@ -313,6 +315,8 @@ namespace Bosses.Worm
             _actionUtilTimer.Update();
             if (_actionUtilTimer.IsFinished)
             {
+                if (_isStageTwo) StartCoroutine(bhp.Pulse());
+                
                 if (actionGoal == ActionGoal.Tailspike)
                 {
                     TailSwipe();

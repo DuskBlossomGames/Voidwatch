@@ -31,8 +31,8 @@ TagManager:
   - Hazards
   - Laser
   - PlayerOnlyHazard
-  - 
-  - 
+  - Post-processing
+  - Both Cameras
   - 
   - 
   - 
