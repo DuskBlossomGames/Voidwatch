@@ -2825,7 +2825,6 @@ MonoBehaviour:
   targetRot: -5
   ejectionVel: 20
   wm: {fileID: 877449872}
-  hasPlayerDbg: 0
 --- !u!61 &528326390
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9673,6 +9672,7 @@ GameObject:
   - component: {fileID: 1476780757}
   - component: {fileID: 1476780761}
   - component: {fileID: 1476780760}
+  - component: {fileID: 1476780762}
   m_Layer: 16
   m_Name: Exit Rift
   m_TagString: Untagged
@@ -9845,6 +9845,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7963492e38d646f9bd832db7ef51e4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1476780762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476780755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6627608dc7678c408e8731d1b713b8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killTime: 10
 --- !u!1 &1480058251
 GameObject:
   m_ObjectHideFlags: 0

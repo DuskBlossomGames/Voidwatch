@@ -1180,15 +1180,12 @@ namespace Bosses.Worm
             player.GetComponent<CustomRigidbody2D>().velocity = playerMoveVel * ((Vector2) (player.transform.position - head.transform.position)).normalized;
             player.GetComponent<Movement>().autoPilot = true;
             
-            float oldRot = 0;
             for (float t = 0; t < spitTime-0.2f; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
                 
                 var rot = wiggleScale * jawWiggle.Evaluate(t / (spitTime-0.2f));
-                _jawGrab.RotBy(rot - oldRot);
-                
-                oldRot = rot;
+                _jawGrab.RotTo(rot);
             }
             
             yield return new WaitForSeconds(1);
