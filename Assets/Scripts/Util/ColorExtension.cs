@@ -11,6 +11,11 @@ namespace Util
             image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
         }
         
+        public static void SetAlpha(this RawImage image, float alpha)
+        {
+            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+        }
+        
         public static void SetAlpha(this SpriteRenderer image, float alpha)
         {
             image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);

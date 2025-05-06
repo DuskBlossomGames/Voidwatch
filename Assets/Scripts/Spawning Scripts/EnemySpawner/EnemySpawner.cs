@@ -146,6 +146,7 @@ namespace EnemySpawner
                 _timeTillExit -= Time.deltaTime;
                 if (_timeTillExit < 0)
                 {
+                    // TODO: destroy bifurcators
                     nUpMan.Show();
                     Destroy(gameObject);
                 }
