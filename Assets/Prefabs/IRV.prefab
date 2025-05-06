@@ -10031,13 +10031,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8956dae76bfb1a44aaf66fb663581ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelforce: 45
+  accelforce: 40
   target: {fileID: 0}
-  maxFuel: 100
+  maxFuel: 200
   particles: {fileID: 5004590640321046991}
   explosion: {fileID: 4674319759175660484}
-  stallTime: 3
-  dmg: 200
+  stallTime: 2
+  dmg: 500
 --- !u!82 &6292027629732448664
 AudioSource:
   m_ObjectHideFlags: 0

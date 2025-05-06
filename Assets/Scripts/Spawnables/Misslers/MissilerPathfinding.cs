@@ -31,7 +31,8 @@ public class MissilerPathfinding : MonoBehaviour
         
         dif *= mult;
 
-        transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(dif.y,dif.x));
+        var rot = Mathf.LerpAngle(transform.rotation.eulerAngles.z, Mathf.Rad2Deg * Mathf.Atan2(dif.y, dif.x), 10 * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0, 0, rot);
         _rigid.AddRelativeForce(new Vector2(Mathf.Abs(mult)*speed, 0));
         _rigid.velocity = Vector2.ClampMagnitude(_rigid.velocity, speed);
         if (mult == 0) _rigid.velocity *= Mathf.Pow(0.3f, Time.deltaTime);

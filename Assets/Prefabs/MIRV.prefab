@@ -9981,7 +9981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8956dae76bfb1a44aaf66fb663581ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelforce: 30
+  accelforce: 40
   target: {fileID: 0}
   maxFuel: 2000
   particles: {fileID: 5004590640321046991}
@@ -10111,7 +10111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
-  maxHealth: 10
+  maxHealth: 100
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -10150,7 +10150,7 @@ MonoBehaviour:
   splitDist: 15
   splitCount: 10
   splitPrefab: {fileID: 8644291156443323015, guid: cf79d3bdb10edc941b0b30c3e77eaca6, type: 3}
-  scatterForce: 1000
+  scatterForce: 1500
   prepTime: 0.6
 --- !u!114 &8820121920070568506
 MonoBehaviour:
