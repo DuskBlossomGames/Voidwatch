@@ -41,6 +41,12 @@ namespace Util
             set => _rigid.position = value;
         }
 
+        public float angularVelocity
+        {
+            get => _rigid.angularVelocity;
+            set => _rigid.angularVelocity = value;
+        }
+
         [Serializable]
         public class Constraints
         {

@@ -329,7 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 2
+  hazardObject: 0
+  cost: 2000
   ScrapCount: 0
   ScrapPrefab: {fileID: 0}
 --- !u!1 &7877571702049520397
