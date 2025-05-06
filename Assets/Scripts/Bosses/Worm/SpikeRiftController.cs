@@ -20,7 +20,11 @@ namespace Bosses.Worm
             set
             {
                 _spike = value;
-                value.GetComponent<DestroyCallback>().Destroyed += () => { if (gameObject != null) Destroy(gameObject); };
+                value.GetComponent<DestroyCallback>().Destroyed += () =>
+                {
+                    Destroy(gameObject);
+                    if (_exit.GetComponent<SpikeExitRiftController>().Spike == null) Destroy(_exit);
+                };
             }
         }
         [NonSerialized] public int Index;

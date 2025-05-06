@@ -15,6 +15,7 @@ namespace Bosses.Worm
 
         private Transform _leftJaw, _rightJaw, _player;
         private readonly Timer _clampTimer = new();
+        private float _clampUpdateAmt;
         private readonly Timer _holdTimer = new();
         private float _initialRot;
 
@@ -25,7 +26,8 @@ namespace Bosses.Worm
             _leftJaw = transform.GetChild(0);
             _rightJaw = transform.GetChild(1);
 
-            _initialRot = _leftJaw.localRotation.eulerAngles.z;
+            _clampTimer.Value = _leftJaw.localRotation.eulerAngles.z - targetRot;
+            _clampUpdateAmt = _clampTimer.Value / grabTime;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -36,7 +38,6 @@ namespace Bosses.Worm
             if (!player || player.inputBlocked || player.Dodging) return;
             _player = player.transform;
             
-            _clampTimer.Value = grabTime;
             StartCoroutine(wm.BiteStart());
         }
 
@@ -51,11 +52,11 @@ namespace Bosses.Worm
             _player = null;
         }
 
-        public bool hasPlayerDbg;
         private void Update()
         {
-            hasPlayerDbg = HasPlayer;
-            _clampTimer.Update(HasPlayer ? -1 : 1);
+            _clampTimer.Update(HasPlayer ? -_clampUpdateAmt : _clampUpdateAmt);
+            RotTo(targetRot + _clampTimer.Value);
+            
             _holdTimer.Update();
 
             if (_holdTimer.IsActive && _holdTimer.IsFinished)
@@ -68,37 +69,30 @@ namespace Bosses.Worm
                 return;
             }
 
-            if (!_holdTimer.IsActive && _clampTimer.IsActive)
+            if (!_holdTimer.IsActive && _clampTimer.IsFinished)
             {
-                RotBy(_clampTimer.LastStepProgress * (_initialRot - targetRot));
-                //_leftJaw.position -= new Vector3(0.03f,0.02f,0);
-                //_rightJaw.position -= new Vector3(0.03f,0.02f,0);
+                _player.GetComponent<Player.Movement>().inputBlocked = true;
+                _player.GetComponent<CustomRigidbody2D>().velocity = Vector2.zero;
+                _player.GetComponent<PlayerDamageable>().Damage(grabDamage, IDamageable.DmgType.Concussive, gameObject);
+                wm.BiteFinish();
 
-                if (_clampTimer.IsFinished)
-                {
-                    _player.GetComponent<Player.Movement>().inputBlocked = true;
-                    _player.GetComponent<CustomRigidbody2D>().velocity = Vector2.zero;
-                    _player.GetComponent<PlayerDamageable>().Damage(grabDamage, IDamageable.DmgType.Concussive, gameObject);
-                    wm.BiteFinish();
-
-                    _holdTimer.Value = holdTime;
-                }
+                _holdTimer.Value = holdTime;
             }
         }
         
-        public void RotBy(float angle)
+        public void RotTo(float angle)
         {
             _leftJaw.RotateAround(
                 _leftJaw.position +
                 _leftJaw.localToWorldMatrix.MultiplyVector(new Vector3(-0.5f, 0, 0)),
                 Vector3.forward,
-                angle);
+                angle - _leftJaw.localRotation.eulerAngles.z);
             
             _rightJaw.RotateAround(
                 _rightJaw.position +
                 _rightJaw.localToWorldMatrix.MultiplyVector(new Vector3(-0.5f, 0, 0)),
                 Vector3.forward,
-                -angle);
+                -angle - _rightJaw.localRotation.eulerAngles.z);
         }
     }
 }

@@ -223,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
-  maxHealth: 100
+  maxHealth: 600
   varientParent: {fileID: 0}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2cc1baf105219468296c3cde2e59e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSpeed: 28
+  rotSpeed: 25
 --- !u!114 &7399155155839543350
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,12 +28,12 @@ namespace Util
             _value = value;
         }
 
-        public void Update(int direction = -1)
+        public void Update(float direction = -1)
         {
             _value = Mathf.Clamp(_value + (_lastStep = direction * Time.deltaTime * CustomRigidbody2D.Scaling), 0, _maxValue);
         }
 
-        public void FixedUpdate(int direction = -1)
+        public void FixedUpdate(float direction = -1)
         {
             _value = Mathf.Clamp(_value + (_lastStep = direction * Time.fixedDeltaTime * CustomRigidbody2D.Scaling), 0, _maxValue);
         }

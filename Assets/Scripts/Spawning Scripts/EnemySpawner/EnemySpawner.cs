@@ -169,6 +169,8 @@ namespace EnemySpawner
 
         public void SpawnHazards()
         {
+            if (_isDebug) return;
+            
             _spawnedHazards = true;
             var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
 

@@ -15,6 +15,9 @@ public class PlatelinController : MonoBehaviour
     public float explosionScaleMult;
     public float gooSpawnTime;
 
+    public AnimationCurve scaleCurve;
+    public float scaleCurveTime;
+    
     public float speed;
     public AnimationCurve speedCurve;
     public float speedCurveScale;
@@ -37,7 +40,7 @@ public class PlatelinController : MonoBehaviour
 
     float _spawntimer;
     float _swelltimer;
-    private float _speedCurve;
+    private float _speedCurve, _scaleCurve;
     private readonly Timer _gooTimer = new();
     private float _scale;
 
@@ -131,7 +134,7 @@ public class PlatelinController : MonoBehaviour
             }
         }
 
-        if (mode == Mode.Idle)
+        if (mode == Mode.Idle || _scaleCurve != 0)
         {
             if (_leader._subjects.Count < maxColonySize) _spawntimer -= Time.deltaTime;
             if (_spawntimer <= 0)
@@ -139,10 +142,16 @@ public class PlatelinController : MonoBehaviour
                 mode = Mode.Swell;
                 _swelltimer = swelltime;
             }
+            
+            var scale = _scale * scaleCurve.Evaluate(_scaleCurve / scaleCurveTime);
+            transform.localScale = new Vector3(scale, scale, 1);
+            
+            _scaleCurve += Time.deltaTime;
+            if (_scaleCurve >= scaleCurveTime) _scaleCurve = 0; // hard clamp to 0 for the above if statement
         } else if (mode == Mode.Swell)
         {
             _swelltimer -= Time.deltaTime;
-            float scale = _scale + (swellsize*_scale/normalSize - _scale) * (swelltime - _swelltimer) / swelltime;
+            var scale = _scale + (swellsize*_scale/normalSize - _scale) * (swelltime - _swelltimer) / swelltime;
             transform.localScale = new Vector3(scale, scale, 1);
             if(_swelltimer <= 0)
             {
