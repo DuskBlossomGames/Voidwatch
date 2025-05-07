@@ -14,8 +14,8 @@ using Util;
 public class NewUpgradeManager : MonoBehaviour
 {
     public AssetLabelReference borderSprites, upgradeSprites;
-    private readonly Dictionary<Upgrade, Sprite> _upgradeSprites = new();
-    private readonly Dictionary<UpgradePlayer.Rarity, Sprite[]> _raritySprites = new();
+    private readonly Dictionary<string, Sprite> _upgradeSprites = new();
+    private readonly Dictionary<string, Sprite[]> _raritySprites = new();
 
     public RawImage minimap;
     public RectTransform titleBox, title, subtitle;
@@ -26,8 +26,8 @@ public class NewUpgradeManager : MonoBehaviour
     
     public Player.Movement playMov;
     public Player.FollowPlayer followPlayer;
-    
-    private readonly Upgrade[] _upgrades = new Upgrade[3];
+
+    private Upgrade[] _upgrades;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class NewUpgradeManager : MonoBehaviour
             var byName = handle.Result.ToDictionary(s => s.name, s => s);
             foreach (var rarity in UpgradePlayer.Rarity.ALL)
             {
-                _raritySprites[rarity] = new[] { byName[rarity.Sprite], byName[rarity.Sprite + "-BOX"] };
+                _raritySprites[rarity.Name] = new[] { byName[rarity.Name], byName[rarity.Name + "-BOX"] };
             }
         };
         Addressables.LoadAssetsAsync<Sprite>(upgradeSprites, null).Completed += handle =>
@@ -44,14 +44,19 @@ public class NewUpgradeManager : MonoBehaviour
             var byName = handle.Result.ToDictionary(s => s.name, s => s);
             foreach (var upgrade in UpgradePlayer.UPGRADES)
             {
-                _upgradeSprites[upgrade] = byName[upgrade.Title];
+                _upgradeSprites[upgrade.Title] = byName[upgrade.Title];
             }
         };
     }
 
+    private void SetUpgrades()
+    {
+        _upgrades = UpgradePlayer.GetRandomUpgrades(3);
+    }
+
     public void Show()
     {
-        for (var i = 0; i < 3; i++) _upgrades[i] = UpgradePlayer.GetRandomUpgrade();
+        SetUpgrades();
         StartCoroutine(DoShow());
     }
     
@@ -121,10 +126,10 @@ public class NewUpgradeManager : MonoBehaviour
     {
         for (var i = 0; i < 3; i++)
         {
-            upgrades[i].GetChild(0).GetComponent<Image>().sprite = _upgradeSprites[_upgrades[i]];
-            upgrades[i].GetChild(1).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity][0];
+            upgrades[i].GetChild(0).GetComponent<Image>().sprite = _upgradeSprites[_upgrades[i].Title];
+            upgrades[i].GetChild(1).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity.Name][0];
             upgrades[i].GetChild(2).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Title;
-            upgrades[i].GetChild(3).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity][1];
+            upgrades[i].GetChild(3).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity.Name][1];
             upgrades[i].GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Description;
             upgrades[i].GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
         }
@@ -138,7 +143,7 @@ public class NewUpgradeManager : MonoBehaviour
 
     public void Reroll()
     {
-        for (var i = 0; i < 3; i++) _upgrades[i] = UpgradePlayer.GetRandomUpgrade();
+        SetUpgrades();
         UpdateUpgrades();
     }
 

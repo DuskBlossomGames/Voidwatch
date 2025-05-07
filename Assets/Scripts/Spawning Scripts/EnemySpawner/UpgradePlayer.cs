@@ -7,24 +7,23 @@ using UnityEngine;
 using static Static_Info.PlayerData;
 using static Static_Info.GunInfo;
 using Random = UnityEngine.Random;
-
 public class UpgradePlayer
 {
     public class Rarity
     {
         public static readonly List<Rarity> ALL = new();
         
-        public static readonly Rarity Common = new(0.6f, "common");
-        public static readonly Rarity Rare = new(0.3f, "rare");
-        public static readonly Rarity Legendary = new(0.1f, "legendary");
+        public static readonly Rarity Common = new(0.7f, "common");
+        public static readonly Rarity Rare = new(0.25f, "rare");
+        public static readonly Rarity Legendary = new(0.05f, "legendary");
         
         public readonly float Weight;
-        public readonly string Sprite;
+        public readonly string Name;
 
-        private Rarity(float weight, string sprite)
+        private Rarity(float weight, string name)
         {
             Weight = weight;
-            Sprite = sprite;
+            Name = name;
             ALL.Add(this);
         }
     }
@@ -58,7 +57,7 @@ public class UpgradePlayer
         new("Absorptive Plating",
             "Redistributes the energy from bullets, increasing hull integrity and shield capacity.",
             "Can't let one spot hog all the energy. Sharing is caring!",
-            Rarity.Common,
+            Rarity.Rare,
             () => {
                 PlayerDataInstance.Health = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
@@ -67,7 +66,7 @@ public class UpgradePlayer
         new("Experimental Batteries",
             "These third-party shield batteries hold longer, but recharge slower.",
             "Huh, this warning seems to have faded...",
-            Rarity.Common,
+            Rarity.Legendary,
             () => {
                 PlayerDataInstance.maxShield = Mathf.CeilToInt(1.2f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxShieldDebt *= 1.5f;
@@ -152,28 +151,34 @@ public class UpgradePlayer
             }),
     };
 
-    public static readonly Dictionary<Rarity, List<Upgrade>> BY_RARITY = new();
+    public static readonly Dictionary<string, List<Upgrade>> BY_RARITY = new();
 
     static UpgradePlayer()
     {
-        foreach (var upgrade in UPGRADES)
-        {
-            if (!BY_RARITY.ContainsKey(upgrade.Rarity)) BY_RARITY[upgrade.Rarity] = new List<Upgrade>();
-            BY_RARITY[upgrade.Rarity].Add(upgrade);
-        }
+        foreach (var rarity in Rarity.ALL) BY_RARITY[rarity.Name] = new List<Upgrade>();
+        foreach (var upgrade in UPGRADES) BY_RARITY[upgrade.Rarity.Name].Add(upgrade);
     }
-
-    public static Upgrade GetRandomUpgrade()
+    
+    public static Upgrade[] GetRandomUpgrades(int count)
     {
-        var choice = Random.Range(0, Rarity.ALL.Sum(r => r.Weight));
+        var upgrades = new List<Upgrade>(count);
 
-        foreach (var rarity in Rarity.ALL)
+        for (var i = 0; i < count; i++)
         {
-            choice -= rarity.Weight;
-            
-            if (choice <= 0) return BY_RARITY[rarity][Random.Range(0, BY_RARITY[rarity].Count)];
+            var choice = Random.Range(0, Rarity.ALL.Sum(r => r.Weight));
+            foreach (var rarity in Rarity.ALL)
+            {
+                choice -= rarity.Weight;
+                if (!(choice <= 0)) continue;
+
+                var selection = BY_RARITY[rarity.Name].FindAll(u => !upgrades.Contains(u));
+                upgrades.Add(selection[Random.Range(0, selection.Count)]);
+                break;
+            }
+
+            if (upgrades.Count != i+1) throw new Exception("mathematics broke");
         }
 
-        throw new Exception("mathematics broke");
+        return upgrades.ToArray();
     }
 }
