@@ -1903,7 +1903,7 @@ MonoBehaviour:
   - {fileID: 1817923688}
   everythingElse: {fileID: 528046545}
   minimapFadeTime: 1.5
-  titleTime: 2
+  titleTime: 1.25
   titleWaitTime: 0.3
   subtitleFadeTime: 1.4
   subtitleWaitTime: 0.4
