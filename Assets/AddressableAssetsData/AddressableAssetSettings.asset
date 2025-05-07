@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: b0ae79841bd6e4f5386bff506e0dea46
   m_currentHash:
     serializedVersion: 2
-    Hash: e35573264ab3c5388dc5f5d78c9042e8
+    Hash: 800dee8fcec3e6f768f1e519e2c73cd5
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -91,6 +91,8 @@ MonoBehaviour:
     - planets
     - mini-bosses
     - asteroids
+    - upgrade-borders
+    - upgrade-sprites
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 1951f15ecbeb0452a9f4b4bb83dcfe57, type: 2}

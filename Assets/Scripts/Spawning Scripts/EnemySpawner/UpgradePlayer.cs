@@ -1,129 +1,179 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using static Static_Info.PlayerData;
 using static Static_Info.GunInfo;
+using Random = UnityEngine.Random;
 
 public class UpgradePlayer
 {
-    public enum Upgrades
+    public class Rarity
     {
-        Wave,
-        Solidify,
-        Tank,
-        Surge,
-        Overcharge,
-        Lance,
-        Juicesqueezer,
-        Juicedynamic,
-        Juicebox,
-        Reload,
-        Repeater,
-        Speedboost,
-        Handling,
+        public static readonly List<Rarity> ALL = new();
+        
+        public static readonly Rarity Common = new(0.6f, "common");
+        public static readonly Rarity Rare = new(0.3f, "rare");
+        public static readonly Rarity Legendary = new(0.1f, "legendary");
+        
+        public readonly float Weight;
+        public readonly string Sprite;
 
+        private Rarity(float weight, string sprite)
+        {
+            Weight = weight;
+            Sprite = sprite;
+            ALL.Add(this);
+        }
+    }
+    
+    public class Upgrade
+    {
+        public readonly string Title, Description, Quip;
+        public readonly Rarity Rarity;
+        public readonly Action Apply;
+
+        public Upgrade(string title, string description, string quip, Rarity rarity, Action apply)
+        {
+            Title = title;
+            Description = description;
+            Quip = quip;
+            Rarity = rarity;
+            Apply = apply;
+        }
     }
 
-    public static void Upgrade(Upgrades upgrade)
+    public static readonly Upgrade[] UPGRADES =
     {
-        switch (upgrade)
-        {
-            case Upgrades.Wave:
+        new("Plasma Coil Array",
+            "More plasma coils allows for more bullets per shot.",
+            "Bigger is better, right?",
+            Rarity.Common,
+            () => {
                 GunInfoInstance.bulletsPerShot = Mathf.Max(2,Mathf.CeilToInt(1.1f * GunInfoInstance.bulletsPerShot));
                 GunInfoInstance.lateralSeperation *= 1.1f;
-                break;
-            case Upgrades.Solidify: //general health boost
-                PlayerDataInstance.Health += Mathf.CeilToInt(0.1f * PlayerDataInstance.maxHealth);
+            }),
+        new("Absorptive Plating",
+            "Redistributes the energy from bullets, increasing hull integrity and shield capacity.",
+            "Can't let one spot hog all the energy. Sharing is caring!",
+            Rarity.Common,
+            () => {
+                PlayerDataInstance.Health = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxShield = Mathf.CeilToInt(1.05f * PlayerDataInstance.maxShield);
-                break;
-            case Upgrades.Tank: //Shield boost but reduce regen
+            }),
+        new("Experimental Batteries",
+            "These third-party shield batteries hold longer, but recharge slower.",
+            "Huh, this warning seems to have faded...",
+            Rarity.Common,
+            () => {
                 PlayerDataInstance.maxShield = Mathf.CeilToInt(1.2f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxShieldDebt *= 1.5f;
                 PlayerDataInstance.shieldRegenRate *= .8f;
-                break;
-            case Upgrades.Surge: //Increase shield regen speed
+            }),
+        new("Hyperefficient Generators",
+            "Improved generators regenerate shields faster.",
+            "Why didn't it come with this?",
+            Rarity.Common,
+            () => {
                 PlayerDataInstance.shieldRegenRate *= 1.4f;
-                break;
-            case Upgrades.Overcharge: //Decrease health, decrease debt, massively increase regen and shields
+            }),
+        new("Durable Duct Tape",
+            "Diverted power massively improves shield capacity and regeneration, but lowers hull integrity.",
+            "If we just divert this cable... wait, where was that going?",
+            Rarity.Common,
+            () => {
                 PlayerDataInstance.shieldRegenRate *= 1.3f;
                 PlayerDataInstance.maxShield = Mathf.CeilToInt(1.5f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxShieldDebt *= .2f;
                 PlayerDataInstance.maxHealth = Mathf.CeilToInt(.7f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.maxHealth);
-                break;
-            case Upgrades.Lance:
+            }),
+        new("Black Market Mod",
+            "Bullets charge in the chamber longer, increasing damage and speed but decreasing fire rate.",
+            "I'll just insert this into a critical system component real quick...",
+            Rarity.Common,
+            () => {
                 GunInfoInstance.dmgMod *= 1.2f;
-                GunInfoInstance.shotForce *=1.2f;
+                GunInfoInstance.shotForce *= 1.2f;
                 GunInfoInstance.fireTime += 0.5f;
-                break;
-            case Upgrades.Juicesqueezer:
+            }),
+        new("Voidwrought Accumulator",
+            "Attaches to your Void Energy eXtraction (V.E.X.) device, increasing Void Energy replenishment speed.",
+            "The Void surrounds us...",
+            Rarity.Common,
+            () => {
                 PlayerDataInstance.dodgeJuiceRegenRate *= 1.15f;
-                break;
-            case Upgrades.Juicedynamic:
+            }),
+        new("Laminar Plating",
+            "Specialized plating eases the transition to Voidspace, lower the cost of jaunts.",
+            "Their world shall be ours.",
+            Rarity.Common,
+            () => {
                 PlayerDataInstance.dodgeJuiceCost *= 0.85f;
-                break;
-            case Upgrades.Juicebox:
+            }),
+        new("Containment Matrix",
+            "Allows Voidhawk starships to hold more Void Energy without leaking.",
+            "Hey, stop running away! Get back here!",
+            Rarity.Common,
+            () => {
                 PlayerDataInstance.maxDodgeJuice *= 1.3f;
-                break;
-            case Upgrades.Reload:
+            }),
+        new("High Yield Plasma Coils",
+            "Greater plasma harnessing capabilities allows for faster shooting.",
+            "More plasma? More bullets. More explosions!",
+            Rarity.Common,
+            () => {
                 GunInfoInstance.fireTime *= 0.8f;
-                break;
-            case Upgrades.Repeater:
+            }),
+        new("Cyclic Firing Chamber",
+            "The chamber cycles several times per shot, sending out more waves of bullets.",
+            "No, no, no! The bullets are supposed to go forward.",
+            Rarity.Common,
+            () => {
                 GunInfoInstance.repeats = Mathf.Max(Mathf.CeilToInt(1.5f * GunInfoInstance.repeats),1);
-                break;
-            case Upgrades.Speedboost:
+            }),
+        new("T.U.R.B.O.",
+            "Turbo capabilities increase the Infiltrator's movement speed.",
+            "Technically Unregulated Rapid Boost Orifice",
+            Rarity.Common,
+            () => {
                 PlayerDataInstance.speedLimit *= 1.2f;
-                break;
-            case Upgrades.Handling:
+            }),
+        new("Coolant Reserves",
+            "Extra coolant allows the engine to push further, achieving greater acceleration.",
+            "Overheating, you say? Faster!",
+            Rarity.Common,
+            () => {
                 PlayerDataInstance.acceleration = Mathf.CeilToInt(1.2f* PlayerDataInstance.acceleration);
                 PlayerDataInstance.driftCorrection *= 1.2f;
-                break;
+            }),
+    };
 
+    public static readonly Dictionary<Rarity, List<Upgrade>> BY_RARITY = new();
 
+    static UpgradePlayer()
+    {
+        foreach (var upgrade in UPGRADES)
+        {
+            if (!BY_RARITY.ContainsKey(upgrade.Rarity)) BY_RARITY[upgrade.Rarity] = new List<Upgrade>();
+            BY_RARITY[upgrade.Rarity].Add(upgrade);
         }
     }
 
-    public static string UpName(Upgrades upgrade)
+    public static Upgrade GetRandomUpgrade()
     {
-        return upgrade switch
-        {
-            Upgrades.Wave => "High Yield Plasma Coils",
-            Upgrades.Solidify => "Metastructural Supports",
-            Upgrades.Tank => "Statishield Batteries",
-            Upgrades.Surge => "Hyperefficient Generators",
-            Upgrades.Overcharge => "Externalized Shield Capacitors",
-            Upgrades.Lance =>"HyperNova Acceleration Lance",
-            Upgrades.Juicesqueezer => "Voidwrought Accummulator",
-            Upgrades.Juicedynamic => "Void Laminar Plating",
-            Upgrades.Juicebox =>"Void Containment Matrix",
-            Upgrades.Reload =>"Overclocked Plasma Coils",
-            Upgrades.Repeater =>"Cyclic Firing Chambers",
-            Upgrades.Speedboost =>"Nuetrino-Flux Propulsor",
-            Upgrades.Handling =>"Gravatic Torque Amplifier",
-        };
-    }
+        var choice = Random.Range(0, Rarity.ALL.Sum(r => r.Weight));
 
-    public static string UpBody(Upgrades upgrade)
-    {
-        return upgrade switch
+        foreach (var rarity in Rarity.ALL)
         {
-            Upgrades.Wave => "Increases Bullets per Shot",
-            Upgrades.Solidify => "Increases Hull Integrity and Shield Capacity",
-            Upgrades.Tank => "Increases Shield Capacity but decreases Shield Regeneration",
-            Upgrades.Surge => "Greatly increases Shield Regenration",
-            Upgrades.Overcharge => "Massively increases Shield Capacity and Regeneration but decreases Hull Integrity",
-            Upgrades.Lance => "Increase Bullet Damage and Bullet Speed, Greatly decrease Rate of Fire",
-            Upgrades.Juicesqueezer => "Increase Phase Shift Regeneration Speed",
-            Upgrades.Juicedynamic => "Decrease Phase Shift Cost",
-            Upgrades.Juicebox => "Moderately Increase Phase Shift Capacity",
-            Upgrades.Reload => "Increase Rate of Fire",
-            Upgrades.Repeater =>"Shoot additional Rounds of Bullets per Shot",
-            Upgrades.Speedboost => "Increases Movement Speed",
-            Upgrades.Handling => "Increases acceleration",
-            _ => throw new ArgumentOutOfRangeException(nameof(upgrade), upgrade, null)
-        };
+            choice -= rarity.Weight;
+            
+            if (choice <= 0) return BY_RARITY[rarity][Random.Range(0, BY_RARITY[rarity].Count)];
+        }
+
+        throw new Exception("mathematics broke");
     }
 }

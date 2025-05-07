@@ -29,6 +29,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - enemies
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcba12ffcccca47c7afbad0e2f988c33
+    m_Address: Assets/Sprites/Upgrades/Borders
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - upgrade-borders
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 386959fea833949f29e4c2fe6d424a4f
+    m_Address: Assets/Sprites/Upgrades/Sprites
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - upgrade-sprites
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2b694b73e3cde4410a254b8bd0d67fec, type: 2}
   m_SchemaSet:

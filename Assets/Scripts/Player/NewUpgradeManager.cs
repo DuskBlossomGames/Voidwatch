@@ -1,38 +1,57 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
-using Upgrade = UpgradePlayer.Upgrades;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Upgrade = UpgradePlayer.Upgrade;
 using Util;
 
 public class NewUpgradeManager : MonoBehaviour
 {
-    public GameObject upgradeHolder; // TODO: deprecated
+    public AssetLabelReference borderSprites, upgradeSprites;
+    private readonly Dictionary<Upgrade, Sprite> _upgradeSprites = new();
+    private readonly Dictionary<UpgradePlayer.Rarity, Sprite[]> _raritySprites = new();
+
     public RawImage minimap;
     public RectTransform titleBox, title, subtitle;
+    public RectTransform[] upgrades;
     public CanvasGroup everythingElse;
     public float minimapFadeTime, titleTime, titleWaitTime, subtitleFadeTime, subtitleWaitTime, slideTime, slideWaitTime, fadeInTime;
     public float startAnchorMin, startAnchorMax;
     
     public Player.Movement playMov;
     public Player.FollowPlayer followPlayer;
-    private GameObject _left;
-    private GameObject _center;
-    private GameObject _right;
-    private Upgrade[] _upgrades = new Upgrade[3];
-
-    public void Start()
-    {
-        _center = upgradeHolder.transform.GetChild(0).gameObject;
-        _left = upgradeHolder.transform.GetChild(1).gameObject;
-        _right = upgradeHolder.transform.GetChild(2).gameObject;
-    }
     
+    private readonly Upgrade[] _upgrades = new Upgrade[3];
+
+    private void Start()
+    {
+        Addressables.LoadAssetsAsync<Sprite>(borderSprites, null).Completed += handle =>
+        {
+            var byName = handle.Result.ToDictionary(s => s.name, s => s);
+            foreach (var rarity in UpgradePlayer.Rarity.ALL)
+            {
+                _raritySprites[rarity] = new[] { byName[rarity.Sprite], byName[rarity.Sprite + "-BOX"] };
+            }
+        };
+        Addressables.LoadAssetsAsync<Sprite>(upgradeSprites, null).Completed += handle =>
+        {
+            var byName = handle.Result.ToDictionary(s => s.name, s => s);
+            foreach (var upgrade in UpgradePlayer.UPGRADES)
+            {
+                _upgradeSprites[upgrade] = byName[upgrade.Title];
+            }
+        };
+    }
+
     public void Show()
     {
+        for (var i = 0; i < 3; i++) _upgrades[i] = UpgradePlayer.GetRandomUpgrade();
         StartCoroutine(DoShow());
     }
     
@@ -89,33 +108,42 @@ public class NewUpgradeManager : MonoBehaviour
         yield return new WaitForSeconds(slideWaitTime);
 
         everythingElse.alpha = 0;
+        UpdateUpgrades();
         everythingElse.gameObject.SetActive(true);
         for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
         {
             everythingElse.alpha = t/fadeInTime;
             yield return new WaitForFixedUpdate();
         }
-        
-        // var allUps = System.Enum.GetValues(typeof(Upgrade));
-        // upgradeHolder.SetActive(true);
-        // _upgrades[0] = (Upgrade)allUps.GetValue(Random.Range(0, allUps.Length));
-        // do _upgrades[1] = (Upgrade)allUps.GetValue(Random.Range(0, allUps.Length));
-        //     while (_upgrades[1] == _upgrades[0]);
-        // do _upgrades[2] = (Upgrade)allUps.GetValue(Random.Range(0, allUps.Length));
-        //     while (_upgrades[2] == _upgrades[1] || _upgrades[2] == _upgrades[0]);
-        //
-        // _left.transform.GetChild(0).GetComponent<TMP_Text>().text = UpgradePlayer.UpName(_upgrades[0]);
-        // _left.transform.GetChild(1).GetComponent<TMP_Text>().text = UpgradePlayer.UpBody(_upgrades[0]);
-        // _center.transform.GetChild(0).GetComponent<TMP_Text>().text = UpgradePlayer.UpName(_upgrades[1]);
-        // _center.transform.GetChild(1).GetComponent<TMP_Text>().text = UpgradePlayer.UpBody(_upgrades[1]);
-        // _right.transform.GetChild(0).GetComponent<TMP_Text>().text = UpgradePlayer.UpName(_upgrades[2]);
-        // _right.transform.GetChild(1).GetComponent<TMP_Text>().text = UpgradePlayer.UpBody(_upgrades[2]);
-        //
     }
 
-    public void Select(int i)
+    private void UpdateUpgrades()
     {
-        UpgradePlayer.Upgrade(_upgrades[i]);
+        for (var i = 0; i < 3; i++)
+        {
+            upgrades[i].GetChild(0).GetComponent<Image>().sprite = _upgradeSprites[_upgrades[i]];
+            upgrades[i].GetChild(1).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity][0];
+            upgrades[i].GetChild(2).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Title;
+            upgrades[i].GetChild(3).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity][1];
+            upgrades[i].GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Description;
+            upgrades[i].GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
+        }
+    }
+
+    public void SelectUpgrade(int i)
+    {
+        _upgrades[i].Apply();
         SceneManager.LoadScene("LevelSelect");
+    }
+
+    public void Reroll()
+    {
+        for (var i = 0; i < 3; i++) _upgrades[i] = UpgradePlayer.GetRandomUpgrade();
+        UpdateUpgrades();
+    }
+
+    public void Scavenge()
+    {
+        
     }
 }
