@@ -422,9 +422,9 @@ MonoBehaviour:
   gravitySource: {fileID: 0}
   clipCount: 5
   clipCap: 1
-  bulletsPerShot: 2
+  bulletsPerShot: 4
   bulletsPerShotVarience: 0
-  reloadTime: 1
+  reloadTime: 0.3
   refillTime: 5
   shotForce: 1500
   forceVarience: 200
@@ -433,7 +433,7 @@ MonoBehaviour:
   misfireChance: 0
   repeats: 1
   repeatSeperation: 0.1
-  dmgMod: 50
+  dmgMod: 100
   status: 
 --- !u!114 &7410061765303661339
 MonoBehaviour:

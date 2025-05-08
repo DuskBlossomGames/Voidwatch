@@ -11,6 +11,8 @@ public class PointAtTargets : MonoBehaviour
     float _rot = 0;
     float _countdown = 0;
 
+    public float turretBulletSpeed = 5000;
+
     float leadShot(Vector2 relPos, Vector2 relVel, float bulletVel)
     {
         float a = bulletVel * bulletVel - relVel.sqrMagnitude;
@@ -35,7 +37,7 @@ public class PointAtTargets : MonoBehaviour
         if((diff.x*transform.position.x + diff.y * transform.position.y) > 0)
         {
             _countdown -= Time.deltaTime;
-            float bulletVel = 5000 / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
+            float bulletVel = turretBulletSpeed / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
             float globalrot = Mathf.Deg2Rad * transform.parent.rotation.eulerAngles.z;
             float angle = leadShot(rot(diff,globalrot), rot(target.GetComponent<CustomRigidbody2D>().velocity,globalrot), bulletVel);
             _rot = angle;
@@ -52,7 +54,7 @@ public class PointAtTargets : MonoBehaviour
             var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
             bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
             bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
-            bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(0, 5000));
+            bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(0, turretBulletSpeed));
             bullet.GetComponent<BulletCollision>().owner = gameObject;
         }
 
