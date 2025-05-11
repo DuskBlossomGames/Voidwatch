@@ -1,6 +1,5 @@
 using UnityEngine;
 using Util;
-
 using static Static_Info.LevelSelectData;
 namespace LevelSelect
 {

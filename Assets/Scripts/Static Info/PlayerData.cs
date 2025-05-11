@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Util;
 
 namespace Static_Info
 {
@@ -23,9 +21,9 @@ namespace Static_Info
         public float dodgeVelocity;
         public float dodgeDistance;
         public float dodgeCooldown;
-        public System.Collections.Generic.List<BaseComponent> weapons;
-        
-        [NonSerialized] public System.Collections.Generic.List<UpgradeInstance> Upgrades;
+        public float dodgeDamage;
+        public float dodgeExplosionDamage;
+
         [NonSerialized] public float Health;
         [NonSerialized] public float Scrap;
 

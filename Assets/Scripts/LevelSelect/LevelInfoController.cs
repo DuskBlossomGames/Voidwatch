@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
-
 using static Static_Info.LevelSelectData;
 namespace LevelSelect
 {

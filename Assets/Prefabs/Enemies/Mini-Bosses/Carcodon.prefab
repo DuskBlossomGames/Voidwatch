@@ -142,7 +142,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.015, y: 0.001}
+  m_Offset: {x: -0.0017096344, y: 0.00018423796}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -153,7 +153,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.07, y: 0.48}
+  m_Size: {x: 0.043419268, y: 0.39754623}
   m_EdgeRadius: 0
 --- !u!114 &3986592165974471160
 MonoBehaviour:
@@ -2177,7 +2177,6 @@ GameObject:
   - component: {fileID: 7577893437302173280}
   - component: {fileID: 6689118768044517454}
   - component: {fileID: 328146442023430764}
-  - component: {fileID: 3963626980238564427}
   m_Layer: 17
   m_Name: Antenna Left
   m_TagString: Untagged
@@ -2317,22 +2316,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3963626980238564427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4515253527541371178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9815104cf131d451190645dbf0385128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  target: {fileID: 0}
-  rigidity: 0
-  segLength: 1
 --- !u!1 &4600115364101549599
 GameObject:
   m_ObjectHideFlags: 0
@@ -3772,7 +3755,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015, y: 0.001}
+  m_Offset: {x: 0.0018442655, y: -0.01237312}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3783,7 +3766,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.07, y: 0.48}
+  m_Size: {x: 0.04368853, y: 0.42323172}
   m_EdgeRadius: 0
 --- !u!114 &4376536874597662092
 MonoBehaviour:
@@ -4446,7 +4429,6 @@ GameObject:
   - component: {fileID: 532510101531308026}
   - component: {fileID: 116579027766775765}
   - component: {fileID: 823602046586388570}
-  - component: {fileID: 8007349036369299863}
   m_Layer: 17
   m_Name: Antenna Left
   m_TagString: Untagged
@@ -4586,22 +4568,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8007349036369299863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8320873271032042798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9815104cf131d451190645dbf0385128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  target: {fileID: 0}
-  rigidity: 0
-  segLength: 1
 --- !u!1 &8492904754974141201
 GameObject:
   m_ObjectHideFlags: 0

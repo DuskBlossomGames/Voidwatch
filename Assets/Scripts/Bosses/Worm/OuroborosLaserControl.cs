@@ -1,10 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Spawnables;
 using UnityEngine;
-using Util;
-using Random = UnityEngine.Random;
 
 namespace Bosses.Worm
 {

@@ -1,17 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using ProgressBars;
-using JetBrains.Annotations;
-using Scriptable_Objects;
-using Static_Info;
-using UnityEngine;
-using UnityEngine.ResourceManagement.Diagnostics;
-using UnityEngine.Serialization;
-using UnityEngine.SceneManagement;
-using Util;
 using System.Collections;
-using UnityEditor.UI;
+using System.Collections.Generic;
+using JetBrains.Annotations;
+using ProgressBars;
+using Spawnables.Carcadon;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Util;
 using RootPlayer = Player;
 
 using static Static_Info.PlayerData;
@@ -152,7 +147,7 @@ namespace Spawnables.Player
 
                   audioPlayer.PlayOneShot(PlayerHitShield);*/
 
-                  audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+                  audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
                   audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
 
                     audioPlayer.clip = PlayerHitShield;
@@ -175,7 +170,7 @@ namespace Spawnables.Player
                         bleed += overDebt;//excess damage overflows to bleeded damage
                     }
 
-                    audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+                    audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
                     audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/13f; //volume of hit modulates logarithmically with damage dealth
                     audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
                     audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
@@ -222,7 +217,7 @@ namespace Spawnables.Player
                 rb.velocity = BIT_VEL * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
                 rb.gravityScale = 0;
 
-                var ftd = rb.gameObject.AddComponent<Carcadon.FadeToDeath>();
+                var ftd = rb.gameObject.AddComponent<FadeToDeath>();
                 ftd.fadeTime = BIT_FADE;
                 ftd.TimeToLive = BIT_TTL;
 
@@ -237,8 +232,7 @@ namespace Spawnables.Player
                 explosionObj.SetActive(true);
                 explosionObj.transform.position = transform.position;
                 explosionObj.transform.localScale = explosionScale * Vector3.one;
-                explosionObj.GetComponent<ExplosionHandler>().Run();
-                explosionObj.GetComponent<ParticleSystem>().Play();
+                explosionObj.GetComponent<ExplosionHandler>().PlayVisuals();
             }
         }
 
@@ -246,12 +240,12 @@ namespace Spawnables.Player
         {
             GetComponent<RootPlayer.Movement>().SetInputBlocked(true);
             fadeOut.SetActive(true);
-            fadeOut.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0);
+            fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, 0);
             for (int i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
             {
                 yield return new WaitForSecondsRealtime(.01f);
                 var prog = i / (100 * fadeouttime);
-                fadeOut.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, Mathf.Pow(prog, .5f));
+                fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, Mathf.Pow(prog, .5f));
             }
 
             if (!isTutorial)

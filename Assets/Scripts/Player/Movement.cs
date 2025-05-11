@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
-using ProgressBars;
-using Scriptable_Objects.Upgrades;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.PlayerData;
+using ProgressBar = ProgressBars.ProgressBar;
 
 namespace Player
 {
     public class Movement : MonoBehaviour
     {
+        public GameObject explosion;
+        
         public bool inputBlocked;
         public bool autoPilot;
 
@@ -25,7 +25,7 @@ namespace Player
 
         [NonSerialized] public Vector2? DodgeOnceDir = null;
 
-        private Shoot _shoot;
+        private PlayerGunHandler _gun;
         private Collider2D _collider;
         private SpriteRenderer _sprite;
         private TrailRenderer[] _trails;
@@ -56,25 +56,22 @@ namespace Player
         private readonly Timer _afterImageTimer = new();
         private Vector2 _dodgeDirection;
         private readonly List<GameObject> _afterImages = new();
-
-        private Upgradeable _upgradeable;
-
+        
         private void Start()
         {
-            _shoot = GetComponent<Shoot>();
+            _gun = GetComponent<PlayerGunHandler>();
             _dodgeJuice = PlayerDataInstance.maxDodgeJuice;
             _camera = Camera.main;
             _rigid = GetComponent<CustomRigidbody2D>();
             _collider = GetComponent<Collider2D>();
             _sprite = GetComponent<SpriteRenderer>();
             _trails = GetComponentsInChildren<TrailRenderer>();
-            _upgradeable = GetComponent<Upgradeable>();
         }
 
         public void SetInputBlocked(bool value)
         {
             inputBlocked = value;
-            (_shoot ?? GetComponent<Shoot>()).enabled = !value;
+            (_gun ?? GetComponent<PlayerGunHandler>()).Shootable = !value;
         }
 
         private bool GetKey(KeyCode code)
@@ -116,20 +113,19 @@ namespace Player
 
             if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(KeyCode.Space) || DodgeOnceDir != null))
             {
-                var evt = new DodgeEvent
-                {
-                    dodgeCooldown = PlayerDataInstance.dodgeCooldown,
-                    dodgeDistance = PlayerDataInstance.dodgeDistance,
-                    dodgeVelocity = PlayerDataInstance.dodgeVelocity
-                };
-                if (_upgradeable) _upgradeable.HandleEvent(evt, null);
-
                 _preDodgeVel = velocity;
-                _dodgeTimeLength = evt.dodgeDistance / evt.dodgeVelocity;
+                _dodgeTimeLength = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity;
                 _dodgeTimer.Value = _dodgeTimeLength;
-                _dodgeCooldownTimer.Value = evt.dodgeDistance / evt.dodgeVelocity + evt.dodgeCooldown;
+                _dodgeCooldownTimer.Value = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity + PlayerDataInstance.dodgeCooldown;
                 _dodgeDirection = DodgeOnceDir ?? new Vector2(_forwards.x, _forwards.y);
 
+                if (PlayerDataInstance.dodgeExplosionDamage > 0)
+                {
+                    Instantiate(explosion).GetComponent<ExplosionHandler>().Run(PlayerDataInstance.dodgeExplosionDamage,
+                        1 + PlayerDataInstance.dodgeExplosionDamage / 50, gameObject.layer,
+                        new List<Collider2D> { _collider });
+                }
+                
                 DodgeOnceDir = null;
             }
 
@@ -193,15 +189,12 @@ namespace Player
 
             if (GetKey(KeyCode.W))
             {
-                var evt = new MoveEvent { speedLimit = PlayerDataInstance.speedLimit, acceleration = PlayerDataInstance.acceleration };
-                if (_upgradeable) _upgradeable.HandleEvent(evt, null);
-
-                var dv = evt.speedLimit * evt.speedLimit / 100;
+                var dv = PlayerDataInstance.speedLimit * PlayerDataInstance.speedLimit / 100;
                 var eff = 1 / (1 + Mathf.Exp(velocity.sqrMagnitude / 100 - dv));
-                if (velocity.sqrMagnitude > (evt.speedLimit + 5) * (evt.speedLimit + 5)){
+                if (velocity.sqrMagnitude > (PlayerDataInstance.speedLimit + 5) * (PlayerDataInstance.speedLimit + 5)){
                     _acceleration = 0;
                 } else {
-                    _acceleration = 10 * evt.acceleration * eff;
+                    _acceleration = 10 * PlayerDataInstance.acceleration * eff;
                 }
 
                 var vm = velocity.magnitude;

@@ -1,10 +1,6 @@
 using System;
 using System.Collections;
-using System.Linq;
-using Player;
 using ProgressBars;
-using Scriptable_Objects;
-using Scriptable_Objects.Upgrades;
 using UnityEngine;
 using Util;
 using static Static_Info.GunInfo;
@@ -12,6 +8,9 @@ using Random = UnityEngine.Random;
 
 public class PlayerGunHandler : MonoBehaviour
 {
+    [NonSerialized]
+    public bool Shootable = true;
+    
     public ProgressBar ammoBar;
 
     public GameObject bulletPrefab;
@@ -51,6 +50,11 @@ public class PlayerGunHandler : MonoBehaviour
 
     private void Update()
     {
+        if (Shootable && Input.GetMouseButtonDown(0))
+        {
+            Shoot(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        }
+        
         _emptyRefilling &= _curAmmo < GunInfoInstance.ammoCount;
         
         _noShootRefillTimer.Update();
@@ -76,29 +80,16 @@ public class PlayerGunHandler : MonoBehaviour
         Vector2 mVel = Vector2.zero;
         Vector2 relPos = _mPos - (Vector2)transform.position;
         float angCorr = UtilFuncs.LeadShot(relPos, mVel - _rb.velocity, ExpectedVelocity());
-
-        var evt = new ShootEvent
-        {
-            bulletsPerShot = GunInfoInstance.bulletsPerShot,
-            bulletsPerShotVarience = GunInfoInstance.bulletsPerShotVarience,
-            shotForce = GunInfoInstance.shotForce,
-            forceVarience = GunInfoInstance.forceVarience,
-            lateralSeperation = GunInfoInstance.lateralSeperation,
-            verticalSeperation = GunInfoInstance.verticalSeperation,
-            misfireChance = GunInfoInstance.misfireChance,
-            repeats = GunInfoInstance.repeats,
-            repeatSeperation = GunInfoInstance.repeatSeperation
-        };
-
-        for (int rep = 0; rep <= evt.repeats; rep++)
+        
+        for (int rep = 0; rep <= GunInfoInstance.repeats; rep++)
         {
             if (rep > 0)//only delay between repeats
             {
-                yield return new WaitForSeconds(evt.repeatSeperation);
+                yield return new WaitForSeconds(GunInfoInstance.repeatSeperation);
             }
 
             _curAmmo = (int)_curAmmo;
-            int bullets = Mathf.Min((int) _curAmmo, evt.bulletsPerShot + Random.Range(-evt.bulletsPerShotVarience, evt.bulletsPerShotVarience + 1));
+            int bullets = Mathf.Min((int) _curAmmo, GunInfoInstance.bulletsPerShot + Random.Range(-GunInfoInstance.bulletsPerShotVarience, GunInfoInstance.bulletsPerShotVarience + 1));
             _curAmmo -= bullets;
             ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
 
@@ -107,8 +98,8 @@ public class PlayerGunHandler : MonoBehaviour
                 float latOff, verOff;
                 if (bullets > 1)
                 {
-                    latOff = evt.lateralSeperation * (2 * i - bullets + 1) / (bullets - 1);
-                    verOff = evt.verticalSeperation * (1 - Mathf.Abs(2 * ((float)i / (bullets - 1)) - 1));
+                    latOff = GunInfoInstance.lateralSeperation * (2 * i - bullets + 1) / (bullets - 1);
+                    verOff = GunInfoInstance.verticalSeperation * (1 - Mathf.Abs(2 * ((float)i / (bullets - 1)) - 1));
                 }
                 else
                 {
@@ -118,7 +109,7 @@ public class PlayerGunHandler : MonoBehaviour
                 Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles.x,
                     transform.rotation.eulerAngles.x,
                     transform.rotation.eulerAngles.z + angCorr);
-                if (Random.Range(0f, 1f) > evt.misfireChance)
+                if (Random.Range(0f, 1f) > GunInfoInstance.misfireChance)
                 {
                     var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
@@ -126,8 +117,8 @@ public class PlayerGunHandler : MonoBehaviour
                     bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
                     bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
 
-                    float vertForce = evt.shotForce + Random.Range(-evt.forceVarience, evt.forceVarience) + verOff;
-                    float latForce = Random.Range(-evt.forceVarience, evt.forceVarience) + latOff;
+                    float vertForce = GunInfoInstance.shotForce + Random.Range(-GunInfoInstance.forceVarience, GunInfoInstance.forceVarience) + verOff;
+                    float latForce = Random.Range(-GunInfoInstance.forceVarience, GunInfoInstance.forceVarience) + latOff;
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
                     bullet.GetComponent<BulletCollision>().dmg = GunInfoInstance.dmgMod;
                     bullet.GetComponent<BulletCollision>().owner = gameObject;

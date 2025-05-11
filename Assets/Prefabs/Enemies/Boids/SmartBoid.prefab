@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 4054740446999730230}
   - component: {fileID: 1422123153232469383}
   - component: {fileID: 988408655905092487}
-  - component: {fileID: 8990267702837496173}
   - component: {fileID: 7410061765303661339}
+  - component: {fileID: 8939435154034989935}
   m_Layer: 8
   m_Name: Boid
   m_TagString: Untagged
@@ -250,7 +250,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 8637034310978827638, guid: 9720eb73586bb0642827314809b277fa, type: 3}
   pixelBuffer: 20
   rotate: 1
---- !u!114 &8990267702837496173
+--- !u!114 &7410061765303661339
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -259,7 +259,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2017439640341726697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fd8e6567b3e62d45944c1a741be60b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appearsAsSelf: 0
+  miniSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  miniColor: {r: 1, g: 0.5851399, b: 0, a: 1}
+  size: 3
+  inheritsRotation: 1
+  staticRot: {x: 0, y: 0, z: 0}
+--- !u!114 &8939435154034989935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017439640341726697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd3b1c1f4317664189bedec5b833edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6569384808679381653, guid: 116573cd1e8558d468ec2a5d067e03cd, type: 3}
@@ -280,24 +298,6 @@ MonoBehaviour:
   repeatSeperation: 0.01
   dmgMod: 50
   status: 
---- !u!114 &7410061765303661339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017439640341726697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appearsAsSelf: 0
-  miniSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  miniColor: {r: 1, g: 0.5851399, b: 0, a: 1}
-  size: 3
-  inheritsRotation: 1
-  staticRot: {x: 0, y: 0, z: 0}
 --- !u!1 &6001684470992877439
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7690703784297350714}
   - component: {fileID: 7995879903636855662}
   - component: {fileID: 3927662753016850058}
-  - component: {fileID: 83327947508867059}
+  - component: {fileID: 1852684549305593317}
   - component: {fileID: -6944973614021043999}
   - component: {fileID: 1254785752343166290}
   m_Layer: 8
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7d822bc273fdd479601481e939a2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &83327947508867059
+--- !u!114 &1852684549305593317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,11 +254,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4353281618518814614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fd8e6567b3e62d45944c1a741be60b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fd3b1c1f4317664189bedec5b833edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6569384808679381653, guid: 116573cd1e8558d468ec2a5d067e03cd, type: 3}
-  playRadius: 75
+  playRadius: 100
   gravitySource: {fileID: 0}
   clipCount: 1
   clipCap: 3

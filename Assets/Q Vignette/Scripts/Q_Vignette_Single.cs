@@ -1,11 +1,5 @@
-﻿using UnityEngine;
-
-using UnityEngine.UI;
-
-using UnityEditor; 
-
-
-
+﻿using System;
+using UnityEngine;
 
 [ExecuteInEditMode] 
 
@@ -24,16 +18,16 @@ public class Q_Vignette_Single : Q_Vignette_Base
     // Alternatively, place it at the bottom of your Canvas heirarchy and it'll affect everything on the Canvas as well
 
     public float mainScale = 0.4f; // size of vignette from 0 to 2       0.5 and above will see the images overlap and efficiency of this method dropping, although it's a nice effect so if you're not on mobile, it'll be great!
-    [System.NonSerialized]public float o_mainScale = 0; // to register change
+    [NonSerialized]public float o_mainScale = 0; // to register change
 
     public Color mainColor = new Color( 0.1698113f , 0.09192452f , 0.05526878f , 1 ); // shade and transparency of the effect
-    [System.NonSerialized]public Color o_mainColor=new Color(0,0,0,0); // to register change
+    [NonSerialized]public Color o_mainColor=new Color(0,0,0,0); // to register change
 
     public int mainCornerType = 0; // the sprite set to use for main corners
-    [System.NonSerialized]public int o_mainCornerType; // to register change
+    [NonSerialized]public int o_mainCornerType; // to register change
 
     public bool stretchMainToScreenRatio = true; // to have the vignette stretch to screen aspect ratio or remain circular
-    [System.NonSerialized]public bool o_stretchMainToScreenRatio = false; // to register change
+    [NonSerialized]public bool o_stretchMainToScreenRatio = false; // to register change
 
     
 

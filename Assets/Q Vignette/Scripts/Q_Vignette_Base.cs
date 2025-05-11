@@ -1,12 +1,6 @@
-﻿using UnityEngine;
-
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
-
-using UnityEditor; 
-
-
-
-
 
 [ExecuteInEditMode] 
 public class Q_Vignette_Base : MonoBehaviour
@@ -23,7 +17,7 @@ public class Q_Vignette_Base : MonoBehaviour
     // The Q_Vignette prefab can sit at the top of your Canvas heirarchy if you just want to affect World Space
     // Alternatively, place it at the bottom of your Canvas heirarchy and it'll affect everything on the Canvas as well
 
-    [System.Serializable]
+    [Serializable]
     public class CornerSprites{
         [SerializeField] public Sprite topLeft;
         [SerializeField] public Sprite topRight;

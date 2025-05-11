@@ -1,9 +1,9 @@
-using System;
 using Spawnables;
 using Spawnables.Asteroids;
 using Spawnables.Player;
 using UnityEngine;
 using Util;
+using static Static_Info.PlayerData;
 
 namespace Player
 {
@@ -32,8 +32,15 @@ namespace Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!_cooldownTimer.IsFinished || _movement.Dodging) return;
             if (!other.gameObject.TryGetComponent<Damageable>(out var damageable)) return;
+
+            if (_movement.Dodging)
+            {
+                if (PlayerDataInstance.dodgeDamage > 0) damageable.Damage(PlayerDataInstance.dodgeDamage, IDamageable.DmgType.Physical, gameObject);
+                return;
+            }
+            
+            if (!_cooldownTimer.IsFinished) return;
             if (damageable.GetComponent<MissleAim>() != null) return;
                 
             var vel = (other.attachedRigidbody.velocity - _rb.velocity).magnitude;

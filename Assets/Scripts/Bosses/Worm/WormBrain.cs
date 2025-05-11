@@ -7,7 +7,6 @@ using ProgressBars;
 using Spawnables;
 using Spawnables.Carcadon;
 using Spawnables.Worms;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 using Util;
@@ -692,7 +691,7 @@ namespace Bosses.Worm
                             foreach (var fb in _fakeSegs[idx].GetComponentsInChildren<FloppyBrain>())
                             {
                                 fb.Clone(head.GetComponentsInChildren<FloppyBrain>()[i++]);
-                                for (var j = 0; j < fb.segments.Count; j++) fb.positions[j] = fb.segments[j].position;
+                                for (var j = 0; j < fb.segments.Count; j++) fb.Positions[j] = fb.segments[j].position;
                             }
                             Destroy(_fakeSegs[idx].GetComponent<CustomRigidbody2D>());
                             Destroy(_fakeSegs[idx].GetComponent<Rigidbody2D>());
@@ -703,7 +702,7 @@ namespace Bosses.Worm
 
                             foreach (var fb in head.GetComponentsInChildren<FloppyBrain>())
                             {
-                                for (var j = 0; j < fb.segments.Count; j++) fb.positions[j] = fb.segments[j].position;
+                                for (var j = 0; j < fb.segments.Count; j++) fb.Positions[j] = fb.segments[j].position;
                             }
 
                             _currdir = pathfinder.AngleToVector(Mathf.Deg2Rad * head.transform.rotation.eulerAngles.z);

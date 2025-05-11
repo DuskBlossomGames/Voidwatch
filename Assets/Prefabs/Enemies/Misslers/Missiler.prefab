@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 1269399153704899952}
   - component: {fileID: 582754640268470002}
   - component: {fileID: 6725564530229344085}
-  - component: {fileID: -810703383415305791}
   - component: {fileID: 8614088855332405689}
   m_Layer: 8
   m_Name: Missiler
@@ -112,7 +111,6 @@ MonoBehaviour:
   engageDist: 30
   shootForce: 1000
   amt: 1
-  isShootin: 0
   animationState: {fileID: 8614088855332405689}
   startFrames: 8
   endFrames: 6
@@ -275,22 +273,6 @@ MonoBehaviour:
   size: 3
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
---- !u!111 &-810703383415305791
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4430136990600543352}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 732e5442519b99f4a9a2e21c786751f6, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 732e5442519b99f4a9a2e21c786751f6, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &8614088855332405689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,5 +305,3 @@ MonoBehaviour:
     name: fire
   framesPerSecond: 20
   loop: 0
-  destroyWhenDone: 0
-  timePerFrame: 0

@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Static_Info;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using static Static_Info.PlayerData;
-using static Static_Info.MerchantData;
-using static Static_Info.LevelSelectData;
 public class MenuButtons : MonoBehaviour
 {
     public void Restart()
@@ -18,9 +14,9 @@ public class MenuButtons : MonoBehaviour
 
     public void Quit()
     {
-        UnityEngine.Application.Quit();
+        Application.Quit();
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+        EditorApplication.isPlaying = false;
 #endif
     }
 }
