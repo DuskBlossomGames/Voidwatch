@@ -1,17 +1,27 @@
 using EnemySpawner;
 using JetBrains.Annotations;
+using Player;
 using Spawnables.Carcadon;
+using Spawnables.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Spawnables
 {
+    public enum EnemyType
+    {
+        Mechanical,
+        Organic
+    }
+    
     public class EnemyDamageable : Damageable
     {
         private const float BIT_TTL = 1;
         private const float BIT_FADE = 1.5f;
         private const float BIT_VEL = 3.5f;
 
+        public EnemyType enemyType; // TODO: give values for these
+        
         public int maxHealth;
         public GameObject varientParent;
         
@@ -72,6 +82,11 @@ namespace Spawnables
                 explosionObj.transform.localScale = explosionScale * Vector3.one;
                 explosionObj.GetComponent<ExplosionHandler>().PlayVisuals();
             }
+        }
+
+        public void Damage(float damage, GameObject source, PlayerDamageType type)
+        {
+            Damage(damage * type.Modifiers[enemyType], source);
         }
     }
 }

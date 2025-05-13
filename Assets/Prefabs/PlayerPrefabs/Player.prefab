@@ -5012,6 +5012,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 8827315544250419742}
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!82 &8827315544250419742
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5414,6 +5416,8 @@ MonoBehaviour:
   playerMod: 1.5
   trueDamageMod: 1.2
   cooldown: 0.15
+  shieldMult: 2
+  bleedPerc: 0.1
 --- !u!1 &5328117465565166959
 GameObject:
   m_ObjectHideFlags: 0
@@ -5759,7 +5763,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   isTutorial: 0
   vignette: {fileID: 0}
   fadeOut: {fileID: 0}
@@ -5816,7 +5819,6 @@ MonoBehaviour:
   maxVignetteScale: 3.8
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
-  shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
   audioPlayer: {fileID: 0}
   PlayerHitShield: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
   PlayerHitDamage: {fileID: 8300000, guid: a5ac4e7b3681b458a894b4481f2fb3da, type: 3}

@@ -8,7 +8,7 @@ public class BulletCollision : MonoBehaviour
 {
     public float dmg = 10;
     public GameObject owner;
-    public IDamageable.DmgType dmgType;
+    public float shieldMult, bleedPerc;
     public bool ignoresOwner;
     
     [CanBeNull] public GameObject explosion;
@@ -46,8 +46,8 @@ public class BulletCollision : MonoBehaviour
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
 
-                if (isKinetic) { damageable.Damage(.5f * dmg * mass * sqrSpeed, dmgType, gameObject); }
-                else {           damageable.Damage(dmg * mass, dmgType, gameObject); }
+                if (isKinetic) { damageable.Damage(.5f * dmg * mass * sqrSpeed, gameObject, shieldMult, bleedPerc); }
+                else {           damageable.Damage(dmg * mass, gameObject, shieldMult, bleedPerc); }
                 
             }
 

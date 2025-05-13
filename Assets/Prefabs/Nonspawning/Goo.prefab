@@ -87,7 +87,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!199 &5521331516543804977
@@ -4949,8 +4949,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damagePerSecond: 5
   entryDamage: 10
+  shieldMult: 4
+  bleedPerc: 0
   canOnlyHurtPlayer: 0
-  dmgType: 3
 --- !u!114 &-9096522590030787941
 MonoBehaviour:
   m_ObjectHideFlags: 0

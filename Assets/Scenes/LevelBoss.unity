@@ -1990,7 +1990,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -2387,7 +2388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -2821,6 +2822,8 @@ MonoBehaviour:
   holdTime: 3.5
   targetRot: -5
   ejectionVel: 20
+  shieldMult: 3
+  bleedPerc: 0
   wm: {fileID: 877449872}
 --- !u!61 &528326390
 BoxCollider2D:
@@ -5155,7 +5158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 60
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -5433,7 +5436,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -5609,6 +5613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!1 &1037884601
 GameObject:
   m_ObjectHideFlags: 0
@@ -6249,7 +6255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -6457,7 +6464,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -6939,7 +6947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 60
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -7122,6 +7130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!1 &1195694507
 GameObject:
   m_ObjectHideFlags: 0
@@ -7372,6 +7382,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!1 &1247414573
 GameObject:
   m_ObjectHideFlags: 0
@@ -8387,6 +8399,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!1 &1331667012
 GameObject:
   m_ObjectHideFlags: 0
@@ -8697,6 +8711,8 @@ MonoBehaviour:
   expandDistance: 175
   damage: 150
   lrWidth: 0.5
+  shieldMult: 3
+  bleedPerc: 0.3
   numPoints: 200
 --- !u!1 &1362879762
 GameObject:
@@ -8908,7 +8924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -11045,7 +11061,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -11310,6 +11327,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 2
+  bleedPerc: 0.2
 --- !u!61 &1618052925
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12350,7 +12369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -12531,6 +12550,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 2
+  bleedPerc: 0.2
 --- !u!1 &1887376682
 GameObject:
   m_ObjectHideFlags: 0
@@ -12995,7 +13016,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -13172,6 +13194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 2
+  bleedPerc: 0.2
 --- !u!1 &2025802648
 GameObject:
   m_ObjectHideFlags: 0

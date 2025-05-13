@@ -84,7 +84,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &6511579325359309058
@@ -129,7 +129,8 @@ MonoBehaviour:
   repeats: 9
   repeatSeperation: 0.01
   dmgMod: 2
-  status: 
+  shieldMult: 1
+  bleedPerc: 0
 --- !u!114 &4934791148734622022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +235,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &2030222083547908139
@@ -279,7 +280,8 @@ MonoBehaviour:
   repeats: 9
   repeatSeperation: 0.01
   dmgMod: 2
-  status: 
+  shieldMult: 1
+  bleedPerc: 0
 --- !u!114 &9221233617286110242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +386,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &2728991975066409354
@@ -429,7 +431,8 @@ MonoBehaviour:
   repeats: 9
   repeatSeperation: 0.01
   dmgMod: 2
-  status: 
+  shieldMult: 1
+  bleedPerc: 0
 --- !u!114 &1606856024609242862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,7 +581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 1000
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -604,7 +607,6 @@ MonoBehaviour:
   engageDist: 70
   shootForce: 2000
   amt: 1
-  isShootin: 0
   animationState: {fileID: 8186915714191357486}
   startFrames: 0
   endFrames: 0
@@ -629,8 +631,6 @@ MonoBehaviour:
     name: fire
   framesPerSecond: 8
   loop: 1
-  destroyWhenDone: 0
-  timePerFrame: 0
 --- !u!114 &206434496878846055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,7 +644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 1000
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -821,7 +821,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &8627058659746047521
@@ -866,7 +866,8 @@ MonoBehaviour:
   repeats: 9
   repeatSeperation: 0.01
   dmgMod: 2
-  status: 
+  shieldMult: 1
+  bleedPerc: 0
 --- !u!114 &8102097405101806087
 MonoBehaviour:
   m_ObjectHideFlags: 0

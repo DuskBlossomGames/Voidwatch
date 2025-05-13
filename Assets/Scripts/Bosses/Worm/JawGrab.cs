@@ -9,6 +9,7 @@ namespace Bosses.Worm
     public class JawGrab : MonoBehaviour
     {
         public float grabDamage, grabTime, holdTime, targetRot, ejectionVel;
+        public float shieldMult, bleedPerc;
         public WormBrain wm;
 
         private Transform _leftJaw, _rightJaw, _player;
@@ -71,7 +72,7 @@ namespace Bosses.Worm
             {
                 _player.GetComponent<Movement>().inputBlocked = true;
                 _player.GetComponent<CustomRigidbody2D>().velocity = Vector2.zero;
-                _player.GetComponent<PlayerDamageable>().Damage(grabDamage, IDamageable.DmgType.Concussive, gameObject);
+                _player.GetComponent<PlayerDamageable>().Damage(grabDamage, gameObject, shieldMult, bleedPerc);
                 wm.BiteFinish();
 
                 _holdTimer.Value = holdTime;

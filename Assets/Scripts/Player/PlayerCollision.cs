@@ -12,6 +12,7 @@ namespace Player
         public float enemyMod, playerMod;
         public float trueDamageMod;
         public float cooldown;
+        public float shieldMult, bleedPerc;
 
         private readonly Timer _cooldownTimer = new();
         private Movement _movement;
@@ -36,7 +37,7 @@ namespace Player
 
             if (_movement.Dodging)
             {
-                if (PlayerDataInstance.dodgeDamage > 0) damageable.Damage(PlayerDataInstance.dodgeDamage, IDamageable.DmgType.Physical, gameObject);
+                if (PlayerDataInstance.dodgeDamage > 0) damageable.Damage(PlayerDataInstance.dodgeDamage, gameObject);
                 return;
             }
             
@@ -44,11 +45,11 @@ namespace Player
             if (damageable.GetComponent<MissleAim>() != null) return;
                 
             var vel = (other.attachedRigidbody.velocity - _rb.velocity).magnitude;
-            damageable.Damage(enemyMod * vel, IDamageable.DmgType.Concussive, gameObject);
+            damageable.Damage(PlayerDataInstance.collisionDamageMult * enemyMod * vel, gameObject);
 
             if (!damageable.IsDead && other.gameObject.GetComponent<AsteroidController>() == null) // asteroid handles it itself
             {
-                _dmgable.Damage(playerMod * vel, IDamageable.DmgType.Concussive, gameObject);
+                _dmgable.Damage(playerMod * vel, gameObject, shieldMult, bleedPerc);
                 _cooldownTimer.Value = cooldown;
             }
             

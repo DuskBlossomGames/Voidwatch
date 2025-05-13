@@ -5046,6 +5046,8 @@ MonoBehaviour:
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   stallTime: 1
   dmg: 4000
+  shieldMult: 0.8
+  bleedPerc: 0
 --- !u!82 &6292027629732448664
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5168,7 +5170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 100
   varientParent: {fileID: 0}
   explosion: {fileID: 0}

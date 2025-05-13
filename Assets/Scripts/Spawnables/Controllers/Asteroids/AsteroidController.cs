@@ -11,6 +11,7 @@ namespace Spawnables.Asteroids
         
         [CanBeNull] public GameObject nextSize;
         
+        public float shieldMult, bleedPerc;
         public Vector2 startVel;
         private CustomRigidbody2D _rb;
 
@@ -34,11 +35,11 @@ namespace Spawnables.Asteroids
             _rb.velocity = Vector3.RotateTowards(_rb.velocity, Quaternion.Euler(0, 0, angle) * _rb.position, 0.15f*Mathf.PI*Time.deltaTime, 0);
         }
 
-        public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1)
+        public override void Damage(float damage, GameObject source)
         {
             if (LayerMask.LayerToName(source.layer) == "PlayerOnlyHazard") return; // prevent bifurcator from incinerating them
             
-            base.Damage(damage, dmgType, source, reduceMod);
+            base.Damage(damage, source);
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -46,7 +47,7 @@ namespace Spawnables.Asteroids
             if (!other.gameObject.TryGetComponent<Damageable>(out var dmgable)) return;
             if (other.gameObject.GetComponent<AsteroidController>() != null) return; // don't damage other asteroids
 
-            dmgable.Damage(350, IDamageable.DmgType.Physical, gameObject);
+            dmgable.Damage(350, gameObject, shieldMult, bleedPerc);
         }
 
         protected override void OnDeath(GameObject source)

@@ -11,10 +11,10 @@ namespace Spawnables.Carcadon
             _cb = GetComponent<CarcadonBrain>();
         }
 
-        public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1f)
+        public override void Damage(float damage, GameObject source)
         {
             var oh = Health;
-            base.Damage(damage, dmgType, source, reduceMod);
+            base.Damage(damage, source);
             _cb.TakeDamage(oh, Health);
         }
     }

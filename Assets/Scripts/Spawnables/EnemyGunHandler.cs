@@ -23,6 +23,7 @@ public class EnemyGunHandler : MonoBehaviour
     public float repeatSeperation;
 
     public float dmgMod;
+    public float shieldMult, bleedPerc;
 
     private int _currClipCount;
     private int _currClipCap;
@@ -102,6 +103,8 @@ public class EnemyGunHandler : MonoBehaviour
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
                     bullet.GetComponent<BulletCollision>().dmg = dmgMod;
                     bullet.GetComponent<BulletCollision>().owner = gameObject;
+                    bullet.GetComponent<BulletCollision>().shieldMult = shieldMult;
+                    bullet.GetComponent<BulletCollision>().bleedPerc = bleedPerc;
                 }
 
             }

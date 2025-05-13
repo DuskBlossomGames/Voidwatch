@@ -27,13 +27,13 @@ namespace Spawnables.Player
         public float minVignetteScale, maxVignetteScale;
 
         public ProgressBar healthBar, shieldBar;
-        public DamageResistances shieldDmgRes;
 
         public AudioSource audioPlayer;
         public AudioClip PlayerHitShield;
         private float _AudioPlayerShieldVolumeStatic;
         private float _AudioPlayerPitchStatic;
         public AudioClip PlayerHitDamage;
+        // TODO: swap PlayerHitShield and PlayerHitDamage
 
         public bool godmode = false;
 
@@ -68,15 +68,13 @@ namespace Spawnables.Player
         private float _vignettePeakAlpha;
 
         private Vector3 _startLoc;
-
+        
         public new void Start()
         {
             _startLoc = transform.position;
             
             healthBar.UpdatePercentage(Health, MaxHealth);
 
-            shieldDmgRes.Ready();
-            dmgRes.Ready();
             Destroy(_healthBar);
             ShieldPower = ShieldMaxPower;
 
@@ -111,7 +109,7 @@ namespace Spawnables.Player
             return ShieldPower < 0;
         }
 
-        public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1f)
+        public override void Damage(float damage, GameObject source)
         {
             if (godmode) return;
 
@@ -132,9 +130,12 @@ namespace Spawnables.Player
             }
             vignette.mainScale = (maxVignetteScale - minVignetteScale) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteScale;
             _vignettePeakAlpha = (maxVignetteAlpha - minVignetteAlpha) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteAlpha;
-
-            float bleed = damage * shieldDmgRes.dmgBleed[(int)dmgType];
-            damage -= bleed;//some damage leaks through
+        }
+        
+        public override void Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
+        {
+            var bleed = damage * bleedPerc;
+            damage -= bleed;
 
             if (damage > 0)
             {
@@ -142,32 +143,23 @@ namespace Spawnables.Player
                 {
                     bleed += damage;
 
-                  /*  audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-                    audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
+                    if (damage > 5)
+                    {
+                        audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+                        audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
 
-                  audioPlayer.PlayOneShot(PlayerHitShield);*/
-
-                  audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-                  audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
-
-                    audioPlayer.clip = PlayerHitShield;
-                    if(damage > 5){
-                      audioPlayer.Play();}
-                    Debug.Log("AUDIO PLAYED!!");
+                        audioPlayer.clip = PlayerHitShield;
+                        audioPlayer.Play();
+                    }
                 }
                 else
                 {
-                    // only apply shield dmg res if it goes to shield
-                    damage -= reduceMod * shieldDmgRes.dmgReduce[(int)dmgType];
-                    damage *= shieldDmgRes.dmgMod[(int)dmgType];
-
-                    ShieldPower -= damage;
-                    ShieldPower -= 1;
+                    ShieldPower -= damage * shieldMult;
                     if (ShieldPower < -ShieldMaxDebt)
                     {
-                        float overDebt = -ShieldMaxDebt - ShieldPower;
+                        var overDebt = -ShieldMaxDebt - ShieldPower;
                         ShieldPower += overDebt;
-                        bleed += overDebt;//excess damage overflows to bleeded damage
+                        bleed += overDebt;
                     }
 
                     audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
@@ -180,10 +172,7 @@ namespace Spawnables.Player
 
                 }
             }
-
-            bleed -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
-            bleed *= dmgRes.dmgMod[(int)dmgType];
-
+            
             if (bleed > 0)
             {
                 Health -= bleed > 0 ? bleed : 0;

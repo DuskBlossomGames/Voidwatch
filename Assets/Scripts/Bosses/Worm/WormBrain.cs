@@ -236,7 +236,7 @@ namespace Bosses.Worm
             {
                 foreach (var dmgable in GetComponentsInChildren<WormEyeDamageable>())
                 {
-                    dmgable.Damage(float.PositiveInfinity, IDamageable.DmgType.Black, gameObject, 0); // kill, triggering OnDeath
+                    dmgable.Damage(float.PositiveInfinity, gameObject); // kill, triggering OnDeath
                 }
             }
 

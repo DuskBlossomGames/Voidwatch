@@ -7,6 +7,7 @@ namespace Spawnables.Carcadon
     public class ClawDamage : MonoBehaviour
     {
         public float damage;
+        public float shieldMult, bleedPerc;
         
         [NonSerialized] public PlayerDamageable Player;
         [NonSerialized] public bool Active;
@@ -15,7 +16,7 @@ namespace Spawnables.Carcadon
         {
             if (Active && other.gameObject == Player.gameObject)
             {
-                Player.Damage(damage, IDamageable.DmgType.Physical, gameObject);
+                Player.Damage(damage, gameObject, shieldMult, bleedPerc);
                 Active = false;
             }
         }
@@ -24,7 +25,7 @@ namespace Spawnables.Carcadon
         {
             if (Active && other.gameObject == Player.gameObject)
             {
-                Player.Damage(damage, IDamageable.DmgType.Physical, gameObject);
+                Player.Damage(damage, gameObject, shieldMult, bleedPerc);
                 Active = false;
             }
         }

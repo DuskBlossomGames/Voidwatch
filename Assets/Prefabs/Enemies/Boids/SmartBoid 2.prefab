@@ -165,7 +165,6 @@ GameObject:
   - component: {fileID: 6130144567755134268}
   - component: {fileID: 459113609036851018}
   - component: {fileID: 621694342670514235}
-  - component: {fileID: 6544548995608787696}
   - component: {fileID: 1657221518511235353}
   - component: {fileID: 4054740446999730230}
   - component: {fileID: 1422123153232469383}
@@ -275,30 +274,6 @@ MonoBehaviour:
   shootDist: 20
   original: 1
   collisionObj: {fileID: 0}
---- !u!114 &6544548995608787696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017439640341726697}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4fbbab0b8040d046843471567bfe2d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visualRangel: 30
-  protectedRange: 5
-  matchingFactor: 0.02
-  centeringFactor: 0.03
-  avoidFactor: 0.7
-  targettingFactor: 0.05
-  maxSpeed: 30
-  minSpeed: 10
-  target: {fileID: 0}
-  gravitySource: {fileID: 0}
-  shootDist: 25
-  original: 1
 --- !u!114 &1657221518511235353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 0
   maxHealth: 50
   varientParent: {fileID: 0}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
@@ -434,7 +409,8 @@ MonoBehaviour:
   repeats: 1
   repeatSeperation: 0.1
   dmgMod: 100
-  status: 
+  shieldMult: 1
+  bleedPerc: 0
 --- !u!114 &7410061765303661339
 MonoBehaviour:
   m_ObjectHideFlags: 0

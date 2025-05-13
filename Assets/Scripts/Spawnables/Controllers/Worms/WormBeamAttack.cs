@@ -9,6 +9,7 @@ public class WormBeamAttack : MonoBehaviour
     public float dodgeTime;
     public float ramp;
     public float baseDmg;
+    public float shieldMult, bleedPerc;
 
     public Material material;
     public Gradient warnColor;
@@ -77,7 +78,7 @@ public class WormBeamAttack : MonoBehaviour
                 var dmgable = tar.GetComponent<IDamageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(.01f * dmg, IDamageable.DmgType.Physical, gameObject, .01f);
+                    dmgable.Damage(.01f * dmg, gameObject, shieldMult, bleedPerc);
                 }
             }
             yield return new WaitForSeconds(.02f);
@@ -98,7 +99,7 @@ public class WormBeamAttack : MonoBehaviour
             var dmgable = tar.GetComponent<Damageable>();
             if (dmgable != null)
             {
-                dmgable.Damage(dmg, IDamageable.DmgType.Physical, gameObject);
+                dmgable.Damage(dmg, gameObject, shieldMult, bleedPerc);
             }
         }
 
@@ -120,7 +121,7 @@ public class WormBeamAttack : MonoBehaviour
                 var dmgable = tar.GetComponent<Damageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(.01f * dmg, IDamageable.DmgType.Physical, gameObject, .01f);
+                    dmgable.Damage(.01f * dmg, gameObject, shieldMult, bleedPerc);
                 }
             }
         }

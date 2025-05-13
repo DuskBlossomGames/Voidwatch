@@ -14,6 +14,7 @@ namespace Bosses.Worm
         public float distortionTime, distortionScale;
         public float expandSpeed, expandDistance;
         public float damage, lrWidth;
+        public float shieldMult, bleedPerc;
         public int numPoints;
 
         private LensDistortion _ld;
@@ -58,7 +59,7 @@ namespace Bosses.Worm
                 _lr.SetPositions(points);
 
                 var playerRad = ((Vector2)player.transform.position).magnitude;
-                if (_playerCollider.enabled && Mathf.Abs(playerRad - radius) < lrWidth) player.Damage(damage, IDamageable.DmgType.Concussive, gameObject);
+                if (_playerCollider.enabled && Mathf.Abs(playerRad - radius) < lrWidth) player.Damage(damage, gameObject, shieldMult, bleedPerc);
             }
             _lr.enabled = false;
 

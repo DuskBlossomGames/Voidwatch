@@ -157,12 +157,21 @@ public class UpgradePlayer
             }),
         new("Automatic Incendiary Device",
             "Attaching to the void jaunt module, this device will trigger a timed detonation upon entering Voidspace.",
-            "The AID is superior to any human aide for aiding in detonations.",
+            "Need a hand? Here's some AID.",
             Rarity.Common,
             () =>
             {
                 PlayerDataInstance.dodgeExplosionDamage += 300;
             }),
+        new("Mining Drill",
+            "A frontal drill increases the damage done when ramming ships.",
+            "If you squint, a ship is basically an asteroid.",
+            Rarity.Common,
+            () =>
+            {
+                PlayerDataInstance.collisionDamageMult += 0.5f;
+            })
+        
     };
 
     public static readonly Dictionary<string, List<Upgrade>> BY_RARITY = new();

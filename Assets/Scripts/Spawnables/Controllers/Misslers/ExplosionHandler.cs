@@ -7,7 +7,8 @@ using Util;
 public class ExplosionHandler : MonoBehaviour
 {
     public AudioSource audioSource;
-
+    public float shieldMult, bleedPerc;
+    
     public void PlayVisuals()
     {
         audioSource.Play();
@@ -29,7 +30,7 @@ public class ExplosionHandler : MonoBehaviour
             var hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + range * raydir, MaskUtil.COLLISION_MASKS[layer]);
             if (hit.collider == null || ignore.Contains(hit.collider)) continue;
                     
-            hit.transform.GetComponent<IDamageable>()?.Damage(damage, IDamageable.DmgType.Physical, gameObject);
+            hit.transform.GetComponent<IDamageable>()?.Damage(damage, gameObject, shieldMult, bleedPerc);
         }
         StartCoroutine(Kill(.5f));
     }

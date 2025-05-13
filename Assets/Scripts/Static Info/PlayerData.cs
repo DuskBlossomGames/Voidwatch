@@ -23,6 +23,7 @@ namespace Static_Info
         public float dodgeCooldown;
         public float dodgeDamage;
         public float dodgeExplosionDamage;
+        public float collisionDamageMult = 1;
 
         [NonSerialized] public float Health;
         [NonSerialized] public float Scrap;

@@ -18,9 +18,9 @@ public class WormDamageable : EnemyDamageable
         base.Start();
     }
 
-    public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1)
+    public override void Damage(float damage, GameObject source)
     {
-        base.Damage(dmgMod*damage, dmgType, source, reduceMod);
+        base.Damage(dmgMod * damage, source);
     }
 
     private void SpawnBits(GameObject source)

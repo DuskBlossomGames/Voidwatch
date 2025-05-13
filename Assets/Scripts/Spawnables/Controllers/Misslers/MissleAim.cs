@@ -15,6 +15,7 @@ public class MissleAim : MonoBehaviour
     public GameObject explosion;
     public float stallTime;
     public float dmg;
+    public float shieldMult, bleedPerc;
 
     private Vector2 _oVel;
     private Vector2 _nDir;
@@ -94,7 +95,10 @@ public class MissleAim : MonoBehaviour
 
     public void Explode()
     {
-        Instantiate(explosion).GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject.layer, new List<Collider2D>());
+        var exp = Instantiate(explosion);
+        exp.GetComponent<ExplosionHandler>().shieldMult = shieldMult;
+        exp.GetComponent<ExplosionHandler>().bleedPerc = bleedPerc;
+        exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject.layer, new List<Collider2D>());
         Destroy(gameObject);
     }
 

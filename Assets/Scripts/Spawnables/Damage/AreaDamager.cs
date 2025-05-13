@@ -5,37 +5,22 @@ public class AreaDamager : MonoBehaviour
 {
     public float damagePerSecond;
     public float entryDamage;
+    public float shieldMult, bleedPerc;
     public bool canOnlyHurtPlayer = false;
-    public IDamageable.DmgType dmgType;
 
     void OnTriggerStay2D(Collider2D other)
     {
-        //Debug.Log(other.gameObject.name);
-
-        IDamageable dmg;
-        if ((dmg = other.gameObject.GetComponent<IDamageable>()) != null && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.TryGetComponent<IDamageable>(out var dmg) && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            dmg.Damage(damagePerSecond * Time.deltaTime, dmgType, gameObject, 0);
-            //Debug.LogFormat("{0} Component found as {1}", other.gameObject.name, dmg.ToString());
-        } else
-        {
-            //Debug.LogFormat("{0} Does not have Interface Damageable", other.gameObject.name);
+            dmg.Damage(damagePerSecond * Time.deltaTime, gameObject, shieldMult, bleedPerc);
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log(other.gameObject.name);
-
-        IDamageable dmg;
-        if ((dmg = other.gameObject.GetComponent<IDamageable>()) != null && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.TryGetComponent<IDamageable>(out var dmg) && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            dmg.Damage(entryDamage, dmgType, gameObject, 0);
-            //Debug.LogFormat("{0} Component found as {1}", other.gameObject.name, dmg.ToString());
-        }
-        else
-        {
-            //Debug.LogFormat("{0} Does not have Interface Damageable", other.gameObject.name);
+            dmg.Damage(entryDamage, gameObject, shieldMult, bleedPerc);
         }
     }
 }
