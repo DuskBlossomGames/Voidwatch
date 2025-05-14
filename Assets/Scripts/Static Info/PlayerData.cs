@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 namespace Static_Info
@@ -24,6 +26,9 @@ namespace Static_Info
         public float dodgeDamage;
         public float dodgeExplosionDamage;
         public float collisionDamageMult = 1;
+        public readonly List<PlayerDamageType> DamageTypes = new();
+
+        public readonly List<UpgradePlayer.Upgrade> Upgrades = new();
 
         [NonSerialized] public float Health;
         [NonSerialized] public float Scrap;

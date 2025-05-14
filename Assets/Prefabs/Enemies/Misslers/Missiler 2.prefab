@@ -111,10 +111,7 @@ MonoBehaviour:
   engageDist: 45
   shootForce: 1000
   amt: 1
-  isShootin: 0
   animationState: {fileID: -5943389145857714790}
-  startFrames: 3
-  endFrames: 4
 --- !u!114 &1114353160703292457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 1
   maxHealth: 200
   varientParent: {fileID: 0}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
@@ -173,6 +170,9 @@ MonoBehaviour:
   numBits: 3
   explosionScale: 0.75
   bitScale: 2.25
+  stunBar: {fileID: 6640671108004503463, guid: 8155757717abf4cd893fffe035e7281b, type: 3}
+  stunnable: {fileID: 7999954347094555490, guid: caa4ef12a7af944db9569048c9445bd7, type: 3}
+  hitsToStun: 20
 --- !u!114 &582754640268470002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,8 +234,6 @@ MonoBehaviour:
     name: fire
   framesPerSecond: 14
   loop: 0
-  destroyWhenDone: 0
-  timePerFrame: 0
 --- !u!114 &8847518296011513265
 MonoBehaviour:
   m_ObjectHideFlags: 0

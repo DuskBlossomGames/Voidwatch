@@ -1,17 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using EnemySpawner;
 using JetBrains.Annotations;
 using Player;
+using ProgressBars;
 using Spawnables.Carcadon;
-using Spawnables.Player;
 using UnityEngine;
+using Util;
 using Random = UnityEngine.Random;
 
 namespace Spawnables
 {
     public enum EnemyType
     {
+        None,
         Mechanical,
-        Organic
+        Organic,
+        Worm,
+        Carcadon,
+        WormBoss
     }
     
     public class EnemyDamageable : Damageable
@@ -19,6 +27,10 @@ namespace Spawnables
         private const float BIT_TTL = 1;
         private const float BIT_FADE = 1.5f;
         private const float BIT_VEL = 3.5f;
+        
+        private const float STUN_TIME = 2;
+        private const float STUN_FALL_WAIT_TIME = 5;
+        private const float STUN_FALL_PERC_PER_SEC = 0.1f;
 
         public EnemyType enemyType; // TODO: give values for these
         
@@ -30,6 +42,16 @@ namespace Spawnables
         public int numBits;
         public float explosionScale, bitScale;
 
+        public GameObject stunBar;
+        public Stunnable stunnable;
+        public int hitsToStun; // 0 means can't stun
+
+        private readonly Timer _stunTimer = new();
+        private readonly Timer _stunFallWaitTimer = new();
+        private readonly Timer _stunImmunityTimer = new();
+        private float _stunCount;
+        private ProgressBar _stunBar;
+        
         // have to do this b/c unity doesn't like duplicated properties -_-
         private float _health;
         protected override float Health { get => _health; set => _health = value; }
@@ -39,6 +61,38 @@ namespace Spawnables
         {
             base.Start();
             Health = MaxHealth;
+            
+            if (stunBar != null) _stunBar = Instantiate(stunBar).GetComponent<ProgressBar>();
+            _stunBar?.transform.SetParent(transform, true);
+
+            _stunImmunityTimer.Value = 3 + Mathf.Pow(hitsToStun, 1.1f) / 4; // calculate MaxValue once
+            _stunImmunityTimer.SetValue(0);
+        }
+
+        private void Update()
+        {
+            // TODO: actually stun/un-stun
+            _stunImmunityTimer.Update();
+            _stunFallWaitTimer.Update();
+
+            if (_stunFallWaitTimer.IsFinished && _stunImmunityTimer.IsFinished && _stunTimer.IsFinished && _stunCount >= 0)
+            {
+                _stunCount = Mathf.Max(0, _stunCount - hitsToStun * STUN_FALL_PERC_PER_SEC * Time.deltaTime);
+                _stunBar.UpdatePercentage(_stunCount, hitsToStun);
+            } 
+
+            if (!_stunTimer.IsFinished)
+            {
+                _stunTimer.Update();
+                stunnable.UpdateStun(); 
+
+                _stunBar.UpdatePercentage(_stunTimer.Progress, 1);
+                if (_stunTimer.IsFinished)
+                {
+                    stunnable.UnStun();
+                    _stunImmunityTimer.Value = _stunImmunityTimer.MaxValue;
+                }
+            }
         }
 
         private void OnDestroy()
@@ -84,9 +138,27 @@ namespace Spawnables
             }
         }
 
-        public void Damage(float damage, GameObject source, PlayerDamageType type)
+        public void Damage(float damage, GameObject source, List<PlayerDamageType> type)
         {
-            Damage(damage * type.Modifiers[enemyType], source);
+            Damage(type.Aggregate(damage, (a, t) => a * t.Modifiers[enemyType]), source);
+            if (type.Contains(PlayerDamageType.Electric)) StunHit();
+        }
+
+        private void StunHit()
+        {
+            if (hitsToStun == 0 || !_stunTimer.IsFinished || !_stunImmunityTimer.IsFinished) return;
+            _stunFallWaitTimer.Value = STUN_FALL_WAIT_TIME;
+            
+            _stunCount += 1;
+            if (_stunCount >= hitsToStun)
+            {
+                _stunCount = hitsToStun; // cap it
+                _stunTimer.Value = STUN_TIME;
+                
+                stunnable.Stun();
+            }
+            
+            _stunBar.UpdatePercentage(_stunCount, hitsToStun);
         }
     }
 }

@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Player;
 using Spawnables;
+using Spawnables.Player;
 using UnityEngine;
 using Util;
+using static Static_Info.PlayerData;
 
 public class BulletCollision : MonoBehaviour
 {
@@ -19,7 +23,13 @@ public class BulletCollision : MonoBehaviour
     public bool isKinetic;
 
     public bool isEnabled = true;
-    
+    private List<PlayerDamageType> _damageTypes = new();
+
+    private void Start()
+    {
+        if (owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
+    }
+
     private void OnTriggerExit2D(Collider2D otherCollider)
     {
         if (!isEnabled) return;
@@ -46,9 +56,11 @@ public class BulletCollision : MonoBehaviour
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
 
-                if (isKinetic) { damageable.Damage(.5f * dmg * mass * sqrSpeed, gameObject, shieldMult, bleedPerc); }
-                else {           damageable.Damage(dmg * mass, gameObject, shieldMult, bleedPerc); }
+                var damage = dmg * mass;
+                if (isKinetic) damage *= 0.5f * sqrSpeed;
                 
+                if (damageable.GetType() == typeof(EnemyDamageable)) ((EnemyDamageable) damageable).Damage(damage, gameObject, _damageTypes); 
+                else damageable.Damage(damage, gameObject, shieldMult, bleedPerc);
             }
 
             if (explosion)

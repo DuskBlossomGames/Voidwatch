@@ -1,7 +1,8 @@
+using Spawnables;
 using UnityEngine;
 using Util;
 
-public class MissleShooter : MonoBehaviour
+public class MissleShooter : Stunnable
 {
     public GameObject target;
     public GameObject missilePrefab;
@@ -10,13 +11,12 @@ public class MissleShooter : MonoBehaviour
     public float shootForce = 1000;
     public int amt = 3;
     public NSpriteAnimation animationState;
-    public int startFrames;
-    public int endFrames;
-
 
     private bool _isShooting, _shot;
     private readonly Timer _shoot = new();
     private float _fireAnimDuration;
+
+    private CustomRigidbody2D _rb;
     
     private void Start()
     {
@@ -25,6 +25,8 @@ public class MissleShooter : MonoBehaviour
         _shoot.Value = shootInterval;
 
         _fireAnimDuration = (float)animationState.states[1].frames.Length / animationState.framesPerSecond;
+
+        _rb = GetComponent<CustomRigidbody2D>();
     }
     private void Update()
     {
@@ -58,5 +60,20 @@ public class MissleShooter : MonoBehaviour
             _shoot.Value = _shoot.MaxValue;
         }
 
+    }
+
+    public override void Stun()
+    {
+        enabled = false;
+    }
+
+    public override void UpdateStun()
+    {
+        _rb.velocity *= Mathf.Pow(0.8f, Time.deltaTime);
+    }
+
+    public override void UnStun()
+    {
+        enabled = true;
     }
 }

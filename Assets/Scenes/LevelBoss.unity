@@ -2388,7 +2388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  enemyType: 0
+  enemyType: 5
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -5158,7 +5158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  enemyType: 0
+  enemyType: 5
   maxHealth: 60
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -6947,7 +6947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  enemyType: 0
+  enemyType: 5
   maxHealth: 60
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -8924,7 +8924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  enemyType: 0
+  enemyType: 5
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -12369,7 +12369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  enemyType: 0
+  enemyType: 5
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}

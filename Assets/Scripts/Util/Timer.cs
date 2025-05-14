@@ -27,7 +27,7 @@ namespace Util
         {
             _value = value;
         }
-
+        
         public void Update(float direction = -1)
         {
             _value = Mathf.Clamp(_value + (_lastStep = direction * Time.deltaTime * CustomRigidbody2D.Scaling), 0, _maxValue);
