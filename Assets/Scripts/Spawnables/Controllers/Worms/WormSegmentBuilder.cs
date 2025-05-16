@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Spawnables;
 using UnityEngine;
 
 public class WormSegmentBuilder : MonoBehaviour
@@ -33,6 +34,13 @@ public class WormSegmentBuilder : MonoBehaviour
         child.transform.localPosition = relPos;
         oldChild = child;
         relPos.x += segLength;
+
+        var head = child;
+        GetComponent<MultiDamageable>().HealthChanged += (_, n) =>
+        {
+            if (n <= 0) head.GetComponent<EnemyDamageable>().SpawnHealthPickups();
+        };
+        
         for (int i = 0; i < length-2; i++)
         {
             child = Instantiate(segmentPrefab, transform);

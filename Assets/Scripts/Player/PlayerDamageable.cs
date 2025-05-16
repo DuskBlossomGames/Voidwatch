@@ -189,6 +189,12 @@ namespace Spawnables.Player
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
         }
 
+        public void Heal(float heal)
+        {
+            Health = Mathf.Min(Health + heal, MaxHealth);
+            healthBar.UpdatePercentage(Health, MaxHealth);
+        }
+
         protected override void OnDeath(GameObject source)
         {
 

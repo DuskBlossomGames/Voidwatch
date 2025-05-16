@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 8847518296011513265}
   - component: {fileID: 8963899016353805272}
   m_Layer: 8
-  m_Name: Missiler 2
+  m_Name: Rapid Missiler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,9 +159,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  tier: 3
   enemyType: 1
   maxHealth: 200
   varientParent: {fileID: 0}
+  healthPickup: {fileID: 1317461934895244640, guid: 5886eced7a3754dd3b2e186b34b40cbb, type: 3}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
   - {fileID: 717642507, guid: f0d388b170c0845958e53eed29d784e3, type: 3}
@@ -171,7 +173,7 @@ MonoBehaviour:
   explosionScale: 0.75
   bitScale: 2.25
   stunBar: {fileID: 6640671108004503463, guid: 8155757717abf4cd893fffe035e7281b, type: 3}
-  stunnable: {fileID: 7999954347094555490, guid: caa4ef12a7af944db9569048c9445bd7, type: 3}
+  stunnable: {fileID: 2209941649696653690}
   hitsToStun: 20
 --- !u!114 &582754640268470002
 MonoBehaviour:

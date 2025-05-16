@@ -12,14 +12,17 @@ public class BulletCollision : MonoBehaviour
 {
     public float dmg = 10;
     public GameObject owner;
+    public int chains;
     public float shieldMult, bleedPerc;
     public bool ignoresOwner;
+
+    private GameObject _firstCollider;
     
     [CanBeNull] public GameObject explosion;
     public float explosionRange;
     public float explosionDmg;
 
-    private bool _leftOwner;
+    private bool _leftFirstCollider;
     public bool isKinetic;
 
     public bool isEnabled = true;
@@ -27,6 +30,7 @@ public class BulletCollision : MonoBehaviour
 
     private void Start()
     {
+        if (_firstCollider == null) _firstCollider = owner;
         if (owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
     }
 
@@ -34,9 +38,9 @@ public class BulletCollision : MonoBehaviour
     {
         if (!isEnabled) return;
         
-        if (otherCollider.gameObject == owner)
+        if (otherCollider.gameObject == _firstCollider)
         {
-            _leftOwner = true;
+            _leftFirstCollider = true;
         }
 
     }
@@ -47,7 +51,7 @@ public class BulletCollision : MonoBehaviour
         var other = otherCollider.gameObject;
         if (other.layer == LayerMask.NameToLayer("Bullet Detector")) return;
 
-        if (_leftOwner || other != owner)
+        if (_leftFirstCollider || other != _firstCollider)
         {
             var damageable = other.GetComponent<IDamageable>();
             if (damageable != null)
@@ -71,7 +75,16 @@ public class BulletCollision : MonoBehaviour
                 Instantiate(explosion).GetComponent<ExplosionHandler>().Run(explosionDmg, explosionRange, gameObject.layer, ignore);
             }
 
-            Destroy(gameObject);
+            if (chains == 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                var newBullet = Instantiate(gameObject).GetComponent<BulletCollision>();
+                newBullet.chains = chains - 1;
+                newBullet._firstCollider = other;
+            }
         }
     }
 }

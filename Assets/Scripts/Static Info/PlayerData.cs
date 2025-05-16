@@ -23,9 +23,15 @@ namespace Static_Info
         public float dodgeVelocity;
         public float dodgeDistance;
         public float dodgeCooldown;
+        
+        [Space(10)]
+        [Header("Upgrade Values (uninitialized)")]
         public float dodgeDamage;
         public float dodgeExplosionDamage;
+        public float postDodgeMult = 1;
         public float collisionDamageMult = 1;
+        public int bulletChains;
+        public bool healthPickupsEnabled;
         public readonly List<PlayerDamageType> DamageTypes = new();
 
         public readonly List<UpgradePlayer.Upgrade> Upgrades = new();

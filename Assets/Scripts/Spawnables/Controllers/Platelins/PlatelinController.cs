@@ -13,6 +13,8 @@ public class PlatelinController : MonoBehaviour
     public float explosionScaleMult;
     public float gooSpawnTime;
 
+    public GameObject healthPickup;
+    
     public AnimationCurve scaleCurve;
     public float scaleCurveTime;
     
@@ -180,6 +182,11 @@ public class PlatelinController : MonoBehaviour
     {
         _leader._subjects.Remove(gameObject);
         Instantiate(goo, transform.position, transform.rotation).transform.localScale *= explosionScaleMult;
-        if (transform.parent.childCount == 1) Destroy(transform.parent.gameObject);
+        if (transform.parent.childCount == 1)
+        {
+            GetComponent<EnemyDamageable>().healthPickup = healthPickup;
+            GetComponent<EnemyDamageable>().SpawnHealthPickups();
+            Destroy(transform.parent.gameObject);
+        }
     }
 }

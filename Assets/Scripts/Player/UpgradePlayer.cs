@@ -114,7 +114,7 @@ public class UpgradePlayer
             }),
         new("Voidwrought Accumulator",
             "Attaches to your Void Energy eXtraction (V.E.X.) device, increasing Void Energy replenishment speed.",
-            "The Void surrounds us...",
+            "I am one with the Void...",
             Rarity.Common,
             false,
             () => {
@@ -180,7 +180,7 @@ public class UpgradePlayer
             }),
         new("Automatic Incendiary Device",
             "Attaching to the void jaunt module, this device will trigger a timed detonation upon entering Voidspace.",
-            "Need a hand? Here's some AID.",
+            "Need a hand? Take some AID.",
             Rarity.Common,
             false,
             () =>
@@ -207,13 +207,41 @@ public class UpgradePlayer
             }),
         new("Nanobot Cartridge",
             "Nanobots in your bullets electrify enemies. After enough subsequent hits to mechanical enemies, their controls are disabled.",
-            "",
+            "tHe GOvErnMenT iS InjECtInG NaNoboTS!11!1!1!!!!11!!",
             Rarity.Common,
             true,
             () =>
             {
                 PlayerDataInstance.DamageTypes.Add(PlayerDamageType.Electric);
-            })
+            }),
+        new("Void Energy Sieve",
+            "Captures Void Energy as you pass through Voidspace, infusing your next bullets with extra power.",
+            "Hippity hoppity, your Energy is my property!",
+            Rarity.Common,
+            true,
+            () =>
+            {
+                PlayerDataInstance.postDodgeMult = 1.5f;
+            }),
+        new("Intrinsic Refraction",
+            "Bullets refract upon hitting their target, launching a copy at the nearest enemy.",
+            "You get a bullet! And you get a bullet! And you get a bullet!",
+            Rarity.Common,
+            false,
+            () =>
+            {
+                PlayerDataInstance.bulletChains += 2;
+            }),
+        new("Reclamation Unit",
+            "Vanquished enemies leave behind residual chunks, repairing your ship on reclamation.",
+            "Reduce (to pieces), Reuse (the parts), Recycle (the corpses).",
+            Rarity.Common,
+            true,
+            () =>
+            {
+                PlayerDataInstance.healthPickupsEnabled = true;
+            }),
+        
     };
 
     public static readonly Dictionary<string, List<Upgrade>> BY_RARITY = new();

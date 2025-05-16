@@ -9,9 +9,25 @@ using Spawnables.Carcadon;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
+using static Static_Info.PlayerData;
 
 namespace Spawnables
 {
+    internal struct HealthPickup
+    {
+        public static readonly List<HealthPickup[]> HealthPickupDropsByTier = new()
+        {
+            new [] {new HealthPickup{Weight=0.7f, Value=0}, new HealthPickup{Weight=0.3f, Value=1}},
+            new [] {new HealthPickup{Weight=1, Value=1}},
+            new [] {new HealthPickup{Weight=0.5f, Value=1}, new HealthPickup{Weight=0.5f, Value=2}},
+            new [] {new HealthPickup{Weight=1, Value=2}},
+            new [] {new HealthPickup{Weight=1, Value=3}},
+        };
+        
+        public float Weight;
+        public float Value;
+    }
+    
     public enum EnemyType
     {
         None,
@@ -31,12 +47,14 @@ namespace Spawnables
         private const float STUN_TIME = 2;
         private const float STUN_FALL_WAIT_TIME = 5;
         private const float STUN_FALL_PERC_PER_SEC = 0.1f;
-
+        
+        [Range(1, 5)] public int tier;
         public EnemyType enemyType; // TODO: give values for these
         
         public int maxHealth;
         public GameObject varientParent;
-        
+
+        [CanBeNull] public GameObject healthPickup; // null for no drops, regardless of tier
         [CanBeNull] public GameObject explosion; // only put if you want an explosion
         public Sprite[] bitOptions;
         public int numBits;
@@ -104,6 +122,32 @@ namespace Spawnables
             _health += x;
         }
 
+        public void SpawnHealthPickups()
+        {
+            if (!PlayerDataInstance.healthPickupsEnabled || healthPickup == null) return;
+
+            var options = HealthPickup.HealthPickupDropsByTier[tier];
+            var sum = options.Sum(o => o.Weight);
+            var pick = Random.value * sum;
+
+            for (var i = 0; i < options.Length; i++)
+            {
+                if ((pick -= options[i].Weight) > 0) continue;
+
+                for (var j = 0; j < options[i].Value; j++)
+                {
+                    var pickup = Instantiate(healthPickup).transform;
+                    pickup.GetComponent<SpriteRenderer>().sprite = bitOptions[j];
+
+                    var angle = 2*Mathf.PI / options[i].Value * Random.Range(i, i + 1f);
+                    
+                    pickup.position = transform.position + transform.lossyScale.x * 2 * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));;
+                    pickup.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360f));
+                    pickup.localScale = 2*bitScale*Vector3.one;
+                }
+            }
+        }
+        
         protected override void OnDeath(GameObject source)
         {
             var angleOffset = Random.Range(0, 360f);
@@ -136,6 +180,8 @@ namespace Spawnables
                 explosionObj.transform.localScale = explosionScale * Vector3.one;
                 explosionObj.GetComponent<ExplosionHandler>().PlayVisuals();
             }
+            
+            SpawnHealthPickups();
         }
 
         public void Damage(float damage, GameObject source, List<PlayerDamageType> type)

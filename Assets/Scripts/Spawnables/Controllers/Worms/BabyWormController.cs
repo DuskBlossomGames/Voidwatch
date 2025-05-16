@@ -50,6 +50,8 @@ namespace Spawnables.Worms
                     _feedTimer.Value = 0;
                     _waitTimer.Value = waitTime;
                 }
+
+                if (n <= 0) head.GetComponent<EnemyDamageable>().SpawnHealthPickups();
             };
             
             _segLength = body.transform.lossyScale.y * 3/4f;

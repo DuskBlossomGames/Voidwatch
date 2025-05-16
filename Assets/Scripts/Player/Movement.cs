@@ -118,6 +118,7 @@ namespace Player
                 _dodgeTimer.Value = _dodgeTimeLength;
                 _dodgeCooldownTimer.Value = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity + PlayerDataInstance.dodgeCooldown;
                 _dodgeDirection = DodgeOnceDir ?? new Vector2(_forwards.x, _forwards.y);
+                _gun.HasDodgePowerAttack = true;
 
                 if (PlayerDataInstance.dodgeExplosionDamage > 0)
                 {

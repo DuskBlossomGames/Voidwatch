@@ -4,12 +4,14 @@ using ProgressBars;
 using UnityEngine;
 using Util;
 using static Static_Info.GunInfo;
+using static Static_Info.PlayerData;
 using Random = UnityEngine.Random;
 
 public class PlayerGunHandler : MonoBehaviour
 {
     [NonSerialized]
     public bool Shootable = true;
+    public bool HasDodgePowerAttack;
     
     public ProgressBar ammoBar;
 
@@ -120,15 +122,16 @@ public class PlayerGunHandler : MonoBehaviour
                     float vertForce = GunInfoInstance.shotForce + Random.Range(-GunInfoInstance.forceVarience, GunInfoInstance.forceVarience) + verOff;
                     float latForce = Random.Range(-GunInfoInstance.forceVarience, GunInfoInstance.forceVarience) + latOff;
                     bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
-                    bullet.GetComponent<BulletCollision>().dmg = GunInfoInstance.dmgMod;
+                    bullet.GetComponent<BulletCollision>().dmg = GunInfoInstance.dmgMod * (HasDodgePowerAttack ? PlayerDataInstance.postDodgeMult : 1);
                     bullet.GetComponent<BulletCollision>().owner = gameObject;
-
-
+                    bullet.GetComponent<BulletCollision>().chains = PlayerDataInstance.bulletChains;
                 }
 
             }
             audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
             audioPlayer.PlayOneShot(PlayerShootLaserGeneric);
+
+            HasDodgePowerAttack = false;
         }
 
         yield return new WaitForSeconds(GunInfoInstance.fireTime);

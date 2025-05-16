@@ -156,9 +156,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  tier: 2
   enemyType: 2
   maxHealth: 150
   varientParent: {fileID: 0}
+  healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
   - {fileID: 917325303, guid: aa89c7e183c9744529c6941d597291b7, type: 3}
@@ -167,6 +169,9 @@ MonoBehaviour:
   numBits: 3
   explosionScale: 0
   bitScale: 3
+  stunBar: {fileID: 0}
+  stunnable: {fileID: 0}
+  hitsToStun: 0
 --- !u!114 &301863512397517819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +191,7 @@ MonoBehaviour:
   leaderChance: 0.05
   explosionScaleMult: 2.5
   gooSpawnTime: 1.25
+  healthPickup: {fileID: 1317461934895244640, guid: 5886eced7a3754dd3b2e186b34b40cbb, type: 3}
   scaleCurve:
     serializedVersion: 2
     m_Curve:

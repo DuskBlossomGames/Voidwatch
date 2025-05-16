@@ -25,4 +25,9 @@ public class MultiDamageable : HealthHolder
     {
         Health = maxHealth;
     }
+
+    private void OnDestroy()
+    {
+        throw new NotImplementedException();
+    }
 }
