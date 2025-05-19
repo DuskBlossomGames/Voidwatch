@@ -32,6 +32,7 @@ namespace Static_Info
         public float collisionDamageMult = 1;
         public int bulletChains;
         public bool healthPickupsEnabled;
+        public bool autoDodge;
         public readonly List<PlayerDamageType> DamageTypes = new();
 
         public readonly List<UpgradePlayer.Upgrade> Upgrades = new();

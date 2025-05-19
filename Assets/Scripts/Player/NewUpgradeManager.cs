@@ -64,7 +64,7 @@ public class NewUpgradeManager : MonoBehaviour
     {
         playMov.SetInputBlocked(true);
         playMov.autoPilot = true;
-        playMov.gameObject.GetComponent<PlayerDamageable>().godmode = true;
+        playMov.GetComponent<PlayerDamageable>().godmode = true;
         followPlayer.suppress = true;
 
         var startAlpha = minimap.color.a;

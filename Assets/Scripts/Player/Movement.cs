@@ -22,8 +22,10 @@ namespace Player
         public Sprite afterImageSprite;
 
         public bool Dodging => !_dodgeTimer.IsFinished;
+        public float DodgeJuice => _dodgeJuice;
 
-        [NonSerialized] public Vector2? DodgeOnceDir = null;
+        [NonSerialized] public Vector2? DodgeOnceDir = null; // auto dodges in this direction
+        [NonSerialized] public float? DodgeOnceCost = null;  // auto dodges for this cost (either in DodgeOnceDir or mouse dir)
 
         private PlayerGunHandler _gun;
         private Collider2D _collider;
@@ -51,6 +53,7 @@ namespace Player
         private Vector2 _redirectDirection;
         private float _dodgeTimeLength;
         private float _dodgeJuice;
+        private float _dodgeCost;
         private readonly Timer _dodgeTimer = new();
         private readonly Timer _dodgeCooldownTimer = new();
         private readonly Timer _afterImageTimer = new();
@@ -111,11 +114,12 @@ namespace Player
             var curAngles = transform.rotation.eulerAngles;
             transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
-            if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(KeyCode.Space) || DodgeOnceDir != null))
+            if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(KeyCode.Space) || DodgeOnceDir != null || DodgeOnceCost != null))
             {
                 _preDodgeVel = velocity;
                 _dodgeTimeLength = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity;
                 _dodgeTimer.Value = _dodgeTimeLength;
+                _dodgeCost = DodgeOnceCost ?? PlayerDataInstance.dodgeJuiceCost;
                 _dodgeCooldownTimer.Value = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity + PlayerDataInstance.dodgeCooldown;
                 _dodgeDirection = DodgeOnceDir ?? new Vector2(_forwards.x, _forwards.y);
                 _gun.HasDodgePowerAttack = true;
@@ -128,6 +132,7 @@ namespace Player
                 }
                 
                 DodgeOnceDir = null;
+                DodgeOnceCost = null;
             }
 
             var wasDodging = !_dodgeTimer.IsFinished;
@@ -150,7 +155,7 @@ namespace Player
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
 
-            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate : -PlayerDataInstance.dodgeJuiceCost/_dodgeTimeLength*dodgeTimeDilation) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
+            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate : -_dodgeCost/_dodgeTimeLength*dodgeTimeDilation) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
             dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice);
 
             if (dodging)

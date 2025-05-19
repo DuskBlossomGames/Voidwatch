@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Player;
 using ProgressBars;
 using Spawnables.Carcadon;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
-using RootPlayer = Player;
 
 using static Static_Info.PlayerData;
 using Random = UnityEngine.Random;
@@ -66,11 +66,14 @@ namespace Spawnables.Player
         private readonly List<float> _vignetteCacheKeys = new();
         private readonly List<float> _vignetteCacheValues = new();
         private float _vignettePeakAlpha;
+        private Movement _movement;
 
         private Vector3 _startLoc;
         
         public new void Start()
         {
+            _movement = GetComponent<Movement>();
+            
             _startLoc = transform.position;
             
             healthBar.UpdatePercentage(Health, MaxHealth);
@@ -109,10 +112,23 @@ namespace Spawnables.Player
             return ShieldPower < 0;
         }
 
-        public override void Damage(float damage, GameObject source)
+        public override void Damage(float damage, GameObject source) { Damage(damage, source, 1, 0); }
+        
+        public override void Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
         {
             if (godmode) return;
-
+            
+            if (PlayerDataInstance.autoDodge)
+            {
+                var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
+                    19*Mathf.Log(damage/110.6f)); // magic formula; max dodgeable is 2000 dmg, first dmg above min cost is 200
+                if (cost >= _movement.DodgeJuice)
+                {
+                    _movement.DodgeOnceCost = cost;
+                    return;
+                }
+            }
+            
             if (_vignetteTimer.IsFinished)
             {
                 _vignetteTimer.Value = vignetteDuration;
@@ -130,10 +146,7 @@ namespace Spawnables.Player
             }
             vignette.mainScale = (maxVignetteScale - minVignetteScale) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteScale;
             _vignettePeakAlpha = (maxVignetteAlpha - minVignetteAlpha) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteAlpha;
-        }
-        
-        public override void Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
-        {
+            
             var bleed = damage * bleedPerc;
             damage -= bleed;
 
@@ -233,7 +246,7 @@ namespace Spawnables.Player
 
         IEnumerator DeathFade()
         {
-            GetComponent<RootPlayer.Movement>().SetInputBlocked(true);
+            _movement.SetInputBlocked(true);
             fadeOut.SetActive(true);
             fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, 0);
             for (int i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
@@ -252,7 +265,7 @@ namespace Spawnables.Player
                 transform.position = _startLoc;
                 godmode = false;
                 GetComponent<SpriteRenderer>().enabled = true;
-                GetComponent<RootPlayer.Movement>().SetInputBlocked(false);
+                _movement.SetInputBlocked(false);
                 fadeOut.SetActive(false);
             }
         }

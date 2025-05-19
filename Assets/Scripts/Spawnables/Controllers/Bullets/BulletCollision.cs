@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Player;
 using Spawnables;
@@ -7,6 +8,7 @@ using Spawnables.Player;
 using UnityEngine;
 using Util;
 using static Static_Info.PlayerData;
+using Object = UnityEngine.Object;
 
 public class BulletCollision : MonoBehaviour
 {
@@ -81,9 +83,18 @@ public class BulletCollision : MonoBehaviour
             }
             else
             {
+                var nearest = FindObjectsOfType<EnemyDamageable>()
+                    .OrderByDescending(e => (e.transform.position-transform.position).sqrMagnitude).ToList();
+
+                Vector3 dir;
+                if (nearest.Count == 0) dir = GetComponent<CustomRigidbody2D>().velocity.normalized;
+                else dir = nearest.First().transform.position - transform.position;
+                
                 var newBullet = Instantiate(gameObject).GetComponent<BulletCollision>();
                 newBullet.chains = chains - 1;
                 newBullet._firstCollider = other;
+                
+                newBullet.GetComponent<CustomRigidbody2D>().velocity = GetComponent<CustomRigidbody2D>().velocity.magnitude * dir;
             }
         }
     }

@@ -1040,6 +1040,7 @@ namespace Bosses.Worm
             
             // dodge as mega laser laserifies
             player.GetComponent<Movement>().DodgeOnceDir = Quaternion.Euler(0, 0, 90) * playerDir;
+            player.GetComponent<Movement>().DodgeOnceCost = 0;
             
             yield return new WaitForSeconds((mlc.laserBuildupTime - mlc.TimeToLightning)*1/4);
             
