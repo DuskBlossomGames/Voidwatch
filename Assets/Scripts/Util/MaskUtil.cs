@@ -14,8 +14,10 @@ namespace Util
                 var mask = 0;
                 for (var j = 0; j < 32; j++)
                 {
-                    if(!Physics.GetIgnoreLayerCollision(i, j)) mask |= 1 << j;
+                    if(!Physics2D.GetIgnoreLayerCollision(i, j)) mask |= 1 << j;
                 }
+
+                Debug.Log(mask);
                 COLLISION_MASKS[i] = mask;
             }
         }

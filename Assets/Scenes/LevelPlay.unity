@@ -1656,7 +1656,7 @@ MonoBehaviour:
   shipPull: 0.35
   mouseZoomScale: 5
   camLaziness: 1
-  suppres: 0
+  suppress: 0
 --- !u!1 &528046543
 GameObject:
   m_ObjectHideFlags: 0
@@ -4225,7 +4225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a90a10ea035f4aa9bd83f065b8606b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  merchantData: {fileID: 0}
 --- !u!114 &1331667020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5990,7 +5989,7 @@ MonoBehaviour:
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   nUpMan: {fileID: 682528864}
-  debugEnemy: {fileID: 0}
+  debugEnemy: {fileID: 6001684470992877439, guid: 5079c2dcbd0b5c34295a0202fde31d7a, type: 3}
 --- !u!4 &1780276284
 Transform:
   m_ObjectHideFlags: 0

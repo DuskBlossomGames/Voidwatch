@@ -93,7 +93,7 @@ namespace Spawnables
             _stunImmunityTimer.Update();
             _stunFallWaitTimer.Update();
 
-            if (_stunFallWaitTimer.IsFinished && _stunImmunityTimer.IsFinished && _stunTimer.IsFinished && _stunCount >= 0)
+            if (hitsToStun != 0 && _stunFallWaitTimer.IsFinished && _stunImmunityTimer.IsFinished && _stunTimer.IsFinished && _stunCount >= 0)
             {
                 _stunCount = Mathf.Max(0, _stunCount - hitsToStun * STUN_FALL_PERC_PER_SEC * Time.deltaTime);
                 _stunBar.UpdatePercentage(_stunCount, hitsToStun);
