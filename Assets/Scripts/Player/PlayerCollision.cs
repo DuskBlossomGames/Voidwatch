@@ -37,7 +37,10 @@ namespace Player
 
             if (_movement.Dodging)
             {
-                if (PlayerDataInstance.dodgeDamage > 0) damageable.Damage(PlayerDataInstance.dodgeDamage, gameObject);
+                if (PlayerDataInstance.dodgeDamage > 0)
+                {
+                    damageable.Damage(PlayerDataInstance.dodgeDamage, gameObject);
+                }
                 return;
             }
             

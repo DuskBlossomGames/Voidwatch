@@ -126,8 +126,10 @@ namespace Player
 
                 if (PlayerDataInstance.dodgeExplosionDamage > 0)
                 {
-                    Instantiate(explosion).GetComponent<ExplosionHandler>().Run(PlayerDataInstance.dodgeExplosionDamage,
-                        1 + PlayerDataInstance.dodgeExplosionDamage / 50, gameObject.layer,
+                    var obj = Instantiate(explosion);
+                    obj.transform.position = transform.position;
+                    obj.GetComponent<ExplosionHandler>().Run(PlayerDataInstance.dodgeExplosionDamage,
+                        1.5f + PlayerDataInstance.dodgeExplosionDamage / 25, gameObject.layer,
                         new List<Collider2D> { _collider });
                 }
                 

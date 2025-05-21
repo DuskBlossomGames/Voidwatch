@@ -13,6 +13,7 @@ public class SmartBoidHandler : MonoBehaviour
     public float responseRate;
 
     public float turnTowardsPlayer;
+    public float turnTowardsPlayerPerSec;
     public float commitAngle;
 
     public float speed;
@@ -52,6 +53,8 @@ public class SmartBoidHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        turnTowardsPlayer += turnTowardsPlayerPerSec * Time.deltaTime;
+        
         var deltaAngle = new Vector2(Mathf.Cos(Mathf.Deg2Rad*(90 + transform.rotation.eulerAngles.z)), Mathf.Sin(Mathf.Deg2Rad * (90 + transform.rotation.eulerAngles.z)));
         var sumturn = 0f;
         for (int i = 0; i < numRays; i++)
@@ -102,35 +105,16 @@ public class SmartBoidHandler : MonoBehaviour
 
     void Shoot()
     {
-        Vector2 diff = new Vector2(target.transform.position.x - transform.position.x, target.transform.position.y - transform.position.y);
+        Vector2 diff = target.transform.position - transform.position;
         Vector2 relVel = target.GetComponent<CustomRigidbody2D>().velocity - _rigidbody2D.velocity;
-        float angle = leadShot(diff, relVel, _gun.ExpectedVelocity());
-        //Debug.LogErrorFormat("Errored angle = {0}", angle);
-        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, -90 + Mathf.Rad2Deg * angle));
-        //transform.rotation = rot;
+        float angle = UtilFuncs.LeadShot(diff, relVel, _gun.ExpectedVelocity());
 
 
         if (diff.sqrMagnitude < shootDist * shootDist)
         {
             //_gun.Shoot(-transform.rotation.z);
-            _gun.Shoot(-90 - Mathf.Rad2Deg * angle - (transform.rotation.z));
+            _gun.Shoot(-90 + Mathf.Rad2Deg * angle - transform.rotation.eulerAngles.z);
         }
 
-    }
-
-    float leadShot(Vector2 relPos, Vector2 relVel, float bulletVel)
-    {
-        float a = bulletVel * bulletVel - relVel.sqrMagnitude;
-        float b = 2 * Vector2.Dot(relPos, relVel);
-        float c = relPos.sqrMagnitude;
-
-        if (b * b + 4 * a * c < 0 || a == 0)
-        {
-            return 0;
-        }
-
-        float colTime = (b + Mathf.Sqrt(b * b + 4 * a * c)) / (2 * a);
-        Vector2 colPos = relPos + colTime * relVel;
-        return Mathf.Atan2(colPos.y, colPos.x);
     }
 }

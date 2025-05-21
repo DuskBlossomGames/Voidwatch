@@ -53,14 +53,14 @@ public class NSpriteAnimation : MonoBehaviour
 
         var maxTime = (float) _frames.Length / framesPerSecond;
         if (loop) _timer %= maxTime;
-        else _timer = Mathf.Min(_timer, maxTime-Time.deltaTime);
+        else _timer = Mathf.Min(_timer, maxTime);
         
         UpdateFrame();
     }
 
     private void UpdateFrame()
     {
-        _sr.sprite = _frames[(int) (_timer * framesPerSecond)];
+        _sr.sprite = _frames[Mathf.Clamp((int) (_timer * framesPerSecond), 0, _frames.Length - 1)];
     }
 
 }

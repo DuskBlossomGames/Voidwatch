@@ -9,7 +9,7 @@ namespace ProgressBars
 
         private Camera _camera;
         private SpriteRenderer[] _srs;
-        private float _opacityPos = 1;
+        private float _opacityPos = 0;
 
         private void Awake()
         {
@@ -33,6 +33,11 @@ namespace ProgressBars
             transform.rotation = _camera.transform.rotation;
         }
 
+        public void UpdatePercentageSilently(float cur, float max)
+        {
+            base.UpdatePercentage(cur, max);
+        }
+        
         public override void UpdatePercentage(float cur, float max)
         {
             base.UpdatePercentage(cur, max);

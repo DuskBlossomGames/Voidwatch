@@ -74,7 +74,9 @@ public class BulletCollision : MonoBehaviour
                 var ignore = new List<Collider2D> { otherCollider };
                 if (ignoresOwner) ignore.Add(owner.GetComponent<Collider2D>());
                 
-                Instantiate(explosion).GetComponent<ExplosionHandler>().Run(explosionDmg, explosionRange, gameObject.layer, ignore);
+                var obj = Instantiate(explosion);
+                obj.transform.position = transform.position;
+                obj.GetComponent<ExplosionHandler>().Run(explosionDmg, explosionRange, gameObject.layer, ignore);
             }
 
             if (chains == 0)
@@ -85,16 +87,13 @@ public class BulletCollision : MonoBehaviour
             {
                 var nearest = FindObjectsOfType<EnemyDamageable>()
                     .OrderByDescending(e => (e.transform.position-transform.position).sqrMagnitude).ToList();
+                
+                chains -= 1;
+                _firstCollider = other;
 
-                Vector3 dir;
-                if (nearest.Count == 0) dir = GetComponent<CustomRigidbody2D>().velocity.normalized;
-                else dir = nearest.First().transform.position - transform.position;
-                
-                var newBullet = Instantiate(gameObject).GetComponent<BulletCollision>();
-                newBullet.chains = chains - 1;
-                newBullet._firstCollider = other;
-                
-                newBullet.GetComponent<CustomRigidbody2D>().velocity = GetComponent<CustomRigidbody2D>().velocity.magnitude * dir;
+                if (nearest.Count != 0) print(nearest.First().gameObject.name);
+                if (nearest.Count != 0) GetComponent<CustomRigidbody2D>().velocity =
+                    GetComponent<CustomRigidbody2D>().velocity.magnitude * (nearest.First().transform.position - transform.position).normalized;
             }
         }
     }

@@ -112,6 +112,7 @@ MonoBehaviour:
   visionAngleDeg: 100
   responseRate: 4
   turnTowardsPlayer: 0.9
+  turnTowardsPlayerPerSec: 0.1
   commitAngle: 5
   speed: 20
   target: {fileID: 0}

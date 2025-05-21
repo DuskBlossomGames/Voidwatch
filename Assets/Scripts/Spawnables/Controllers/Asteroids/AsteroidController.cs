@@ -37,7 +37,7 @@ namespace Spawnables.Asteroids
 
         public override void Damage(float damage, GameObject source)
         {
-            if (LayerMask.LayerToName(source.layer) == "PlayerOnlyHazard") return; // prevent bifurcator from incinerating them
+            if (source != null && LayerMask.LayerToName(source.layer) == "PlayerOnlyHazard") return; // prevent bifurcator from incinerating them
             
             base.Damage(damage, source);
         }
@@ -46,15 +46,13 @@ namespace Spawnables.Asteroids
         {
             if (!other.gameObject.TryGetComponent<Damageable>(out var dmgable)) return;
             if (other.gameObject.GetComponent<AsteroidController>() != null) return; // don't damage other asteroids
-
-            dmgable.Damage(350, gameObject, shieldMult, bleedPerc);
+            
+            dmgable.Damage(0.5f * other.relativeVelocity.sqrMagnitude, gameObject, shieldMult, bleedPerc);
         }
 
         protected override void OnDeath(GameObject source)
         {
-            // base.OnDeath(source); // TODO: spawn bits
-
-            if (nextSize == null) return;
+            if (nextSize == null || source == null) return;
 
             var vel = (source.GetComponent<CustomRigidbody2D>()?.velocity.normalized ?? _rb.velocity.normalized) * _rb.velocity.magnitude;
 

@@ -17,7 +17,6 @@ namespace Util
                     if(!Physics2D.GetIgnoreLayerCollision(i, j)) mask |= 1 << j;
                 }
 
-                Debug.Log(mask);
                 COLLISION_MASKS[i] = mask;
             }
         }

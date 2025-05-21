@@ -90,15 +90,19 @@ public class MissleAim : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Explode();
+        Explode(collision.collider);
     }
 
-    public void Explode()
+    public void Explode(Collider2D other = null)
     {
         var exp = Instantiate(explosion);
+        exp.transform.position = transform.position;
         exp.GetComponent<ExplosionHandler>().shieldMult = shieldMult;
         exp.GetComponent<ExplosionHandler>().bleedPerc = bleedPerc;
-        exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject.layer, new List<Collider2D>());
+
+        var ignore = new List<Collider2D>();
+        if (other != null) ignore.Add(other);
+        exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject.layer, ignore);
         Destroy(gameObject);
     }
 

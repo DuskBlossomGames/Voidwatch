@@ -18,7 +18,7 @@ public class ExplosionHandler : MonoBehaviour
     public void Run(float damage, float range, int layer, List<Collider2D> ignore)
     {
         var scale = range / 5; // ~5 is the empirically derived start scale
-        transform.localScale = new Vector3(scale, 1);
+        transform.localScale = new Vector3(scale, scale, 1);
 
         PlayVisuals();
         
@@ -29,7 +29,8 @@ public class ExplosionHandler : MonoBehaviour
                 Mathf.Sin(2 * Mathf.PI * i / rayNum));
             var hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + range * raydir, MaskUtil.COLLISION_MASKS[layer]);
             if (hit.collider == null || ignore.Contains(hit.collider)) continue;
-                    
+
+            ignore.Add(hit.collider);
             hit.transform.GetComponent<IDamageable>()?.Damage(damage, gameObject, shieldMult, bleedPerc);
         }
         StartCoroutine(Kill(.5f));

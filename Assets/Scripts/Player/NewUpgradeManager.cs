@@ -23,6 +23,7 @@ public class NewUpgradeManager : MonoBehaviour
     public CanvasGroup everythingElse;
     public float minimapFadeTime, titleTime, titleWaitTime, subtitleFadeTime, subtitleWaitTime, slideTime, slideWaitTime, fadeInTime;
     public float startAnchorMin, startAnchorMax;
+    public int debugUpgrade = -1; // TODO: remove
     
     public Movement playMov;
     public FollowPlayer followPlayer;
@@ -52,6 +53,7 @@ public class NewUpgradeManager : MonoBehaviour
     private void SetUpgrades()
     {
         _upgrades = UpgradePlayer.GetRandomUpgrades(3);
+        if (debugUpgrade != -1) _upgrades[0] = UpgradePlayer.UPGRADES[debugUpgrade];
     }
 
     public void Show()

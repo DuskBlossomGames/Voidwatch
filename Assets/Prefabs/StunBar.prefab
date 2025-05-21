@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac6e99cd6004c5c850e5b601ab8d715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 2
+  radius: 5.5
   opacityCurve:
     serializedVersion: 2
     m_Curve:

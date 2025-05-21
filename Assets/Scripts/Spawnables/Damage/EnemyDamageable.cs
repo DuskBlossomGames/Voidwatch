@@ -68,7 +68,7 @@ namespace Spawnables
         private readonly Timer _stunFallWaitTimer = new();
         private readonly Timer _stunImmunityTimer = new();
         private float _stunCount;
-        private ProgressBar _stunBar;
+        private HealthBar _stunBar;
         
         // have to do this b/c unity doesn't like duplicated properties -_-
         private float _health;
@@ -80,7 +80,7 @@ namespace Spawnables
             base.Start();
             Health = MaxHealth;
             
-            if (stunBar != null) _stunBar = Instantiate(stunBar).GetComponent<ProgressBar>();
+            if (stunBar != null) _stunBar = Instantiate(stunBar).GetComponent<HealthBar>();
             _stunBar?.transform.SetParent(transform, true);
 
             _stunImmunityTimer.Value = 3 + Mathf.Pow(hitsToStun, 1.1f) / 4; // calculate MaxValue once
@@ -96,7 +96,7 @@ namespace Spawnables
             if (hitsToStun != 0 && _stunFallWaitTimer.IsFinished && _stunImmunityTimer.IsFinished && _stunTimer.IsFinished && _stunCount >= 0)
             {
                 _stunCount = Mathf.Max(0, _stunCount - hitsToStun * STUN_FALL_PERC_PER_SEC * Time.deltaTime);
-                _stunBar.UpdatePercentage(_stunCount, hitsToStun);
+                _stunBar.UpdatePercentageSilently(_stunCount, hitsToStun);
             } 
 
             if (!_stunTimer.IsFinished)

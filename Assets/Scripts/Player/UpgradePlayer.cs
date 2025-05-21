@@ -176,7 +176,7 @@ public class UpgradePlayer
             false,
             () =>
             {
-                PlayerDataInstance.dodgeDamage += 200;
+                PlayerDataInstance.dodgeDamage += 50;
             }),
         new("Automatic Incendiary Device",
             "Attaching to the void jaunt module, this device will trigger a timed detonation upon entering Voidspace.",
@@ -185,7 +185,7 @@ public class UpgradePlayer
             false,
             () =>
             {
-                PlayerDataInstance.dodgeExplosionDamage += 300;
+                PlayerDataInstance.dodgeExplosionDamage += 100;
             }),
         new("Mining Drill",
             "A frontal drill increases the damage done when ramming ships.",
@@ -234,7 +234,7 @@ public class UpgradePlayer
             }),
         new("Reclamation Unit",
             "Vanquished enemies leave behind residual parts, repairing your ship on reclamation.",
-            "Reduce (to pieces), Reuse (the parts), Recycle (the corpses).",
+            "Reduce to pieces, Reuse the parts, Recycle the corpses.",
             Rarity.Common,
             true,
             () =>

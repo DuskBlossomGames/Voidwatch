@@ -139,7 +139,11 @@ namespace EnemySpawner
                 _timeTillExit -= Time.deltaTime;
                 if (_timeTillExit < 0)
                 {
-                    // TODO: destroy bifurcators
+                    // kill all hazards
+                    FindObjectsOfType<Damageable>().ToList().ForEach(dmg =>
+                    {
+                        if (dmg.gameObject.layer == LayerMask.NameToLayer("Hazards")) dmg.Damage(100000, null);
+                    });
                     nUpMan.Show();
                     Destroy(gameObject);
                 }

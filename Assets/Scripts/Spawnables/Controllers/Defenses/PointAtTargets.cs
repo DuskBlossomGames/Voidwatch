@@ -12,18 +12,7 @@ public class PointAtTargets : MonoBehaviour
     float _countdown = 0;
 
     public float turretBulletSpeed = 5000;
-
-    float leadShot(Vector2 relPos, Vector2 relVel, float bulletVel)
-    {
-        float a = bulletVel * bulletVel - relVel.sqrMagnitude;
-        float b = 2 * Vector2.Dot(relPos, relVel);
-        float c = relPos.sqrMagnitude;
-
-        float colTime = (b + Mathf.Sqrt(b * b + 4 * a * c)) / (2 * a);
-        Vector2 colPos = relPos + colTime * relVel;
-        return Mathf.Atan2(colPos.y, colPos.x);
-    }
-
+    
     Vector2 rot(Vector2 vec, float angle)
     {
         return new Vector2(vec.x * Mathf.Cos(angle) + vec.y * Mathf.Sin(angle), -vec.x * Mathf.Sin(angle) + vec.y * Mathf.Cos(angle));
@@ -39,7 +28,7 @@ public class PointAtTargets : MonoBehaviour
             _countdown -= Time.deltaTime;
             float bulletVel = turretBulletSpeed / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
             float globalrot = Mathf.Deg2Rad * transform.parent.rotation.eulerAngles.z;
-            float angle = leadShot(rot(diff,globalrot), rot(target.GetComponent<CustomRigidbody2D>().velocity,globalrot), bulletVel);
+            float angle = UtilFuncs.LeadShot(rot(diff,globalrot), rot(target.GetComponent<CustomRigidbody2D>().velocity,globalrot), bulletVel);
             _rot = angle;
             //_rot = Mathf.Atan2(diff.y, diff.x);
         } else

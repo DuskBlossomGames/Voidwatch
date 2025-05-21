@@ -180,7 +180,7 @@ MonoBehaviour:
   particles: {fileID: 8367763298320455633}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   stallTime: 1
-  dmg: 500
+  dmg: 200
   shieldMult: 0.8
   bleedPerc: 0
 --- !u!82 &8527055192818424703
@@ -305,14 +305,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  tier: 0
   enemyType: 1
   maxHealth: 10
   varientParent: {fileID: 0}
+  healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
   numBits: 0
   explosionScale: 0
   bitScale: 0
+  stunBar: {fileID: 0}
+  stunnable: {fileID: 0}
+  hitsToStun: 0
 --- !u!114 &5345334240102758022
 MonoBehaviour:
   m_ObjectHideFlags: 0
