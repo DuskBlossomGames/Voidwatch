@@ -1,9 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Util;
+using Random = UnityEngine.Random;
 
-using static Static_Info.PlayerData;
 public class ScrapController : MonoBehaviour
 {
     public int value = 1;
@@ -13,7 +13,7 @@ public class ScrapController : MonoBehaviour
 
     private Dictionary<int, Sprite[]> _spriteVals;
 
-    [System.Serializable] public class KVpair
+    [Serializable] public class KVpair
     {
         public int value;
         public Sprite[] sprites;
@@ -33,7 +33,7 @@ public class ScrapController : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
 
         var rend = GetComponent<SpriteRenderer>();
-        rend.sprite = _spriteVals[value][UnityEngine.Random.Range(0, _spriteVals[value].Length)];
+        rend.sprite = _spriteVals[value][Random.Range(0, _spriteVals[value].Length)];
         
     }
 

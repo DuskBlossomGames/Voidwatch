@@ -1,9 +1,9 @@
-using System;
 using Spawnables;
 using Spawnables.Asteroids;
 using Spawnables.Player;
 using UnityEngine;
 using Util;
+using static Static_Info.PlayerData;
 
 namespace Player
 {
@@ -12,6 +12,7 @@ namespace Player
         public float enemyMod, playerMod;
         public float trueDamageMod;
         public float cooldown;
+        public float shieldMult, bleedPerc;
 
         private readonly Timer _cooldownTimer = new();
         private Movement _movement;
@@ -32,16 +33,26 @@ namespace Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!_cooldownTimer.IsFinished || _movement.Dodging) return;
             if (!other.gameObject.TryGetComponent<Damageable>(out var damageable)) return;
+
+            if (_movement.Dodging)
+            {
+                if (PlayerDataInstance.dodgeDamage > 0)
+                {
+                    damageable.Damage(PlayerDataInstance.dodgeDamage, gameObject);
+                }
+                return;
+            }
+            
+            if (!_cooldownTimer.IsFinished) return;
             if (damageable.GetComponent<MissleAim>() != null) return;
                 
             var vel = (other.attachedRigidbody.velocity - _rb.velocity).magnitude;
-            damageable.Damage(enemyMod * vel, IDamageable.DmgType.Concussive, gameObject);
+            damageable.Damage(PlayerDataInstance.collisionDamageMult * enemyMod * vel, gameObject);
 
             if (!damageable.IsDead && other.gameObject.GetComponent<AsteroidController>() == null) // asteroid handles it itself
             {
-                _dmgable.Damage(playerMod * vel, IDamageable.DmgType.Concussive, gameObject);
+                _dmgable.Damage(playerMod * vel, gameObject, shieldMult, bleedPerc);
                 _cooldownTimer.Value = cooldown;
             }
             

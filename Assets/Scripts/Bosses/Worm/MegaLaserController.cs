@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using Util;
-using Debug = System.Diagnostics.Debug;
 
 namespace Bosses.Worm
 {

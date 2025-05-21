@@ -5012,6 +5012,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 8827315544250419742}
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!82 &8827315544250419742
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5414,6 +5416,8 @@ MonoBehaviour:
   playerMod: 1.5
   trueDamageMod: 1.2
   cooldown: 0.15
+  shieldMult: 2
+  bleedPerc: 0.1
 --- !u!1 &5328117465565166959
 GameObject:
   m_ObjectHideFlags: 0
@@ -5580,11 +5584,9 @@ GameObject:
   - component: {fileID: 5860123073663108939}
   - component: {fileID: 8279655053268107252}
   - component: {fileID: 288120715808517032}
-  - component: {fileID: 9038072507043348681}
   - component: {fileID: 8656161946522945512}
   - component: {fileID: 1428599344170491721}
   - component: {fileID: 3284878835932497912}
-  - component: {fileID: 4112729194113466389}
   - component: {fileID: 7806520410933609926}
   - component: {fileID: 6517574593632805756}
   - component: {fileID: 4196548031175783819}
@@ -5681,6 +5683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b649eef00d9fe439d8acf01ce0920d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   inputBlocked: 0
   autoPilot: 0
   dodgeBar: {fileID: 0}
@@ -5747,19 +5750,6 @@ MonoBehaviour:
     freezeX: 0
     freezeY: 0
     freezeRotation: 0
---- !u!114 &9038072507043348681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997792626973407928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 028cf50648571b74ea91103ca7784bff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletText: {fileID: 0}
 --- !u!114 &8656161946522945512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5773,7 +5763,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
   isTutorial: 0
   vignette: {fileID: 0}
   fadeOut: {fileID: 0}
@@ -5830,7 +5819,6 @@ MonoBehaviour:
   maxVignetteScale: 3.8
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
-  shieldDmgRes: {fileID: 11400000, guid: 9ec488554bfeb034b8069c3b7096c54b, type: 2}
   audioPlayer: {fileID: 0}
   PlayerHitShield: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
   PlayerHitDamage: {fileID: 8300000, guid: a5ac4e7b3681b458a894b4481f2fb3da, type: 3}
@@ -5908,18 +5896,6 @@ MonoBehaviour:
   size: 5
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
---- !u!114 &4112729194113466389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997792626973407928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bacdb5496416442088ee3d41050b2c9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7806520410933609926
 MonoBehaviour:
   m_ObjectHideFlags: 0

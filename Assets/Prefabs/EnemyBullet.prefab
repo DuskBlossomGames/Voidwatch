@@ -173,7 +173,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6569384808679381653}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a2e202d2eadd9a44bdec0557019786b, type: 3}
   m_Name: 
@@ -193,8 +193,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 10
   owner: {fileID: 0}
-  dmgType: 0
-  weaponID: 0
+  chains: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0

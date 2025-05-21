@@ -1243,8 +1243,6 @@ MonoBehaviour:
     name: idle
   framesPerSecond: 12
   loop: 1
-  destroyWhenDone: 0
-  timePerFrame: 0
 --- !u!212 &272954351
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1992,8 +1990,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
-  weaponID: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -2390,7 +2388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 5
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -2711,7 +2709,7 @@ MonoBehaviour:
   shipPull: 0.35
   mouseZoomScale: 5
   camLaziness: 1
-  suppres: 0
+  suppress: 0
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2824,6 +2822,8 @@ MonoBehaviour:
   holdTime: 3.5
   targetRot: -5
   ejectionVel: 20
+  shieldMult: 3
+  bleedPerc: 0
   wm: {fileID: 877449872}
 --- !u!61 &528326390
 BoxCollider2D:
@@ -3872,7 +3872,8 @@ PrefabInstance:
       propertyPath: bulletText
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4112729194113466389, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5157,7 +5158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 5
   maxHealth: 60
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -5435,8 +5436,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
-  weaponID: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -5612,6 +5613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!1 &1037884601
 GameObject:
   m_ObjectHideFlags: 0
@@ -6252,8 +6255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
-  weaponID: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -6461,8 +6464,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
-  weaponID: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -6944,7 +6947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 5
   maxHealth: 60
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -7127,6 +7130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!1 &1195694507
 GameObject:
   m_ObjectHideFlags: 0
@@ -7377,6 +7382,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!1 &1247414573
 GameObject:
   m_ObjectHideFlags: 0
@@ -7677,6 +7684,7 @@ MonoBehaviour:
   playRadius: 150
   gravitySource: {fileID: 1331667012}
   target: {fileID: 528394096}
+  turretBulletSpeed: 5000
 --- !u!212 &1258107692
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8391,6 +8399,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 0
+  bleedPerc: 0
 --- !u!1 &1331667012
 GameObject:
   m_ObjectHideFlags: 0
@@ -8561,7 +8571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a90a10ea035f4aa9bd83f065b8606b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  merchantData: {fileID: 0}
 --- !u!114 &1331667020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8613,8 +8622,6 @@ MonoBehaviour:
     name: 
   framesPerSecond: 8
   loop: 1
-  destroyWhenDone: 0
-  timePerFrame: 0
 --- !u!114 &1331667022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8704,6 +8711,8 @@ MonoBehaviour:
   expandDistance: 175
   damage: 150
   lrWidth: 0.5
+  shieldMult: 3
+  bleedPerc: 0.3
   numPoints: 200
 --- !u!1 &1362879762
 GameObject:
@@ -8915,7 +8924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 5
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -9744,8 +9753,6 @@ MonoBehaviour:
     name: idle
   framesPerSecond: 12
   loop: 1
-  destroyWhenDone: 0
-  timePerFrame: 0
 --- !u!212 &1476780759
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11054,8 +11061,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
-  weaponID: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -11320,6 +11327,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 2
+  bleedPerc: 0.2
 --- !u!61 &1618052925
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12360,7 +12369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 5
   maxHealth: 0
   varientParent: {fileID: 0}
   explosion: {fileID: 0}
@@ -12541,6 +12550,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 2
+  bleedPerc: 0.2
 --- !u!1 &1887376682
 GameObject:
   m_ObjectHideFlags: 0
@@ -13005,8 +13016,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 150
   owner: {fileID: 490401127}
-  dmgType: 0
-  weaponID: 0
+  shieldMult: 0
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0
@@ -13183,6 +13194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1000
+  shieldMult: 2
+  bleedPerc: 0.2
 --- !u!1 &2025802648
 GameObject:
   m_ObjectHideFlags: 0
@@ -13861,8 +13874,6 @@ MonoBehaviour:
     name: idle
   framesPerSecond: 12
   loop: 1
-  destroyWhenDone: 0
-  timePerFrame: 0
 --- !u!1 &362666455514565543
 GameObject:
   m_ObjectHideFlags: 0
@@ -13949,8 +13960,6 @@ MonoBehaviour:
     name: idle
   framesPerSecond: 12
   loop: 1
-  destroyWhenDone: 0
-  timePerFrame: 0
 --- !u!224 &757264228707339590
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14277,7 +14286,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -602751032, guid: 24791bf1be61d4d32880b7f61ff4c679, type: 3}
+  m_Sprite: {fileID: -593038361, guid: 24791bf1be61d4d32880b7f61ff4c679, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14322,8 +14331,6 @@ MonoBehaviour:
     name: idle
   framesPerSecond: 12
   loop: 1
-  destroyWhenDone: 0
-  timePerFrame: 0
 --- !u!1 &6002535217696518413
 GameObject:
   m_ObjectHideFlags: 0
@@ -14486,7 +14493,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1467424432, guid: 24791bf1be61d4d32880b7f61ff4c679, type: 3}
+  m_Sprite: {fileID: 491601945, guid: 24791bf1be61d4d32880b7f61ff4c679, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14774,7 +14781,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1532652555, guid: 24791bf1be61d4d32880b7f61ff4c679, type: 3}
+  m_Sprite: {fileID: -635087470, guid: 24791bf1be61d4d32880b7f61ff4c679, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 08a039c8910a6784b893ebe282ff723c, type: 2}
+  enemyType: 1
   maxHealth: 600
   varientParent: {fileID: 0}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
@@ -233,6 +233,9 @@ MonoBehaviour:
   numBits: 4
   explosionScale: 0.25
   bitScale: 2
+  stunBar: {fileID: 6640671108004503463, guid: 8155757717abf4cd893fffe035e7281b, type: 3}
+  stunnable: {fileID: 788439408942379800}
+  hitsToStun: 6
   root: {fileID: 6810281189628237293}
   dmgMod: 1
 --- !u!61 &8052478090706259117
@@ -690,5 +693,3 @@ MonoBehaviour:
     name: lightningDefault
   framesPerSecond: 8
   loop: 1
-  destroyWhenDone: 0
-  timePerFrame: 0

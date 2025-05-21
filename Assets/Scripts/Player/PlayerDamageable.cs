@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using ProgressBars;
-using JetBrains.Annotations;
-using Scriptable_Objects;
-using Static_Info;
-using UnityEngine;
-using UnityEngine.ResourceManagement.Diagnostics;
-using UnityEngine.Serialization;
-using UnityEngine.SceneManagement;
-using Util;
 using System.Collections;
-using UnityEditor.UI;
-using RootPlayer = Player;
+using System.Collections.Generic;
+using JetBrains.Annotations;
+using Player;
+using ProgressBars;
+using Spawnables.Carcadon;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Util;
 
 using static Static_Info.PlayerData;
 using Random = UnityEngine.Random;
@@ -32,13 +27,13 @@ namespace Spawnables.Player
         public float minVignetteScale, maxVignetteScale;
 
         public ProgressBar healthBar, shieldBar;
-        public DamageResistances shieldDmgRes;
 
         public AudioSource audioPlayer;
         public AudioClip PlayerHitShield;
         private float _AudioPlayerShieldVolumeStatic;
         private float _AudioPlayerPitchStatic;
         public AudioClip PlayerHitDamage;
+        // TODO: swap PlayerHitShield and PlayerHitDamage
 
         public bool godmode = false;
 
@@ -71,17 +66,18 @@ namespace Spawnables.Player
         private readonly List<float> _vignetteCacheKeys = new();
         private readonly List<float> _vignetteCacheValues = new();
         private float _vignettePeakAlpha;
+        private Movement _movement;
 
         private Vector3 _startLoc;
-
+        
         public new void Start()
         {
+            _movement = GetComponent<Movement>();
+            
             _startLoc = transform.position;
             
             healthBar.UpdatePercentage(Health, MaxHealth);
 
-            shieldDmgRes.Ready();
-            dmgRes.Ready();
             Destroy(_healthBar);
             ShieldPower = ShieldMaxPower;
 
@@ -116,10 +112,23 @@ namespace Spawnables.Player
             return ShieldPower < 0;
         }
 
-        public override void Damage(float damage, IDamageable.DmgType dmgType, GameObject source, float reduceMod = 1f)
+        public override void Damage(float damage, GameObject source) { Damage(damage, source, 1, 0); }
+        
+        public override void Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
         {
             if (godmode) return;
-
+            
+            if (PlayerDataInstance.autoDodge)
+            {
+                var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
+                    19*Mathf.Log(damage/110.6f)); // magic formula; max dodgeable is 2000 dmg, first dmg above min cost is 200
+                if (cost <= _movement.DodgeJuice)
+                {
+                    _movement.DodgeOnceCost = cost;
+                    return;
+                }
+            }
+            
             if (_vignetteTimer.IsFinished)
             {
                 _vignetteTimer.Value = vignetteDuration;
@@ -137,9 +146,9 @@ namespace Spawnables.Player
             }
             vignette.mainScale = (maxVignetteScale - minVignetteScale) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteScale;
             _vignettePeakAlpha = (maxVignetteAlpha - minVignetteAlpha) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteAlpha;
-
-            float bleed = damage * shieldDmgRes.dmgBleed[(int)dmgType];
-            damage -= bleed;//some damage leaks through
+            
+            var bleed = damage * bleedPerc;
+            damage -= bleed;
 
             if (damage > 0)
             {
@@ -147,35 +156,26 @@ namespace Spawnables.Player
                 {
                     bleed += damage;
 
-                  /*  audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-                    audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
+                    if (damage > 5)
+                    {
+                        audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+                        audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
 
-                  audioPlayer.PlayOneShot(PlayerHitShield);*/
-
-                  audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-                  audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
-
-                    audioPlayer.clip = PlayerHitShield;
-                    if(damage > 5){
-                      audioPlayer.Play();}
-                    Debug.Log("AUDIO PLAYED!!");
+                        audioPlayer.clip = PlayerHitShield;
+                        audioPlayer.Play();
+                    }
                 }
                 else
                 {
-                    // only apply shield dmg res if it goes to shield
-                    damage -= reduceMod * shieldDmgRes.dmgReduce[(int)dmgType];
-                    damage *= shieldDmgRes.dmgMod[(int)dmgType];
-
-                    ShieldPower -= damage;
-                    ShieldPower -= 1;
+                    ShieldPower -= damage * shieldMult;
                     if (ShieldPower < -ShieldMaxDebt)
                     {
-                        float overDebt = -ShieldMaxDebt - ShieldPower;
+                        var overDebt = -ShieldMaxDebt - ShieldPower;
                         ShieldPower += overDebt;
-                        bleed += overDebt;//excess damage overflows to bleeded damage
+                        bleed += overDebt;
                     }
 
-                    audioPlayer.pitch = _AudioPlayerPitchStatic + UnityEngine.Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+                    audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
                     audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/13f; //volume of hit modulates logarithmically with damage dealth
                     audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
                     audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
@@ -185,10 +185,7 @@ namespace Spawnables.Player
 
                 }
             }
-
-            bleed -= reduceMod * dmgRes.dmgReduce[(int)dmgType];
-            bleed *= dmgRes.dmgMod[(int)dmgType];
-
+            
             if (bleed > 0)
             {
                 Health -= bleed > 0 ? bleed : 0;
@@ -203,6 +200,12 @@ namespace Spawnables.Player
 
             healthBar.UpdatePercentage(Health, MaxHealth);
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
+        }
+
+        public void Heal(float heal)
+        {
+            Health = Mathf.Min(Health + heal, MaxHealth);
+            healthBar.UpdatePercentage(Health, MaxHealth);
         }
 
         protected override void OnDeath(GameObject source)
@@ -222,7 +225,7 @@ namespace Spawnables.Player
                 rb.velocity = BIT_VEL * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
                 rb.gravityScale = 0;
 
-                var ftd = rb.gameObject.AddComponent<Carcadon.FadeToDeath>();
+                var ftd = rb.gameObject.AddComponent<FadeToDeath>();
                 ftd.fadeTime = BIT_FADE;
                 ftd.TimeToLive = BIT_TTL;
 
@@ -237,21 +240,20 @@ namespace Spawnables.Player
                 explosionObj.SetActive(true);
                 explosionObj.transform.position = transform.position;
                 explosionObj.transform.localScale = explosionScale * Vector3.one;
-                explosionObj.GetComponent<ExplosionHandler>().Run();
-                explosionObj.GetComponent<ParticleSystem>().Play();
+                explosionObj.GetComponent<ExplosionHandler>().PlayVisuals();
             }
         }
 
         IEnumerator DeathFade()
         {
-            GetComponent<RootPlayer.Movement>().SetInputBlocked(true);
+            _movement.SetInputBlocked(true);
             fadeOut.SetActive(true);
-            fadeOut.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0);
+            fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, 0);
             for (int i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
             {
                 yield return new WaitForSecondsRealtime(.01f);
                 var prog = i / (100 * fadeouttime);
-                fadeOut.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, Mathf.Pow(prog, .5f));
+                fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, Mathf.Pow(prog, .5f));
             }
 
             if (!isTutorial)
@@ -263,7 +265,7 @@ namespace Spawnables.Player
                 transform.position = _startLoc;
                 godmode = false;
                 GetComponent<SpriteRenderer>().enabled = true;
-                GetComponent<RootPlayer.Movement>().SetInputBlocked(false);
+                _movement.SetInputBlocked(false);
                 fadeOut.SetActive(false);
             }
         }

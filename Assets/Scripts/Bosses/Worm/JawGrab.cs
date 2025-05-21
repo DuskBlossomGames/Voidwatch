@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
+using Player;
 using Spawnables;
 using Spawnables.Player;
-using TMPro;
 using UnityEngine;
 using Util;
 
@@ -11,6 +9,7 @@ namespace Bosses.Worm
     public class JawGrab : MonoBehaviour
     {
         public float grabDamage, grabTime, holdTime, targetRot, ejectionVel;
+        public float shieldMult, bleedPerc;
         public WormBrain wm;
 
         private Transform _leftJaw, _rightJaw, _player;
@@ -34,7 +33,7 @@ namespace Bosses.Worm
         {
             if (!enabled) return;
             
-            var player = other.GetComponent<Player.Movement>();
+            var player = other.GetComponent<Movement>();
             if (!player || player.inputBlocked || player.Dodging) return;
             _player = player.transform;
             
@@ -45,7 +44,7 @@ namespace Bosses.Worm
         {
             if (!enabled) return;
             
-            if (!other.TryGetComponent<Player.Movement>(out var movement)) return;
+            if (!other.TryGetComponent<Movement>(out var movement)) return;
             movement.inputBlocked = false;
             if (HasPlayer) _player.GetComponent<CustomRigidbody2D>().velocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
             _holdTimer.Value = 0;
@@ -61,7 +60,7 @@ namespace Bosses.Worm
 
             if (_holdTimer.IsActive && _holdTimer.IsFinished)
             {
-                _player.GetComponent<Player.Movement>().inputBlocked = false;
+                _player.GetComponent<Movement>().inputBlocked = false;
                 _player.GetComponent<CustomRigidbody2D>().velocity += (Vector2)(transform.rotation * new Vector3(ejectionVel, 0, 0));
                 _player = null;
 
@@ -71,9 +70,9 @@ namespace Bosses.Worm
 
             if (!_holdTimer.IsActive && _clampTimer.IsFinished)
             {
-                _player.GetComponent<Player.Movement>().inputBlocked = true;
+                _player.GetComponent<Movement>().inputBlocked = true;
                 _player.GetComponent<CustomRigidbody2D>().velocity = Vector2.zero;
-                _player.GetComponent<PlayerDamageable>().Damage(grabDamage, IDamageable.DmgType.Concussive, gameObject);
+                _player.GetComponent<PlayerDamageable>().Damage(grabDamage, gameObject, shieldMult, bleedPerc);
                 wm.BiteFinish();
 
                 _holdTimer.Value = holdTime;

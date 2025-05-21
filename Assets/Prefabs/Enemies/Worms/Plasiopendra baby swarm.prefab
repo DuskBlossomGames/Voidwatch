@@ -250,14 +250,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 5118d3f272cff524dbb6354c0b9dbb77, type: 2}
+  tier: 0
+  enemyType: 3
   maxHealth: 50
   varientParent: {fileID: 0}
+  healthPickup: {fileID: 0}
   explosion: {fileID: 0}
-  bitOptions: []
-  numBits: 0
+  bitOptions:
+  - {fileID: 21300000, guid: fbd1f535193f04e1289f2aa3f1c57061, type: 3}
+  - {fileID: 21300000, guid: e706cd000b8a04f92bc005b6ae94b1b7, type: 3}
+  numBits: 3
   explosionScale: 0
-  bitScale: 0
+  bitScale: 0.75
+  stunBar: {fileID: 0}
+  stunnable: {fileID: 0}
+  hitsToStun: 0
   root: {fileID: 67814197549092420}
   dmgMod: 1
 --- !u!114 &5953054369909028972
@@ -292,7 +299,6 @@ GameObject:
   - component: {fileID: 5797002919009100865}
   - component: {fileID: 3699540519930664418}
   - component: {fileID: 4594104219381906187}
-  - component: {fileID: 1015234067541467112}
   m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
@@ -461,28 +467,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 5118d3f272cff524dbb6354c0b9dbb77, type: 2}
+  tier: 1
+  enemyType: 3
   maxHealth: 50
   varientParent: {fileID: 0}
+  healthPickup: {fileID: 1317461934895244640, guid: 5886eced7a3754dd3b2e186b34b40cbb, type: 3}
   explosion: {fileID: 0}
-  bitOptions: []
-  numBits: 0
+  bitOptions:
+  - {fileID: 21300000, guid: fbd1f535193f04e1289f2aa3f1c57061, type: 3}
+  - {fileID: 21300000, guid: e706cd000b8a04f92bc005b6ae94b1b7, type: 3}
+  numBits: 3
   explosionScale: 0
-  bitScale: 0
+  bitScale: 0.75
+  stunBar: {fileID: 0}
+  stunnable: {fileID: 0}
+  hitsToStun: 0
   root: {fileID: 67814197549092420}
   dmgMod: 1
---- !u!114 &1015234067541467112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2409627043472435659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a3bb7c1779442395f2d003c7977edf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6951849249803381746
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,14 +648,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 5118d3f272cff524dbb6354c0b9dbb77, type: 2}
+  tier: 0
+  enemyType: 3
   maxHealth: 50
   varientParent: {fileID: 0}
+  healthPickup: {fileID: 0}
   explosion: {fileID: 0}
-  bitOptions: []
-  numBits: 0
+  bitOptions:
+  - {fileID: 21300000, guid: fbd1f535193f04e1289f2aa3f1c57061, type: 3}
+  - {fileID: 21300000, guid: e706cd000b8a04f92bc005b6ae94b1b7, type: 3}
+  numBits: 3
   explosionScale: 0
-  bitScale: 0
+  bitScale: 0.75
+  stunBar: {fileID: 0}
+  stunnable: {fileID: 0}
+  hitsToStun: 0
   root: {fileID: 67814197549092420}
   dmgMod: 1
 --- !u!114 &5538207632579746697

@@ -7,7 +7,6 @@ using ProgressBars;
 using Spawnables;
 using Spawnables.Carcadon;
 using Spawnables.Worms;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 using Util;
@@ -237,7 +236,7 @@ namespace Bosses.Worm
             {
                 foreach (var dmgable in GetComponentsInChildren<WormEyeDamageable>())
                 {
-                    dmgable.Damage(float.PositiveInfinity, IDamageable.DmgType.Black, gameObject, 0); // kill, triggering OnDeath
+                    dmgable.Damage(float.PositiveInfinity, gameObject); // kill, triggering OnDeath
                 }
             }
 
@@ -692,7 +691,7 @@ namespace Bosses.Worm
                             foreach (var fb in _fakeSegs[idx].GetComponentsInChildren<FloppyBrain>())
                             {
                                 fb.Clone(head.GetComponentsInChildren<FloppyBrain>()[i++]);
-                                for (var j = 0; j < fb.segments.Count; j++) fb.positions[j] = fb.segments[j].position;
+                                for (var j = 0; j < fb.segments.Count; j++) fb.Positions[j] = fb.segments[j].position;
                             }
                             Destroy(_fakeSegs[idx].GetComponent<CustomRigidbody2D>());
                             Destroy(_fakeSegs[idx].GetComponent<Rigidbody2D>());
@@ -703,7 +702,7 @@ namespace Bosses.Worm
 
                             foreach (var fb in head.GetComponentsInChildren<FloppyBrain>())
                             {
-                                for (var j = 0; j < fb.segments.Count; j++) fb.positions[j] = fb.segments[j].position;
+                                for (var j = 0; j < fb.segments.Count; j++) fb.Positions[j] = fb.segments[j].position;
                             }
 
                             _currdir = pathfinder.AngleToVector(Mathf.Deg2Rad * head.transform.rotation.eulerAngles.z);
@@ -1041,6 +1040,7 @@ namespace Bosses.Worm
             
             // dodge as mega laser laserifies
             player.GetComponent<Movement>().DodgeOnceDir = Quaternion.Euler(0, 0, 90) * playerDir;
+            player.GetComponent<Movement>().DodgeOnceCost = 0;
             
             yield return new WaitForSeconds((mlc.laserBuildupTime - mlc.TimeToLightning)*1/4);
             

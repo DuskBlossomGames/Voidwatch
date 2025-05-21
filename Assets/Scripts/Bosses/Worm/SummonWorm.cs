@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using Util;
-using Random = UnityEngine.Random;
 
 namespace Bosses.Worm
 {
@@ -54,7 +51,7 @@ namespace Bosses.Worm
             var head = _summoning.GetChild(0).GetComponent<WormSegment>();
             if (head.enabled)
             {
-                _oldSegPos = new System.Collections.Generic.List<Vector3>();
+                _oldSegPos = new List<Vector3>();
                 for (var i = 0; i < _numSegs; i++) { 
                     SetupSegment(i, enabled: false, masked: true);
                     _summoning.GetChild(i).GetComponent<WormSegment>().enabled = false;

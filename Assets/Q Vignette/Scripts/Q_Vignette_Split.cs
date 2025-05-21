@@ -1,11 +1,5 @@
-﻿using UnityEngine;
-
-using UnityEngine.UI;
-
-using UnityEditor; 
-
-
-
+﻿using System;
+using UnityEngine;
 
 [ExecuteInEditMode] 
 public class Q_Vignette_Split : Q_Vignette_Base
@@ -47,15 +41,15 @@ public class Q_Vignette_Split : Q_Vignette_Base
     
 
     // matching the above 8 variables, just to register their changing
-    [System.NonSerialized]public float o_skyScale = 0; 
-    [System.NonSerialized]public Color o_skyColor = new Color( 0 , 0 , 0 , 0 );
-    [System.NonSerialized]public int o_skyCornerType;
-    [System.NonSerialized]public bool o_stretchSkyToScreenRatio = false;
+    [NonSerialized]public float o_skyScale = 0; 
+    [NonSerialized]public Color o_skyColor = new Color( 0 , 0 , 0 , 0 );
+    [NonSerialized]public int o_skyCornerType;
+    [NonSerialized]public bool o_stretchSkyToScreenRatio = false;
 
-    [System.NonSerialized]public float o_mainScale = 0;
-    [System.NonSerialized]public Color o_mainColor=new Color(0,0,0,0);
-    [System.NonSerialized]public int o_mainCornerType;
-    [System.NonSerialized]public bool o_stretchMainToScreenRatio = false;
+    [NonSerialized]public float o_mainScale = 0;
+    [NonSerialized]public Color o_mainColor=new Color(0,0,0,0);
+    [NonSerialized]public int o_mainCornerType;
+    [NonSerialized]public bool o_stretchMainToScreenRatio = false;
     
 
 

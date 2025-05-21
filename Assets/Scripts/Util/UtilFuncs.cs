@@ -1,27 +1,9 @@
 using UnityEngine;
-using System;
-using System.IO;
 
 namespace Util
 {
     public class UtilFuncs
     {
-        public static bool FullyContains(Bounds container, Bounds obj)
-        {
-            for (var x = -1; x <= 1; x += 2)
-            {
-                for (var y = -1; y <= 1; y += 2)
-                {
-                    if (!container.Contains(obj.center + new Vector3(obj.extents.x * x, obj.extents.y * y, 0)))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
         public static Vector2 LeadShotNorm(Vector2 relPos, Vector2 relVel, float bulletVel)
         {
             float a = bulletVel * bulletVel - relVel.sqrMagnitude;
@@ -90,108 +72,19 @@ namespace Util
 
         public static float MinUnsigned(float x, float y)
         {
-            if (Mathf.Abs(x) < Mathf.Abs(y))
-            {
-                return x;
-            }
-            else
-            {
-                return y;
-            }
+            return Mathf.Abs(x) < Mathf.Abs(y) ? x : y;
         }
-
-        public static float SmallestAngleDist(float orig, float tar)
-        {
-            return MinUnsigned(MinUnsigned(tar - orig, tar + 2 * Mathf.PI - orig), tar - 2 * Mathf.PI - orig);
-        }
-
-        public static Vector2 TangentPointOnCircleFromPoint(Vector2 circleCenter, float radius, Vector2 externalPoint)
-        {
-            Vector2 diff = circleCenter - externalPoint;
-            Vector2 norm = diff.normalized;
-            Vector2 perp = Vector2.Perpendicular(norm);
-
-            float sqMag = diff.sqrMagnitude;
-            float mag = diff.magnitude;
-            float sqRadius = radius * radius;
-
-            float magic = sqMag - sqRadius;
-            float xdiv = radius * mag;
-            float ydiv = sqMag;
-
-            return externalPoint + (norm * (magic / xdiv) + perp * Mathf.Sqrt(magic / ydiv)) * radius;
-        }
-
+        
         public static Vector2 Rot(Vector2 vec, float angle)
         {
             return new Vector2(vec.x * Mathf.Cos(angle) - vec.y * Mathf.Sin(angle), vec.x * Mathf.Sin(angle) + vec.y * Mathf.Cos(angle));
         }
-
-        public static Vector2 Rot(Vector2 vec, Vector2 angle)
-        {
-            return vec.x * angle + vec.y * Vector2.Perpendicular(angle);
-        }
-
+        
         public static Vector2 AngleToVector(float angle)
         {
             return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         }
-
-        [System.Serializable]
-        public class IRef<T> : ISerializationCallbackReceiver where T : class
-        {
-            public UnityEngine.Object target;
-            public T I { get => target as T; }
-            public static implicit operator bool(IRef<T> ir) => ir.target != null;
-            void OnValidate()
-            {
-                if (!(target is T))
-                {
-                    if (target is GameObject go)
-                    {
-                        target = null;
-                        foreach (Component c in go.GetComponents<Component>())
-                        {
-                            if (c is T)
-                            {
-                                target = c;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            void ISerializationCallbackReceiver.OnBeforeSerialize() => this.OnValidate();
-            void ISerializationCallbackReceiver.OnAfterDeserialize() { }
-        }
-
-        public static void WriteToFile(string FileName, string Text)
-        {
-
-        // Set a variable to the Documents path.
-        string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-        Debug.Log(Path.Combine(docPath, FileName));
-        // Append "text" to an existing file named "FileName".
-        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, FileName), true))
-        {
-            outputFile.WriteLine(Text);
-        }
-      }
-
-
-      public static float ClampAngle(float current, float min, float max)
-      {
-          float dtAngle = Mathf.Abs(((min - max) + 180) % 360 - 180);
-          float hdtAngle = dtAngle * 0.5f;
-          float midAngle = min + hdtAngle;
-
-          float offset = Mathf.Abs(Mathf.DeltaAngle(current, midAngle)) - hdtAngle;
-          if (offset > 0)
-              current = Mathf.MoveTowardsAngle(current, midAngle, offset);
-          return current;
-      }
+        
 
       public class Anim
       {

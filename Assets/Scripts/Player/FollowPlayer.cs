@@ -1,5 +1,4 @@
 using System;
-using System.Timers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Timer = Util.Timer;
@@ -18,14 +17,13 @@ namespace Player
 
         [NonSerialized] public bool Enabled = true;
 
-        public bool suppres = false;
+        public bool suppress;
         
         private Vector3 _camOffset;
         
         private Camera _cameraComponent;
         private Camera _mainCamera;
         private Vector3 _moddedOffset;
-        private float _timeSubStep;
         private Vector3 _oldOffset;
 
         private Timer _screenShake = new();
@@ -68,18 +66,17 @@ namespace Player
             
             var playerPos = new Vector3(playerPosition.x, playerPosition.y, cameraPosition.z);
             var mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            if (suppres) mousePos = playerPos;
+            if (suppress) mousePos = playerPos;
             var mouseToPlayer = mousePos - playerPos;
             var sqM = (mouseToPlayer - (cameraPosition - playerPos)).sqrMagnitude/camLaziness;
             var mouseInf = mouseToPlayer.sqrMagnitude / 10;
             var scale = (sqM + mouseInf) / (1 + sqM + mouseInf);
-            if (suppres) scale = 1;
+            if (suppress) scale = 1;
             //camOffset = Lerp((transform.position - playerpos), mouse2player * shipPull, jump * scale);
 
             //transform.position = playerpos + camOffset;
             _camOffset = Lerp(cameraPosition, Lerp(playerPos,mousePos, shipPull), jump * scale * scale);
 
-            _timeSubStep = 0;
             //_moddedOffset = _camOffset;
             transform.position = _camOffset;
             transform.rotation = Quaternion.Euler(new Vector3(0,0,-90+Mathf.Rad2Deg*Mathf.Atan2(playerPos.y,playerPos.x)));

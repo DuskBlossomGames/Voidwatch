@@ -1,13 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Player;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Tutorial;
-using UnityEditor.Experimental;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Util;
 
 public class TutorialController : MonoBehaviour

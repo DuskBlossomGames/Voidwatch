@@ -1,0 +1,26 @@
+using Spawnables;
+using UnityEngine;
+
+public class AreaDamager : MonoBehaviour
+{
+    public float damagePerSecond;
+    public float entryDamage;
+    public float shieldMult, bleedPerc;
+    public bool canOnlyHurtPlayer = false;
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.TryGetComponent<IDamageable>(out var dmg) && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            dmg.Damage(damagePerSecond * Time.deltaTime, gameObject, shieldMult, bleedPerc);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.TryGetComponent<IDamageable>(out var dmg) && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            dmg.Damage(entryDamage, gameObject, shieldMult, bleedPerc);
+        }
+    }
+}

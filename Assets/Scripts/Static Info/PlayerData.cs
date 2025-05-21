@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
+using Player;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Util;
 
 namespace Static_Info
 {
@@ -23,9 +23,20 @@ namespace Static_Info
         public float dodgeVelocity;
         public float dodgeDistance;
         public float dodgeCooldown;
-        public System.Collections.Generic.List<BaseComponent> weapons;
         
-        [NonSerialized] public System.Collections.Generic.List<UpgradeInstance> Upgrades;
+        [Space(10)]
+        [Header("Upgrade Values (uninitialized)")]
+        public float dodgeDamage;
+        public float dodgeExplosionDamage;
+        public float postDodgeMult = 1;
+        public float collisionDamageMult = 1;
+        public int bulletChains;
+        public bool healthPickupsEnabled;
+        public bool autoDodge;
+        public readonly List<PlayerDamageType> DamageTypes = new();
+
+        public readonly List<UpgradePlayer.Upgrade> Upgrades = new();
+
         [NonSerialized] public float Health;
         [NonSerialized] public float Scrap;
 

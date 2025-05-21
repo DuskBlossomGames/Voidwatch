@@ -1,15 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Player;
+using Spawnables.Player;
 using TMPro;
-using UnityEditor;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Upgrade = UpgradePlayer.Upgrade;
 using Util;
+using Upgrade = UpgradePlayer.Upgrade;
 
 public class NewUpgradeManager : MonoBehaviour
 {
@@ -23,9 +23,10 @@ public class NewUpgradeManager : MonoBehaviour
     public CanvasGroup everythingElse;
     public float minimapFadeTime, titleTime, titleWaitTime, subtitleFadeTime, subtitleWaitTime, slideTime, slideWaitTime, fadeInTime;
     public float startAnchorMin, startAnchorMax;
+    public int debugUpgrade = -1; // TODO: remove
     
-    public Player.Movement playMov;
-    public Player.FollowPlayer followPlayer;
+    public Movement playMov;
+    public FollowPlayer followPlayer;
 
     private Upgrade[] _upgrades;
 
@@ -52,6 +53,7 @@ public class NewUpgradeManager : MonoBehaviour
     private void SetUpgrades()
     {
         _upgrades = UpgradePlayer.GetRandomUpgrades(3);
+        if (debugUpgrade != -1) _upgrades[0] = UpgradePlayer.UPGRADES[debugUpgrade];
     }
 
     public void Show()
@@ -64,8 +66,8 @@ public class NewUpgradeManager : MonoBehaviour
     {
         playMov.SetInputBlocked(true);
         playMov.autoPilot = true;
-        playMov.gameObject.GetComponent<Spawnables.Player.PlayerDamageable>().godmode = true;
-        followPlayer.suppres = true;
+        playMov.GetComponent<PlayerDamageable>().godmode = true;
+        followPlayer.suppress = true;
 
         var startAlpha = minimap.color.a;
         for (float t = 0; t < minimapFadeTime; t += Time.fixedDeltaTime)

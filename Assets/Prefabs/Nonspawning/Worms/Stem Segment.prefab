@@ -167,6 +167,8 @@ MonoBehaviour:
   dodgeTime: 0.2
   ramp: 1.5
   baseDmg: 50
+  shieldMult: 2
+  bleedPerc: 0.05
   material: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   warnColor:
     serializedVersion: 2
@@ -352,9 +354,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  dmgRes: {fileID: 11400000, guid: 5118d3f272cff524dbb6354c0b9dbb77, type: 2}
+  tier: 3
+  enemyType: 3
   maxHealth: 1500
   varientParent: {fileID: 0}
+  healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
   - {fileID: -164018351, guid: 0d5725cb20c124dc583c528eca9bfd88, type: 3}
@@ -363,6 +367,9 @@ MonoBehaviour:
   numBits: 4
   explosionScale: 0
   bitScale: 2
+  stunBar: {fileID: 0}
+  stunnable: {fileID: 0}
+  hitsToStun: 0
   root: {fileID: 0}
   dmgMod: 1
 --- !u!114 &4405246181603560970
