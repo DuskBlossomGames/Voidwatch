@@ -95,6 +95,7 @@ namespace Spawnables.Carcadon
         private bool _folded;
         private void Update()
         {
+            _attackCooldown.Update();
             _slashCooldown.Update();
             
             // fold
@@ -181,6 +182,7 @@ namespace Spawnables.Carcadon
                     {
                         _attackCooldown.Value = Random.Range(minAttackDelay, maxAttackDelay);
                         _curAttackSlashes = Random.Range(minSlash, maxSlash);
+                        _curSlash = 0;
                     }
                     else
                     {
