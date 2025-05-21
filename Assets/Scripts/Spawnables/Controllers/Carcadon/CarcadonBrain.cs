@@ -29,7 +29,7 @@ namespace Spawnables.Carcadon
 
         public float attackAccel, attackSpeed;
         public float attackRadius;
-
+        
         private EnemySpawner.EnemySpawner _enemySpawner;
         private SpriteRenderer[] _baseSpriteRenderers;
         private List<SpriteRenderer> _stackedSpriteRenderers = new();
@@ -49,6 +49,8 @@ namespace Spawnables.Carcadon
         private int _mouthDirection; // 1 = open, -1 = close
         private float _mouthProgress;
         private SpriteRenderer _mouthSr;
+
+        private int _currentSlash;
 
         private CustomRigidbody2D _player;
 
