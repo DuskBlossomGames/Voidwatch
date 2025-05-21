@@ -53,147 +53,56 @@ namespace LevelSelect
         private void GenerateGalaxy(IList<Sprite> sprites)
         {
             var levels = new List<LevelData>();
-            var usedGridPositions = new List<Vector2>();
+            var connections = new List<Tuple<int, int>>();
 
             var planetScale = planetPrefab.transform.localScale;
             var planetRadius = Mathf.Max(planetScale.x, planetScale.y) / 2;
-
-            while (true)
-            {
-                // position represents position in a theoretical discrete grid of planets
-                Vector2 position;
-                do
-                {
-                    position = new Vector2(Random.Range(-mapGridSize, mapGridSize+1), Random.Range(-mapGridSize, mapGridSize+1));
-                } while (usedGridPositions.Contains(position));
-                usedGridPositions.Add(position);
-
-                levels.Add(new LevelData
-                {
-                    Type = levels.Count == 0 ? LevelType.Entrance : LevelType.Normal,
-                    Sprite = levels.Count == 0 ? entranceSprite : sprites[Random.Range(0, sprites.Count)],
+            
+            levels.Add(new LevelData {
+                    Type = LevelType.Entrance,
+                    Sprite = entranceSprite,
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>(),
-                    WorldPosition = planetPrefab.transform.localPosition +
-                               (Vector3) (position * planetScale * 2.25f + // make every grid space 2 and a quarter planets wide
-                                          Random.insideUnitCircle * planetScale / 2), // offset by up to half a planet
+                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                    Name = "Entrance",
+                    LoreText = ""
+            });
 
-                    Name = "Planet Name",
-                    LoreText = "Lore text goes here, idk how long it'll be but decently I would think. Maybe a bit more? How about a teeeensy bit more."
+            for (var i = 0; i < 5; i++)
+            {
+                levels.Add(new LevelData {
+                    Type = LevelType.Normal,
+                    Sprite = sprites[Random.Range(0, sprites.Count)],
+                    HiddenSprite = hiddenSprite,
+                    Connections = new List<int>(),
+                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(i+1, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                    Name = "Planet",
+                    LoreText = ""
                 });
-
-                if (levels.Count >= minLevels && Random.value < 1/(1+Mathf.Exp(expScale*(avgLevels-levels.Count)))) break;
-            }
-
-            var connections = new List<Tuple<int, int>>();
-            for (var level = 0; level < levels.Count; level++)
-            {
-                var connectionsLeft = level == 0 ? 1 : Random.Range(minPlanetConnections, maxPlanetConnections+1) - levels[level].Connections.Count;
-
-                var validConnections = levels
-                    .Select((_, i) => i)
-                    .Where(i =>
-                        i != level && i != 0 &&
-                        levels[i].Connections.Count < maxPlanetConnections &&
-                        !levels[level].Connections.Contains(i) &&
-                        !connections.Any(c => MapUtil.Intersect(levels[i].WorldPosition, levels[level].WorldPosition, levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
-                        !levels.Any(l => l != levels[i] && l != levels[level] && MapUtil.SegmentAndCircleIntersect(levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition, planetRadius*2)))
-                    .ToList();
-
-                while (connectionsLeft > 0 && validConnections.Count > 0)
-                {
-                    var connectionIdx = Random.Range(0, validConnections.Count);
-                    var other = validConnections[connectionIdx];
-
-                    connections.Add(new Tuple<int, int>(level, other));
-
-                    levels[level].Connections.Add(other);
-                    levels[other].Connections.Add(level);
-
-                    validConnections.RemoveAt(connectionIdx);
-
-                    connectionsLeft--;
-                }
+                connections.Add(new Tuple<int, int>(i, i+1));
             }
             
-            for (var level = 1; level < levels.Count; level++)
-            {
-                if (levels[level].Connections.Count >= minPlanetConnections) continue;
-
-                var validConnections = levels
-                    .Select((_, i) => i)
-                    .Where(i =>
-                        i != level && i != 0 &&
-                        levels[i].Connections.Count > 0 && levels[i].Connections.Count < maxPlanetConnections &&
-                        !levels[level].Connections.Contains(i) &&
-                        !connections.Any(c => MapUtil.Intersect(levels[i].WorldPosition, levels[level].WorldPosition,
-                            levels[c.Item1].WorldPosition, levels[c.Item2].WorldPosition)) &&
-                        !levels.Any(l =>
-                            l != levels[i] && l != levels[level] && MapUtil.SegmentAndCircleIntersect(
-                                levels[i].WorldPosition, levels[level].WorldPosition, l.WorldPosition,
-                                planetRadius * 2))).ToList();
-
-                for (var i = 0; i < minPlanetConnections - levels[level].Connections.Count; i++)
-                {
-                    if (validConnections.Count == 0) break;
-                    
-                    var other = validConnections[Random.Range(0, validConnections.Count-1)];
-                    validConnections.Remove(other);
-                    
-                    connections.Add(new Tuple<int, int>(level, other));
-
-                    levels[level].Connections.Add(other);
-                    levels[other].Connections.Add(level);
-                }
-
-                if (levels[level].Connections.Count < minPlanetConnections)
-                {
-                    // couldn't be fixed :( we must redo regeneration
-                    GenerateGalaxy(sprites);
-                    return;
-                }
-            }
+            levels.Add(new LevelData {
+                Type = LevelType.SpaceStation,
+                Sprite = spaceStationSprite,
+                HiddenSprite = hiddenSprite,
+                Connections = new List<int>(),
+                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(6, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                Name = "Space Station",
+                LoreText = ""
+            });
+            connections.Add(new Tuple<int, int>(5, 6));
             
-            int stationIdx;
-            do
-            {
-                stationIdx = Random.Range(1, levels.Count - 1);
-            } while (levels[stationIdx].Connections.Contains(0));
-
-            levels[stationIdx].Type = LevelType.SpaceStation;
-            levels[stationIdx].Sprite = spaceStationSprite;
-            
-            // make the furthest planet be the boss
-            var eligibleBosses = new List<int>();
-            for (var i = 1; i < levels.Count; i++)
-            {
-                var distStart = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[0].WorldPosition)?.Length ?? 0;
-                var distShop = MapUtil.GetShortestPath(levels.ToArray(), levels[i], levels[stationIdx].WorldPosition)?.Length ?? 0;
-                
-                if (distStart >= minBossStartDist && distShop >= minBossShopDist) eligibleBosses.Add(i);
-            }
-
-            if (eligibleBosses.Count < minEligibleBosses)
-            {
-                GenerateGalaxy(sprites);
-                return;
-            }
-
-            var bossPlanet = eligibleBosses[Random.Range(0, eligibleBosses.Count)];
-            levels[bossPlanet].IsBoss = true;
-            
-            for (var i = 0; i < Random.Range(minElites, maxElites); i++)
-            {
-                int eliteIdx;
-                do
-                {
-                    eliteIdx = Random.Range(1, levels.Count - 2);
-                    if (eliteIdx >= Mathf.Min(stationIdx, bossPlanet)) eliteIdx++;
-                    if (eliteIdx >= Mathf.Max(stationIdx, bossPlanet)) eliteIdx++;
-                } while ((MapUtil.GetShortestPath(levels.ToArray(), levels[eliteIdx], levels[0].WorldPosition)?.Length ?? 0) < minEliteDist);
-
-                levels[eliteIdx].Type = LevelType.Elite;
-            }
+            levels.Add(new LevelData {
+                Type = LevelType.Elite,
+                Sprite = sprites[Random.Range(0, sprites.Count)],
+                HiddenSprite = hiddenSprite,
+                Connections = new List<int>(),
+                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(7, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                Name = "Elite Enemy",
+                LoreText = ""
+            });
+            connections.Add(new Tuple<int, int>(6, 7));
 
             LevelSelectDataInstance.PopulateData(levels.ToArray(), connections.ToArray());
         }

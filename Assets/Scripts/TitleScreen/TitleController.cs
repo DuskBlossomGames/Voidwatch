@@ -14,6 +14,10 @@ public class TitleController : MonoBehaviour
     public AnimationCurve textFadeCurve, particleSpeed;
     public float fadeTime, speedupTime, waitTime;
 
+    public RectTransform credits;
+    public float creditsTime, creditsHoldTime, anchorDist;
+    public AnimationCurve creditsMultCurve;
+    
     private TextMeshProUGUI[] _texts;
     private Image[] _images;
 
@@ -23,18 +27,39 @@ public class TitleController : MonoBehaviour
         _images = GetComponentsInChildren<Image>();
     }
 
-    public void Play() { StartCoroutine(PlayRoutine()); }
-    private IEnumerator PlayRoutine()
+    private IEnumerator Fade(bool includeCredits)
     {
         foreach (var button in gameObject.GetComponentsInChildren<Button>()) button.interactable = false;
         
         for (float t = 0; t < fadeTime; t += Time.fixedDeltaTime)
         {
             yield return new WaitForFixedUpdate();
-            foreach (var obj in _texts) obj.SetAlpha(textFadeCurve.Evaluate(1-t/fadeTime));
-            foreach (var obj in _images) obj.SetAlpha(1-t/fadeTime);
-        }
+            foreach (var obj in _texts)
+            {
+                if (!includeCredits && obj.transform.IsChildOf(credits)) continue;
+                obj.SetAlpha(Mathf.Min(obj.color.a, textFadeCurve.Evaluate(1-t/fadeTime)));
+            }
 
+            foreach (var obj in _images)
+            {
+                if (!includeCredits && obj.transform.IsChildOf(credits)) continue;
+                obj.SetAlpha(Mathf.Min(obj.color.a, 1-t/fadeTime));
+            }
+        }
+    }
+
+    private void UnFade()
+    {
+        foreach (var button in gameObject.GetComponentsInChildren<Button>()) button.interactable = true;
+        foreach (var obj in _texts) obj.SetAlpha(1);
+        foreach (var obj in _images) obj.SetAlpha(1);
+    }
+    
+    public void Play() { StartCoroutine(PlayRoutine()); }
+    private IEnumerator PlayRoutine()
+    {
+        yield return Fade(true);
+        
         for (float t = 0; t < speedupTime; t += Time.fixedDeltaTime)
         {
             yield return new WaitForFixedUpdate();
@@ -60,7 +85,31 @@ public class TitleController : MonoBehaviour
 
     public void Credits()
     {
-        throw new Exception("Unimplemented");
+        StartCoroutine(CreditsRoutine());
+    }
+
+    private IEnumerator CreditsRoutine()
+    {
+        yield return Fade(false);
+
+        float anchorMod = 0;
+        for (float t = 0; t < creditsTime; t += Time.fixedDeltaTime)
+        {
+            yield return new WaitForFixedUpdate();
+
+            anchorMod += anchorDist / creditsTime * Time.fixedDeltaTime;
+            credits.anchorMin = new Vector2(0, creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
+            credits.anchorMax = new Vector2(1, 1+creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
+        }
+        
+        yield return new WaitForSeconds(creditsHoldTime);
+        yield return Fade(true);
+        yield return new WaitForSeconds(0.5f);
+
+        credits.anchorMin = Vector2.zero;
+        credits.anchorMax = Vector2.one;
+
+        UnFade();
     }
 
     public void Quit()

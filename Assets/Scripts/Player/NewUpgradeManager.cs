@@ -140,17 +140,25 @@ public class NewUpgradeManager : MonoBehaviour
     public void SelectUpgrade(int i)
     {
         _upgrades[i].Apply();
-        SceneManager.LoadScene("LevelSelect");
+        StartCoroutine(ExitAfter(0));
     }
 
     public void Reroll()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<ScrapDisplayController>().Collect(-50);
         SetUpgrades();
         UpdateUpgrades();
     }
 
     public void Scavenge()
     {
-        
+        GameObject.FindGameObjectWithTag("Player").GetComponent<ScrapDisplayController>().Collect(Random.Range(100, 200));
+        StartCoroutine(ExitAfter(2));
+    }
+
+    private IEnumerator ExitAfter(float time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene("LevelSelect");
     }
 }
