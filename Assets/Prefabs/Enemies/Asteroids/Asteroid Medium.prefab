@@ -67,14 +67,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  tier: 0
   enemyType: 0
   maxHealth: 250
   varientParent: {fileID: 0}
+  healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
   numBits: 4
   explosionScale: 0
   bitScale: 2
+  stunBar: {fileID: 0}
+  stunnable: {fileID: 0}
+  hitsToStun: 0
   asteroidTypes:
   - {fileID: 1261275619952868859, guid: 69b1986ab2e144e3f823cc647b7051f8, type: 3}
   - {fileID: 1261275619952868859, guid: 3381aafca01014efeba60dd8d2649826, type: 3}
@@ -83,7 +88,7 @@ MonoBehaviour:
   - {fileID: 1261275619952868859, guid: e5e9b38e081e6424a9ba8f9674ccdfb7, type: 3}
   - {fileID: 1261275619952868859, guid: dbb7d8c15429e4891830b22781838d56, type: 3}
   nextSize: {fileID: 4661534520163306949, guid: 262429f9a5a28412795ffc80e858bacc, type: 3}
-  shieldMult: 3
+  shieldMult: 2
   bleedPerc: 0.05
   startVel: {x: 0, y: 0}
 --- !u!114 &-8967648618552505094

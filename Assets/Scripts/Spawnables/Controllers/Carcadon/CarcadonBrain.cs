@@ -16,11 +16,15 @@ namespace Spawnables.Carcadon
     {
         public Texture2D texture;
         public float mouthTimeToOpen;
-        
+
+        public AudioSource CarcAudio;
+        public AudioClip CarcRoar;
+        public bool roarBegun = false;
+
         public float stealthOpacity, stackedStealthOpacity;
         public float opacityTime;
         public float accel, maxSpeed;
-        
+
         public float stealthRadius, stealthScaling, stealthScaleMaxRad; // increase in max speed per unit closeness
         public float minRandStealthTime, maxRandStealthTime, minUnstealthDist;
         public float stealthAcc;
@@ -29,7 +33,7 @@ namespace Spawnables.Carcadon
 
         public float attackAccel, attackSpeed;
         public float attackRadius;
-        
+
         private EnemySpawner.EnemySpawner _enemySpawner;
         private SpriteRenderer[] _baseSpriteRenderers;
         private List<SpriteRenderer> _stackedSpriteRenderers = new();
@@ -59,7 +63,7 @@ namespace Spawnables.Carcadon
         private void Start()
         {
             _colliders = GetComponentsInChildren<BoxCollider2D>();
-            
+
             _mouthSr = GetComponent<SpriteRenderer>();
             _numMouthFrames = texture.width / texture.height;
             _mouthSprites = new Sprite[_numMouthFrames];
@@ -68,19 +72,19 @@ namespace Spawnables.Carcadon
                 _mouthSprites[i] = Sprite.Create(texture, new Rect(i*texture.height, 0, texture.height, texture.height), new Vector2(0.5f, 0.5f), texture.height);
             }
             _mouthProgress = _numMouthFrames;
-            
+
             _maxHealth = GetComponent<EnemyDamageable>().maxHealth;
-            
+
             _opacityTimer.Value = opacityTime;
             _rb = GetComponent<CustomRigidbody2D>();
             _armControllers = GetComponentsInChildren<ArmController>();
             _enemySpawner = GetComponent<MiniBoss>().enemySpawner;
             _player = _enemySpawner.player.GetComponent<CustomRigidbody2D>();
-            
+
             foreach (var ac in _armControllers) ac.Player = _player.gameObject;
-            
+
             _forceFieldRadius = _enemySpawner.planet.transform.GetChild(0).transform.lossyScale.x / 2;
-            
+
             StartCoroutine(Cutscene());
         }
 
@@ -94,13 +98,13 @@ namespace Spawnables.Carcadon
         private void Update()
         {
             if (_inCutscene) return;
-            
+
             var dir = _rb.velocity.normalized;
-            
+
             if (_mode == Mode.Stealth)
             {
                 var playerDist = (_player.transform.position - transform.position).magnitude;
-                
+
                 var distVal = stealthScaleMaxRad - playerDist;
                 var trueMax = maxSpeed + (distVal > 0 ? distVal*distVal : 0) * stealthScaling;
 
@@ -109,32 +113,32 @@ namespace Spawnables.Carcadon
                 _currSpeed = UtilFuncs.LerpSafe(_currSpeed, Mathf.Min(trueMax, _currSpeed+trueAccel), Time.deltaTime);
 
                 var w = _currSpeed / stealthRadius; // angular velocity
-                
+
                 var pointOnCircle = transform.position.normalized * stealthRadius;
 
                 var targPoint = Quaternion.Euler(0, 0, w * Mathf.Rad2Deg * Time.deltaTime) * pointOnCircle;
 
                 dir = (targPoint - transform.position).normalized;
-                
+
                 _stealthTimer.Update();
-                if (!_forceStealth && ((_stealthTimer.IsFinished && playerDist >= minUnstealthDist) || _enemySpawner.SpawnedEnemies.All(g => g == gameObject))) _mode = Mode.Rush;
+                if (!_forceStealth && ((_stealthTimer.IsFinished && playerDist >= minUnstealthDist) || _enemySpawner.SpawnedEnemies.All(g => g == gameObject))){ _mode = Mode.Rush; CarcAudio.clip = CarcRoar; CarcAudio.Play();}
             } else if (_mode == Mode.Rush)
             {
                 _currSpeed = Mathf.Min(maxSpeed, _currSpeed + accel * Time.deltaTime);
 
                 var target = (Vector2)_player.transform.position;
-                
+
                 var dist = target - (Vector2) transform.position;
                 if (dist.magnitude < destealthRadius) SetVisualStealth(false);
                 if (!_stealth && dist.magnitude < attackRadius) _mode = Mode.Attack;
-                
+
                 dir = dist.normalized;
             } else if (_mode == Mode.Attack)
             {
                 _timeGoingForPos += Time.deltaTime;
-                
+
                 var dist = _attackTarg - (Vector2)transform.position;
-                
+
                 if (_timeGoingForPos > 2.5f || _attackTarg.sqrMagnitude == 0 || dist.magnitude < 3.5f)
                 {
                     var radius = Random.Range(3, attackRadius);
@@ -144,9 +148,9 @@ namespace Spawnables.Carcadon
 
                     _timeGoingForPos = 0;
                 }
-                
+
                 dir = dist.normalized;
-                
+
                 _currSpeed = UtilFuncs.LerpSafe(_currSpeed, Math.Min(attackSpeed - 2000/Mathf.Pow(dist.magnitude, 3) + 4*Mathf.Log(dist.magnitude), _currSpeed + attackAccel), Time.deltaTime);
             }
 
@@ -156,9 +160,9 @@ namespace Spawnables.Carcadon
             }
             else
             {
-                _rb.velocity = Vector3.RotateTowards(_rb.velocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 8 : 1.5f) * Time.deltaTime, 15 * Time.deltaTime);                
+                _rb.velocity = Vector3.RotateTowards(_rb.velocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 8 : 1.5f) * Time.deltaTime, 15 * Time.deltaTime);
             }
-            
+
             transform.rotation = Quaternion.Lerp(transform.rotation, UtilFuncs.RotFromNorm(_rb.velocity), 5 * Time.deltaTime);
 
             // opacity
@@ -176,7 +180,7 @@ namespace Spawnables.Carcadon
             if (_opacityDir != 0)
             {
                 _opacityTimer.Update(_opacityDir);
-                
+
                 foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-_opacityTimer.Progress) * (1-stealthOpacity));
                 foreach (var sr in _stackedSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-_opacityTimer.Progress) * (1-stackedStealthOpacity));
 
@@ -184,16 +188,16 @@ namespace Spawnables.Carcadon
                 {
                     _isOpaque = _opacityDir > 0;
                     _opacityDir = 0;
-                    
+
                     foreach (var col in _colliders) col.enabled = _isOpaque;
                 }
             }
-            
+
             // mouth
             if (_mouthDirection != 0)
             {
                 _mouthProgress += _mouthDirection * Time.deltaTime * _numMouthFrames/mouthTimeToOpen;
-            
+
                 if (_mouthProgress <= 0 || _mouthProgress >= _numMouthFrames)
                 {
                     _mouthProgress = Mathf.Clamp(_mouthProgress, 0, _numMouthFrames);
@@ -217,14 +221,14 @@ namespace Spawnables.Carcadon
                 _enemySpawner.SpawnWave();
             }
         }
-        
+
         private bool _stealth;
         private void SetVisualStealth(bool stealth)
         {
             if (_stealth == stealth) return;
             _stealth = stealth;
             _mouthDirection = _opacityDir = stealth ? -1 : 1;
-            
+
             foreach (var ac in _armControllers)
             {
                 if (stealth) ac.FoldClosed();
@@ -260,9 +264,9 @@ namespace Spawnables.Carcadon
                 !_stackedSpriteRenderers.Contains(sr) &&
                 sr.GetComponent<ProgressBar>() == null &&
                 sr.transform.parent?.GetComponent<ProgressBar>() == null).ToArray();
-            
+
             _player.GetComponent<Movement>().SetInputBlocked(true);
-            
+
             // set up camera
             var cam = Camera.main;
             var camFp = cam!.GetComponent<FollowPlayer>();
@@ -296,10 +300,10 @@ namespace Spawnables.Carcadon
                 yield return new WaitForFixedUpdate();
                 fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, Mathf.SmoothStep(1, 0, t / fadeInTime));
             }
-            
+
             // hold
             yield return new WaitForSeconds(waitTime);
-            
+
             // move right
             var origPos = transform.position.y;
             var targPos = origPos - (2 * cam.orthographicSize * cam.aspect + length + 2*distOffScreen);
@@ -317,7 +321,7 @@ namespace Spawnables.Carcadon
                 cam.transform.position = new Vector3(_player.transform.position.x + Mathf.SmoothStep(camDistAbovePlayer, -camDistAbovePlayer, t/timeBetweenPasses),
                     cam.transform.position.y, cam.transform.position.z);
             }
-            
+
             // move left
             transform.RotateAround(transform.position + length/2 * Vector3.up, Vector3.forward, 180); // so tail doesn't have to fix itself
             transform.position = new Vector3(_player.transform.position.x-distAbovePlayer, _player.transform.position.y - cam.orthographicSize * cam.aspect - distOffScreen, transform.position.z);
@@ -329,7 +333,7 @@ namespace Spawnables.Carcadon
                 transform.position = new Vector3(transform.position.x,
                     Mathf.SmoothStep(origPos, targPos, t / flyAcrossScreenTime), transform.position.z);
             }
-            
+
             // hold
             yield return new WaitForSeconds(timeBeforeExpand);
 
@@ -344,6 +348,8 @@ namespace Spawnables.Carcadon
             var origSize = cam.orthographicSize;
             float mouthProgress = 0;
             var unfurled = false;
+
+
             for (float t = 0; t < camExpandTime; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
@@ -352,14 +358,23 @@ namespace Spawnables.Carcadon
                     foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-(t-timeBeforeReveal)/opacityTime) * (1-stealthOpacity));
                     foreach (var sr in _stackedSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-(t-timeBeforeReveal)/opacityTime) * (1-stackedStealthOpacity));
                 }
+                if(t >= timeBeforeReveal+(timeBeforeUnfurl-timeBeforeReveal)/5){
+                  if(!roarBegun){
+                    CarcAudio.clip = CarcRoar;
+                    CarcAudio.Play();
+                    roarBegun = true;
+                  }
+                }
 
                 if (t >= timeBeforeUnfurl)
                 {
+
                     if (!unfurled)
                     {
                         unfurled = true;
                         foreach (var ac in _armControllers) ac.FoldOpen();
                     }
+
 
                     if (mouthProgress < _numMouthFrames)
                     {
@@ -378,7 +393,7 @@ namespace Spawnables.Carcadon
             camFp.ScreenShake(shakeTime, shakeIntensity);
             GetComponentInChildren<SpitController>().Spit(shakeTime);
             yield return new WaitForSeconds(pauseTime);
-            
+
             _mode = Mode.Stealth;
             _stealthTimer.Value = Random.Range(minRandStealthTime, maxRandStealthTime);
             SetVisualStealth(true);
@@ -396,7 +411,7 @@ namespace Spawnables.Carcadon
                     cam.transform.position.y, cam.transform.position.z);
                 cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);
             }
-            
+
             for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount; i++)
             {
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);

@@ -13,15 +13,15 @@ namespace Spawnables.Carcadon
         public float[] foldRotations;
         public float timeToFold;
         public bool hasAttack;
-        
+
         public int minSlash, maxSlash;
         public float slashDelay, minAttackDelay, maxAttackDelay;
-        
+
         public float timeToOpen, timeToClose, timeToReturn;
         private float _attackProgress;
-        
+
         private GameObject[] _segments;
-        
+
         private float _foldProgress;
         private float _foldSpeed;
         private int _foldDirection;
@@ -39,7 +39,7 @@ namespace Spawnables.Carcadon
                 if (cd != null) cd.Player = value.GetComponent<PlayerDamageable>();
             }
         }
-        
+
         private ClawDamage _clawDamage;
         private PolygonCollider2D _collider;
 
@@ -47,19 +47,24 @@ namespace Spawnables.Carcadon
         private int _curSlash;
         private readonly Timer _attackCooldown = new();
         private readonly Timer _slashCooldown = new();
-        
+
+        public AudioSource clawAudio;
+        private bool clawSoundBegan = false;
+        private float _AudioPlayerPitchStatic;
+
         private void Start()
         {
             _collider = GetComponent<PolygonCollider2D>();
             _clawDamage = GetComponentInChildren<ClawDamage>();
-            
+
             _segments = new [] {transform.GetChild(3).gameObject, transform.GetChild(2).gameObject,
                 transform.GetChild(1).gameObject, transform.GetChild(0).gameObject};
-            
-            
+
+
             _foldSpeed = foldRotations.Sum(Mathf.Abs) / timeToFold;
 
             _curAttackSlashes = Random.Range(minSlash, maxSlash);
+            _AudioPlayerPitchStatic = clawAudio.pitch;
         }
 
         public void FoldClosed() { _foldDirection = 1; }
@@ -81,7 +86,7 @@ namespace Spawnables.Carcadon
                 for (var i = _segments.Length - 1; i >= 0; i--) RotateJoint(i, -foldRotations[i]);
             }
         }
-        
+
         private float MinOrMax(float a, float b)
         {
             return _foldDirection == 1 ? (a + 1 < b ? a + 1 : b) : (a > b ? a : b);
@@ -97,7 +102,7 @@ namespace Spawnables.Carcadon
         {
             _attackCooldown.Update();
             _slashCooldown.Update();
-            
+
             // fold
             if (_attackProgress == 0 && _foldDirection != 0)
             {
@@ -117,7 +122,7 @@ namespace Spawnables.Carcadon
             }
 
             if (!hasAttack) return;
-            
+
             if (!_folded && _attackCooldown.IsFinished && _slashCooldown.IsFinished && (_collider.OverlapPoint(_player.transform.position) || _attackProgress != 0))
             {
                 if (!_player.GetComponent<Movement>().Dodging)
@@ -133,18 +138,18 @@ namespace Spawnables.Carcadon
                             var normalAngle = Mathf.Atan2(arm.y, arm.x) * Mathf.Rad2Deg + 90;
 
                             var playerDist = (Quaternion.Euler(0, 0, -normalAngle) * (_player.transform.position - _segments[i].transform.position)).x;
-                        
+
                             _player.transform.position += Quaternion.Euler(0, 0, normalAngle) * new Vector3(myCol.transform.lossyScale.x*myCol.size.x/2 + playerCol.transform.lossyScale.x*playerCol.radius/2 - playerDist, 0, 0);
                         }
                     }
                 }
-                
+
                 if (_attackProgress == 0)
                 {
                     _clawDamage.Active = true;
                     _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(true); // enable trail renderer
                 }
-                
+
                 var openBase = (Mathf.Sign(foldRotations[^1]) * -180 + foldRotations[^1]) * 3/4;
                 var openNext = Mathf.Sign(foldRotations[^2]) * -180 + foldRotations[^2];
 
@@ -155,16 +160,24 @@ namespace Spawnables.Carcadon
                 var returnBase = -openBase;
                 var returnLast = -foldLast;
                 var returnClaw = -foldClaw;
-                
+
                 if (_attackProgress < timeToOpen)
                 {
                     RotateJoint(_segments.Length - 1, openBase / timeToOpen * Time.deltaTime);
                     RotateJoint(_segments.Length - 2, openNext / timeToOpen * Time.deltaTime);
+
+                    if(!clawSoundBegan){
+                      clawAudio.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f);
+                      clawAudio.Play();
+                      clawSoundBegan = true;
+                    }
+                    
                 } else if (_attackProgress - timeToOpen < timeToClose)
                 {
                     RotateJoint(_segments.Length - 2, returnNext / timeToClose * Time.deltaTime);
                     RotateJoint(_segments.Length - 3, foldLast / timeToClose * Time.deltaTime);
                     RotateJoint(0, foldClaw / timeToClose * Time.deltaTime);
+
                 } else if (_attackProgress - timeToOpen - timeToClose < timeToReturn)
                 {
                     RotateJoint(_segments.Length - 1, returnBase / timeToReturn * Time.deltaTime);
@@ -174,6 +187,7 @@ namespace Spawnables.Carcadon
                 else
                 {
                     _clawDamage.Active = false;
+                    clawSoundBegan = false;
                     _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(false); // disable trail renderer
                     _attackProgress = 0;
 
@@ -189,16 +203,16 @@ namespace Spawnables.Carcadon
                         _slashCooldown.Value = slashDelay;
                     }
                 }
-                
+
                 if (_slashCooldown.IsFinished) _attackProgress += Time.deltaTime; // don't increment if we just set to 0
             }
         }
-        
+
         private Vector2 GetJoint(int i)
         {
             return _segments[i].transform.TransformPoint(joints[i]);
         }
-        
+
         private void RotateJoint(int joint, float degrees)
         {
             for (var i = 0; i <= joint; i++) RotateAboutJoint(i, joint, degrees);
