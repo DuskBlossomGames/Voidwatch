@@ -72,16 +72,6 @@ public class UpgradePlayer
                 PlayerDataInstance.maxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxShield = Mathf.CeilToInt(1.05f * PlayerDataInstance.maxShield);
             }),
-        new("Experimental Batteries",
-            "These third-party shield batteries hold longer, but recharge slower.",
-            "Huh, this warning seems to have faded...",
-            Rarity.Common,
-            false,
-            () => {
-                PlayerDataInstance.maxShield = Mathf.CeilToInt(1.3f * PlayerDataInstance.maxShield);
-                PlayerDataInstance.maxShieldDebt *= 1.5f;
-                PlayerDataInstance.shieldRegenRate *= .75f;
-            }),
         new("Hyperefficient Generators",
             "Improved generators regenerate shields faster.",
             "Why didn't it come with this?",
@@ -144,31 +134,6 @@ public class UpgradePlayer
             () => {
                 GunInfoInstance.fireTime *= 0.8f;
             }),
-        new("Cyclic Firing Chamber",
-            "The chamber cycles several times per shot, sending out more waves of bullets.",
-            "No, no, no! The bullets are supposed to go forward.",
-            Rarity.Common,
-            false,
-            () => {
-                GunInfoInstance.repeats = Mathf.Max(Mathf.CeilToInt(1.5f * GunInfoInstance.repeats),1);
-            }),
-        new("T.U.R.B.O.",
-            "Turbo capabilities increase the Infiltrator's movement speed.",
-            "Technically Unregulated Rapid Boost Orifice",
-            Rarity.Common,
-            false,
-            () => {
-                PlayerDataInstance.speedLimit *= 1.2f;
-            }),
-        new("Coolant Reserves",
-            "Extra coolant allows the engine to push further, achieving greater acceleration.",
-            "Overheating, you say? Faster!",
-            Rarity.Common,
-            false,
-            () => {
-                PlayerDataInstance.acceleration = Mathf.CeilToInt(1.2f* PlayerDataInstance.acceleration);
-                PlayerDataInstance.driftCorrection *= 1.2f;
-            }),
         new("Interdimensional Spike",
             "This spike touches both our world and theirs, damaging enemies you pass through in Voidspace.",
             "The best offense is an offensive defense.",
@@ -178,15 +143,6 @@ public class UpgradePlayer
             {
                 PlayerDataInstance.dodgeDamage += 50;
             }),
-        new("Automatic Incendiary Device",
-            "Attaching to the void jaunt module, this device will trigger a timed detonation upon entering Voidspace.",
-            "Need a hand? Take some AID.",
-            Rarity.Common,
-            false,
-            () =>
-            {
-                PlayerDataInstance.dodgeExplosionDamage += 100;
-            }),
         new("Mining Drill",
             "A frontal drill increases the damage done when ramming ships.",
             "If you squint, a ship is basically an asteroid.",
@@ -195,24 +151,6 @@ public class UpgradePlayer
             () =>
             {
                 PlayerDataInstance.collisionDamageMult += 1f;
-            }),
-        new("Acidic Compound Formula",
-            "The bullet synthesis chamber will produce acidic bullets, causing particular pain to organic enemies.",
-            "It's fine, they're not sapient. Probably.",
-            Rarity.Common,
-            true,
-            () =>
-            {
-                PlayerDataInstance.DamageTypes.Add(PlayerDamageType.Acidic);
-            }),
-        new("Nanobot Cartridge",
-            "Nanobots in your bullets electrify enemies. After enough subsequent hits to mechanical enemies, their controls are disabled.",
-            "tHe GOvErnMenT iS InjECtInG NaNoboTS!11!1!1!!!!11!!",
-            Rarity.Common,
-            true,
-            () =>
-            {
-                PlayerDataInstance.DamageTypes.Add(PlayerDamageType.Electric);
             }),
         new("Void Energy Sieve",
             "Captures Void Energy as you pass through Voidspace, infusing your next bullets with extra power.",
@@ -232,25 +170,6 @@ public class UpgradePlayer
             {
                 PlayerDataInstance.bulletChains += 2;
             }),
-        new("Reclamation Unit",
-            "Vanquished enemies leave behind residual parts, repairing your ship on reclamation.",
-            "Reduce to pieces, Reuse the parts, Recycle the corpses.",
-            Rarity.Common,
-            true,
-            () =>
-            {
-                PlayerDataInstance.healthPickupsEnabled = true;
-            }),
-        new("Void Implant",
-            "This Void cybernetic grants brief foresight, instinctively attempting to dodge if you would be hit, at a cost proportional to damage.",
-            "No need to worry, I feel perfectly f~ AAAHHHHH!",
-            Rarity.Common,
-            true,
-            () =>
-            {
-                PlayerDataInstance.autoDodge = true;
-            }),
-
     };
 
     private static readonly Dictionary<string, List<Upgrade>> BY_RARITY = new();
