@@ -11,11 +11,11 @@ public class UpgradePlayer
     public class Rarity
     {
         public static readonly List<Rarity> ALL = new();
-        
+
         public static readonly Rarity Common = new(0.7f, "common");
         public static readonly Rarity Rare = new(0.25f, "rare");
         public static readonly Rarity Legendary = new(0.05f, "legendary");
-        
+
         public readonly float Weight;
         public readonly string Name;
 
@@ -26,7 +26,7 @@ public class UpgradePlayer
             ALL.Add(this);
         }
     }
-    
+
     public class Upgrade
     {
         public readonly string Title, Description, Quip;
@@ -60,7 +60,7 @@ public class UpgradePlayer
             false,
             () => {
                 GunInfoInstance.bulletsPerShot = Mathf.Max(2,Mathf.CeilToInt(1.1f * GunInfoInstance.bulletsPerShot));
-                GunInfoInstance.lateralSeperation *= 1.1f;
+                GunInfoInstance.lateralSeperation *= 1.2f;
             }),
         new("Absorptive Plating",
             "Redistributes the energy from bullets, increasing hull integrity and shield capacity.",
@@ -78,9 +78,9 @@ public class UpgradePlayer
             Rarity.Common,
             false,
             () => {
-                PlayerDataInstance.maxShield = Mathf.CeilToInt(1.2f * PlayerDataInstance.maxShield);
+                PlayerDataInstance.maxShield = Mathf.CeilToInt(1.3f * PlayerDataInstance.maxShield);
                 PlayerDataInstance.maxShieldDebt *= 1.5f;
-                PlayerDataInstance.shieldRegenRate *= .8f;
+                PlayerDataInstance.shieldRegenRate *= .75f;
             }),
         new("Hyperefficient Generators",
             "Improved generators regenerate shields faster.",
@@ -88,7 +88,7 @@ public class UpgradePlayer
             Rarity.Common,
             false,
             () => {
-                PlayerDataInstance.shieldRegenRate *= 1.4f;
+                PlayerDataInstance.shieldRegenRate *= 1.5f;
             }),
         new("Durable Duct Tape",
             "Diverted power massively improves shield capacity and regeneration, but lowers hull integrity.",
@@ -108,9 +108,9 @@ public class UpgradePlayer
             Rarity.Common,
             false,
             () => {
-                GunInfoInstance.dmgMod *= 1.2f;
-                GunInfoInstance.shotForce *= 1.2f;
-                GunInfoInstance.fireTime += 0.5f;
+                GunInfoInstance.dmgMod *= 1.4f;
+                GunInfoInstance.shotForce *= 1.7f;
+                GunInfoInstance.fireTime += 0.4f;
             }),
         new("Voidwrought Accumulator",
             "Attaches to your Void Energy eXtraction (V.E.X.) device, increasing Void Energy replenishment speed.",
@@ -118,7 +118,7 @@ public class UpgradePlayer
             Rarity.Common,
             false,
             () => {
-                PlayerDataInstance.dodgeJuiceRegenRate *= 1.15f;
+                PlayerDataInstance.dodgeJuiceRegenRate *= 1.25f;
             }),
         new("Laminar Plating",
             "Specialized plating eases the transition to Voidspace, lower the cost of jaunts.",
@@ -126,7 +126,7 @@ public class UpgradePlayer
             Rarity.Common,
             false,
             () => {
-                PlayerDataInstance.dodgeJuiceCost *= 0.85f;
+                PlayerDataInstance.dodgeJuiceCost *= 0.75f;
             }),
         new("Containment Matrix",
             "Allows Voidhawk starships to hold more Void Energy without leaking.",
@@ -134,7 +134,7 @@ public class UpgradePlayer
             Rarity.Common,
             false,
             () => {
-                PlayerDataInstance.maxDodgeJuice *= 1.3f;
+                PlayerDataInstance.maxDodgeJuice *= 1.35f;
             }),
         new("High Yield Plasma Coils",
             "Greater plasma harnessing capabilities allows for faster shooting.",
@@ -194,7 +194,7 @@ public class UpgradePlayer
             false,
             () =>
             {
-                PlayerDataInstance.collisionDamageMult += 0.5f;
+                PlayerDataInstance.collisionDamageMult += 1f;
             }),
         new("Acidic Compound Formula",
             "The bullet synthesis chamber will produce acidic bullets, causing particular pain to organic enemies.",
@@ -233,7 +233,7 @@ public class UpgradePlayer
                 PlayerDataInstance.bulletChains += 2;
             }),
         new("Reclamation Unit",
-            "Vanquished enemies leave behind residual chunks, repairing your ship on reclamation.",
+            "Vanquished enemies leave behind residual parts, repairing your ship on reclamation.",
             "Reduce (to pieces), Reuse (the parts), Recycle (the corpses).",
             Rarity.Common,
             true,
@@ -250,7 +250,7 @@ public class UpgradePlayer
             {
                 PlayerDataInstance.autoDodge = true;
             }),
-        
+
     };
 
     private static readonly Dictionary<string, List<Upgrade>> BY_RARITY = new();
@@ -260,7 +260,7 @@ public class UpgradePlayer
         foreach (var rarity in Rarity.ALL) BY_RARITY[rarity.Name] = new List<Upgrade>();
         foreach (var upgrade in UPGRADES) BY_RARITY[upgrade.Rarity.Name].Add(upgrade);
     }
-    
+
     public static Upgrade[] GetRandomUpgrades(int count)
     {
         var upgrades = new List<Upgrade>(count);
