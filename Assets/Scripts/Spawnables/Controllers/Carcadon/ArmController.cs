@@ -14,8 +14,9 @@ namespace Spawnables.Carcadon
         public float timeToFold;
         public bool hasAttack;
         
-        public float attackCooldown;
-
+        public int minSlash, maxSlash;
+        public float slashDelay, minAttackDelay, maxAttackDelay;
+        
         public float timeToOpen, timeToClose, timeToReturn;
         private float _attackProgress;
         
@@ -42,7 +43,10 @@ namespace Spawnables.Carcadon
         private ClawDamage _clawDamage;
         private PolygonCollider2D _collider;
 
+        private int _curAttackSlashes;
+        private int _curSlash;
         private readonly Timer _attackCooldown = new();
+        private readonly Timer _slashCooldown = new();
         
         private void Start()
         {
@@ -54,6 +58,8 @@ namespace Spawnables.Carcadon
             
             
             _foldSpeed = foldRotations.Sum(Mathf.Abs) / timeToFold;
+
+            _curAttackSlashes = Random.Range(minSlash, maxSlash);
         }
 
         public void FoldClosed() { _foldDirection = 1; }
@@ -90,6 +96,7 @@ namespace Spawnables.Carcadon
         private void Update()
         {
             _attackCooldown.Update();
+            _slashCooldown.Update();
             
             // fold
             if (_attackProgress == 0 && _foldDirection != 0)
@@ -111,7 +118,7 @@ namespace Spawnables.Carcadon
 
             if (!hasAttack) return;
             
-            if (!_folded && _attackCooldown.IsFinished && (_collider.OverlapPoint(_player.transform.position) || _attackProgress != 0))
+            if (!_folded && _attackCooldown.IsFinished && _slashCooldown.IsFinished && (_collider.OverlapPoint(_player.transform.position) || _attackProgress != 0))
             {
                 if (!_player.GetComponent<Movement>().Dodging)
                 {
@@ -169,10 +176,21 @@ namespace Spawnables.Carcadon
                     _clawDamage.Active = false;
                     _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(false); // disable trail renderer
                     _attackProgress = 0;
-                    _attackCooldown.Value = attackCooldown;
+
+                    _curSlash += 1;
+                    if (_curSlash == _curAttackSlashes)
+                    {
+                        _attackCooldown.Value = Random.Range(minAttackDelay, maxAttackDelay);
+                        _curAttackSlashes = Random.Range(minSlash, maxSlash);
+                        _curSlash = 0;
+                    }
+                    else
+                    {
+                        _slashCooldown.Value = slashDelay;
+                    }
                 }
                 
-                if (_attackCooldown.IsFinished) _attackProgress += Time.deltaTime; // don't increment if we just set to 0
+                if (_slashCooldown.IsFinished) _attackProgress += Time.deltaTime; // don't increment if we just set to 0
             }
         }
         

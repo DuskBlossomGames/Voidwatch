@@ -3782,7 +3782,7 @@ MonoBehaviour:
   playRadius: 150
   gravitySource: {fileID: 1331667012}
   target: {fileID: 2086174082}
-  turretBulletSpeed: 20000
+  turretBulletSpeed: 5000
 --- !u!212 &1258107692
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6217,7 +6217,7 @@ MonoBehaviour:
   HUD: {fileID: 1562156498}
   fadeIn: {fileID: 1781870393}
   planet: {fileID: 1331667019}
-  playerDamager: {fileID: 2086174091}
+  playerDamager: {fileID: 1840725724178856790}
   scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
   difficultyToLootTiers: 070000000f0000001900000032000000
   scrapCountTiers: 02000000050000000a0000000f000000
@@ -7136,17 +7136,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1362395923931163341, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
   m_PrefabInstance: {fileID: 1840725724178856788}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2086174091 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
-  m_PrefabInstance: {fileID: 1840725724178856788}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2086174079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6fc2b787f5664dcd8b93639b559eee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1616393753307876499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7417,6 +7406,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41b649eef00d9fe439d8acf01ce0920d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1840725724178856790 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+  m_PrefabInstance: {fileID: 1840725724178856788}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086174079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6fc2b787f5664dcd8b93639b559eee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1840725724178856799
