@@ -1611,7 +1611,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2815991
+    m_Bits: 19593207
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1912,7 +1912,7 @@ MonoBehaviour:
   fadeInTime: 1.7
   startAnchorMin: 0.6
   startAnchorMax: 0.75
-  debugUpgrade: 20
+  debugUpgrade: -1
   playMov: {fileID: 1840725724178856789}
   followPlayer: {fileID: 519420033}
 --- !u!1 &745304235

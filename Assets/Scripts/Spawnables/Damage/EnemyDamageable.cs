@@ -48,7 +48,7 @@ namespace Spawnables
         private const float STUN_FALL_WAIT_TIME = 5;
         private const float STUN_FALL_PERC_PER_SEC = 0.1f;
         
-        [Range(1, 5)] public int tier;
+        [Range(1, 5)] public int tier = 1;
         public EnemyType enemyType; // TODO: give values for these
         
         public int maxHealth;
@@ -126,7 +126,7 @@ namespace Spawnables
         {
             if (!PlayerDataInstance.healthPickupsEnabled || healthPickup == null) return;
 
-            var options = HealthPickup.HealthPickupDropsByTier[tier];
+            var options = HealthPickup.HealthPickupDropsByTier[tier-1];
             var sum = options.Sum(o => o.Weight);
             var pick = Random.value * sum;
 
@@ -141,9 +141,9 @@ namespace Spawnables
 
                     var angle = 2*Mathf.PI / options[i].Value * Random.Range(i, i + 1f);
                     
-                    pickup.position = transform.position + transform.lossyScale.x * 2 * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));;
+                    pickup.position = transform.position + transform.lossyScale.x * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));;
                     pickup.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360f));
-                    pickup.localScale = 2*bitScale*Vector3.one;
+                    pickup.localScale = bitScale*Vector3.one;
                 }
             }
         }

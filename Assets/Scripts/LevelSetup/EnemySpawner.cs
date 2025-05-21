@@ -142,7 +142,8 @@ namespace EnemySpawner
                     // kill all hazards
                     FindObjectsOfType<Damageable>().ToList().ForEach(dmg =>
                     {
-                        if (dmg.gameObject.layer == LayerMask.NameToLayer("Hazards")) dmg.Damage(100000, null);
+                        if (dmg.gameObject.layer == LayerMask.NameToLayer("Hazards") ||
+                            dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) dmg.Damage(100000, null);
                     });
                     nUpMan.Show();
                     Destroy(gameObject);

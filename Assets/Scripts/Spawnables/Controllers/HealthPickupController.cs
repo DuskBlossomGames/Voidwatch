@@ -8,11 +8,14 @@ namespace EnemySpawner
     public class HealthPickupController : MonoBehaviour
     {
         public float healthGain;
-        public float swellScale, swellTime;
+        public float swellScale, swellTime, shrinkTime;
 
         private readonly Timer _swell = new();
         private int _dir = 1;
         private float _startScale;
+
+        private float _startShrink;
+        private float _shrinkScale = 0;
         private void Start()
         {
             _swell.Value = swellTime/2;
@@ -23,6 +26,15 @@ namespace EnemySpawner
 
         private void Update()
         {
+            if (_shrinkScale != 0)
+            {
+                transform.localScale = new Vector3(_shrinkScale, _shrinkScale, 1);
+                _shrinkScale -= _startShrink / shrinkTime * Time.deltaTime;
+
+                if (_shrinkScale <= 0) Destroy(gameObject);
+                return;
+            }
+            
             _swell.Update(_dir);
             if (_swell.Value == _swell.MaxValue || _swell.Value == 0) _dir *= -1;
 
@@ -36,6 +48,8 @@ namespace EnemySpawner
 
             player.Heal(healthGain);
             GetComponent<Collider2D>().enabled = false;
+            
+            _shrinkScale = _startShrink = transform.localScale.x;
         }
     }
 }

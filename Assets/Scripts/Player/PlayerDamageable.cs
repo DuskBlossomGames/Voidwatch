@@ -122,7 +122,7 @@ namespace Spawnables.Player
             {
                 var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
                     19*Mathf.Log(damage/110.6f)); // magic formula; max dodgeable is 2000 dmg, first dmg above min cost is 200
-                if (cost >= _movement.DodgeJuice)
+                if (cost <= _movement.DodgeJuice)
                 {
                     _movement.DodgeOnceCost = cost;
                     return;

@@ -33,7 +33,7 @@ public class BulletCollision : MonoBehaviour
     private void Start()
     {
         if (_firstCollider == null) _firstCollider = owner;
-        if (owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
+        if (owner != null && owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
     }
 
     private void OnTriggerExit2D(Collider2D otherCollider)

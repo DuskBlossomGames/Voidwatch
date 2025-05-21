@@ -153,5 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthGain: 100
-  swellScale: 1.25
+  swellScale: 1.4
   swellTime: 1.5
+  shrinkTime: 0.3
