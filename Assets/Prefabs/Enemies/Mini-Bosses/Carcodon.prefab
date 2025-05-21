@@ -2332,7 +2332,11 @@ MonoBehaviour:
   - 40
   timeToFold: 0.6
   hasAttack: 0
-  attackCooldown: 0
+  minSlash: 0
+  maxSlash: 0
+  slashDelay: 0
+  minAttackDelay: 0
+  maxAttackDelay: 0
   timeToOpen: 0
   timeToClose: 0
   timeToReturn: 0
@@ -2911,7 +2915,11 @@ MonoBehaviour:
   - -40
   timeToFold: 0.6
   hasAttack: 0
-  attackCooldown: 0
+  minSlash: 0
+  maxSlash: 0
+  slashDelay: 0
+  minAttackDelay: 0
+  maxAttackDelay: 0
   timeToOpen: 0
   timeToClose: 0
   timeToReturn: 0
@@ -3917,7 +3925,11 @@ MonoBehaviour:
   - 70
   timeToFold: 0.6
   hasAttack: 1
-  attackCooldown: 0.5
+  minSlash: 1
+  maxSlash: 3
+  slashDelay: 0.5
+  minAttackDelay: 1
+  maxAttackDelay: 2
   timeToOpen: 0.1
   timeToClose: 0.175
   timeToReturn: 0.25
@@ -4331,7 +4343,11 @@ MonoBehaviour:
   - -70
   timeToFold: 0.6
   hasAttack: 1
-  attackCooldown: 0.5
+  minSlash: 1
+  maxSlash: 3
+  slashDelay: 0.5
+  minAttackDelay: 1
+  maxAttackDelay: 2
   timeToOpen: 0.1
   timeToClose: 0.175
   timeToReturn: 0.25
