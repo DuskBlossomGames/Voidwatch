@@ -8,20 +8,26 @@ public class ExplosionHandler : MonoBehaviour
 {
     public AudioSource audioSource;
     public float shieldMult, bleedPerc;
-    
+    private float _AudioPlayerPitchStatic;
+
+
+
     public void PlayVisuals()
     {
+      _AudioPlayerPitchStatic = audioSource.pitch;
+      audioSource.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
         audioSource.Play();
-        GetComponent<ParticleSystem>().Play();
+      audioSource.pitch = _AudioPlayerPitchStatic;
+        //GetComponent<ParticleSystem>().Play();
     }
-    
+
     public void Run(float damage, float range, int layer, List<Collider2D> ignore)
     {
         var scale = range / 5; // ~5 is the empirically derived start scale
         transform.localScale = new Vector3(scale, scale, 1);
 
         PlayVisuals();
-        
+
         const int rayNum = 16;
         for (var i = 0; i < rayNum; i++)
         {

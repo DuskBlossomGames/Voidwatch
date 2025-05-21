@@ -16,7 +16,7 @@ namespace Spawnables.Player
     public class PlayerDamageable : Damageable
     {
         public bool isTutorial;
-        
+
         public Q_Vignette_Single vignette;
         public GameObject fadeOut;
         public float fadeouttime = 1;
@@ -69,13 +69,13 @@ namespace Spawnables.Player
         private Movement _movement;
 
         private Vector3 _startLoc;
-        
+
         public new void Start()
         {
             _movement = GetComponent<Movement>();
-            
+
             _startLoc = transform.position;
-            
+
             healthBar.UpdatePercentage(Health, MaxHealth);
 
             Destroy(_healthBar);
@@ -87,7 +87,7 @@ namespace Spawnables.Player
                 _vignetteCacheValues.Add(vignetteDuration - t);
             }
 
-            _AudioPlayerPitchStatic = audioPlayer.volume;
+            _AudioPlayerPitchStatic = audioPlayer.pitch;
             _AudioPlayerShieldVolumeStatic = audioPlayer.volume;
         }
 
@@ -113,11 +113,11 @@ namespace Spawnables.Player
         }
 
         public override void Damage(float damage, GameObject source) { Damage(damage, source, 1, 0); }
-        
+
         public override void Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
         {
             if (godmode) return;
-            
+
             if (PlayerDataInstance.autoDodge)
             {
                 var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
@@ -128,7 +128,7 @@ namespace Spawnables.Player
                     return;
                 }
             }
-            
+
             if (_vignetteTimer.IsFinished)
             {
                 _vignetteTimer.Value = vignetteDuration;
@@ -146,7 +146,7 @@ namespace Spawnables.Player
             }
             vignette.mainScale = (maxVignetteScale - minVignetteScale) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteScale;
             _vignettePeakAlpha = (maxVignetteAlpha - minVignetteAlpha) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteAlpha;
-            
+
             var bleed = damage * bleedPerc;
             damage -= bleed;
 
@@ -185,7 +185,7 @@ namespace Spawnables.Player
 
                 }
             }
-            
+
             if (bleed > 0)
             {
                 Health -= bleed > 0 ? bleed : 0;
@@ -216,7 +216,7 @@ namespace Spawnables.Player
             for (var i = 0; i < numBits; i++)
             {
                 var sprite = bitOptions[i < bitOptions.Length ? i : Random.Range(0, bitOptions.Length)];
-                
+
                 var sr = new GameObject().AddComponent<SpriteRenderer>();
                 sr.sprite = sprite;
 

@@ -193,8 +193,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 100
   owner: {fileID: 0}
-  dmgType: 0
-  weaponID: 0
+  chains: 0
+  shieldMult: 1
+  bleedPerc: 0
   ignoresOwner: 0
   explosion: {fileID: 0}
   explosionRange: 0

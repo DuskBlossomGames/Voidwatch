@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class NewMapGen : MonoBehaviour
 {
     public int lowerClusterCount;
@@ -17,7 +17,7 @@ public class NewMapGen : MonoBehaviour
         {
             var cluster = new Cluster();
             cluster.id = cID;
-            do { cluster.clusterPos = Random.}
+            //do { cluster.clusterPos = Random.}
             var numPlanets = Random.Range(lowerPlanetsPerCluster, upperPlanetsPerCluster);
 
         }
@@ -148,3 +148,4 @@ public class Planet
     public Vector2 inClusterPos;
     public List<int> connections;
 }
+*/
