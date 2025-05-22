@@ -78,7 +78,11 @@ public class TitleController : MonoBehaviour
     {
         foreach (var button in gameObject.GetComponentsInChildren<Button>()) button.interactable = true;
         foreach (var obj in _texts) obj.SetAlpha(1);
-        foreach (var obj in _images) obj.SetAlpha(1);
+        foreach (var obj in _images)
+        {
+            obj.SetAlpha(1);
+            if (obj.gameObject.name == "Options") obj.SetAlpha(0.26f); // TODO: remove
+        }
     }
     
     public void Play() { StartCoroutine(PlayRoutine()); }

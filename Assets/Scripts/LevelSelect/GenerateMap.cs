@@ -56,13 +56,12 @@ namespace LevelSelect
             var connections = new List<Tuple<int, int>>();
 
             var planetScale = planetPrefab.transform.localScale;
-            var planetRadius = Mathf.Max(planetScale.x, planetScale.y) / 2;
             
             levels.Add(new LevelData {
                     Type = LevelType.Entrance,
                     Sprite = entranceSprite,
                     HiddenSprite = hiddenSprite,
-                    Connections = new List<int>(),
+                    Connections = new List<int>{1},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
                     Name = "Entrance",
                     LoreText = ""
@@ -74,7 +73,7 @@ namespace LevelSelect
                     Type = LevelType.Normal,
                     Sprite = sprites[Random.Range(0, sprites.Count)],
                     HiddenSprite = hiddenSprite,
-                    Connections = new List<int>(),
+                    Connections = new List<int>{i,i+2},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(i+1, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
                     Name = "Planet",
                     LoreText = ""
@@ -86,7 +85,7 @@ namespace LevelSelect
                 Type = LevelType.SpaceStation,
                 Sprite = spaceStationSprite,
                 HiddenSprite = hiddenSprite,
-                Connections = new List<int>(),
+                Connections = new List<int>{5, 7},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(6, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
                 Name = "Space Station",
                 LoreText = ""
@@ -97,7 +96,7 @@ namespace LevelSelect
                 Type = LevelType.Elite,
                 Sprite = sprites[Random.Range(0, sprites.Count)],
                 HiddenSprite = hiddenSprite,
-                Connections = new List<int>(),
+                Connections = new List<int>{6},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(7, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
                 Name = "Elite Enemy",
                 LoreText = ""
