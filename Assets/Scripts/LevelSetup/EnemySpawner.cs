@@ -217,6 +217,8 @@ namespace EnemySpawner
 
             yield return new WaitForSeconds(winWaitTime);
             
+            Destroy(StaticInfoHolder.Instance.gameObject);
+            DontDestroyOnLoad(new GameObject("RollCredits")); // TODO: this is so scuffed ahhhh
             SceneManager.LoadScene("TitleScreen");
         }
 

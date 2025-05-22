@@ -25,11 +25,15 @@ public class TitleController : MonoBehaviour
     private TextMeshProUGUI[] _texts;
     private Image[] _images;
 
+    private bool _initCredits;
     private void Start()
     {
         _texts = GetComponentsInChildren<TextMeshProUGUI>();
         _images = GetComponentsInChildren<Image>();
 
+        _initCredits = GameObject.Find("RollCredits") != null;
+        if (_initCredits) Destroy(GameObject.Find("RollCredits"));
+        
         GetComponent<Canvas>().enabled = false;
         ps.gameObject.SetActive(false);
         StartCoroutine(FadeIn());
@@ -38,6 +42,7 @@ public class TitleController : MonoBehaviour
     private IEnumerator FadeIn()
     {
         fadeIn.gameObject.SetActive(true);
+        if (_initCredits) yield return Fade(false);
         
         GetComponent<Canvas>().enabled = true;
         ps.gameObject.SetActive(true);
@@ -50,6 +55,7 @@ public class TitleController : MonoBehaviour
         }
 
         fadeIn.gameObject.SetActive(false);
+        if (_initCredits) yield return CreditsRoutine();
     }
 
     private IEnumerator Fade(bool includeCredits)
