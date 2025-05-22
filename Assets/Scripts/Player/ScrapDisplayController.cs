@@ -34,7 +34,7 @@ public class ScrapDisplayController : MonoBehaviour
     {
         _wait.Update();
         _transfer.Update();
-        _text.text = _scrap == 0 ? "  0" : $"{_scrap:# ### ###}"; // idk why 0 doesn't work
+        _text.text = $"{_scrap:# ### ##0}";
 
         if (_scrap != PlayerDataInstance.Scrap)
         {

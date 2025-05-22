@@ -20,6 +20,7 @@ public class ShopManager : MonoBehaviour
     public TMP_Text wbo;
     public TMP_Text hbo;
     public TMP_Text sbo;
+    public TextMeshProUGUI dCost, hCost, sCost;
     public Button dButton, hButton, sButton, lhButton, mhButton, hhButton; 
     public TMP_Text scrapDisplay;
     public bool lf = true;
@@ -176,6 +177,9 @@ public class ShopManager : MonoBehaviour
         rhp.anchorMax = new Vector2(_anchorMaxStart + _anchorWidth * (1f), rhp.anchorMax.y);
         
         scrapDisplay.text = $"{PDI.Scrap:### ### ### ##0}";
+        dCost.text = $"{boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1):### ### ### ##0}";
+        hCost.text = $"{boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1):### ### ### ##0}";
+        sCost.text = $"{boostCost * (PDI.SpeedBoosts + 1) * (PDI.SpeedBoosts + 1):### ### ### ##0}";
 
         dmgChain.Unlocked = PDI.DamageBoosts;
         hpChain.Unlocked = PDI.HealthBoosts;
