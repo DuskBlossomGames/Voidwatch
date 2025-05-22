@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
 using Upgrade = UpgradePlayer.Upgrade;
+using static Static_Info.PlayerData;
+using Button = UnityEngine.UI.Button;
+using Random = UnityEngine.Random;
 
 public class NewUpgradeManager : MonoBehaviour
 {
@@ -17,6 +21,8 @@ public class NewUpgradeManager : MonoBehaviour
     private readonly Dictionary<string, Sprite> _upgradeSprites = new();
     private readonly Dictionary<string, Sprite[]> _raritySprites = new();
 
+    public Button reroll;
+    
     public RawImage minimap;
     public RectTransform titleBox, title, subtitle;
     public RectTransform[] upgrades;
@@ -48,6 +54,11 @@ public class NewUpgradeManager : MonoBehaviour
                 _upgradeSprites[upgrade.Title] = byName[upgrade.Title];
             }
         };
+    }
+
+    private void Update()
+    {
+        reroll.interactable = PlayerDataInstance.Scrap >= 50;
     }
 
     private void SetUpgrades()
@@ -145,15 +156,18 @@ public class NewUpgradeManager : MonoBehaviour
 
     public void Reroll()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<ScrapDisplayController>().Collect(-50);
+        PlayerDataInstance.Scrap -= 50;
         SetUpgrades();
         UpdateUpgrades();
     }
 
     public void Scavenge()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<ScrapDisplayController>().Collect(Random.Range(100, 200));
-        StartCoroutine(ExitAfter(2));
+        var scrap = Random.Range(100, 200);
+        PlayerDataInstance.Scrap += scrap;
+        
+        var sdc = FindObjectOfType<ScrapDisplayController>();
+        StartCoroutine(ExitAfter(sdc.waitTime + (float) scrap / sdc.transferPerSec + 1));
     }
 
     private IEnumerator ExitAfter(float time)

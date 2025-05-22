@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
+using static Static_Info.PlayerData;
 
 public class ScrapController : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class ScrapController : MonoBehaviour
 
         if(4 * _crb.velocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<ScrapDisplayController>().Collect(value);
+            PlayerDataInstance.Scrap += value;
             //PlayerDataInstance.Scrap += value;
             Destroy(gameObject);
         }

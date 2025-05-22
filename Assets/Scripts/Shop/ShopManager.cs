@@ -135,7 +135,7 @@ public class ShopManager : MonoBehaviour
         PDI.maxHealth = Mathf.CeilToInt(PDI.maxHealth * (1f + boostPercentages[PDI.HealthBoosts] / 100f));
         PDI.Health = PDI.maxHealth * per;
         PDI.HealthBoosts += 1;
-        PDI.Scrap -= rbc;
+        PDI.Scrap -= (int) rbc;
     }
 
     public void WBoost()
@@ -145,7 +145,7 @@ public class ShopManager : MonoBehaviour
         if (PDI.DamageBoosts >= 5 || PDI.Scrap < rbc) return;
         GunInfoInstance.dmgMod *= 1f + boostPercentages[PDI.DamageBoosts] / 100f;
         PDI.DamageBoosts += 1;
-        PDI.Scrap -= rbc;
+        PDI.Scrap -= (int) rbc;
     }
 
     public void SBoost()
@@ -155,7 +155,7 @@ public class ShopManager : MonoBehaviour
         if (PDI.SpeedBoosts >= 5 || PDI.Scrap < rbc) return;
         PlayerDataInstance.speedLimit *= 1f + boostPercentages[PDI.SpeedBoosts] / 100f;
         PDI.SpeedBoosts += 1;
-        PDI.Scrap -= rbc;
+        PDI.Scrap -= (int) rbc;
     }
 
     private float _anchorMinStart = 0.065f, _anchorMaxStart = 0.125f, _anchorWidth = 0.765f;
