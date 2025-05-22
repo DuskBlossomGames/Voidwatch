@@ -135,10 +135,12 @@ namespace EnemySpawner
             }
             
             // TODO: debug
+#if UNITY_EDITOR
             if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
             if (_level.Type == LevelType.Elite && Input.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
             if (Input.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
-
+#endif
+            
             if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
             if (!_spawnedHazards && _level.Type != LevelType.Elite) SpawnHazards();
 

@@ -16,12 +16,14 @@ namespace Static_Info
         {
             get
             {
+#if UNITY_EDITOR
                 if (_instance == null)
                 {
                     // very scuffed way of initializing it .-. TODO: REMOVE IN PRODUCTION
                     _returnScene = SceneManager.GetActiveScene().name;
                     SceneManager.LoadScene("TitleScreen");
                 }
+#endif
                 
                 return _instance;
             }
@@ -53,8 +55,10 @@ namespace Static_Info
         }
 
         // TODO DEBUG: remove
+#if UNITY_EDITOR
         private void Update() { Time.timeScale = Input.GetKey(KeyCode.F2) ? 5 : 1; }
-
+#endif
+        
         public T GetCachedComponent<T>() where T : MonoBehaviour
         {
             if (!_behaviors.TryGetValue(typeof(T), out var ret))
