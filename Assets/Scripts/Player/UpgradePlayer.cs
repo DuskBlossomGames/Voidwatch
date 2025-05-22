@@ -72,6 +72,16 @@ public class UpgradePlayer
                 PlayerDataInstance.maxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.maxShield = Mathf.CeilToInt(1.05f * PlayerDataInstance.maxShield);
             }),
+        new("Experimental Batteries",
+            "These third-party shield batteries hold longer, but recharge slower.",
+            "Huh, this warning seems to have faded...",
+            Rarity.Rare,
+            false,
+            () => {
+                PlayerDataInstance.maxShield = Mathf.CeilToInt(1.3f * PlayerDataInstance.maxShield);
+                PlayerDataInstance.maxShieldDebt *= 1.5f;
+                PlayerDataInstance.shieldRegenRate *= .75f;
+            }),
         new("Hyperefficient Generators",
             "Improved generators regenerate shields faster.",
             "Why didn't it come with this?",
@@ -169,6 +179,15 @@ public class UpgradePlayer
             () =>
             {
                 PlayerDataInstance.bulletChains += 2;
+            }),
+        new("Void Implant",
+            "This Void cybernetic grants brief foresight, instinctively attempting to dodge if you would be hit, at a cost proportional to damage.",
+            "No need to worry, I feel perfectly f~ AAAHHHHH!",
+            Rarity.Legendary,
+            true,
+            () =>
+            {
+                PlayerDataInstance.autoDodge = true;
             }),
     };
 
