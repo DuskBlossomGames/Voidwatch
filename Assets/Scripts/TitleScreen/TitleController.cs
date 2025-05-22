@@ -37,6 +37,8 @@ public class TitleController : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
+        fadeIn.gameObject.SetActive(true);
+        
         GetComponent<Canvas>().enabled = true;
         ps.gameObject.SetActive(true);
         GetComponent<VideoPlayer>().enabled = false;
