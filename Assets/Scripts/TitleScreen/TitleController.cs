@@ -32,7 +32,7 @@ public class TitleController : MonoBehaviour
 
         GetComponent<Canvas>().enabled = false;
         ps.gameObject.SetActive(false);
-        GetComponent<VideoPlayer>().loopPointReached += _ => StartCoroutine(FadeIn());
+        StartCoroutine(FadeIn());
     }
 
     private IEnumerator FadeIn()
@@ -41,7 +41,6 @@ public class TitleController : MonoBehaviour
         
         GetComponent<Canvas>().enabled = true;
         ps.gameObject.SetActive(true);
-        GetComponent<VideoPlayer>().enabled = false;
 
         for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
         {
