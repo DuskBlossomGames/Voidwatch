@@ -13,15 +13,15 @@ public class TitleController : MonoBehaviour
 {
     public Image fadeIn;
     public float fadeInTime;
-    
+
     public ParticleSystem ps;
     public AnimationCurve textFadeCurve, particleSpeed;
     public float fadeTime, speedupTime, waitTime;
-    
+
     public RectTransform credits;
     public float creditsTime, creditsHoldTime, anchorDist;
     public AnimationCurve creditsMultCurve;
-    
+
     private TextMeshProUGUI[] _texts;
     private Image[] _images;
 
@@ -33,7 +33,7 @@ public class TitleController : MonoBehaviour
 
         _initCredits = GameObject.Find("RollCredits") != null;
         if (_initCredits) Destroy(GameObject.Find("RollCredits"));
-        
+
         GetComponent<Canvas>().enabled = false;
         ps.gameObject.SetActive(false);
         StartCoroutine(FadeIn());
@@ -43,7 +43,7 @@ public class TitleController : MonoBehaviour
     {
         fadeIn.gameObject.SetActive(true);
         if (_initCredits) yield return Fade(false);
-        
+
         GetComponent<Canvas>().enabled = true;
         ps.gameObject.SetActive(true);
 
@@ -61,7 +61,7 @@ public class TitleController : MonoBehaviour
     private IEnumerator Fade(bool includeCredits)
     {
         foreach (var button in gameObject.GetComponentsInChildren<Button>()) button.interactable = false;
-        
+
         for (float t = 0; t < fadeTime; t += Time.fixedDeltaTime)
         {
             yield return new WaitForFixedUpdate();
@@ -89,12 +89,12 @@ public class TitleController : MonoBehaviour
             if (obj.gameObject.name == "Options") obj.SetAlpha(0.26f); // TODO: remove
         }
     }
-    
+
     public void Play() { StartCoroutine(PlayRoutine()); }
     private IEnumerator PlayRoutine()
     {
         yield return Fade(true);
-        
+
         for (float t = 0; t < speedupTime; t += Time.fixedDeltaTime)
         {
             yield return new WaitForFixedUpdate();
@@ -103,7 +103,7 @@ public class TitleController : MonoBehaviour
         }
 
         ps.gameObject.SetActive(false);
-        
+
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene("LevelSelect");
     }
@@ -136,7 +136,7 @@ public class TitleController : MonoBehaviour
             credits.anchorMin = new Vector2(0, creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
             credits.anchorMax = new Vector2(1, 1+creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
         }
-        
+
         yield return new WaitForSeconds(creditsHoldTime);
         yield return Fade(true);
         yield return new WaitForSeconds(0.5f);
@@ -154,7 +154,7 @@ public class TitleController : MonoBehaviour
 
     public void OpenSteam()
     {
-        Application.OpenURL("https://steam.com");
+        //Application.OpenURL("https://steam.com");
     }
 
     public void Quit()
