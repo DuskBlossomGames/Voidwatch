@@ -158,6 +158,7 @@ namespace EnemySpawner
                 {
                     _timeTillExit = 3;
                     _isTerminal = true;
+                    print("done");
                 }
                 else if (_level.Type != LevelType.Elite)
                 {

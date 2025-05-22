@@ -142,6 +142,16 @@ public class TitleController : MonoBehaviour
         UnFade();
     }
 
+    public void OpenInstagram()
+    {
+        Application.OpenURL("https://instagram.com/duskblossomgames");
+    }
+
+    public void OpenSteam()
+    {
+        Application.OpenURL("https://steam.com");
+    }
+
     public void Quit()
     {
         Application.Quit();
