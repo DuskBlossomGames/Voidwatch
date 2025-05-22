@@ -412,7 +412,7 @@ namespace Spawnables.Carcadon
                 cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);
             }
 
-            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount; i++)
+            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount-2; i++)
             {
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
             }

@@ -1,10 +1,16 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Spawnables;
 using Spawnables.Player;
 using Static_Info;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
+using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.LevelSelectData;
 namespace EnemySpawner
@@ -15,6 +21,10 @@ namespace EnemySpawner
 
         public GameObject HUD, fadeIn;
         public PlanetSetup planet;
+
+        public Image carcWinImage;
+        public TextMeshProUGUI carcWinText, carcWinSubtext;
+        public float winFadeInTime, winWaitTime;
         
         public PlayerDamageable playerDamager;
         public GameObject scrapPrefab;
@@ -145,8 +155,17 @@ namespace EnemySpawner
                         if (dmg.gameObject.layer == LayerMask.NameToLayer("Hazards") ||
                             dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) dmg.Damage(100000, null);
                     });
-                    nUpMan.Show();
-                    Destroy(gameObject);
+
+                    if (_level.Type == LevelType.Elite)
+                    {
+                        StartCoroutine(Win());
+                        _isTerminal = false;
+                    }
+                    else
+                    {
+                        nUpMan.Show();
+                        Destroy(gameObject);
+                    }
                 }
                 return;
             }
@@ -158,13 +177,45 @@ namespace EnemySpawner
                 {
                     _timeTillExit = 3;
                     _isTerminal = true;
-                    print("done");
                 }
                 else if (_level.Type != LevelType.Elite)
                 {
                     SpawnWave();
                 }
             }
+        }
+
+        private bool _won;
+        private IEnumerator Win()
+        {
+            if (_won) yield break;
+            _won = true;
+            
+            fadeIn.SetActive(true);
+            fadeIn.GetComponent<Image>().SetAlpha(0);
+            for (float t = 0; t < winFadeInTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                fadeIn.GetComponent<Image>().SetAlpha(t / winFadeInTime);
+            }
+
+            carcWinImage.gameObject.SetActive(true);
+            carcWinText.gameObject.SetActive(true);
+            carcWinSubtext.gameObject.SetActive(true);
+            carcWinImage.SetAlpha(0);
+            carcWinText.SetAlpha(0);
+            carcWinSubtext.SetAlpha(0);
+            for (float t = 0; t < winFadeInTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                carcWinImage.SetAlpha(t / winFadeInTime);
+                carcWinText.SetAlpha(t / winFadeInTime);
+                carcWinSubtext.SetAlpha(t / winFadeInTime);
+            }
+
+            yield return new WaitForSeconds(winWaitTime);
+            
+            SceneManager.LoadScene("TitleScreen");
         }
 
         public void SpawnHazards()

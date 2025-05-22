@@ -64,7 +64,7 @@ namespace Spawnables.Carcadon
             _foldSpeed = foldRotations.Sum(Mathf.Abs) / timeToFold;
 
             _curAttackSlashes = Random.Range(minSlash, maxSlash);
-            _AudioPlayerPitchStatic = clawAudio.pitch;
+            if (clawAudio != null) _AudioPlayerPitchStatic = clawAudio.pitch;
         }
 
         public void FoldClosed() { _foldDirection = 1; }
@@ -166,7 +166,7 @@ namespace Spawnables.Carcadon
                     RotateJoint(_segments.Length - 1, openBase / timeToOpen * Time.deltaTime);
                     RotateJoint(_segments.Length - 2, openNext / timeToOpen * Time.deltaTime);
 
-                    if(!clawSoundBegan){
+                    if(clawAudio != null && !clawSoundBegan){
                       clawAudio.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f);
                       clawAudio.Play();
                       clawSoundBegan = true;
