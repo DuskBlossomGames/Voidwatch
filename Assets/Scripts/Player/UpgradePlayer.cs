@@ -87,7 +87,7 @@ public class UpgradePlayer
             false,
             () => {
                 PlayerDataInstance.shieldRegenRate *= 1.3f;
-                PlayerDataInstance.maxShield = Mathf.CeilToInt(1.5f * PlayerDataInstance.maxShield);
+                PlayerDataInstance.maxShield = Mathf.CeilToInt(1.8f * PlayerDataInstance.maxShield);
                 PlayerDataInstance.maxShieldDebt *= .2f;
                 PlayerDataInstance.maxHealth = Mathf.CeilToInt(.7f * PlayerDataInstance.maxHealth);
                 PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.maxHealth);
