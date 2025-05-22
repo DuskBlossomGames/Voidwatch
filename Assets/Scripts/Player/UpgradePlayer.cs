@@ -83,7 +83,7 @@ public class UpgradePlayer
         new("Durable Duct Tape",
             "Diverted power massively improves shield capacity and regeneration, but lowers hull integrity.",
             "If we just divert this cable... wait, where was that going?",
-            Rarity.legendary,
+            Rarity.Legendary,
             false,
             () => {
                 PlayerDataInstance.shieldRegenRate *= 1.3f;
