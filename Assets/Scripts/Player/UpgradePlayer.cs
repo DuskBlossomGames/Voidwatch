@@ -83,7 +83,7 @@ public class UpgradePlayer
         new("Durable Duct Tape",
             "Diverted power massively improves shield capacity and regeneration, but lowers hull integrity.",
             "If we just divert this cable... wait, where was that going?",
-            Rarity.Common,
+            Rarity.legendary,
             false,
             () => {
                 PlayerDataInstance.shieldRegenRate *= 1.3f;
@@ -95,11 +95,11 @@ public class UpgradePlayer
         new("Black Market Mod",
             "Bullets charge in the chamber longer, increasing damage and speed but decreasing fire rate.",
             "I'll just insert this into a critical system component real quick...",
-            Rarity.Common,
+            Rarity.Legendary,
             false,
             () => {
-                GunInfoInstance.dmgMod *= 1.4f;
-                GunInfoInstance.shotForce *= 1.7f;
+                GunInfoInstance.dmgMod *= 1.6f;
+                GunInfoInstance.shotForce *= 1.9f;
                 GunInfoInstance.fireTime += 0.4f;
             }),
         new("Voidwrought Accumulator",
@@ -129,7 +129,7 @@ public class UpgradePlayer
         new("High Yield Plasma Coils",
             "Greater plasma harnessing capabilities allows for faster shooting.",
             "More plasma? More bullets. More explosions!",
-            Rarity.Common,
+            Rarity.Rare,
             false,
             () => {
                 GunInfoInstance.fireTime *= 0.8f;
@@ -137,7 +137,7 @@ public class UpgradePlayer
         new("Interdimensional Spike",
             "This spike touches both our world and theirs, damaging enemies you pass through in Voidspace.",
             "The best offense is an offensive defense.",
-            Rarity.Common,
+            Rarity.Rare,
             false,
             () =>
             {
@@ -155,7 +155,7 @@ public class UpgradePlayer
         new("Void Energy Sieve",
             "Captures Void Energy as you pass through Voidspace, infusing your next bullets with extra power.",
             "Hippity hoppity, your Energy is my property!",
-            Rarity.Common,
+            Rarity.Rare,
             true,
             () =>
             {
@@ -164,7 +164,7 @@ public class UpgradePlayer
         new("Intrinsic Refraction",
             "Bullets refract upon hitting their target, launching a copy at the nearest enemy.",
             "You get a bullet! And you get a bullet! And you get a bullet!",
-            Rarity.Common,
+            Rarity.Rare,
             false,
             () =>
             {
