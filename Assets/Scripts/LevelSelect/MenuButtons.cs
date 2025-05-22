@@ -7,7 +7,6 @@ public class MenuButtons : MonoBehaviour
 {
     public void Restart()
     {
-        Debug.Log("Restart");
         Destroy(StaticInfoHolder.Instance.gameObject); // reset static info
         SceneManager.LoadScene("TitleScreen"); // return to boot
     }
