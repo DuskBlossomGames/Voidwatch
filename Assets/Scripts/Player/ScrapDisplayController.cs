@@ -1,47 +1,63 @@
+using System;
 using TMPro;
 using UnityEngine;
+using Util;
 using static Static_Info.PlayerData;
 
 public class ScrapDisplayController : MonoBehaviour
 {
-    public RectTransform parent;
-    public TMP_Text total;
-    public TMP_Text delta;
+    public float waitTime;
+    public int transferPerSec;
+    
+    private TextMeshProUGUI _text;
+    private TextMeshProUGUI _gain;
+    private int _scrap;
 
-    private int _accum;
-    public float accumWindow = 1f;
-    public float slideTime = .2f;
-    private float _slideprog = 0;
-    private float _accumprog = 0;
+    private bool _waited;
+    private readonly Timer _wait = new();
 
-    // Update is called once per frame
-    void Update()
+    private readonly Timer _transfer = new();
+    
+    private void Start()
     {
-        var PDI = PlayerDataInstance;
-        if (_accumprog > 0 && _slideprog < 1)
-        {
-            _slideprog += Time.deltaTime / slideTime;
-            if (_slideprog > 1) _slideprog = 1;
-        }
-        if (_accumprog < 0 && _slideprog > 0)
-        {
-            _slideprog -= Time.deltaTime / slideTime;
-            if (_slideprog < 0) _slideprog = 0;
+        _text = GetComponentsInChildren<TextMeshProUGUI>()[0];
+        _gain = GetComponentsInChildren<TextMeshProUGUI>()[1];
+        
+        _scrap = PlayerDataInstance.Scrap;
+        _gain.SetAlpha(0);
 
-        } else if (_accumprog < 0 && _slideprog == 0)
-        {
-            PDI.Scrap += _accum;
-            _accum = 0;
-        }
-        _accumprog -= Time.deltaTime / accumWindow;
-        parent.anchoredPosition = new Vector3(-500 + 200*_slideprog, 160, 0);
+        _transfer.Value = 1f / transferPerSec;
     }
 
-    public void Collect(int amt)
+
+    void Update()
     {
-        _accumprog = 1;
-        _accum += amt;
-        delta.text = $"+{_accum:# ### ###}";
-        total.text = $"{PlayerDataInstance.Scrap:# ### ###} SCRAP";
+        _wait.Update();
+        _transfer.Update();
+        _text.text = _scrap == 0 ? "  0" : $"{_scrap:# ### ###}"; // idk why 0 doesn't work
+
+        if (_scrap != PlayerDataInstance.Scrap)
+        {
+            if (_wait.IsFinished && !_waited)
+            {
+                _waited = true;
+                _wait.Value = waitTime;
+            }
+            
+            _gain.SetAlpha(1);
+            _gain.text = (_scrap < PlayerDataInstance.Scrap ? "+" : "- ") +
+                         $"{Mathf.Abs(PlayerDataInstance.Scrap - _scrap):# ### ###}";
+
+            if (_wait.IsFinished && _transfer.IsFinished)
+            {
+                _scrap += (int) Mathf.Sign(PlayerDataInstance.Scrap - _scrap);
+                _transfer.Value = _transfer.MaxValue;
+            }
+        }
+        else
+        {
+            _waited = false;
+            _gain.SetAlpha(0);
+        }
     }
 }

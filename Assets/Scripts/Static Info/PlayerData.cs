@@ -38,7 +38,7 @@ namespace Static_Info
         public readonly List<UpgradePlayer.Upgrade> Upgrades = new();
 
         [NonSerialized] public float Health;
-        [NonSerialized] public float Scrap;
+        [NonSerialized] public int Scrap;
 
         [NonSerialized] public short HealthBoosts = 0;
         [NonSerialized] public short DamageBoosts = 0;
