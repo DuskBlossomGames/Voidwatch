@@ -267,6 +267,7 @@ namespace Spawnables.Player
                 GetComponent<SpriteRenderer>().enabled = true;
                 _movement.SetInputBlocked(false);
                 fadeOut.SetActive(false);
+                PlayerDataInstance.Health = PlayerDataInstance.maxHealth;
             }
         }
     }
