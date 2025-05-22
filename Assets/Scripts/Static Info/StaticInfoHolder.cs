@@ -51,7 +51,10 @@ namespace Static_Info
             
             if (_returnScene != null) StartCoroutine(LoadInfo());
         }
-        
+
+        // TODO DEBUG: remove
+        private void Update() { Time.timeScale = Input.GetKey(KeyCode.F2) ? 5 : 1; }
+
         public T GetCachedComponent<T>() where T : MonoBehaviour
         {
             if (!_behaviors.TryGetValue(typeof(T), out var ret))

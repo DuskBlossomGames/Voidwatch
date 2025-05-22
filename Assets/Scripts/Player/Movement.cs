@@ -104,9 +104,6 @@ namespace Player
 
         private void FixedUpdate()
         {
-            // TODO DEBUG: remove
-            Time.timeScale = Input.GetKey(KeyCode.F2) ? 5 : 1;
-            
             var velocity = _rigid.velocity;
 
             var tar = _camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;

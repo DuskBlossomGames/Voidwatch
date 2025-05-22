@@ -5,15 +5,19 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using Util;
 using Button = UnityEngine.UI.Button;
 
 public class TitleController : MonoBehaviour
 {
+    public Image fadeIn;
+    public float fadeInTime;
+    
     public ParticleSystem ps;
     public AnimationCurve textFadeCurve, particleSpeed;
     public float fadeTime, speedupTime, waitTime;
-
+    
     public RectTransform credits;
     public float creditsTime, creditsHoldTime, anchorDist;
     public AnimationCurve creditsMultCurve;
@@ -25,6 +29,26 @@ public class TitleController : MonoBehaviour
     {
         _texts = GetComponentsInChildren<TextMeshProUGUI>();
         _images = GetComponentsInChildren<Image>();
+
+        GetComponent<Canvas>().enabled = false;
+        ps.gameObject.SetActive(false);
+        GetComponent<VideoPlayer>().loopPointReached += _ => StartCoroutine(FadeIn());
+    }
+
+    private IEnumerator FadeIn()
+    {
+        GetComponent<Canvas>().enabled = true;
+        ps.gameObject.SetActive(true);
+        GetComponent<VideoPlayer>().enabled = false;
+
+        for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
+        {
+            yield return new WaitForFixedUpdate();
+
+            fadeIn.SetAlpha(1 - t / fadeInTime);
+        }
+
+        fadeIn.gameObject.SetActive(false);
     }
 
     private IEnumerator Fade(bool includeCredits)
