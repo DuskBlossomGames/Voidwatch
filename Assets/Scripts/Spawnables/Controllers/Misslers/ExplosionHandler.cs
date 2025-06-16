@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Spawnables;
+using UnityEditor;
 using UnityEngine;
 using Util;
 
@@ -12,13 +13,15 @@ public class ExplosionHandler : MonoBehaviour
 
 
 
-    public void PlayVisuals()
+    public void Play()
     {
-      _AudioPlayerPitchStatic = audioSource.pitch;
-      audioSource.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+        _AudioPlayerPitchStatic = audioSource.pitch;
+        audioSource.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
         audioSource.Play();
-      audioSource.pitch = _AudioPlayerPitchStatic;
-        //GetComponent<ParticleSystem>().Play();
+        audioSource.pitch = _AudioPlayerPitchStatic;
+        
+        GetComponent<ParticleSystem>().Play();
+        StartCoroutine(Kill(.5f));
     }
 
     public void Run(float damage, float range, int layer, List<Collider2D> ignore)
@@ -26,8 +29,8 @@ public class ExplosionHandler : MonoBehaviour
         var scale = range / 5; // ~5 is the empirically derived start scale
         transform.localScale = new Vector3(scale, scale, 1);
 
-        PlayVisuals();
-
+        Play();
+        
         const int rayNum = 16;
         for (var i = 0; i < rayNum; i++)
         {
@@ -39,10 +42,9 @@ public class ExplosionHandler : MonoBehaviour
             ignore.Add(hit.collider);
             hit.transform.GetComponent<IDamageable>()?.Damage(damage, gameObject, shieldMult, bleedPerc);
         }
-        StartCoroutine(Kill(.5f));
     }
 
-    IEnumerator Kill(float time)
+    private IEnumerator Kill(float time)
     {
         yield return new WaitForSeconds(time);
         Destroy(gameObject);

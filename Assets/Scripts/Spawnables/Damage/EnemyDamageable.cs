@@ -178,7 +178,7 @@ namespace Spawnables
                 explosionObj.SetActive(true);
                 explosionObj.transform.position = transform.position;
                 explosionObj.transform.localScale = explosionScale * Vector3.one;
-                explosionObj.GetComponent<ExplosionHandler>().PlayVisuals();
+                explosionObj.GetComponent<ExplosionHandler>().Play();
             }
             
             SpawnHealthPickups();
