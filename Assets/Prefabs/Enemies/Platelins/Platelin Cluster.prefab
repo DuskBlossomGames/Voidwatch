@@ -158,7 +158,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   tier: 2
   enemyType: 2
-  maxHealth: 150
+  maxHealth: 0
   varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
@@ -185,10 +185,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxColonySize: 10
+  maxNumColonies: 4
   normalSize: 5
-  leaderSize: 7.5
+  leaderSize: 7.75
   isLeader: 1
-  leaderChance: 0.05
+  maxHealth: 150
+  leaderMaxHealth: 300
+  leaderChance: 1
   explosionScaleMult: 2.5
   gooSpawnTime: 1.25
   healthPickup: {fileID: 1317461934895244640, guid: 5886eced7a3754dd3b2e186b34b40cbb, type: 3}

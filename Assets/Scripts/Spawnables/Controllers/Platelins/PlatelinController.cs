@@ -6,9 +6,12 @@ using Random = UnityEngine.Random;
 
 public class PlatelinController : MonoBehaviour
 {
-    public int maxColonySize;
+    private static int _numColonies;
+    
+    public int maxColonySize, maxNumColonies;
     public float normalSize, leaderSize;
     public bool isLeader;
+    public int maxHealth, leaderMaxHealth;
     public float leaderChance;
     public float explosionScaleMult;
     public float gooSpawnTime;
@@ -57,6 +60,8 @@ public class PlatelinController : MonoBehaviour
 
     void OnEnable()
     {
+        GetComponent<EnemyDamageable>().maxHealth = isLeader ? leaderMaxHealth : maxHealth;
+        
         isSpore = false;
         animationState.SwapState("Maturation");
         _spawntimer = initialDelay;
@@ -66,7 +71,11 @@ public class PlatelinController : MonoBehaviour
     private void Start()
     {
         transform.localScale = (_scale = isLeader ? leaderSize : normalSize) * Vector3.one;
-        if (isLeader) _leader = this;
+        if (isLeader)
+        {
+            _leader = this;
+            _numColonies++;
+        }
         
         _target = GameObject.FindGameObjectWithTag("Player");
     }
@@ -94,9 +103,15 @@ public class PlatelinController : MonoBehaviour
             }
         }
 
-        if(transform.position.sqrMagnitude > 75 * 75)
+        if(((Vector2)transform.position).sqrMagnitude > 75 * 75)
         {
-            GetComponent<CustomRigidbody2D>().AddForce(-30 * ((Vector2)transform.position).normalized);
+            GetComponent<CustomRigidbody2D>().AddForce(-60 * ((Vector2)transform.position).normalized);
+        }
+
+        // just hard cap it at some point as a backstop
+        if (((Vector2)transform.position).sqrMagnitude > 130 * 130)
+        {
+            transform.position = transform.position.normalized * 130;
         }
 
         if (mode == Mode.Immature)
@@ -121,10 +136,13 @@ public class PlatelinController : MonoBehaviour
 
         if (mode is Mode.Idle or Mode.Swell)
         {
-            var targSpeed = speed * speedCurve.Evaluate(_speedCurve / speedCurveScale) *
-                            ((Vector2)(_target.transform.position - transform.position)).normalized;
-            GetComponent<CustomRigidbody2D>().velocity = Vector2.SmoothDamp(GetComponent<CustomRigidbody2D>().velocity, targSpeed, ref _dampVel, 0.1f);
-            _speedCurve = (_speedCurve + Time.deltaTime) % speedCurveScale;
+            if (((Vector2)transform.position).sqrMagnitude < 80 * 80)
+            {
+                var targSpeed = speed * speedCurve.Evaluate(_speedCurve / speedCurveScale) *
+                                ((Vector2)(_target.transform.position - transform.position)).normalized;
+                GetComponent<CustomRigidbody2D>().velocity = Vector2.SmoothDamp(GetComponent<CustomRigidbody2D>().velocity, targSpeed, ref _dampVel, 0.1f);
+                _speedCurve = (_speedCurve + Time.deltaTime) % speedCurveScale;
+            }
             
             _gooTimer.Update();
             if (_gooTimer.IsFinished)
@@ -163,23 +181,30 @@ public class PlatelinController : MonoBehaviour
                 copy._leader = _leader;
                 copy.isLeader = false;
                 copy.mode = Mode.Immature;
-
-                _leader._subjects.Add(copy.gameObject);
-
-                if(Random.value < leaderChance)
+                
+                if (isLeader && _numColonies < maxNumColonies && Random.value < leaderChance)
                 {
-                    copy.GetComponent<CustomRigidbody2D>().AddForce(30000 * Random.insideUnitCircle.normalized);
+                    copy.GetComponent<CustomRigidbody2D>().AddForce(25000 * Random.insideUnitCircle.normalized);
                     copy._spawntimer += 5;
                     copy.animationState.SwapState("Dormant");
                     copy.isSpore = true;
                     copy.isLeader = true;
+                    copy._leader = copy;
                 }
+                else
+                {
+                    _leader._subjects.Add(copy.gameObject);
+                }
+                
+                copy.GetComponent<EnemyDamageable>().maxHealth = copy.isLeader ? leaderMaxHealth : maxHealth;
             }
         }
     }
 
     private void OnDestroy()
     {
+        if (isLeader) _numColonies--;
+        
         _leader._subjects.Remove(gameObject);
         Instantiate(goo, transform.position, transform.rotation).transform.localScale *= explosionScaleMult;
         if (transform.parent.childCount == 1)
