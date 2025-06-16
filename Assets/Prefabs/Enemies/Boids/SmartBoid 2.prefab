@@ -188,7 +188,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 2.25, y: 2.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9161576513603538157}
@@ -414,7 +414,7 @@ MonoBehaviour:
   misfireChance: 0
   repeats: 1
   repeatSeperation: 0.1
-  dmgMod: 100
+  dmgMod: 40
   shieldMult: 1
   bleedPerc: 0
 --- !u!114 &7410061765303661339

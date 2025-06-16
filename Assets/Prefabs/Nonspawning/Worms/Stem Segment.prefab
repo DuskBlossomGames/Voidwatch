@@ -114,7 +114,7 @@ MonoBehaviour:
   next: {fileID: 0}
   target: {fileID: 0}
   speed: 40
-  accel: 2
+  accel: 6
   accelCurve:
     serializedVersion: 2
     m_Curve:
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargeTime: 2
   dodgeTime: 0.2
-  ramp: 1.5
+  ramp: 1.15
   baseDmg: 50
   shieldMult: 2
   bleedPerc: 0.05

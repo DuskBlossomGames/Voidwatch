@@ -217,7 +217,7 @@ namespace Player
                 _acceleration = 0;
             }
 
-            if (autoPilot && ((Vector2)transform.position).sqrMagnitude > 60 * 60) velocity -= (Vector2)transform.position * (2 * Time.fixedDeltaTime);
+            if (autoPilot && ((Vector2)transform.position).sqrMagnitude > 60 * 60) velocity -= (Vector2)transform.position * Time.fixedDeltaTime;
 
             if (velocity.sqrMagnitude > PlayerDataInstance.speedLimit * PlayerDataInstance.speedLimit)
             {
@@ -225,7 +225,7 @@ namespace Player
             }
             //forwards = new Vector2(-Mathf.Sin(Mathf.Deg2Rad * rigid.freezeRotation), Mathf.Cos(Mathf.Deg2Rad * rigid.freezeRotation));
 
-            velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
+            if (!autoPilot) velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
             velocity *= Mathf.Pow(.99f, Time.fixedDeltaTime);
 
             _rigid.velocity = velocity;
