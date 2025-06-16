@@ -6,6 +6,7 @@ namespace Spawnables.Asteroids
 {
     public class AsteroidSwarmInit : MonoBehaviour
     {
+        public float spreadMultiplier;
         public float minDriftVel, maxDriftVel;
 
         public float size;
@@ -27,7 +28,7 @@ namespace Spawnables.Asteroids
                 size -= obj.transform.localScale.x;
 
                 var asteroid = Instantiate(obj, transform.position +
-                                 (Vector3) (origSize/2*Random.insideUnitCircle), Quaternion.identity);
+                                 (Vector3) (spreadMultiplier*origSize*Random.insideUnitCircle), Quaternion.identity);
                 asteroid.transform.SetParent(null);
 
                 asteroid.GetComponent<AsteroidController>().startVel = driftVel;

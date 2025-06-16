@@ -228,9 +228,9 @@ namespace EnemySpawner
             
             _spawnedHazards = true;
             var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
-
-            var sectorSize = 2*Mathf.PI / hazards.Count;
-            for (var sector = 0; sector < hazards.Count; sector++)
+            
+            var sectorSize = 2*Mathf.PI / (hazards.Count+1);
+            for (var sector = 1; sector < hazards.Count+1; sector++)
             {
                 var idx = Random.Range(0, hazards.Count);
                 var hazard = hazards[idx];
