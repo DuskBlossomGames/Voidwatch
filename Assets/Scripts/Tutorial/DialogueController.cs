@@ -41,14 +41,15 @@ namespace Tutorial
         private bool _opened;
         
         private RectTransform _transform;
-        private Image _person, _box;
+        private Image _personBox, _person, _box;
         private float _anchorMinX, _anchorMaxX, _anchorMinY, _anchorMaxY;
         private float _startAnchorX, _startAnchorY;
         
         private void Start()
         {
             _transform = GetComponent<RectTransform>();
-            _person = transform.GetChild(0).GetComponent<Image>();
+            _personBox = transform.GetChild(0).GetComponent<Image>();
+            _person = transform.GetChild(0).GetChild(0).GetComponent<Image>();
             _box = GetComponent<Image>();
             
             _anchorMinX = _transform.anchorMin.x;
@@ -163,6 +164,8 @@ namespace Tutorial
                 }
             }
             _box.SetAlpha(1);
+            _person.SetAlpha(0);
+            _personBox.SetAlpha(0);
 
             yield return new WaitForSeconds(waitBeforeOpen);
 
@@ -179,6 +182,7 @@ namespace Tutorial
                 yield return new WaitForFixedUpdate();
                 
                 _person.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime));
+                _personBox.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime));
             }
 
             _opened = true;
