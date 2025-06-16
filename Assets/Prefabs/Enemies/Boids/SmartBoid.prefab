@@ -277,7 +277,7 @@ MonoBehaviour:
   misfireChance: 0
   repeats: 0
   repeatSeperation: 0.01
-  dmgMod: 50
+  dmgMod: 20
   shieldMult: 1
   bleedPerc: 0
 --- !u!1 &6001684470992877439
