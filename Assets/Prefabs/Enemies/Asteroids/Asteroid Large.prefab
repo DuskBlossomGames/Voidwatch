@@ -103,10 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 1
-  miniSprite: {fileID: 0}
-  miniColor: {r: 0, g: 0, b: 0, a: 0}
-  size: 5
+  appearsAsSelf: 0
+  miniSprite: {fileID: 2747690628134850419, guid: a9716c16a44a94eed9b5c90fbf4d9bdd, type: 3}
+  miniColor: {r: 0.67058825, g: 0.22352941, b: 0, a: 1}
+  size: 6
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
 --- !u!212 &2038406915348808591
