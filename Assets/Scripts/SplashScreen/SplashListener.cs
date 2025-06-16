@@ -9,7 +9,6 @@ namespace SplashScreen
     {
         private void Start()
         {
-            GetComponent<VideoPlayer>().Play();
             GetComponent<VideoPlayer>().loopPointReached += _ => SceneManager.LoadScene("TitleScreen");
         }
     }
