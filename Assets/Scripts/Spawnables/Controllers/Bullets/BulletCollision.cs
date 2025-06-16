@@ -4,7 +4,9 @@ using System.Linq;
 using JetBrains.Annotations;
 using Player;
 using Spawnables;
+using Spawnables.Asteroids;
 using Spawnables.Player;
+using UnityEditor;
 using UnityEngine;
 using Util;
 using static Static_Info.PlayerData;
@@ -67,6 +69,28 @@ public class BulletCollision : MonoBehaviour
                 
                 if (damageable.GetType() == typeof(EnemyDamageable)) ((EnemyDamageable) damageable).Damage(damage, gameObject, _damageTypes); 
                 else damageable.Damage(damage, gameObject, shieldMult, bleedPerc);
+                
+                if (chains == 0)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    try
+                    {
+                        var nearest = FindObjectsOfType<EnemyDamageable>()
+                            .Where(d => d.gameObject != other && d.GetType() != typeof(AsteroidController))
+                            .OrderByDescending(e => ((Vector2)(e.transform.position - transform.position)).sqrMagnitude)
+                            .Last();
+                        
+                        chains -= 1;
+                        _firstCollider = other;
+
+                        GetComponent<CustomRigidbody2D>().velocity =
+                            GetComponent<CustomRigidbody2D>().velocity.magnitude * (nearest.transform.position - transform.position).normalized;
+                    }
+                    catch (InvalidOperationException) {}
+                }
             }
 
             if (explosion)
@@ -77,23 +101,6 @@ public class BulletCollision : MonoBehaviour
                 var obj = Instantiate(explosion);
                 obj.transform.position = transform.position;
                 obj.GetComponent<ExplosionHandler>().Run(explosionDmg, explosionRange, gameObject.layer, ignore);
-            }
-
-            if (chains == 0)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                var nearest = FindObjectsOfType<EnemyDamageable>()
-                    .OrderByDescending(e => (e.transform.position-transform.position).sqrMagnitude).ToList();
-                
-                chains -= 1;
-                _firstCollider = other;
-
-                if (nearest.Count != 0) print(nearest.First().gameObject.name);
-                if (nearest.Count != 0) GetComponent<CustomRigidbody2D>().velocity =
-                    GetComponent<CustomRigidbody2D>().velocity.magnitude * (nearest.First().transform.position - transform.position).normalized;
             }
         }
     }

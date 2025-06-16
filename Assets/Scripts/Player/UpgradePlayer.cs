@@ -178,7 +178,7 @@ public class UpgradePlayer
             false,
             () =>
             {
-                PlayerDataInstance.bulletChains += 2;
+                PlayerDataInstance.bulletChains += 1;
             }),
         new("Void Implant",
             "This Void cybernetic grants brief foresight, instinctively attempting to dodge if you would be hit, at a cost proportional to damage.",

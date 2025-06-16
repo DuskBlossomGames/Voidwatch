@@ -2175,7 +2175,7 @@ MonoBehaviour:
   fadeInTime: 1.7
   startAnchorMin: 0.6
   startAnchorMax: 0.75
-  debugUpgrade: -1
+  debugUpgrade: 13
   playMov: {fileID: 1840725724178856789}
   followPlayer: {fileID: 519420033}
 --- !u!1 &724665293
