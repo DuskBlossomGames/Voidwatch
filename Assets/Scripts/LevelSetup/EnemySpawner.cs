@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Player;
 using Spawnables;
 using Spawnables.Player;
 using Static_Info;
@@ -192,6 +193,10 @@ namespace EnemySpawner
         {
             if (_won) yield break;
             _won = true;
+            
+            player.GetComponent<Movement>().SetInputBlocked(true);
+            player.GetComponent<Movement>().autoPilot = true;
+            player.GetComponent<PlayerDamageable>().godmode = true;
             
             fadeIn.SetActive(true);
             fadeIn.GetComponent<Image>().SetAlpha(0);
