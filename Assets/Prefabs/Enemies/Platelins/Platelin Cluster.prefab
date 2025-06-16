@@ -191,7 +191,7 @@ MonoBehaviour:
   isLeader: 1
   maxHealth: 150
   leaderMaxHealth: 300
-  leaderChance: 1
+  leaderChance: 0.2
   explosionScaleMult: 2.5
   gooSpawnTime: 1.25
   healthPickup: {fileID: 1317461934895244640, guid: 5886eced7a3754dd3b2e186b34b40cbb, type: 3}
