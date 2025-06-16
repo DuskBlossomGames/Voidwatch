@@ -172,7 +172,7 @@ namespace Spawnables.Player
                     {
                         var overDebt = -ShieldMaxDebt - ShieldPower;
                         ShieldPower += overDebt;
-                        bleed += overDebt;
+                        bleed += overDebt / shieldMult;
                     }
 
                     audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance

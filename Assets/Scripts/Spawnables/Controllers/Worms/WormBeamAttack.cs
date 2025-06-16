@@ -78,7 +78,7 @@ public class WormBeamAttack : MonoBehaviour
                 var dmgable = tar.GetComponent<IDamageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(.01f * dmg, gameObject, shieldMult, bleedPerc);
+                    dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
                 }
             }
             yield return new WaitForSeconds(.02f);
@@ -121,7 +121,7 @@ public class WormBeamAttack : MonoBehaviour
                 var dmgable = tar.GetComponent<Damageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(.01f * dmg, gameObject, shieldMult, bleedPerc);
+                    dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
                 }
             }
         }
