@@ -96,9 +96,9 @@ namespace LevelSelect
             const float planetDivergePoint = 10 * Mathf.Deg2Rad;
             
             var baseOrbitalVelocity = 2*Mathf.PI / secondsPerOrbit * _orbitRadius;
-            var targOrbitalVelocity = 2.5f * baseOrbitalVelocity;
+            var targOrbitalVelocity = 3.5f * baseOrbitalVelocity;
             var orbitalVelocity = baseOrbitalVelocity;
-            var radToTargVel = 15 * Mathf.Deg2Rad;
+            var radToTargVel = 20 * Mathf.Deg2Rad;
 
             var current = _orbitPosition;
             var currentRot = _orbitAngle;

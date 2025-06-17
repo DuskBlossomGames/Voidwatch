@@ -3,6 +3,7 @@ using System.Timers;
 using Static_Info;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Util;
 using static Static_Info.LevelSelectData;
 using Timer = Util.Timer;
 
@@ -18,6 +19,8 @@ namespace LevelSelect
         
         private LevelData Level => LevelSelectDataInstance.Levels[LevelIdx];
 
+        private bool _selected;
+        
         private float _baseScale;
         private void Start()
         {
@@ -26,6 +29,8 @@ namespace LevelSelect
             _scaleTimer.SetValue(0);
             
             if (Clickable && Level.Type != LevelType.SpaceStation) transform.GetChild(0).gameObject.SetActive(true);
+            GetComponent<Selectable>().clickable = Clickable;
+            GetComponent<Selectable>().selector.OnSelectionChange += pos => _selected = pos == Level.WorldPosition;
         }
 
         private float _scaleMult = 1;
@@ -45,7 +50,7 @@ namespace LevelSelect
 
         private void OnMouseUpAsButton()
         {
-            if (!Clickable) return;
+            if (!Clickable || !_selected) return;
 
             playerMini.GoTo(Level.WorldPosition, LevelIdx,
                 Level.IsBoss ? "LevelBoss" : Level.Type == LevelType.SpaceStation ? "Shop" : "LevelPlay");
