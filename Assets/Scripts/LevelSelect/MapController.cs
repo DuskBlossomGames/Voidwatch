@@ -10,7 +10,6 @@ namespace LevelSelect
         public float scrollSpeed, minCamSize, maxCamSize;
 
         public MiniPlayerController playerMini;
-        public Selector selector;
         public Material lineMaterial;
 
         private Vector2 _minScroll;
@@ -31,8 +30,6 @@ namespace LevelSelect
 
             camTransform.position = pos;
             playerMini.SetOrbitPosition(pos);
-            
-            selector.OnSelectionChange += DrawPathToPlanet;
         }
 
         private void DrawPathToPlanet(Vector3? planet)
@@ -65,22 +62,13 @@ namespace LevelSelect
         }
         
         private Vector3 _lastMousePos;
-        private bool _resettingSelector;
-        
-        private void OnMouseUp()
-        {
-            if (_resettingSelector) selector.SetPosition(null);
-        }
 
         private void OnMouseDown()
         {
-            _resettingSelector = true;
             _lastMousePos = Input.mousePosition;
         }
         private void OnMouseDrag()
         {
-            _resettingSelector &= Input.mousePosition == _lastMousePos;
-            
             var camTransform = camera.transform;
             var camPos = camTransform.position + (_lastMousePos - Input.mousePosition) * camera.orthographicSize / camSizeDragRatio;
 
@@ -91,8 +79,6 @@ namespace LevelSelect
             _lastMousePos = Input.mousePosition;
         }
         
-        // TODO: scale stars accordingly?
-        // TODO: zoom to mouse?
         private void Update()
         {
             camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + Input.mouseScrollDelta.y * scrollSpeed,

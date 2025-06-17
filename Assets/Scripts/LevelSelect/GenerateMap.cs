@@ -74,7 +74,7 @@ namespace LevelSelect
                     Sprite = sprites[Random.Range(0, sprites.Count)],
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{i,i+2},
-                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(i+1, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*(i+1), 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
                     Name = "Planet",
                     LoreText = ""
                 });
@@ -86,7 +86,7 @@ namespace LevelSelect
                 Sprite = spaceStationSprite,
                 HiddenSprite = hiddenSprite,
                 Connections = new List<int>{5, 7},
-                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(6, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(18, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
                 Name = "Space Station",
                 LoreText = ""
             });
@@ -97,7 +97,7 @@ namespace LevelSelect
                 Sprite = sprites[Random.Range(0, sprites.Count)],
                 HiddenSprite = hiddenSprite,
                 Connections = new List<int>{6},
-                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(7, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(21, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
                 Name = "Elite Enemy",
                 LoreText = ""
             });
@@ -120,15 +120,23 @@ namespace LevelSelect
                     revealed.Add(connection.Item2);
                 }
 
-                var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();
-                line.transform.SetParent(transform);
+                if (reveal)
+                {
+                    var pos1 = LevelSelectDataInstance.Levels[connection.Item1].WorldPosition;
+                    var pos2 = LevelSelectDataInstance.Levels[connection.Item2].WorldPosition;
+                    
+                    var line = new GameObject("LineRenderer").AddComponent<LineRenderer>();
+                    line.transform.SetParent(transform);
+                    
+                    line.material = lineMaterial;
+                    line.startColor = line.endColor = new Color(0.2f, 0.2f, 0.2f);
+                    line.startWidth = line.endWidth = 2;
+                    line.textureMode = LineTextureMode.RepeatPerSegment;
+                    line.textureScale = new Vector2(Vector2.Distance(pos1, pos2)/100 * 3, 0);
 
-                line.material = lineMaterial;
-                line.startColor = line.endColor = reveal ? Color.red : new Color(0.2f, 0.2f, 0.2f);
-                line.startWidth = line.endWidth = 3f;
-
-                line.SetPosition(0, LevelSelectDataInstance.Levels[connection.Item1].WorldPosition);
-                line.SetPosition(1, LevelSelectDataInstance.Levels[connection.Item2].WorldPosition);
+                    line.SetPosition(0, pos1);
+                    line.SetPosition(1, pos2);
+                }
             }
 
             foreach (var (level, idx) in LevelSelectDataInstance.Levels.Select((l,i) => (l,i)))
@@ -138,13 +146,22 @@ namespace LevelSelect
                 planetObj.GetComponent<SpriteRenderer>().sprite = revealed.Contains(idx)
                     ? level.Sprite
                     : level.HiddenSprite;
-                
-                if (revealed.Contains(idx))
+
+                planetObj.GetComponent<PlanetController>().Clickable =
+                    revealed.Contains(idx) && (level.Type == LevelType.SpaceStation ||
+                    !LevelSelectDataInstance.VisitedPlanets.Contains(idx));
+                planetObj.GetComponent<PlanetController>().LevelIdx = idx;
+
+                if (revealed.Contains(idx) && level.Type != LevelType.SpaceStation &&
+                    LevelSelectDataInstance.VisitedPlanets.Contains(idx))
                 {
-                    if (level.Type == LevelType.SpaceStation || !LevelSelectDataInstance.VisitedPlanets.Contains(idx)) planetObj.GetComponent<Selectable>().clickable = true;
-                    if (level.Type == LevelType.Elite) planetObj.transform.GetChild(0).gameObject.SetActive(true);
+                    planetObj.GetComponent<SpriteRenderer>().color = new Color(0.6f, 0.6f, 0.6f);
                 }
-                if (level.IsBoss) planetObj.transform.GetChild(1).gameObject.SetActive(true);
+
+                if (!revealed.Contains(idx))
+                {
+                    planetObj.GetComponent<SpriteRenderer>().color = new Color(0.4f, 0.4f, 0.4f);
+                }
             }
         }
     }

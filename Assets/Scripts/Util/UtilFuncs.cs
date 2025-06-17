@@ -4,6 +4,16 @@ namespace Util
 {
     public class UtilFuncs
     {
+        public static float Mod(float a, float b)
+        {
+            return (a%b + b)%b;
+        }
+        
+        public static float Angle(Vector2 v)
+        {
+            return Mathf.Atan2(v.y, v.x);
+        }
+        
         public static Vector2 LeadShotNorm(Vector2 relPos, Vector2 relVel, float bulletVel)
         {
             float a = bulletVel * bulletVel - relVel.sqrMagnitude;
