@@ -78,7 +78,7 @@ namespace LevelSelect
             }
         }
 
-        public IEnumerator DoGoTo(Vector3 planetLoc, int planetIdx, string scene)
+        private IEnumerator DoGoTo(Vector3 planetLoc, int planetIdx, string scene)
         {
             if (_isTraveling) yield break;
             _isTraveling = true;
