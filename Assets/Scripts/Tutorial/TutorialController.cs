@@ -20,6 +20,8 @@ namespace Tutorial
             Shooting,
             Targets,
             Enemy,
+            Minimap,
+            Shop
         }
 
         private static readonly Dictionary<Stage, string[]> Text = new()
@@ -35,9 +37,7 @@ namespace Tutorial
             {
                 Stage.Movement, new[]
                 {
-                    "Infiltrators have a unique thruster design to maximize maneuverability. The lack of horizontal propulsion can take some practice, however.",
-                    "The ship will always accelerate in the direction it is facing, when the <b>W key</b> is pressed. It is recommended to keep your mouse some distance from the ship.",
-                    "Lack of air resistance enables pilots to cease acceleration while maintaining velocity. As such, ship orientation and velocity can be decoupled.",
+                    "Infiltrators will always accelerate in the direction they are facing, when the <b>W key</b> is pressed. It is recommended to keep your mouse some distance from the ship.",
                     "Deceleration is achieved through the braking apparatus, generating thrust backwards. Pilots can use the <b>S key</b> to slow down.",
                     "Finally, as a convenience to the pilot, the ship's camera system will always orient 'down' as towards the nearest planet. <b>Practice accelerating and braking.</b>",
                     "When you feel comfortable, continue to see what makes this a Voidhawk-class starship."
@@ -85,7 +85,8 @@ namespace Tutorial
             {
                 Stage.Enemy, new[]
                 {
-                    "A few enemies have been spawned. These are exact replicas of Cult of the Void vessels. Beware that you will also encounter other, more... fleshy opponents. <b>Eliminate the enemies.</b>",
+                    "A few enemies will now bw spawned. These are exact replicas of Cult of the Void vessels. Beware that you will also encounter other, more... fleshy opponents.",
+                    "<b>Eliminate the enemies.</b>",
                     "You have completed the Voidwatch Academy. You are ready to join this elite force. Godspeed, soldier. You'll need it."
                 }
             }
