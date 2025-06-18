@@ -5922,7 +5922,7 @@ MonoBehaviour:
   stunnedMsg: {fileID: 192696325376253107}
   stunMsgRadius: 1.9
   stunRotPerSec: 900
-  stunBreakStrength: 0.4
+  stunBreakStrength: 0.3
   stunCurveStrength: 60
 --- !u!114 &288120715808517032
 MonoBehaviour:

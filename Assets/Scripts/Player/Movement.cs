@@ -141,7 +141,10 @@ namespace Player
             {
                 transform.rotation *= Quaternion.Euler(0, 0, stunRotPerSec * Time.fixedDeltaTime);
                 velocity *= Mathf.Pow(1-stunBreakStrength, Time.fixedDeltaTime);
-                velocity = Quaternion.Euler(0, 0, stunCurveStrength * Mathf.Abs(Vector2.Dot(velocity.normalized, Quaternion.Euler(0, 0, 90) * transform.position.normalized)) * Time.fixedDeltaTime) * velocity;
+                velocity = Quaternion.Euler(0, 0, stunCurveStrength
+                                                  * Vector2.Dot(velocity.normalized,
+                                                      Quaternion.Euler(0, 0, 90) * transform.position.normalized)
+                                                  * Time.fixedDeltaTime) * velocity;
                 
                 _stunTimer.FixedUpdate();
                 if (!Stunned) SetInputBlocked(false);
