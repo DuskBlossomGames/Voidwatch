@@ -1,7 +1,7 @@
 using ProgressBars;
 using UnityEngine;
 
-namespace Spawnables
+namespace Spawnables.Damage
 {
     public class Damageable : MonoBehaviour, IDamageable
     {

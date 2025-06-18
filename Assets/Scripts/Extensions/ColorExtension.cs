@@ -2,28 +2,33 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Util
+namespace Extensions
 {
     public static class ColorExtension
     {
-        public static void SetAlpha(this Image image, float alpha)
+        public static void SetAlpha(this Image obj, float alpha)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+            obj.color = new Color(obj.color.r, obj.color.g, obj.color.b, alpha);
         }
         
-        public static void SetAlpha(this RawImage image, float alpha)
+        public static void SetAlpha(this RawImage obj, float alpha)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+            obj.color = new Color(obj.color.r, obj.color.g, obj.color.b, alpha);
         }
         
-        public static void SetAlpha(this SpriteRenderer image, float alpha)
+        public static void SetAlpha(this SpriteRenderer obj, float alpha)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+            obj.color = new Color(obj.color.r, obj.color.g, obj.color.b, alpha);
         }
         
-        public static void SetAlpha(this TextMeshProUGUI image, float alpha)
+        public static void SetAlpha(this TextMeshProUGUI obj, float alpha)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+            obj.color = new Color(obj.color.r, obj.color.g, obj.color.b, alpha);
+        }
+        
+        public static void SetAlpha(this TextMeshPro obj, float alpha)
+        {
+            obj.color = new Color(obj.color.r, obj.color.g, obj.color.b, alpha);
         }
     }
 }

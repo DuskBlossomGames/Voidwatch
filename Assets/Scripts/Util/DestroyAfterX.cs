@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class DestroyAfterX : MonoBehaviour
+namespace Util
 {
-    public float killTime;
-    private float _timeToDeath;
-
-    private void Start()
+    public class DestroyAfterX : MonoBehaviour
     {
-        _timeToDeath = killTime;
-    }
+        public float killTime;
+        private float _timeToDeath;
 
-    private void Update()
-    {
-        _timeToDeath -= Time.deltaTime;
-        if(_timeToDeath <= 0)
+        private void Start()
         {
-            Destroy(gameObject);
+            _timeToDeath = killTime;
         }
+
+        private void Update()
+        {
+            _timeToDeath -= Time.deltaTime;
+            if(_timeToDeath <= 0)
+            {
+                Destroy(gameObject);
+            }
         
+        }
     }
 }

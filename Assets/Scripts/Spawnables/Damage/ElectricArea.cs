@@ -1,33 +1,22 @@
 using Player;
-using Spawnables.Player;
 using UnityEngine;
 using Util;
 
-public class ElectricArea : MonoBehaviour
+namespace Spawnables.Damage
 {
-    public float shieldDamagePerSecond;
-    public float stunTime;
-
-    private Movement _player;
-    private Timer _stunTimer = new();
-
-    private void Update()
+    public class ElectricArea : MonoBehaviour
     {
-        var wasStunned = !_stunTimer.IsFinished;
-        _stunTimer.Update();
+        public float shieldDamagePerSecond;
+        public float stunTime;
+
+        private Movement _player;
         
-        // TODO: more than just block input, slow down or make arc or something
-        if (wasStunned) _player.SetInputBlocked(!_stunTimer.IsFinished);
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (!_stunTimer.IsFinished || !other.TryGetComponent<PlayerDamageable>(out var damageable)) return;
-
-        if (damageable.TakeEMP(shieldDamagePerSecond * Time.deltaTime))
+        private void OnTriggerStay2D(Collider2D other)
         {
-            _stunTimer.Value = stunTime;
-            _player = other.GetComponent<Movement>();
+            if (!other.TryGetComponent(out _player) || _player.Stunned ||
+                !other.TryGetComponent<PlayerDamageable>(out var damageable)) return;
+
+            if (damageable.TakeEMP(shieldDamagePerSecond * Time.deltaTime)) _player.Stun(stunTime);
         }
     }
 }

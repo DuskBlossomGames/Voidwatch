@@ -1,11 +1,14 @@
 using UnityEngine;
 using static Static_Info.LevelSelectData;
-public class PlanetSetup : MonoBehaviour
+namespace LevelPlay
 {
-    private void Start()
+    public class PlanetSetup : MonoBehaviour
     {
-        var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
+        private void Start()
+        {
+            var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 
-        GetComponent<SpriteRenderer>().sprite = level.Sprite;
+            GetComponent<SpriteRenderer>().sprite = level.Sprite;
+        }
     }
 }

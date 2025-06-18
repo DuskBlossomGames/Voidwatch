@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ShopButBetter
+namespace Shop
 {
     public class ChainController : MonoBehaviour
     {

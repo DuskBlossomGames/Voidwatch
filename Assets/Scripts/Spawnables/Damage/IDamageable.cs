@@ -1,7 +1,6 @@
-using Player;
 using UnityEngine;
 
-namespace Spawnables
+namespace Spawnables.Damage
 {
     public interface IDamageable
     {

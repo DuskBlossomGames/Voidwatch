@@ -2,15 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using LevelPlay;
 using Player;
 using ProgressBars;
+using Spawnables.Damage;
 using Static_Info;
 using UnityEngine;
 using UnityEngine.UI;
 using Util;
 using Random = UnityEngine.Random;
 
-namespace Spawnables.Carcadon
+namespace Spawnables.Controllers.Carcadon
 {
     public class CarcadonBrain : MonoBehaviour
     {
@@ -34,7 +36,7 @@ namespace Spawnables.Carcadon
         public float attackAccel, attackSpeed;
         public float attackRadius;
 
-        private EnemySpawner.EnemySpawner _enemySpawner;
+        private EnemySpawner _enemySpawner;
         private SpriteRenderer[] _baseSpriteRenderers;
         private List<SpriteRenderer> _stackedSpriteRenderers = new();
         private ArmController[] _armControllers;

@@ -1,4 +1,5 @@
 using Spawnables;
+using Spawnables.Damage;
 using UnityEngine;
 
 namespace Bosses.Worm

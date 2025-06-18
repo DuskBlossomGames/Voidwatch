@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class BoidSpawner : MonoBehaviour
+namespace Spawnables.Controllers.Boids
 {
-    public int boidCount;
-    
-    public void Ready()
+    public class BoidSpawner : MonoBehaviour
     {
-        GameObject sample = transform.GetChild(0).gameObject;
-        for (int i = 0; i < boidCount-1; i++)
+        public int boidCount;
+    
+        public void Ready()
         {
-            GameObject newChild = Instantiate(sample, transform);
-            newChild.transform.position += new Vector3(Random.Range(-10, 10), Random.Range(-10, 10));
-            newChild.GetComponent<SmartBoidHandler>().original = false;
+            GameObject sample = transform.GetChild(0).gameObject;
+            for (int i = 0; i < boidCount-1; i++)
+            {
+                GameObject newChild = Instantiate(sample, transform);
+                newChild.transform.position += new Vector3(Random.Range(-10, 10), Random.Range(-10, 10));
+                newChild.GetComponent<SmartBoidHandler>().original = false;
+            }
         }
-    }
     
-    private void Update()
-    {
-        if (transform.childCount == 0) Destroy(gameObject);
+        private void Update()
+        {
+            if (transform.childCount == 0) Destroy(gameObject);
+        }
     }
 }

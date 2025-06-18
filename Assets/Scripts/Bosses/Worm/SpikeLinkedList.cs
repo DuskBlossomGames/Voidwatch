@@ -1,46 +1,49 @@
 using System.Collections;
 using UnityEngine;
 
-public class SpikeLinkedList : MonoBehaviour
+namespace Bosses.Worm
 {
-    public SpikeLinkedList? previous = null;
-    public SpikeLinkedList? next = null;
-
-    public float timebetweensegments;
-    public float animtime;
-    public bool isAnim = false;
-    public AnimationCurve brightness;
-
-    private SpriteRenderer _sprite;
-    private float _prog;
-
-    public void Start()
+    public class SpikeLinkedList : MonoBehaviour
     {
-        _sprite = GetComponent<SpriteRenderer>();
-    }
+        public SpikeLinkedList? previous = null;
+        public SpikeLinkedList? next = null;
 
-    public void Update()
-    {
-        if (isAnim)
+        public float timebetweensegments;
+        public float animtime;
+        public bool isAnim = false;
+        public AnimationCurve brightness;
+
+        private SpriteRenderer _sprite;
+        private float _prog;
+
+        public void Start()
         {
-            _prog += Time.deltaTime / animtime;
-            if (_prog > 1)
-            {
-                _prog = 0;
-                isAnim = false;
-            }
-            float value = brightness.Evaluate(_prog);
-            _sprite.color = new Color(value, value, value, 1);
+            _sprite = GetComponent<SpriteRenderer>();
         }
-    }
 
-    public IEnumerator TriggerDown()
-    {
-        isAnim = true;
-        yield return new WaitForSeconds(timebetweensegments);
-        if (next != null)
+        public void Update()
         {
-            StartCoroutine(next!.TriggerDown());
+            if (isAnim)
+            {
+                _prog += Time.deltaTime / animtime;
+                if (_prog > 1)
+                {
+                    _prog = 0;
+                    isAnim = false;
+                }
+                float value = brightness.Evaluate(_prog);
+                _sprite.color = new Color(value, value, value, 1);
+            }
+        }
+
+        public IEnumerator TriggerDown()
+        {
+            isAnim = true;
+            yield return new WaitForSeconds(timebetweensegments);
+            if (next != null)
+            {
+                StartCoroutine(next!.TriggerDown());
+            }
         }
     }
 }

@@ -1,26 +1,29 @@
 using UnityEngine;
 
-public class DefenseSpawner : MonoBehaviour
+namespace LevelPlay
 {
-    public int defCount;
-
-    Vector2 rot(Vector2 vec, float angle)
+    public class DefenseSpawner : MonoBehaviour
     {
-        return new Vector2(vec.x*Mathf.Cos(angle)+vec.y*Mathf.Sin(angle), -vec.x * Mathf.Sin(angle) + vec.y * Mathf.Cos(angle));
-    }
+        public int defCount;
 
-    void Start()
-    {
-        GameObject sample = transform.GetChild(0).gameObject;
-        for (int i = 0; i < defCount; i++)
+        Vector2 rot(Vector2 vec, float angle)
         {
-            GameObject newChild = Instantiate(sample, transform);
-            float angle = (float) i / defCount * (2 * Mathf.PI);
-            newChild.transform.position = rot(sample.transform.position,angle);
-            newChild.transform.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * angle);
-            //newChild.GetComponent<CustomRigidbody2D>().AddForce(new Vector2(0, 100));
-
+            return new Vector2(vec.x*Mathf.Cos(angle)+vec.y*Mathf.Sin(angle), -vec.x * Mathf.Sin(angle) + vec.y * Mathf.Cos(angle));
         }
-        Destroy(sample);
+
+        void Start()
+        {
+            GameObject sample = transform.GetChild(0).gameObject;
+            for (int i = 0; i < defCount; i++)
+            {
+                GameObject newChild = Instantiate(sample, transform);
+                float angle = (float) i / defCount * (2 * Mathf.PI);
+                newChild.transform.position = rot(sample.transform.position,angle);
+                newChild.transform.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * angle);
+                //newChild.GetComponent<CustomRigidbody2D>().AddForce(new Vector2(0, 100));
+
+            }
+            Destroy(sample);
+        }
     }
 }

@@ -1,23 +1,26 @@
 using UnityEngine;
 
-public class MultiSpawner : MonoBehaviour
+namespace Spawnables.Controllers.Worms
 {
-    public int childcount;
-
-    void Start()
+    public class MultiSpawner : MonoBehaviour
     {
-        for (int i = 0; i < childcount-1; i++)
+        public int childcount;
+
+        void Start()
         {
-            var nchild = Instantiate(transform.GetChild(0), parent: transform);
-            nchild.transform.position += 10 * (Vector3)Random.insideUnitCircle;
+            for (int i = 0; i < childcount-1; i++)
+            {
+                var nchild = Instantiate(transform.GetChild(0), parent: transform);
+                nchild.transform.position += 10 * (Vector3)Random.insideUnitCircle;
+            }
         }
-    }
 
-    private void Update()
-    {
-        if(transform.childCount == 0)
+        private void Update()
         {
-            Destroy(gameObject);
+            if(transform.childCount == 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

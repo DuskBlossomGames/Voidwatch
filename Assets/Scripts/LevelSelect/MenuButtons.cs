@@ -3,19 +3,22 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuButtons : MonoBehaviour
+namespace LevelSelect
 {
-    public void Restart()
+    public class MenuButtons : MonoBehaviour
     {
-        Destroy(StaticInfoHolder.Instance.gameObject); // reset static info
-        SceneManager.LoadScene("TitleScreen"); // return to boot
-    }
+        public void Restart()
+        {
+            Destroy(StaticInfoHolder.Instance.gameObject); // reset static info
+            SceneManager.LoadScene("TitleScreen"); // return to boot
+        }
 
-    public void Quit()
-    {
-        Application.Quit();
+        public void Quit()
+        {
+            Application.Quit();
 #if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
+            EditorApplication.isPlaying = false;
 #endif
+        }
     }
 }

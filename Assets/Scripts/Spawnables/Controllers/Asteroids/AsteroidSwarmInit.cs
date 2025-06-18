@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Spawnables.Asteroids
+namespace Spawnables.Controllers.Asteroids
 {
     public class AsteroidSwarmInit : MonoBehaviour
     {

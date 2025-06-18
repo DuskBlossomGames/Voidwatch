@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class DirectPathfinding : MonoBehaviour, IPathfinder
+namespace Spawnables.Pathfinding
 {
-    public Vector2 PathDirNorm(Vector2 currentPosition, Vector2 targetPosition)
+    public class DirectPathfinding : MonoBehaviour, IPathfinder
     {
-        return (targetPosition-currentPosition).normalized;
+        public Vector2 PathDirNorm(Vector2 currentPosition, Vector2 targetPosition)
+        {
+            return (targetPosition-currentPosition).normalized;
+        }
     }
 }

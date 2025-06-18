@@ -1,17 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using EnemySpawner;
 using JetBrains.Annotations;
 using Player;
 using ProgressBars;
-using Spawnables.Carcadon;
+using Spawnables.Controllers;
+using Spawnables.Controllers.Misslers;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.PlayerData;
 
-namespace Spawnables
+namespace Spawnables.Damage
 {
     internal struct HealthPickup
     {
@@ -163,7 +162,7 @@ namespace Spawnables
                 rb.velocity = BIT_VEL * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
                 rb.gravityScale = 0;
 
-                var ftd = rb.gameObject.AddComponent<FadeToDeath>();
+                var ftd = rb.gameObject.AddComponent<SpriteFadeToDeath>();
                 ftd.fadeTime = BIT_FADE;
                 ftd.TimeToLive = BIT_TTL;
 

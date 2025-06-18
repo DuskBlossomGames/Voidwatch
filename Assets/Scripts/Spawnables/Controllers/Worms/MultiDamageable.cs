@@ -1,28 +1,30 @@
 using System;
-using Spawnables.Worms;
 
-public class MultiDamageable : HealthHolder
+namespace Spawnables.Controllers.Worms
 {
-    public float maxHealth;
-
-    private float _health;
-
-    public override float Health
+    public class MultiDamageable : HealthHolder
     {
-        get => _health;
-        set
+        public float maxHealth;
+
+        private float _health;
+
+        public override float Health
         {
-            HealthChanged?.Invoke(_health, value);
-            _health = value;
+            get => _health;
+            set
+            {
+                HealthChanged?.Invoke(_health, value);
+                _health = value;
+            }
         }
-    }
 
-    public override float MaxHealth => maxHealth;
+        public override float MaxHealth => maxHealth;
 
-    public event Action<float, float> HealthChanged;
+        public event Action<float, float> HealthChanged;
     
-    private void Awake()
-    {
-        Health = maxHealth;
+        private void Awake()
+        {
+            Health = maxHealth;
+        }
     }
 }

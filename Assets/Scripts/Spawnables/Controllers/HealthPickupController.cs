@@ -1,9 +1,8 @@
-using System;
-using Spawnables.Player;
+using Player;
 using UnityEngine;
 using Util;
 
-namespace EnemySpawner
+namespace Spawnables.Controllers
 {
     public class HealthPickupController : MonoBehaviour
     {

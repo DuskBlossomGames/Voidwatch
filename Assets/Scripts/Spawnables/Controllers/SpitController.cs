@@ -3,7 +3,7 @@ using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 
-namespace Spawnables.Carcadon
+namespace Spawnables.Controllers
 {
     public class SpitController : MonoBehaviour
     {
@@ -37,7 +37,7 @@ namespace Spawnables.Carcadon
                 obj.transform.localScale = new Vector3(Random.Range(minWidth, maxWidth), Random.Range(minHeight, maxHeight), 1);
                 obj.transform.position = transform.position;
                 obj.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, Random.Range(minAngle, maxAngle));
-                obj.GetComponent<FadeToDeath>().TimeToLive = travelTime;
+                obj.GetComponent<SpriteFadeToDeath>().TimeToLive = travelTime;
                 obj.SetActive(true);
                 
                 _spawned.Add(obj, Random.Range(minSpeed, maxSpeed) * Time.deltaTime);

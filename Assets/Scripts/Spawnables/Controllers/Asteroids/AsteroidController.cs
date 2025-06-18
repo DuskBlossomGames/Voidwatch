@@ -1,9 +1,10 @@
 using JetBrains.Annotations;
+using Spawnables.Damage;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 
-namespace Spawnables.Asteroids
+namespace Spawnables.Controllers.Asteroids
 {
     public class AsteroidController : EnemyDamageable
     {

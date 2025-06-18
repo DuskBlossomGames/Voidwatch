@@ -3,104 +3,105 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Player;
-using Spawnables;
-using Spawnables.Asteroids;
-using Spawnables.Player;
-using UnityEditor;
+using Spawnables.Controllers.Asteroids;
+using Spawnables.Controllers.Misslers;
+using Spawnables.Damage;
 using UnityEngine;
 using Util;
 using static Static_Info.PlayerData;
-using Object = UnityEngine.Object;
 
-public class BulletCollision : MonoBehaviour
+namespace Spawnables.Controllers.Bullets
 {
-    public float dmg = 10;
-    public GameObject owner;
-    public int chains;
-    public float shieldMult, bleedPerc;
-    public bool ignoresOwner;
+    public class BulletCollision : MonoBehaviour
+    {
+        public float dmg = 10;
+        public GameObject owner;
+        public int chains;
+        public float shieldMult, bleedPerc;
+        public bool ignoresOwner;
 
-    private GameObject _firstCollider;
+        private GameObject _firstCollider;
     
-    [CanBeNull] public GameObject explosion;
-    public float explosionRange;
-    public float explosionDmg;
+        [CanBeNull] public GameObject explosion;
+        public float explosionRange;
+        public float explosionDmg;
 
-    private bool _leftFirstCollider;
-    public bool isKinetic;
+        private bool _leftFirstCollider;
+        public bool isKinetic;
 
-    public bool isEnabled = true;
-    private List<PlayerDamageType> _damageTypes = new();
+        public bool isEnabled = true;
+        private List<PlayerDamageType> _damageTypes = new();
 
-    private void Start()
-    {
-        if (_firstCollider == null) _firstCollider = owner;
-        if (owner != null && owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
-    }
-
-    private void OnTriggerExit2D(Collider2D otherCollider)
-    {
-        if (!isEnabled) return;
-        
-        if (otherCollider.gameObject == _firstCollider)
+        private void Start()
         {
-            _leftFirstCollider = true;
+            if (_firstCollider == null) _firstCollider = owner;
+            if (owner != null && owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
         }
 
-    }
-    private void OnTriggerEnter2D(Collider2D otherCollider)
-    {
-        if (!isEnabled) return;
-        
-        var other = otherCollider.gameObject;
-        if (other.layer == LayerMask.NameToLayer("Bullet Detector")) return;
-
-        if (_leftFirstCollider || other != _firstCollider)
+        private void OnTriggerExit2D(Collider2D otherCollider)
         {
-            var damageable = other.GetComponent<IDamageable>();
-            if (damageable != null)
+            if (!isEnabled) return;
+        
+            if (otherCollider.gameObject == _firstCollider)
             {
-                Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
-                float mass = GetComponent<CustomRigidbody2D>().mass;
-                float sqrSpeed = velDiff.sqrMagnitude/1_000f;
-
-                var damage = dmg * mass;
-                if (isKinetic) damage *= 0.5f * sqrSpeed;
-                
-                if (damageable.GetType() == typeof(EnemyDamageable)) ((EnemyDamageable) damageable).Damage(damage, gameObject, _damageTypes); 
-                else damageable.Damage(damage, gameObject, shieldMult, bleedPerc);
-                
-                if (chains == 0)
-                {
-                    Destroy(gameObject);
-                }
-                else
-                {
-                    try
-                    {
-                        var nearest = FindObjectsOfType<EnemyDamageable>()
-                            .Where(d => d.gameObject != other && d.GetType() != typeof(AsteroidController))
-                            .OrderByDescending(e => ((Vector2)(e.transform.position - transform.position)).sqrMagnitude)
-                            .Last();
-                        
-                        chains -= 1;
-                        _firstCollider = other;
-
-                        GetComponent<CustomRigidbody2D>().velocity =
-                            GetComponent<CustomRigidbody2D>().velocity.magnitude * (nearest.transform.position - transform.position).normalized;
-                    }
-                    catch (InvalidOperationException) {}
-                }
+                _leftFirstCollider = true;
             }
 
-            if (explosion)
+        }
+        private void OnTriggerEnter2D(Collider2D otherCollider)
+        {
+            if (!isEnabled) return;
+        
+            var other = otherCollider.gameObject;
+            if (other.layer == LayerMask.NameToLayer("Bullet Detector")) return;
+
+            if (_leftFirstCollider || other != _firstCollider)
             {
-                var ignore = new List<Collider2D> { otherCollider };
-                if (ignoresOwner) ignore.Add(owner.GetComponent<Collider2D>());
+                var damageable = other.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
+                    float mass = GetComponent<CustomRigidbody2D>().mass;
+                    float sqrSpeed = velDiff.sqrMagnitude/1_000f;
+
+                    var damage = dmg * mass;
+                    if (isKinetic) damage *= 0.5f * sqrSpeed;
                 
-                var obj = Instantiate(explosion);
-                obj.transform.position = transform.position;
-                obj.GetComponent<ExplosionHandler>().Run(explosionDmg, explosionRange, gameObject.layer, ignore);
+                    if (damageable.GetType() == typeof(EnemyDamageable)) ((EnemyDamageable) damageable).Damage(damage, gameObject, _damageTypes); 
+                    else damageable.Damage(damage, gameObject, shieldMult, bleedPerc);
+                
+                    if (chains == 0)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var nearest = FindObjectsOfType<EnemyDamageable>()
+                                .Where(d => d.gameObject != other && d.GetType() != typeof(AsteroidController))
+                                .OrderByDescending(e => ((Vector2)(e.transform.position - transform.position)).sqrMagnitude)
+                                .Last();
+                        
+                            chains -= 1;
+                            _firstCollider = other;
+
+                            GetComponent<CustomRigidbody2D>().velocity =
+                                GetComponent<CustomRigidbody2D>().velocity.magnitude * (nearest.transform.position - transform.position).normalized;
+                        }
+                        catch (InvalidOperationException) {}
+                    }
+                }
+
+                if (explosion)
+                {
+                    var ignore = new List<Collider2D> { otherCollider };
+                    if (ignoresOwner) ignore.Add(owner.GetComponent<Collider2D>());
+                
+                    var obj = Instantiate(explosion);
+                    obj.transform.position = transform.position;
+                    obj.GetComponent<ExplosionHandler>().Run(explosionDmg, explosionRange, gameObject.layer, ignore);
+                }
             }
         }
     }

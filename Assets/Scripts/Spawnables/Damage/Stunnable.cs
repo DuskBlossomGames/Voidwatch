@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Spawnables
+namespace Spawnables.Damage
 {
     public abstract class Stunnable : MonoBehaviour
     {

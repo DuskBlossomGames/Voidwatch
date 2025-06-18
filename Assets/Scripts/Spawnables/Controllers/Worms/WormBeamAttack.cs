@@ -1,141 +1,144 @@
 using System.Collections;
 using System.Collections.Generic;
-using Spawnables;
+using Spawnables.Damage;
 using UnityEngine;
 
-public class WormBeamAttack : MonoBehaviour
+namespace Spawnables.Controllers.Worms
 {
-    public float chargeTime;
-    public float dodgeTime;
-    public float ramp;
-    public float baseDmg;
-    public float shieldMult, bleedPerc;
-
-    public Material material;
-    public Gradient warnColor;
-    public Gradient beamColor;
-    public Gradient littlebeamColor;
-
-    private bool _isShooting;
-    private float _atkTimer;
-    public void Shoot()
+    public class WormBeamAttack : MonoBehaviour
     {
-        if (!_isShooting) {
-            _isShooting = true;
-            StartCoroutine(_Shoot());
-        };
-    }
+        public float chargeTime;
+        public float dodgeTime;
+        public float ramp;
+        public float baseDmg;
+        public float shieldMult, bleedPerc;
 
-    IEnumerator _Shoot()
-    {
-        GetComponent<WormSegment>().aroundPather.snakeyness /= 3;
-        GetComponent<WormSegment>().pathmode = WormSegment.PathMode.Direct;
-        yield return new WaitForSeconds(chargeTime);
+        public Material material;
+        public Gradient warnColor;
+        public Gradient beamColor;
+        public Gradient littlebeamColor;
 
-        GetComponent<WormSegment>().speed /= 4;
-        Vector2 dir = GetComponent<WormSegment>().PredDir(dodgeTime);
-
-        GameObject ray = new GameObject("Warning Beam");
-        ray.transform.position-= Vector3.forward * 2;
-        var lrend = ray.AddComponent<LineRenderer>();
-        lrend.colorGradient = warnColor;
-        lrend.material = material;
-        lrend.widthMultiplier = .17f;
-        lrend.SetPositions(new[] { transform.position + 1 * (Vector3)dir, transform.position + 200 * (Vector3)dir });
-
-
-        yield return new WaitForSeconds(dodgeTime);
-        Destroy(ray);
-
-        GetComponent<WormSegment>().speed *= 4;
-        GetComponent<WormSegment>().speed = Mathf.Max(5, GetComponent<WormSegment>().speed);
-
-
-        List <GameObject> beams =  new List<GameObject>();
-
-        float dmg = baseDmg;
-
-        for (int i = 1; i < transform.parent.childCount-1; i++)
+        private bool _isShooting;
+        private float _atkTimer;
+        public void Shoot()
         {
-            dmg *= (1 + transform.parent.GetChild(i).GetComponent<WormSegment>().bend)/2 * ramp;
+            if (!_isShooting) {
+                _isShooting = true;
+                StartCoroutine(_Shoot());
+            };
         }
 
-        for (int i = 0; i < 5; i++)
+        IEnumerator _Shoot()
         {
-            GameObject lilray = new GameObject("Mini-Beam");
-            lilray.transform.position -= Vector3.forward * 2;
-            beams.Add(lilray);
-            lrend = lilray.AddComponent<LineRenderer>();
-            lrend.colorGradient = littlebeamColor;
+            GetComponent<WormSegment>().aroundPather.snakeyness /= 3;
+            GetComponent<WormSegment>().pathmode = WormSegment.PathMode.Direct;
+            yield return new WaitForSeconds(chargeTime);
+
+            GetComponent<WormSegment>().speed /= 4;
+            Vector2 dir = GetComponent<WormSegment>().PredDir(dodgeTime);
+
+            GameObject ray = new GameObject("Warning Beam");
+            ray.transform.position-= Vector3.forward * 2;
+            var lrend = ray.AddComponent<LineRenderer>();
+            lrend.colorGradient = warnColor;
             lrend.material = material;
-            lrend.widthMultiplier = .04f;
-            Vector3[] pos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 8 * (Vector3)Random.insideUnitCircle };
-            lrend.SetPositions(pos);
-            RaycastHit2D hit = Physics2D.Linecast(pos[0], pos[1], 1 << LayerMask.NameToLayer("Player"));
-            if (hit.collider != null)
+            lrend.widthMultiplier = .17f;
+            lrend.SetPositions(new[] { transform.position + 1 * (Vector3)dir, transform.position + 200 * (Vector3)dir });
+
+
+            yield return new WaitForSeconds(dodgeTime);
+            Destroy(ray);
+
+            GetComponent<WormSegment>().speed *= 4;
+            GetComponent<WormSegment>().speed = Mathf.Max(5, GetComponent<WormSegment>().speed);
+
+
+            List <GameObject> beams =  new List<GameObject>();
+
+            float dmg = baseDmg;
+
+            for (int i = 1; i < transform.parent.childCount-1; i++)
             {
-                var tar = hit.transform.gameObject;
-                var dmgable = tar.GetComponent<IDamageable>();
-                if (dmgable != null)
+                dmg *= (1 + transform.parent.GetChild(i).GetComponent<WormSegment>().bend)/2 * ramp;
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                GameObject lilray = new GameObject("Mini-Beam");
+                lilray.transform.position -= Vector3.forward * 2;
+                beams.Add(lilray);
+                lrend = lilray.AddComponent<LineRenderer>();
+                lrend.colorGradient = littlebeamColor;
+                lrend.material = material;
+                lrend.widthMultiplier = .04f;
+                Vector3[] pos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 8 * (Vector3)Random.insideUnitCircle };
+                lrend.SetPositions(pos);
+                RaycastHit2D hit = Physics2D.Linecast(pos[0], pos[1], 1 << LayerMask.NameToLayer("Player"));
+                if (hit.collider != null)
                 {
-                    dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
+                    var tar = hit.transform.gameObject;
+                    var dmgable = tar.GetComponent<IDamageable>();
+                    if (dmgable != null)
+                    {
+                        dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
+                    }
                 }
+                yield return new WaitForSeconds(.02f);
             }
-            yield return new WaitForSeconds(.02f);
-        }
 
-        ray = new GameObject("Beam");
-        ray.transform.position -= Vector3.forward * 2;
-        lrend = ray.AddComponent<LineRenderer>();
-        lrend.colorGradient = beamColor;
-        lrend.material = material;
-        Vector3[] rpos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 3 * (Vector3)Random.insideUnitCircle };
-        lrend.SetPositions(rpos);
-        lrend.widthMultiplier = .6f;
-        RaycastHit2D rhit = Physics2D.Linecast(rpos[0], rpos[1], 1 << LayerMask.NameToLayer("Player"));
-        if (rhit.collider != null)
-        {
-            var tar = rhit.transform.gameObject;
-            var dmgable = tar.GetComponent<Damageable>();
-            if (dmgable != null)
-            {
-                dmgable.Damage(dmg, gameObject, shieldMult, bleedPerc);
-            }
-        }
-
-        for (int i = 0; i < 20; i++)
-        {
-            GameObject lilray = new GameObject("Mini-Beam");
-            lilray.transform.position -= Vector3.forward * 2;
-            beams.Add(lilray);
-            lrend = lilray.AddComponent<LineRenderer>();
-            lrend.colorGradient = littlebeamColor;
+            ray = new GameObject("Beam");
+            ray.transform.position -= Vector3.forward * 2;
+            lrend = ray.AddComponent<LineRenderer>();
+            lrend.colorGradient = beamColor;
             lrend.material = material;
-            lrend.widthMultiplier = .04f;
-            Vector3[] pos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 4 * (Vector3)Random.insideUnitCircle };
-            lrend.SetPositions(pos);
-            RaycastHit2D hit = Physics2D.Linecast(pos[0], pos[1], 1 << LayerMask.NameToLayer("Player"));
-            if (hit.collider != null)
+            Vector3[] rpos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 3 * (Vector3)Random.insideUnitCircle };
+            lrend.SetPositions(rpos);
+            lrend.widthMultiplier = .6f;
+            RaycastHit2D rhit = Physics2D.Linecast(rpos[0], rpos[1], 1 << LayerMask.NameToLayer("Player"));
+            if (rhit.collider != null)
             {
-                var tar = hit.transform.gameObject;
+                var tar = rhit.transform.gameObject;
                 var dmgable = tar.GetComponent<Damageable>();
                 if (dmgable != null)
                 {
-                    dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
+                    dmgable.Damage(dmg, gameObject, shieldMult, bleedPerc);
                 }
             }
+
+            for (int i = 0; i < 20; i++)
+            {
+                GameObject lilray = new GameObject("Mini-Beam");
+                lilray.transform.position -= Vector3.forward * 2;
+                beams.Add(lilray);
+                lrend = lilray.AddComponent<LineRenderer>();
+                lrend.colorGradient = littlebeamColor;
+                lrend.material = material;
+                lrend.widthMultiplier = .04f;
+                Vector3[] pos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 4 * (Vector3)Random.insideUnitCircle };
+                lrend.SetPositions(pos);
+                RaycastHit2D hit = Physics2D.Linecast(pos[0], pos[1], 1 << LayerMask.NameToLayer("Player"));
+                if (hit.collider != null)
+                {
+                    var tar = hit.transform.gameObject;
+                    var dmgable = tar.GetComponent<Damageable>();
+                    if (dmgable != null)
+                    {
+                        dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
+                    }
+                }
+            }
+
+            GetComponent<WormSegment>().pathmode = WormSegment.PathMode.Around;
+            GetComponent<WormSegment>().aroundPather.snakeyness *= 3;
+
+            yield return new WaitForSeconds(.1f);
+            Destroy(ray);
+            foreach (var lilray in beams)
+            {
+                Destroy(lilray);
+            }
+
+            _isShooting = false;
         }
-
-        GetComponent<WormSegment>().pathmode = WormSegment.PathMode.Around;
-        GetComponent<WormSegment>().aroundPather.snakeyness *= 3;
-
-        yield return new WaitForSeconds(.1f);
-        Destroy(ray);
-        foreach (var lilray in beams)
-        {
-            Destroy(lilray);
-        }
-
-        _isShooting = false;
     }
 }

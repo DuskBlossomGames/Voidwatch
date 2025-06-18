@@ -1,9 +1,9 @@
-using Spawnables;
+using Spawnables.Damage;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 
-namespace EnemySpawner
+namespace Spawnables.Controllers
 {
     public class EnemyVariant : MonoBehaviour
     {

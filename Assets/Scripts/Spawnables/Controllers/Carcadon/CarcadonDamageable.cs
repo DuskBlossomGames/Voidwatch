@@ -1,6 +1,7 @@
+using Spawnables.Damage;
 using UnityEngine;
 
-namespace Spawnables.Carcadon
+namespace Spawnables.Controllers.Carcadon
 {
     public class CarcadonDamageable : EnemyDamageable
     {

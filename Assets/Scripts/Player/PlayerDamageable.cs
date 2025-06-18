@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Player;
 using ProgressBars;
-using Spawnables.Carcadon;
+using Q_Vignette.Scripts;
+using Spawnables.Controllers.Misslers;
+using Spawnables.Damage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
-
 using static Static_Info.PlayerData;
 using Random = UnityEngine.Random;
-namespace Spawnables.Player
+namespace Player
 {
     public class PlayerDamageable : Damageable
     {
@@ -225,7 +225,7 @@ namespace Spawnables.Player
                 rb.velocity = BIT_VEL * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
                 rb.gravityScale = 0;
 
-                var ftd = rb.gameObject.AddComponent<FadeToDeath>();
+                var ftd = rb.gameObject.AddComponent<SpriteFadeToDeath>();
                 ftd.fadeTime = BIT_FADE;
                 ftd.TimeToLive = BIT_TTL;
 

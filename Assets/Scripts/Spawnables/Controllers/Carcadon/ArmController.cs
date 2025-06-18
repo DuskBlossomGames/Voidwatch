@@ -1,10 +1,9 @@
 using System.Linq;
 using Player;
-using Spawnables.Player;
 using UnityEngine;
 using Util;
 
-namespace Spawnables.Carcadon
+namespace Spawnables.Controllers.Carcadon
 {
     public class ArmController : MonoBehaviour
     {

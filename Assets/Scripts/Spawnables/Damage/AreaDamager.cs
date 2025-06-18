@@ -1,26 +1,28 @@
-using Spawnables;
 using UnityEngine;
 
-public class AreaDamager : MonoBehaviour
+namespace Spawnables.Damage
 {
-    public float damagePerSecond;
-    public float entryDamage;
-    public float shieldMult, bleedPerc;
-    public bool canOnlyHurtPlayer = false;
-
-    void OnTriggerStay2D(Collider2D other)
+    public class AreaDamager : MonoBehaviour
     {
-        if (other.gameObject.TryGetComponent<IDamageable>(out var dmg) && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        public float damagePerSecond;
+        public float entryDamage;
+        public float shieldMult, bleedPerc;
+        public bool canOnlyHurtPlayer = false;
+
+        void OnTriggerStay2D(Collider2D other)
         {
-            dmg.Damage(damagePerSecond * Time.deltaTime, gameObject, shieldMult, bleedPerc);
+            if (other.gameObject.TryGetComponent<IDamageable>(out var dmg) && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                dmg.Damage(damagePerSecond * Time.deltaTime, gameObject, shieldMult, bleedPerc);
+            }
         }
-    }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.TryGetComponent<IDamageable>(out var dmg) && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        void OnTriggerEnter2D(Collider2D other)
         {
-            dmg.Damage(entryDamage, gameObject, shieldMult, bleedPerc);
+            if (other.gameObject.TryGetComponent<IDamageable>(out var dmg) && !canOnlyHurtPlayer || canOnlyHurtPlayer && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                dmg.Damage(entryDamage, gameObject, shieldMult, bleedPerc);
+            }
         }
     }
 }

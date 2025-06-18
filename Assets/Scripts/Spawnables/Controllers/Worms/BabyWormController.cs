@@ -1,8 +1,10 @@
 using Player;
+using Spawnables.Damage;
+using Spawnables.Pathfinding;
 using UnityEngine;
 using Util;
 
-namespace Spawnables.Worms
+namespace Spawnables.Controllers.Worms
 {
     public class BabyWormController : MonoBehaviour
     {

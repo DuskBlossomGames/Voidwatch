@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Util;
 
-namespace Spawnables.Player
+namespace Player
 {
     public class EnforcePlayArea : MonoBehaviour
     {

@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class AlignAtChild : MonoBehaviour
+namespace Spawnables
 {
-    public int id;
-
-    // Update is called once per frame
-    void Update()
+    public class AlignAtChild : MonoBehaviour
     {
-        transform.position = transform.GetChild(id).position;
+        public int id;
+
+        // Update is called once per frame
+        void Update()
+        {
+            transform.position = transform.GetChild(id).position;
+        }
     }
 }

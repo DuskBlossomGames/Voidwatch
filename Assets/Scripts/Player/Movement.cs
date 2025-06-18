@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Spawnables.Controllers.Misslers;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
@@ -20,6 +21,12 @@ namespace Player
         public AnimationCurve dodgeTimeDilationCurve;
         public float afterImageSpacing;
         public Sprite afterImageSprite;
+
+        public GameObject stunnedMsg;
+        public float stunMsgRadius;
+        public float stunRotPerSec; // degrees
+        public float stunBreakStrength;
+        public float stunCurveStrength;
 
         public bool Dodging => !_dodgeTimer.IsFinished;
         public float DodgeJuice => _dodgeJuice;
@@ -91,6 +98,21 @@ namespace Player
             _dodgeJuice = Mathf.Max(_dodgeJuice-amt, 0);
         }
 
+        private readonly Timer _stunTimer = new();
+        public bool Stunned => !_stunTimer.IsFinished;
+        public void Stun(float time)
+        {
+            if (Stunned) return;
+
+            _stunTimer.Value = time;
+            SetInputBlocked(true);
+            Instantiate(stunnedMsg,
+                stunnedMsg.transform.position + stunMsgRadius *
+                (Vector3)UtilFuncs.AngleToVector(_camera.transform.eulerAngles.z * Mathf.Deg2Rad + Mathf.PI / 2),
+                Camera.main!.transform.rotation).SetActive(true);
+            // TODO: stunned VFX
+        }
+
         private void Update()
         {
             if (!_stealthKeyUp && !_dodgeTimer.IsFinished && Input.GetKeyUp(KeyCode.Space)) _stealthKeyUp = true;
@@ -109,8 +131,22 @@ namespace Player
             var tar = _camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             _forwards = ((Vector2) tar).normalized;
             var curAngles = transform.rotation.eulerAngles;
-            transform.rotation=Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
 
+            if (!Stunned)
+            {
+                // look at mouse
+                transform.rotation = Quaternion.Euler(curAngles.x, curAngles.y, -90+Mathf.Rad2Deg*Mathf.Atan2(tar.y, tar.x));
+            }
+            else
+            {
+                transform.rotation *= Quaternion.Euler(0, 0, stunRotPerSec * Time.fixedDeltaTime);
+                velocity *= Mathf.Pow(1-stunBreakStrength, Time.fixedDeltaTime);
+                velocity = Quaternion.Euler(0, 0, stunCurveStrength * Mathf.Abs(Vector2.Dot(velocity.normalized, Quaternion.Euler(0, 0, 90) * transform.position.normalized)) * Time.fixedDeltaTime) * velocity;
+                
+                _stunTimer.FixedUpdate();
+                if (!Stunned) SetInputBlocked(false);
+            }
+            
             if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(KeyCode.Space) || DodgeOnceDir != null || DodgeOnceCost != null))
             {
                 _preDodgeVel = velocity;

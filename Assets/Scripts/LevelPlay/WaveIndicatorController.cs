@@ -1,11 +1,7 @@
-using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Util;
 
-namespace EnemySpawner
+namespace LevelPlay
 {
     public class WaveIndicatorController : MonoBehaviour
     {

@@ -1,8 +1,8 @@
 using System;
-using Spawnables.Player;
+using Player;
 using UnityEngine;
 
-namespace Spawnables.Carcadon
+namespace Spawnables.Controllers.Carcadon
 {
     public class ClawDamage : MonoBehaviour
     {

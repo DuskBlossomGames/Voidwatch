@@ -1,31 +1,34 @@
 using UnityEngine;
 using Util;
 
-public class IRVGun : MonoBehaviour
+namespace Spawnables.Controllers.Seekers
 {
-    // Start is called before the first frame update
-
-    public GameObject target;
-    float _bulletvel;
-    CustomRigidbody2D _crb;
-    public EnemyGunHandler gun;
-
-    void Start()
+    public class IRVGun : MonoBehaviour
     {
-        target = GameObject.FindGameObjectWithTag("Player");
-        _bulletvel = gun.ExpectedVelocity();
-        _crb = GetComponent<CustomRigidbody2D>();
-    }
+        // Start is called before the first frame update
 
-    // Update is called once per frame
-    void Update()
-    {
-        var ppos = target.transform.position;
-        var pvel = target.GetComponent<Rigidbody2D>().velocity;
+        public GameObject target;
+        float _bulletvel;
+        CustomRigidbody2D _crb;
+        public EnemyGunHandler gun;
 
-        float dir = UtilFuncs.LeadShot(ppos - transform.position, pvel - _crb.velocity, _bulletvel);
-        float tardir = Mathf.Rad2Deg * dir - 90;
+        void Start()
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+            _bulletvel = gun.ExpectedVelocity();
+            _crb = GetComponent<CustomRigidbody2D>();
+        }
 
-        gun.Shoot(tardir - transform.rotation.eulerAngles.z);
+        // Update is called once per frame
+        void Update()
+        {
+            var ppos = target.transform.position;
+            var pvel = target.GetComponent<Rigidbody2D>().velocity;
+
+            float dir = UtilFuncs.LeadShot(ppos - transform.position, pvel - _crb.velocity, _bulletvel);
+            float tardir = Mathf.Rad2Deg * dir - 90;
+
+            gun.Shoot(tardir - transform.rotation.eulerAngles.z);
+        }
     }
 }

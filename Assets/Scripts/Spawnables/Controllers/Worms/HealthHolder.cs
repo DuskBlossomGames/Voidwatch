@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Spawnables.Worms
+namespace Spawnables.Controllers.Worms
 {
     public abstract class HealthHolder : MonoBehaviour
     {

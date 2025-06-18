@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class GenerateUniformFloppy : MonoBehaviour
+namespace Floppy_Bits
 {
+  public class GenerateUniformFloppy : MonoBehaviour
+  {
     public int length;
     public bool degredation;
     public float degredationMagnitude;
@@ -65,4 +67,5 @@ public class GenerateUniformFloppy : MonoBehaviour
     {
 
     }
+  }
 }

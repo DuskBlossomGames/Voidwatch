@@ -1,6 +1,6 @@
 using System.Collections;
+using Player;
 using Spawnables;
-using Spawnables.Player;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 

@@ -1,63 +1,67 @@
+using Spawnables.Controllers.Misslers;
 using UnityEngine;
 using Util;
 
-public class MIRVController : MonoBehaviour
+namespace Spawnables.Controllers.Seekers
 {
-    MissleAim _ma;
-    public Transform target;
-    public float splitDist;
-    public int splitCount;
-    public GameObject splitPrefab;
-    public float scatterForce;
-    public float prepTime = 1;
-
-    bool _canPop = false;
-
-    Timer _timer;
-
-    CustomRigidbody2D _crb;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MIRVController : MonoBehaviour
     {
-        target = null;
-        _ma = GetComponent<MissleAim>();
-        _crb = GetComponent<CustomRigidbody2D>();
-        _timer = new Timer();
-    }
+        MissleAim _ma;
+        public Transform target;
+        public float splitDist;
+        public int splitCount;
+        public GameObject splitPrefab;
+        public float scatterForce;
+        public float prepTime = 1;
 
-    // Update is called once per frame
-    void Update()
-    {
-        while(target == null)
+        bool _canPop = false;
+
+        Timer _timer;
+
+        CustomRigidbody2D _crb;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            if (_ma.target != null)
-            {
-                target = _ma.target.transform;
-                _timer.Value = prepTime;
-                _canPop = true;
-            }
-            else
-            {
-                return;
-            }
+            target = null;
+            _ma = GetComponent<MissleAim>();
+            _crb = GetComponent<CustomRigidbody2D>();
+            _timer = new Timer();
         }
 
-        _timer.Update();
-
-        if (_canPop && _timer.IsFinished && (transform.position - target.position).sqrMagnitude < splitDist * splitDist)
+        // Update is called once per frame
+        void Update()
         {
-            for (int i = 0; i < splitCount; i++)
+            while(target == null)
             {
-                var nchild = Instantiate(splitPrefab);
-                var nma = nchild.GetComponent<MissleAim>();
-                nma.target = target.gameObject;
-                var ncrb = nchild.GetComponent<CustomRigidbody2D>();
-                ncrb.velocity = _crb.velocity;
-                ncrb.AddForce(scatterForce * Random.insideUnitCircle);
-                nchild.transform.position = transform.position;
+                if (_ma.target != null)
+                {
+                    target = _ma.target.transform;
+                    _timer.Value = prepTime;
+                    _canPop = true;
+                }
+                else
+                {
+                    return;
+                }
             }
-            Destroy(gameObject);
+
+            _timer.Update();
+
+            if (_canPop && _timer.IsFinished && (transform.position - target.position).sqrMagnitude < splitDist * splitDist)
+            {
+                for (int i = 0; i < splitCount; i++)
+                {
+                    var nchild = Instantiate(splitPrefab);
+                    var nma = nchild.GetComponent<MissleAim>();
+                    nma.target = target.gameObject;
+                    var ncrb = nchild.GetComponent<CustomRigidbody2D>();
+                    ncrb.velocity = _crb.velocity;
+                    ncrb.AddForce(scatterForce * Random.insideUnitCircle);
+                    nchild.transform.position = transform.position;
+                }
+                Destroy(gameObject);
+            }
         }
     }
 }

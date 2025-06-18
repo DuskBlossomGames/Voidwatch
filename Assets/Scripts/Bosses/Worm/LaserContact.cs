@@ -1,5 +1,5 @@
+using Player;
 using Spawnables;
-using Spawnables.Player;
 using UnityEngine;
 
 namespace Bosses.Worm

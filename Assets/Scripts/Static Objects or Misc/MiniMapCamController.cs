@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class MiniMapCamController : MonoBehaviour
+namespace Static_Objects_or_Misc
 {
-    public Transform player;
-
-    private void Update()
+    public class MiniMapCamController : MonoBehaviour
     {
-        transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * Mathf.Atan2(player.position.y, player.position.x));
+        public Transform player;
+
+        private void Update()
+        {
+            transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * Mathf.Atan2(player.position.y, player.position.x));
+        }
     }
 }

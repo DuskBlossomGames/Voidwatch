@@ -1,8 +1,11 @@
 using UnityEngine;
+using Util;
 
-public class RiftAnimationControl : MonoBehaviour
+namespace Spawnables
 {
-  public NSpriteAnimation animationState;
+  public class RiftAnimationControl : MonoBehaviour
+  {
+    public NSpriteAnimation animationState;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +18,5 @@ public class RiftAnimationControl : MonoBehaviour
     {
 
     }
+  }
 }
