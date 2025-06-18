@@ -73,7 +73,8 @@ MonoBehaviour:
   varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
-  bitOptions: []
+  bitOptions:
+  - {fileID: 21300000, guid: 5fc770b69356246e7bce4a5fc58184d6, type: 3}
   numBits: 4
   explosionScale: 0
   bitScale: 2
