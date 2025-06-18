@@ -99,8 +99,9 @@ namespace LevelPlay
             };
     
           // if debug, it's probably being booted from nothing which will make CurrentPlanet 0 TODO: is debug 
+#if UNITY_EDITOR
           if (_isDebug) LevelSelectDataInstance.CurrentPlanet = LevelSelectDataInstance.Levels[0].Connections[0];
-          
+#endif
           _level =  LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
           print(Mathf.Floor(_level.DifficultyScore/LevelSelectDataInstance.MaxDifficultyScore *5 *2)/2);
 
