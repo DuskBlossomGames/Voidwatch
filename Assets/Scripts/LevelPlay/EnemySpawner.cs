@@ -197,7 +197,6 @@ namespace EnemySpawner
             if (_waitingOnIndicator) yield break;
             _waitingOnIndicator = true;
             yield return wic.Flash();
-            yield return new WaitForSeconds(wic.flashTime);
             _waitingOnIndicator = false;
             
             SpawnWave();
