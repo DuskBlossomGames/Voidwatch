@@ -18,7 +18,18 @@ namespace LevelSelect
         
         private Vector2 _orbitPosition;
         private float _orbitRadius;
-        
+
+        private void Awake()
+        {
+            StartCoroutine(EnableTrails());
+        }
+
+        private IEnumerator EnableTrails()
+        {
+            yield return new WaitForSeconds(0.1f);
+            foreach (var tr in GetComponentsInChildren<TrailRenderer>()) tr.enabled = true;
+        }
+
         public void SetOrbitPosition(Vector2 position)
         {
             _orbitPosition = position;
@@ -66,7 +77,7 @@ namespace LevelSelect
             const float camTime = 1.5f;
             
             var camStartPos = cam.transform.position;
-            float camPosProgress = 0;
+            float camPosProgress;
             var camStartSize = cam.orthographicSize;
             for (float t = 0; t < camTime; t += Time.fixedDeltaTime)
             {
@@ -89,16 +100,13 @@ namespace LevelSelect
 
             List<Tuple<Vector2, float>> path = new();
 
-            const float rotateStep = 0.05f;
-            const float maxSpeedMult = 4;
+            const float rotateStep = 0.08f;
+            const float maxSpeedMult = 5.5f;
             
-            const float planetExitRadMult = 1.5f;
-            const float planetDivergePoint = 10 * Mathf.Deg2Rad;
+            const float planetExitRadMult = 1.7f;
+            const float planetDivergePoint = 25 * Mathf.Deg2Rad;
             
-            var baseOrbitalVelocity = 2*Mathf.PI / secondsPerOrbit * _orbitRadius;
-            var targOrbitalVelocity = 3.5f * baseOrbitalVelocity;
-            var orbitalVelocity = baseOrbitalVelocity;
-            var radToTargVel = 20 * Mathf.Deg2Rad;
+            var orbitalVelocity = 3.25f * 2*Mathf.PI/secondsPerOrbit * _orbitRadius;
 
             var current = _orbitPosition;
             var currentRot = _orbitAngle;
@@ -109,11 +117,9 @@ namespace LevelSelect
 
                 // rotate around current planet
                 var direction = i == 1 ? 1 : Mathf.Abs(exitRot - currentRot) < Mathf.PI ? 1 : -1;
-
-                if (i == 1) radToTargVel = Mathf.Min(radToTargVel, Mathf.Abs(exitRot - currentRot));
-
+                
                 float radsTraveled = 0;
-                for (var r = currentRot; Mathf.Abs(r - exitRot) >= 0.05f; r = UtilFuncs.Mod(r + direction * rotateStep, Mathf.PI*2))
+                for (var r = currentRot; Mathf.Abs(r - exitRot) >= rotateStep; r = UtilFuncs.Mod(r + direction * rotateStep, Mathf.PI*2))
                 {
                     var rad = _orbitRadius;
                     if (Mathf.Abs(r - exitRot) <= planetDivergePoint)
@@ -124,8 +130,6 @@ namespace LevelSelect
                     path.Add(new Tuple<Vector2, float>(current + new Vector2(
                         rad * Mathf.Cos(r),
                         rad * Mathf.Sin(r)), orbitalVelocity));
-
-                    if (i == 1) orbitalVelocity = Mathf.Lerp(baseOrbitalVelocity, targOrbitalVelocity, radsTraveled / radToTargVel);
                     
                     radsTraveled += rotateStep;
                 }
@@ -137,7 +141,7 @@ namespace LevelSelect
                 {
                     var multEvaluation = i < planetPath.Length-1
                         ? Mathf.Exp(-Mathf.Pow(4 * t - 2, 2)) * (maxSpeedMult - 1) + 1
-                        : Mathf.Exp(3 * t - 3) * (maxSpeedMult - 1) + 1;
+                        : Mathf.Exp(4 * t - 4) * (maxSpeedMult - 1) + 1;
                     path.Add(new Tuple<Vector2, float>(startPos + t * (endPos - startPos), orbitalVelocity*multEvaluation));
                 }
                 

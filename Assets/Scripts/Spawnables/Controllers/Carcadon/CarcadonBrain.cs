@@ -218,7 +218,8 @@ namespace Spawnables.Carcadon
                 _stealthAccTimer.Value = stealthLowAccTime;
                 SetVisualStealth(true);
 
-                _enemySpawner.SpawnWave();
+                
+                StartCoroutine( _enemySpawner.SpawnWaveWithIndicator());
             }
         }
 

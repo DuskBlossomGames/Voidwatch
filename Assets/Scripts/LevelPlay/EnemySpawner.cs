@@ -23,6 +23,8 @@ namespace EnemySpawner
         public GameObject HUD, fadeIn;
         public PlanetSetup planet;
 
+        public WaveIndicatorController wic;
+        
         public Image carcWinImage;
         public TextMeshProUGUI carcWinText, carcWinSubtext;
         public float winFadeInTime, winWaitTime;
@@ -109,7 +111,7 @@ namespace EnemySpawner
         private bool _isDebug;
         private float _timeTillExit;
         private bool _isTerminal;
-
+        
         public List<GameObject> SpawnedEnemies
         {
             get
@@ -183,9 +185,22 @@ namespace EnemySpawner
                 }
                 else if (_level.Type != LevelType.Elite)
                 {
-                    SpawnWave();
+                    if (_wave == -1) SpawnWave();
+                    else if (!_waitingOnIndicator) StartCoroutine(SpawnWaveWithIndicator());
                 }
             }
+        }
+
+        private bool _waitingOnIndicator;
+        public IEnumerator SpawnWaveWithIndicator()
+        {
+            if (_waitingOnIndicator) yield break;
+            _waitingOnIndicator = true;
+            yield return wic.Flash();
+            yield return new WaitForSeconds(wic.flashTime);
+            _waitingOnIndicator = false;
+            
+            SpawnWave();
         }
 
         private bool _won;
