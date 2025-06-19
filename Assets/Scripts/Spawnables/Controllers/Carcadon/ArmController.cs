@@ -105,7 +105,7 @@ namespace Spawnables.Controllers.Carcadon
             // fold
             if (_attackProgress == 0 && _foldDirection != 0)
             {
-                var currentSeg = FloorOrCeil(_foldProgress);
+                var currentSeg = Mathf.Clamp(FloorOrCeil(_foldProgress), 0, foldRotations.Length-1);
                 var rotation = _foldDirection * Mathf.Sign(foldRotations[currentSeg]) * _foldSpeed * Time.deltaTime;
 
                 _foldProgress = MinOrMax(currentSeg, _foldProgress + rotation / foldRotations[currentSeg]);
