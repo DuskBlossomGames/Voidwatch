@@ -27,7 +27,7 @@ namespace Menus
         private KeybindController[] _keybinds;
         public bool BindingKey => _keybinds.Any(kc => kc.BindingKey);
         
-        private void Awake()
+        public void Awake()
         {
             // AUDIO
             mixer.GetFloat("MasterVolume", out var vol);

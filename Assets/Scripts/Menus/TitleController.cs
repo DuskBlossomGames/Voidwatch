@@ -39,6 +39,8 @@ namespace Menus
             GetComponent<Canvas>().enabled = false;
             ps.gameObject.SetActive(false);
             StartCoroutine(FadeIn());
+
+            options.GetComponent<OptionsController>().Awake();
         }
 
         private IEnumerator FadeIn()
