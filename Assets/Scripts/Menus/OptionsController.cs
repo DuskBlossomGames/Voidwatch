@@ -77,7 +77,6 @@ namespace Menus
                 var key = (KeyCode) PlayerPrefs.GetInt($"Control{i}", (int) _keybinds[i].defaultKey);
                 _keybinds[i].Awake();
                 _keybinds[i].DisplayKey(key);
-                SetKeybind(i, key);
             }
         }
 

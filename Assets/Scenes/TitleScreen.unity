@@ -5747,6 +5747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5620a1ce4c14ce2baa873a4320047b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultKeybindHolder: {fileID: 1088407739}
 --- !u!4 &342308709
 Transform:
   m_ObjectHideFlags: 0
@@ -7560,6 +7561,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4836efd4ac9440f69fdd7c33f576c70e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1088407739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2754371012234609770, guid: 410b52d736521442bbb8c687c53f3c74, type: 3}
+  m_PrefabInstance: {fileID: 1088407736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1232795070
 GameObject:
   m_ObjectHideFlags: 0
