@@ -9,7 +9,6 @@ using Util;
 
 namespace Menus
 {
-    // TODO: PlayerPrefs?
     public class OptionsController : MonoBehaviour
     {
         public OptionsHolder optionsExiter;
@@ -21,7 +20,6 @@ namespace Menus
         public AudioMixer mixer;
 
         public TMP_Dropdown resolution;
-        private List<Resolution> _resolutions;
         public CheckboxController fullscreen, vsync;
 
         private KeybindController[] _keybinds;
@@ -30,53 +28,38 @@ namespace Menus
         public void Awake()
         {
             // AUDIO
-            mixer.GetFloat("MasterVolume", out var vol);
-            vol = PlayerPrefs.GetFloat("MasterVolume", vol);
-            SetMasterVolume(vol);
-            masterSlider.value = (int) (Mathf.Pow(10, vol/20)*100);
+            masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+            masterSlider.onValueChanged.AddListener(v => SettingsInterface.SetChannelVolume(SoundChannel.Master, v));
             
-            mixer.GetFloat("MusicVolume", out vol);
-            vol = PlayerPrefs.GetFloat("MusicVolume", vol);
-            SetMusicVolume(vol);
-            musicSlider.value = (int) (Mathf.Pow(10, vol/20)*100);
+            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+            musicSlider.onValueChanged.AddListener(v => SettingsInterface.SetChannelVolume(SoundChannel.Music, v));
             
-            mixer.GetFloat("EffectsVolume", out vol);
-            vol = PlayerPrefs.GetFloat("EffectsVolume", vol);
-            SetEffectsVolume(vol);
-            effectsSlider.value = (int) (Mathf.Pow(10, vol/20)*100);
+            effectsSlider.value = PlayerPrefs.GetFloat("EffectsVolume");
+            effectsSlider.onValueChanged.AddListener(v => SettingsInterface.SetChannelVolume(SoundChannel.Effects, v));
             
             // VIDEO
             resolution.ClearOptions();
-            _resolutions = Screen.resolutions
-                .Where(r => r.refreshRateRatio.value == Screen.currentResolution.refreshRateRatio.value)
-                .OrderByDescending(r => r.width * r.height).ToList();
-            resolution.AddOptions(_resolutions.Select(r => $"{r.width} x {r.height}").ToList());
-            resolution.value = _resolutions.IndexOf(Screen.currentResolution);
-            SetResolution(PlayerPrefs.GetInt("Resolution", resolution.value));
-
+            resolution.AddOptions(SettingsInterface.resolutions.Select(r => $"{r.width} x {r.height}").ToList());
+            resolution.value = PlayerPrefs.GetInt("Resolution");
+            resolution.onValueChanged.AddListener(SettingsInterface.SetResolution);
             
-            fullscreen.Awake();
-            bool isFullscreen;
-            SetVsync(isFullscreen = PlayerPrefs.GetInt("Fullscreen", Screen.fullScreenMode == FullScreenMode.MaximizedWindow ? 1 : 0) == 1);
-            if (isFullscreen) fullscreen.Toggle();
-            fullscreen.OnToggle += SetFullscreen;
+            fullscreen.Setup();
+            if (PlayerPrefs.GetInt("Fullscreen", 1) == 1) fullscreen.Toggle();
+            fullscreen.OnToggle += SettingsInterface.SetFullscreen;
             
-            vsync.Awake();
-            bool isVsync;
-            SetVsync(isVsync = PlayerPrefs.GetInt("Vsync", QualitySettings.vSyncCount == 1 ? 1 : 0) == 1);
-            if (isVsync) vsync.Toggle();
-            vsync.OnToggle += SetVsync;
+            vsync.Setup();
+            if (PlayerPrefs.GetInt("Vsync", 1) == 1) vsync.Toggle();
+            vsync.OnToggle += SettingsInterface.SetVsync;
             
             // CONTROLS
             _keybinds = GetComponentsInChildren<KeybindController>(true);
             for (var i = 0; i < _keybinds.Length; i++)
             {
                 var constI = i;
-                _keybinds[i].OnKeybindChange += k => SetKeybind(constI, k);
+                _keybinds[i].OnKeybindChange += k => SettingsInterface.SetKeybind(constI, k);
                 
-                var key = (KeyCode) PlayerPrefs.GetInt($"Control{i}", (int) _keybinds[i].defaultKey);
-                _keybinds[i].Awake();
-                _keybinds[i].DisplayKey(key);
+                _keybinds[i].Setup();
+                _keybinds[i].DisplayKey((KeyCode) PlayerPrefs.GetInt($"Control{i}"));
             }
         }
 
@@ -109,59 +92,13 @@ namespace Menus
             _inGroup = false;
         }
 
-        // AUDIO
-        public void SetMasterVolume(float perc)
-        {
-            PlayerPrefs.SetFloat("MasterVolume", perc);
-            mixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Max(perc, 0.01f)/100)*20);
-        }
-
-        public void SetMusicVolume(float perc)
-        {
-            PlayerPrefs.SetFloat("MusicVolume", perc);
-            mixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Max(perc, 0.01f)/100)*20);
-        }
-
-        public void SetEffectsVolume(float perc)
-        {
-            PlayerPrefs.SetFloat("EffectsVolume", perc);
-            mixer.SetFloat("EffectsVolume", Mathf.Log10(Mathf.Max(perc, 0.01f)/100)*20);
-        }
-        
-        // VIDEO
-        public void SetResolution(int idx)
-        {
-            PlayerPrefs.SetInt("Resolution", idx);
-            
-            var res = _resolutions[idx];
-            Screen.SetResolution(res.width, res.height, Screen.fullScreenMode);
-        }
-        public void SetFullscreen(bool value)
-        {
-            PlayerPrefs.SetInt("Fullscreen", value ? 1 : 0);;
-            
-            Screen.fullScreenMode = value ? FullScreenMode.MaximizedWindow : FullScreenMode.Windowed;
-        }
-        public void SetVsync(bool value)
-        {
-            PlayerPrefs.SetInt("Vsync", value ? 1 : 0);;
-            
-            QualitySettings.vSyncCount = value ? 1 : 0;
-        }
-        
-        // CONTROLS
         public void DefaultKeybinds()
         {
             for (var i = 0; i < _keybinds.Length; i++)
             {
-                SetKeybind(i, _keybinds[i].defaultKey);
-                _keybinds[i].DisplayKey(_keybinds[i].defaultKey);
+                _keybinds[i].DisplayKey(InputManager.DEFAULT_ACTIONS[(InputAction) i]);
+                SettingsInterface.SetKeybind(i, InputManager.DEFAULT_ACTIONS[(InputAction) i]);
             }
-        }
-        public void SetKeybind(int control, KeyCode key)
-        {
-            PlayerPrefs.SetInt($"Control{control}", (int) key);
-            InputManager.InputActions[(InputAction) control] = key;
         }
     }
 }

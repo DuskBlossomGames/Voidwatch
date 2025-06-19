@@ -36,7 +36,16 @@ namespace Util
         public static bool GetKeyUp(InputAction action) { return GetKeyUp(InputActions[action]); }
 
         
-        public static readonly Dictionary<InputAction, KeyCode> InputActions = new(); 
+        public static readonly Dictionary<InputAction, KeyCode> InputActions = new();
+
+        public static readonly Dictionary<InputAction, KeyCode> DEFAULT_ACTIONS = new()
+        {
+            { InputAction.Accelerate, KeyCode.W },
+            { InputAction.Brake, KeyCode.S },
+            { InputAction.Dash, KeyCode.Space },
+            { InputAction.PrimaryWeapon, KeyCode.Mouse0 },
+            { InputAction.SecondaryWeapon, KeyCode.Mouse1 }
+        };
     }
     
     public enum InputAction

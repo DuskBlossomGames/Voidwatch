@@ -11,8 +11,6 @@ namespace Menus
     public class KeybindController : MonoBehaviour, IPointerDownHandler
     {
         public event Action<KeyCode> OnKeybindChange;
-
-        public KeyCode defaultKey;
         
         private Button _button;
         private TextMeshProUGUI _keyText, _instructionText;
@@ -37,7 +35,7 @@ namespace Menus
             for (var i = KeyCode.Mouse2; i <= KeyCode.Mouse6; i++) ValidKeyCodes.Add(i, $"MB{i-KeyCode.Mouse0}");
         }
 
-        public void Awake()
+        public void Setup()
         {
             _button = GetComponent<Button>();
             _keyText = transform.GetComponentsInChildren<TextMeshProUGUI>(true)[0];

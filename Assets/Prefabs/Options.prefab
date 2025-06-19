@@ -545,7 +545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802f39c2c2dd4cd0aecd02cd18592310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultKey: 323
 --- !u!1 &821482305769831539
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,7 +692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802f39c2c2dd4cd0aecd02cd18592310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultKey: 32
 --- !u!1 &1128063608121361859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,19 +1140,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7450585125910410343}
-        m_TargetAssemblyTypeName: Menus.OptionsController, Assembly-CSharp
-        m_MethodName: SetResolution
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_AlphaFadeSpeed: 0.15
 --- !u!1 &1625193175463281734
 GameObject:
@@ -2109,7 +2095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802f39c2c2dd4cd0aecd02cd18592310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultKey: 115
 --- !u!1 &3129403747580670740
 GameObject:
   m_ObjectHideFlags: 0
@@ -3565,8 +3550,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -35, y: 2}
+  m_SizeDelta: {x: 15, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1790935140179033752
 CanvasRenderer:
@@ -5444,7 +5429,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802f39c2c2dd4cd0aecd02cd18592310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultKey: 324
 --- !u!1 &5822417548071844562
 GameObject:
   m_ObjectHideFlags: 0
@@ -7475,7 +7459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802f39c2c2dd4cd0aecd02cd18592310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultKey: 119
 --- !u!1 &7461249439504236215
 GameObject:
   m_ObjectHideFlags: 0
@@ -7570,18 +7553,6 @@ MonoBehaviour:
       - m_Target: {fileID: 5696072873832757771}
         m_TargetAssemblyTypeName: Menus.SliderController, Assembly-CSharp
         m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7450585125910410343}
-        m_TargetAssemblyTypeName: Menus.OptionsController, Assembly-CSharp
-        m_MethodName: SetMasterVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7810,18 +7781,6 @@ MonoBehaviour:
       - m_Target: {fileID: 794835599950457568}
         m_TargetAssemblyTypeName: Menus.SliderController, Assembly-CSharp
         m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7450585125910410343}
-        m_TargetAssemblyTypeName: Menus.OptionsController, Assembly-CSharp
-        m_MethodName: SetEffectsVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9145,18 +9104,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1194663395928681102}
         m_TargetAssemblyTypeName: Menus.SliderController, Assembly-CSharp
         m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7450585125910410343}
-        m_TargetAssemblyTypeName: Menus.OptionsController, Assembly-CSharp
-        m_MethodName: SetMusicVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

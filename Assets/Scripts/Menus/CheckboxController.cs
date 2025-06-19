@@ -8,12 +8,12 @@ namespace Menus
         public event Action<bool> OnToggle;
 
         private GameObject _check;
-        
-        public void Awake()
+
+        public void Setup()
         {
             _check = transform.GetChild(0).gameObject;
         }
-
+        
         public void Toggle()
         {
             _check.SetActive(!_check.activeSelf);

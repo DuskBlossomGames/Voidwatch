@@ -11,8 +11,6 @@ namespace Static_Info
 {
     public class StaticInfoHolder : MonoBehaviour
     {
-        public GameObject defaultKeybindHolder;
-        
         private static StaticInfoHolder _instance;
         private static string _returnScene;
         
@@ -54,13 +52,6 @@ namespace Static_Info
             DontDestroyOnLoad(gameObject);
             
             PlayerDataInstance.Health = PlayerDataInstance.maxHealth;
-            
-            // set default controls
-            var keybindHolders = defaultKeybindHolder.GetComponentsInChildren<KeybindController>();
-            foreach (InputAction action in Enum.GetValues(typeof(InputAction)))
-            {
-                InputManager.InputActions[action] = (KeyCode) PlayerPrefs.GetInt($"Control{(int) action}", (int) keybindHolders[(int) action].defaultKey);
-            }
             
             if (_returnScene != null) StartCoroutine(LoadInfo());
         }
