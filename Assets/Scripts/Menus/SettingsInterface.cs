@@ -41,7 +41,7 @@ namespace Menus
             // CONTROLS
             foreach (InputAction control in Enum.GetValues(typeof(InputAction)))
             {
-                SetKeybind((int) control, (KeyCode) PlayerPrefs.GetInt($"Control{control}", (int) InputManager.DEFAULT_ACTIONS[(InputAction) control]));
+                SetKeybind((int) control, (KeyCode) PlayerPrefs.GetInt($"Control{control}", (int) InputManager.DEFAULT_ACTIONS[control]));
             }
         }
         
