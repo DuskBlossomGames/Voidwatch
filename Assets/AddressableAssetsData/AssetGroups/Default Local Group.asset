@@ -13,21 +13,19 @@ MonoBehaviour:
   m_Name: Default Local Group
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
-  m_Data:
-    m_SerializedData: []
   m_GUID: b0ae79841bd6e4f5386bff506e0dea46
   m_SerializeEntries:
+  - m_GUID: 386959fea833949f29e4c2fe6d424a4f
+    m_Address: Assets/Sprites/Upgrades/Sprites
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - upgrade-sprites
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c73869e016d24e6ab576ed09db01a13
     m_Address: Assets/Sprites/Planets
     m_ReadOnly: 0
     m_SerializedLabels:
     - planets
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ce772ed7423914db4aca415ce52ac7b3
-    m_Address: Assets/Prefabs/Enemies
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - enemies
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bcba12ffcccca47c7afbad0e2f988c33
     m_Address: Assets/Sprites/Upgrades/Borders
@@ -35,15 +33,15 @@ MonoBehaviour:
     m_SerializedLabels:
     - upgrade-borders
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 386959fea833949f29e4c2fe6d424a4f
-    m_Address: Assets/Sprites/Upgrades/Sprites
+  - m_GUID: ce772ed7423914db4aca415ce52ac7b3
+    m_Address: Assets/Prefabs/Enemies
     m_ReadOnly: 0
     m_SerializedLabels:
-    - upgrade-sprites
+    - enemies
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2b694b73e3cde4410a254b8bd0d67fec, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: a218f8d85994e44439d47ec93cb9233f, type: 2}
     - {fileID: 11400000, guid: d007cc6e9a8df4c42938f83a87d9dff1, type: 2}
+    - {fileID: 11400000, guid: a218f8d85994e44439d47ec93cb9233f, type: 2}

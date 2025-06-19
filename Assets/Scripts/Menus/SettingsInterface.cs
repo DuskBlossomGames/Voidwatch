@@ -13,7 +13,8 @@ namespace Menus
         
         private static SettingsInterface _instance;
         public static List<Resolution> resolutions;
-
+        private static int _currentResolution;
+        
         public AudioMixer mixer;
         private void Awake()
         {
@@ -64,7 +65,8 @@ namespace Menus
         public static void SetResolution(int idx)
         {
             PlayerPrefs.SetInt("Resolution", idx);
-            
+
+            _currentResolution = idx;
             var res = resolutions[idx];
             Screen.SetResolution(res.width, res.height, Screen.fullScreenMode);
         }
@@ -73,7 +75,8 @@ namespace Menus
         {
             PlayerPrefs.SetInt("Fullscreen", value ? 1 : 0);;
             
-            Screen.fullScreenMode = value ? FullScreenMode.MaximizedWindow : FullScreenMode.Windowed;
+            var res = resolutions[_currentResolution];
+            Screen.SetResolution(res.width, res.height, value ? FullScreenMode.MaximizedWindow : FullScreenMode.Windowed);
         }
         
         public static void SetVsync(bool value)

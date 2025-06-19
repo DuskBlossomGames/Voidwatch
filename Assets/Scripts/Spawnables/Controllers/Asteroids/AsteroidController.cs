@@ -53,6 +53,7 @@ namespace Spawnables.Controllers.Asteroids
 
         protected override void OnDeath(GameObject source)
         {
+            base.OnDeath(source);
             if (nextSize == null || source == null) return;
 
             var vel = (source.GetComponent<CustomRigidbody2D>()?.linearVelocity.normalized ?? _rb.linearVelocity.normalized) * _rb.linearVelocity.magnitude;
