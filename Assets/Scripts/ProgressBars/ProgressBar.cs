@@ -4,16 +4,10 @@ namespace ProgressBars
 {
     public class ProgressBar : MonoBehaviour
     {
-        private Transform _underneath;
-
-        private void Awake()
-        {
-            _underneath = transform.GetChild(transform.childCount-1);
-        }
-
         public virtual void UpdatePercentage(float cur, float max)
         {
-            _underneath.localScale = new Vector3(2*(1 - Mathf.Clamp(cur, 0, max)/max), _underneath.localScale.y, _underneath.localScale.z);
+            var underneath = transform.GetChild(transform.childCount - 1);
+            underneath.localScale = new Vector3(2*(1 - Mathf.Clamp(cur, 0, max)/max), underneath.localScale.y, underneath.localScale.z);
         }
     }
 }
