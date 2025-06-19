@@ -22,7 +22,7 @@ namespace Player
 
         public Button reroll;
     
-        public RawImage minimap;
+        public GameObject minimap;
         public RectTransform titleBox, title, subtitle;
         public RectTransform[] upgrades;
         public CanvasGroup everythingElse;
@@ -78,11 +78,14 @@ namespace Player
             playMov.autoPilot = true;
             playMov.GetComponent<PlayerDamageable>().godmode = true;
             followPlayer.suppress = true;
-
-            var startAlpha = minimap.color.a;
+            
+            var rawImage = minimap.GetComponentInChildren<RawImage>();
+            var border = minimap.GetComponentsInChildren<Image>()[1];
+            var startAlpha = rawImage.color.a;
             for (float t = 0; t < minimapFadeTime; t += Time.fixedDeltaTime)
             {
-                minimap.SetAlpha(startAlpha*(1 - t / minimapFadeTime));
+                rawImage.SetAlpha(startAlpha*(1 - t / minimapFadeTime));
+                border.SetAlpha(1 - t / minimapFadeTime);
                 yield return new WaitForFixedUpdate();
             }
         
