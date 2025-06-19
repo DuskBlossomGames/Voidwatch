@@ -10679,10 +10679,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4368990934169296406, guid: 410b52d736521442bbb8c687c53f3c74, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 6154323218950325099, guid: 410b52d736521442bbb8c687c53f3c74, type: 3}
+      propertyPath: dbg
+      value: 
+      objectReference: {fileID: 1496270375}
     - target: {fileID: 6211481273980934153, guid: 410b52d736521442bbb8c687c53f3c74, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

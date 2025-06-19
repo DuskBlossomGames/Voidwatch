@@ -44,11 +44,11 @@ namespace Menus
             resolution.onValueChanged.AddListener(SettingsInterface.SetResolution);
             
             fullscreen.Setup();
-            if (PlayerPrefs.GetInt("Fullscreen", 1) == 1) fullscreen.Toggle();
+            fullscreen.SetValue(PlayerPrefs.GetInt("Fullscreen") == 1);
             fullscreen.OnToggle += SettingsInterface.SetFullscreen;
             
             vsync.Setup();
-            if (PlayerPrefs.GetInt("Vsync", 1) == 1) vsync.Toggle();
+            vsync.SetValue(PlayerPrefs.GetInt("Vsync") == 1);
             vsync.OnToggle += SettingsInterface.SetVsync;
             
             // CONTROLS

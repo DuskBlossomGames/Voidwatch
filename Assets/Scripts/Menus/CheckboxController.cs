@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace Menus
@@ -13,7 +14,8 @@ namespace Menus
         {
             _check = transform.GetChild(0).gameObject;
         }
-        
+
+        public void SetValue(bool value) { _check.SetActive(value); }
         public void Toggle()
         {
             _check.SetActive(!_check.activeSelf);

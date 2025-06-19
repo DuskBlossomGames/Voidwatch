@@ -64,7 +64,7 @@ namespace Menus
         {
             PlayerPrefs.SetInt("Fullscreen", value ? 1 : 0);;
             
-            Screen.fullScreenMode = value ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+            Screen.fullScreenMode = value ? FullScreenMode.MaximizedWindow : FullScreenMode.Windowed;
         }
         
         public static void SetVsync(bool value)
