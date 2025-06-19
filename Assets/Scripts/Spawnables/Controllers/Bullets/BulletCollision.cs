@@ -59,7 +59,7 @@ namespace Spawnables.Controllers.Bullets
             var damageable = other.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().velocity - GetComponent<CustomRigidbody2D>().velocity;
+                Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().linearVelocity - GetComponent<CustomRigidbody2D>().linearVelocity;
                 float mass = GetComponent<CustomRigidbody2D>().mass;
                 float sqrSpeed = velDiff.sqrMagnitude/1_000f;
 
@@ -85,8 +85,8 @@ namespace Spawnables.Controllers.Bullets
                         chains -= 1;
                         _firstCollider = other;
 
-                        GetComponent<CustomRigidbody2D>().velocity =
-                            GetComponent<CustomRigidbody2D>().velocity.magnitude * (nearest.transform.position - transform.position).normalized;
+                        GetComponent<CustomRigidbody2D>().linearVelocity =
+                            GetComponent<CustomRigidbody2D>().linearVelocity.magnitude * (nearest.transform.position - transform.position).normalized;
                     }
                     catch (InvalidOperationException) {}
                 }

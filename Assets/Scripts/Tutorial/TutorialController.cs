@@ -153,8 +153,8 @@ namespace Tutorial
                     break;
                 }
                 case Stage.Movement:
-                    _genFlag |= _playerRb.velocity.sqrMagnitude > 400; // greater than 20 u/s
-                    if (_genFlag && _playerRb.velocity.sqrMagnitude < 25) Continue(); // less than 5 u/s
+                    _genFlag |= _playerRb.linearVelocity.sqrMagnitude > 400; // greater than 20 u/s
+                    if (_genFlag && _playerRb.linearVelocity.sqrMagnitude < 25) Continue(); // less than 5 u/s
                     break;
                 case Stage.Dashing:
                     _genFlag |= playerMovement.Dodging;

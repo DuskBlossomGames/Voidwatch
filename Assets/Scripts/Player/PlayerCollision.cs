@@ -48,7 +48,7 @@ namespace Player
             if (!_cooldownTimer.IsFinished) return;
             if (damageable.GetComponent<MissleAim>() != null) return;
                 
-            var vel = (other.attachedRigidbody.velocity - _rb.velocity).magnitude;
+            var vel = (other.attachedRigidbody.linearVelocity - _rb.linearVelocity).magnitude;
             damageable.Damage(PlayerDataInstance.collisionDamageMult * enemyMod * vel, gameObject);
 
             if (!damageable.IsDead && other.gameObject.GetComponent<AsteroidController>() == null) // asteroid handles it itself

@@ -100,7 +100,7 @@ namespace Spawnables.Controllers.Worms
             Vector2 dir;
             if (!_feedTimer.IsFinished)
             {
-                _speed = _player.GetComponent<CustomRigidbody2D>().velocity.magnitude;
+                _speed = _player.GetComponent<CustomRigidbody2D>().linearVelocity.magnitude;
                 
                 _feedTimer.Update();
                 if (_feedTimer.IsFinished) _waitTimer.Value = waitTime;
@@ -129,7 +129,7 @@ namespace Spawnables.Controllers.Worms
             }
             
             head.transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
-            _rb.velocity = _feedTimer.IsFinished ? dir * _speed : Vector2.zero;
+            _rb.linearVelocity = _feedTimer.IsFinished ? dir * _speed : Vector2.zero;
             
             RippleSegments();
         }

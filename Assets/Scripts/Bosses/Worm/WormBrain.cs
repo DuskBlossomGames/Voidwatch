@@ -566,7 +566,7 @@ namespace Bosses.Worm
             // _currdir = dir = (.1f / Time.deltaTime * _currdir + dir).normalized;
 
             //_headRigid.AddForce(_speed * dir, ForceMode.VelocityChange)
-            _headRigid.velocity = _speed * dir;
+            _headRigid.linearVelocity = _speed * dir;
 
             if (numportals == 0 || _portalIDs[numportals - 1] > 0)
             {
@@ -769,7 +769,7 @@ namespace Bosses.Worm
                         exitingPortal = true;
                         var oc = currSegmentPos;
                         currSegmentPos = FromLocalSpace(pair.pout, new Vector2(
-                            IntoLocalSpace(pair.pout, currSegmentPos).x - Time.deltaTime * _headRigid.velocity.magnitude, 0));
+                            IntoLocalSpace(pair.pout, currSegmentPos).x - Time.deltaTime * _headRigid.linearVelocity.magnitude, 0));
 
                         _fakeSegs[idx].transform.position = IntoPortal(pair, currSegmentPos);
                         float along = ValueAlongPortal(pair.pin, _fakeSegs[idx].transform.position);
@@ -983,7 +983,7 @@ namespace Bosses.Worm
             
             yield return new WaitForEndOfFrame();
             
-            _headRigid.velocity = 7*Vector2.right; // to make sure the floppies look good lol
+            _headRigid.linearVelocity = 7*Vector2.right; // to make sure the floppies look good lol
 
             var oldCircleScale = boundaryCircle.transform.localScale;
             boundaryCircle.transform.localScale = new Vector3(1000, 1000, 1);
@@ -1158,18 +1158,18 @@ namespace Bosses.Worm
                         curSpeed = Mathf.Clamp(curSpeed + 7 * Time.deltaTime * MathF.Sign(speed - curSpeed), Mathf.Min(curSpeed, speed), Mathf.Max(curSpeed, speed));
                     }
 
-                    _headRigid.velocity = curSpeed * finalDir;
+                    _headRigid.linearVelocity = curSpeed * finalDir;
                     
                     RippleSegments();
                 }
             }
             
-            var origVel = _headRigid.velocity;
+            var origVel = _headRigid.linearVelocity;
             for (float t = 0; t < 0.7f; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
 
-                _headRigid.velocity = origVel * Mathf.SmoothStep(1, 0, t / 0.7f);
+                _headRigid.linearVelocity = origVel * Mathf.SmoothStep(1, 0, t / 0.7f);
                 RippleSegments();
             }
 
@@ -1181,7 +1181,7 @@ namespace Bosses.Worm
             GetComponentInChildren<SpitController>().Spit(spitTime);
             
             yield return new WaitForSeconds(0.2f);
-            player.GetComponent<CustomRigidbody2D>().velocity = playerMoveVel * ((Vector2) (player.transform.position - head.transform.position)).normalized;
+            player.GetComponent<CustomRigidbody2D>().linearVelocity = playerMoveVel * ((Vector2) (player.transform.position - head.transform.position)).normalized;
             player.GetComponent<Movement>().autoPilot = true;
             
             for (float t = 0; t < spitTime-0.2f; t += Time.fixedDeltaTime)

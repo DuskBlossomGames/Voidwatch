@@ -95,7 +95,7 @@ namespace Spawnables
                         var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
                         //Debug.Log("Getting Velocity");
-                        bullet.GetComponent<CustomRigidbody2D>().velocity = GetComponent<CustomRigidbody2D>().velocity;
+                        bullet.GetComponent<CustomRigidbody2D>().linearVelocity = GetComponent<CustomRigidbody2D>().linearVelocity;
                         bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
                         bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
 

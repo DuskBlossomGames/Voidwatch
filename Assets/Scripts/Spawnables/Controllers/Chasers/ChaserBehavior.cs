@@ -37,7 +37,7 @@ namespace Spawnables.Controllers.Chasers
                 if (diff.sqrMagnitude < attackDist * attackDist)
                 {
                     _currSpeed *= Mathf.Pow(.9f, Time.deltaTime);
-                    Vector2 tarmovDir = UtilFuncs.LeadShotNorm(diff, target.GetComponent<Rigidbody2D>().velocity - GetComponent<Rigidbody2D>().velocity, _gun.ExpectedVelocity());
+                    Vector2 tarmovDir = UtilFuncs.LeadShotNorm(diff, target.GetComponent<Rigidbody2D>().linearVelocity - GetComponent<Rigidbody2D>().linearVelocity, _gun.ExpectedVelocity());
                     _movDir = UtilFuncs.LerpSafe(_movDir, tarmovDir, 10 * Time.deltaTime);
                     _gun.Shoot(0);
                     //Debug.Log(_gun.status);
@@ -45,16 +45,16 @@ namespace Spawnables.Controllers.Chasers
                 else
                 {
                     float halfDistV = diff.magnitude * movVal;
-                    Vector2 e1 = (Vector2)transform.position + halfDistV * GetComponent<Rigidbody2D>().velocity.normalized;
-                    Vector2 e2 = (Vector2)target.transform.position - halfDistV * target.GetComponent<Rigidbody2D>().velocity.normalized;
+                    Vector2 e1 = (Vector2)transform.position + halfDistV * GetComponent<Rigidbody2D>().linearVelocity.normalized;
+                    Vector2 e2 = (Vector2)target.transform.position - halfDistV * target.GetComponent<Rigidbody2D>().linearVelocity.normalized;
                     Vector2 em = (e1 + e2) / 2;
 
                     Vector2 tarmovDir = pathfinder.PathDirNorm(transform.position, em);
                     _movDir = UtilFuncs.LerpSafe(_movDir, tarmovDir, 10 * Time.deltaTime);
                     _currSpeed = Mathf.Min(maxSpeed, _currSpeed + accel * Time.deltaTime);
                 }
-                var vel = GetComponent<CustomRigidbody2D>().velocity;
-                GetComponent<CustomRigidbody2D>().velocity = UtilFuncs.LerpSafe(vel,_movDir * _currSpeed, 10 * Time.deltaTime);
+                var vel = GetComponent<CustomRigidbody2D>().linearVelocity;
+                GetComponent<CustomRigidbody2D>().linearVelocity = UtilFuncs.LerpSafe(vel,_movDir * _currSpeed, 10 * Time.deltaTime);
                 transform.rotation = UtilFuncs.RotFromNorm(_movDir);
             }
         }

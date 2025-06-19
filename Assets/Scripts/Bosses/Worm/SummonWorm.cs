@@ -74,7 +74,7 @@ namespace Bosses.Worm
                     _summoning.GetChild(i).GetComponent<WormSegment>().enabled = true;
                 }
 
-                headRigid.velocity = Vector2.zero;
+                headRigid.linearVelocity = Vector2.zero;
                 
                 _summoning.SetParent(null, true);
                 _summonTimer.Value = 0;

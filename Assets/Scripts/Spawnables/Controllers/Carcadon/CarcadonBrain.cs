@@ -101,7 +101,7 @@ namespace Spawnables.Controllers.Carcadon
         {
             if (_inCutscene) return;
 
-            var dir = _rb.velocity.normalized;
+            var dir = _rb.linearVelocity.normalized;
 
             if (_mode == Mode.Stealth)
             {
@@ -158,14 +158,14 @@ namespace Spawnables.Controllers.Carcadon
 
             if (_mode == Mode.Stealth) // don't want to make it snake, so shouldn't have an arbitrary min turn radius
             {
-                _rb.velocity = UtilFuncs.LerpSafe(_rb.velocity, _currSpeed * dir, 5 * Time.deltaTime);
+                _rb.linearVelocity = UtilFuncs.LerpSafe(_rb.linearVelocity, _currSpeed * dir, 5 * Time.deltaTime);
             }
             else
             {
-                _rb.velocity = Vector3.RotateTowards(_rb.velocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 8 : 1.5f) * Time.deltaTime, 15 * Time.deltaTime);
+                _rb.linearVelocity = Vector3.RotateTowards(_rb.linearVelocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 8 : 1.5f) * Time.deltaTime, 15 * Time.deltaTime);
             }
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, UtilFuncs.RotFromNorm(_rb.velocity), 5 * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, UtilFuncs.RotFromNorm(_rb.linearVelocity), 5 * Time.deltaTime);
 
             // opacity
             if (!_stealth && _opacityDir == 0)
@@ -215,7 +215,7 @@ namespace Spawnables.Controllers.Carcadon
             if (Mathf.Min((int) (oldHealth / _maxHealth * LevelSelectData.ELITE_WAVES), LevelSelectData.ELITE_WAVES-1) != (int) (newHealth / _maxHealth * LevelSelectData.ELITE_WAVES))
             {
                 _mode = Mode.Stealth;
-                _rb.velocity = Vector2.zero; _currSpeed = 0;
+                _rb.linearVelocity = Vector2.zero; _currSpeed = 0;
                 _stealthTimer.Value = Random.Range(minRandStealthTime, maxRandStealthTime);
                 _stealthAccTimer.Value = stealthLowAccTime;
                 SetVisualStealth(true);

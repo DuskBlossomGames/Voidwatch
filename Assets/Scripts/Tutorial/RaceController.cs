@@ -57,7 +57,7 @@ namespace Tutorial
 
             player.transform.position = new Vector3(35, 0, -1);
             player.transform.rotation = Quaternion.identity;
-            _playerRb.velocity = Vector2.zero;
+            _playerRb.linearVelocity = Vector2.zero;
 
             foreach (var ring in _rings) ring.Completed = false;
             
@@ -82,7 +82,7 @@ namespace Tutorial
 
             if (!_begun)
             {
-                if (!player.autoPilot && _playerRb.velocity.sqrMagnitude > 0) _begun = true;
+                if (!player.autoPilot && _playerRb.linearVelocity.sqrMagnitude > 0) _begun = true;
                 else return;
             }
             

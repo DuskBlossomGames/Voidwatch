@@ -23,9 +23,9 @@ namespace Spawnables.Controllers.Seekers
         void Update()
         {
             var ppos = target.transform.position;
-            var pvel = target.GetComponent<Rigidbody2D>().velocity;
+            var pvel = target.GetComponent<Rigidbody2D>().linearVelocity;
 
-            float dir = UtilFuncs.LeadShot(ppos - transform.position, pvel - _crb.velocity, _bulletvel);
+            float dir = UtilFuncs.LeadShot(ppos - transform.position, pvel - _crb.linearVelocity, _bulletvel);
             float tardir = Mathf.Rad2Deg * dir - 90;
 
             gun.Shoot(tardir - transform.rotation.eulerAngles.z);

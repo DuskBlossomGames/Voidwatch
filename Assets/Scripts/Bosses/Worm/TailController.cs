@@ -38,7 +38,7 @@ namespace Bosses.Worm
             spike.transform.localScale = orig.transform.lossyScale;
             spike.transform.localRotation = orig.transform.rotation;
             spike.transform.localPosition = orig.transform.position;
-            var velocity = spike.GetComponent<CustomRigidbody2D>().velocity = shootSpeed * (orig.transform.rotation * 
+            var velocity = spike.GetComponent<CustomRigidbody2D>().linearVelocity = shootSpeed * (orig.transform.rotation * 
                                                                              new Vector2(-Mathf.Cos(rotationDegrees[index] * Mathf.Deg2Rad),
                                                                                  Mathf.Sin(rotationDegrees[index] * Mathf.Deg2Rad)));
 

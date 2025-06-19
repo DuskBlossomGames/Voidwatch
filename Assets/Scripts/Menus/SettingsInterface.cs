@@ -9,11 +9,13 @@ namespace Menus
 {
     public class SettingsInterface : MonoBehaviour
     {
+        public static bool isFirstTime;
+        
         private static SettingsInterface _instance;
         public static List<Resolution> resolutions;
 
         public AudioMixer mixer;
-        private void Start()
+        private void Awake()
         {
             if (_instance != null)
             {
@@ -27,11 +29,9 @@ namespace Menus
                 .Where(r => r.refreshRateRatio.value == Screen.currentResolution.refreshRateRatio.value)
                 .OrderByDescending(r => r.width * r.height).ToList();
 
-            // AUDIO
-            foreach (SoundChannel channel in Enum.GetValues(typeof(SoundChannel)))
-            {
-                SetChannelVolume(channel, PlayerPrefs.GetFloat(channel+"Volume", 100));
-            }
+            // MISC
+            isFirstTime = !PlayerPrefs.HasKey("check");
+            PlayerPrefs.SetInt("check", 1);
             
             // VIDEO
             SetResolution(PlayerPrefs.GetInt("Resolution", resolutions.IndexOf(Screen.currentResolution)));
@@ -42,6 +42,15 @@ namespace Menus
             foreach (InputAction control in Enum.GetValues(typeof(InputAction)))
             {
                 SetKeybind((int) control, (KeyCode) PlayerPrefs.GetInt($"Control{control}", (int) InputManager.DEFAULT_ACTIONS[control]));
+            }
+        }
+
+        public void Start()
+        {
+            // AUDIO (has to be done in start for mixer to be initialized)
+            foreach (SoundChannel channel in Enum.GetValues(typeof(SoundChannel)))
+            {
+                SetChannelVolume(channel, PlayerPrefs.GetFloat(channel+"Volume", 100));
             }
         }
         

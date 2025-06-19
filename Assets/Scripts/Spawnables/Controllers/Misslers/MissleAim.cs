@@ -42,7 +42,7 @@ namespace Spawnables.Controllers.Misslers
             {
                 Vector3 relPos = target.transform.position - transform.position;
                 //Debug.LogFormat("target.name: {0}",target.name);
-                Vector3 relVel = target.GetComponent<CustomRigidbody2D>().velocity - _rigid.velocity;
+                Vector3 relVel = target.GetComponent<CustomRigidbody2D>().linearVelocity - _rigid.linearVelocity;
                 float accel = (accelforce) / _rigid.mass;
                 _nDir = LeadShot(relPos, relVel, accel);
                 yield return new WaitForSeconds(.1f);
@@ -55,8 +55,8 @@ namespace Spawnables.Controllers.Misslers
             {
                 _fuel -= accelforce * Time.fixedDeltaTime;
                 _rigid.AddForce(accelforce * _nDir);
-                Vector2 realAccel = -(_oVel - _rigid.velocity) / Time.fixedDeltaTime;
-                _oVel = _rigid.velocity;
+                Vector2 realAccel = -(_oVel - _rigid.linearVelocity) / Time.fixedDeltaTime;
+                _oVel = _rigid.linearVelocity;
                 Quaternion tRot = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * Mathf.Atan2(_nDir.y, _nDir.x));
                 _cRot = Quaternion.RotateTowards(_cRot, tRot, 360 * Time.deltaTime);
                 transform.rotation = _cRot;

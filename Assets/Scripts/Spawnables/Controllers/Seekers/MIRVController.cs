@@ -56,7 +56,7 @@ namespace Spawnables.Controllers.Seekers
                     var nma = nchild.GetComponent<MissleAim>();
                     nma.target = target.gameObject;
                     var ncrb = nchild.GetComponent<CustomRigidbody2D>();
-                    ncrb.velocity = _crb.velocity;
+                    ncrb.linearVelocity = _crb.linearVelocity;
                     ncrb.AddForce(scatterForce * Random.insideUnitCircle);
                     nchild.transform.position = transform.position;
                 }

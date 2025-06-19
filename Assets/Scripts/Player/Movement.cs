@@ -126,7 +126,7 @@ namespace Player
 
         private void FixedUpdate()
         {
-            var velocity = _rigid.velocity;
+            var velocity = _rigid.linearVelocity;
 
             var tar = _camera.ScreenToWorldPoint(InputManager.mousePosition) - transform.position;
             _forwards = ((Vector2) tar).normalized;
@@ -219,7 +219,7 @@ namespace Player
 
                     _afterImages.Add(afterImage);
                 }
-                _rigid.velocity = _dodgeDirection * PlayerDataInstance.dodgeVelocity;
+                _rigid.linearVelocity = _dodgeDirection * PlayerDataInstance.dodgeVelocity;
                 return;
             }
             if (wasDodging)
@@ -267,7 +267,7 @@ namespace Player
             if (!autoPilot) velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
             velocity *= Mathf.Pow(.99f, Time.fixedDeltaTime);
 
-            _rigid.velocity = velocity;
+            _rigid.linearVelocity = velocity;
         }
 
         private static Vector2 Push(Vector2 target, Vector2 line)

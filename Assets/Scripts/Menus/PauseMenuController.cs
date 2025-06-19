@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Static_Info;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
@@ -10,6 +11,7 @@ namespace Menus
     public class PauseMenuController : OptionsHolder
     {
         public GameObject canvas, buttons;
+        public TextMeshProUGUI mainMenu;
         public OptionsController options;
         
         private static PauseMenuController _instance;
@@ -41,6 +43,9 @@ namespace Menus
             }
             else if (SceneManager.GetActiveScene().name != "TitleScreen")
             {
+                if (SceneManager.GetActiveScene().name == "Tutorial") mainMenu.text = "Exit Tutorial";
+                else mainMenu.text = "Main Menu";
+                
                 canvas.SetActive(true);
                 Time.timeScale = 0;
                 InputManager.isPaused = true;

@@ -24,12 +24,12 @@ namespace Util
         private Rigidbody2D _rigid;
         
         // ReSharper disable once InconsistentNaming
-        public Vector2 velocity
+        public Vector2 linearVelocity
         {
-            get => _rigid.velocity / _scaling;
+            get => _rigid.linearVelocity / _scaling;
             set
             {
-                _rigid.velocity = value * _scaling;
+                _rigid.linearVelocity = value * _scaling;
             }
         }
         
@@ -84,9 +84,9 @@ namespace Util
                 (constraints.freezeX ? RigidbodyConstraints2D.FreezePositionX : RigidbodyConstraints2D.None) |
                 (constraints.freezeY ? RigidbodyConstraints2D.FreezePositionY : RigidbodyConstraints2D.None) |
                 (constraints.freezeRotation ? RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.None);
-            _rigid.angularDrag = 0;
+            _rigid.angularDamping = 0;
             
-            ScalingChange += _eventHandler = (oldScaling, newScaling) => _rigid.velocity *= newScaling / oldScaling;
+            ScalingChange += _eventHandler = (oldScaling, newScaling) => _rigid.linearVelocity *= newScaling / oldScaling;
         }
 
         private void OnDestroy()

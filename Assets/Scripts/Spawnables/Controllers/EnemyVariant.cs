@@ -54,7 +54,7 @@ namespace Spawnables.Controllers
                         ScrapCount -= _scrapvals[ind];
                         var rigid = Instantiate(ScrapPrefab, pos, transform.rotation).GetComponent<CustomRigidbody2D>();
                         rigid.gameObject.GetComponent<ScrapController>().value = _scrapvals[ind];
-                        rigid.velocity = Random.insideUnitCircle * 5;
+                        rigid.linearVelocity = Random.insideUnitCircle * 5;
                     }
                 }
             }

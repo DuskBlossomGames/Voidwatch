@@ -38,7 +38,13 @@ namespace Menus
 
             GetComponent<Canvas>().enabled = false;
             ps.gameObject.SetActive(false);
-            StartCoroutine(FadeIn());
+
+            if (SettingsInterface.isFirstTime)
+            {
+                SettingsInterface.isFirstTime = false; // since this is the only place it's used, easy solution for now, can change if needed elsewhere
+                Tutorial();
+            }
+            else StartCoroutine(FadeIn());
         }
 
         private IEnumerator FadeIn()

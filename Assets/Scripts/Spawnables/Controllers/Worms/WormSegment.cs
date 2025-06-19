@@ -61,9 +61,9 @@ namespace Spawnables.Controllers.Worms
                 transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * angle);
             
                 var rigid = GetComponent<CustomRigidbody2D>();
-                float deltVel = accel * accelCurve.Evaluate(rigid.velocity.magnitude/speed) * Time.deltaTime;
+                float deltVel = accel * accelCurve.Evaluate(rigid.linearVelocity.magnitude/speed) * Time.deltaTime;
                 _currSpeed = Mathf.Min(_currSpeed+ deltVel, speed);
-                rigid.velocity = _currSpeed * _dir;
+                rigid.linearVelocity = _currSpeed * _dir;
 
 
                 if((transform.position - target.transform.position).sqrMagnitude < atkRange * atkRange)
@@ -104,7 +104,7 @@ namespace Spawnables.Controllers.Worms
 
         public Vector2 PredDir(float time)
         {
-            return (target.transform.position + time * (Vector3)target.GetComponent<CustomRigidbody2D>().velocity - transform.position).normalized;
+            return (target.transform.position + time * (Vector3)target.GetComponent<CustomRigidbody2D>().linearVelocity - transform.position).normalized;
         }
     }
 }

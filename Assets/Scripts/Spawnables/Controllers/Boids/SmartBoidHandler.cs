@@ -92,7 +92,7 @@ namespace Spawnables.Controllers.Boids
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + Time.deltaTime * sumturn * Vector3.forward);
             //transform.rotation.eulerAngles += Time.deltaTime * sumturn * Vector3.forward;
 
-            _rigidbody2D.velocity = speed * deltaAngle;
+            _rigidbody2D.linearVelocity = speed * deltaAngle;
             _rigidbody2D.angularVelocity = 0;
             if (((Vector2)transform.position).sqrMagnitude < 15 * 15)
             {
@@ -108,7 +108,7 @@ namespace Spawnables.Controllers.Boids
         void Shoot()
         {
             Vector2 diff = target.transform.position - transform.position;
-            Vector2 relVel = target.GetComponent<CustomRigidbody2D>().velocity - _rigidbody2D.velocity;
+            Vector2 relVel = target.GetComponent<CustomRigidbody2D>().linearVelocity - _rigidbody2D.linearVelocity;
             float angle = UtilFuncs.LeadShot(diff, relVel, _gun.ExpectedVelocity());
 
 

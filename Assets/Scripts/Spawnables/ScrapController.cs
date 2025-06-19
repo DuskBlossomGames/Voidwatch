@@ -44,10 +44,10 @@ namespace Spawnables
         {
             var dist = ((Vector2)_player.transform.position - (Vector2)transform.position);
             Vector2 norm = dist.normalized;
-            _crb.velocity = norm * _crb.velocity.magnitude;
-            _crb.velocity += 30 * norm * Time.deltaTime;
+            _crb.linearVelocity = norm * _crb.linearVelocity.magnitude;
+            _crb.linearVelocity += 30 * norm * Time.deltaTime;
 
-            if(4 * _crb.velocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude)
+            if(4 * _crb.linearVelocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude)
             {
                 PlayerDataInstance.Scrap += value;
                 //PlayerDataInstance.Scrap += value;

@@ -96,7 +96,7 @@ namespace Spawnables.Controllers.Platelins
                     if ((plate.position - transform.position).sqrMagnitude < tendonLength * tendonLength)
                     {
                         var rigid = GetComponent<CustomRigidbody2D>();
-                        var diffVel = plate.GetComponent<CustomRigidbody2D>().velocity - rigid.velocity;
+                        var diffVel = plate.GetComponent<CustomRigidbody2D>().linearVelocity - rigid.linearVelocity;
                         rigid.AddForce(diffVel.normalized * diffVel.sqrMagnitude * drag);
                         var diffPos = plate.position - transform.position;
                         rigid.AddForce(diffPos.normalized * suction);
@@ -142,7 +142,7 @@ namespace Spawnables.Controllers.Platelins
                 {
                     var targSpeed = speed * speedCurve.Evaluate(_speedCurve / speedCurveScale) *
                                     ((Vector2)(_target.transform.position - transform.position)).normalized;
-                    GetComponent<CustomRigidbody2D>().velocity = Vector2.SmoothDamp(GetComponent<CustomRigidbody2D>().velocity, targSpeed, ref _dampVel, 0.1f);
+                    GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.SmoothDamp(GetComponent<CustomRigidbody2D>().linearVelocity, targSpeed, ref _dampVel, 0.1f);
                     _speedCurve = (_speedCurve + Time.deltaTime) % speedCurveScale;
                 }
             

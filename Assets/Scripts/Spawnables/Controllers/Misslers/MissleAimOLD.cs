@@ -27,7 +27,7 @@ namespace Spawnables.Controllers.Misslers
             if (fuel > 0)
             {
                 _rb.AddForce(accel * _moveSpeed / cruiseSpeed * _dir);
-                _rb.velocity = Vector2.ClampMagnitude(_rb.velocity, _moveSpeed);
+                _rb.linearVelocity = Vector2.ClampMagnitude(_rb.linearVelocity, _moveSpeed);
                 fuel -= Time.fixedDeltaTime * _moveSpeed;
             }
         }
@@ -39,14 +39,14 @@ namespace Spawnables.Controllers.Misslers
                 Vector2 relpos = target.transform.position - transform.position;
                 if (relpos.sqrMagnitude < 30)
                 {
-                    _dir = leadShot(relpos, target.GetComponent<CustomRigidbody2D>().velocity - _rb.velocity, diveSpeed);
+                    _dir = leadShot(relpos, target.GetComponent<CustomRigidbody2D>().linearVelocity - _rb.linearVelocity, diveSpeed);
                     transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(_dir.y, _dir.x));
                     _moveSpeed = diveSpeed;
                     yield return new WaitForFixedUpdate();
                 }
                 else
                 {
-                    _dir = leadShot(relpos,target.GetComponent<CustomRigidbody2D>().velocity - _rb.velocity,cruiseSpeed);
+                    _dir = leadShot(relpos,target.GetComponent<CustomRigidbody2D>().linearVelocity - _rb.linearVelocity,cruiseSpeed);
                     transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(_dir.y, _dir.x));
                     _moveSpeed = cruiseSpeed;
                     yield return new WaitForFixedUpdate();

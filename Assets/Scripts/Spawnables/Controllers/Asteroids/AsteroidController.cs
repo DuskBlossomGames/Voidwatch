@@ -23,7 +23,7 @@ namespace Spawnables.Controllers.Asteroids
             base.Start();
             _rb = GetComponent<CustomRigidbody2D>();
 
-            _rb.velocity = startVel;
+            _rb.linearVelocity = startVel;
 
             var type = asteroidTypes[Random.Range(0, asteroidTypes.Length)];
             GetComponent<SpriteRenderer>().sprite = type.GetComponent<SpriteRenderer>().sprite;
@@ -32,8 +32,8 @@ namespace Spawnables.Controllers.Asteroids
 
         private void Update()
         {
-            var angle = Mathf.Sign(Vector3.SignedAngle(_rb.position, _rb.velocity, Vector3.forward)) * 90;
-            _rb.velocity = Vector3.RotateTowards(_rb.velocity, Quaternion.Euler(0, 0, angle) * _rb.position, 0.15f*Mathf.PI*Time.deltaTime, 0);
+            var angle = Mathf.Sign(Vector3.SignedAngle(_rb.position, _rb.linearVelocity, Vector3.forward)) * 90;
+            _rb.linearVelocity = Vector3.RotateTowards(_rb.linearVelocity, Quaternion.Euler(0, 0, angle) * _rb.position, 0.15f*Mathf.PI*Time.deltaTime, 0);
         }
 
         public override void Damage(float damage, GameObject source)
@@ -55,7 +55,7 @@ namespace Spawnables.Controllers.Asteroids
         {
             if (nextSize == null || source == null) return;
 
-            var vel = (source.GetComponent<CustomRigidbody2D>()?.velocity.normalized ?? _rb.velocity.normalized) * _rb.velocity.magnitude;
+            var vel = (source.GetComponent<CustomRigidbody2D>()?.linearVelocity.normalized ?? _rb.linearVelocity.normalized) * _rb.linearVelocity.magnitude;
 
             var vel1 = Quaternion.Euler(0, 0, -45) * vel;
             var vel2 = Quaternion.Euler(0, 0, 45) * vel;

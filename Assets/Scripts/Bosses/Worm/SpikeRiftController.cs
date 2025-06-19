@@ -40,7 +40,7 @@ namespace Bosses.Worm
         {
             if (other.gameObject != Spike) return;
 
-            var playerDirection = Mathf.Atan2(player.velocity.y, player.velocity.x) * Mathf.Rad2Deg;
+            var playerDirection = Mathf.Atan2(player.linearVelocity.y, player.linearVelocity.x) * Mathf.Rad2Deg;
             
             var angle = playerDirection - 180 + arcAngle / 2 - arcAngle / numSpikes * Index;
             var radAngle = angle * Mathf.Deg2Rad;
@@ -50,8 +50,8 @@ namespace Bosses.Worm
                 arcDist * Mathf.Sin(radAngle),
                 -10);
 
-            var vel = Spike.GetComponent<CustomRigidbody2D>().velocity;
-            var rot = UtilFuncs.LeadShot(player.transform.position - _exit.transform.position, player.velocity, vel.magnitude);
+            var vel = Spike.GetComponent<CustomRigidbody2D>().linearVelocity;
+            var rot = UtilFuncs.LeadShot(player.transform.position - _exit.transform.position, player.linearVelocity, vel.magnitude);
             _exit.transform.rotation = Quaternion.Euler(0, 0, rot*Mathf.Rad2Deg);
             
             var newSpike = Instantiate(Spike);
@@ -61,7 +61,7 @@ namespace Bosses.Worm
                                           (Spike.transform.position - transform.position) -
                                           _exit.transform.rotation * (vel.magnitude * leadTime * Vector3.right);
             newSpike.transform.rotation = _exit.transform.localRotation * Spike.transform.rotation * Quaternion.Euler(0, 0, 180);
-            newSpike.GetComponent<CustomRigidbody2D>().velocity = _exit.transform.localRotation * -vel;
+            newSpike.GetComponent<CustomRigidbody2D>().linearVelocity = _exit.transform.localRotation * -vel;
             
             _exit.GetComponent<SpikeExitRiftController>().Spike = newSpike;
             

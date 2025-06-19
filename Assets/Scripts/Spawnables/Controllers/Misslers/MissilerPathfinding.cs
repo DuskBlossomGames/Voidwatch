@@ -36,8 +36,8 @@ namespace Spawnables.Controllers.Misslers
             var rot = Mathf.LerpAngle(transform.rotation.eulerAngles.z, Mathf.Rad2Deg * Mathf.Atan2(dif.y, dif.x), 10 * Time.deltaTime);
             transform.rotation = Quaternion.Euler(0, 0, rot);
             _rigid.AddRelativeForce(new Vector2(Mathf.Abs(mult)*speed, 0));
-            _rigid.velocity = Vector2.ClampMagnitude(_rigid.velocity, speed);
-            if (mult == 0) _rigid.velocity *= Mathf.Pow(0.3f, Time.deltaTime);
+            _rigid.linearVelocity = Vector2.ClampMagnitude(_rigid.linearVelocity, speed);
+            if (mult == 0) _rigid.linearVelocity *= Mathf.Pow(0.3f, Time.deltaTime);
         }
     }
 }

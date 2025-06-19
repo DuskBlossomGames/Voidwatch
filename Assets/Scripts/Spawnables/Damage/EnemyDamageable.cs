@@ -155,7 +155,7 @@ namespace Spawnables.Damage
 
                 var rb = sr.gameObject.AddComponent<Rigidbody2D>();
                 var angle = 2*Mathf.PI / numBits * Random.Range(i, i + 1f) + angleOffset;
-                rb.velocity = BIT_VEL * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
+                rb.linearVelocity = BIT_VEL * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
                 rb.gravityScale = 0;
 
                 var ftd = rb.gameObject.AddComponent<SpriteFadeToDeath>();

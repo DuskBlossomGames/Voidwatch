@@ -45,7 +45,7 @@ namespace Bosses.Worm
             
             if (!other.TryGetComponent<Movement>(out var movement)) return;
             movement.inputBlocked = false;
-            if (HasPlayer) _player.GetComponent<CustomRigidbody2D>().velocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
+            if (HasPlayer) _player.GetComponent<CustomRigidbody2D>().linearVelocity = transform.rotation * new Vector3(ejectionVel, 0, 0);
             _holdTimer.Value = 0;
             _player = null;
         }
@@ -60,7 +60,7 @@ namespace Bosses.Worm
             if (_holdTimer.IsActive && _holdTimer.IsFinished)
             {
                 _player.GetComponent<Movement>().inputBlocked = false;
-                _player.GetComponent<CustomRigidbody2D>().velocity += (Vector2)(transform.rotation * new Vector3(ejectionVel, 0, 0));
+                _player.GetComponent<CustomRigidbody2D>().linearVelocity += (Vector2)(transform.rotation * new Vector3(ejectionVel, 0, 0));
                 _player = null;
 
                 _holdTimer.Value = 0;
@@ -70,7 +70,7 @@ namespace Bosses.Worm
             if (!_holdTimer.IsActive && _clampTimer.IsFinished)
             {
                 _player.GetComponent<Movement>().inputBlocked = true;
-                _player.GetComponent<CustomRigidbody2D>().velocity = Vector2.zero;
+                _player.GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.zero;
                 _player.GetComponent<PlayerDamageable>().Damage(grabDamage, gameObject, shieldMult, bleedPerc);
                 wm.BiteFinish();
 

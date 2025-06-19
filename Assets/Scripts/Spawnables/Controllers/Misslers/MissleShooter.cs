@@ -71,7 +71,7 @@ namespace Spawnables.Controllers.Misslers
 
         public override void UpdateStun()
         {
-            _rb.velocity *= Mathf.Pow(0.8f, Time.deltaTime);
+            _rb.linearVelocity *= Mathf.Pow(0.8f, Time.deltaTime);
         }
 
         public override void UnStun()
