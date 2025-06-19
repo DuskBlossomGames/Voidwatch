@@ -56,9 +56,9 @@ namespace Player
 
         private void Update()
         {
-            if (Shootable && Input.GetMouseButtonDown(0))
+            if (Shootable && InputManager.GetKeyDown(InputAction.PrimaryWeapon))
             {
-                Shoot(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                Shoot(Camera.main.ScreenToWorldPoint(InputManager.mousePosition));
             }
         
             _emptyRefilling &= _curAmmo < GunInfoInstance.ammoCount;

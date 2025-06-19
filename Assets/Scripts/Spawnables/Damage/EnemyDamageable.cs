@@ -6,6 +6,7 @@ using ProgressBars;
 using Spawnables.Controllers;
 using Spawnables.Controllers.Misslers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.PlayerData;
@@ -112,11 +113,6 @@ namespace Spawnables.Damage
             }
         }
 
-        private void OnDestroy()
-        {
-            if(varientParent != null) varientParent.GetComponent<EnemyVariant>().SpawnScrap(transform.position);
-        }
-
         public void EnemyHeal(float x){ 
             _health += x;
         }
@@ -181,6 +177,8 @@ namespace Spawnables.Damage
             }
             
             SpawnHealthPickups();
+            
+            if(varientParent != null) varientParent.GetComponent<EnemyVariant>().SpawnScrap(transform.position);
         }
 
         public void Damage(float damage, GameObject source, List<PlayerDamageType> type)

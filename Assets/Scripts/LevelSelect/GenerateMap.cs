@@ -28,7 +28,7 @@ namespace LevelSelect
         
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.LeftBracket))
+            if (InputManager.GetKeyUp(KeyCode.LeftBracket))
             {
                 for (var i = 1; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
                 LevelSelectDataInstance.RevealAll();

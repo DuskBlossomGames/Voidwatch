@@ -45,25 +45,25 @@ namespace LevelSelect
         private void OnMouseDown()
         {
             _resettingSelector = true;
-            _lastMousePos = Input.mousePosition;
+            _lastMousePos = InputManager.mousePosition;
         }
         private void OnMouseDrag()
         {
-            _resettingSelector &= Input.mousePosition == _lastMousePos;
+            _resettingSelector &= InputManager.mousePosition == _lastMousePos;
             
             var camTransform = camera.transform;
-            var camPos = camTransform.position + (_lastMousePos - Input.mousePosition) * camera.orthographicSize / camSizeDragRatio;
+            var camPos = camTransform.position + (_lastMousePos - InputManager.mousePosition) * camera.orthographicSize / camSizeDragRatio;
 
             camPos.x = Mathf.Clamp(camPos.x, _minScroll.x, _maxScroll.x);
             camPos.y = Mathf.Clamp(camPos.y, _minScroll.y, _maxScroll.y);
             
             camTransform.position = camPos;
-            _lastMousePos = Input.mousePosition;
+            _lastMousePos = InputManager.mousePosition;
         }
         
         private void Update()
         {
-            camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + Input.mouseScrollDelta.y * scrollSpeed,
+            camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + InputManager.mouseScrollDelta.y * scrollSpeed,
                 minCamSize, maxCamSize);
         }
     }

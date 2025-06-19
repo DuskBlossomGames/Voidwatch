@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Util;
 using Random = UnityEngine.Random;
 using Timer = Util.Timer;
 
@@ -65,7 +66,7 @@ namespace Player
             //_cameraComponent.backgroundColor = GenColorFromCoords(playerPosition,100);
             
             var playerPos = new Vector3(playerPosition.x, playerPosition.y, cameraPosition.z);
-            var mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            var mousePos = _mainCamera.ScreenToWorldPoint(InputManager.mousePosition);
             if (suppress) mousePos = playerPos;
             var mouseToPlayer = mousePos - playerPos;
             var sqM = (mouseToPlayer - (cameraPosition - playerPos)).sqrMagnitude/camLaziness;

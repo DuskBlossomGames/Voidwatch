@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.LevelSelectData;
 namespace LevelPlay
@@ -141,9 +142,9 @@ namespace LevelPlay
             
             // TODO: debug
 #if UNITY_EDITOR
-            if (Input.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
-            if (_level.Type == LevelType.Elite && Input.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
-            if (Input.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
+            if (InputManager.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
+            if (_level.Type == LevelType.Elite && InputManager.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
+            if (InputManager.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 #endif
             
             if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;

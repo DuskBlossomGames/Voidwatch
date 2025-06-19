@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Extensions;
 using TMPro;
@@ -8,9 +7,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
 
-namespace TitleScreen
+namespace Menus
 {
-    public class TitleController : MonoBehaviour
+    public class TitleController : OptionsHolder
     {
         public Image fadeIn;
         public float fadeInTime;
@@ -19,6 +18,8 @@ namespace TitleScreen
         public AnimationCurve textFadeCurve, particleSpeed;
         public float fadeTime, speedupTime, waitTime;
 
+        public GameObject options;
+        
         public RectTransform credits;
         public float creditsTime, creditsHoldTime, anchorDist;
         public AnimationCurve creditsMultCurve;
@@ -84,11 +85,7 @@ namespace TitleScreen
         {
             foreach (var button in gameObject.GetComponentsInChildren<Button>()) button.interactable = true;
             foreach (var obj in _texts) obj.SetAlpha(1);
-            foreach (var obj in _images)
-            {
-                obj.SetAlpha(1);
-                if (obj.gameObject.name == "Options") obj.SetAlpha(0.26f); // TODO: remove
-            }
+            foreach (var obj in _images) obj.SetAlpha(1);
         }
 
         public void Play() { StartCoroutine(PlayRoutine()); }
@@ -116,7 +113,24 @@ namespace TitleScreen
 
         public void Options()
         {
-            throw new Exception("Unimplemented");
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                if (options.transform.GetSiblingIndex() == i) break;
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+            
+            options.SetActive(true);
+        }
+
+        public override void ExitOptions()
+        {
+            options.SetActive(false);
+            
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                if (options.transform.GetSiblingIndex() == i) break;
+                transform.GetChild(i).gameObject.SetActive(true);
+            }
         }
 
         public void Credits()

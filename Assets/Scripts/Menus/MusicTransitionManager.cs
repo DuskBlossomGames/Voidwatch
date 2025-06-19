@@ -2,7 +2,7 @@ using Bosses.Worm;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace TitleScreen
+namespace Menus
 {
   public class MusicTransitionManager : MonoBehaviour
   {

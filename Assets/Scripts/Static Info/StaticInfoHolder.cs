@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Util;
 using static Static_Info.PlayerData;
 
 namespace Static_Info
@@ -56,7 +57,7 @@ namespace Static_Info
 
         // TODO DEBUG: remove
 #if UNITY_EDITOR
-        private void Update() { Time.timeScale = Input.GetKey(KeyCode.F2) ? 5 : 1; }
+        private void Update() { if (Time.timeScale != 0) Time.timeScale = InputManager.GetKey(KeyCode.F2) ? 5 : 1; }
 #endif
         
         public T GetCachedComponent<T>() where T : MonoBehaviour

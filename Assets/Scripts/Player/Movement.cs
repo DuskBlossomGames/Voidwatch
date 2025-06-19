@@ -84,13 +84,13 @@ namespace Player
             (_gun ?? GetComponent<PlayerGunHandler>()).Shootable = !value;
         }
 
-        private bool GetKey(KeyCode code)
+        private bool GetKey(InputAction code)
         {
-            return !inputBlocked && !autoPilot && Input.GetKey(code);
+            return !inputBlocked && !autoPilot && InputManager.GetKey(code);
         }
-        private bool GetKeyDown(KeyCode code)
+        private bool GetKeyDown(InputAction code)
         {
-            return !inputBlocked && !autoPilot && Input.GetKeyDown(code);
+            return !inputBlocked && !autoPilot && InputManager.GetKeyDown(code);
         }
 
         public void DrainDodgeJuice(float amt)
@@ -115,9 +115,9 @@ namespace Player
 
         private void Update()
         {
-            if (!_stealthKeyUp && !_dodgeTimer.IsFinished && Input.GetKeyUp(KeyCode.Space)) _stealthKeyUp = true;
+            if (!_stealthKeyUp && !_dodgeTimer.IsFinished && InputManager.GetKeyUp(InputAction.Dash)) _stealthKeyUp = true;
 
-            if (_stealthKeyUp && !_redirectDodge && GetKeyDown(KeyCode.Space))
+            if (_stealthKeyUp && !_redirectDodge && GetKeyDown(InputAction.Dash))
             {
                 _redirectDodge = true;
                 _redirectDirection = new Vector2(_forwards.x, _forwards.y);
@@ -128,7 +128,7 @@ namespace Player
         {
             var velocity = _rigid.velocity;
 
-            var tar = _camera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            var tar = _camera.ScreenToWorldPoint(InputManager.mousePosition) - transform.position;
             _forwards = ((Vector2) tar).normalized;
             var curAngles = transform.rotation.eulerAngles;
 
@@ -150,7 +150,7 @@ namespace Player
                 if (!Stunned) SetInputBlocked(false);
             }
             
-            if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(KeyCode.Space) || DodgeOnceDir != null || DodgeOnceCost != null))
+            if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(InputAction.Dash) || DodgeOnceDir != null || DodgeOnceCost != null))
             {
                 _preDodgeVel = velocity;
                 _dodgeTimeLength = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity;
@@ -231,7 +231,7 @@ namespace Player
                 velocity = _forwards * _preDodgeVel.magnitude;
             }
 
-            if (GetKey(KeyCode.W))
+            if (GetKey(InputAction.Accelerate))
             {
                 var dv = PlayerDataInstance.speedLimit * PlayerDataInstance.speedLimit / 100;
                 var eff = 1 / (1 + Mathf.Exp(velocity.sqrMagnitude / 100 - dv));
@@ -250,7 +250,7 @@ namespace Player
                     _velocity = _or
                 }*/
 
-            } else if (GetKey(KeyCode.S) || autoPilot) {
+            } else if (GetKey(InputAction.Brake) || autoPilot) {
                 velocity *= Mathf.Pow(.2f, Time.fixedDeltaTime);
             } else {
                 _acceleration = 0;

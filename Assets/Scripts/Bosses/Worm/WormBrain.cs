@@ -236,7 +236,7 @@ namespace Bosses.Worm
         {
             if (_inCutscene) return;
             
-            if (Input.GetKeyDown(KeyCode.RightBracket))
+            if (InputManager.GetKeyDown(KeyCode.RightBracket))
             {
                 foreach (var dmgable in GetComponentsInChildren<WormEyeDamageable>())
                 {
