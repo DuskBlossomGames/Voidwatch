@@ -158,10 +158,10 @@ namespace LevelPlay
                 if (_timeTillExit < 0)
                 {
                     // kill all hazards
-                    FindObjectsOfType<Damageable>().ToList().ForEach(dmg =>
+                    FindObjectsByType<Damageable>(FindObjectsSortMode.None).ToList().ForEach(dmg =>
                     {
                         if (dmg.gameObject.layer == LayerMask.NameToLayer("Hazards") ||
-                            dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) dmg.Damage(100000, null);
+                            dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) dmg.Damage(float.MaxValue, null);
                     });
 
                     if (_level.Type == LevelType.Elite)

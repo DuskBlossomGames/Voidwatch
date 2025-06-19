@@ -6,7 +6,7 @@ namespace ProgressBars
     {
         private Transform _underneath;
 
-        private void Start()
+        private void Awake()
         {
             _underneath = transform.GetChild(transform.childCount-1);
         }

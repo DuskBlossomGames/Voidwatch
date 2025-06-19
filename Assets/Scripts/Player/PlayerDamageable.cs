@@ -5,6 +5,7 @@ using ProgressBars;
 using Q_Vignette.Scripts;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
+using Static_Info;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -258,7 +259,8 @@ namespace Player
 
             if (!isTutorial)
             {
-                SceneManager.LoadScene("Menu");
+                Destroy(StaticInfoHolder.Instance.gameObject); // reset static info
+                SceneManager.LoadScene("TitleScreen"); // return to boot
             }
             else
             {

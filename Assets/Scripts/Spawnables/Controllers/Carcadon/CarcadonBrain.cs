@@ -415,9 +415,12 @@ namespace Spawnables.Controllers.Carcadon
                 cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);
             }
 
-            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount-2; i++)
+            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount; i++)
             {
-                _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
+                var obj = _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject;
+                if (obj == _enemySpawner.fadeIn) break;
+                
+                obj.SetActive(true);
             }
             //DestroyImmediate(_enemySpawner.fadeIn);
             _enemySpawner.fadeIn.SetActive(false);

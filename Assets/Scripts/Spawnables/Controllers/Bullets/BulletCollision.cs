@@ -77,7 +77,7 @@ namespace Spawnables.Controllers.Bullets
                 {
                     try
                     {
-                        var nearest = FindObjectsOfType<EnemyDamageable>()
+                        var nearest = FindObjectsByType<EnemyDamageable>(FindObjectsSortMode.None)
                             .Where(d => d.gameObject != other && d.GetType() != typeof(AsteroidController))
                             .OrderByDescending(e => ((Vector2)(e.transform.position - transform.position)).sqrMagnitude)
                             .Last();
