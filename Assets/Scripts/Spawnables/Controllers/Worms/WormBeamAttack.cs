@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Spawnables.Damage;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Spawnables.Controllers.Worms
 {
@@ -20,6 +22,9 @@ namespace Spawnables.Controllers.Worms
 
         private bool _isShooting;
         private float _atkTimer;
+
+        private List<GameObject> _spawns;
+        
         public void Shoot()
         {
             if (!_isShooting) {
@@ -38,6 +43,7 @@ namespace Spawnables.Controllers.Worms
             Vector2 dir = GetComponent<WormSegment>().PredDir(dodgeTime);
 
             GameObject ray = new GameObject("Warning Beam");
+            _spawns.Add(ray);
             ray.transform.position-= Vector3.forward * 2;
             var lrend = ray.AddComponent<LineRenderer>();
             lrend.colorGradient = warnColor;
@@ -48,6 +54,7 @@ namespace Spawnables.Controllers.Worms
 
             yield return new WaitForSeconds(dodgeTime);
             Destroy(ray);
+            _spawns.Remove(ray);
 
             GetComponent<WormSegment>().speed *= 4;
             GetComponent<WormSegment>().speed = Mathf.Max(5, GetComponent<WormSegment>().speed);
@@ -65,6 +72,7 @@ namespace Spawnables.Controllers.Worms
             for (int i = 0; i < 5; i++)
             {
                 GameObject lilray = new GameObject("Mini-Beam");
+                _spawns.Add(lilray);
                 lilray.transform.position -= Vector3.forward * 2;
                 beams.Add(lilray);
                 lrend = lilray.AddComponent<LineRenderer>();
@@ -87,6 +95,7 @@ namespace Spawnables.Controllers.Worms
             }
 
             ray = new GameObject("Beam");
+            _spawns.Add(ray);
             ray.transform.position -= Vector3.forward * 2;
             lrend = ray.AddComponent<LineRenderer>();
             lrend.colorGradient = beamColor;
@@ -108,6 +117,7 @@ namespace Spawnables.Controllers.Worms
             for (int i = 0; i < 20; i++)
             {
                 GameObject lilray = new GameObject("Mini-Beam");
+                _spawns.Add(lilray);
                 lilray.transform.position -= Vector3.forward * 2;
                 beams.Add(lilray);
                 lrend = lilray.AddComponent<LineRenderer>();
@@ -133,12 +143,16 @@ namespace Spawnables.Controllers.Worms
 
             yield return new WaitForSeconds(.1f);
             Destroy(ray);
+            _spawns.Remove(ray);
             foreach (var lilray in beams)
             {
                 Destroy(lilray);
+                _spawns.Remove(lilray);
             }
 
             _isShooting = false;
         }
+
+        private void OnDestroy() { _spawns.ForEach(Destroy); }
     }
 }

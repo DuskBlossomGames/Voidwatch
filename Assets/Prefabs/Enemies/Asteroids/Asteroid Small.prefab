@@ -89,7 +89,7 @@ MonoBehaviour:
   - {fileID: 1261275619952868859, guid: e5e9b38e081e6424a9ba8f9674ccdfb7, type: 3}
   - {fileID: 1261275619952868859, guid: dbb7d8c15429e4891830b22781838d56, type: 3}
   nextSize: {fileID: 0}
-  shieldMult: 2
+  shieldMult: 1.6
   bleedPerc: 0.05
   startVel: {x: 0, y: 0}
 --- !u!114 &-8967648618552505094
