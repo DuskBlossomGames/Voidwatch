@@ -65,6 +65,7 @@ namespace Menus
 
         public static void SetResolution(int idx)
         {
+            if (idx == -1) idx = 0;
             PlayerPrefs.SetInt("Resolution", idx);
 
             _currentResolution = idx;
@@ -77,7 +78,7 @@ namespace Menus
             PlayerPrefs.SetInt("Fullscreen", value ? 1 : 0);;
             
             var res = resolutions[_currentResolution];
-            Screen.SetResolution(res.width, res.height, value ? FullScreenMode.MaximizedWindow : FullScreenMode.Windowed);
+            Screen.SetResolution(res.width, res.height, value ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed);
         }
         
         public static void SetVsync(bool value)
