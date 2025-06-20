@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Util;
 
@@ -53,6 +54,7 @@ namespace Spawnables.Controllers.Boids
         }
 
         // Update is called once per frame
+        private float _prevSumTurn, _turnSmoothVel;
         void Update()
         {
             turnTowardsPlayer += turnTowardsPlayerPerSec * Time.deltaTime;
@@ -81,14 +83,34 @@ namespace Spawnables.Controllers.Boids
                 var turnAmt = TurnAmt(dist);
                 sumturn += turnAmt * turnScale * turnAggr;
             }
+            
             var tarDelta = target.transform.position - transform.position;
             var tarAngle = Mathf.Atan2(tarDelta.y, tarDelta.x);
             if (Mathf.Abs(sumturn) <= commitAngle)
             {
                 sumturn += turnTowardsPlayer * Mathf.DeltaAngle(transform.rotation.eulerAngles.z + 90, Mathf.Rad2Deg * tarAngle);
+                
+                sumturn = Mathf.SmoothDamp(_prevSumTurn, sumturn, ref _turnSmoothVel, 0.25f);
                 Shoot();
+                
+                // if (((Vector2) tarDelta).sqrMagnitude > 7 * 7)
+                // {
+                //     var minDistToOtherBoid = FindObjectsByType<SmartBoidHandler>(FindObjectsSortMode.None)
+                //         .Where(b => b != this)
+                //         .Select(b => ((Vector2)(b.transform.position - transform.position)).sqrMagnitude)
+                //         .OrderByDescending(f=>f).Last();
+                //     if (minDistToOtherBoid < 3*3)
+                //     {
+                //         // if (transform.GetSiblingIndex() == 0) print("adjusting");
+                //         // sumturn += Mathf.Sign(sumturn) * Random.Range(0, 10);
+                //     }
+                // }
+
             }
+            
             //sumturn += turnTowardsPlayer * Vector2.SignedAngle(deltaAngle, (target.transform.position - transform.position));
+            _prevSumTurn = sumturn;
+            
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + Time.deltaTime * sumturn * Vector3.forward);
             //transform.rotation.eulerAngles += Time.deltaTime * sumturn * Vector3.forward;
 
@@ -108,7 +130,7 @@ namespace Spawnables.Controllers.Boids
         void Shoot()
         {
             Vector2 diff = target.transform.position - transform.position;
-            Vector2 relVel = target.GetComponent<CustomRigidbody2D>().linearVelocity - _rigidbody2D.linearVelocity;
+            Vector2 relVel = target.GetComponent<CustomRigidbody2D>().linearVelocity;
             float angle = UtilFuncs.LeadShot(diff, relVel, _gun.ExpectedVelocity());
 
 

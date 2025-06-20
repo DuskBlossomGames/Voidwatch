@@ -35,10 +35,7 @@ namespace Util
             float b = 2 * Vector2.Dot(relPos, relVel);
             float c = relPos.sqrMagnitude;
 
-            if (b * b + 4 * a * c < 0 || a == 0)
-            {
-                return 0;
-            }
+            if (b * b + 4 * a * c < 0 || a == 0) return 0; // finding the zeroes will error
 
             float colTime = (b + Mathf.Sqrt(b * b + 4 * a * c)) / (2 * a);
             Vector2 colPos = relPos + colTime * relVel;

@@ -35,6 +35,8 @@ namespace Player
 
         private Upgrade[] _upgrades;
 
+        public GraphicRaycaster raycaster;
+
         private void Start()
         {
             Addressables.LoadAssetsAsync<Sprite>(borderSprites, null).Completed += handle =>
@@ -169,6 +171,7 @@ namespace Player
             PlayerDataInstance.Scrap += scrap;
         
             var sdc = FindObjectOfType<ScrapDisplayController>();
+            raycaster.enabled = false; // just disable all interaction at this point
             StartCoroutine(ExitAfter(sdc.waitTime + (float) scrap / sdc.transferPerSec + 1));
         }
 

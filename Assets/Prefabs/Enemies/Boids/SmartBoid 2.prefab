@@ -50,6 +50,9 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -212,6 +215,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -301,6 +307,7 @@ PolygonCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017439640341726697}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -324,7 +331,8 @@ PolygonCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -401,12 +409,12 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6569384808679381653, guid: 116573cd1e8558d468ec2a5d067e03cd, type: 3}
   playRadius: 100
   gravitySource: {fileID: 0}
-  clipCount: 5
+  clipCount: 7
   clipCap: 1
   bulletsPerShot: 4
   bulletsPerShotVarience: 0
-  reloadTime: 0.3
-  refillTime: 5
+  reloadTime: 0.2
+  refillTime: 1
   shotForce: 1500
   forceVarience: 200
   lateralSeperation: 200
@@ -485,6 +493,9 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -651,4 +662,4 @@ MonoBehaviour:
   hazardObject: 0
   cost: 7
   ScrapCount: 0
-  ScrapPrefab: {fileID: 0}
+  ScrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}

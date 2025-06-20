@@ -89,6 +89,11 @@ namespace LevelSelect
             }
         }
 
+        private float DeltaAngle(float a, float b)
+        {
+            return UtilFuncs.Mod(Mathf.Deg2Rad * Mathf.DeltaAngle(a*Mathf.Rad2Deg, b*Mathf.Rad2Deg), 2*Mathf.PI);
+        }
+
         private IEnumerator DoGoTo(Vector3 planetLoc, int planetIdx, string scene)
         {
             if (_isTraveling) yield break;
@@ -103,10 +108,10 @@ namespace LevelSelect
             const float rotateStep = 0.08f;
             const float maxSpeedMult = 5.5f;
             
-            const float planetExitRadMult = 1.7f;
-            const float planetDivergePoint = 25 * Mathf.Deg2Rad;
+            const float planetExitRadMult = 1.95f;
+            const float planetDivergePoint = 40 * Mathf.Deg2Rad;
             
-            var orbitalVelocity = 3.25f * 2*Mathf.PI/secondsPerOrbit * _orbitRadius;
+            var orbitalVelocity = 3.5f * 2*Mathf.PI/secondsPerOrbit * _orbitRadius;
 
             var current = _orbitPosition;
             var currentRot = _orbitAngle;
@@ -119,17 +124,19 @@ namespace LevelSelect
                 var direction = i == 1 ? 1 : Mathf.Abs(exitRot - currentRot) < Mathf.PI ? 1 : -1;
                 
                 float radsTraveled = 0;
-                for (var r = currentRot; Mathf.Abs(r - exitRot) >= rotateStep; r = UtilFuncs.Mod(r + direction * rotateStep, Mathf.PI*2))
+                for (var r = currentRot; DeltaAngle(r, exitRot) >= 1.5f*rotateStep; r = UtilFuncs.Mod(r + direction * rotateStep, Mathf.PI*2))
                 {
                     var rad = _orbitRadius;
-                    if (Mathf.Abs(r - exitRot) <= planetDivergePoint)
+                    var vel = orbitalVelocity;
+                    if (DeltaAngle(r, exitRot) <= planetDivergePoint)
                     {
-                        rad *= Mathf.Exp(4.5f * (1-Mathf.Abs(r - exitRot)/planetDivergePoint) - 4.5f) * (planetExitRadMult - 1) + 1;
+                        rad *= Mathf.Exp(3.5f * (1-DeltaAngle(r, exitRot)/planetDivergePoint) - 3.5f) * (planetExitRadMult - 1) + 1;
+                        vel *= 1.5f;
                     }
                     
                     path.Add(new Tuple<Vector2, float>(current + new Vector2(
                         rad * Mathf.Cos(r),
-                        rad * Mathf.Sin(r)), orbitalVelocity));
+                        rad * Mathf.Sin(r)), vel));
                     
                     radsTraveled += rotateStep;
                 }

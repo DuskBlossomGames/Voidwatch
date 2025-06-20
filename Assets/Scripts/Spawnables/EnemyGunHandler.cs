@@ -58,7 +58,7 @@ namespace Spawnables
 
         public float ExpectedVelocity()
         {
-            return shotForce / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
+            return GetComponent<CustomRigidbody2D>().linearVelocity.magnitude + shotForce / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
         }
         IEnumerator _Fire()
         {
@@ -87,7 +87,7 @@ namespace Spawnables
                     }
 
                     Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles.x,
-                        transform.rotation.eulerAngles.x,
+                        transform.rotation.eulerAngles.y,
                         transform.rotation.eulerAngles.z + _bulletAngle);
                     if (Random.Range(0f, 1f) > misfireChance)
                     {
@@ -95,7 +95,7 @@ namespace Spawnables
                         var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
                         //Debug.Log("Getting Velocity");
-                        bullet.GetComponent<CustomRigidbody2D>().linearVelocity = GetComponent<CustomRigidbody2D>().linearVelocity;
+                        bullet.GetComponent<CustomRigidbody2D>().linearVelocity = rot * (Vector3.up * GetComponent<CustomRigidbody2D>().linearVelocity.magnitude);
                         bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
                         bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
 
@@ -103,7 +103,7 @@ namespace Spawnables
 
                         float vertForce = shotForce + Random.Range(-forceVarience, forceVarience) + verOff;
                         float latForce = Random.Range(-forceVarience, forceVarience) + latOff;
-                        bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
+                        bullet.GetComponent<CustomRigidbody2D>().AddForce(rot * new Vector2(latForce, vertForce));
                         bullet.GetComponent<BulletCollision>().dmg = dmgMod;
                         bullet.GetComponent<BulletCollision>().owner = gameObject;
                         bullet.GetComponent<BulletCollision>().shieldMult = shieldMult;

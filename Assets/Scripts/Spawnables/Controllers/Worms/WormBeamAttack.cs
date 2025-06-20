@@ -23,7 +23,7 @@ namespace Spawnables.Controllers.Worms
         private bool _isShooting;
         private float _atkTimer;
 
-        private List<GameObject> _spawns;
+        private List<GameObject> _spawns = new();
         
         public void Shoot()
         {
