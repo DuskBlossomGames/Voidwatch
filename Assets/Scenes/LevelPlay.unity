@@ -496,7 +496,7 @@ AudioSource:
   m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 75644444908053681, guid: 189a2b2d2bf044e0a98d01ffbaccfac9, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 526fc4e7697124af185a143754847e1d, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 526fc4e7697124af185a143754847e1d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.946
@@ -6722,7 +6722,7 @@ MonoBehaviour:
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   nUpMan: {fileID: 682528864}
-  debugEnemy: {fileID: 0}
+  debugEnemy: {fileID: 6810281189628237293, guid: f14a773bc876ec141a2846b4eaeafa7f, type: 3}
 --- !u!4 &1780276284
 Transform:
   m_ObjectHideFlags: 0

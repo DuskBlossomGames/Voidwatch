@@ -12,7 +12,7 @@ namespace Player
     public class Movement : MonoBehaviour
     {
         public GameObject explosion;
-        
+
         public bool inputBlocked;
         public bool autoPilot;
 
@@ -27,6 +27,8 @@ namespace Player
         public float stunRotPerSec; // degrees
         public float stunBreakStrength;
         public float stunCurveStrength;
+
+        public ParticleSystem EnemyLightningVFX;
 
         public bool Dodging => !_dodgeTimer.IsFinished;
         public float DodgeJuice => _dodgeJuice;
@@ -66,7 +68,7 @@ namespace Player
         private readonly Timer _afterImageTimer = new();
         private Vector2 _dodgeDirection;
         private readonly List<GameObject> _afterImages = new();
-        
+
         private void Start()
         {
             _gun = GetComponent<PlayerGunHandler>();
@@ -111,6 +113,8 @@ namespace Player
                 (Vector3)UtilFuncs.AngleToVector(_camera.transform.eulerAngles.z * Mathf.Deg2Rad + Mathf.PI / 2),
                 Camera.main!.transform.rotation).SetActive(true);
             // TODO: stunned VFX
+            EnemyLightningVFX.Play();
+
         }
 
         private void Update()
@@ -145,11 +149,11 @@ namespace Player
                                                   * Vector2.Dot(velocity.normalized,
                                                       Quaternion.Euler(0, 0, 90) * transform.position.normalized)
                                                   * Time.fixedDeltaTime) * velocity;
-                
+
                 _stunTimer.FixedUpdate();
                 if (!Stunned) SetInputBlocked(false);
             }
-            
+
             if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(InputAction.Dash) || DodgeOnceDir != null || DodgeOnceCost != null))
             {
                 _preDodgeVel = velocity;
@@ -168,7 +172,7 @@ namespace Player
                         1.5f + PlayerDataInstance.dodgeExplosionDamage / 25, gameObject.layer,
                         new List<Collider2D> { _collider });
                 }
-                
+
                 DodgeOnceDir = null;
                 DodgeOnceCost = null;
             }
