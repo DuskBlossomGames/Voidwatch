@@ -32,6 +32,7 @@ namespace Menus
 
             // MISC
             isFirstTime = !PlayerPrefs.HasKey("check");
+            if (isFirstTime) PlayerPrefs.DeleteAll();
             PlayerPrefs.SetInt("check", 1);
             
             // VIDEO
