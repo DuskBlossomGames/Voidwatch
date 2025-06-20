@@ -70,6 +70,8 @@ namespace Tutorial
         
         public void ShowText(string text, bool continuable)
         {
+            text = new Regex("{(.*)}").Replace(text, m => InputManager.VALID_KEY_CODES[InputAction.Parse(m.Groups[1].Value)!]);
+            
             var openRegex = "(<[^/].*?>)";
             var closeRegex = "(</.+?>)";
 

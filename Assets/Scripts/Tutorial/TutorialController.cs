@@ -37,8 +37,8 @@ namespace Tutorial
             {
                 Stage.Movement, new[]
                 {
-                    "Infiltrators will always accelerate in the direction they are facing, when the <b>W key</b> is pressed. It is recommended to keep your mouse some distance from the ship.",
-                    "Deceleration is achieved through the braking apparatus, generating thrust backwards. Pilots can use the <b>S key</b> to slow down.",
+                    "Infiltrators will always accelerate in the direction they are facing, when <b>{Accelerate}</b> is pressed. It is recommended to keep your mouse some distance from the ship.",
+                    "Deceleration is achieved through the braking apparatus, generating thrust backwards. Pilots can use <b>{Brake}</b> to slow down.",
                     "Finally, as a convenience to the pilot, the ship's camera system will always orient 'down' as towards the nearest planet. <b>Practice accelerating and braking.</b>",
                     "When you feel comfortable, continue to see what makes this a Voidhawk-class starship."
                 
@@ -49,7 +49,7 @@ namespace Tutorial
                 {
                     "Voidhawk ships contain an onboard Void Energy eXtractor (V.E.X.) device. This energy can be used to bridge the boundary between this world and <i>theirs</i>.",
                     "While it recharges over time, your ship only holds enough energy for about three dashes. During these jaunts into Voidspace, you are incorporeal to enemies and obstacles alike.",
-                    "When exiting a dash, the Infiltrator will immediately resume velocity in the direction it is facing, allowing for instant pivoting. Press the <b>SPACE key</b> to dash. <b>Try dashing now.</b>",
+                    "When exiting a dash, the Infiltrator will immediately resume velocity in the direction it is facing, allowing for instant pivoting. Press <b>{Dash}</b> to dash. <b>Try dashing now.</b>",
                     "When you are ready, the simulation will load the first training exercise."
                 }
             },
@@ -63,7 +63,7 @@ namespace Tutorial
             {
                 Stage.Shooting, new[]
                 {
-                    "Your starship converts electrical energy into concentrated packets of destruction. Your HUD displays your energy stores in a partial circle around your ship when you shoot.",
+                    "Your starship converts electrical energy into concentrated packets of destruction upon pressing <b>{PrimaryWeapon}</b>. Your HUD displays your energy stores in a partial circle around your ship when you shoot.",
                     "The energy bullets cannot be replenished while you are shooting, and if you fully deplete your stores, you cannot shoot until the ship recharges fully.",
                     "Also be aware that the planet's gravity will not affect your bullets. This will cause apparent curvature if you are flying around the planet, as skilled pilots must take into account.",
                     "Practice shooting now, and reloading without fully draining it. Then, <b>empty your clip and allow it to refill.</b>",

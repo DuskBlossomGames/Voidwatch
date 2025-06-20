@@ -86,11 +86,11 @@ namespace Player
             (_gun ?? GetComponent<PlayerGunHandler>()).Shootable = !value;
         }
 
-        private bool GetKey(InputAction code)
+        private bool GetKey(KeyCode code)
         {
             return !inputBlocked && !autoPilot && InputManager.GetKey(code);
         }
-        private bool GetKeyDown(InputAction code)
+        private bool GetKeyDown(KeyCode code)
         {
             return !inputBlocked && !autoPilot && InputManager.GetKeyDown(code);
         }

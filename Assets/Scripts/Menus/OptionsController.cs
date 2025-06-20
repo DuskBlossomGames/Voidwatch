@@ -96,8 +96,8 @@ namespace Menus
         {
             for (var i = 0; i < _keybinds.Length; i++)
             {
-                _keybinds[i].DisplayKey(InputManager.DEFAULT_ACTIONS[(InputAction) i]);
-                SettingsInterface.SetKeybind(i, InputManager.DEFAULT_ACTIONS[(InputAction) i]);
+                _keybinds[i].DisplayKey(InputManager.DEFAULT_ACTIONS[i]);
+                SettingsInterface.SetKeybind(i, InputManager.DEFAULT_ACTIONS[i]);
             }
         }
     }

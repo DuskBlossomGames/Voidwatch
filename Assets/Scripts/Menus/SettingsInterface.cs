@@ -41,9 +41,9 @@ namespace Menus
             SetVsync(PlayerPrefs.GetInt("Vsync", 1) == 1);
             
             // CONTROLS
-            foreach (InputAction control in Enum.GetValues(typeof(InputAction)))
+            for (var control = 0; control < InputAction.Count; control++)
             {
-                SetKeybind((int) control, (KeyCode) PlayerPrefs.GetInt($"Control{control}", (int) InputManager.DEFAULT_ACTIONS[control]));
+                SetKeybind(control, (KeyCode) PlayerPrefs.GetInt($"Control{control}", (int) InputManager.DEFAULT_ACTIONS[control]));
             }
         }
 
@@ -91,7 +91,7 @@ namespace Menus
         public static void SetKeybind(int control, KeyCode key)
         {
             PlayerPrefs.SetInt($"Control{control}", (int) key);
-            InputManager.InputActions[(InputAction) control] = key;
+            InputManager.InputActions[control] = key;
         }
     }
 

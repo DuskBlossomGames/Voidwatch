@@ -16,25 +16,7 @@ namespace Menus
         private TextMeshProUGUI _keyText, _instructionText;
 
         public bool BindingKey { get; private set; }
-
-        private static readonly Dictionary<KeyCode, string> ValidKeyCodes = new();
-
-        static KeybindController()
-        {
-            ValidKeyCodes.Add(KeyCode.Return, "Enter");
-            ValidKeyCodes.Add(KeyCode.Space, "Space");
-            ValidKeyCodes.Add(KeyCode.LeftShift, "LShift");
-            ValidKeyCodes.Add(KeyCode.RightShift, "RShift");
-            ValidKeyCodes.Add(KeyCode.UpArrow, "↑");
-            ValidKeyCodes.Add(KeyCode.DownArrow, "↓");
-            ValidKeyCodes.Add(KeyCode.RightArrow, "→");
-            ValidKeyCodes.Add(KeyCode.LeftArrow, "←");
-            ValidKeyCodes.Add(KeyCode.Mouse0, "LMB");
-            ValidKeyCodes.Add(KeyCode.Mouse1, "RMB");
-            for (var i = KeyCode.Exclaim; i <= KeyCode.Tilde; i++) ValidKeyCodes.Add(i, ("" + (char)i).ToUpper());
-            for (var i = KeyCode.Mouse2; i <= KeyCode.Mouse6; i++) ValidKeyCodes.Add(i, $"MB{i-KeyCode.Mouse0}");
-        }
-
+        
         public void Setup()
         {
             _button = GetComponent<Button>();
@@ -56,7 +38,7 @@ namespace Menus
                 OnKeybindChange?.Invoke(KeyCode.None);
             }
 
-            foreach (var kvp in ValidKeyCodes)
+            foreach (var kvp in InputManager.VALID_KEY_CODES)
             {
                 if (!Input.GetKeyDown(kvp.Key)) continue;
 
@@ -84,7 +66,7 @@ namespace Menus
             {
                 _keyText.gameObject.SetActive(true);
                 _instructionText.gameObject.SetActive(false);
-                _keyText.text = ValidKeyCodes[key];
+                _keyText.text = InputManager.VALID_KEY_CODES[key];
             }
         }
 
