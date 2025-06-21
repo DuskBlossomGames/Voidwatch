@@ -64,7 +64,7 @@ namespace Player
                     GunInfoInstance.lateralSeperation *= 1.2f;
                 }),
             new("Absorptive Plating",
-                "Redistributes the energy from bullets, increasing hull integrity and shield capacity.",
+                "Redistributes the energy of incoming bullets, increasing hull integrity and shield capacity.",
                 "Can't let one spot hog all the energy. Sharing is caring!",
                 Rarity.Common,
                 false,

@@ -120,7 +120,7 @@ MonoBehaviour:
   speed: 20
   target: {fileID: 0}
   gravitySource: {fileID: 0}
-  shootDist: 20
+  shootDist: 40
   original: 1
   collisionObj: {fileID: 0}
 --- !u!114 &4987311900252396314
