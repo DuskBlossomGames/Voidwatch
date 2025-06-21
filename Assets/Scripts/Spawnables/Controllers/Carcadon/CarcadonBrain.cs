@@ -212,7 +212,7 @@ namespace Spawnables.Controllers.Carcadon
 
         public void TakeDamage(float oldHealth, float newHealth)
         {
-            if (Mathf.Min((int) (oldHealth / _maxHealth * LevelSelectData.ELITE_WAVES), LevelSelectData.ELITE_WAVES-1) != (int) (newHealth / _maxHealth * LevelSelectData.ELITE_WAVES))
+            if (Mathf.Min((int) (oldHealth / _maxHealth * LevelSelectData.EliteWaves), LevelSelectData.EliteWaves-1) != (int) (newHealth / _maxHealth * LevelSelectData.EliteWaves))
             {
                 _mode = Mode.Stealth;
                 _rb.linearVelocity = Vector2.zero; _currSpeed = 0;

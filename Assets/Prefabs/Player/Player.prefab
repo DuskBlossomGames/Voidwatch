@@ -5954,6 +5954,9 @@ MonoBehaviour:
   inputBlocked: 0
   autoPilot: 0
   dodgeBar: {fileID: 0}
+  dodgeExcludeMask:
+    serializedVersion: 2
+    m_Bits: 67108343
   dodgeTimeDilation: 0.25
   dodgeTimeDilationCurve:
     serializedVersion: 2
@@ -6223,7 +6226,7 @@ CircleCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
