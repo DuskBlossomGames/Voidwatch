@@ -157,7 +157,7 @@ namespace Menus
             {
                 yield return new WaitForFixedUpdate();
 
-                anchorMod += (InputManager.GetKey(KeyCode.Space) ? 2 : 1) * anchorDist / creditsTime * Time.fixedDeltaTime;
+                anchorMod += (InputManager.GetKey(KeyCode.Space) || InputManager.GetKey(KeyCode.Mouse0) ? 2 : 1) * anchorDist / creditsTime * Time.fixedDeltaTime;
                 credits.anchorMin = new Vector2(0, creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
                 credits.anchorMax = new Vector2(1, 1+creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
             }
