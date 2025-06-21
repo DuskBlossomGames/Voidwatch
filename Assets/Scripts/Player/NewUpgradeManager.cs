@@ -176,7 +176,7 @@ namespace Player
         
             var sdc = FindObjectOfType<ScrapDisplayController>();
             raycaster.enabled = false; // just disable all interaction at this point
-            StartCoroutine(ExitAfter(sdc.waitTime + (float) scrap / sdc.transferPerSec + 1));
+            StartCoroutine(ExitAfter(0.5f * (sdc.waitTime + (float) scrap / sdc.transferPerSec + 1)));
         }
 
         private IEnumerator ExitAfter(float time)

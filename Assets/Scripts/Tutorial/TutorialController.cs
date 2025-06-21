@@ -85,7 +85,7 @@ namespace Tutorial
             {
                 Stage.Enemy, new[]
                 {
-                    "A few enemies will now bw spawned. These are exact replicas of Cult of the Void vessels. Beware that you will also encounter other, more... fleshy opponents.",
+                    "A few enemies will now be spawned. These are exact replicas of Cult of the Void vessels. Beware that you will also encounter other, more... fleshy opponents.",
                     "<b>Eliminate the enemies.</b>",
                     "You have completed the Voidwatch Academy. You are ready to join this elite force. Godspeed, soldier. You'll need it."
                 }
@@ -201,9 +201,6 @@ namespace Tutorial
                         securityBorder.SetActive(false);
                         healthBar.SetActive(true);
                         break;
-                    case Stage.Targets:
-                        enemies.SetActive(true);
-                        break;
                     case Stage.Enemy:
                         StartCoroutine(FadeOut());
                         return;
@@ -219,6 +216,7 @@ namespace Tutorial
             {
                 _wait.Value = minStageWaitTime;
                 if (_stage == Stage.Targets) targets.SetActive(true);
+                if (_stage == Stage.Enemy) enemies.SetActive(true);
             }
         
             dialogueController.ShowText(Text[_stage][_textIdx], !_waitingForAction);

@@ -8864,7 +8864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 2335324456699977284}
-  multiplier: 0
+  multiplier: 1
 --- !u!1 &7476485412227462782
 GameObject:
   m_ObjectHideFlags: 0
@@ -9093,7 +9093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 6242546983119097007}
-  multiplier: 0
+  multiplier: 1
 --- !u!1 &7650575492640110635
 GameObject:
   m_ObjectHideFlags: 0
@@ -10468,7 +10468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 5375086633044131655}
-  multiplier: 0
+  multiplier: 1
 --- !u!1 &8996005086172520637
 GameObject:
   m_ObjectHideFlags: 0

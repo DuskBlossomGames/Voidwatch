@@ -94,7 +94,9 @@ namespace Player
 
         private void Update()
         {
-
+            // failsafe
+            if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Destroy(gameObject);
+            
             ShieldPower = Mathf.Clamp(ShieldPower + ShieldRegenRate * Time.deltaTime, -ShieldMaxDebt, ShieldMaxPower);
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
         }
@@ -247,6 +249,8 @@ namespace Player
 
         IEnumerator DeathFade()
         {
+            for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(false);
+            
             _movement.SetInputBlocked(true);
             fadeOut.SetActive(true);
             fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, 0);
@@ -268,6 +272,7 @@ namespace Player
                 godmode = false;
                 GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.zero;
                 GetComponent<SpriteRenderer>().enabled = true;
+                for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(true);
                 _movement.SetInputBlocked(false);
                 fadeOut.SetActive(false);
                 Heal(MaxHealth);

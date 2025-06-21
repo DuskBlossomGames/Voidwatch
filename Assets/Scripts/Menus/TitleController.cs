@@ -27,6 +27,8 @@ namespace Menus
         private TextMeshProUGUI[] _texts;
         private Image[] _images;
 
+        public GameObject tutorialHint;
+        
         private bool _initCredits;
         private void Start()
         {
@@ -41,10 +43,11 @@ namespace Menus
 
             if (SettingsInterface.isFirstTime)
             {
+                tutorialHint.SetActive(true);
                 SettingsInterface.isFirstTime = false; // since this is the only place it's used, easy solution for now, can change if needed elsewhere
-                Tutorial();
             }
-            else StartCoroutine(FadeIn());
+            
+            StartCoroutine(FadeIn());
         }
 
         private IEnumerator FadeIn()
