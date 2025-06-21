@@ -5,6 +5,7 @@ using Player;
 using ProgressBars;
 using Spawnables.Controllers;
 using Spawnables.Controllers.Misslers;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
@@ -47,6 +48,8 @@ namespace Spawnables.Damage
         private const float STUN_TIME = 2;
         private const float STUN_FALL_WAIT_TIME = 5;
         private const float STUN_FALL_PERC_PER_SEC = 0.1f;
+
+        public bool dontDestroyOffscreen;
         
         [Range(1, 5)] public int tier = 1;
         public EnemyType enemyType; // TODO: give values for these
@@ -89,6 +92,12 @@ namespace Spawnables.Damage
 
         private void Update()
         {
+            if (!dontDestroyOffscreen && ((Vector2)transform.position).sqrMagnitude > 200 * 200)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            
             // TODO: actually stun/un-stun
             _stunImmunityTimer.Update();
             _stunFallWaitTimer.Update();
