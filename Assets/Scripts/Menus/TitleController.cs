@@ -16,7 +16,7 @@ namespace Menus
         public float fadeInTime;
 
         public ParticleSystem ps;
-        public AnimationCurve textFadeCurve, particleSpeed;
+        public AnimationCurve textFadeCurve, buttonsFadeCurve, particleSpeed;
         public float fadeTime, speedupTime, waitTime;
 
         public GameObject options;
@@ -26,6 +26,8 @@ namespace Menus
         public AnimationCurve creditsMultCurve;
 
         private TextMeshProUGUI[] _texts;
+        private FlashUI[] _flashes;
+        private Button[] _buttons;
         private Image[] _images;
 
         public GameObject tutorialHint;
@@ -34,6 +36,8 @@ namespace Menus
         private void Start()
         {
             _texts = GetComponentsInChildren<TextMeshProUGUI>();
+            _flashes = GetComponentsInChildren<FlashUI>();
+            _buttons = GetComponentsInChildren<Button>();
             _images = GetComponentsInChildren<Image>();
 
             _initCredits = GameObject.Find("RollCredits") != null;
@@ -72,7 +76,8 @@ namespace Menus
 
         private IEnumerator Fade(bool includeCredits)
         {
-            foreach (var button in gameObject.GetComponentsInChildren<Button>()) button.interactable = false;
+            foreach (var flash in _flashes) flash.enabled = false;
+            foreach (var button in _buttons) button.interactable = false;
 
             for (float t = 0; t < fadeTime; t += Time.fixedDeltaTime)
             {
@@ -86,16 +91,32 @@ namespace Menus
                 foreach (var obj in _images)
                 {
                     if (!includeCredits && obj.transform.IsChildOf(credits)) continue;
-                    obj.SetAlpha(Mathf.Min(obj.color.a, 1-t/fadeTime));
+
+                    var alpha = 1 - t / fadeTime;
+                    if (obj.GetComponent<Button>() != null) alpha = buttonsFadeCurve.Evaluate(alpha);
+                    obj.SetAlpha(Mathf.Min(obj.color.a, alpha));
                 }
             }
         }
 
-        private void UnFade()
+        private IEnumerator UnFade()
         {
-            foreach (var button in gameObject.GetComponentsInChildren<Button>()) button.interactable = true;
-            foreach (var obj in _texts) obj.SetAlpha(1);
-            foreach (var obj in _images) obj.SetAlpha(1);
+            for (float t = 0; t < fadeTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                foreach (var obj in _texts)
+                {
+                    obj.SetAlpha(Mathf.Max(obj.color.a, 1-textFadeCurve.Evaluate(1-t/fadeTime)));
+                }
+
+                foreach (var obj in _images)
+                {
+                    obj.SetAlpha(Mathf.Max(obj.color.a, t/fadeTime));
+                }
+            }
+
+            foreach (var flash in _flashes) flash.enabled = true;
+            foreach (var button in _buttons) button.interactable = true;
         }
 
         public void Play() { StartCoroutine(PlayRoutine()); }
@@ -157,7 +178,9 @@ namespace Menus
             {
                 yield return new WaitForFixedUpdate();
 
-                anchorMod += (InputManager.GetKey(KeyCode.Space) || InputManager.GetKey(KeyCode.Mouse0) ? 2 : 1) * anchorDist / creditsTime * Time.fixedDeltaTime;
+                var fast = InputManager.GetKey(KeyCode.Space) || InputManager.GetKey(KeyCode.Mouse0);
+                if (fast) t += Time.fixedDeltaTime;
+                anchorMod += (fast ? 2 : 1) * anchorDist / creditsTime * Time.fixedDeltaTime;
                 credits.anchorMin = new Vector2(0, creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
                 credits.anchorMax = new Vector2(1, 1+creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
             }
@@ -169,7 +192,7 @@ namespace Menus
             credits.anchorMin = Vector2.zero;
             credits.anchorMax = Vector2.one;
 
-            UnFade();
+            yield return UnFade();
         }
 
         public void OpenInstagram()

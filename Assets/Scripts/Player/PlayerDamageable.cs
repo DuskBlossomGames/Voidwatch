@@ -95,7 +95,7 @@ namespace Player
         private void Update()
         {
             // failsafe
-            if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Destroy(gameObject);
+            if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Damage(float.MaxValue, null);
             
             ShieldPower = Mathf.Clamp(ShieldPower + ShieldRegenRate * Time.deltaTime, -ShieldMaxDebt, ShieldMaxPower);
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
