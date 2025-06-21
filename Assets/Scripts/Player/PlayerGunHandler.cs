@@ -7,6 +7,7 @@ using UnityEngine;
 using Util;
 using static Static_Info.GunInfo;
 using static Static_Info.PlayerData;
+using static Static_Info.Statistics;
 using Random = UnityEngine.Random;
 
 namespace Player
@@ -117,6 +118,7 @@ namespace Player
                         transform.rotation.eulerAngles.z + angCorr);
                     if (Random.Range(0f, 1f) > GunInfoInstance.misfireChance)
                     {
+                        StatisticsInstance.bulletsShot++;
                         var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
                         bullet.GetComponent<CustomRigidbody2D>().linearVelocity = GetComponent<CustomRigidbody2D>().linearVelocity;

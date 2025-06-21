@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Spawnables.Controllers.Misslers;
+using Static_Info;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.PlayerData;
+using static Static_Info.Statistics;
 using ProgressBar = ProgressBars.ProgressBar;
 
 namespace Player
@@ -270,6 +272,7 @@ namespace Player
 
             if (!autoPilot) velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
             velocity *= Mathf.Pow(.99f, Time.fixedDeltaTime);
+            StatisticsInstance.distanceTraveled += velocity.magnitude * Time.fixedDeltaTime;
 
             _rigid.linearVelocity = velocity;
         }

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Extensions;
 using JetBrains.Annotations;
 using ProgressBars;
 using Q_Vignette.Scripts;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using Static_Info;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,8 +22,13 @@ namespace Player
         public bool isTutorial;
 
         public Q_Vignette_Single vignette;
+       
         public GameObject fadeOut;
         public float fadeouttime = 1;
+        public TextMeshProUGUI title, subtitle;
+        public GameObject[] statistics;
+        public float statisticsBeforeTime, statisticsFadeTime, statisticsBetweenTime; 
+        
         public AnimationCurve vignetteCurve;
         public float vignetteDuration, vignettePeak;
         public float sigmoidStart, sigmoidEnd;
@@ -253,16 +261,45 @@ namespace Player
             
             _movement.SetInputBlocked(true);
             fadeOut.SetActive(true);
-            fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-            for (int i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
+            title.gameObject.SetActive(true);
+            subtitle.gameObject.SetActive(true);
+            fadeOut.GetComponent<Image>().SetAlpha(0);
+            title.SetAlpha(0);
+            subtitle.SetAlpha(0);
+            for (var i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
             {
                 yield return new WaitForSecondsRealtime(.01f);
                 var prog = i / (100 * fadeouttime);
-                fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, Mathf.Pow(prog, .5f));
+                fadeOut.GetComponent<Image>().SetAlpha(Mathf.Pow(prog, .5f));
+                title.SetAlpha(Mathf.Pow(prog, .5f));
+                subtitle.SetAlpha(Mathf.Pow(prog, .5f));
             }
 
             if (!isTutorial)
             {
+                yield return new WaitForSeconds(statisticsBeforeTime);
+                Statistics.SetText(statistics.Select(o => o.GetComponentsInChildren<TextMeshProUGUI>()[1]).ToArray());
+                
+                foreach (var stat in statistics)
+                {
+                    stat.SetActive(true);
+                    for (float t = 0; t < statisticsFadeTime; t += Time.fixedDeltaTime)
+                    {
+                        stat.GetComponentInChildren<Image>().SetAlpha(t/statisticsFadeTime);
+                        foreach (var text in stat.GetComponentsInChildren<TextMeshProUGUI>()) text.SetAlpha(t/statisticsFadeTime);
+                        
+                        yield return new WaitForFixedUpdate();
+                    }
+                    
+                    yield return new WaitForSeconds(statisticsBetweenTime);
+                }
+                
+                while (!InputManager.GetKeyDown(KeyCode.Return) && !InputManager.GetKeyDown(KeyCode.Escape) &&
+                       !InputManager.GetKeyDown(KeyCode.Mouse0) && !InputManager.GetKeyDown(KeyCode.Space))
+                {
+                    yield return new WaitForFixedUpdate();
+                }
+                
                 Destroy(StaticInfoHolder.Instance.gameObject); // reset static info
                 SceneManager.LoadScene("TitleScreen"); // return to boot
             }

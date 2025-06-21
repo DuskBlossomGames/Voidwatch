@@ -9,6 +9,7 @@ using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.PlayerData;
+using static Static_Info.Statistics;
 
 namespace Spawnables.Damage
 {

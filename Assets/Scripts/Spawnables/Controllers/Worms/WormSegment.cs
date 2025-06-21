@@ -82,6 +82,8 @@ namespace Spawnables.Controllers.Worms
 
             }
             if (form == Form.Middle || form == Form.Tail) {
+                if (prev == null) return;
+                
                 Vector2 currToPrev = (transform.position - prev.transform.position).normalized;
                 transform.position = prev.transform.position + (Vector3) currToPrev * segLength;
 

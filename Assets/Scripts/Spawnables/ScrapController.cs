@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Static_Info;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.PlayerData;
+using static Static_Info.Statistics;
 
 namespace Spawnables
 {
@@ -49,6 +51,7 @@ namespace Spawnables
 
             if(4 * _crb.linearVelocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude)
             {
+                StatisticsInstance.scrapCollected += value;
                 PlayerDataInstance.Scrap += value;
                 //PlayerDataInstance.Scrap += value;
                 Destroy(gameObject);

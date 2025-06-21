@@ -6042,6 +6042,12 @@ MonoBehaviour:
   vignette: {fileID: 0}
   fadeOut: {fileID: 0}
   fadeouttime: 1
+  title: {fileID: 0}
+  subtitle: {fileID: 0}
+  statistics: []
+  statisticsBeforeTime: 0.5
+  statisticsFadeTime: 0.3
+  statisticsBetweenTime: 0.3
   vignetteCurve:
     serializedVersion: 2
     m_Curve:

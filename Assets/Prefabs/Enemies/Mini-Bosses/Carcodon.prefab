@@ -1950,6 +1950,7 @@ GameObject:
   - component: {fileID: -5548867977713206262}
   - component: {fileID: -9101354916200461371}
   - component: {fileID: 2306016957590154251}
+  - component: {fileID: -4516620202533724956}
   m_Layer: 17
   m_Name: Carcodon
   m_TagString: Untagged
@@ -2331,6 +2332,18 @@ MonoBehaviour:
   stunBar: {fileID: 0}
   stunnable: {fileID: 0}
   hitsToStun: 0
+--- !u!114 &-4516620202533724956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4353281618518814614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c032fddaf0d47c2a57b4142dc508e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4413525710197146119
 GameObject:
   m_ObjectHideFlags: 0

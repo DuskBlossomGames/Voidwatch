@@ -5850,8 +5850,9 @@ GameObject:
   - component: {fileID: 342308709}
   - component: {fileID: 342308708}
   - component: {fileID: 342308707}
-  - component: {fileID: 342308706}
   - component: {fileID: 342308705}
+  - component: {fileID: 342308706}
+  - component: {fileID: 342308710}
   m_Layer: 0
   m_Name: Static Info
   m_TagString: Untagged
@@ -5964,6 +5965,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &342308710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342308703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb39206700c44be4803a2e255d4b45ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceTraveled: 0
+  bulletsShot: 0
+  enemiesDefeated: 0
+  scrapCollected: 0
+  wavesCleared: 0
+  levelsCleared: 0
 --- !u!1 &404930622
 GameObject:
   m_ObjectHideFlags: 0
@@ -9428,7 +9447,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 113.35
+  m_fontSize: 113.3
   m_fontSizeBase: 180
   m_fontWeight: 400
   m_enableAutoSizing: 1

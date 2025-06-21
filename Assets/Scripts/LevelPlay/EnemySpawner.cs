@@ -16,6 +16,7 @@ using UnityEngine.UI;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.LevelSelectData;
+using static Static_Info.Statistics;
 namespace LevelPlay
 {
     public class EnemySpawner : MonoBehaviour
@@ -29,7 +30,7 @@ namespace LevelPlay
         
         public Image carcWinImage;
         public TextMeshProUGUI carcWinText, carcWinSubtext;
-        public float winFadeInTime, winWaitTime;
+        public float winFadeInTime;
         
         public PlayerDamageable playerDamager;
         public GameObject scrapPrefab;
@@ -184,6 +185,8 @@ namespace LevelPlay
                 if (_level.Type == LevelType.Elite || _wave == _level.Waves.Length-1)
                 {
                     _timeTillExit = 3;
+                    StatisticsInstance.wavesCleared++;
+                    StatisticsInstance.levelsCleared++;
                     _isTerminal = true;
                 }
                 else if (_level.Type != LevelType.Elite)
@@ -199,10 +202,12 @@ namespace LevelPlay
         {
             if (_waitingOnIndicator) yield break;
             _waitingOnIndicator = true;
-            yield return wic.Flash();
-            _waitingOnIndicator = false;
             
+            StatisticsInstance.wavesCleared++;
+            yield return wic.Flash();
             SpawnWave();
+            
+            _waitingOnIndicator = false;
         }
 
         private bool _won;
@@ -237,7 +242,11 @@ namespace LevelPlay
                 carcWinSubtext.SetAlpha(t / winFadeInTime);
             }
 
-            yield return new WaitForSeconds(winWaitTime);
+            while (!InputManager.GetKeyDown(KeyCode.Return) && !InputManager.GetKeyDown(KeyCode.Escape) &&
+                   !InputManager.GetKeyDown(KeyCode.Mouse0) && !InputManager.GetKeyDown(KeyCode.Space))
+            {
+                yield return new WaitForFixedUpdate();
+            }
             
             Destroy(StaticInfoHolder.Instance.gameObject);
             DontDestroyOnLoad(new GameObject("RollCredits")); // TODO: this is so scuffed ahhhh
