@@ -53,6 +53,7 @@ namespace Spawnables.Controllers.Worms
                 oldChild.GetComponent<WormSegment>().next = child;
                 child.transform.localPosition = relPos;
                 child.GetComponent<WormDamageable>().root = gameObject;
+                child.GetComponent<PositionHinter>().enabled = false;
                 oldChild = child;
                 relPos.x += segLength;
             }
@@ -64,6 +65,7 @@ namespace Spawnables.Controllers.Worms
             oldChild.GetComponent<WormSegment>().next = child;
             child.transform.localPosition = relPos;
             child.GetComponent<WormDamageable>().root = gameObject;
+            child.GetComponent<PositionHinter>().enabled = false;
 
             buildCallback?.Invoke();
         }

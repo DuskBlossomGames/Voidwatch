@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -630066795176946171}
   - component: {fileID: 4405246181603560970}
   - component: {fileID: 8290449300364683273}
+  - component: {fileID: 8069644381904980747}
   m_Layer: 8
   m_Name: Stem Segment
   m_TagString: Untagged
@@ -358,6 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  dontDestroyOffscreen: 0
   tier: 3
   enemyType: 3
   maxHealth: 1500
@@ -402,3 +404,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7d822bc273fdd479601481e939a2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8069644381904980747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633799158591997125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688130f280acfd644a0ecbc07a00242d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPos: {fileID: 0}
+  arrowPrefab: {fileID: 8637034310978827638, guid: 50075d59617dfa94fa68a76886ad8b97, type: 3}
+  pixelBuffer: 25
+  rotate: 1

@@ -14,8 +14,11 @@ namespace Spawnables
         private Vector3 _defaultScale;
         private void Start()
         {
+            if (_arrow != null) return;
+            
             playerPos = GameObject.FindGameObjectsWithTag("Player")[0].transform;
-            _arrow = Instantiate(arrowPrefab, transform);
+            _arrow = transform.Find("DirHinter")?.gameObject ?? Instantiate(arrowPrefab, transform);
+            _arrow.name = "DirHinter";
             _arrow.GetComponent<SpriteRenderer>().enabled = false;
             _defaultScale = arrowPrefab.transform.localScale;
             //Debug.LogFormat("LossyScale: {0}", transform.lossyScale);
