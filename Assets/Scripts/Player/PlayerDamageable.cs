@@ -266,6 +266,7 @@ namespace Player
             {
                 transform.position = _startLoc;
                 godmode = false;
+                GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.zero;
                 GetComponent<SpriteRenderer>().enabled = true;
                 _movement.SetInputBlocked(false);
                 fadeOut.SetActive(false);

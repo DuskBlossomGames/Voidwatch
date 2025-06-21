@@ -99,7 +99,7 @@ namespace Tutorial
         {
             if (!_opened) return;
             
-            if (InputManager.GetKeyDown(KeyCode.LeftShift) || InputManager.GetKeyDown(KeyCode.RightShift) || InputManager.GetKeyDown(KeyCode.Return))
+            if (InputManager.GetKeyDown(KeyCode.LeftShift) || InputManager.GetKeyDown(KeyCode.RightShift) || InputManager.GetKeyDown(KeyCode.Return) || InputManager.GetKeyDown(KeyCode.Space))
             {
                 if (!_progress.IsFinished)
                 {

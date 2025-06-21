@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleWithDamage: 1
   dmg: 10
   owner: {fileID: 0}
   chains: 0

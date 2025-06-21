@@ -2026,6 +2026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontScaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -5654,6 +5655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontScaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -6491,6 +6493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontScaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -6706,6 +6709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontScaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -10999,6 +11003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontScaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -12920,6 +12925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontScaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
