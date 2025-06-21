@@ -28,7 +28,6 @@ namespace Player
         public float stunBreakStrength;
         public float stunCurveStrength;
 
-        public ParticleSystem EnemyLightningVFX;
 
         public bool Dodging => !_dodgeTimer.IsFinished;
         public float DodgeJuice => _dodgeJuice;
@@ -113,7 +112,7 @@ namespace Player
                 (Vector3)UtilFuncs.AngleToVector(_camera.transform.eulerAngles.z * Mathf.Deg2Rad + Mathf.PI / 2),
                 Camera.main!.transform.rotation).SetActive(true);
             // TODO: stunned VFX
-            EnemyLightningVFX.Play();
+            gameObject.GetComponent<PlayerVFXController>().RunStun();
 
         }
 
