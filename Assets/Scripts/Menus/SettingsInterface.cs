@@ -39,6 +39,7 @@ namespace Menus
             SetResolution(PlayerPrefs.GetInt("Resolution", resolutions.IndexOf(Screen.currentResolution)));
             SetFullscreen(PlayerPrefs.GetInt("Fullscreen", 1) == 1);
             SetVsync(PlayerPrefs.GetInt("Vsync", 1) == 1);
+            SetHUDSize(PlayerPrefs.GetFloat("HUDSize", 1));
             
             // CONTROLS
             for (var control = 0; control < InputAction.Count; control++)
@@ -86,6 +87,14 @@ namespace Menus
             PlayerPrefs.SetInt("Vsync", value ? 1 : 0);;
             
             QualitySettings.vSyncCount = value ? 1 : 0;
+        }
+
+        public static float HUDSize { get; private set; }
+        public static void SetHUDSize(float value)
+        {
+            PlayerPrefs.SetFloat("HUDSize", value);
+
+            HUDSize = value;
         }
         
         public static void SetKeybind(int control, KeyCode key)

@@ -21,6 +21,7 @@ namespace Menus
 
         public TMP_Dropdown resolution;
         public CheckboxController fullscreen, vsync;
+        public Slider hudSizeSlider;
 
         private KeybindController[] _keybinds;
         public bool BindingKey => _keybinds.Any(kc => kc.BindingKey);
@@ -50,6 +51,9 @@ namespace Menus
             vsync.Setup();
             vsync.SetValue(PlayerPrefs.GetInt("Vsync") == 1);
             vsync.OnToggle += SettingsInterface.SetVsync;
+            
+            hudSizeSlider.value = PlayerPrefs.GetFloat("HUDSize")*10;
+            hudSizeSlider.onValueChanged.AddListener(v => SettingsInterface.SetHUDSize(v/10));
             
             // CONTROLS
             _keybinds = GetComponentsInChildren<KeybindController>(true);

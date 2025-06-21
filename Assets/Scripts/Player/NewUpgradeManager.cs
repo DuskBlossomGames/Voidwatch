@@ -158,9 +158,13 @@ namespace Player
             StartCoroutine(ExitAfter(0));
         }
 
+        private int _rerollCost = 50;
+        private int _numRerolls;
         public void Reroll()
         {
-            PlayerDataInstance.Scrap -= 50;
+            PlayerDataInstance.Scrap -= _rerollCost;
+            _rerollCost = Mathf.RoundToInt(_rerollCost * Mathf.Max(1.8f - 0.1f * ++_numRerolls, 1.2f) / 10) * 10;
+            
             SetUpgrades();
             UpdateUpgrades();
         }

@@ -7758,10 +7758,6 @@ PrefabInstance:
       propertyPath: optionsExiter
       value: 
       objectReference: {fileID: 502528447}
-    - target: {fileID: 7450585125910410343, guid: 410b52d736521442bbb8c687c53f3c74, type: 3}
-      propertyPath: titleController
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9177,7 +9173,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 113.35
+  m_fontSize: 113.3
   m_fontSizeBase: 180
   m_fontWeight: 400
   m_enableAutoSizing: 1
