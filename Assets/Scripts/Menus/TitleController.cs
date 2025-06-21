@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Util;
 using Button = UnityEngine.UI.Button;
 
 namespace Menus
@@ -156,7 +157,7 @@ namespace Menus
             {
                 yield return new WaitForFixedUpdate();
 
-                anchorMod += anchorDist / creditsTime * Time.fixedDeltaTime;
+                anchorMod += (InputManager.GetKey(KeyCode.Space) ? 2 : 1) * anchorDist / creditsTime * Time.fixedDeltaTime;
                 credits.anchorMin = new Vector2(0, creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
                 credits.anchorMax = new Vector2(1, 1+creditsMultCurve.Evaluate(anchorMod/anchorDist)*anchorDist);
             }
