@@ -1,9 +1,6 @@
 using System;
-using System.Timers;
 using Static_Info;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Util;
 using static Static_Info.LevelSelectData;
 using Timer = Util.Timer;
 
