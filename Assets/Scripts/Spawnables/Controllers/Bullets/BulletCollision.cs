@@ -36,6 +36,9 @@ namespace Spawnables.Controllers.Bullets
         {
             if (_firstCollider == null) _firstCollider = owner;
             if (owner != null && owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
+
+            transform.localScale *= dmg / 15;
+            GetComponent<TrailRenderer>().widthMultiplier *= dmg / 15;
         }
 
         private void OnTriggerExit2D(Collider2D otherCollider)

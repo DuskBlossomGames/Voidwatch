@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  dontDestroyOffscreen: 0
   tier: 2
   enemyType: 1
   maxHealth: 50
@@ -409,12 +410,12 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6569384808679381653, guid: 116573cd1e8558d468ec2a5d067e03cd, type: 3}
   playRadius: 100
   gravitySource: {fileID: 0}
-  clipCount: 7
+  clipCount: 9
   clipCap: 1
   bulletsPerShot: 4
   bulletsPerShotVarience: 0
   reloadTime: 0.2
-  refillTime: 1
+  refillTime: 0.7
   shotForce: 1500
   forceVarience: 200
   lateralSeperation: 200
@@ -422,7 +423,7 @@ MonoBehaviour:
   misfireChance: 0
   repeats: 1
   repeatSeperation: 0.1
-  dmgMod: 40
+  dmgMod: 30
   shieldMult: 1
   bleedPerc: 0
 --- !u!114 &7410061765303661339
