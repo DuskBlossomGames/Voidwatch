@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Static_Info
@@ -62,16 +63,17 @@ namespace Static_Info
         public float MaxDifficultyScore => baseDifficulty +
                                            levelModifier * (Levels.Length - 1) + 2 * randomModifier;
 
-        public static readonly int ELITE_WAVES = 3;
-        private float EliteDifficultyBonus => minBudgetPerWave.Select((b, i) => i < ELITE_WAVES ? b : 0).Sum();
+        public const int EliteWaves = 3;
+        private float EliteDifficultyBonus => minBudgetPerWave.Select((b, i) => i < EliteWaves ? b : 0).Sum();
 
 
         // TODO: temporary, debug
         public void RevealAll()
         {
-            List<int> old = new(_visitedPlanets);
+            var orig = CurrentPlanet;
             for (var i = 0; i < Levels.Length; i++) CurrentPlanet = i;
-            _visitedPlanets.Clear(); _visitedPlanets.AddRange(old);
+            CurrentPlanet = orig;
+            _visitedPlanets.Clear();
         }
         [NonSerialized] private int _currentPlanet = -1;
         public int CurrentPlanet
@@ -111,7 +113,7 @@ namespace Static_Info
 
                         waves.Add(budget);
 
-                        if (level.Type == LevelType.Elite && waves.Count == ELITE_WAVES) break;
+                        if (level.Type == LevelType.Elite && waves.Count == EliteWaves) break;
                     }
                     // distribute the rest randomly
                     while (difficultyBudget > 0)

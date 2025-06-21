@@ -17,6 +17,7 @@ namespace Player
         public bool autoPilot;
 
         public ProgressBar dodgeBar;
+        public LayerMask dodgeExcludeMask;
         public float dodgeTimeDilation;
         public AnimationCurve dodgeTimeDilationCurve;
         public float afterImageSpacing;
@@ -193,7 +194,7 @@ namespace Player
 
             // CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
             CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
-            _collider.enabled = !dodging;
+            _collider.excludeLayers = dodging ? dodgeExcludeMask : 0;
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
 
