@@ -5977,12 +5977,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb39206700c44be4803a2e255d4b45ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceTraveled: 0
-  bulletsShot: 0
+  levelsCleared: 0
   enemiesDefeated: 0
   scrapCollected: 0
-  wavesCleared: 0
-  levelsCleared: 0
+  bulletsShot: 0
+  timesDashed: 0
+  distanceTraveled: 0
 --- !u!1 &404930622
 GameObject:
   m_ObjectHideFlags: 0

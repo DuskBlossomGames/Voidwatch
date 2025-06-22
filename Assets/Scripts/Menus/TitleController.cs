@@ -35,10 +35,10 @@ namespace Menus
         private bool _initCredits;
         private void Start()
         {
-            _texts = GetComponentsInChildren<TextMeshProUGUI>();
-            _flashes = GetComponentsInChildren<FlashUI>();
-            _buttons = GetComponentsInChildren<Button>();
-            _images = GetComponentsInChildren<Image>();
+            _texts = GetComponentsInChildren<TextMeshProUGUI>(true);
+            _flashes = GetComponentsInChildren<FlashUI>(true);
+            _buttons = GetComponentsInChildren<Button>(true);
+            _images = GetComponentsInChildren<Image>(true);
 
             _initCredits = GameObject.Find("RollCredits") != null;
             if (_initCredits) Destroy(GameObject.Find("RollCredits"));
