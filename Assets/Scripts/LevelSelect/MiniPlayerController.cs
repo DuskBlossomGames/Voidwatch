@@ -146,7 +146,7 @@ namespace LevelSelect
                     // move to next planet
                     var startPos = current + (target - current).normalized * (_orbitRadius * planetExitRadMult);
                     var endPos = target + (current - target).normalized *
-                        (i == planetPath.Length - 1 ? _orbitRadius / 2 : _orbitRadius);
+                        (i == planetPath.Length - 1 ? _orbitRadius / 4 : _orbitRadius);
                     for (float t = 0; t < 1; t += 0.05f)
                     {
                         var multEvaluation = i < planetPath.Length - 1

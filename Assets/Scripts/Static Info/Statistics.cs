@@ -6,14 +6,16 @@ namespace Static_Info
 {
     public class Statistics : MonoBehaviour
     {
+        private const float UNITS_TO_KM = 12756 / 22.5f; // based on planet ~radius of earth (12756km) which is 22.5 units in game
+        
         public static Statistics StatisticsInstance => StaticInfoHolder.Instance.GetCachedComponent<Statistics>();
 
-        public float distanceTraveled;
-        public int bulletsShot;
+        public int levelsCleared;
         public int enemiesDefeated;
         public int scrapCollected;
-        public int wavesCleared;
-        public int levelsCleared;
+        public int bulletsShot;
+        public int timesDashed;
+        public float distanceTraveled;
 
         public static void SetText(TextMeshProUGUI[] texts)
         {
@@ -21,7 +23,7 @@ namespace Static_Info
             for (var i = 0; i < fields.Length; i++)
             {
                 var val = fields[i].GetValue(StatisticsInstance);
-                if (i == 0) val = (float) val / 1000;
+                if (i == 0) val = (float) val / 1000 * UNITS_TO_KM;
                 texts[i].text = $"{val:### ##0}" + (i == 0 ? " km" : "");
             }
         }

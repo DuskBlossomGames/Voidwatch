@@ -5900,7 +5900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDifficulty: 5
-  gameDifficultyModifier: 2.5
+  gameDifficultyModifier: 1.5
   levelModifier: 4
   randomModifier: 3
   galaxyModifier: 0

@@ -268,10 +268,10 @@ namespace Player
             {
                 title.gameObject.SetActive(true);
                 subtitle.gameObject.SetActive(true);
+                title.SetAlpha(0);
+                subtitle.SetAlpha(0);
             }
             fadeOut.GetComponent<Image>().SetAlpha(0);
-            title.SetAlpha(0);
-            subtitle.SetAlpha(0);
             for (var i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
             {
                 yield return new WaitForSecondsRealtime(.01f);

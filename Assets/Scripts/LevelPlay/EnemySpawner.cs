@@ -185,7 +185,6 @@ namespace LevelPlay
                 if (_level.Type == LevelType.Elite || _wave == _level.Waves.Length-1)
                 {
                     _timeTillExit = 3;
-                    StatisticsInstance.wavesCleared++;
                     StatisticsInstance.levelsCleared++;
                     _isTerminal = true;
                 }
@@ -203,7 +202,6 @@ namespace LevelPlay
             if (_waitingOnIndicator) yield break;
             _waitingOnIndicator = true;
             
-            StatisticsInstance.wavesCleared++;
             yield return wic.Flash();
             SpawnWave();
             
@@ -260,7 +258,7 @@ namespace LevelPlay
             _spawnedHazards = true;
             var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
             
-            var sectorSize = 2*Mathf.PI / (hazards.Count+1);
+            var sectorSize = 2*Mathf.PI / (hazards.Count+2);
             for (var sector = 1; sector < hazards.Count+1; sector++)
             {
                 var idx = Random.Range(0, hazards.Count);

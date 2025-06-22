@@ -175,6 +175,8 @@ namespace Player
                         new List<Collider2D> { _collider });
                 }
 
+                StatisticsInstance.timesDashed++;
+
                 DodgeOnceDir = null;
                 DodgeOnceCost = null;
             }

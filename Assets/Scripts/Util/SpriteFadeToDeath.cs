@@ -1,6 +1,7 @@
 using System;
 using Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Util
 {
@@ -17,6 +18,8 @@ namespace Util
         {
             _sr = GetComponent<SpriteRenderer>();
             _startAlpha = _sr.color.a;
+
+            if (TimeToLive == 0) TimeToLive = fadeTime;
         }
 
         private void Update()
