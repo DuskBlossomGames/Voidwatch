@@ -638,7 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ec139ad2a948dea22f6996898446a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialDamage: 200
+  initialDamage: 75
   shieldDamagePerSecond: 500
   stunTime: 2
 --- !u!60 &1997713199156744106
