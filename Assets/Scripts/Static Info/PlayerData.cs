@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Player;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Static_Info
 {
@@ -9,6 +11,8 @@ namespace Static_Info
     {
         public static PlayerData PlayerDataInstance => StaticInfoHolder.Instance.GetCachedComponent<PlayerData>();
 
+        public AssetLabelReference borderSprites, upgradeSprites;
+        
         public int maxHealth;
         public float maxShield;
         public float shieldRegenRate;
@@ -44,5 +48,26 @@ namespace Static_Info
         [NonSerialized] public short DamageBoosts = 0;
         [NonSerialized] public short SpeedBoosts = 0;
 
+        public readonly Dictionary<string, Sprite> UpgradeSprites = new();
+        public readonly Dictionary<string, Sprite[]> RaritySprites = new();
+        private void Awake()
+        {
+            Addressables.LoadAssetsAsync<Sprite>(borderSprites, null).Completed += handle =>
+            {
+                var byName = handle.Result.ToDictionary(s => s.name, s => s);
+                foreach (var rarity in UpgradePlayer.Rarity.ALL)
+                {
+                    RaritySprites[rarity.Name] = new[] { byName[rarity.Name], byName[rarity.Name + "-BOX"] };
+                }
+            };
+            Addressables.LoadAssetsAsync<Sprite>(upgradeSprites, null).Completed += handle =>
+            {
+                var byName = handle.Result.ToDictionary(s => s.name, s => s);
+                foreach (var upgrade in UpgradePlayer.UPGRADES)
+                {
+                    UpgradeSprites[upgrade.Title] = byName[upgrade.Title];
+                }
+            };
+        }
     }
 }

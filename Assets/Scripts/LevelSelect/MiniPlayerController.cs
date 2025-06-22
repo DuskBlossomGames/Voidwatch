@@ -15,10 +15,12 @@ namespace LevelSelect
         
         private Vector2 _orbitPosition;
         private float _orbitRadius;
+        private SpriteRenderer _bg;
 
         private void Awake()
         {
             StartCoroutine(EnableTrails());
+            _bg = mapControler.GetComponent<SpriteRenderer>();
         }
 
         private IEnumerator EnableTrails()
@@ -62,7 +64,7 @@ namespace LevelSelect
         private IEnumerator SetupCamera(Vector3 planetLoc)
         {
             // setup camera
-            mapControler.enabled = false; // don't need anything else from it and don't want cam control
+            Destroy(mapControler); // don't need anything else from it and don't want cam control
             
             var cam = Camera.main!;
 
@@ -176,7 +178,7 @@ namespace LevelSelect
                     }
                 }
 
-                mapControler.GetComponent<SpriteRenderer>().sortingOrder = 10000;
+                _bg.sortingOrder = 10000;
 
                 yield return new WaitForSeconds(0.75f);
             }

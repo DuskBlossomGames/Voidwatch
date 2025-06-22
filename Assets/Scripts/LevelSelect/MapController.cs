@@ -63,7 +63,7 @@ namespace LevelSelect
         
         private void Update()
         {
-            camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + InputManager.mouseScrollDelta.y * scrollSpeed,
+            camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - InputManager.mouseScrollDelta.y * scrollSpeed,
                 minCamSize, maxCamSize);
         }
     }

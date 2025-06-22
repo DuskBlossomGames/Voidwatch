@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
+using Menus;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -16,10 +17,6 @@ namespace Player
 {
     public class NewUpgradeManager : MonoBehaviour
     {
-        public AssetLabelReference borderSprites, upgradeSprites;
-        private readonly Dictionary<string, Sprite> _upgradeSprites = new();
-        private readonly Dictionary<string, Sprite[]> _raritySprites = new();
-
         public Button reroll;
     
         public GameObject minimap;
@@ -36,27 +33,7 @@ namespace Player
         private Upgrade[] _upgrades;
 
         public GraphicRaycaster raycaster;
-
-        private void Start()
-        {
-            Addressables.LoadAssetsAsync<Sprite>(borderSprites, null).Completed += handle =>
-            {
-                var byName = handle.Result.ToDictionary(s => s.name, s => s);
-                foreach (var rarity in UpgradePlayer.Rarity.ALL)
-                {
-                    _raritySprites[rarity.Name] = new[] { byName[rarity.Name], byName[rarity.Name + "-BOX"] };
-                }
-            };
-            Addressables.LoadAssetsAsync<Sprite>(upgradeSprites, null).Completed += handle =>
-            {
-                var byName = handle.Result.ToDictionary(s => s.name, s => s);
-                foreach (var upgrade in UpgradePlayer.UPGRADES)
-                {
-                    _upgradeSprites[upgrade.Title] = byName[upgrade.Title];
-                }
-            };
-        }
-
+        
         private void Update()
         {
             reroll.interactable = PlayerDataInstance.Scrap >= 50;
@@ -143,10 +120,10 @@ namespace Player
         {
             for (var i = 0; i < 3; i++)
             {
-                upgrades[i].GetChild(0).GetComponent<Image>().sprite = _upgradeSprites[_upgrades[i].Title];
-                upgrades[i].GetChild(1).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity.Name][0];
+                upgrades[i].GetChild(0).GetComponent<Image>().sprite = PlayerDataInstance.UpgradeSprites[_upgrades[i].Title];
+                upgrades[i].GetChild(1).GetComponent<Image>().sprite = PlayerDataInstance.RaritySprites[_upgrades[i].Rarity.Name][0];
                 upgrades[i].GetChild(2).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Title;
-                upgrades[i].GetChild(3).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity.Name][1];
+                upgrades[i].GetChild(3).GetComponent<Image>().sprite = PlayerDataInstance.RaritySprites[_upgrades[i].Rarity.Name][1];
                 upgrades[i].GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Description;
                 upgrades[i].GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
             }
