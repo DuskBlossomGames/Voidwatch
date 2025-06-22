@@ -93,7 +93,7 @@ namespace Menus
                     if (!includeCredits && obj.transform.IsChildOf(credits)) continue;
 
                     var alpha = 1 - t / fadeTime;
-                    if (obj.GetComponent<Button>() != null) alpha = buttonsFadeCurve.Evaluate(alpha);
+                    if (obj.GetComponent<Button>() != null) alpha = buttonsFadeCurve.Evaluate(alpha); 
                     obj.SetAlpha(Mathf.Min(obj.color.a, alpha));
                 }
             }

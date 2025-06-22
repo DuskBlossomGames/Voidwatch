@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Extensions;
 using JetBrains.Annotations;
+using LevelPlay;
 using ProgressBars;
 using Q_Vignette.Scripts;
 using Spawnables.Controllers.Misslers;
@@ -22,7 +23,8 @@ namespace Player
         public bool isTutorial;
 
         public Q_Vignette_Single vignette;
-       
+
+        public EnemySpawner enemySpawner;
         public GameObject fadeOut;
         public float fadeouttime = 1;
         public TextMeshProUGUI title, subtitle;
@@ -221,7 +223,8 @@ namespace Player
 
         protected override void OnDeath(GameObject source)
         {
-
+            if (enemySpawner != null) enemySpawner.enabled = false;
+            
             StartCoroutine(DeathFade());
             var angleOffset = Random.Range(0, 360f);
             for (var i = 0; i < numBits; i++)
@@ -261,8 +264,11 @@ namespace Player
             
             _movement.SetInputBlocked(true);
             fadeOut.SetActive(true);
-            title.gameObject.SetActive(true);
-            subtitle.gameObject.SetActive(true);
+            if (!isTutorial)
+            {
+                title.gameObject.SetActive(true);
+                subtitle.gameObject.SetActive(true);
+            }
             fadeOut.GetComponent<Image>().SetAlpha(0);
             title.SetAlpha(0);
             subtitle.SetAlpha(0);
@@ -270,9 +276,13 @@ namespace Player
             {
                 yield return new WaitForSecondsRealtime(.01f);
                 var prog = i / (100 * fadeouttime);
-                fadeOut.GetComponent<Image>().SetAlpha(Mathf.Pow(prog, .5f));
-                title.SetAlpha(Mathf.Pow(prog, .5f));
-                subtitle.SetAlpha(Mathf.Pow(prog, .5f));
+                
+                if (!isTutorial)
+                {
+                    fadeOut.GetComponent<Image>().SetAlpha(Mathf.Pow(prog, .5f));
+                    title.SetAlpha(Mathf.Pow(prog, .5f));
+                    subtitle.SetAlpha(Mathf.Pow(prog, .5f));
+                }
             }
 
             if (!isTutorial)

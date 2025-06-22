@@ -48,6 +48,7 @@ namespace Util
             var scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
             
             // MACOS
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
             BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
                 scenes = scenes,
@@ -62,7 +63,8 @@ namespace Util
                 $"../butler push voidwatch.zip DuskBlossomGames/Voidwatch:osx --identity=\"{butlerAPIPath}\" --userversion={VERSION}",
             }, false);
             
-            // WINDOWS x86
+            // WINDOWS
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
             for (var arch = 0; arch <= 1; arch++)
             {
                 var archStr = arch == 0 ? "x86" : "arm";
@@ -85,6 +87,7 @@ namespace Util
             }
             
             // LINUX
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneLinux64);
             BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
                 scenes = scenes,
