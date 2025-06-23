@@ -153,7 +153,7 @@ namespace Spawnables.Controllers.Carcadon
 
                 dir = dist.normalized;
 
-                _currSpeed = UtilFuncs.LerpSafe(_currSpeed, Math.Min(attackSpeed - 2000/Mathf.Pow(dist.magnitude, 3) + 4*Mathf.Log(dist.magnitude), _currSpeed + attackAccel), Time.deltaTime);
+                _currSpeed = UtilFuncs.LerpSafe(_currSpeed, Math.Min(attackSpeed - 2000/Mathf.Pow(dist.magnitude, 3) + 2*Mathf.Log(dist.magnitude), _currSpeed + attackAccel), 1.5f*Time.deltaTime);
             }
 
             if (_mode == Mode.Stealth) // don't want to make it snake, so shouldn't have an arbitrary min turn radius
@@ -162,7 +162,7 @@ namespace Spawnables.Controllers.Carcadon
             }
             else
             {
-                _rb.linearVelocity = Vector3.RotateTowards(_rb.linearVelocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 8 : 1.5f) * Time.deltaTime, 15 * Time.deltaTime);
+                _rb.linearVelocity = Vector3.RotateTowards(_rb.linearVelocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 5 : 1.5f) * Time.deltaTime, 15 * Time.deltaTime);
             }
 
             transform.rotation = Quaternion.Lerp(transform.rotation, UtilFuncs.RotFromNorm(_rb.linearVelocity), 5 * Time.deltaTime);
@@ -277,13 +277,11 @@ namespace Spawnables.Controllers.Carcadon
             cam.transform.position = (Vector3) (Vector2) _player.transform.position + new Vector3(camDistAbovePlayer, 0, cam.transform.position.z);
             cam.transform.rotation = Quaternion.Euler(0, 0, -90);
             cam.orthographicSize = camFp.baseSize;
-            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount; i++)
+            for (var i = 0; i < _enemySpawner.fadeIn.transform.GetSiblingIndex(); i++)
             {
                 _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(false);
             }
-
-            _enemySpawner.fadeIn.SetActive(true);
-
+            
             // set up carcadon
             _mouthSr.sprite = _mouthSprites[0];
             foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, stealthOpacity);
@@ -419,14 +417,10 @@ namespace Spawnables.Controllers.Carcadon
                 cam.orthographicSize = Mathf.SmoothStep(origSize, targSize, t / headstartTime);
             }
 
-            for (var i = 0; i < _enemySpawner.fadeIn.transform.parent.childCount; i++)
+            for (var i = 0; i < _enemySpawner.fadeIn.transform.GetSiblingIndex(); i++)
             {
-                var obj = _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject;
-                if (obj == _enemySpawner.fadeIn) break;
-                
-                obj.SetActive(true);
+                _enemySpawner.fadeIn.transform.parent.GetChild(i).gameObject.SetActive(true);
             }
-            //DestroyImmediate(_enemySpawner.fadeIn);
             _enemySpawner.fadeIn.SetActive(false);
             _forceStealth = false;
             for (var ac = 0; ac < 2; ac++) _armControllers[ac].hasAttack = true;

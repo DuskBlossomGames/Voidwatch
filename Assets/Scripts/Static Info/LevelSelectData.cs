@@ -64,9 +64,9 @@ namespace Static_Info
                                            levelModifier * (Levels.Length - 1) + 2 * randomModifier;
         
         public const int EliteWaves = 3;
-        private const int EliteWaveStart = 4; // for difficulty, elite waves start at 4
-
-        private float EliteDifficulty => 1.5f * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
+        private const int EliteWaveStart = 2; // for difficulty, which wave elites start at (3)
+        
+        private float EliteDifficulty => 1.25f * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 
 
 #if UNITY_EDITOR
@@ -94,10 +94,10 @@ namespace Static_Info
                     if (level.Waves != null) continue;
 
                     var difficultyScore = level.Type == LevelType.Boss ? MaxDifficultyScore :
+                        level.Type == LevelType.Elite ? EliteDifficulty :
                         baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 2) * randomModifier;
-
-                    var difficultyBudget = (int) (gameDifficultyModifier * (level.Type == LevelType.Elite
-                        ? EliteDifficulty : difficultyScore) + 0/*TODO: galaxyNumber * galaxyModifier*/);
+                    
+                    var difficultyBudget = (int) (gameDifficultyModifier * difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/);
                     List<int> waves = new();
 
                     // TODO
@@ -106,7 +106,8 @@ namespace Static_Info
                     // start with as many waves as possible given min budget
                     while (true)
                     {
-                        var budget = minBudgetPerWave[waves.Count + (level.Type == LevelType.Elite ? EliteWaveStart : 0)];
+                        var budget = (int)(gameDifficultyModifier *
+                                           minBudgetPerWave[waves.Count + (level.Type == LevelType.Elite ? EliteWaveStart : 0)]);
                         if ((difficultyBudget -= budget) < 0)
                         {
                             difficultyBudget += budget;
@@ -120,15 +121,18 @@ namespace Static_Info
                     // distribute the rest randomly
                     while (difficultyBudget > 0)
                     {
-                        var addition = difficultyBudget < 5 ? difficultyBudget :
-                            Random.Range(0, difficultyBudget);
+                        var addition = (difficultyBudget < 5 ? difficultyBudget :
+                            Random.Range(1, 5));
 
                         // don't allow waves to go past the next wave's min value
                         var validWaves = minBudgetPerWave.Select((_, i) =>
-                            i < waves.Count && (
-                                i == waves.Count - 1
-                                || waves[i] + addition < minBudgetPerWave[i + 1]
-                            ) ? i : -1).Where(i=>i!=-1).ToList();
+                        {
+                            var wave = i;
+                            if (level.Type == LevelType.Elite) i -= EliteWaveStart;
+                            if (i < 0 || i >= waves.Count) return -1;
+
+                            return i == waves.Count - 1 || waves[i] + addition < gameDifficultyModifier * minBudgetPerWave[wave + 1] ? i : -1;
+                        }).Where(i=>i!=-1).ToList();
                         waves[validWaves[Random.Range(0, validWaves.Count)]] += addition;
                         difficultyBudget -= addition;
                     }
@@ -136,6 +140,7 @@ namespace Static_Info
                     level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
                     level.DifficultyScore = (int) difficultyScore;
                     level.Waves = waves.ToArray();
+                    if (level.Type == LevelType.Elite) print(string.Join(",", level.Waves)+" | "+string.Join(",", minBudgetPerWave.Select(s=>s*gameDifficultyModifier))+" | "+difficultyScore);
                 }
             }
         }

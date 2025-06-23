@@ -2268,7 +2268,7 @@ MonoBehaviour:
   stealthLowAccTime: 2
   destealthRadius: 22.5
   attackAccel: 9
-  attackSpeed: 33
+  attackSpeed: 30
   attackRadius: 10
   editorNote: Cutscene Variables
   fadeInTime: 3
@@ -2629,6 +2629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675ed14927146a484414c6170171e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clawTip: {x: 0, y: 0}
   joints:
   - {x: 0.046, y: -0.222}
   - {x: 0.141, y: -0.148}
@@ -3226,6 +3227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675ed14927146a484414c6170171e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clawTip: {x: 0, y: 0}
   joints:
   - {x: -0.046, y: -0.222}
   - {x: -0.141, y: -0.148}
@@ -4390,6 +4392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675ed14927146a484414c6170171e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clawTip: {x: 0.007, y: 0.196}
   joints:
   - {x: 0.04, y: -0.202}
   - {x: 0.146, y: -0.15}
@@ -4404,9 +4407,9 @@ MonoBehaviour:
   hasAttack: 1
   minSlash: 1
   maxSlash: 4
-  slashDelay: 0.2
-  minAttackDelay: 1
-  maxAttackDelay: 2
+  slashDelay: 0.5
+  minAttackDelay: 2
+  maxAttackDelay: 4
   timeToOpen: 0.1
   timeToClose: 0.175
   timeToReturn: 0.25
@@ -4819,6 +4822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675ed14927146a484414c6170171e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clawTip: {x: -0.007, y: 0.196}
   joints:
   - {x: -0.04, y: -0.202}
   - {x: -0.146, y: -0.15}
@@ -4833,9 +4837,9 @@ MonoBehaviour:
   hasAttack: 1
   minSlash: 1
   maxSlash: 4
-  slashDelay: 0.2
-  minAttackDelay: 1
-  maxAttackDelay: 2
+  slashDelay: 0.5
+  minAttackDelay: 2
+  maxAttackDelay: 4
   timeToOpen: 0.1
   timeToClose: 0.175
   timeToReturn: 0.25

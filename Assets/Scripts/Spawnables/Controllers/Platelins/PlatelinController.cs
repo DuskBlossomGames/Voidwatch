@@ -9,6 +9,7 @@ namespace Spawnables.Controllers.Platelins
     public class PlatelinController : MonoBehaviour
     {
         private static int _numColonies;
+        private static int _numPlatelins;
     
         public int maxColonySize, maxNumColonies;
         public float normalSize, leaderSize;
@@ -68,6 +69,8 @@ namespace Spawnables.Controllers.Platelins
             animationState.SwapState("Maturation");
             _spawntimer = initialDelay;
             //GetComponent<SpriteRenderer>().color = Color.blue;
+
+            _numPlatelins++;
         }
 
         private void Start()
@@ -156,7 +159,7 @@ namespace Spawnables.Controllers.Platelins
 
             if (mode == Mode.Idle || _scaleCurve != 0)
             {
-                if (_leader._subjects.Count < maxColonySize) _spawntimer -= Time.deltaTime;
+                if (_leader._subjects.Count < maxColonySize && _numPlatelins < maxNumColonies * maxColonySize) _spawntimer -= Time.deltaTime;
                 if (_spawntimer <= 0)
                 {
                     mode = Mode.Swell;
@@ -206,6 +209,7 @@ namespace Spawnables.Controllers.Platelins
         private void OnDestroy()
         {
             if (isLeader) _numColonies--;
+            _numPlatelins--;
         
             _leader._subjects.Remove(gameObject);
             Instantiate(goo, transform.position, transform.rotation).transform.localScale *= explosionScaleMult;
