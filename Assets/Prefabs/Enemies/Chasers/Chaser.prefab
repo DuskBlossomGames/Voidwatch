@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba59484905c838d44baffea2dd31fffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelforce: 30
+  accelforce: 27
   target: {fileID: 0}
   maxFuel: 0
   particles: {fileID: 0}
