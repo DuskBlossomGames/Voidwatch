@@ -12,7 +12,6 @@ namespace Spawnables.Damage
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            print("entered");
             if (!other.TryGetComponent<Movement>(out var player) || player.Stunned ||
                 !other.TryGetComponent<PlayerDamageable>(out var damageable)) return;
 

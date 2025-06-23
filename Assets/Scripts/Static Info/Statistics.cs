@@ -22,9 +22,11 @@ namespace Static_Info
             var fields = typeof(Statistics).GetFields(BindingFlags.Instance | BindingFlags.Public);
             for (var i = 0; i < fields.Length; i++)
             {
+                var dt = fields[i].Name == "distanceTraveled";
+                
                 var val = fields[i].GetValue(StatisticsInstance);
-                if (fields[i].Name == "distanceTraveled") val = (float) val / 1000 * UNITS_TO_KM;
-                texts[i].text = $"{val:### ##0}" + (i == 0 ? " km" : "");
+                if (dt) val = (float) val / 1000 * UNITS_TO_KM;
+                texts[i].text = $"{val:### ##0}" + (dt ? " km" : "");
             }
         }
     }

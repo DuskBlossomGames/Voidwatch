@@ -12,6 +12,7 @@ namespace Menus
     public class UpgradesListController : MonoBehaviour
     {
         public float spacing;
+        public float sideSpace;
         
         private RectTransform _prefab;
         private void Awake()
@@ -36,11 +37,21 @@ namespace Menus
 
                 upgrade.gameObject.SetActive(true);
             }
+
+            var right = transform.GetChild(1).GetChild(1).GetComponent<RectTransform>().anchorMax.x
+                + 2 * (_prefab.anchorMin.x - transform.GetChild(1).GetChild(1).GetComponent<RectTransform>().anchorMax.x)
+                + spacing * (PlayerDataInstance.Upgrades.Count-1)
+                + _prefab.anchorMax.x-_prefab.anchorMin.x;
+            transform.GetChild(1).gameObject.SetActive(PlayerDataInstance.Upgrades.Count > 0);
+            transform.GetChild(1).GetChild(2).GetComponent<RectTransform>().anchorMin = new Vector2(right, 0);
+            transform.GetChild(1).GetChild(2).GetComponent<RectTransform>().anchorMax = new Vector2(right, 1);
+            transform.GetChild(1).GetChild(3).GetComponent<RectTransform>().anchorMax = new Vector2(right, 1);
+            transform.GetChild(1).GetChild(4).GetComponent<RectTransform>().anchorMax = new Vector2(right, 0);
         }
 
         private void OnDisable()
         {
-            for (var i = 2; i < transform.childCount; i++) Destroy(transform.GetChild(i));
+            for (var i = 3; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Menus
 {
     public class UpgradeHoverController : MonoBehaviour
     {
+        public UpgradesListController ulc;
         public float fadeTime;
-        public float anchorSpacing;
         
         private float _width;
         
@@ -45,6 +45,7 @@ namespace Menus
         {
             _upgrade = null;
             _idx = -1;
+            _dir = -1;
 
             _fade.SetValue(0);
             foreach (var image in _images) image.SetAlpha(0);
@@ -81,7 +82,7 @@ namespace Menus
         
         public void PointerEntered(UpgradePlayer.Upgrade upgrade, int idx, float center)
         {
-            center = Mathf.Clamp(center, anchorSpacing + _width / 2, 1 - anchorSpacing - _width / 2);
+            center = Mathf.Clamp(center, ulc.sideSpace + _width / 2, 1 - ulc.sideSpace - _width / 2);
             
             if (_idx == idx)
             {

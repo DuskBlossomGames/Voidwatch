@@ -24,6 +24,8 @@ namespace Menus
             
             _instance = this;
             StartCoroutine(DontDestroyOnLoadAsync());
+            
+            SceneManager.sceneLoaded += (_, _) => Resume();
         }
 
         private IEnumerator DontDestroyOnLoadAsync()
@@ -67,8 +69,7 @@ namespace Menus
         public void MainMenu()
         {
             Destroy(StaticInfoHolder.Instance.gameObject);
-            Resume();
-            
+
             SceneManager.LoadScene("TitleScreen");
         }
 
