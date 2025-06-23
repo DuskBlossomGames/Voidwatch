@@ -64,12 +64,12 @@ namespace Static_Info
                                            levelModifier * (Levels.Length - 1) + 2 * randomModifier;
         
         public const int EliteWaves = 3;
-        private const int EliteWaveStartDifficulty = 4;
+        private const int EliteWaveStart = 4; // for difficulty, elite waves start at 4
 
-        private float EliteDifficulty => minBudgetPerWave[EliteWaveStartDifficulty..(EliteWaveStartDifficulty + EliteWaves)].Sum();
+        private float EliteDifficulty => 1.5f * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 
 
-        // TODO: temporary, debug
+#if UNITY_EDITOR
         public void RevealAll()
         {
             var orig = CurrentPlanet;
@@ -77,6 +77,7 @@ namespace Static_Info
             CurrentPlanet = orig;
             _visitedPlanets.Clear();
         }
+#endif
         [NonSerialized] private int _currentPlanet = -1;
         public int CurrentPlanet
         {
@@ -105,7 +106,7 @@ namespace Static_Info
                     // start with as many waves as possible given min budget
                     while (true)
                     {
-                        var budget = minBudgetPerWave[waves.Count];
+                        var budget = minBudgetPerWave[waves.Count + (level.Type == LevelType.Elite ? EliteWaveStart : 0)];
                         if ((difficultyBudget -= budget) < 0)
                         {
                             difficultyBudget += budget;

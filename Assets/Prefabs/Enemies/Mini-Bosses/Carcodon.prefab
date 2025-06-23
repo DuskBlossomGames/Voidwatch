@@ -1202,7 +1202,7 @@ MonoBehaviour:
   maxAngle: 25
   minTime: 0.005
   maxTime: 0.03
-  travelTime: 0.2
+  travelTime: 0.5
 --- !u!1 &3003821881512258811
 GameObject:
   m_ObjectHideFlags: 0
@@ -2283,7 +2283,7 @@ MonoBehaviour:
   timeBeforeExpand: 0.8
   timeBeforeReveal: 2.7
   timeBeforeUnfurl: 3.5
-  finalDistAbovePlayer: 12
+  finalDistAbovePlayer: 20
   camExpandTime: 4.5
   camExpandAmt: 10
   camMoveAmt: 5
@@ -4457,11 +4457,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.2048719, y: 1.2736353}
+    - - {x: -1.1559322, y: 1.0167018}
       - {x: -1.130382, y: -0.0019807965}
       - {x: -0.729417, y: -0.25817567}
       - {x: -0.0060915947, y: 0.09681493}
-      - {x: 0.02213088, y: 1.2643237}
+      - {x: 0.02213088, y: 1.0135075}
   m_UseDelaunayMesh: 0
 --- !u!1 &8125593938387779123
 GameObject:
@@ -4886,9 +4886,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.056299575, y: 1.2493267}
+    - - {x: 0.0048750527, y: 1.029098}
       - {x: 0.006036043, y: 0.18033227}
       - {x: 0.7473188, y: -0.24602151}
       - {x: 1.1303265, y: -0.06118971}
-      - {x: 1.3773246, y: 1.2339383}
+      - {x: 1.2733277, y: 1.0381795}
   m_UseDelaunayMesh: 0

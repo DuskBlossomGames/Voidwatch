@@ -86,6 +86,17 @@ namespace Spawnables.Controllers.Carcadon
             }
         }
 
+        public void Attack()
+        {
+            if (transform.GetSiblingIndex() == 1) print("force enable claw");
+            _clawDamage.Active = true;
+            _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(true); // enable trail renderer
+
+            _curAttackSlashes = 1;
+            _curSlash = 0;
+            _attackProgress += Time.fixedDeltaTime;
+        }
+
         private float MinOrMax(float a, float b)
         {
             return _foldDirection == 1 ? (a + 1 < b ? a + 1 : b) : (a > b ? a : b);
@@ -97,16 +108,16 @@ namespace Spawnables.Controllers.Carcadon
         }
 
         private bool _folded;
-        private void Update()
+        private void FixedUpdate()
         {
-            _attackCooldown.Update();
-            _slashCooldown.Update();
+            _attackCooldown.FixedUpdate();
+            _slashCooldown.FixedUpdate();
 
             // fold
             if (_attackProgress == 0 && _foldDirection != 0)
             {
                 var currentSeg = Mathf.Clamp(FloorOrCeil(_foldProgress), 0, foldRotations.Length-1);
-                var rotation = _foldDirection * Mathf.Sign(foldRotations[currentSeg]) * _foldSpeed * Time.deltaTime;
+                var rotation = _foldDirection * Mathf.Sign(foldRotations[currentSeg]) * _foldSpeed * Time.fixedDeltaTime;
 
                 _foldProgress = MinOrMax(currentSeg, _foldProgress + rotation / foldRotations[currentSeg]);
 
@@ -119,10 +130,8 @@ namespace Spawnables.Controllers.Carcadon
                     _foldDirection = 0;
                 }
             }
-
-            if (!hasAttack) return;
-
-            if (_foldDirection == 0 && !_folded && _attackCooldown.IsFinished && _slashCooldown.IsFinished && (_collider.OverlapPoint(_player.transform.position) || _attackProgress != 0))
+            
+            if ((hasAttack && _foldDirection == 0 && !_folded && _attackCooldown.IsFinished && _slashCooldown.IsFinished && _collider.OverlapPoint(_player.transform.position)) || _attackProgress != 0)
             {
                 if (!_player.GetComponent<Movement>().Dodging)
                 {
@@ -145,6 +154,7 @@ namespace Spawnables.Controllers.Carcadon
 
                 if (_attackProgress == 0)
                 {
+                    if (transform.GetSiblingIndex() == 1) print("enable claw");
                     _clawDamage.Active = true;
                     _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(true); // enable trail renderer
                 }
@@ -162,8 +172,8 @@ namespace Spawnables.Controllers.Carcadon
 
                 if (_attackProgress < timeToOpen)
                 {
-                    RotateJoint(_segments.Length - 1, openBase / timeToOpen * Time.deltaTime);
-                    RotateJoint(_segments.Length - 2, openNext / timeToOpen * Time.deltaTime);
+                    RotateJoint(_segments.Length - 1, openBase / timeToOpen * Time.fixedDeltaTime);
+                    RotateJoint(_segments.Length - 2, openNext / timeToOpen * Time.fixedDeltaTime);
 
                     if(clawAudio != null && !clawSoundBegan){
                       clawAudio.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f);
@@ -173,18 +183,19 @@ namespace Spawnables.Controllers.Carcadon
                     
                 } else if (_attackProgress - timeToOpen < timeToClose)
                 {
-                    RotateJoint(_segments.Length - 2, returnNext / timeToClose * Time.deltaTime);
-                    RotateJoint(_segments.Length - 3, foldLast / timeToClose * Time.deltaTime);
-                    RotateJoint(0, foldClaw / timeToClose * Time.deltaTime);
+                    RotateJoint(_segments.Length - 2, returnNext / timeToClose * Time.fixedDeltaTime);
+                    RotateJoint(_segments.Length - 3, foldLast / timeToClose * Time.fixedDeltaTime);
+                    RotateJoint(0, foldClaw / timeToClose * Time.fixedDeltaTime);
 
                 } else if (_attackProgress - timeToOpen - timeToClose < timeToReturn)
                 {
-                    RotateJoint(_segments.Length - 1, returnBase / timeToReturn * Time.deltaTime);
-                    RotateJoint(_segments.Length - 3, returnLast / timeToReturn * Time.deltaTime);
-                    RotateJoint(0, returnClaw / timeToReturn * Time.deltaTime);
+                    RotateJoint(_segments.Length - 1, returnBase / timeToReturn * Time.fixedDeltaTime);
+                    RotateJoint(_segments.Length - 3, returnLast / timeToReturn * Time.fixedDeltaTime);
+                    RotateJoint(0, returnClaw / timeToReturn * Time.fixedDeltaTime);
                 }
                 else
                 {
+                    if (transform.GetSiblingIndex() == 1) print("disable claw");
                     _clawDamage.Active = false;
                     clawSoundBegan = false;
                     _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(false); // disable trail renderer
@@ -203,7 +214,9 @@ namespace Spawnables.Controllers.Carcadon
                     }
                 }
 
-                if (_slashCooldown.IsFinished) _attackProgress += Time.deltaTime; // don't increment if we just set to 0
+                if (transform.GetSiblingIndex() == 1) print(_clawDamage.Active);
+                // if (transform.GetSiblingIndex() == 1) print(_attackProgress);
+                if (_clawDamage.Active) _attackProgress += Time.fixedDeltaTime; // don't increment if we just set to 0
             }
         }
 
