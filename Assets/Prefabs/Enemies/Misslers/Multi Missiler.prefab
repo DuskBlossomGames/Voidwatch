@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: 582754640268470002}
   - component: {fileID: 6725564530229344085}
   - component: {fileID: 3600005745741968676}
-  - component: {fileID: 3547089474846609503}
   m_Layer: 8
   m_Name: Multi Missiler
   m_TagString: Untagged
@@ -217,6 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
+  trackDeath: 1
   tier: 3
   enemyType: 1
   maxHealth: 200
@@ -313,15 +313,3 @@ MonoBehaviour:
     name: fire
   framesPerSecond: 24
   loop: 0
---- !u!114 &3547089474846609503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4430136990600543352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c032fddaf0d47c2a57b4142dc508e25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using Util;
 using Complex = System.Numerics.Complex;
 
 namespace Spawnables.Controllers.Misslers
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class MissleAim : MonoBehaviour
     {
         public float accelforce;
@@ -19,17 +21,17 @@ namespace Spawnables.Controllers.Misslers
         public float dmg;
         public float shieldMult, bleedPerc;
 
-        private Vector2 _oVel;
-        private Vector2 _nDir;
-        private CustomRigidbody2D _rigid;
+        protected Vector2 _oVel;
+        protected Vector2 _nDir;
+        protected CustomRigidbody2D _rigid;
 
         private bool _stopped = false;
-        private Quaternion _cRot;
-        private float _fuel;
+        protected Quaternion _cRot;
+        protected float _fuel;
         private float _tickTimer;
         private float _timeToImpact;
 
-        private void Start()
+        public void Start()
         {
             _fuel = maxFuel;
             _rigid = GetComponent<CustomRigidbody2D>();
@@ -49,7 +51,7 @@ namespace Spawnables.Controllers.Misslers
             }
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if (_fuel>0)
             {
@@ -90,7 +92,7 @@ namespace Spawnables.Controllers.Misslers
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
             Explode(collision.collider);
         }

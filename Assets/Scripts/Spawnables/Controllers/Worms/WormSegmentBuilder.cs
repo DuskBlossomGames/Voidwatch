@@ -33,6 +33,7 @@ namespace Spawnables.Controllers.Worms
             child.GetComponent<SpriteRenderer>().sprite = headSprite;
             child.GetComponent<WormSegment>().form = WormSegment.Form.Head;
             child.GetComponent<WormDamageable>().root = gameObject;
+            child.GetComponent<WormDamageable>().trackDeath = true;
             child.transform.localPosition = relPos;
             oldChild = child;
             relPos.x += segLength;

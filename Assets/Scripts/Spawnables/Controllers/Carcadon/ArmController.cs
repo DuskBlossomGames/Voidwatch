@@ -122,7 +122,7 @@ namespace Spawnables.Controllers.Carcadon
 
             if (!hasAttack) return;
 
-            if (!_folded && _attackCooldown.IsFinished && _slashCooldown.IsFinished && (_collider.OverlapPoint(_player.transform.position) || _attackProgress != 0))
+            if (_foldDirection == 0 && !_folded && _attackCooldown.IsFinished && _slashCooldown.IsFinished && (_collider.OverlapPoint(_player.transform.position) || _attackProgress != 0))
             {
                 if (!_player.GetComponent<Movement>().Dodging)
                 {

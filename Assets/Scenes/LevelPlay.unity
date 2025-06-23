@@ -2887,10 +2887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2aa6f298c6ae52409caf79eb6dbac54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  borderSprites:
-    m_LabelString: upgrade-borders
-  upgradeSprites:
-    m_LabelString: upgrade-sprites
   reroll: {fileID: 1429863985}
   minimap: {fileID: 1755684698}
   titleBox: {fileID: 1779492369}

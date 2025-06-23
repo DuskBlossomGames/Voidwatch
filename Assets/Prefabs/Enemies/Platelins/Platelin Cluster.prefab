@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 8772780823410768721}
   - component: {fileID: 3726635049977287167}
   - component: {fileID: 1332257419737465132}
-  - component: {fileID: 3515060017847954174}
   m_Layer: 12
   m_Name: Platelin
   m_TagString: Untagged
@@ -163,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
+  trackDeath: 1
   tier: 2
   enemyType: 2
   maxHealth: 0
@@ -366,18 +366,6 @@ MonoBehaviour:
   arrowPrefab: {fileID: 8637034310978827638, guid: 50075d59617dfa94fa68a76886ad8b97, type: 3}
   pixelBuffer: 25
   rotate: 1
---- !u!114 &3515060017847954174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083978659629366612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c032fddaf0d47c2a57b4142dc508e25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7663828382742004186
 GameObject:
   m_ObjectHideFlags: 0

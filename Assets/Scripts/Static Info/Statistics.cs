@@ -23,7 +23,7 @@ namespace Static_Info
             for (var i = 0; i < fields.Length; i++)
             {
                 var val = fields[i].GetValue(StatisticsInstance);
-                if (i == 0) val = (float) val / 1000 * UNITS_TO_KM;
+                if (fields[i].Name == "distanceTraveled") val = (float) val / 1000 * UNITS_TO_KM;
                 texts[i].text = $"{val:### ##0}" + (i == 0 ? " km" : "");
             }
         }

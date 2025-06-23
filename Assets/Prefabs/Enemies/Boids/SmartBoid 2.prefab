@@ -174,7 +174,6 @@ GameObject:
   - component: {fileID: 988408655905092487}
   - component: {fileID: 2619070593489675282}
   - component: {fileID: 7410061765303661339}
-  - component: {fileID: 5795943144272152676}
   m_Layer: 8
   m_Name: Boid
   m_TagString: Untagged
@@ -364,6 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
+  trackDeath: 1
   tier: 2
   enemyType: 1
   maxHealth: 50
@@ -445,18 +445,6 @@ MonoBehaviour:
   size: 3
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
---- !u!114 &5795943144272152676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017439640341726697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c032fddaf0d47c2a57b4142dc508e25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4800529180713540370
 GameObject:
   m_ObjectHideFlags: 0

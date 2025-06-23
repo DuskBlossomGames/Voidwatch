@@ -229,6 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
+  trackDeath: 1
   tier: 1
   enemyType: 1
   maxHealth: 600

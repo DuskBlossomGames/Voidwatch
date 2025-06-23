@@ -49,6 +49,7 @@ namespace Spawnables.Damage
         private const float STUN_FALL_PERC_PER_SEC = 0.1f;
 
         public bool dontDestroyOffscreen;
+        public bool trackDeath;
         
         [Range(1, 5)] public int tier = 1;
         public EnemyType enemyType; // TODO: give values for these
@@ -153,6 +154,8 @@ namespace Spawnables.Damage
         
         protected override void OnDeath(GameObject source)
         {
+            if (trackDeath) StatisticsInstance.enemiesDefeated++;
+            
             var angleOffset = Random.Range(0, 360f);
             for (var i = 0; i < numBits; i++)
             {

@@ -43,7 +43,7 @@ namespace Util
         }
         public static Quaternion RotFromNorm(Vector2 vec)
         {
-            return Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * Mathf.Atan2(vec.y, vec.x));
+            return Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * Mathf.Atan2(vec.normalized.y, vec.normalized.x));
         }
 
         public static float LerpSafe(float a, float b, float t)

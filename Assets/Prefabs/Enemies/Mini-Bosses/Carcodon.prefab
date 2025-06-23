@@ -1950,7 +1950,6 @@ GameObject:
   - component: {fileID: -5548867977713206262}
   - component: {fileID: -9101354916200461371}
   - component: {fileID: 2306016957590154251}
-  - component: {fileID: -4516620202533724956}
   m_Layer: 17
   m_Name: Carcodon
   m_TagString: Untagged
@@ -2268,8 +2267,8 @@ MonoBehaviour:
   stealthAcc: 9
   stealthLowAccTime: 2
   destealthRadius: 22.5
-  attackAccel: 8
-  attackSpeed: 27
+  attackAccel: 9
+  attackSpeed: 33
   attackRadius: 10
   editorNote: Cutscene Variables
   fadeInTime: 3
@@ -2319,6 +2318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
+  trackDeath: 1
   tier: 1
   enemyType: 4
   maxHealth: 3500
@@ -2332,18 +2332,6 @@ MonoBehaviour:
   stunBar: {fileID: 0}
   stunnable: {fileID: 0}
   hitsToStun: 0
---- !u!114 &-4516620202533724956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4353281618518814614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c032fddaf0d47c2a57b4142dc508e25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4413525710197146119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3364,7 +3352,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.6348991, w: 0.7725951}
   m_LocalPosition: {x: -0.4589999, y: -0.11599994, z: 0}
-  m_LocalScale: {x: 1, y: 0.99924, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6798118379262112045}
@@ -4415,8 +4403,8 @@ MonoBehaviour:
   timeToFold: 0.6
   hasAttack: 1
   minSlash: 1
-  maxSlash: 3
-  slashDelay: 0.5
+  maxSlash: 4
+  slashDelay: 0.2
   minAttackDelay: 1
   maxAttackDelay: 2
   timeToOpen: 0.1
@@ -4844,8 +4832,8 @@ MonoBehaviour:
   timeToFold: 0.6
   hasAttack: 1
   minSlash: 1
-  maxSlash: 3
-  slashDelay: 0.5
+  maxSlash: 4
+  slashDelay: 0.2
   minAttackDelay: 1
   maxAttackDelay: 2
   timeToOpen: 0.1

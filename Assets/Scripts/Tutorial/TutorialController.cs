@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
+using static Static_Info.GunInfo;
 
 namespace Tutorial
 {
@@ -37,7 +38,7 @@ namespace Tutorial
             {
                 Stage.Movement, new[]
                 {
-                    "Infiltrators will always accelerate in the direction they are facing, when <b>{Accelerate}</b> is pressed. It is recommended to keep your mouse some distance from the ship.",
+                    "Your ship will always accelerate in the direction you are facing, when <b>{Accelerate}</b> is pressed. It is recommended to keep your mouse some distance from the ship.",
                     "Deceleration is achieved through the braking apparatus, generating thrust backwards. Pilots can use <b>{Brake}</b> to slow down.",
                     "Finally, as a convenience to the pilot, the ship's camera system will always orient 'down' as towards the nearest planet. <b>Practice accelerating and braking.</b>",
                     "When you feel comfortable, continue to see what makes this a Voidhawk-class starship."
@@ -93,6 +94,7 @@ namespace Tutorial
         };
     
         public DialogueController dialogueController;
+        public GameObject instruction;
         public Movement playerMovement;
         public PlayerGunHandler playerGun;
         public float minStageWaitTime;
@@ -195,11 +197,13 @@ namespace Tutorial
                     case Stage.Race:
                         raceCourse.SetActive(false);
                         playerMovement.SetInputBlocked(false); // enable player shoot
+                        GunInfoInstance.ammoCount = 50;
                         break;
                     case Stage.Shooting:
                         minimap.SetActive(true);
                         securityBorder.SetActive(false);
                         healthBar.SetActive(true);
+                        GunInfoInstance.ammoCount = 100;
                         break;
                     case Stage.Enemy:
                         StartCoroutine(FadeOut());
