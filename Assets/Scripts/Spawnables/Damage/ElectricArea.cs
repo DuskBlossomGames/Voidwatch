@@ -14,7 +14,12 @@ namespace Spawnables.Damage
         public float immunityTime;
 
         private readonly Timer _immunity = new();
-        
+
+        private void Update()
+        {
+            _immunity.Update();
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.TryGetComponent<Movement>(out var player) || player.Stunned || !_immunity.IsFinished ||

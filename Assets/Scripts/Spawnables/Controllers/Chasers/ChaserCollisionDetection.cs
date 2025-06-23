@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Player;
+using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using UnityEditor;
 using UnityEngine;
@@ -9,12 +11,23 @@ namespace Spawnables.Controllers.Chasers
 {
     public class ChaserCollisionDetection : MonoBehaviour
     {
+        public ChaserBehavior chaser;
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.GetComponent<PlayerDamageable>() == null) return;
-
-            transform.parent.GetComponent<EnemyDamageable>().varientParent = null; // disable scrap
-            transform.parent.GetComponent<EnemyDamageable>().Damage(float.MaxValue, null);
+            
+            var ed = transform.parent.GetComponent<EnemyDamageable>();
+            var explosionObj = Instantiate(ed.explosion, null, true);
+            explosionObj.SetActive(true);
+            explosionObj.transform.position = transform.position;
+            explosionObj.transform.localScale = transform.parent.lossyScale * 1.5f;
+            explosionObj.GetComponent<ExplosionHandler>().Run(chaser.explosionDamage,
+                explosionObj.transform.localScale.x, ed.gameObject.layer, new List<Collider2D>());
+            
+            ed.explosion = null; // we're doing it ourselves
+            ed.varientParent = null; // disable scrap
+            ed.Damage(float.MaxValue, null);
             
             var ea = transform.parent.GetChild(1);
             ea.SetParent(null);

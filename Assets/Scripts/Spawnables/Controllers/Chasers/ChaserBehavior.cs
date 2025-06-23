@@ -7,6 +7,8 @@ namespace Spawnables.Controllers.Chasers
 {
     public class ChaserBehavior : MissleAim
     {
+        public float explosionDamage;
+        
         private void Start()
         {
             if (target == null) target = GameObject.FindGameObjectWithTag("Player");
