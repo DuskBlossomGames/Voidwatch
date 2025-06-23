@@ -4,7 +4,7 @@ namespace LevelPlay
 {
     public class PlanetSetup : MonoBehaviour
     {
-        private void Start()
+        private void Awake()
         {
             var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 
