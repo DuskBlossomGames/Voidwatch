@@ -277,14 +277,14 @@ MonoBehaviour:
   bulletsPerShotVarience: 0
   reloadTime: 0.2
   refillTime: 0.7
-  shotForce: 1500
+  shotForce: 750
   forceVarience: 200
   lateralSeperation: 0
   verticalSeperation: 0
   misfireChance: 0
   repeats: 0
   repeatSeperation: 0.01
-  dmgMod: 5
+  dmgMod: 10
   shieldMult: 1
   bleedPerc: 0
 --- !u!1 &6001684470992877439

@@ -62,9 +62,11 @@ namespace Static_Info
         // based on how difficultyScore is generated below
         public float MaxDifficultyScore => baseDifficulty +
                                            levelModifier * (Levels.Length - 1) + 2 * randomModifier;
-
+        
         public const int EliteWaves = 3;
-        private float EliteDifficultyBonus => minBudgetPerWave.Select((b, i) => i < EliteWaves ? b : 0).Sum();
+        private const int EliteWaveStartDifficulty = 4;
+
+        private float EliteDifficulty => minBudgetPerWave[EliteWaveStartDifficulty..(EliteWaveStartDifficulty + EliteWaves)].Sum();
 
 
         // TODO: temporary, debug
@@ -93,9 +95,8 @@ namespace Static_Info
                     var difficultyScore = level.Type == LevelType.Boss ? MaxDifficultyScore :
                         baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 2) * randomModifier;
 
-                    var difficultyBudget = (int) (gameDifficultyModifier * (difficultyScore +
-                                                                            (level.Type == LevelType.Elite ? EliteDifficultyBonus : 0) +
-                                                                            0/*TODO: galaxyNumber * galaxyModifier*/));
+                    var difficultyBudget = (int) (gameDifficultyModifier * (level.Type == LevelType.Elite
+                        ? EliteDifficulty : difficultyScore) + 0/*TODO: galaxyNumber * galaxyModifier*/);
                     List<int> waves = new();
 
                     // TODO

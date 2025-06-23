@@ -24,9 +24,6 @@ namespace Shop
         public TextMeshProUGUI dCost, hCost, sCost;
         public Button dButton, hButton, sButton, lhButton, mhButton, hhButton; 
         public TMP_Text scrapDisplay;
-        public bool lf = true;
-        public bool mf = true;
-        public bool rf = true;
 
         public ChainController dmgChain, hpChain, speedChain;
 
@@ -104,8 +101,7 @@ namespace Shop
         public void LowerHeal()
         {
             var PDI = PlayerDataInstance;
-            if (!lf || PDI.Scrap < _repairs[0]) return;
-            lf = !lf;
+            if (PDI.Scrap < _repairs[0]) return;
             PDI.Health = (1 - 2 * (1 - PDI.Health / PDI.maxHealth) / 3) * PDI.maxHealth;
             PDI.Scrap -= _repairs[0];
         }
@@ -113,8 +109,7 @@ namespace Shop
         public void MiddleHeal()
         {
             var PDI = PlayerDataInstance;
-            if (!mf || PDI.Scrap < _repairs[1]) return;
-            mf = !mf;
+            if (PDI.Scrap < _repairs[1]) return;
             PDI.Health = (1 - 1 * (1 - PDI.Health / PDI.maxHealth) / 3) * PDI.maxHealth;
             PDI.Scrap -= _repairs[1];
         }
@@ -122,8 +117,7 @@ namespace Shop
         public void HighHeal()
         {
             var PDI = PlayerDataInstance;
-            if (!rf || PDI.Scrap < _repairs[2]) return;
-            rf = !rf;
+            if (PDI.Scrap < _repairs[2]) return;
             PDI.Health = PDI.maxHealth;
             PDI.Scrap -= _repairs[2];
         }
@@ -186,9 +180,9 @@ namespace Shop
             hpChain.Unlocked = PDI.HealthBoosts;
             speedChain.Unlocked = PDI.SpeedBoosts;
 
-            lhButton.interactable = lf && PDI.Scrap >= _repairs[0];
-            mhButton.interactable = mf && PDI.Scrap >= _repairs[1];
-            hhButton.interactable = rf && PDI.Scrap >= _repairs[2];
+            lhButton.interactable = prog < 1 && PDI.Scrap >= _repairs[0];
+            mhButton.interactable = prog < 1 && PDI.Scrap >= _repairs[1];
+            hhButton.interactable = prog < 1 && PDI.Scrap >= _repairs[2];
         
             dButton.interactable = PDI.Scrap >= boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1);
             hButton.interactable = PDI.Scrap >= boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1);

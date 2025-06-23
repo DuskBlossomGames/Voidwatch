@@ -5,6 +5,7 @@ using Extensions;
 using Player;
 using Spawnables;
 using Spawnables.Controllers;
+using Spawnables.Controllers.Asteroids;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using Static_Info;
@@ -161,8 +162,9 @@ namespace LevelPlay
                     // kill all hazards
                     FindObjectsByType<Damageable>(FindObjectsSortMode.None).ToList().ForEach(dmg =>
                     {
-                        if (dmg.gameObject.layer == LayerMask.NameToLayer("Hazards") ||
-                            dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) dmg.Damage(float.MaxValue, null);
+                        if ((dmg.gameObject.layer == LayerMask.NameToLayer("Hazards") 
+                            || dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) 
+                            && dmg.GetComponent<AsteroidController>() == null) dmg.Damage(float.MaxValue, null);
                     });
 
                     if (_level.Type == LevelType.Elite)

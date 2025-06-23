@@ -417,14 +417,14 @@ MonoBehaviour:
   bulletsPerShotVarience: 0
   reloadTime: 0.2
   refillTime: 0.7
-  shotForce: 1500
+  shotForce: 750
   forceVarience: 200
   lateralSeperation: 200
   verticalSeperation: 0
   misfireChance: 0
   repeats: 1
   repeatSeperation: 0.1
-  dmgMod: 7
+  dmgMod: 14
   shieldMult: 1
   bleedPerc: 0
 --- !u!114 &7410061765303661339
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c7deeaa2a87ea4f88935a16f9654d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boidCount: 5
+  boidCount: 6
 --- !u!114 &5597069691401805074
 MonoBehaviour:
   m_ObjectHideFlags: 0

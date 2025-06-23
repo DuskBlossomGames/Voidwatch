@@ -5670,7 +5670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf58cae5392a4bfda803ce5b50f16597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMod: 0.5
+  enemyMod: 1.1
   playerMod: 1.5
   trueDamageMod: 1.2
   cooldown: 0.15
@@ -6040,6 +6040,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 0}
   isTutorial: 0
   vignette: {fileID: 0}
+  enemySpawner: {fileID: 0}
   fadeOut: {fileID: 0}
   fadeouttime: 1
   title: {fileID: 0}

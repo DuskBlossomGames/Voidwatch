@@ -131,13 +131,14 @@ namespace Player
         {
             if (godmode) return;
 
-            if (PlayerDataInstance.autoDodge)
+            if (PlayerDataInstance.autoDodge && damage > 15)
             {
                 var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
                     19*Mathf.Log(damage/110.6f)); // magic formula; max dodgeable is 2000 dmg, first dmg above min cost is 200
                 if (cost <= _movement.DodgeJuice)
                 {
                     _movement.DodgeOnceCost = cost;
+                    _movement.DodgeOnceDir = _movement.GetComponent<CustomRigidbody2D>().linearVelocity.normalized;
                     return;
                 }
             }

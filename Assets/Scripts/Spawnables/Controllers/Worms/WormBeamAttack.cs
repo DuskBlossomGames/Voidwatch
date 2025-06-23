@@ -39,7 +39,7 @@ namespace Spawnables.Controllers.Worms
             yield return new WaitForSeconds(chargeTime);
 
             GetComponent<WormSegment>().speed /= 4;
-            Vector2 dir = GetComponent<WormSegment>().PredDir(dodgeTime);
+            Vector2 dir = GetComponent<WormSegment>().PredDir(dodgeTime+0.1f);
 
             GameObject ray = new GameObject("Warning Beam");
             _spawns.Add(ray);

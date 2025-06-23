@@ -8792,7 +8792,7 @@ MonoBehaviour:
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   nUpMan: {fileID: 682528864}
-  debugEnemy: {fileID: 0}
+  debugEnemy: {fileID: 7455740270890831396, guid: c161bb06027a88f459755f266a61a8c8, type: 3}
 --- !u!4 &1780276284
 Transform:
   m_ObjectHideFlags: 0
