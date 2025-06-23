@@ -10,6 +10,7 @@ using Q_Vignette.Scripts;
 using Spawnables;
 using Spawnables.Controllers;
 using Spawnables.Controllers.Bullets;
+using Spawnables.Controllers.Defenses;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using Static_Info;
@@ -104,7 +105,7 @@ namespace Player
         private void Update()
         {
             // failsafe
-            if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Damage(float.MaxValue, null);
+            if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Damage(float.MaxValue, FindAnyObjectByType<PointAtTargets>().gameObject);
 
             if (Health < 0) OnDeath(null);
             

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Extensions;
 using Static_Info;
 using TMPro;
@@ -40,7 +41,7 @@ namespace Menus
             _texts = GetComponentsInChildren<TextMeshProUGUI>(true);
             _flashes = GetComponentsInChildren<FlashUI>(true);
             _buttons = GetComponentsInChildren<Button>(true);
-            _images = GetComponentsInChildren<Image>(true);
+            _images = GetComponentsInChildren<Image>(true).Where(i => i != fadeIn).ToArray();
 
             _initCredits = GameObject.Find("RollCredits") != null;
             if (_initCredits) Destroy(GameObject.Find("RollCredits"));
@@ -53,14 +54,14 @@ namespace Menus
                 tutorialHint.SetActive(true);
                 SettingsInterface.isFirstTime = false; // since this is the only place it's used, easy solution for now, can change if needed elsewhere
             }
-            
+
             StartCoroutine(FadeIn());
         }
 
         private IEnumerator FadeIn()
         {
             fadeIn.gameObject.SetActive(true);
-            if (_initCredits) yield return Fade(false);
+            if (_initCredits) yield return Fade(false, false);
 
             GetComponent<Canvas>().enabled = true;
             ps.gameObject.SetActive(true);
@@ -76,14 +77,14 @@ namespace Menus
             if (_initCredits) yield return CreditsRoutine();
         }
 
-        private IEnumerator Fade(bool includeCredits)
+        private IEnumerator Fade(bool includeCredits, bool wait=true)
         {
             foreach (var flash in _flashes) flash.enabled = false;
             foreach (var button in _buttons) button.interactable = false;
 
             for (float t = 0; t < fadeTime; t += Time.fixedDeltaTime)
             {
-                yield return new WaitForFixedUpdate();
+                if (!wait) yield return new WaitForFixedUpdate();
                 foreach (var obj in _texts)
                 {
                     if (!includeCredits && obj.transform.IsChildOf(credits)) continue;

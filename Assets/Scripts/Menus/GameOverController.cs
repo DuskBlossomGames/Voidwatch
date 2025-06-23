@@ -23,6 +23,7 @@ namespace Menus
         public GameObject[] statistics;
         public float fadeInTime;
         public float statisticsBeforeTime, statisticsFadeTime, statisticsBetweenTime;
+        public Image fadeOutAgain;
 
         public IEnumerator Run(bool won, DeathInfo diedTo)
         {
@@ -91,6 +92,14 @@ namespace Menus
                    !InputManager.GetKeyDown(KeyCode.Mouse0) && !InputManager.GetKeyDown(KeyCode.Space))
             {
                 yield return new WaitForFixedUpdate();
+            }
+            
+            fadeOutAgain.gameObject.SetActive(true);
+            fadeOutAgain.SetAlpha(0);
+            for (float t = 0; t < fadeOutTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                fadeOutAgain.SetAlpha(t/fadeOutTime);
             }
             
             Destroy(StaticInfoHolder.Instance.gameObject);
