@@ -172,9 +172,9 @@ namespace Shop
             rhp.anchorMax = new Vector2(_anchorMaxStart + _anchorWidth * (1f), rhp.anchorMax.y);
         
             scrapDisplay.text = $"{PDI.Scrap:### ### ### ##0}";
-            dCost.text = $"{boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1):### ### ### ##0}";
-            hCost.text = $"{boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1):### ### ### ##0}";
-            sCost.text = $"{boostCost * (PDI.SpeedBoosts + 1) * (PDI.SpeedBoosts + 1):### ### ### ##0}";
+            dCost.text = PDI.DamageBoosts < 5 ? $"{boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1):### ### ### ##0}" : "MAX";
+            hCost.text = PDI.HealthBoosts < 5 ? $"{boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1):### ### ### ##0}" : "MAX";
+            sCost.text = PDI.SpeedBoosts < 5 ? $"{boostCost * (PDI.SpeedBoosts + 1) * (PDI.SpeedBoosts + 1):### ### ### ##0}" : "MAX";
 
             dmgChain.Unlocked = PDI.DamageBoosts;
             hpChain.Unlocked = PDI.HealthBoosts;
@@ -184,9 +184,9 @@ namespace Shop
             mhButton.interactable = prog < 1 && PDI.Scrap >= _repairs[1];
             hhButton.interactable = prog < 1 && PDI.Scrap >= _repairs[2];
         
-            dButton.interactable = PDI.Scrap >= boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1);
-            hButton.interactable = PDI.Scrap >= boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1);
-            sButton.interactable = PDI.Scrap >= boostCost * (PDI.SpeedBoosts + 1) * (PDI.SpeedBoosts + 1);
+            dButton.interactable = PDI.DamageBoosts < 5 && PDI.Scrap >= boostCost * (PDI.DamageBoosts + 1) * (PDI.DamageBoosts + 1);
+            hButton.interactable = PDI.HealthBoosts < 5 && PDI.Scrap >= boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1);
+            sButton.interactable = PDI.SpeedBoosts < 5 && PDI.Scrap >= boostCost * (PDI.SpeedBoosts + 1) * (PDI.SpeedBoosts + 1);
         
             SetPrices();
         }
