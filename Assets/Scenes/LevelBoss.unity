@@ -2972,6 +2972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
+  trackDeath: 0
   tier: 1
   enemyType: 5
   maxHealth: 0
@@ -6275,6 +6276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 1
+  trackDeath: 0
   tier: 1
   enemyType: 5
   maxHealth: 60
@@ -8595,6 +8597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 1
+  trackDeath: 0
   tier: 1
   enemyType: 5
   maxHealth: 60
@@ -10554,6 +10557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
+  trackDeath: 0
   tier: 1
   enemyType: 5
   maxHealth: 0
@@ -11920,8 +11924,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 174262420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.2, y: 1}
+  m_AnchorMin: {x: 0, y: 0.1}
+  m_AnchorMax: {x: 0.2, y: 0.9}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -11945,7 +11949,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8a6a05d3be3604c2690e76c8c429e4b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3bc0bcf1ea37a47f8a69c89e76e4a651, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -14419,6 +14423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
+  trackDeath: 0
   tier: 1
   enemyType: 5
   maxHealth: 0

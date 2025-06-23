@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba59484905c838d44baffea2dd31fffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accelforce: 27
+  accelforce: 25
   target: {fileID: 0}
   maxFuel: 0
   particles: {fileID: 0}
@@ -5249,6 +5249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ec139ad2a948dea22f6996898446a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialDamage: 200
-  shieldDamagePerSecond: 100
+  initialDamage: 100
+  shieldDamagePerSecond: 200
   stunTime: 2
+  immunityTime: 1
