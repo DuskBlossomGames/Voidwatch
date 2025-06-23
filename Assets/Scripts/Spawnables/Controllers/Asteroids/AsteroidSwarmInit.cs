@@ -29,7 +29,6 @@ namespace Spawnables.Controllers.Asteroids
 
                 var asteroid = Instantiate(obj, transform.position +
                                  (Vector3) (spreadMultiplier*origSize*Random.insideUnitCircle), Quaternion.identity);
-                asteroid.transform.SetParent(null);
 
                 asteroid.GetComponent<AsteroidController>().startVel = driftVel;
             }

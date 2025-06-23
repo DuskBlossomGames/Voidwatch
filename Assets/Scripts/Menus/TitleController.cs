@@ -1,5 +1,6 @@
 using System.Collections;
 using Extensions;
+using Static_Info;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
 using Button = UnityEngine.UI.Button;
+using static Static_Info.Statistics;
 
 namespace Menus
 {
@@ -134,6 +136,7 @@ namespace Menus
             ps.gameObject.SetActive(false);
 
             yield return new WaitForSeconds(waitTime);
+            StatisticsInstance.startTime = Time.time;
             SceneManager.LoadScene("LevelSelect");
         }
 

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 582754640268470002}
   - component: {fileID: 6725564530229344085}
   - component: {fileID: 8614088855332405689}
+  - component: {fileID: 7430330871907421853}
   m_Layer: 8
   m_Name: Missiler
   m_TagString: Untagged
@@ -315,3 +316,17 @@ MonoBehaviour:
     name: fire
   framesPerSecond: 20
   loop: 0
+--- !u!114 &7430330871907421853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430136990600543352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: -1358975380, guid: dd50de61391000b40a753484f74b5372, type: 3}
+  title: Missiler

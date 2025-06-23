@@ -5852,6 +5852,7 @@ GameObject:
   - component: {fileID: 6517574593632805756}
   - component: {fileID: 4196548031175783819}
   - component: {fileID: 3119659123227047046}
+  - component: {fileID: 5576731283433186254}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -6043,12 +6044,7 @@ MonoBehaviour:
   enemySpawner: {fileID: 0}
   fadeOut: {fileID: 0}
   fadeouttime: 1
-  title: {fileID: 0}
-  subtitle: {fileID: 0}
-  statistics: []
-  statisticsBeforeTime: 0.5
-  statisticsFadeTime: 0.3
-  statisticsBetweenTime: 0.3
+  gameOver: {fileID: 0}
   vignetteCurve:
     serializedVersion: 2
     m_Curve:
@@ -6103,7 +6099,7 @@ MonoBehaviour:
   shieldBar: {fileID: 0}
   audioPlayer: {fileID: 0}
   PlayerHitShield: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
-  PlayerHitDamage: {fileID: 8300000, guid: a5ac4e7b3681b458a894b4481f2fb3da, type: 3}
+  PlayerHitDamage: {fileID: 8300000, guid: 43ad996c8068547eba46b0acb990ae4a, type: 3}
   godmode: 0
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
@@ -6266,6 +6262,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bif: {fileID: 7119497648670040162}
   StunElectricity: {fileID: 3163672952808208618}
+--- !u!114 &5576731283433186254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997792626973407928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: -810062340, guid: cde6125cc0d214d11a087a64bebe0a9f, type: 3}
+  title: Yourself
 --- !u!1 &6003794264972008175
 GameObject:
   m_ObjectHideFlags: 0

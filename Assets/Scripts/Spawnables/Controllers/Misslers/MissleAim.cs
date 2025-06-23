@@ -12,6 +12,7 @@ namespace Spawnables.Controllers.Misslers
     public class MissleAim : MonoBehaviour
     {
         public float accelforce;
+        public GameObject owner;
         public GameObject target;
         //public GameObject marker;
         public float maxFuel;

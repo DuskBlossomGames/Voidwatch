@@ -376,6 +376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6077276900865238909}
   - component: {fileID: 4352720049731049132}
+  - component: {fileID: 8753938358301726008}
   m_Layer: 0
   m_Name: Platelin Cluster
   m_TagString: Untagged
@@ -415,3 +416,17 @@ MonoBehaviour:
   cost: 7
   ScrapCount: 0
   ScrapPrefab: {fileID: 0}
+--- !u!114 &8753938358301726008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663828382742004186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 454445444, guid: 706e2aa31ab3c44bc9fafd74e9a38518, type: 3}
+  title: Platelin

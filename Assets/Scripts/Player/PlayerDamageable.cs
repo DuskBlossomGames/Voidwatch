@@ -4,8 +4,12 @@ using System.Linq;
 using Extensions;
 using JetBrains.Annotations;
 using LevelPlay;
+using Menus;
 using ProgressBars;
 using Q_Vignette.Scripts;
+using Spawnables;
+using Spawnables.Controllers;
+using Spawnables.Controllers.Bullets;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using Static_Info;
@@ -27,9 +31,8 @@ namespace Player
         public EnemySpawner enemySpawner;
         public GameObject fadeOut;
         public float fadeouttime = 1;
-        public TextMeshProUGUI title, subtitle;
-        public GameObject[] statistics;
-        public float statisticsBeforeTime, statisticsFadeTime, statisticsBetweenTime; 
+
+        public GameOverController gameOver;
         
         public AnimationCurve vignetteCurve;
         public float vignetteDuration, vignettePeak;
@@ -61,11 +64,7 @@ namespace Player
         protected override float Health
         {
             get => PlayerDataInstance.Health;
-            set
-            {
-                PlayerDataInstance.Health = value;
-                if (value <= 0) OnDeath(null);
-            }
+            set => PlayerDataInstance.Health = value;
         }
 
         protected float ShieldRegenRate => PlayerDataInstance.shieldRegenRate;
@@ -106,6 +105,8 @@ namespace Player
         {
             // failsafe
             if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Damage(float.MaxValue, null);
+
+            if (Health < 0) OnDeath(null);
             
             ShieldPower = Mathf.Clamp(ShieldPower + ShieldRegenRate * Time.deltaTime, -ShieldMaxDebt, ShieldMaxPower);
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
@@ -222,11 +223,21 @@ namespace Player
             healthBar.UpdatePercentage(Health, MaxHealth);
         }
 
+        private bool _died;
         protected override void OnDeath(GameObject source)
         {
-            if (enemySpawner != null) enemySpawner.enabled = false;
+            if (_died) return;
+            _died = true;
             
-            StartCoroutine(DeathFade());
+            if (enemySpawner != null) enemySpawner.enabled = false;
+
+            StartCoroutine(DeathFade(source.TryGetComponent<BulletCollision>(out var bullet)
+                ? bullet.owner.GetComponentInParent<DeathInfo>()
+                : source.TryGetComponent<MissleAim>(out var missile)
+                ? (missile.owner == null ? source : missile.owner).GetComponentInParent<DeathInfo>()
+                : source.TryGetComponent<AreaDamager>(out var ae)
+                ? (ae.owner == null ? source : ae.owner).GetComponentInParent<DeathInfo>()
+                : source.GetComponentInParent<DeathInfo>()));
             var angleOffset = Random.Range(0, 360f);
             for (var i = 0; i < numBits; i++)
             {
@@ -259,63 +270,28 @@ namespace Player
             }
         }
 
-        IEnumerator DeathFade()
+        IEnumerator DeathFade(DeathInfo diedTo)
         {
             for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(false);
             
             _movement.SetInputBlocked(true);
-            fadeOut.SetActive(true);
+            
             if (!isTutorial)
             {
-                title.gameObject.SetActive(true);
-                subtitle.gameObject.SetActive(true);
-                title.SetAlpha(0);
-                subtitle.SetAlpha(0);
-            }
-            fadeOut.GetComponent<Image>().SetAlpha(0);
-            for (var i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
-            {
-                yield return new WaitForSecondsRealtime(.01f);
-                var prog = i / (100 * fadeouttime);
-                
-                if (!isTutorial)
-                {
-                    fadeOut.GetComponent<Image>().SetAlpha(Mathf.Pow(prog, .5f));
-                    title.SetAlpha(Mathf.Pow(prog, .5f));
-                    subtitle.SetAlpha(Mathf.Pow(prog, .5f));
-                }
-            }
-
-            if (!isTutorial)
-            {
-                yield return new WaitForSeconds(statisticsBeforeTime);
-                Statistics.SetText(statistics.Select(o => o.GetComponentsInChildren<TextMeshProUGUI>()[1]).ToArray());
-                
-                foreach (var stat in statistics)
-                {
-                    stat.SetActive(true);
-                    for (float t = 0; t < statisticsFadeTime; t += Time.fixedDeltaTime)
-                    {
-                        stat.GetComponentInChildren<Image>().SetAlpha(t/statisticsFadeTime);
-                        foreach (var text in stat.GetComponentsInChildren<TextMeshProUGUI>()) text.SetAlpha(t/statisticsFadeTime);
-                        
-                        yield return new WaitForFixedUpdate();
-                    }
-                    
-                    yield return new WaitForSeconds(statisticsBetweenTime);
-                }
-                
-                while (!InputManager.GetKeyDown(KeyCode.Return) && !InputManager.GetKeyDown(KeyCode.Escape) &&
-                       !InputManager.GetKeyDown(KeyCode.Mouse0) && !InputManager.GetKeyDown(KeyCode.Space))
-                {
-                    yield return new WaitForFixedUpdate();
-                }
-                
-                Destroy(StaticInfoHolder.Instance.gameObject); // reset static info
-                SceneManager.LoadScene("TitleScreen"); // return to boot
+                StartCoroutine(gameOver.Run(false, diedTo));
             }
             else
             {
+                fadeOut.SetActive(true);
+                fadeOut.GetComponent<Image>().SetAlpha(0);
+                for (var i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
+                {
+                    yield return new WaitForSecondsRealtime(.01f);
+                    var prog = i / (100 * fadeouttime);
+                
+                    fadeOut.GetComponent<Image>().SetAlpha(Mathf.Pow(prog, .5f));
+                }
+
                 transform.position = _startLoc;
                 godmode = false;
                 GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.zero;

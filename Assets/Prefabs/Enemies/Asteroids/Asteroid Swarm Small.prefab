@@ -65,6 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 864c738debf1c4afaa422c0e22d1d93b, type: 3}
+  title: Asteroid
   hazardObject: 1
   cost: 5
   ScrapCount: 0

@@ -152,7 +152,9 @@ namespace Spawnables.Controllers.Platelins
                 _gooTimer.Update();
                 if (_gooTimer.IsFinished)
                 {
-                    Instantiate(goo, transform.position, transform.rotation).transform.localScale *= _scale / normalSize;
+                    var newGoo = Instantiate(goo, transform.position, transform.rotation);
+                    newGoo.transform.localScale *= _scale/normalSize;
+                    newGoo.GetComponent<AreaDamager>().owner = transform.parent.gameObject;
                     _gooTimer.Value = gooSpawnTime;
                 }
             }
@@ -212,7 +214,9 @@ namespace Spawnables.Controllers.Platelins
             _numPlatelins--;
         
             _leader._subjects.Remove(gameObject);
-            Instantiate(goo, transform.position, transform.rotation).transform.localScale *= explosionScaleMult;
+            var newGoo = Instantiate(goo, transform.position, transform.rotation);
+            newGoo.transform.localScale *= explosionScaleMult;
+            newGoo.GetComponent<AreaDamager>().owner = transform.parent.gameObject;
             if (transform.parent.childCount == 1)
             {
                 GetComponent<EnemyDamageable>().healthPickup = healthPickup;

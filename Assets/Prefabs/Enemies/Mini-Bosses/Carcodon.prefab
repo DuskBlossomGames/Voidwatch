@@ -1950,6 +1950,7 @@ GameObject:
   - component: {fileID: -5548867977713206262}
   - component: {fileID: -9101354916200461371}
   - component: {fileID: 2306016957590154251}
+  - component: {fileID: -7286475855829482345}
   m_Layer: 17
   m_Name: Carcodon
   m_TagString: Untagged
@@ -2332,6 +2333,20 @@ MonoBehaviour:
   stunBar: {fileID: 0}
   stunnable: {fileID: 0}
   hitsToStun: 0
+--- !u!114 &-7286475855829482345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4353281618518814614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: -392216076, guid: 56d5e5933486345bab95fca6a0a7d972, type: 3}
+  title: Carcadon
 --- !u!1 &4413525710197146119
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,6 +49,7 @@ namespace Spawnables.Controllers.Misslers
                 for (var i = 0; i < amt; i++)
                 {
                     var missile = Instantiate(missilePrefab, transform.position, transform.rotation);
+                    missile.GetComponent<MissleAim>().owner = gameObject;
                     missile.GetComponent<MissleAim>().target = target;
                     missile.GetComponent<CustomRigidbody2D>().AddForce(shootForce * Random.insideUnitCircle);
                 }

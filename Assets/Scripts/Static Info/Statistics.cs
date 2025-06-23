@@ -10,17 +10,22 @@ namespace Static_Info
         
         public static Statistics StatisticsInstance => StaticInfoHolder.Instance.GetCachedComponent<Statistics>();
 
+        // reflections needs these to be first
         public int levelsCleared;
         public int enemiesDefeated;
         public int scrapCollected;
         public int bulletsShot;
         public int timesDashed;
         public float distanceTraveled;
+        // ------------------------------------
+
+        public float startTime;
+        
 
         public static void SetText(TextMeshProUGUI[] texts)
         {
             var fields = typeof(Statistics).GetFields(BindingFlags.Instance | BindingFlags.Public);
-            for (var i = 0; i < fields.Length; i++)
+            for (var i = 0; i < texts.Length; i++)
             {
                 var dt = fields[i].Name == "distanceTraveled";
                 

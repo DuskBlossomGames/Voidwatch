@@ -433,6 +433,7 @@ GameObject:
   - component: {fileID: 788439408942379800}
   - component: {fileID: 7399155155839543350}
   - component: {fileID: 8461856629468172864}
+  - component: {fileID: 2075841115787099456}
   m_Layer: 21
   m_Name: Bifurcator
   m_TagString: Untagged
@@ -518,6 +519,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+--- !u!114 &2075841115787099456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6810281189628237293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: f44e3e4eb98764428818446724417552, type: 3}
+  title: Bifurcator
 --- !u!1 &8783412800550140137
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
+using Menus;
 using Player;
 using Spawnables;
 using Spawnables.Controllers;
@@ -28,10 +29,8 @@ namespace LevelPlay
         public PlanetSetup planet;
 
         public WaveIndicatorController wic;
-        
-        public Image carcWinImage;
-        public TextMeshProUGUI carcWinText, carcWinSubtext;
-        public float winFadeInTime;
+
+        public GameOverController gameOver;
         
         public PlayerDamageable playerDamager;
         public GameObject scrapPrefab;
@@ -219,38 +218,8 @@ namespace LevelPlay
             player.GetComponent<Movement>().SetInputBlocked(true);
             player.GetComponent<Movement>().autoPilot = true;
             player.GetComponent<PlayerDamageable>().godmode = true;
-            
-            fadeIn.SetActive(true);
-            fadeIn.GetComponent<Image>().SetAlpha(0);
-            for (float t = 0; t < winFadeInTime; t += Time.fixedDeltaTime)
-            {
-                yield return new WaitForFixedUpdate();
-                fadeIn.GetComponent<Image>().SetAlpha(t / winFadeInTime);
-            }
 
-            carcWinImage.gameObject.SetActive(true);
-            carcWinText.gameObject.SetActive(true);
-            carcWinSubtext.gameObject.SetActive(true);
-            carcWinImage.SetAlpha(0);
-            carcWinText.SetAlpha(0);
-            carcWinSubtext.SetAlpha(0);
-            for (float t = 0; t < winFadeInTime; t += Time.fixedDeltaTime)
-            {
-                yield return new WaitForFixedUpdate();
-                carcWinImage.SetAlpha(t / winFadeInTime);
-                carcWinText.SetAlpha(t / winFadeInTime);
-                carcWinSubtext.SetAlpha(t / winFadeInTime);
-            }
-
-            while (!InputManager.GetKeyDown(KeyCode.Return) && !InputManager.GetKeyDown(KeyCode.Escape) &&
-                   !InputManager.GetKeyDown(KeyCode.Mouse0) && !InputManager.GetKeyDown(KeyCode.Space))
-            {
-                yield return new WaitForFixedUpdate();
-            }
-            
-            Destroy(StaticInfoHolder.Instance.gameObject);
-            DontDestroyOnLoad(new GameObject("RollCredits")); // TODO: this is so scuffed ahhhh
-            SceneManager.LoadScene("TitleScreen");
+            yield return gameOver.Run(true, null);
         }
 
         public void SpawnHazards()
