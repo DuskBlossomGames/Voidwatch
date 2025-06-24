@@ -107,7 +107,7 @@ namespace Spawnables.Controllers.Misslers
 
             var ignore = new List<Collider2D>();
             if (other != null) ignore.Add(other);
-            exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject.layer, ignore);
+            exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject, ignore);
             Destroy(gameObject);
         }
 

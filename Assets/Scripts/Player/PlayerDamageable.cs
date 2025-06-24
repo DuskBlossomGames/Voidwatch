@@ -232,13 +232,7 @@ namespace Player
             
             if (enemySpawner != null) enemySpawner.enabled = false;
 
-            StartCoroutine(DeathFade(source.TryGetComponent<BulletCollision>(out var bullet)
-                ? bullet.owner.GetComponentInParent<DeathInfo>()
-                : source.TryGetComponent<MissleAim>(out var missile)
-                ? (missile.owner == null ? source : missile.owner).GetComponentInParent<DeathInfo>()
-                : source.TryGetComponent<AreaDamager>(out var ae)
-                ? (ae.owner == null ? source : ae.owner).GetComponentInParent<DeathInfo>()
-                : source.GetComponentInParent<DeathInfo>()));
+            StartCoroutine(DeathFade(FindDeathInfo(source)));
             var angleOffset = Random.Range(0, 360f);
             for (var i = 0; i < numBits; i++)
             {
@@ -301,6 +295,39 @@ namespace Player
                 _movement.SetInputBlocked(false);
                 fadeOut.SetActive(false);
                 Heal(MaxHealth);
+            }
+        }
+
+        [CanBeNull]
+        private static DeathInfo FindDeathInfo(GameObject source)
+        {
+            while (true)
+            {
+                if (source.TryGetComponent<BulletCollision>(out var bullet))
+                {
+                    source = bullet.owner;
+                    continue;
+                }
+
+                if (source.TryGetComponent<MissleAim>(out var missile) && missile.owner != null)
+                {
+                    source = missile.owner;
+                    continue;
+                }
+
+                if (source.TryGetComponent<AreaDamager>(out var ae) && ae.owner != null)
+                {
+                    source = ae.owner;
+                    continue;
+                }
+
+                if (source.TryGetComponent<ExplosionHandler>(out var exp) && exp.source != null)
+                {
+                    source = exp.source;
+                    continue;
+                }
+
+                return source.GetComponentInParent<DeathInfo>();
             }
         }
     }

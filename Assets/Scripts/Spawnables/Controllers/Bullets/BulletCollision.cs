@@ -110,7 +110,7 @@ namespace Spawnables.Controllers.Bullets
                 
                 var obj = Instantiate(explosion);
                 obj.transform.position = transform.position;
-                obj.GetComponent<ExplosionHandler>().Run(explosionDmg, explosionRange, gameObject.layer, ignore);
+                obj.GetComponent<ExplosionHandler>().Run(explosionDmg, explosionRange, gameObject, ignore);
             }
         }
     }

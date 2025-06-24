@@ -23,7 +23,7 @@ namespace Spawnables.Controllers.Chasers
             explosionObj.transform.position = transform.position;
             explosionObj.transform.localScale = transform.parent.lossyScale * 1.5f;
             explosionObj.GetComponent<ExplosionHandler>().Run(chaser.explosionDamage,
-                explosionObj.transform.localScale.x, ed.gameObject.layer, new List<Collider2D>());
+                explosionObj.transform.localScale.x, ed.gameObject);
             
             ed.explosion = null; // we're doing it ourselves
             ed.varientParent = null; // disable scrap

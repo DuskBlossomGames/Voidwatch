@@ -12,6 +12,7 @@ namespace Spawnables.Controllers.Misslers
         public float shieldMult, bleedPerc;
         private float _AudioPlayerPitchStatic;
 
+        public GameObject source;
 
 
         public void Play()
@@ -25,8 +26,13 @@ namespace Spawnables.Controllers.Misslers
             StartCoroutine(Kill(.5f));
         }
 
-        public void Run(float damage, float range, int layer, List<Collider2D> ignore)
+        public void Run(float damage, float range, GameObject source, List<Collider2D> ignore = null, int layer = -1)
         {
+            if (layer == -1) layer = source.layer;
+            ignore ??= new List<Collider2D>();
+            
+            this.source = source;
+            
             var scale = range / 5; // ~5 is the empirically derived start scale
             transform.localScale = new Vector3(scale, scale, 1);
 

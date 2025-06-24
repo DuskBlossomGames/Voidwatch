@@ -171,7 +171,7 @@ namespace Player
                     var obj = Instantiate(explosion);
                     obj.transform.position = transform.position;
                     obj.GetComponent<ExplosionHandler>().Run(PlayerDataInstance.dodgeExplosionDamage,
-                        1.5f + PlayerDataInstance.dodgeExplosionDamage / 25, gameObject.layer,
+                        1.5f + PlayerDataInstance.dodgeExplosionDamage / 25, gameObject,
                         new List<Collider2D> { _collider });
                 }
 
