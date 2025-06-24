@@ -8,6 +8,7 @@ namespace Spawnables.Controllers.Chasers
     public class ChaserBehavior : MissleAim
     {
         public float explosionDamage;
+        public float startupTime;
         
         private void Start()
         {
@@ -17,6 +18,8 @@ namespace Spawnables.Controllers.Chasers
 
         protected override void FixedUpdate()
         { // ripped striaght from MissleAim#FixedUpdate
+            if ((startupTime -= Time.fixedDeltaTime) > 0) return;
+            
             _fuel -= accelforce * Time.fixedDeltaTime;
             _rigid.AddForce(accelforce * _nDir);
             _oVel = _rigid.linearVelocity;

@@ -18,9 +18,6 @@ namespace Shop
         public TMP_Text lbut;
         public TMP_Text mbut;
         public TMP_Text rbut;
-        public TMP_Text wbo;
-        public TMP_Text hbo;
-        public TMP_Text sbo;
         public TextMeshProUGUI dCost, hCost, sCost;
         public Button dButton, hButton, sButton, lhButton, mhButton, hhButton; 
         public TMP_Text scrapDisplay;
@@ -48,48 +45,24 @@ namespace Shop
             float mrem = Mathf.Round(rem * factor) / factor;
             float tprice = mag * (pdig + mrem);
             int rprice = 5 * Mathf.CeilToInt(tprice / 5); //Round to nearest 5
-            if (rprice < minPrice) rprice = minPrice + 5;
-            return rprice;
+            return Mathf.Max(rprice, minPrice);
         }
 
-        public void SetPrices()
+        private void SetPrices()
         {
             var PDI = PlayerDataInstance;
-            float perDmg = 1 - PDI.Health / PDI.maxHealth;
-            var MHP = PDI.maxHealth;
-            float mercy = Mathf.Pow(perDmg, 1f / 3f);
+            float mercy = Mathf.Pow(1 - PDI.Health / PDI.maxHealth, 1f / 3f);
             float mul = Mathf.Lerp(honestFactor, 1f, mercy);
         
             int min;
-            _repairs[0] = min = RoundPrice(mul * MHP * scrapPerThouHp / 1000f * cheapDiscount); // 1/3 Cost
-            _repairs[1] = min = RoundPrice(mul * MHP * scrapPerThouHp / 1000f * midDiscount, min); // 2/3 Cost
-            _repairs[2] = min = RoundPrice(mul * MHP * scrapPerThouHp / 1000f, min); // Full Cost
+            var dmg = PDI.maxHealth - PDI.Health;
+            _repairs[0] = min = RoundPrice(mul * dmg * scrapPerThouHp / 1000f * cheapDiscount); // 1/3 Cost
+            _repairs[1] = min = RoundPrice(mul * dmg * scrapPerThouHp / 1000f * midDiscount, min); // 2/3 Cost
+            _repairs[2] = min = RoundPrice(mul * dmg * scrapPerThouHp / 1000f, min); // Full Cost
 
             lbut.text = $"{_repairs[0]:# ### ###}";
             mbut.text = $"{_repairs[1]:# ### ###}";
             rbut.text = $"{_repairs[2]:# ### ###}";
-
-            // TODO: show cost (and maybe boost) somewhere...
-            // if (PDI.healthBoosts < 5) {
-            //     var rbc = boostCost * (PDI.healthBoosts + 1) * (PDI.healthBoosts + 1);
-            //     hbo.text = $"Lvl {_roman[PDI.healthBoosts]}: +{boostPercentages[PDI.healthBoosts]}%\n{rbc} SCRAP";
-            // } else {
-            //     hbo.text = $"Max Lvl";
-            // }
-            //
-            // if (PDI.damageBoosts < 5) {
-            //     var rbc = boostCost * (PDI.damageBoosts + 1) * (PDI.damageBoosts + 1);
-            //     wbo.text = $"Lvl {_roman[PDI.damageBoosts]}: +{boostPercentages[PDI.damageBoosts]}%\n{rbc} SCRAP";
-            // } else {
-            //     wbo.text = $"Max Lvl";
-            // }
-            //
-            // if (PDI.speedBoosts < 5) {
-            //     var rbc = boostCost * (PDI.speedBoosts + 1) * (PDI.speedBoosts + 1);
-            //     sbo.text = $"Lvl {_roman[PDI.speedBoosts]}: +{boostPercentages[PDI.speedBoosts]}%\n{rbc} SCRAP";
-            // } else {
-            //     sbo.text = $"Max Lvl";
-            // }
         }
 
 
@@ -127,9 +100,9 @@ namespace Shop
             var PDI = PlayerDataInstance;
             var rbc = boostCost * (PDI.HealthBoosts + 1) * (PDI.HealthBoosts + 1);
             if (PDI.HealthBoosts >= 5 || PDI.Scrap < rbc) return;
-            float per = PDI.Health / PDI.maxHealth;
+            var dmg = PDI.maxHealth - PDI.Health;
             PDI.maxHealth = Mathf.CeilToInt(PDI.maxHealth * (1f + boostPercentages[PDI.HealthBoosts] / 100f));
-            PDI.Health = PDI.maxHealth * per;
+            PDI.Health = PDI.maxHealth - dmg;
             PDI.HealthBoosts += 1;
             PDI.Scrap -= (int) rbc;
         }

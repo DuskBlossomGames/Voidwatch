@@ -143,6 +143,7 @@ namespace Player
             
             PlayerDataInstance.Scrap -= _rerollCost;
             _rerollCost = Mathf.RoundToInt(_rerollCost * Mathf.Max(1.8f - 0.1f * ++_numRerolls, 1.2f) / 10) * 10;
+            reroll.GetComponentInChildren<TextMeshProUGUI>().text = _rerollCost.ToString();
             
             SetUpgrades();
             UpdateUpgrades();

@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelforce: 25
+  owner: {fileID: 0}
   target: {fileID: 0}
   maxFuel: 0
   particles: {fileID: 0}
@@ -171,6 +172,7 @@ MonoBehaviour:
   shieldMult: 0
   bleedPerc: 0
   explosionDamage: 30
+  startupTime: 2
 --- !u!114 &-6944973614021043999
 MonoBehaviour:
   m_ObjectHideFlags: 0
