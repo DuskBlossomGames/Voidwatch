@@ -88,8 +88,8 @@ namespace Menus
                 yield return new WaitForSeconds(statisticsBetweenTime);
             }
             
-            while (!InputManager.GetKeyDown(KeyCode.Return) && !InputManager.GetKeyDown(KeyCode.Escape) &&
-                   !InputManager.GetKeyDown(KeyCode.Mouse0) && !InputManager.GetKeyDown(KeyCode.Space))
+            while (!InputManager.GetKeyDown(KeyCode.Return) && !InputManager.GetKeyDown(KeyCode.Mouse0) 
+                                                            && !InputManager.GetKeyDown(KeyCode.Space))
             {
                 yield return new WaitForFixedUpdate();
             }
