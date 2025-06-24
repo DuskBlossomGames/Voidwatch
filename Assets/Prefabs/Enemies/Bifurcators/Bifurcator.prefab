@@ -656,7 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDamage: 75
   shieldDamagePerSecond: 150
-  stunTime: 2
+  stunTime: 1.2
   immunityTime: 0.5
 --- !u!60 &1997713199156744106
 PolygonCollider2D:

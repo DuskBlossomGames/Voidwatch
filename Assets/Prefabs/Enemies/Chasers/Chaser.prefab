@@ -5270,5 +5270,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDamage: 100
   shieldDamagePerSecond: 200
-  stunTime: 2
-  immunityTime: 1
+  stunTime: 1.2
+  immunityTime: 0.7
