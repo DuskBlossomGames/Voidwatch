@@ -40,7 +40,8 @@ namespace LevelPlay
                 scrapCount.anchoredPosition = GetOriginal(scrapCount.anchoredPosition) * scale;
                 scrapCount.sizeDelta = GetOriginal(scrapCount.sizeDelta) * scale;
             }
-            
+
+            scale = SettingsInterface.MinimapSize;
             minimap.anchoredPosition = GetOriginal(minimap.anchoredPosition) * scale;
             minimap.sizeDelta = GetOriginal(minimap.sizeDelta) * scale;
         }

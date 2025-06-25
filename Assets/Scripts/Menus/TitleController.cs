@@ -84,7 +84,7 @@ namespace Menus
 
             for (float t = 0; t < fadeTime; t += Time.fixedDeltaTime)
             {
-                if (!wait) yield return new WaitForFixedUpdate();
+                if (wait) yield return new WaitForFixedUpdate();
                 foreach (var obj in _texts)
                 {
                     if (!includeCredits && obj.transform.IsChildOf(credits)) continue;

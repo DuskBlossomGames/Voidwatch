@@ -34,8 +34,15 @@ namespace Menus
             time.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{hour:00}:{minute:00}:{second:00}";
 
             enemy.GetComponentInChildren<Image>().enabled = !won;
-            if (!won) enemy.GetComponentInChildren<Image>().sprite = diedTo.icon; 
-            enemy.GetComponentsInChildren<TextMeshProUGUI>()[1].text = won ? "Nobody!" : diedTo.title;
+            if (!won)
+            {
+                if (diedTo != null) enemy.GetComponentInChildren<Image>().sprite = diedTo.icon;
+                else
+                {
+                    enemy.GetComponentInChildren<Image>().enabled = false;
+                }
+            } 
+            enemy.GetComponentsInChildren<TextMeshProUGUI>()[1].text = won ? "Nobody!" : diedTo != null ? diedTo.title : "Unclear";
             
             fadeOut.gameObject.SetActive(true);
             fadeOut.SetAlpha(0);

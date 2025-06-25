@@ -26,10 +26,10 @@ namespace Spawnables.Controllers.Chasers
                 explosionObj.transform.localScale.x, ed.gameObject);
             
             ed.explosion = null; // we're doing it ourselves
-            ed.varientParent = null; // disable scrap
+            ed.Variant = null; // disable scrap
             ed.Damage(float.MaxValue, null);
             
-            var ea = transform.parent.GetChild(1);
+            var ea = transform.parent.GetChild(2);
             ea.SetParent(null);
             ea.gameObject.SetActive(true);
             // idk why all of these start disabled :|

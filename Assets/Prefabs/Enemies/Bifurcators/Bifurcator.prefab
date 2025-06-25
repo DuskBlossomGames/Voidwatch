@@ -230,10 +230,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
   trackDeath: 1
-  tier: 1
-  enemyType: 1
   maxHealth: 600
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
@@ -503,9 +500,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardObject: 1
-  cost: 8
-  ScrapCount: 0
-  ScrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
+  cost: 10
+  tier: 2
+  enemyType: 1
 --- !u!114 &8461856629468172864
 MonoBehaviour:
   m_ObjectHideFlags: 0

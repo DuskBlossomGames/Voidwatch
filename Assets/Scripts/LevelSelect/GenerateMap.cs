@@ -43,7 +43,6 @@ namespace LevelSelect
             Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
             {
                 // only re-generate if it doesn't already exist
-                Debug.LogFormat("CurrentPlanet = {0}", LevelSelectDataInstance.CurrentPlanet);
                 if (LevelSelectDataInstance.CurrentPlanet == -1) GenerateGalaxy(handle.Result);
 
                 playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 2f);
@@ -69,7 +68,6 @@ namespace LevelSelect
                     LoreText = ""
             });
 
-            print(sprites.Count);
             for (var i = 0; i < 5; i++)
             {
                 levels.Add(new LevelData {

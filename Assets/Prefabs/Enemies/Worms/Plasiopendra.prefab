@@ -78,9 +78,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardObject: 0
-  cost: 9
-  ScrapCount: 0
-  ScrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
+  cost: 10
+  tier: 4
+  enemyType: 3
 --- !u!114 &-3038872763145261138
 MonoBehaviour:
   m_ObjectHideFlags: 0

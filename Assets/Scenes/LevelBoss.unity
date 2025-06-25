@@ -2437,10 +2437,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
   trackDeath: 0
-  tier: 1
-  enemyType: 5
   maxHealth: 0
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -4623,6 +4620,7 @@ GameObject:
   - component: {fileID: 877449873}
   - component: {fileID: 877449872}
   - component: {fileID: 877449874}
+  - component: {fileID: 877449875}
   m_Layer: 14
   m_Name: Worm Boss
   m_TagString: Untagged
@@ -4835,6 +4833,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snakeyness: 0.9
   snaketime: 4
+--- !u!114 &877449875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877449871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hazardObject: 0
+  cost: 0
+  tier: 5
+  enemyType: 5
 --- !u!1 &885995848
 GameObject:
   m_ObjectHideFlags: 0
@@ -5320,10 +5334,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 1
   trackDeath: 0
-  tier: 1
-  enemyType: 5
   maxHealth: 60
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -7251,10 +7262,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 1
   trackDeath: 0
-  tier: 1
-  enemyType: 5
   maxHealth: 60
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -8939,10 +8947,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
   trackDeath: 0
-  tier: 1
-  enemyType: 5
   maxHealth: 0
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -9961,9 +9966,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1427075527
+  m_SortingLayer: -1
+  m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -12496,10 +12501,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
   trackDeath: 0
-  tier: 1
-  enemyType: 5
   maxHealth: 0
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []

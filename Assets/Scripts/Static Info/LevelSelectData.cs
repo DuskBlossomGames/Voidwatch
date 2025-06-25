@@ -33,8 +33,8 @@ namespace Static_Info
     {
         public LevelType Type;
         public int Loot;
-        public int DifficultyScore;
-        public int HazardBudget;
+        public int DifficultyScore, MaxTier;
+        public int HazardBudget, HazardLoot;
         public int[] Waves;
         public Sprite Sprite;
         public List<int> Connections;
@@ -60,13 +60,12 @@ namespace Static_Info
         public int[] minBudgetPerWave;
 
         // based on how difficultyScore is generated below
-        public float MaxDifficultyScore => baseDifficulty +
-                                           levelModifier * (Levels.Length - 1) + 2 * randomModifier;
+        public float MaxDifficultyScore => baseDifficulty + levelModifier * (Levels.Length - 1) + randomModifier;
         
         public const int EliteWaves = 3;
-        private const int EliteWaveStart = 2; // for difficulty, which wave elites start at (3)
+        private const int EliteWaveStart = 1; // for difficulty, which wave elites start at (2)
         
-        private float EliteDifficulty => 1.25f * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
+        private float EliteDifficulty => 1.1f * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 
 
 #if UNITY_EDITOR
@@ -95,13 +94,14 @@ namespace Static_Info
 
                     var difficultyScore = level.Type == LevelType.Boss ? MaxDifficultyScore :
                         level.Type == LevelType.Elite ? EliteDifficulty :
-                        baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 2) * randomModifier;
+                        baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 1) * randomModifier;
                     
                     var difficultyBudget = (int) (gameDifficultyModifier * difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/);
                     List<int> waves = new();
 
-                    // TODO
-                    level.HazardBudget = (int) (30 + 50 * difficultyScore/MaxDifficultyScore);
+                    // TODO: kinda scuffed?
+                    level.HazardBudget = (int) (10 + 30 * difficultyScore/MaxDifficultyScore);
+                    level.HazardLoot = (int) (10 + 80 * difficultyScore/MaxDifficultyScore);
 
                     // start with as many waves as possible given min budget
                     while (true)
@@ -139,8 +139,8 @@ namespace Static_Info
 
                     level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
                     level.DifficultyScore = (int) difficultyScore;
+                    level.MaxTier = (int) (4*Mathf.Pow(difficultyScore/MaxDifficultyScore, 2/3f) + 1);
                     level.Waves = waves.ToArray();
-                    if (level.Type == LevelType.Elite) print(string.Join(",", level.Waves)+" | "+string.Join(",", minBudgetPerWave.Select(s=>s*gameDifficultyModifier))+" | "+difficultyScore);
                 }
             }
         }

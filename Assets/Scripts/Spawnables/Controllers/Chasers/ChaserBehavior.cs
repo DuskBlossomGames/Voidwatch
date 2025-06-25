@@ -8,17 +8,32 @@ namespace Spawnables.Controllers.Chasers
     public class ChaserBehavior : MissleAim
     {
         public float explosionDamage;
-        public float startupTime;
+        public float wakeupRange;
+
+        private PositionHinter _ph;
+        private bool _alive;
         
         private void Start()
         {
             if (target == null) target = GameObject.FindGameObjectWithTag("Player");
+            _ph = GetComponent<PositionHinter>();
+            _ph.enabled = false;
+            
+            transform.GetChild(0).localScale = 2*wakeupRange / transform.lossyScale.x * Vector3.one;
+            
             base.Start();
         }
 
         protected override void FixedUpdate()
         { // ripped striaght from MissleAim#FixedUpdate
-            if ((startupTime -= Time.fixedDeltaTime) > 0) return;
+            if (!_alive)
+            {
+                if (Vector2.Distance(transform.position, target.transform.position) > wakeupRange) return;
+                
+                _alive = true;
+                _ph.enabled = true;
+                transform.GetChild(0).gameObject.SetActive(false);
+            }
             
             _fuel -= accelforce * Time.fixedDeltaTime;
             _rigid.AddForce(accelforce * _nDir);

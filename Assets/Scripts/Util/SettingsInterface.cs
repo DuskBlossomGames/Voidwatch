@@ -40,6 +40,7 @@ namespace Menus
             SetFullscreen(PlayerPrefs.GetInt("Fullscreen", 1) == 1);
             SetVsync(PlayerPrefs.GetInt("Vsync", 1) == 1);
             SetHUDSize(PlayerPrefs.GetFloat("HUDSize", 1));
+            SetMinimapSize(PlayerPrefs.GetFloat("MinimapSize", 1));
             
             // CONTROLS
             for (var control = 0; control < InputAction.Count; control++)
@@ -95,6 +96,14 @@ namespace Menus
             PlayerPrefs.SetFloat("HUDSize", value);
 
             HUDSize = value;
+        }
+        
+        public static float MinimapSize { get; private set; }
+        public static void SetMinimapSize(float value)
+        {
+            PlayerPrefs.SetFloat("MinimapSize", value);
+
+            MinimapSize = value;
         }
         
         public static void SetKeybind(int control, KeyCode key)

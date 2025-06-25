@@ -5229,6 +5229,7 @@ MonoBehaviour:
   audioSource: {fileID: 8827315544250419742}
   shieldMult: 0
   bleedPerc: 0
+  source: {fileID: 0}
 --- !u!82 &8827315544250419742
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11405,9 +11406,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1427075527
+  m_SortingLayer: -1
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

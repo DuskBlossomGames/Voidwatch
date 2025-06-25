@@ -1951,6 +1951,7 @@ GameObject:
   - component: {fileID: -9101354916200461371}
   - component: {fileID: 2306016957590154251}
   - component: {fileID: -7286475855829482345}
+  - component: {fileID: -7302791274613200644}
   m_Layer: 17
   m_Name: Carcodon
   m_TagString: Untagged
@@ -2320,10 +2321,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
   trackDeath: 1
-  tier: 1
-  enemyType: 4
   maxHealth: 3500
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -2347,6 +2345,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: -392216076, guid: 56d5e5933486345bab95fca6a0a7d972, type: 3}
   title: Carcadon
+--- !u!114 &-7302791274613200644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4353281618518814614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hazardObject: 0
+  cost: 0
+  tier: 5
+  enemyType: 4
 --- !u!1 &4413525710197146119
 GameObject:
   m_ObjectHideFlags: 0

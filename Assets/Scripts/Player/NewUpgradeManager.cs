@@ -8,9 +8,11 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Upgrade = Player.UpgradePlayer.Upgrade;
 using static Static_Info.PlayerData;
 using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 using Random = UnityEngine.Random;
 
 namespace Player
@@ -132,7 +134,7 @@ namespace Player
         public void SelectUpgrade(int i)
         {
             _upgrades[i].Apply();
-            StartCoroutine(ExitAfter(0));
+            Exit();
         }
 
         private int _rerollCost = 50;
@@ -151,17 +153,17 @@ namespace Player
 
         public void Scavenge()
         {
-            var scrap = Random.Range(100, 200);
+            var scrap = Random.Range(200, 300);
             PlayerDataInstance.Scrap += scrap;
-        
-            var sdc = FindObjectOfType<ScrapDisplayController>();
+
             raycaster.enabled = false; // just disable all interaction at this point
-            StartCoroutine(ExitAfter(0.5f * (sdc.waitTime + (float) scrap / sdc.transferPerSec + 1)));
+            
+            var sdc = FindObjectsByType<ScrapDisplayController>(FindObjectsSortMode.None)[0];
+            sdc.FinishTransfer += Exit;
         }
 
-        private IEnumerator ExitAfter(float time)
+        private void Exit()
         {
-            yield return new WaitForSeconds(time);
             SceneManager.LoadScene("LevelSelect");
         }
     }

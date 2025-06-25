@@ -1,3 +1,4 @@
+using System;
 using Extensions;
 using TMPro;
 using UnityEngine;
@@ -27,11 +28,9 @@ namespace Player
         
             _scrap = PlayerDataInstance.Scrap;
             _gain.SetAlpha(0);
-
-            _transfer.Value = 1f / transferPerSec;
         }
 
-
+        public event Action FinishTransfer;
         void Update()
         {
             _wait.Update();
@@ -53,7 +52,10 @@ namespace Player
                 if (_wait.IsFinished && _transfer.IsFinished)
                 {
                     _scrap += (int) Mathf.Sign(PlayerDataInstance.Scrap - _scrap);
-                    _transfer.Value = _transfer.MaxValue;
+                    if (_scrap == PlayerDataInstance.Scrap) FinishTransfer?.Invoke();
+                    
+                    var perSec = transferPerSec * (0.8f + Mathf.Abs(_scrap - PlayerDataInstance.Scrap)/200f);
+                    _transfer.Value = 1 / perSec;
                 }
             }
             else
