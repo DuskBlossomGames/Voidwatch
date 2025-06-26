@@ -139,7 +139,7 @@ namespace Static_Info
 
                     level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
                     level.DifficultyScore = (int) difficultyScore;
-                    level.MaxTier = (int) (4*Mathf.Pow(difficultyScore/MaxDifficultyScore, 2/3f) + 1);
+                    level.MaxTier = (int) (5*Mathf.Pow(difficultyScore/MaxDifficultyScore, 2/3f) + 1);
                     level.Waves = waves.ToArray();
                 }
             }

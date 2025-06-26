@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using Static_Info;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
+using static Static_Info.Statistics;
 
 namespace Menus
 {
@@ -27,6 +29,10 @@ namespace Menus
             
             SceneManager.sceneLoaded += (_, _) => Resume();
         }
+        
+        private float _opened;
+        private void OnEnable() { _opened = Time.time; }
+        private void OnDisable() { StatisticsInstance.pauseTime += Time.time - _opened; }
 
         private IEnumerator DontDestroyOnLoadAsync()
         {

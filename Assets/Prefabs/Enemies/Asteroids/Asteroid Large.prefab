@@ -70,10 +70,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
   trackDeath: 0
-  tier: 1
-  enemyType: 0
   maxHealth: 500
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -93,7 +90,7 @@ MonoBehaviour:
   - {fileID: 1261275619952868859, guid: dbb7d8c15429e4891830b22781838d56, type: 3}
   nextSize: {fileID: 4661534520163306949, guid: fb010a693aaff49869af75025b383f5b, type: 3}
   shieldMult: 1.6
-  bleedPerc: 0.05
+  bleedPerc: 0
   startVel: {x: 0, y: 0}
 --- !u!114 &-8967648618552505094
 MonoBehaviour:

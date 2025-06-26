@@ -27,7 +27,7 @@ namespace Menus
 
         public IEnumerator Run(bool won, DeathInfo diedTo)
         {
-            var timePlayed = Time.time - StatisticsInstance.startTime;
+            var timePlayed = Time.time - StatisticsInstance.startTime - StatisticsInstance.pauseTime;
             var hour = (int) timePlayed / 3600;
             var minute = (int) (timePlayed % 3600) / 60;
             var second = (int) (timePlayed % 3600) % 60;

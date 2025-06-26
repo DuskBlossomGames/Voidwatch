@@ -5676,7 +5676,7 @@ MonoBehaviour:
   trueDamageMod: 1.2
   cooldown: 0.15
   shieldMult: 2
-  bleedPerc: 0.1
+  bleedPerc: 0
 --- !u!1 &5328117465565166959
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,8 +56,8 @@ namespace Shop
         
             int min;
             var dmg = PDI.maxHealth - PDI.Health;
-            _repairs[0] = min = RoundPrice(mul * dmg * scrapPerThouHp / 1000f * cheapDiscount); // 1/3 Cost
-            _repairs[1] = min = RoundPrice(mul * dmg * scrapPerThouHp / 1000f * midDiscount, min); // 2/3 Cost
+            _repairs[0] = min = RoundPrice(mul * dmg * scrapPerThouHp / 1000f/* * cheapDiscount*/); // 1/3 Cost
+            _repairs[1] = min = RoundPrice(mul * dmg * scrapPerThouHp / 1000f/* * midDiscount*/, min); // 2/3 Cost
             _repairs[2] = min = RoundPrice(mul * dmg * scrapPerThouHp / 1000f, min); // Full Cost
 
             lbut.text = $"{_repairs[0]:# ### ###}";

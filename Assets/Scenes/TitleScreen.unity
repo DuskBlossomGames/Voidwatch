@@ -5901,8 +5901,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseDifficulty: 5
   gameDifficultyModifier: 1.5
-  levelModifier: 3
-  randomModifier: 2
+  levelModifier: 4
+  randomModifier: 1
   galaxyModifier: 0
   minBudgetPerWave: 050000000c0000001200000019000000230000002d00000037000000
 --- !u!114 &342308707

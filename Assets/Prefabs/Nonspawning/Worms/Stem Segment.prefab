@@ -172,7 +172,7 @@ MonoBehaviour:
   ramp: 1.15
   baseDmg: 50
   shieldMult: 2
-  bleedPerc: 0.05
+  bleedPerc: 0
   material: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   warnColor:
     serializedVersion: 2
@@ -361,10 +361,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
   trackDeath: 0
-  tier: 3
-  enemyType: 3
   maxHealth: 1500
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:

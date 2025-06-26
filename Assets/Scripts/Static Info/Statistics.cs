@@ -20,6 +20,7 @@ namespace Static_Info
         // ------------------------------------
 
         public float startTime;
+        public float pauseTime;
         
 
         public static void SetText(TextMeshProUGUI[] texts)

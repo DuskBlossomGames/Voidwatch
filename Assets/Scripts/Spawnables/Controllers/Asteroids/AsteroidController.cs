@@ -1,4 +1,6 @@
 using JetBrains.Annotations;
+using Spawnables.Controllers.Carcadon;
+using Spawnables.Controllers.Worms;
 using Spawnables.Damage;
 using UnityEngine;
 using Util;
@@ -46,7 +48,9 @@ namespace Spawnables.Controllers.Asteroids
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (!other.gameObject.TryGetComponent<Damageable>(out var dmgable)) return;
-            if (other.gameObject.GetComponent<AsteroidController>() != null) return; // don't damage other asteroids
+            if (other.gameObject.GetComponent<AsteroidController>() != null
+                || other.gameObject.GetComponent<CarcadonBrain>() != null
+                || other.gameObject.GetComponent<WormSegmentBuilder>() != null) return; // don't damage other asteroids, carc, or worms
             
             dmgable.Damage(0.25f * other.relativeVelocity.sqrMagnitude, gameObject, shieldMult, bleedPerc);
         }

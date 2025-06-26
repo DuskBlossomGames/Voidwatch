@@ -205,7 +205,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
   trackDeath: 1
-  maxHealth: 80
+  maxHealth: 150
   healthPickup: {fileID: 1317461934895244640, guid: 5886eced7a3754dd3b2e186b34b40cbb, type: 3}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
@@ -5347,7 +5347,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ccfc65e0ef82d4d94935ab8c1a12f51d, type: 3}
-  m_Color: {r: 0.6468049, g: 0.8932213, b: 0.8962264, a: 0.5803922}
+  m_Color: {r: 0, g: 0.984375, b: 1, a: 0.14117648}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -334,7 +334,7 @@ namespace LevelPlay
             partitions.Add(pointWidth);
 
             //2.
-            for (int i = 0; i < enemies.Count - 1; i++) partitions.Add(Random.Range(1, enemies.Count));
+            for (int i = 0; i < pointWidth - 1; i++) partitions.Add(Random.Range(1, pointWidth));
 
 
             for (int i = 0; i < partitions.Count - 1; i++)
@@ -352,9 +352,8 @@ namespace LevelPlay
                 //5.
                 spts[j] += amt;
                 //Debug.LogFormat("Enemy ({0}) has scrap count ({1})", enemies[j].name, enemies[j].GetComponent<EnemyVariant>().ScrapCount);
-                enemies[j].GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
             }
-
+            
             //Older code
             int ind = 0;
             foreach (var enemy in enemies)
@@ -370,6 +369,7 @@ namespace LevelPlay
                 if (enemyObj.TryGetComponent<MissleShooter>(out var missleShooter)) missleShooter.target = player;
 
                 //Debug.LogFormat("Late Enemy ({0}) has scrap count ({1})", enemy.name, enemy.GetComponent<EnemyVariant>().ScrapCount);
+                enemyObj.GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
                 enemyObj.GetComponent<EnemyVariant>().ScrapCount = spts[ind++];
 
                 _spawnedEnemies.Add(enemyObj);
