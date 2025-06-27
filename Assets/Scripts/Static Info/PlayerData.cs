@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Player;
+using Shop;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -13,14 +14,14 @@ namespace Static_Info
 
         public AssetLabelReference borderSprites, upgradeSprites;
         
-        public int maxHealth;
-        public float maxShield;
+        public MaxHealthStat maxHealth;
+        public BoostableStat<float> maxShield;
         public float shieldRegenRate;
         public float maxShieldDebt;
-        public float maxDodgeJuice;
+        public BoostableStat<float> maxDodgeJuice;
         public float dodgeJuiceRegenRate;
         public float driftCorrection;
-        public float speedLimit;
+        public BoostableStat<float> speedLimit;
         public float acceleration;
         public float dodgeRedirectPercentage;
         public float dodgeJuiceCost;
@@ -43,11 +44,7 @@ namespace Static_Info
 
         [NonSerialized] public float Health;
         [NonSerialized] public int Scrap;
-
-        [NonSerialized] public short HealthBoosts = 0;
-        [NonSerialized] public short DamageBoosts = 0;
-        [NonSerialized] public short SpeedBoosts = 0;
-
+        
         public readonly Dictionary<string, Sprite> UpgradeSprites = new();
         public readonly Dictionary<string, Sprite[]> RaritySprites = new();
         private void Awake()

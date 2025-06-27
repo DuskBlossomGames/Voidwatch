@@ -5872,7 +5872,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2894d6ba2614e6f82e3ba795429e268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoCount: 100
+  ammoCount:
+    name: Ammo
+    value: 100
   noShootRefillTime: 1
   emptyRefillTime: 1
   timeToRefillFully: 1
@@ -5886,7 +5888,9 @@ MonoBehaviour:
   misfireChance: 0
   repeats: 2
   repeatSeperation: 0.08
-  dmgMod: 15
+  dmgMod:
+    name: Damage
+    value: 15
 --- !u!114 &342308706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5921,14 +5925,22 @@ MonoBehaviour:
     m_LabelString: upgrade-borders
   upgradeSprites:
     m_LabelString: upgrade-sprites
-  maxHealth: 2000
-  maxShield: 500
+  maxHealth:
+    name: Health
+    value: 2000
+  maxShield:
+    name: Shield
+    value: 500
   shieldRegenRate: 30
   maxShieldDebt: 500
-  maxDodgeJuice: 100
+  maxDodgeJuice:
+    name: Void Energy
+    value: 100
   dodgeJuiceRegenRate: 20
   driftCorrection: 5
-  speedLimit: 25
+  speedLimit:
+    name: Speed
+    value: 25
   acceleration: 4
   dodgeRedirectPercentage: 0.6
   dodgeJuiceCost: 45
@@ -5988,6 +6000,7 @@ MonoBehaviour:
   timesDashed: 0
   distanceTraveled: 0
   startTime: 0
+  pauseTime: 0
 --- !u!1 &404930622
 GameObject:
   m_ObjectHideFlags: 0

@@ -62,12 +62,10 @@ namespace Static_Info
         
         public T GetCachedComponent<T>() where T : MonoBehaviour
         {
-            if (!_behaviors.TryGetValue(typeof(T), out var ret))
-            {
-                ret = GetComponent<T>();
-                _behaviors.Add(typeof(T), ret);
-            }
+            if (_behaviors.TryGetValue(typeof(T), out var ret)) return (T)ret;
             
+            _behaviors.Add(typeof(T), ret = GetComponent<T>());
+
             return (T)ret;
         }
     }

@@ -6,7 +6,7 @@ namespace Static_Info
     {
         public static GunInfo GunInfoInstance => StaticInfoHolder.Instance.GetCachedComponent<GunInfo>();
 
-        public int ammoCount;
+        public BoostableStat<int> ammoCount;
         public float noShootRefillTime;
         public float emptyRefillTime;
         public float timeToRefillFully;
@@ -21,6 +21,6 @@ namespace Static_Info
         public int repeats;
         public float repeatSeperation;
 
-        public float dmgMod;
+        public BoostableStat<float> dmgMod;
     }
 }

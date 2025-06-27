@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 .DS_Store
 .butler
+
+Assets/Editor/
+Assets/Editor.Meta
