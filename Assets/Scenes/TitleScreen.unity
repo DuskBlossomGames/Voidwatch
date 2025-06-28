@@ -5925,6 +5925,8 @@ MonoBehaviour:
     m_LabelString: upgrade-borders
   upgradeSprites:
     m_LabelString: upgrade-sprites
+  boostableStatSprite:
+    m_LabelString: boostable-stats
   maxHealth:
     name: Health
     value: 2000

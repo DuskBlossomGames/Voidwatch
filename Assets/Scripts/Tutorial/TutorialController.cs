@@ -179,7 +179,7 @@ namespace Tutorial
                     break;
             }
         }
-
+        
         private void Continue()
         {
             _textIdx += 1;
@@ -199,7 +199,9 @@ namespace Tutorial
                             raceCourse.SetActive(true);
                             StartCoroutine(FadeIn());
                             Continue();
+                            dialogueController.Continue += Continue;
                         }));
+                        dialogueController.Continue -= Continue;
                         _stage += 1;
                         _textIdx = -1;
                         _genFlag = false;

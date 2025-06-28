@@ -18,6 +18,8 @@ namespace Shop
     public class ShopManager : MonoBehaviour
     {
         public TextMeshProUGUI scrapDisplay, healCost;
+        public TextMeshProUGUI[] boostTitles;
+        public Image[] boostIcons;
         public TextMeshProUGUI[] boostCosts;
         
         public Button healButton;
@@ -26,7 +28,6 @@ namespace Shop
         public RectTransform healthBar, healthPreview;
         public ChainController[] boostChains;
 
-        public float boostCost;
         public float scrapPerThouHp;
         
         private int _healCost;
@@ -42,8 +43,11 @@ namespace Shop
             _healPreviewTimer.Value = 0.085f;
             _healPreviewTimer.SetValue(0);
 
-            PlayerDataInstance.Health = 100;
-            PlayerDataInstance.Scrap = 1000;
+            for (var i = 0; i < 3; i++)
+            {
+                boostTitles[i].text = _stats[i].name + " Boost";
+                boostIcons[i].sprite = PlayerDataInstance.BoostableStatSprites[_stats[i].name];
+            }
             
             UpdateShop();
         }

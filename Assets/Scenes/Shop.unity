@@ -1465,6 +1465,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrapDisplay: {fileID: 631672051}
   healCost: {fileID: 1146778095}
+  boostTitles:
+  - {fileID: 1385744294}
+  - {fileID: 1195380113}
+  - {fileID: 1504462099}
+  boostIcons:
+  - {fileID: 168903109}
+  - {fileID: 1028998058}
+  - {fileID: 1035879746}
   boostCosts:
   - {fileID: 1960290548}
   - {fileID: 1575281003}
