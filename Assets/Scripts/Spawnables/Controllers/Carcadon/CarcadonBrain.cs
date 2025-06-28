@@ -141,6 +141,12 @@ namespace Spawnables.Controllers.Carcadon
                 _timeGoingForPos += Time.deltaTime;
                 _timeAttacking += Time.deltaTime;
 
+                if (_enemySpawner.SpawnedEnemies.All(g => g == gameObject))
+                {
+                    _timeAttacking = 0;
+                    for (var i = 0; i < 2; i++) _armControllers[i].hasAttack = true;
+                }
+                
                 if (_timeAttacking > maxTimeAttacking)
                 {
                     for (var i = 0; i < 2; i++) _armControllers[i].hasAttack = false;

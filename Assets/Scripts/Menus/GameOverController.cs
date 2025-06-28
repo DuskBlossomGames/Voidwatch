@@ -79,18 +79,16 @@ namespace Menus
             yield return new WaitForSeconds(statisticsBeforeTime);
             SetText(statistics.Select(o => o.GetComponentsInChildren<TextMeshProUGUI>()[1]).ToArray());
                 
-            for (var i = 0; i < statistics.Length + 2; i++)
+            for (var i = 0; i < statistics.Length + 1; i++)
             {
-                var stats = i == statistics.Length + 1 ? new[] { clickContinue }
-                    : i == statistics.Length ? new[] { time, enemy }
-                    : new[] { statistics[i] };
+                var stats = i == statistics.Length ? new[] { time, enemy, clickContinue } : new[] { statistics[i] };
                 
                 foreach (var stat in stats) stat.SetActive(true);
                 for (float t = 0; t < statisticsFadeTime; t += Time.fixedDeltaTime)
                 {
                     foreach (var stat in stats)
                     {
-                        stat.GetComponentInChildren<Image>().SetAlpha(t/statisticsFadeTime);
+                        stat.GetComponentInChildren<Image>()?.SetAlpha(t/statisticsFadeTime);
                         foreach (var text in stat.GetComponentsInChildren<TextMeshProUGUI>()) text.SetAlpha(t/statisticsFadeTime);
                     }
                         
@@ -100,8 +98,8 @@ namespace Menus
                 yield return new WaitForSeconds(statisticsBetweenTime);
             }
             
-            while (!InputManager.GetKeyDown(KeyCode.Return) && !InputManager.GetKeyDown(KeyCode.Mouse0) 
-                                                            && !InputManager.GetKeyDown(KeyCode.Space))
+            while (!InputManager.GetKey(KeyCode.Return) && !InputManager.GetKey(KeyCode.Mouse0) 
+                                                        && !InputManager.GetKey(KeyCode.Space))
             {
                 yield return new WaitForFixedUpdate();
             }
