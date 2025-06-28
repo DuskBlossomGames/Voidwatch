@@ -124,7 +124,7 @@ namespace Spawnables.Controllers.Carcadon
                 dir = (targPoint - transform.position).normalized;
 
                 _stealthTimer.Update();
-                if (!_forceStealth && ((_stealthTimer.IsFinished && playerDist >= minUnstealthDist) || _enemySpawner.SpawnedEnemies.All(g => g == gameObject))){ _mode = Mode.Rush; CarcAudio.clip = CarcRoar; CarcAudio.Play();}
+                if (!_forceStealth && ((_stealthTimer.IsFinished && playerDist >= minUnstealthDist) || (!_enemySpawner.WaitingOnIndicator && _enemySpawner.SpawnedEnemies.All(g => g == gameObject)))){ _mode = Mode.Rush; CarcAudio.clip = CarcRoar; CarcAudio.Play();}
             } else if (_mode == Mode.Rush)
             {
                 _currSpeed = Mathf.Min(maxSpeed, _currSpeed + accel * Time.deltaTime);
@@ -201,6 +201,7 @@ namespace Spawnables.Controllers.Carcadon
             }
             if (_opacityDir != 0)
             {
+                if (_opacityDir == -1) print("stealthing");
                 _opacityTimer.Update(_opacityDir);
 
                 foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-_opacityTimer.Progress) * (1-stealthOpacity));
@@ -211,6 +212,7 @@ namespace Spawnables.Controllers.Carcadon
                     _isOpaque = _opacityDir > 0;
                     _opacityDir = 0;
 
+                    if (!_isOpaque) print("stealthed");
                     foreach (var col in _colliders) col.enabled = _isOpaque;
                 }
             }

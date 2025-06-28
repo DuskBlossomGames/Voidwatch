@@ -204,6 +204,7 @@ namespace LevelPlay
             }
         }
 
+        public bool WaitingOnIndicator => _waitingOnIndicator;
         private bool _waitingOnIndicator;
         public IEnumerator SpawnWaveWithIndicator()
         {
