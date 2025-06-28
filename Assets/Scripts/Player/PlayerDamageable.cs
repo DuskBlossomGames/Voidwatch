@@ -124,7 +124,13 @@ namespace Player
         public bool TakeEMP(float damage)
         {
             ShieldPower = Mathf.Max(ShieldPower - damage, -ShieldMaxDebt);
+            
+            audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+            audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
 
+            audioPlayer.clip = PlayerHitShield;
+            audioPlayer.Play();
+            
             return ShieldPower < 0;
         }
 
