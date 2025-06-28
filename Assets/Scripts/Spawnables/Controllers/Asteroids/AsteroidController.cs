@@ -38,19 +38,11 @@ namespace Spawnables.Controllers.Asteroids
             _rb.linearVelocity = Vector3.RotateTowards(_rb.linearVelocity, Quaternion.Euler(0, 0, angle) * _rb.position, 0.15f*Mathf.PI*Time.deltaTime, 0);
         }
 
-        public override void Damage(float damage, GameObject source)
-        {
-            if (source != null && LayerMask.LayerToName(source.layer) == "PlayerOnlyHazard") return; // prevent bifurcator from incinerating them
-            
-            base.Damage(damage, source);
-        }
-
         private void OnCollisionEnter2D(Collision2D other)
         {
+            
             if (!other.gameObject.TryGetComponent<Damageable>(out var dmgable)) return;
-            if (other.gameObject.GetComponent<AsteroidController>() != null
-                || other.gameObject.GetComponent<CarcadonBrain>() != null
-                || other.gameObject.GetComponent<WormSegmentBuilder>() != null) return; // don't damage other asteroids, carc, or worms
+            if (!dmgable.takeAsteroidDmg) return; // don't damage other asteroids, carc, or worms
             
             dmgable.Damage(0.25f * other.relativeVelocity.sqrMagnitude, gameObject, shieldMult, bleedPerc);
         }

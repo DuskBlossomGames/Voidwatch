@@ -6,7 +6,8 @@ namespace Spawnables.Damage
     public class Damageable : MonoBehaviour, IDamageable
     {
         public GameObject healthBarPrefab;
-        
+
+        public bool takeAsteroidDmg = true;
         public bool IsDead => Health <= 0;
         
         protected virtual float Health { get; set; }
