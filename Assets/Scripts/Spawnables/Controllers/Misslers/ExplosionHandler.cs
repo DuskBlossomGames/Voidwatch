@@ -47,7 +47,6 @@ namespace Spawnables.Controllers.Misslers
                 if (hit.collider == null || ignore.Contains(hit.collider)) continue;
 
                 ignore.Add(hit.collider);
-                print("hit " + hit.transform.gameObject.name);
                 hit.transform.GetComponent<IDamageable>()?.Damage(damage, gameObject, shieldMult, bleedPerc);
             }
         }
