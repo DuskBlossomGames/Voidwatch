@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Static_Info;
@@ -6,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Util;
 using static Static_Info.PlayerData;
 using static Static_Info.GunInfo;
 using Random = UnityEngine.Random;
@@ -21,7 +23,7 @@ namespace Shop
         public Button healButton;
         public Button[] boostButtons;
         
-        public RectTransform healthBar;
+        public RectTransform healthBar, healthPreview;
         public ChainController[] boostChains;
 
         public float boostCost;
@@ -31,24 +33,39 @@ namespace Shop
         private readonly int[] _boostCosts = new int[3];
         private List<BoostableStat> _stats;
 
+        private readonly Timer _healPreviewTimer = new();
+        private int _previewDir = -1;
+        
         private void Start()
         {
             _stats = BoostableStat.STATS.OrderBy(_=>Random.value).Take(3).ToList();
+            _healPreviewTimer.Value = 0.085f;
+            _healPreviewTimer.SetValue(0);
+
+            PlayerDataInstance.Health = 100;
+            PlayerDataInstance.Scrap = 1000;
             
             UpdateShop();
         }
-        
+
+        private static float HealedHealth => Mathf.Min(PlayerDataInstance.maxHealth, 
+            PlayerDataInstance.Health + 0.25f * PlayerDataInstance.maxHealth);
         public void Heal()
         {
             if (PlayerDataInstance.Scrap < _healCost) return;
 
             PlayerDataInstance.Scrap -= _healCost;
-            PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.maxHealth,
-                PlayerDataInstance.Health + 0.25f * PlayerDataInstance.maxHealth);
-            
+            PlayerDataInstance.Health = HealedHealth;
+
+            // _healPreviewTimer.SetValue(0);
             UpdateShop();
         }
 
+        public void HealPreview(bool show)
+        {
+            _previewDir = show ? 1 : -1;
+        }
+        
         public void Boost(int idx)
         {
             if (PlayerDataInstance.Scrap < _boostCosts[idx]) return;
@@ -84,8 +101,18 @@ namespace Shop
                 boostButtons[i].interactable = _stats[i].Boosts < 3 && PlayerDataInstance.Scrap >= _boostCosts[i];
                 boostChains[i].Unlocked = _stats[i].Boosts;
             }
-            
+
             healthBar.anchorMin = new Vector2(PlayerDataInstance.Health / PlayerDataInstance.maxHealth, healthBar.anchorMin.y);
+            healthPreview.anchorMin = new Vector2(PlayerDataInstance.Health / PlayerDataInstance.maxHealth, healthPreview.anchorMin.y);
+        }
+
+        private void Update()
+        {
+            _healPreviewTimer.Update(_previewDir);
+            healthPreview.anchorMax =
+                new Vector2(
+                    Mathf.Lerp(PlayerDataInstance.Health, HealedHealth, _healPreviewTimer.Progress) /
+                    PlayerDataInstance.maxHealth, healthPreview.anchorMax.y);
         }
 
         public void Exit()
