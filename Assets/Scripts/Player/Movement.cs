@@ -128,6 +128,8 @@ namespace Player
                 _redirectDodge = true;
                 _redirectDirection = new Vector2(_forwards.x, _forwards.y);
             }
+            
+            dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice); // just always keep up to date
         }
 
         private void FixedUpdate()

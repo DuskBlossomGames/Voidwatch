@@ -41,8 +41,9 @@ namespace Menus
             _texts = GetComponentsInChildren<TextMeshProUGUI>(true);
             _flashes = GetComponentsInChildren<FlashUI>(true);
             _buttons = GetComponentsInChildren<Button>(true);
-            _images = GetComponentsInChildren<Image>(true).Where(i => i != fadeIn).ToArray();
-
+            _images = GetComponentsInChildren<Image>(true)
+                .Where(i => i != fadeIn && !i.transform.IsChildOf(options.transform)).ToArray(); // options should always be closed, so just don't mess with it (breaks slider hitboxes)
+            
             _initCredits = GameObject.Find("RollCredits") != null;
             if (_initCredits) Destroy(GameObject.Find("RollCredits"));
 
@@ -161,11 +162,7 @@ namespace Menus
         {
             options.SetActive(false);
             
-            for (var i = 0; i < transform.childCount; i++)
-            {
-                if (options.transform.GetSiblingIndex() == i) break;
-                transform.GetChild(i).gameObject.SetActive(true);
-            }
+            for (var i = 0; i < options.transform.GetSiblingIndex(); i++) transform.GetChild(i).gameObject.SetActive(true);
         }
 
         public void Credits()

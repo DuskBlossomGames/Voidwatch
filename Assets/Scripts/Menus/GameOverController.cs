@@ -19,7 +19,7 @@ namespace Menus
         public float fadeOutTime;
         public Image winImage;
         public TextMeshProUGUI winTitle, winSubtitle, loseTitle, loseSubtitle;
-        public GameObject time, enemy;
+        public GameObject time, enemy, clickContinue;
         public GameObject[] statistics;
         public float fadeInTime;
         public float statisticsBeforeTime, statisticsFadeTime, statisticsBetweenTime;
@@ -27,22 +27,25 @@ namespace Menus
 
         public IEnumerator Run(bool won, DeathInfo diedTo)
         {
-            var timePlayed = Time.time - StatisticsInstance.startTime - StatisticsInstance.pauseTime;
+            var timePlayed = Time.time - StatisticsInstance.startTime;
             var hour = (int) timePlayed / 3600;
             var minute = (int) (timePlayed % 3600) / 60;
             var second = (int) (timePlayed % 3600) % 60;
             time.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{hour:00}:{minute:00}:{second:00}";
 
-            enemy.GetComponentInChildren<Image>().enabled = !won;
             if (!won)
             {
-                if (diedTo != null) enemy.GetComponentInChildren<Image>().sprite = diedTo.icon;
+                if (diedTo != null)
+                {
+                    enemy.GetComponentsInChildren<TextMeshProUGUI>()[1].text = diedTo.title;
+                    enemy.GetComponentInChildren<Image>().sprite = diedTo.icon;
+                }
                 else
                 {
+                    enemy.GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Unclear";
                     enemy.GetComponentInChildren<Image>().enabled = false;
                 }
             } 
-            enemy.GetComponentsInChildren<TextMeshProUGUI>()[1].text = won ? "Nobody!" : diedTo != null ? diedTo.title : "Unclear";
             
             fadeOut.gameObject.SetActive(true);
             fadeOut.SetAlpha(0);
@@ -76,9 +79,11 @@ namespace Menus
             yield return new WaitForSeconds(statisticsBeforeTime);
             SetText(statistics.Select(o => o.GetComponentsInChildren<TextMeshProUGUI>()[1]).ToArray());
                 
-            for (var i = 0; i <= statistics.Length; i++)
+            for (var i = 0; i < statistics.Length + 2; i++)
             {
-                var stats = i == statistics.Length ? new[] { time, enemy } : new[] { statistics[i] };
+                var stats = i == statistics.Length + 1 ? new[] { clickContinue }
+                    : i == statistics.Length ? new[] { time, enemy }
+                    : new[] { statistics[i] };
                 
                 foreach (var stat in stats) stat.SetActive(true);
                 for (float t = 0; t < statisticsFadeTime; t += Time.fixedDeltaTime)

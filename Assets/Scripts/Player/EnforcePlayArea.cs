@@ -21,6 +21,8 @@ namespace Player
             _outOfBoundsTimer.Value = timeTillAttack;
         }
 
+        public void Reset() => _outOfBoundsTimer.Value = _outOfBoundsTimer.MaxValue;
+        
         void Update()
         {
             var boundary = GameObject.FindGameObjectWithTag("Circle");

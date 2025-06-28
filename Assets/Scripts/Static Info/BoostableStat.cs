@@ -23,9 +23,13 @@ namespace Static_Info
 
         public BoostableStat() => STATS.Add(this);
 
-        protected static T AsType(float value)
+        private static T AsType(float value)
         {
             return typeof(T) == typeof(int) ? (T) (object) (int) value : (T) (object) value;
+        }
+        private static float AsFloat(T value)
+        {
+            return typeof(T) == typeof(int) ? (int) (object) value : (float) (object) value;
         }
 
         public static implicit operator T(BoostableStat<T> stat) => AsType(stat.value * BOOST_AMOUNTS[stat.Boosts]);
@@ -33,25 +37,25 @@ namespace Static_Info
         public static BoostableStat<T> operator *(BoostableStat<T> stat, float b) => new()
         {
             name = stat.name,
-            value = (float) (object) AsType(stat.value * b),
+            value = AsFloat(AsType(stat.value * b)),
             Boosts = stat.Boosts
         };
         public static BoostableStat<T> operator /(BoostableStat<T> stat, float b) => new()
         {
             name = stat.name,
-            value = (float) (object) AsType(stat.value / b),
+            value = AsFloat(AsType(stat.value / b)),
             Boosts = stat.Boosts
         };
         public static BoostableStat<T> operator +(BoostableStat<T> stat, float b) => new()
         {
             name = stat.name,
-            value = (float) (object) AsType(stat.value + b),
+            value = AsFloat(AsType(stat.value + b)),
             Boosts = stat.Boosts
         };
         public static BoostableStat<T> operator -(BoostableStat<T> stat, float b) => new()
         {
             name = stat.name,
-            value = (float) (object) AsType(stat.value - b),
+            value = AsFloat(AsType(stat.value - b)),
             Boosts = stat.Boosts
         };
     }

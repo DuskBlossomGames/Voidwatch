@@ -6170,9 +6170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appearsAsSelf: 0
-  miniSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  miniColor: {r: 1, g: 0, b: 0, a: 1}
-  size: 5
+  miniSprite: {fileID: 21300000, guid: c1e9c54a6f1868c4887f0b7ecb966774, type: 3}
+  miniColor: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+  size: 7
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
 --- !u!114 &7806520410933609926

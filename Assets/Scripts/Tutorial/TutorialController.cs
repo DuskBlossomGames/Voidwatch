@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Extensions;
 using Player;
+using Static_Info;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -64,7 +65,7 @@ namespace Tutorial
             {
                 Stage.Shooting, new[]
                 {
-                    "Your starship converts electrical energy into concentrated packets of destruction upon pressing <b>{PrimaryWeapon}</b>. Your HUD displays your energy stores in a partial circle around your ship when you shoot.",
+                    "Your starship converts electrical energy into bullets upon pressing <b>{PrimaryWeapon}</b>. Your HUD displays your energy stores in a partial circle around your ship when you shoot.",
                     "The energy bullets cannot be replenished while you are shooting, and if you fully deplete your stores, you cannot shoot until the ship recharges fully.",
                     "Also be aware that the planet's gravity will not affect your bullets. This will cause apparent curvature if you are flying around the planet, as skilled pilots must take into account.",
                     "Practice shooting now, and reloading without fully draining it. Then, <b>empty your clip and allow it to refill.</b>",
@@ -236,6 +237,7 @@ namespace Tutorial
                 fadeOut.SetAlpha(t / fadeOutTime);
             }
 
+            Destroy(StaticInfoHolder.Instance.gameObject);
             SceneManager.LoadScene("TitleScreen");
         }
     }

@@ -174,6 +174,7 @@ namespace LevelPlay
                             && dmg.GetComponent<AsteroidController>() == null) dmg.Damage(float.MaxValue, null);
                     });
 
+                    StatisticsInstance.levelsCleared++;
                     if (_level.Type == LevelType.Elite)
                     {
                         StartCoroutine(Win());
@@ -188,13 +189,11 @@ namespace LevelPlay
                 return;
             }
 
-            // TODO: do spawning waves better
             if (SpawnedEnemies.Count == 0)
             {
                 if (_level.Type == LevelType.Elite || _wave == _level.Waves.Length-1)
                 {
                     _timeTillExit = 3;
-                    StatisticsInstance.levelsCleared++;
                     _isTerminal = true;
                 }
                 else if (_level.Type != LevelType.Elite)

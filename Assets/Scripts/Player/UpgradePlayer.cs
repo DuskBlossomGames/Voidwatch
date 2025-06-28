@@ -74,7 +74,7 @@ namespace Player
                     PlayerDataInstance.maxShield *= 1.05f;
                 }),
             new("Experimental Batteries",
-                "These third-party shield batteries hold longer, but recharge slower.",
+                "These third-party shield batteries hold charge longer, but recharge slower.",
                 "Huh, this warning seems to have faded...",
                 Rarity.Rare,
                 false,
@@ -123,7 +123,7 @@ namespace Player
                     PlayerDataInstance.dodgeJuiceRegenRate *= 1.25f;
                 }),
             new("Laminar Plating",
-                "Specialized plating eases the transition to Voidspace, lower the cost of jaunts.",
+                "Specialized plating eases the transition to Voidspace, lowering the cost of jaunts.",
                 "Their world shall be ours.",
                 Rarity.Common,
                 false,

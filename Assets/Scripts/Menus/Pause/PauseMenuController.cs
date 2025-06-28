@@ -16,6 +16,7 @@ namespace Menus
         public OptionsController options;
         
         private static PauseMenuController _instance;
+
         private void Awake()
         {
             if (_instance != null)
@@ -30,10 +31,6 @@ namespace Menus
             SceneManager.sceneLoaded += (_, _) => Resume();
         }
         
-        private float _opened;
-        private void OnEnable() { _opened = Time.time; }
-        private void OnDisable() { StatisticsInstance.pauseTime += Time.time - _opened; }
-
         private IEnumerator DontDestroyOnLoadAsync()
         {
             DontDestroyOnLoad(gameObject);

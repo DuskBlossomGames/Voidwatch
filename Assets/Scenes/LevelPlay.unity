@@ -2193,6 +2193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f583515f119495fa0482d8bb0bcc340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   healthBar: {fileID: 342773323}
   dashBar: {fileID: 879530126}
   scrapCount: {fileID: 397480715}
@@ -7349,26 +7350,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: -1
       objectReference: {fileID: 0}
-    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
-      propertyPath: size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
-      propertyPath: miniSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c1e9c54a6f1868c4887f0b7ecb966774, type: 3}
-    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
-      propertyPath: miniColor.b
-      value: 0.8773585
-      objectReference: {fileID: 0}
-    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
-      propertyPath: miniColor.g
-      value: 0.8773585
-      objectReference: {fileID: 0}
-    - target: {fileID: 3284878835932497912, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
-      propertyPath: miniColor.r
-      value: 0.8773585
-      objectReference: {fileID: 0}
     - target: {fileID: 5997792626973407928, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7678,7 +7659,8 @@ PrefabInstance:
       value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 578109379728807004, guid: 920d5780c4f324483be8acd0da552148, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 920d5780c4f324483be8acd0da552148, type: 3}

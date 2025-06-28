@@ -69,9 +69,11 @@ namespace Player
 
             if (_curAmmo < GunInfoInstance.ammoCount && (_noShootRefillTimer.IsFinished || (_emptyRefilling && _emptyRefillTimer.IsFinished)))
             {
-                _curAmmo = Mathf.Clamp(_curAmmo + GunInfoInstance.ammoCount / GunInfoInstance.timeToRefillFully * Time.deltaTime, 0, GunInfoInstance.ammoCount);
-                ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
+                _curAmmo += GunInfoInstance.ammoCount / GunInfoInstance.timeToRefillFully * Time.deltaTime;
             }
+            
+            _curAmmo = Mathf.Clamp(_curAmmo, 0, GunInfoInstance.ammoCount);
+            ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
         }
 
         public float ExpectedVelocity()

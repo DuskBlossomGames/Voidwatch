@@ -193,8 +193,8 @@ MonoBehaviour:
   normalSize: 5
   leaderSize: 7.75
   isLeader: 1
-  maxHealth: 150
-  leaderMaxHealth: 300
+  maxHealth: 75
+  leaderMaxHealth: 150
   leaderChance: 0.2
   explosionScaleMult: 2.5
   gooSpawnTime: 1.25
@@ -269,7 +269,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   speedCurveScale: 1.25
   initialDelay: 3
-  spawndelay: 9
+  spawndelay: 5
   swellsize: 3
   swelltime: 0.6181264
   isSpore: 0
