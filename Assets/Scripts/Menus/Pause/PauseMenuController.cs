@@ -53,6 +53,8 @@ namespace Menus
                 canvas.SetActive(true);
                 Time.timeScale = 0;
                 InputManager.isPaused = true;
+
+                foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.Pause();
             }
         }
 
@@ -61,6 +63,7 @@ namespace Menus
             Time.timeScale = 1;
             InputManager.isPaused = false;
             canvas.SetActive(false);
+            foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.UnPause();
         }
 
         public void Options()
