@@ -13,7 +13,7 @@ namespace Spawnables.Controllers.Bifurcator
         void Start()
         {
             transform.position = new Vector3(0, 0, transform.position.z);
-            transform.rotation = Quaternion.Euler(0, 0, Random.value * 360);
+            transform.rotation = Quaternion.Euler(0, 0, Random.Range(1/3f * Mathf.PI, 5/3f * Mathf.PI));
 
             rotSpeed *= Mathf.Sign(Random.value - 0.5f);
             _rotMult = 1;

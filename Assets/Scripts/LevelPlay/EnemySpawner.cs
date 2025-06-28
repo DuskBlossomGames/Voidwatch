@@ -11,6 +11,7 @@ using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using Static_Info;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -260,6 +261,8 @@ namespace LevelPlay
                 hazardObj.GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
                 hazardObj.GetComponent<EnemyVariant>().ScrapCount = lootPer;
             }
+
+            EditorApplication.isPaused = true;
         }
 
         private void SpawnAsteroids()
