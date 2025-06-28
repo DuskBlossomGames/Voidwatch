@@ -44,11 +44,7 @@ namespace Player
                     _waited = true;
                     _wait.Value = waitTime;
                 }
-            
-                _gain.SetAlpha(1);
-                _gain.text = (_scrap < PlayerDataInstance.Scrap ? "+" : "- ") +
-                             $"{Mathf.Abs(PlayerDataInstance.Scrap - _scrap):# ### ###}";
-
+                
                 if (_wait.IsFinished && _transfer.IsFinished)
                 {
                     _scrap += (int) Mathf.Sign(PlayerDataInstance.Scrap - _scrap);
@@ -57,6 +53,10 @@ namespace Player
                     var perSec = transferPerSec * (0.8f + Mathf.Abs(_scrap - PlayerDataInstance.Scrap)/200f);
                     _transfer.Value = 1 / perSec;
                 }
+                
+                _gain.SetAlpha(1);
+                _gain.text = (_scrap < PlayerDataInstance.Scrap ? "+" : "- ") +
+                             $"{Mathf.Abs(PlayerDataInstance.Scrap - _scrap):# ### ##0}";
             }
             else
             {

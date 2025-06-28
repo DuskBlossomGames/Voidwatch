@@ -122,12 +122,12 @@ namespace Player
         {
             for (var i = 0; i < 3; i++)
             {
-                upgrades[i].GetChild(0).GetComponent<Image>().sprite = PlayerDataInstance.UpgradeSprites[_upgrades[i].Title];
-                upgrades[i].GetChild(1).GetComponent<Image>().sprite = PlayerDataInstance.RaritySprites[_upgrades[i].Rarity.Name][0];
-                upgrades[i].GetChild(2).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Title;
-                upgrades[i].GetChild(3).GetComponent<Image>().sprite = PlayerDataInstance.RaritySprites[_upgrades[i].Rarity.Name][1];
-                upgrades[i].GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Description;
-                upgrades[i].GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
+                upgrades[i].GetChild(0).GetChild(0).GetComponent<Image>().sprite = PlayerDataInstance.UpgradeSprites[_upgrades[i].Title];
+                upgrades[i].GetChild(0).GetChild(1).GetComponent<Image>().sprite = PlayerDataInstance.RaritySprites[_upgrades[i].Rarity.Name][0];
+                upgrades[i].GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Title;
+                upgrades[i].GetChild(2).GetComponent<Image>().sprite = PlayerDataInstance.RaritySprites[_upgrades[i].Rarity.Name][1];
+                upgrades[i].GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Description;
+                upgrades[i].GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
             }
         }
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace Util
 {
+    [RequireComponent(typeof(CanvasRenderer))]
     public class GraphicsGroup : Graphic
     {
         [Space(10)]
