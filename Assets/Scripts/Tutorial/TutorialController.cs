@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Extensions;
@@ -140,7 +141,7 @@ namespace Tutorial
             dialogueController.Continue += Continue;
             playerMovement.SetInputBlocked(true);
 
-            StartCoroutine(FadeIn());
+            StartCoroutine(FadeIn(Continue));
         }
 
         private void Update()
@@ -193,8 +194,16 @@ namespace Tutorial
                         dashBar.SetActive(true);
                         break;
                     case Stage.Dashing:
-                        raceCourse.SetActive(true);
-                        break;
+                        StartCoroutine(FadeOut(() =>
+                        {
+                            raceCourse.SetActive(true);
+                            StartCoroutine(FadeIn());
+                            Continue();
+                        }));
+                        _stage += 1;
+                        _textIdx = -1;
+                        _genFlag = false;
+                        return;
                     case Stage.Race:
                         raceCourse.SetActive(false);
                         playerMovement.SetInputBlocked(false); // enable player shoot
@@ -207,7 +216,11 @@ namespace Tutorial
                         GunInfoInstance.ammoCount *= 2;
                         break;
                     case Stage.Enemy:
-                        StartCoroutine(FadeOut());
+                        StartCoroutine(FadeOut(() =>
+                        {
+                            Destroy(StaticInfoHolder.Instance.gameObject);
+                            SceneManager.LoadScene("TitleScreen");
+                        }));
                         return;
                 }
             
@@ -227,7 +240,7 @@ namespace Tutorial
             dialogueController.ShowText(Text[_stage][_textIdx], !_waitingForAction);
         }
 
-        private IEnumerator FadeIn()
+        private IEnumerator FadeIn(Action then=null)
         {
             fadeOut.gameObject.SetActive(true);
             fadeOut.SetAlpha(1);
@@ -237,10 +250,10 @@ namespace Tutorial
                 fadeOut.SetAlpha(1 - (t / fadeOutTime));
             }
 
-            Continue();
+            then?.Invoke();
         }
         
-        private IEnumerator FadeOut()
+        private IEnumerator FadeOut(Action then=null)
         {
             fadeOut.gameObject.SetActive(true);
             fadeOut.SetAlpha(0);
@@ -250,8 +263,7 @@ namespace Tutorial
                 fadeOut.SetAlpha(t / fadeOutTime);
             }
 
-            Destroy(StaticInfoHolder.Instance.gameObject);
-            SceneManager.LoadScene("TitleScreen");
+            then?.Invoke();
         }
     }
 }
