@@ -137,6 +137,14 @@ namespace Static_Info
                         difficultyBudget -= addition;
                     }
 
+                    for (var i = 0; i < 3; i++)
+                    {
+                        if (Random.value < Mathf.Pow(difficultyScore / MaxDifficultyScore, i == 0 ? 1 : 2 * i))
+                        {
+                            waves.Add(waves[^1]);
+                        }
+                    }
+
                     level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
                     level.DifficultyScore = (int) difficultyScore;
                     level.MaxTier = (int) (5*Mathf.Pow(difficultyScore/MaxDifficultyScore, 2/3f) + 1);
