@@ -95,6 +95,7 @@ namespace Spawnables.Controllers.Misslers
 
         protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
+            if (collision.collider.gameObject == owner) return;
             Explode(collision.collider);
         }
 
@@ -105,9 +106,7 @@ namespace Spawnables.Controllers.Misslers
             exp.GetComponent<ExplosionHandler>().shieldMult = shieldMult;
             exp.GetComponent<ExplosionHandler>().bleedPerc = bleedPerc;
 
-            var ignore = new List<Collider2D>();
-            if (other != null) ignore.Add(other);
-            exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject, ignore);
+            exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject, new List<Collider2D>{owner.GetComponent<Collider2D>()});
             Destroy(gameObject);
         }
 

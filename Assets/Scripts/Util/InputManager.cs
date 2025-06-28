@@ -36,6 +36,7 @@ namespace Util
         public static readonly Dictionary<KeyCode, string> VALID_KEY_CODES = new();
         static InputManager()
         {
+            VALID_KEY_CODES.Add(KeyCode.None, "<unbound>");
             VALID_KEY_CODES.Add(KeyCode.Return, "Enter");
             VALID_KEY_CODES.Add(KeyCode.Space, "Space");
             VALID_KEY_CODES.Add(KeyCode.LeftShift, "LShift");

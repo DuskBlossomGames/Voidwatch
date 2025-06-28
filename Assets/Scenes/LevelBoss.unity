@@ -2718,7 +2718,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 9172983
+    m_Bits: 76281847
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4434,6 +4434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f583515f119495fa0482d8bb0bcc340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   healthBar: {fileID: 1896843935}
   dashBar: {fileID: 830563147}
   scrapCount: {fileID: 0}

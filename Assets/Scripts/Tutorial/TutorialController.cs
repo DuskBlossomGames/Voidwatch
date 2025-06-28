@@ -139,8 +139,8 @@ namespace Tutorial
         
             dialogueController.Continue += Continue;
             playerMovement.SetInputBlocked(true);
-        
-            Continue();
+
+            StartCoroutine(FadeIn());
         }
 
         private void Update()
@@ -227,6 +227,19 @@ namespace Tutorial
             dialogueController.ShowText(Text[_stage][_textIdx], !_waitingForAction);
         }
 
+        private IEnumerator FadeIn()
+        {
+            fadeOut.gameObject.SetActive(true);
+            fadeOut.SetAlpha(1);
+            for (float t = 0; t < fadeOutTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                fadeOut.SetAlpha(1 - (t / fadeOutTime));
+            }
+
+            Continue();
+        }
+        
         private IEnumerator FadeOut()
         {
             fadeOut.gameObject.SetActive(true);

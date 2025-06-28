@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1855628}
   - component: {fileID: 1855629}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 11878139}
   - component: {fileID: 11878140}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -848,7 +848,7 @@ GameObject:
   - component: {fileID: 78802577}
   - component: {fileID: 78802578}
   - component: {fileID: 78802579}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -885,11 +885,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1194,7 +1194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 120694744}
   - component: {fileID: 120694745}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1355,7 +1355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 144597851}
   - component: {fileID: 144597852}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1549,7 +1549,7 @@ GameObject:
   m_Component:
   - component: {fileID: 158104814}
   - component: {fileID: 158104815}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1637,7 +1637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 165259186}
   - component: {fileID: 165259187}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1936,7 +1936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 212673346}
   - component: {fileID: 212673347}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2152,7 +2152,7 @@ GameObject:
   - component: {fileID: 258275127}
   - component: {fileID: 258275128}
   - component: {fileID: 258275129}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2189,11 +2189,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2391,7 +2391,7 @@ GameObject:
   - component: {fileID: 288177614}
   - component: {fileID: 288177615}
   - component: {fileID: 288177616}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2428,11 +2428,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2485,7 +2485,7 @@ GameObject:
   - component: {fileID: 289418573}
   - component: {fileID: 289418574}
   - component: {fileID: 289418575}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2522,11 +2522,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3071,7 +3071,7 @@ GameObject:
   m_Component:
   - component: {fileID: 350129543}
   - component: {fileID: 350129544}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3158,7 +3158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 356873836}
   - component: {fileID: 356873837}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3245,7 +3245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 374655188}
   - component: {fileID: 374655189}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3644,7 +3644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 474924491}
   - component: {fileID: 474924492}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3963,7 +3963,7 @@ GameObject:
   m_Component:
   - component: {fileID: 500808436}
   - component: {fileID: 500808437}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4378,7 +4378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 533476618}
   - component: {fileID: 533476619}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4726,7 +4726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 577166255}
   - component: {fileID: 577166256}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5442,7 +5442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 641540328}
   - component: {fileID: 641540329}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5537,7 +5537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &666178716
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5605,7 +5605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 672924253}
   - component: {fileID: 672924254}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5767,7 +5767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 706308145}
   - component: {fileID: 706308146}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5854,7 +5854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 712476664}
   - component: {fileID: 712476665}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6226,7 +6226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 721175274}
   - component: {fileID: 721175275}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6462,6 +6462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f583515f119495fa0482d8bb0bcc340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   healthBar: {fileID: 738553339883171654}
   dashBar: {fileID: 4181911249025847363}
   scrapCount: {fileID: 931925296}
@@ -6476,7 +6477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 747677281}
   - component: {fileID: 747677282}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6564,7 +6565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 761824517}
   - component: {fileID: 761824518}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6652,7 +6653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 775849348}
   - component: {fileID: 775849349}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6802,7 +6803,7 @@ GameObject:
   m_Component:
   - component: {fileID: 840049702}
   - component: {fileID: 840049703}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7060,7 +7061,7 @@ GameObject:
   m_Component:
   - component: {fileID: 918959640}
   - component: {fileID: 918959641}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7379,7 +7380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 931184241}
   - component: {fileID: 931184242}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7504,7 +7505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 977619999}
   - component: {fileID: 977620000}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7667,7 +7668,7 @@ GameObject:
   - component: {fileID: 1019538900}
   - component: {fileID: 1019538901}
   - component: {fileID: 1019538902}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7704,11 +7705,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -7761,7 +7762,7 @@ GameObject:
   - component: {fileID: 1061064140}
   - component: {fileID: 1061064141}
   - component: {fileID: 1061064142}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7798,11 +7799,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -7949,7 +7950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1077773227}
   - component: {fileID: 1077773228}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8359,7 +8360,7 @@ GameObject:
   - component: {fileID: 1149203397}
   - component: {fileID: 1149203398}
   - component: {fileID: 1149203399}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8396,11 +8397,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -8546,7 +8547,7 @@ GameObject:
   - component: {fileID: 1163204688}
   - component: {fileID: 1163204689}
   - component: {fileID: 1163204690}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8583,11 +8584,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -8639,7 +8640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1175431650}
   - component: {fileID: 1175431651}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8727,7 +8728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1176065746}
   - component: {fileID: 1176065747}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9370,7 +9371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1215552331}
   - component: {fileID: 1215552332}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9533,7 +9534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1250617946}
   - component: {fileID: 1250617947}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9757,7 +9758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1265320938}
   - component: {fileID: 1265320939}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10056,7 +10057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1296608134}
   - component: {fileID: 1296608135}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10180,7 +10181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1327829626}
   - component: {fileID: 1327829627}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10267,7 +10268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1332861806}
   - component: {fileID: 1332861807}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10354,7 +10355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1347540004}
   - component: {fileID: 1347540005}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10578,7 +10579,7 @@ GameObject:
   - component: {fileID: 1376008348}
   - component: {fileID: 1376008349}
   - component: {fileID: 1376008350}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10615,11 +10616,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -10746,7 +10747,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 53147639
+    m_Bits: 120256503
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -11030,7 +11031,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1417896968}
   - component: {fileID: 1417896969}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11331,7 +11332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1449263923}
   - component: {fileID: 1449263924}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11463,7 +11464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1450555438}
   - component: {fileID: 1450555439}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11762,7 +11763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1475316597}
   - component: {fileID: 1475316598}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12117,7 +12118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1530028103}
   - component: {fileID: 1530028104}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12478,7 +12479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1567772597}
   - component: {fileID: 1567772598}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12565,7 +12566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1603309610}
   - component: {fileID: 1603309611}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12654,7 +12655,7 @@ GameObject:
   - component: {fileID: 1627109159}
   - component: {fileID: 1627109160}
   - component: {fileID: 1627109161}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12691,11 +12692,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -12998,7 +12999,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1652551917}
   - component: {fileID: 1652551918}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13606,7 +13607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1731703875}
   - component: {fileID: 1731703876}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13976,7 +13977,7 @@ GameObject:
   - component: {fileID: 1754314985}
   - component: {fileID: 1754314986}
   - component: {fileID: 1754314987}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14013,11 +14014,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -14443,7 +14444,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <mspace=17>00</mspace>:<mspace=17>00</mspace>.<mspace=17>00
+  m_text: <mspace=15>00</mspace>:<mspace=15>00</mspace>.<mspace=15>00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
   m_sharedMaterial: {fileID: 7206338398465205622, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
@@ -14554,7 +14555,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1790887799}
   - component: {fileID: 1790887800}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14976,7 +14977,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1825208857}
   - component: {fileID: 1825208858}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15234,7 +15235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1851563049}
   - component: {fileID: 1851563050}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15356,7 +15357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1873489586}
   - component: {fileID: 1873489587}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15508,7 +15509,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1918142530}
   - component: {fileID: 1918142531}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15746,7 +15747,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1947856164}
   - component: {fileID: 1947856165}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15834,7 +15835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1978082275}
   - component: {fileID: 1978082276}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16340,7 +16341,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2018612932}
   - component: {fileID: 2018612933}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16461,7 +16462,7 @@ GameObject:
   - component: {fileID: 2024456956}
   - component: {fileID: 2024456957}
   - component: {fileID: 2024456958}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16498,11 +16499,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -16554,7 +16555,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032796035}
   - component: {fileID: 2032796036}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16930,7 +16931,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2066635430}
   - component: {fileID: 2066635431}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17019,7 +17020,7 @@ GameObject:
   - component: {fileID: 2086127816}
   - component: {fileID: 2086127817}
   - component: {fileID: 2086127818}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17056,11 +17057,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -17187,7 +17188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2100737652}
   - component: {fileID: 2100737653}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17275,7 +17276,7 @@ GameObject:
   - component: {fileID: 2123828093}
   - component: {fileID: 2123828095}
   - component: {fileID: 2123828096}
-  m_Layer: 25
+  m_Layer: 9
   m_Name: Ring 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17312,11 +17313,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 10
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
