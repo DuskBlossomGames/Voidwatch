@@ -12,7 +12,7 @@ namespace Static_Info
     {
         public static PlayerData PlayerDataInstance => StaticInfoHolder.Instance.GetCachedComponent<PlayerData>();
 
-        public AssetLabelReference borderSprites, upgradeSprites;
+        public AssetLabelReference borderSprites, upgradeSprites, boostableStatSprite;
         
         public MaxHealthStat maxHealth;
         public BoostableStat<float> maxShield;
@@ -47,6 +47,7 @@ namespace Static_Info
         
         public readonly Dictionary<string, Sprite> UpgradeSprites = new();
         public readonly Dictionary<string, Sprite[]> RaritySprites = new();
+        public readonly Dictionary<string, Sprite> BoostableStatSprites = new();
         private void Awake()
         {
             Addressables.LoadAssetsAsync<Sprite>(borderSprites, null).Completed += handle =>
@@ -63,6 +64,14 @@ namespace Static_Info
                 foreach (var upgrade in UpgradePlayer.UPGRADES)
                 {
                     UpgradeSprites[upgrade.Title] = byName[upgrade.Title];
+                }
+            };
+            Addressables.LoadAssetsAsync<Sprite>(boostableStatSprite, null).Completed += handle =>
+            {
+                var byName = handle.Result.ToDictionary(s => s.name, s => s);
+                foreach (var upgrade in UpgradePlayer.UPGRADES)
+                {
+                    BoostableStatSprites[upgrade.Title] = byName[upgrade.Title];
                 }
             };
         }

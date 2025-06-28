@@ -137,11 +137,14 @@ namespace Static_Info
                         difficultyBudget -= addition;
                     }
 
-                    for (var i = 0; i < 3; i++)
+                    if (level.Type != LevelType.Elite)
                     {
-                        if (Random.value < Mathf.Pow(difficultyScore / MaxDifficultyScore, i == 0 ? 1 : 2 * i))
+                        for (var i = 0; i < 3; i++)
                         {
-                            waves.Add(waves[^1]);
+                            if (Random.value < Mathf.Pow(difficultyScore / MaxDifficultyScore, i == 0 ? 1 : 2 * i))
+                            {
+                                waves.Add(waves[^1]);
+                            }
                         }
                     }
 

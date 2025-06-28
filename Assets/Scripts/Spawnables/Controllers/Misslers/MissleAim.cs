@@ -106,7 +106,9 @@ namespace Spawnables.Controllers.Misslers
             exp.GetComponent<ExplosionHandler>().shieldMult = shieldMult;
             exp.GetComponent<ExplosionHandler>().bleedPerc = bleedPerc;
 
-            exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject, new List<Collider2D>{owner.GetComponent<Collider2D>()}, enemyMod: 0.3f);
+            var ignore = new List<Collider2D>();
+            if (owner != null) ignore.Add(owner.GetComponent<Collider2D>());
+            exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject, ignore, enemyMod: 0.3f);
             Destroy(gameObject);
         }
 

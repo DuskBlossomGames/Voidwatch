@@ -2270,7 +2270,7 @@ MonoBehaviour:
   stealthLowAccTime: 2
   destealthRadius: 22.5
   attackAccel: 9
-  attackSpeed: 30
+  attackSpeed: 32
   attackRadius: 10
   maxTimeAttacking: 8
   editorNote: Cutscene Variables

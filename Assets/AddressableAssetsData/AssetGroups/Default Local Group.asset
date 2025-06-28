@@ -39,6 +39,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - enemies
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f035b6803be3e40fb8c70a60203fa33f
+    m_Address: Assets/Sprites/Shop/Boostable Stats
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - boostable-stats
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2b694b73e3cde4410a254b8bd0d67fec, type: 2}
   m_SchemaSet:

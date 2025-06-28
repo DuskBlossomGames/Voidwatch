@@ -6566,7 +6566,7 @@ MonoBehaviour:
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   nUpMan: {fileID: 682528864}
-  debugEnemy: {fileID: 0}
+  debugEnemy: {fileID: 4430136990600543352, guid: 44ade27e3b9ecad44914e3ff7636293e, type: 3}
 --- !u!4 &1780276284
 Transform:
   m_ObjectHideFlags: 0
@@ -6964,7 +6964,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
