@@ -13,15 +13,13 @@ namespace Spawnables.Controllers.Chasers
         private PositionHinter _ph;
         private bool _alive;
         
-        private void Start()
+        private void Awake()
         {
             if (target == null) target = GameObject.FindGameObjectWithTag("Player");
             _ph = GetComponent<PositionHinter>();
             _ph.enabled = false;
             
             transform.GetChild(0).localScale = 2*wakeupRange / transform.lossyScale.x * Vector3.one;
-            
-            base.Start();
         }
 
         protected override void FixedUpdate()

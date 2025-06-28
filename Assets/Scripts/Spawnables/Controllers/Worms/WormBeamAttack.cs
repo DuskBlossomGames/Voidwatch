@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using Spawnables.Damage;
+using UnityEditor;
 using UnityEngine;
+using Util;
 using Random = UnityEngine.Random;
 
 namespace Spawnables.Controllers.Worms
@@ -32,6 +35,8 @@ namespace Spawnables.Controllers.Worms
             };
         }
 
+        private Vector3 LineStart =>
+            transform.position + transform.rotation * (transform.lossyScale.x / 3 * Vector3.up);
         IEnumerator _Shoot()
         {
             GetComponent<WormSegment>().aroundPather.snakeyness /= 3;
@@ -39,7 +44,7 @@ namespace Spawnables.Controllers.Worms
             yield return new WaitForSeconds(chargeTime);
 
             GetComponent<WormSegment>().speed /= 4;
-            Vector2 dir = GetComponent<WormSegment>().PredDir(dodgeTime+0.1f);
+            Vector2 dir = GetComponent<WormSegment>().PredDir(LineStart, dodgeTime+0.1f);
 
             GameObject ray = new GameObject("Warning Beam");
             _spawns.Add(ray);
@@ -47,9 +52,9 @@ namespace Spawnables.Controllers.Worms
             var lrend = ray.AddComponent<LineRenderer>();
             lrend.colorGradient = warnColor;
             lrend.material = material;
-            lrend.widthMultiplier = .17f;
-            lrend.SetPositions(new[] { transform.position + 1 * (Vector3)dir, transform.position + 200 * (Vector3)dir });
-
+            lrend.widthMultiplier = .3f;
+            lrend.sortingOrder = -1;
+            lrend.SetPositions(new[] { LineStart, LineStart + 200 * (Vector3)dir });
 
             yield return new WaitForSeconds(dodgeTime);
             Destroy(ray);
@@ -77,11 +82,12 @@ namespace Spawnables.Controllers.Worms
                 lrend = lilray.AddComponent<LineRenderer>();
                 lrend.colorGradient = littlebeamColor;
                 lrend.material = material;
-                lrend.widthMultiplier = .04f;
-                Vector3[] pos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 8 * (Vector3)Random.insideUnitCircle };
+                lrend.widthMultiplier = .08f;
+                lrend.sortingOrder = -1;
+                Vector3[] pos = new[] { LineStart + .1f * (Vector3)Random.insideUnitCircle, LineStart + 200 * (Vector3)dir + 8 * (Vector3)Random.insideUnitCircle };
                 lrend.SetPositions(pos);
                 RaycastHit2D hit = Physics2D.Linecast(pos[0], pos[1], 1 << LayerMask.NameToLayer("Player"));
-                if (hit.collider != null)
+                if (hit.collider != null && !hit.collider.GetComponent<Movement>().Dodging)
                 {
                     var tar = hit.transform.gameObject;
                     var dmgable = tar.GetComponent<IDamageable>();
@@ -99,11 +105,12 @@ namespace Spawnables.Controllers.Worms
             lrend = ray.AddComponent<LineRenderer>();
             lrend.colorGradient = beamColor;
             lrend.material = material;
-            Vector3[] rpos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 3 * (Vector3)Random.insideUnitCircle };
+            Vector3[] rpos = new[] { LineStart, LineStart + 200 * (Vector3)dir };
             lrend.SetPositions(rpos);
-            lrend.widthMultiplier = .6f;
+            lrend.widthMultiplier = 1.1f;
+            lrend.sortingOrder = -1;
             RaycastHit2D rhit = Physics2D.Linecast(rpos[0], rpos[1], 1 << LayerMask.NameToLayer("Player"));
-            if (rhit.collider != null)
+            if (rhit.collider != null && !rhit.collider.GetComponent<Movement>().Dodging)
             {
                 var tar = rhit.transform.gameObject;
                 var dmgable = tar.GetComponent<Damageable>();
@@ -122,11 +129,12 @@ namespace Spawnables.Controllers.Worms
                 lrend = lilray.AddComponent<LineRenderer>();
                 lrend.colorGradient = littlebeamColor;
                 lrend.material = material;
-                lrend.widthMultiplier = .04f;
-                Vector3[] pos = new[] { transform.position + 1 * (Vector3)dir + .1f * (Vector3)Random.insideUnitCircle, transform.position + 200 * (Vector3)dir + 4 * (Vector3)Random.insideUnitCircle };
+                lrend.widthMultiplier = .08f;
+                lrend.sortingOrder = -1;
+                Vector3[] pos = new[] { LineStart + .1f * (Vector3)Random.insideUnitCircle, LineStart + 200 * (Vector3) dir + 4 * (Vector3)Random.insideUnitCircle };
                 lrend.SetPositions(pos);
                 RaycastHit2D hit = Physics2D.Linecast(pos[0], pos[1], 1 << LayerMask.NameToLayer("Player"));
-                if (hit.collider != null)
+                if (hit.collider != null && !hit.collider.GetComponent<Movement>().Dodging)
                 {
                     var tar = hit.transform.gameObject;
                     var dmgable = tar.GetComponent<Damageable>();

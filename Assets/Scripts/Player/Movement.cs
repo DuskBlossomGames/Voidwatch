@@ -66,6 +66,7 @@ namespace Player
         private float _dodgeJuice;
         private float _dodgeCost;
         private readonly Timer _dodgeTimer = new();
+        private readonly Timer _dodgeCostTimer = new();
         private readonly Timer _dodgeCooldownTimer = new();
         private readonly Timer _afterImageTimer = new();
         private Vector2 _dodgeDirection;
@@ -163,6 +164,7 @@ namespace Player
                 _preDodgeVel = velocity;
                 _dodgeTimeLength = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity;
                 _dodgeTimer.Value = _dodgeTimeLength;
+                _dodgeCostTimer.Value = _dodgeTimeLength;
                 _dodgeCost = DodgeOnceCost ?? PlayerDataInstance.dodgeJuiceCost;
                 _dodgeCooldownTimer.Value = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity + PlayerDataInstance.dodgeCooldown;
                 _dodgeDirection = DodgeOnceDir ?? new Vector2(_forwards.x, _forwards.y);
@@ -185,6 +187,7 @@ namespace Player
 
             var wasDodging = !_dodgeTimer.IsFinished;
             _dodgeTimer.FixedUpdate();
+            _dodgeCostTimer.FixedUpdate();
             _dodgeCooldownTimer.FixedUpdate();
             _afterImageTimer.FixedUpdate();
             var dodging = !_dodgeTimer.IsFinished;
@@ -200,10 +203,13 @@ namespace Player
             // CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
             CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
             _collider.excludeLayers = dodging ? dodgeExcludeMask : 0;
+            _collider.layerOverridePriority = dodging ? 1000 : 1;
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
-
-            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate : -_dodgeCost/_dodgeTimeLength*dodgeTimeDilation) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
+            
+            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate
+                : !_dodgeCostTimer.IsFinished ? -_dodgeCost/_dodgeTimeLength*dodgeTimeDilation
+                : 0) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
             dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice);
 
             if (dodging)

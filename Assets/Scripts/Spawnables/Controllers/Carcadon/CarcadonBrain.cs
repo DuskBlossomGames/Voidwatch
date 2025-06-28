@@ -35,6 +35,7 @@ namespace Spawnables.Controllers.Carcadon
 
         public float attackAccel, attackSpeed;
         public float attackRadius;
+        public float maxTimeAttacking;
 
         private EnemySpawner _enemySpawner;
         private SpriteRenderer[] _baseSpriteRenderers;
@@ -96,7 +97,7 @@ namespace Spawnables.Controllers.Carcadon
 
         private Vector2 _attackTarg;
         private bool _isOpaque = true;
-        private float _timeGoingForPos;
+        private float _timeGoingForPos, _timeAttacking;
         private void Update()
         {
             if (_inCutscene) return;
@@ -138,6 +139,19 @@ namespace Spawnables.Controllers.Carcadon
             } else if (_mode == Mode.Attack)
             {
                 _timeGoingForPos += Time.deltaTime;
+                _timeAttacking += Time.deltaTime;
+
+                if (_timeAttacking > maxTimeAttacking)
+                {
+                    for (var i = 0; i < 2; i++) _armControllers[i].hasAttack = false;
+                }
+                if (_timeAttacking > maxTimeAttacking+1)
+                {
+                    _timeAttacking = 0;
+                    for (var i = 0; i < 2; i++) _armControllers[i].hasAttack = true;
+                    GoToStealth(0.5f);
+                    return;
+                }
 
                 var dist = _attackTarg - (Vector2)transform.position;
 
@@ -214,15 +228,18 @@ namespace Spawnables.Controllers.Carcadon
         {
             if (Mathf.Min((int) (oldHealth / _maxHealth * LevelSelectData.EliteWaves), LevelSelectData.EliteWaves-1) != (int) (newHealth / _maxHealth * LevelSelectData.EliteWaves))
             {
-                _mode = Mode.Stealth;
-                _rb.linearVelocity = Vector2.zero; _currSpeed = 0;
-                _stealthTimer.Value = Random.Range(minRandStealthTime, maxRandStealthTime);
-                _stealthAccTimer.Value = stealthLowAccTime;
-                SetVisualStealth(true);
-
-                
+                GoToStealth();
                 StartCoroutine( _enemySpawner.SpawnWaveWithIndicator());
             }
+        }
+
+        private void GoToStealth(float stealthTimeMod=1)
+        {
+            _mode = Mode.Stealth;
+            _rb.linearVelocity = Vector2.zero; _currSpeed = 0;
+            _stealthTimer.Value = stealthTimeMod*Random.Range(minRandStealthTime, maxRandStealthTime);
+            _stealthAccTimer.Value = stealthLowAccTime;
+            SetVisualStealth(true);
         }
 
         private bool _stealth;

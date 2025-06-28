@@ -152,7 +152,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  atkRange: 40
+  atkRange: 50
   chargeUpTime: 1
   bend: 0
 --- !u!114 &-7001248555379214586
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chargeTime: 1
-  dodgeTime: 0.2
+  dodgeTime: 0.4
   ramp: 1.15
   baseDmg: 50
   shieldMult: 2

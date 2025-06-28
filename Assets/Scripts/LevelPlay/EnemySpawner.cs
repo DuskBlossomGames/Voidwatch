@@ -149,7 +149,6 @@ namespace LevelPlay
                 _spawnedElite = true;
             }
             
-            // TODO: debug
 #if UNITY_EDITOR
             if (InputManager.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
             if (_level.Type == LevelType.Elite && InputManager.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
@@ -239,7 +238,7 @@ namespace LevelPlay
             var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
             var lootPer = _level.HazardLoot / hazards.Count;
             
-            var sectorSize = 3/2f*Mathf.PI / hazards.Count;
+            var sectorSize = 4/3f*Mathf.PI / hazards.Count;
             for (var sector = 0; sector < hazards.Count; sector++)
             {
                 var idx = Random.Range(0, hazards.Count);
@@ -248,7 +247,7 @@ namespace LevelPlay
                     
                 var offset = Random.Range(-sectorSize/3, sectorSize/3);
 
-                var theta = 1/4f * Mathf.PI + sectorSize/2 + sector * sectorSize + offset;
+                var theta = 1/3f * Mathf.PI + sectorSize/2 + sector * sectorSize + offset;
                 var r = Random.Range(planet.transform.localScale.x / 2 + 30,
                     boundaryCircle.transform.localScale.x / 2 - 20);
                     
@@ -283,14 +282,14 @@ namespace LevelPlay
                 asteroids.Add(asteroid);
             }
             
-            var sectorSize = 2*Mathf.PI / asteroids.Count;
+            var sectorSize = 7/4f*Mathf.PI / asteroids.Count;
             for (var sector = 0; sector < asteroids.Count; sector++)
             {
                 var idx = Random.Range(0, asteroids.Count);
                 var asteroid = asteroids[idx];
                     
                 var offset = Random.Range(-sectorSize/3, sectorSize/3);
-                var theta = sectorSize/2 + sector * sectorSize + offset;
+                var theta = 1/8f * Mathf.PI + sectorSize/2 + sector * sectorSize + offset;
                 var r = Random.Range(planet.transform.localScale.x / 2 + 30,
                     boundaryCircle.transform.localScale.x / 2 - 35);
                     
@@ -364,7 +363,7 @@ namespace LevelPlay
                     enemy,
                     transform.position +
                     new Vector3(boundarySize.x * Mathf.Cos(rad), boundarySize.y * Mathf.Sin(rad), 0),
-                    Quaternion.identity);
+                    Quaternion.Euler(0, 0, 180+Mathf.Rad2Deg * rad));
                 if (enemyObj.TryGetComponent<MissleShooter>(out var missleShooter)) missleShooter.target = player;
 
                 //Debug.LogFormat("Late Enemy ({0}) has scrap count ({1})", enemy.name, enemy.GetComponent<EnemyVariant>().ScrapCount);

@@ -2272,6 +2272,7 @@ MonoBehaviour:
   attackAccel: 9
   attackSpeed: 30
   attackRadius: 10
+  maxTimeAttacking: 8
   editorNote: Cutscene Variables
   fadeInTime: 3
   waitTime: 0.3
@@ -4459,7 +4460,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 261111
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -4889,7 +4890,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 261111
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

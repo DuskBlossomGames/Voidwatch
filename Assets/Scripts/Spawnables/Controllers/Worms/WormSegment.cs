@@ -1,4 +1,5 @@
 using Spawnables.Pathfinding;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using Util;
 
@@ -44,21 +45,20 @@ namespace Spawnables.Controllers.Worms
             if (target == null) target = GameObject.FindGameObjectWithTag("Player");
         }
 
+        private void RotateTo(Vector2 dir)
+        {
+            _dir = dir;
+            var angle = Mathf.Atan2(_dir.y, _dir.x);
+            transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * angle);
+        }
+
         void Update()
         {
             if(form == Form.Head)
             {
-
-                if (pathmode == PathMode.Around)
-                {
-                    _dir = aroundPather.PathDirNorm(transform.position, target.transform.position);
-                } else if(pathmode ==PathMode.Direct)
-                {
-                    _dir = directPather.PathDirNorm(transform.position, target.transform.position);
-                }
-                float angle = Mathf.Atan2(_dir.y, _dir.x);
-
-                transform.rotation = Quaternion.Euler(0, 0, -90 + Mathf.Rad2Deg * angle);
+                RotateTo(pathmode == PathMode.Around
+                    ? aroundPather.PathDirNorm(transform.position, target.transform.position)
+                    : directPather.PathDirNorm(transform.position, target.transform.position));
             
                 var rigid = GetComponent<CustomRigidbody2D>();
                 float deltVel = accel * accelCurve.Evaluate(rigid.linearVelocity.magnitude/speed) * Time.deltaTime;
@@ -104,9 +104,10 @@ namespace Spawnables.Controllers.Worms
 
         }
 
-        public Vector2 PredDir(float time)
+        public Vector2 PredDir(Vector3 myPos, float time)
         {
-            return (target.transform.position + time * (Vector3)target.GetComponent<CustomRigidbody2D>().linearVelocity - transform.position).normalized;
+            return UtilFuncs.LeadShotNorm(target.transform.position - myPos, target.transform.GetComponent<CustomRigidbody2D>().linearVelocity, Vector2.Distance(target.transform.position, myPos)/time);
+            // return (target.transform.position + time * (Vector3)target.GetComponent<CustomRigidbody2D>().linearVelocity - transform.position).normalized;
         }
     }
 }
