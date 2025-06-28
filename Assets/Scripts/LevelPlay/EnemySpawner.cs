@@ -261,8 +261,6 @@ namespace LevelPlay
                 hazardObj.GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
                 hazardObj.GetComponent<EnemyVariant>().ScrapCount = lootPer;
             }
-
-            EditorApplication.isPaused = true;
         }
 
         private void SpawnAsteroids()
