@@ -5958,7 +5958,7 @@ MonoBehaviour:
   dodgeBar: {fileID: 0}
   dodgeExcludeMask:
     serializedVersion: 2
-    m_Bits: 67108343
+    m_Bits: 134217207
   dodgeTimeDilation: 0.25
   dodgeTimeDilationCurve:
     serializedVersion: 2

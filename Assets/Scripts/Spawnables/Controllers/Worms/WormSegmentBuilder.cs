@@ -34,6 +34,7 @@ namespace Spawnables.Controllers.Worms
             child.GetComponent<WormSegment>().form = WormSegment.Form.Head;
             child.GetComponent<WormDamageable>().root = gameObject;
             child.GetComponent<WormDamageable>().trackDeath = true;
+            child.GetComponent<WormDamageable>().Variant = GetComponent<EnemyVariant>();
             child.transform.localPosition = relPos;
             oldChild = child;
             relPos.x -= segLength;

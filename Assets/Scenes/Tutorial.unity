@@ -10694,7 +10694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2066395885}
-  baseSize: 12
+  baseSize: 15
   jump: 0.1
   shipPull: 0.35
   mouseZoomScale: 5
@@ -10743,7 +10743,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.5
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

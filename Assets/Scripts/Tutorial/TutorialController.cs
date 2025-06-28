@@ -32,7 +32,7 @@ namespace Tutorial
                 Stage.Camera, new[]
                 {
                     "Welcome to the Voidwatch Academy. Here you will learn how to be a part of the galaxy's greatest fighting force. And our last hope.",
-                    "The latest Voidhawk Infiltrator starship is equipped with state-of-the-art scouting technology. <b>Move your mouse around to see further.</b>",
+                    "The latest Voidhawk Infiltrator starship is equipped with state-of-the-art scouting technology. <b>Move your mouse around to see farther.</b>",
                     "Great work. When you're ready, the simulation will enable the propulsion system."
                 }
             },

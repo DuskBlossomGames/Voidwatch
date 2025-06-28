@@ -6,12 +6,10 @@ namespace LevelSelect
     public class MapController : MonoBehaviour
     {
         public new Camera camera;
-        public float camSizeDragRatio;
         public float scrollSpeed, minCamSize, maxCamSize;
 
         public MiniPlayerController playerMini;
         public Selector selector;
-        public Material lineMaterial;
 
         private Vector2 _minScroll;
         private Vector2 _maxScroll;
@@ -52,7 +50,8 @@ namespace LevelSelect
             _resettingSelector &= InputManager.mousePosition == _lastMousePos;
             
             var camTransform = camera.transform;
-            var camPos = camTransform.position + (_lastMousePos - InputManager.mousePosition) * camera.orthographicSize / camSizeDragRatio;
+            var camPos = camTransform.position + (camera.ScreenToWorldPoint(_lastMousePos) -
+                                                  camera.ScreenToWorldPoint(InputManager.mousePosition));
 
             camPos.x = Mathf.Clamp(camPos.x, _minScroll.x, _maxScroll.x);
             camPos.y = Mathf.Clamp(camPos.y, _minScroll.y, _maxScroll.y);
