@@ -69,9 +69,9 @@ namespace Static_Info
             Addressables.LoadAssetsAsync<Sprite>(boostableStatSprite, null).Completed += handle =>
             {
                 var byName = handle.Result.ToDictionary(s => s.name, s => s);
-                foreach (var upgrade in UpgradePlayer.UPGRADES)
+                foreach (var stat in BoostableStat.STATS)
                 {
-                    BoostableStatSprites[upgrade.Title] = byName[upgrade.Title];
+                    BoostableStatSprites[stat.name] = byName[stat.name];
                 }
             };
         }
