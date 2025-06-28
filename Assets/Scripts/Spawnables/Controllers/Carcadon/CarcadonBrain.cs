@@ -124,7 +124,14 @@ namespace Spawnables.Controllers.Carcadon
                 dir = (targPoint - transform.position).normalized;
 
                 _stealthTimer.Update();
-                if (!_forceStealth && ((_stealthTimer.IsFinished && playerDist >= minUnstealthDist) || (!_enemySpawner.WaitingOnIndicator && _enemySpawner.SpawnedEnemies.All(g => g == gameObject)))){ _mode = Mode.Rush; CarcAudio.clip = CarcRoar; CarcAudio.Play();}
+                if (!_forceStealth && ((_stealthTimer.IsFinished && playerDist >= minUnstealthDist) ||
+                                       (!_enemySpawner.WaitingOnIndicator &&
+                                        _enemySpawner.SpawnedEnemies.All(g => g == gameObject))))
+                {
+                    _mode = Mode.Rush;
+                    CarcAudio.clip = CarcRoar;
+                    CarcAudio.Play();
+                }
             } else if (_mode == Mode.Rush)
             {
                 _currSpeed = Mathf.Min(maxSpeed, _currSpeed + accel * Time.deltaTime);

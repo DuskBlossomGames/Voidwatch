@@ -26,7 +26,7 @@ namespace Spawnables.Controllers.Misslers
             StartCoroutine(Kill(.5f));
         }
 
-        public void Run(float damage, float range, GameObject source, List<Collider2D> ignore = null, int layer = -1)
+        public void Run(float damage, float range, GameObject source, List<Collider2D> ignore = null, int layer = -1, float enemyMod=1)
         {
             if (layer == -1) layer = source.layer;
             ignore ??= new List<Collider2D>();
@@ -47,7 +47,8 @@ namespace Spawnables.Controllers.Misslers
                 if (hit.collider == null || ignore.Contains(hit.collider)) continue;
 
                 ignore.Add(hit.collider);
-                hit.transform.GetComponent<IDamageable>()?.Damage(damage, gameObject, shieldMult, bleedPerc);
+                var damageable = hit.transform.GetComponent<IDamageable>();
+                damageable?.Damage((damageable is EnemyDamageable ? enemyMod : 1) * damage, gameObject, shieldMult, bleedPerc);
             }
         }
 

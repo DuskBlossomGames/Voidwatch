@@ -126,9 +126,11 @@ namespace Player
             ShieldPower = Mathf.Max(ShieldPower - damage, -ShieldMaxDebt);
             
             audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-            audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
+            audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/13f; //volume of hit modulates logarithmically with damage dealth
+            audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
+            audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
 
-            audioPlayer.clip = PlayerHitShield;
+            audioPlayer.clip = PlayerHitDamage;
             audioPlayer.Play();
             
             return ShieldPower < 0;
