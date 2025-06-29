@@ -120,7 +120,7 @@ namespace Player
         {
             ShieldPower = Mathf.Max(ShieldPower - damage, -ShieldMaxDebt);
             
-            AudioPlayer.Play(shieldDamageClip, Random.Range(0.9f, 1.1f), 0.3f + Mathf.Log(damage)/13f);
+            AudioPlayer.Play(shieldDamageClip, 1, 0.3f + Mathf.Log(damage)/13f);
             
             return ShieldPower < 0;
         }
@@ -180,7 +180,7 @@ namespace Player
                         bleed += overDebt / shieldMult;
                     }
 
-                    AudioPlayer.Play(shieldDamageClip, Random.Range(0.9f, 1.1f), 0.3f + Mathf.Log(damage)/13f);
+                    AudioPlayer.Play(shieldDamageClip, 1, 0.3f + Mathf.Log(damage)/13f);
                 }
             }
 
