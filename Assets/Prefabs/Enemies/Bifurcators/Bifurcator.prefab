@@ -100,12 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 0
-  miniSprite: {fileID: 21300000, guid: 4b0833adbc3f54746bfeccf9eacc6529, type: 3}
-  miniColor: {r: 1, g: 1, b: 1, a: 1}
-  size: 5
-  inheritsRotation: 1
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 1, g: 0, b: 0, a: 1}
+  scale: 1.3
 --- !u!1 &3801896122326799239
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,12 +205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 0
-  miniSprite: {fileID: 21300000, guid: b1c28fd9780284c7ba2ee09f80da5eec, type: 3}
-  miniColor: {r: 1, g: 1, b: 1, a: 1}
-  size: 8
-  inheritsRotation: 1
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 1, g: 0, b: 0, a: 1}
+  scale: 1.3
 --- !u!114 &7016650687875973483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,12 +403,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 0
-  miniSprite: {fileID: 21300000, guid: 4b0833adbc3f54746bfeccf9eacc6529, type: 3}
-  miniColor: {r: 1, g: 1, b: 1, a: 1}
-  size: 5
-  inheritsRotation: 1
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 1, g: 0, b: 0, a: 1}
+  scale: 1.3
 --- !u!1 &6810281189628237293
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,12 +621,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 0
-  miniSprite: {fileID: 1875662669, guid: 2ef7abf497ac14380b2091732e4e33cb, type: 3}
-  miniColor: {r: 1, g: 1, b: 1, a: 1}
-  size: 5
-  inheritsRotation: 1
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 1, g: 0, b: 0, a: 1}
+  scale: 1
 --- !u!114 &5293203790975598915
 MonoBehaviour:
   m_ObjectHideFlags: 0

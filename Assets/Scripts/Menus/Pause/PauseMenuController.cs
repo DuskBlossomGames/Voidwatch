@@ -1,13 +1,11 @@
-using System;
 using System.Collections;
-using Static_Info;
+using Singletons.Static_Info;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
-using static Static_Info.Statistics;
 
-namespace Menus
+namespace Menus.Pause
 {
     public class PauseMenuController : OptionsHolder
     {

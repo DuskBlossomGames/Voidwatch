@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Menus
+namespace Menus.Pause
 {
     public abstract class OptionsHolder : MonoBehaviour
     {

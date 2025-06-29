@@ -1,27 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Singletons;
 using Spawnables.Damage;
 using UnityEngine;
 using Util;
+using Random = UnityEngine.Random;
 
 namespace Spawnables.Controllers.Misslers
 {
     public class ExplosionHandler : MonoBehaviour
     {
-        public AudioSource audioSource;
+        public AudioClip explosionClip;
         public float shieldMult, bleedPerc;
-        private float _AudioPlayerPitchStatic;
 
         public GameObject source;
 
 
-        public void Play()
+        public void Play(float pitch = 0.8f, float volume = 0.141f)
         {
-            _AudioPlayerPitchStatic = audioSource.pitch;
-            audioSource.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-            audioSource.Play();
-            audioSource.pitch = _AudioPlayerPitchStatic;
-        
+            AudioPlayer.Play(explosionClip, pitch + Random.Range(-0.1f, 0.1f), volume);
+            
             GetComponent<ParticleSystem>().Play();
             StartCoroutine(Kill(.5f));
         }

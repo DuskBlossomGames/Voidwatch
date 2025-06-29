@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Static_Info;
+using Singletons.Static_Info;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Util;
 using Random = UnityEngine.Random;
-using static Static_Info.LevelSelectData;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace LevelSelect
 {
@@ -26,7 +26,7 @@ namespace LevelSelect
         public int minElites, maxElites;
         public int minEligibleBosses;
         
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
         private void Update()
         {
             if (InputManager.GetKeyUp(KeyCode.LeftBracket))
@@ -36,7 +36,7 @@ namespace LevelSelect
                 RenderGalaxy(true);
             }
         }
-#endif
+// #endif
 
         private void Start()
         {

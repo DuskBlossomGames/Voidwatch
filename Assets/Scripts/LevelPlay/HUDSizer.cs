@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using Menus;
 using Player;
 using ProgressBars;
+using Singletons;
 using UnityEngine;
 using UnityEngine.UI;
+using Util;
 
 namespace LevelPlay
 {

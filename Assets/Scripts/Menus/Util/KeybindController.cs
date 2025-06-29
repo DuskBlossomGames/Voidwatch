@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Util;
 
-namespace Menus
+namespace Menus.Util
 {
     public class KeybindController : MonoBehaviour, IPointerDownHandler
     {

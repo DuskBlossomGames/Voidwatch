@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Upgrade = Player.UpgradePlayer.Upgrade;
-using static Static_Info.PlayerData;
+using static Singletons.Static_Info.PlayerData;
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
 using Random = UnityEngine.Random;

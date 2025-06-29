@@ -298,7 +298,6 @@ namespace Bosses.Worm
                                         (lasers[0].laserBuildupTime - lasers[0].TimeToLightning) -
                                         lasers[0].beamBuildupTime;
                                     lasers[0].Shoot(boundaryCircle.transform.localScale.x/2 - _ouroborosRadius - middle.transform.lossyScale.y / 2, lasers[0].TimeToLightning);
-                                    print(planet.transform.lossyScale.x / 2);
                                     lasers[1].Shoot(_ouroborosRadius - middle.transform.lossyScale.y / 2 - 9.5f, lasers[0].TimeToLightning);
                                 }
                             }

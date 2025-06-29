@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class PlayerVFXController : MonoBehaviour
+namespace Player
 {
+  public class PlayerVFXController : MonoBehaviour
+  {
 
-  public ParticleSystem bif;
-  public ParticleSystem StunElectricity;
+    public ParticleSystem bif;
+    public ParticleSystem StunElectricity;
 
-  public void RunBif(){  bif.Play();}
+    public void RunBif(){  bif.Play();}
 
-  public void RunStun(){  StunElectricity.Play();}
+    public void RunStun(){  StunElectricity.Play();}
+  }
 }

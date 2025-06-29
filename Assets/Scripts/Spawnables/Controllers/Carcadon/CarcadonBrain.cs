@@ -6,8 +6,9 @@ using Extensions;
 using LevelPlay;
 using Player;
 using ProgressBars;
+using Singletons;
+using Singletons.Static_Info;
 using Spawnables.Damage;
-using Static_Info;
 using UnityEngine;
 using UnityEngine.UI;
 using Util;
@@ -20,8 +21,7 @@ namespace Spawnables.Controllers.Carcadon
         public Texture2D texture;
         public float mouthTimeToOpen;
 
-        public AudioSource CarcAudio;
-        public AudioClip CarcRoar;
+        public AudioClip carcRoar;
         public bool roarBegun = false;
 
         public float stealthOpacity, stackedStealthOpacity;
@@ -130,8 +130,7 @@ namespace Spawnables.Controllers.Carcadon
                                         _enemySpawner.SpawnedEnemies.All(g => g == gameObject))))
                 {
                     _mode = Mode.Rush;
-                    CarcAudio.clip = CarcRoar;
-                    CarcAudio.Play();
+                    AudioPlayer.Play(carcRoar, 1, 1);
                 }
             } else if (_mode == Mode.Rush)
             {
@@ -209,7 +208,6 @@ namespace Spawnables.Controllers.Carcadon
             }
             if (_opacityDir != 0)
             {
-                if (_opacityDir == -1) print("stealthing");
                 _opacityTimer.Update(_opacityDir);
 
                 foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-_opacityTimer.Progress) * (1-stealthOpacity));
@@ -220,7 +218,6 @@ namespace Spawnables.Controllers.Carcadon
                     _isOpaque = _opacityDir > 0;
                     _opacityDir = 0;
 
-                    if (!_isOpaque) print("stealthed");
                     foreach (var col in _colliders) col.enabled = _isOpaque;
                 }
             }
@@ -394,8 +391,7 @@ namespace Spawnables.Controllers.Carcadon
                 }
                 if(t >= timeBeforeReveal+(timeBeforeUnfurl-timeBeforeReveal)/5){
                   if(!roarBegun){
-                    CarcAudio.clip = CarcRoar;
-                    CarcAudio.Play();
+                    AudioPlayer.Play(carcRoar, 1, 1);
                     roarBegun = true;
                   }
                 }

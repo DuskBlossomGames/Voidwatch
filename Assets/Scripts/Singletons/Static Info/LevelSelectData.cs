@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace Static_Info
+namespace Singletons.Static_Info
 {
     public class LevelType
     {
@@ -68,7 +67,7 @@ namespace Static_Info
         private float EliteDifficulty => 1.1f * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 
 
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
         public void RevealAll()
         {
             var orig = CurrentPlanet;
@@ -76,7 +75,7 @@ namespace Static_Info
             CurrentPlanet = orig;
             _visitedPlanets.Clear();
         }
-#endif
+// #endif
         [NonSerialized] private int _currentPlanet = -1;
         public int CurrentPlanet
         {

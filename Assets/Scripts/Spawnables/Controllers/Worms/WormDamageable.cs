@@ -1,6 +1,6 @@
 using Spawnables.Damage;
 using UnityEngine;
-using static Static_Info.Statistics;
+using static Singletons.Static_Info.Statistics;
 
 namespace Spawnables.Controllers.Worms
 {

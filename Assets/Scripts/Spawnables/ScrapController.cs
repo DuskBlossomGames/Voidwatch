@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Static_Info;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
-using static Static_Info.PlayerData;
-using static Static_Info.Statistics;
+using static Singletons.Static_Info.PlayerData;
+using static Singletons.Static_Info.Statistics;
 
 namespace Spawnables
 {

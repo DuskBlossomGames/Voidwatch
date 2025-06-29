@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Static_Info
+namespace Singletons.Static_Info
 {
     public class GunInfo : MonoBehaviour
     {

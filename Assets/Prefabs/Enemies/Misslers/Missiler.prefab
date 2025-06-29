@@ -275,12 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 0
-  miniSprite: {fileID: 2747690628134850419, guid: 16037dbd798344f57a526d53d48f5ead, type: 3}
-  miniColor: {r: 0.3781308, g: 1, b: 0, a: 1}
-  size: 3
-  inheritsRotation: 1
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 1, g: 0, b: 0, a: 1}
+  scale: 2
 --- !u!114 &8614088855332405689
 MonoBehaviour:
   m_ObjectHideFlags: 0

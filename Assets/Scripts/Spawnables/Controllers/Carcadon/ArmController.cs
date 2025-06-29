@@ -1,5 +1,6 @@
 using System.Linq;
 using Player;
+using Singletons;
 using UnityEngine;
 using Util;
 
@@ -48,9 +49,8 @@ namespace Spawnables.Controllers.Carcadon
         private readonly Timer _attackCooldown = new();
         private readonly Timer _slashCooldown = new();
 
-        public AudioSource clawAudio;
-        private bool clawSoundBegan = false;
-        private float _AudioPlayerPitchStatic;
+        public AudioClip slashClip;
+        private bool _clawSoundBegan;
 
         private float[] _origJointAngles;
         
@@ -66,7 +66,6 @@ namespace Spawnables.Controllers.Carcadon
             _foldSpeed = foldRotations.Sum(Mathf.Abs) / timeToFold;
 
             _curAttackSlashes = Random.Range(minSlash, maxSlash);
-            if (clawAudio != null) _AudioPlayerPitchStatic = clawAudio.pitch;
 
             _origJointAngles = new float[_segments.Length];
             for (var joint = 0; joint < _segments.Length; joint++) _origJointAngles[joint] = GetJointAngle(joint);
@@ -175,10 +174,10 @@ namespace Spawnables.Controllers.Carcadon
                     RotateJointTo(_segments.Length - 1,  prog * openBase);
                     RotateJointTo(_segments.Length - 2, prog * openNext);
 
-                    if(clawAudio != null && !clawSoundBegan){
-                      clawAudio.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f);
-                      clawAudio.Play();
-                      clawSoundBegan = true;
+                    if (!_clawSoundBegan)
+                    {
+                        AudioPlayer.Play(slashClip, Random.Range(0.8f, 1f), 0.7f);
+                        _clawSoundBegan = true;
                     }
                     
                 } else if (_attackProgress - timeToOpen < timeToClose)
@@ -199,7 +198,7 @@ namespace Spawnables.Controllers.Carcadon
                 {
                     SetFolded(false); // fail-safe
                     _clawDamage.Active = false;
-                    clawSoundBegan = false;
+                    _clawSoundBegan = false;
                     _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(false); // disable trail renderer
                     _attackProgress = 0;
 

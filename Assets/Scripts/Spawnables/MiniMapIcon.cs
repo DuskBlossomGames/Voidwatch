@@ -1,61 +1,84 @@
+using System.Linq;
+using NUnit.Framework.Internal;
 using UnityEngine;
 
 namespace Spawnables
 {
     public class MiniMapIcon : MonoBehaviour
     {
-        public bool appearsAsSelf = false;
-        public Sprite miniSprite;
-        public Color miniColor;
-        public float size = 5;
-        public bool inheritsRotation;
-        public Vector3 staticRot;
-
-        private GameObject _miniIcon;
-
-        //TODO: implement uncertain icons (position is "blurry")
-
-        void Start() // used to be Awake, if problems start happening
-        {
-            float sizeX, sizeY;
-            if (appearsAsSelf)
-            {
-                inheritsRotation = true;
-                sizeX = 1;
-                sizeY = 1;
-                miniSprite = transform.GetComponent<SpriteRenderer>().sprite;
-                miniColor = transform.GetComponent<SpriteRenderer>().color;
-
-                _miniIcon = new GameObject(gameObject.name + "-SMMI");
-            } else {
-                sizeX = size / transform.lossyScale.x;
-                sizeY = size / transform.lossyScale.y;
-                _miniIcon = new GameObject(gameObject.name + "-MMI");
-            }
+        public Color border, particleColor;
+        public float scale = 1;
         
-            _miniIcon.transform.parent = transform;//adopt child
-            _miniIcon.transform.localPosition = Vector3.zero;
-            _miniIcon.transform.position += -10 * Vector3.forward;//spawn with offset z component
-            _miniIcon.transform.localRotation = Quaternion.identity;
-            _miniIcon.transform.localScale = new Vector3(sizeX, sizeY, 1);
-            var renderer = _miniIcon.AddComponent<SpriteRenderer>();
-            renderer.sprite = miniSprite;
-            var sr = transform.GetComponent<SpriteRenderer>();
-            if (sr == null) sr = renderer; // just use the defaults present if null
-            renderer.sortingOrder = sr.sortingOrder;
-            renderer.sortingLayerID = sr.sortingLayerID;
-            renderer.drawMode = sr.drawMode;
-            renderer.maskInteraction = sr.maskInteraction;
-            renderer.color = miniColor;
-            _miniIcon.layer = LayerMask.NameToLayer("Minimap");
-        }
-
-        // Update is called once per frame
-        void Update()
+        void Start()
         {
-            if (!inheritsRotation)
+            if (TryGetComponent<SpriteRenderer>(out var mySr))
             {
-                _miniIcon.transform.rotation = Quaternion.Euler(staticRot);
+                var obj = new GameObject(gameObject.name + "-MMI")
+                {
+                    transform =
+                    {
+                        parent = transform,
+                        localPosition = Vector3.zero,
+                        localRotation = Quaternion.identity,
+                        localScale = scale * Vector3.one
+                    },
+                    layer = LayerMask.NameToLayer("Minimap")
+                };
+                obj.transform.position += -10 * Vector3.forward;
+
+                var sr = obj.AddComponent<SpriteRenderer>();
+                sr.sprite = mySr.sprite;
+                sr.color = mySr.color;
+                sr.sortingOrder = mySr.sortingOrder;
+                sr.sortingLayerID = mySr.sortingLayerID;
+                sr.drawMode = mySr.drawMode;
+                sr.maskInteraction = mySr.maskInteraction;
+
+                if (border.a > 0)
+                {
+                    var outline = new GameObject("MMIO")
+                    {
+                        transform =
+                        {
+                            parent = obj.transform,
+                            localPosition = Vector3.zero,
+                            localRotation = Quaternion.identity,
+                            localScale = Vector3.one * 1.3f
+                        },
+                        layer = obj.layer
+                    };
+                    var oSr = outline.AddComponent<SpriteRenderer>();
+                    oSr.sprite = sr.sprite;
+                    oSr.color = border;
+                    oSr.sortingOrder = sr.sortingOrder-1;
+                    oSr.sortingLayerID = sr.sortingLayerID;
+                    oSr.drawMode = sr.drawMode;
+                    oSr.maskInteraction = sr.maskInteraction;
+                }
+            }
+
+            if (TryGetComponent<ParticleSystem>(out _))
+            {
+                var obj = Instantiate(gameObject, transform, true);
+                
+                for (var i = 0; i < obj.transform.childCount; i++) Destroy(obj.transform.GetChild(i).gameObject);
+                foreach (var comp in obj.GetComponents<Component>().Where(c =>
+                             c is not ParticleSystem && c is not Transform && c is not ParticleSystemRenderer))
+                {
+                    Destroy(comp);
+                }
+
+                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localRotation = Quaternion.identity;
+                obj.transform.localScale = transform.lossyScale;
+                obj.transform.position += -10 * Vector3.forward;
+                obj.layer = LayerMask.NameToLayer("Minimap");
+                obj.name = gameObject.name + "-MMIPS";
+
+                var main = obj.GetComponent<ParticleSystem>().main;
+                main.startColor = particleColor;
+                obj.GetComponent<ParticleSystemRenderer>().sortingOrder -= 2; // make sure it's fully behind MMI and MMIO
+                print(obj.GetComponent<ParticleSystemRenderer>().sortingOrder);
             }
         }
     }

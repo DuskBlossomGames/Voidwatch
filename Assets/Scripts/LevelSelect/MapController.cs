@@ -1,6 +1,6 @@
 using UnityEngine;
 using Util;
-using static Static_Info.LevelSelectData;
+using static Singletons.Static_Info.LevelSelectData;
 namespace LevelSelect
 {
     public class MapController : MonoBehaviour

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Singletons;
 using UnityEngine;
 using Util;
 using Complex = System.Numerics.Complex;
@@ -22,6 +23,8 @@ namespace Spawnables.Controllers.Misslers
         public float dmg;
         public float shieldMult, bleedPerc;
 
+        public AudioClip warningClip;
+        
         protected Vector2 _oVel;
         protected Vector2 _nDir;
         protected CustomRigidbody2D _rigid;
@@ -44,7 +47,6 @@ namespace Spawnables.Controllers.Misslers
             while (true)
             {
                 Vector3 relPos = target.transform.position - transform.position;
-                //Debug.LogFormat("target.name: {0}",target.name);
                 Vector3 relVel = target.GetComponent<CustomRigidbody2D>().linearVelocity - _rigid.linearVelocity;
                 float accel = (accelforce) / _rigid.mass;
                 _nDir = LeadShot(relPos, relVel, accel);
@@ -52,6 +54,8 @@ namespace Spawnables.Controllers.Misslers
             }
         }
 
+        private GameObject _audio;
+        private bool _hasAudio;
         protected virtual void FixedUpdate()
         {
             if (_fuel>0)
@@ -64,12 +68,15 @@ namespace Spawnables.Controllers.Misslers
                 _cRot = Quaternion.RotateTowards(_cRot, tRot, 360 * Time.deltaTime);
                 transform.rotation = _cRot;
 
-                if (_timeToImpact < 2 && !GetComponent<AudioSource>().isPlaying)
+                if (_timeToImpact < 2 && !_hasAudio)
                 {
-                    GetComponent<AudioSource>().Play();
-                } else if(_timeToImpact > 2 && GetComponent<AudioSource>().isPlaying)
+                    _audio = AudioPlayer.Play(warningClip, 1, 0.05f).gameObject;
+                    _hasAudio = true;
+                }
+                else if(_timeToImpact > 2 && _hasAudio)
                 {
-                    GetComponent<AudioSource>().Stop();
+                    Destroy(_audio);
+                    _hasAudio = false;
                 }
             
                 var psmain = particles.GetComponent<ParticleSystem>().main;
@@ -78,7 +85,11 @@ namespace Spawnables.Controllers.Misslers
             } else {
                 if (!_stopped)
                 {
-                    GetComponent<AudioSource>().Stop();
+                    if (_hasAudio)
+                    {
+                        Destroy(_audio);
+                        _hasAudio = false;
+                    }
                     var psmain = particles.GetComponent<ParticleSystem>().main;
                     psmain.loop = false;
                     _stopped = true;
@@ -210,10 +221,6 @@ namespace Spawnables.Controllers.Misslers
             float zSign = Mathf.Sign(coefs[coefs.Count - 1]); //_Poly(coefs, 0)
 
             List<float> extrema = RecMinPosRoot(_Derivate(coefs),rep+1);
-            /*for (int i = 0; i < extrema.Count; i++)
-        {
-            Debug.LogFormat("Extrema_{3} {0}: {1} @ {2}", i, extrema[i],_Poly(coefs,extrema[i]),rep);
-        }*/
 
             float prevSign = zSign;
             float low = 0;
@@ -251,14 +258,10 @@ namespace Spawnables.Controllers.Misslers
                     break;
                 }
             }
-            //Debug.LogFormat("End behaviour goes to +inf_{1} : {0}; prevsign: {2}", endPos, rep, prevSign);
 
             if (prevSign!=0 && endPos!=(prevSign>0))
             {
-                //Debug.LogFormat("Right zero_{0}", rep);
-                //Debug.LogFormat("Poly(low={2})_{0} = {1}",rep,_Poly(coefs,low),low);
                 solutions.Add(_Bisect(coefs, low));
-                //Debug.LogFormat("Right zero_{0} = {1}", rep, solutions[solutions.Count-1]);
             }
             solutions.Sort();
             return solutions;
@@ -297,12 +300,8 @@ namespace Spawnables.Controllers.Misslers
                 -relVel.sqrMagnitude,
                 -2 * Vector2.Dot(relVel, relPos),
                 -relPos.sqrMagnitude, .01f);
-            //float colTime = (lowbound + upbound) / 2;
-            //Debug.Log(colTime);
 
             Vector2 colPos = relPos + colTime * relVel;
-            //marker.transform.position = (Vector3)colPos + transform.position;
-            //marker.name = string.Format("+{0};{1}", colTime.ToString(), Time.time + colTime);
             return colPos.normalized;
 
         }
@@ -317,7 +316,6 @@ namespace Spawnables.Controllers.Misslers
                 lowbound = upbound;
                 upbound *= 2;
                 val = DEPRECATED_QVal(relPos, relVel, vesselAccel, upbound);
-                //Debug.Log(string.Format("Doubling upbound to {0}, due to {1} <= 0", upbound, val));
             }
             //establish bounds of zero
 
@@ -334,7 +332,6 @@ namespace Spawnables.Controllers.Misslers
                 }
             }
             float colTime = (lowbound + upbound) / 2;
-            //Debug.Log(colTime);
 
             Vector2 colPos = relPos + colTime * relVel;
             //marker.transform.position = (Vector3)colPos + transform.position;
@@ -345,7 +342,6 @@ namespace Spawnables.Controllers.Misslers
 
         float DEPRECATED_QVal(Vector2 pos, Vector2 vel, float accel, float time)
         {
-            //Debug.Log(string.Format("Pos: {0}, Vel: {1}, Acc: {2}, Time: {3}", pos, vel, accel, time));
             return time * time * time * time * (.25f * accel * accel)
                    - time * time * (vel.sqrMagnitude)
                    - time * (2 * Vector2.Dot(vel, pos))
@@ -383,7 +379,6 @@ namespace Spawnables.Controllers.Misslers
             float ret = -1;
             for (int i = 0; i < 4; i++)
             {
-                //Debug.LogFormat("Root {0} = {1}", i, newAproxRoots[i]);
                 if (Math.Abs(newAproxRoots[i].Imaginary) < prec)
                 {
                     if ((newAproxRoots[i].Real < ret || ret == -1) && newAproxRoots[i].Real > 0)

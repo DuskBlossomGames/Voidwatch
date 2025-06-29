@@ -72,7 +72,6 @@ namespace Spawnables
                 }
 
                 int bullets = Mathf.Min(_currClipCap, bulletsPerShot + Random.Range(-bulletsPerShotVarience, bulletsPerShotVarience + 1));
-                //Debug.Log(string.Format("bullets: {0}",bullets));
                 _currClipCap -= bullets;
                 for (int i = 0; i < bullets; i++)
                 {
@@ -91,16 +90,12 @@ namespace Spawnables
                         transform.rotation.eulerAngles.z + _bulletAngle);
                     if (Random.Range(0f, 1f) > misfireChance)
                     {
-                        //Debug.Log("Enemy Spawning Bullet");
                         var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
-                        //Debug.Log("Getting Velocity");
                         bullet.GetComponent<CustomRigidbody2D>().linearVelocity = rot * (Vector3.up * GetComponent<CustomRigidbody2D>().linearVelocity.magnitude);
                         bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
                         bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
-
-                        //Debug.Log("Got Velocity");
-
+                        
                         float vertForce = shotForce + Random.Range(-forceVarience, forceVarience) + verOff;
                         float latForce = Random.Range(-forceVarience, forceVarience) + latOff;
                         bullet.GetComponent<CustomRigidbody2D>().AddForce(rot * new Vector2(latForce, vertForce));

@@ -4,12 +4,12 @@ using System.Linq;
 using Extensions;
 using Menus;
 using Player;
+using Singletons.Static_Info;
 using Spawnables;
 using Spawnables.Controllers;
 using Spawnables.Controllers.Asteroids;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
-using Static_Info;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -18,8 +18,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
 using Random = UnityEngine.Random;
-using static Static_Info.LevelSelectData;
-using static Static_Info.Statistics;
+using static Singletons.Static_Info.LevelSelectData;
+using static Singletons.Static_Info.Statistics;
 namespace LevelPlay
 {
     public class EnemySpawner : MonoBehaviour
@@ -343,7 +343,6 @@ namespace LevelPlay
             {
                 debt += rate;
                 debt -= pts[i] = Mathf.FloorToInt(debt);
-                //Debug.LogFormat("Slot {0} has amt {1}", i, pts[i]);
             }
 
             SortedSet<int> partitions = new SortedSet<int>();
@@ -368,7 +367,6 @@ namespace LevelPlay
 
                 //5.
                 spts[j] += amt;
-                //Debug.LogFormat("Enemy ({0}) has scrap count ({1})", enemies[j].name, enemies[j].GetComponent<EnemyVariant>().ScrapCount);
             }
             
             //Older code
@@ -385,7 +383,6 @@ namespace LevelPlay
                     Quaternion.Euler(0, 0, 180+Mathf.Rad2Deg * rad));
                 if (enemyObj.TryGetComponent<MissleShooter>(out var missleShooter)) missleShooter.target = player;
 
-                //Debug.LogFormat("Late Enemy ({0}) has scrap count ({1})", enemy.name, enemy.GetComponent<EnemyVariant>().ScrapCount);
                 enemyObj.GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
                 enemyObj.GetComponent<EnemyVariant>().ScrapCount = spts[ind++];
 

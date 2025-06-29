@@ -1540,12 +1540,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 1
-  miniSprite: {fileID: 0}
-  miniColor: {r: 0, g: 0, b: 0, a: 0}
-  size: 5
-  inheritsRotation: 0
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 0, g: 0, b: 0, a: 0}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
+  scale: 1
 --- !u!224 &342773323 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 738553338022979446, guid: 920d5780c4f324483be8acd0da552148, type: 3}
@@ -4810,12 +4807,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 1
-  miniSprite: {fileID: 0}
-  miniColor: {r: 0, g: 0, b: 0, a: 0}
-  size: 5
-  inheritsRotation: 0
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 0, g: 0, b: 0, a: 0}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
+  scale: 1
 --- !u!1 &1270909783
 GameObject:
   m_ObjectHideFlags: 0
@@ -5177,12 +5171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 1
-  miniSprite: {fileID: 0}
-  miniColor: {r: 0, g: 0, b: 0, a: 0}
-  size: 5
-  inheritsRotation: 0
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 0, g: 0, b: 0, a: 0}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
+  scale: 1
 --- !u!114 &1331667019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5775,12 +5766,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 1
-  miniSprite: {fileID: 0}
-  miniColor: {r: 0, g: 0, b: 0, a: 0}
-  size: 5
-  inheritsRotation: 0
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 0, g: 0, b: 0, a: 0}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
+  scale: 1
 --- !u!1 &1486008745
 GameObject:
   m_ObjectHideFlags: 0
@@ -8746,10 +8734,6 @@ PrefabInstance:
       propertyPath: enemySpawner
       value: 
       objectReference: {fileID: 1780276283}
-    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
-      propertyPath: PlayerHitDamage
-      value: 
-      objectReference: {fileID: 8300000, guid: 43ad996c8068547eba46b0acb990ae4a, type: 3}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: statistics.Array.size
       value: 6

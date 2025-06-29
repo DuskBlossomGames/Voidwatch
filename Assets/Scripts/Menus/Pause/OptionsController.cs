@@ -1,12 +1,13 @@
-using System;
 using System.Linq;
+using Menus.Util;
+using Singletons;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using Util;
 
-namespace Menus
+namespace Menus.Pause
 {
     public class OptionsController : MonoBehaviour
     {

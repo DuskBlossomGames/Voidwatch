@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Menus
+namespace Menus.Util
 {
     public class SliderController : MonoBehaviour
     {

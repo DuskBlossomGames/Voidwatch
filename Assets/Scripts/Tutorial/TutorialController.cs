@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Extensions;
 using Player;
-using Static_Info;
+using Singletons.Static_Info;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
-using static Static_Info.GunInfo;
+using static Singletons.Static_Info.GunInfo;
 
 namespace Tutorial
 {
