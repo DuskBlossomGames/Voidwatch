@@ -305,13 +305,14 @@ namespace Player
                 foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = true;
                 foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = true;
                 _movement.SetInputBlocked(false);
-                fadeOut.SetActive(false);
                 GetComponent<EnforcePlayArea>().Reset();
                 Health = MaxHealth;
                 ShieldPower = ShieldMaxPower;
                 healthBar.UpdatePercentage(Health, MaxHealth);
                 shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
                 _died = false;
+                yield return new WaitForSeconds(0.35f);
+                fadeOut.SetActive(false);
             }
         }
 

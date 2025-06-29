@@ -7286,6 +7286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2086174079}
+  fadeInTime: 0.5
   HUD: {fileID: 1562156498}
   fadeIn: {fileID: 1781870393}
   planet: {fileID: 1331667019}
@@ -7413,7 +7414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1781870395
 RectTransform:
   m_ObjectHideFlags: 0

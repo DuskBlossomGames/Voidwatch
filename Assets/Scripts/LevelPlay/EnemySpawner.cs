@@ -26,6 +26,7 @@ namespace LevelPlay
     {
         public GameObject player;
 
+        public float fadeInTime;
         public GameObject HUD, fadeIn;
         public PlanetSetup planet;
 
@@ -116,7 +117,23 @@ namespace LevelPlay
 #endif
           _level =  LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 
-          if (_level.Type == LevelType.Elite) fadeIn.SetActive(true);
+          fadeIn.SetActive(true);
+          if (_level.Type != LevelType.Elite) StartCoroutine(FadeIn());
+          else _faded = true;
+        }
+
+        private bool _faded;
+        private IEnumerator FadeIn()
+        {
+            var img = fadeIn.GetComponent<Image>();
+            for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+
+                img.SetAlpha(1 - t / fadeInTime);
+            }
+
+            _faded = true;
         }
 
         private readonly List<GameObject> _spawnedEnemies = new();
@@ -156,7 +173,7 @@ namespace LevelPlay
             if (InputManager.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 #endif
             
-            if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
+            if (!_faded || _groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
             if (!_spawnedHazards && _level.Type != LevelType.Elite) SpawnHazards();
 
             //var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];

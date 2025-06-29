@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Extensions;
 using LevelPlay;
 using Player;
 using ProgressBars;
@@ -331,7 +332,7 @@ namespace Spawnables.Controllers.Carcadon
             for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
-                fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, Mathf.SmoothStep(1, 0, t / fadeInTime));
+                fadeImg.SetAlpha(Mathf.SmoothStep(1, 0, t / fadeInTime));
             }
 
             // hold
