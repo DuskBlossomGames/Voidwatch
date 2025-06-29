@@ -276,7 +276,8 @@ namespace Player
 
         IEnumerator DeathFade(DeathInfo diedTo)
         {
-            for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(false);
+            foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;
+            foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = false;
             
             _movement.SetInputBlocked(true);
             
@@ -301,7 +302,8 @@ namespace Player
                 godmode = false;
                 GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.zero;
                 GetComponent<SpriteRenderer>().enabled = true;
-                for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(true);
+                foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = true;
+                foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = true;
                 _movement.SetInputBlocked(false);
                 fadeOut.SetActive(false);
                 GetComponent<EnforcePlayArea>().Reset();
