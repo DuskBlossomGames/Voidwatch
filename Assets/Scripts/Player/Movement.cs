@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Spawnables.Controllers.Misslers;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Util;
 using Random = UnityEngine.Random;
 using static Singletons.Static_Info.PlayerData;
@@ -44,7 +45,7 @@ namespace Player
         private CustomRigidbody2D _rigid;
         private Camera _camera;
 
-        private Vector2 _preDodgeVel;
+        public Vector2 PreDodgeVel { get; private set; }
         private float _acceleration;
 
         private Vector2 _forwards;
@@ -160,7 +161,7 @@ namespace Player
 
             if (_dodgeJuice >= PlayerDataInstance.dodgeJuiceCost && _dodgeCooldownTimer.IsFinished && (GetKey(InputAction.Dash) || DodgeOnceDir != null || DodgeOnceCost != null))
             {
-                _preDodgeVel = velocity;
+                PreDodgeVel = velocity;
                 _dodgeTimeLength = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity;
                 _dodgeTimer.Value = _dodgeTimeLength;
                 _dodgeCostTimer.Value = _dodgeTimeLength;
@@ -243,7 +244,7 @@ namespace Player
                 _afterImages.Clear();
                 _redirectDodge = _redirected = _stealthKeyUp = false;
 
-                velocity = _forwards * _preDodgeVel.magnitude;
+                velocity = _forwards * PreDodgeVel.magnitude;
             }
 
             if (GetKey(InputAction.Accelerate))

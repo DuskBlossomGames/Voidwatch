@@ -23,7 +23,7 @@ namespace Spawnables.Controllers.Seekers
         void Update()
         {
             var ppos = target.transform.position;
-            var pvel = target.GetComponent<Rigidbody2D>().linearVelocity;
+            var pvel = UtilFuncs.GetTargetVel(target);
 
             float dir = UtilFuncs.LeadShot(ppos - transform.position, pvel - _crb.linearVelocity, _bulletvel);
             float tardir = Mathf.Rad2Deg * dir - 90;
