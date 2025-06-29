@@ -17,18 +17,14 @@ namespace Spawnables
             if (_arrow != null) return;
             
             playerPos = GameObject.FindGameObjectsWithTag("Player")[0].transform;
-            _arrow = transform.Find("DirHinter")?.gameObject ?? Instantiate(arrowPrefab, transform);
-            _arrow.name = "DirHinter";
+            _arrow = GameObject.Find("DirHinter - "+gameObject.GetInstanceID())?.gameObject ?? Instantiate(arrowPrefab);
+            _arrow.name = "DirHinter - "+gameObject.GetInstanceID();
             _arrow.GetComponent<SpriteRenderer>().enabled = false;
             _defaultScale = arrowPrefab.transform.localScale;
-            //Debug.LogFormat("LossyScale: {0}", transform.lossyScale);
-            _defaultScale = new Vector3(_defaultScale.x / transform.lossyScale.x,
-                _defaultScale.y / transform.lossyScale.y,
-                _defaultScale.z / transform.lossyScale.z);
         }
         void Update()
         {
-            Vector2 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+            Vector2 screenPos = Camera.main!.WorldToScreenPoint(transform.position);
             _camWidth = Screen.width;
             _camHeight = Screen.height;
 
