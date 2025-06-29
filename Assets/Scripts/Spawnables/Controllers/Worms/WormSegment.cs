@@ -105,8 +105,7 @@ namespace Spawnables.Controllers.Worms
 
         public Vector2 PredDir(Vector3 myPos, float time)
         {
-            return UtilFuncs.LeadShotNorm(target.transform.position - myPos, target.transform.GetComponent<CustomRigidbody2D>().linearVelocity, Vector2.Distance(target.transform.position, myPos)/time);
-            // return (target.transform.position + time * (Vector3)target.GetComponent<CustomRigidbody2D>().linearVelocity - transform.position).normalized;
+            return UtilFuncs.PredictTargetPos(target.transform.position - myPos, target.transform.GetComponent<CustomRigidbody2D>().linearVelocity, time).normalized;
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Util
 {
-    public class UtilFuncs
+    public static class UtilFuncs
     {
         public static float Mod(float a, float b)
         {
@@ -13,33 +13,29 @@ namespace Util
         {
             return Mathf.Atan2(v.y, v.x);
         }
+
+        public static Vector2 PredictTargetPos(Vector2 pos, Vector2 vel, float time)
+        {
+            return pos + vel * time;
+        }
         
         public static Vector2 LeadShotNorm(Vector2 relPos, Vector2 relVel, float bulletVel)
         {
-            float a = bulletVel * bulletVel - relVel.sqrMagnitude;
-            float b = 2 * Vector2.Dot(relPos, relVel);
-            float c = relPos.sqrMagnitude;
+            var a = relVel.sqrMagnitude - bulletVel * bulletVel;
+            var b = 2 * Vector2.Dot(relPos, relVel);
+            var c = relPos.sqrMagnitude;
 
-            if (b * b + 4 * a * c < 0 || a == 0)
-            {
-                return Vector2.zero;
-            }
-
-            float colTime = (b + Mathf.Sqrt(b * b + 4 * a * c)) / (2 * a);
-            Vector2 colPos = relPos + colTime * relVel;
-            return colPos.normalized;
+            var disc = b * b - 4 * a * c;
+            var colTime = disc < 0 ? 0
+                            : a != 0 ? (-b - Mathf.Sqrt(disc)) / (2 * a)
+                            : b != 0 ? -c / b
+                            : 0;
+            colTime = colTime < 0 ? 0 : colTime;
+            return PredictTargetPos(relPos, relVel, colTime).normalized;
         }
         public static float LeadShot(Vector2 relPos, Vector2 relVel, float bulletVel)
         {
-            float a = bulletVel * bulletVel - relVel.sqrMagnitude;
-            float b = 2 * Vector2.Dot(relPos, relVel);
-            float c = relPos.sqrMagnitude;
-
-            if (b * b + 4 * a * c < 0 || a == 0) return 0; // finding the zeroes will error
-
-            float colTime = (b + Mathf.Sqrt(b * b + 4 * a * c)) / (2 * a);
-            Vector2 colPos = relPos + colTime * relVel;
-            return Mathf.Atan2(colPos.y, colPos.x);
+            return Angle(LeadShotNorm(relPos, relVel, bulletVel));
         }
         public static Quaternion RotFromNorm(Vector2 vec)
         {

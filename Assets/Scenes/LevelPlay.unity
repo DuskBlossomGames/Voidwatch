@@ -6566,7 +6566,7 @@ MonoBehaviour:
   groupBudgetTiers: 03000000050000000a000000140000002300000032000000
   boundaryCircle: {fileID: 1480058251}
   nUpMan: {fileID: 682528864}
-  debugEnemy: {fileID: 4430136990600543352, guid: 44ade27e3b9ecad44914e3ff7636293e, type: 3}
+  debugEnemy: {fileID: 0}
 --- !u!4 &1780276284
 Transform:
   m_ObjectHideFlags: 0
@@ -7967,6 +7967,10 @@ PrefabInstance:
       propertyPath: fadeOut
       value: 
       objectReference: {fileID: 1781870393}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: godmode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: gameOver
       value: 
