@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using static Static_Info.PlayerData;
+using static Singletons.Static_Info.PlayerData;
 
-namespace Static_Info
+namespace Singletons.Static_Info
 {
     [Serializable]
     public abstract class BoostableStat

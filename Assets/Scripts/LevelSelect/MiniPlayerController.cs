@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
-using static Static_Info.LevelSelectData;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace LevelSelect
 {

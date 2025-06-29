@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Static_Info;
+using Singletons.Static_Info;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
-using static Static_Info.PlayerData;
-using static Static_Info.GunInfo;
+using static Singletons.Static_Info.PlayerData;
+using static Singletons.Static_Info.GunInfo;
 using Random = UnityEngine.Random;
 
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Menus
+namespace Menus.Util
 {
     public class ToggleOnDropdown : MonoBehaviour
     {

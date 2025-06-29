@@ -3,7 +3,7 @@ using Extensions;
 using TMPro;
 using UnityEngine;
 using Util;
-using static Static_Info.PlayerData;
+using static Singletons.Static_Info.PlayerData;
 
 namespace Player
 {

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Linq;
 using Extensions;
-using Static_Info;
+using Menus.Pause;
+using Singletons;
+using Spawnables.Controllers.Misslers;
+using Spawnables.Damage;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -9,7 +12,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
 using Button = UnityEngine.UI.Button;
-using static Static_Info.Statistics;
+using static Singletons.Static_Info.Statistics;
 
 namespace Menus
 {

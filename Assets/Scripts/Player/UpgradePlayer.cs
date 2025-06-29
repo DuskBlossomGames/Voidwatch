@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static Static_Info.PlayerData;
-using static Static_Info.GunInfo;
+using static Singletons.Static_Info.PlayerData;
+using static Singletons.Static_Info.GunInfo;
 using Random = UnityEngine.Random;
 namespace Player
 {

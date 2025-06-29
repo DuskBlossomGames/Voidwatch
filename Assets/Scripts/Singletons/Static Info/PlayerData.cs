@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Player;
-using Shop;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Static_Info
+namespace Singletons.Static_Info
 {
     public class PlayerData : MonoBehaviour
     {

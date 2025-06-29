@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Linq;
 using Extensions;
+using Singletons.Static_Info;
 using Spawnables;
 using Spawnables.Controllers;
-using Static_Info;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
-using static Static_Info.Statistics;
+using static Singletons.Static_Info.Statistics;
 
 namespace Menus
 {

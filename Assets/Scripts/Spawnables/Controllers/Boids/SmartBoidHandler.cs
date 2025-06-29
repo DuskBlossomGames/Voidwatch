@@ -73,13 +73,7 @@ namespace Spawnables.Controllers.Boids
                 if (collision.collider != null)
                 {
                     dist = collision.distance;
-                    //_collisionObjs[i].transform.position = collision.transform.position;
-                } else
-                {
-                    //var a = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (90 + rayAngle)), Mathf.Sin(Mathf.Deg2Rad * (90 + rayAngle)));
-                    //_collisionObjs[i].transform.position = maxVisionLen * (Vector3)a + transform.position;
                 }
-                //Debug.LogFormat("Distance is {0}", dist);
                 var turnAmt = TurnAmt(dist);
                 sumturn += turnAmt * turnScale * turnAggr *
                            (collision.collider != null && collision.collider.GetComponent<BulletCollision>() != null ? 0.8f : 1);
@@ -93,27 +87,11 @@ namespace Spawnables.Controllers.Boids
                 
                 sumturn = Mathf.SmoothDamp(_prevSumTurn, sumturn, ref _turnSmoothVel, 0.3f);
                 Shoot();
-                
-                // if (((Vector2) tarDelta).sqrMagnitude > 7 * 7)
-                // {
-                //     var minDistToOtherBoid = FindObjectsByType<SmartBoidHandler>(FindObjectsSortMode.None)
-                //         .Where(b => b != this)
-                //         .Select(b => ((Vector2)(b.transform.position - transform.position)).sqrMagnitude)
-                //         .OrderByDescending(f=>f).Last();
-                //     if (minDistToOtherBoid < 3*3)
-                //     {
-                //         // if (transform.GetSiblingIndex() == 0) print("adjusting");
-                //         // sumturn += Mathf.Sign(sumturn) * Random.Range(0, 10);
-                //     }
-                // }
-
             }
             
-            //sumturn += turnTowardsPlayer * Vector2.SignedAngle(deltaAngle, (target.transform.position - transform.position));
             _prevSumTurn = sumturn;
             
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + Time.deltaTime * sumturn * Vector3.forward);
-            //transform.rotation.eulerAngles += Time.deltaTime * sumturn * Vector3.forward;
 
             _rigidbody2D.linearVelocity = speed * deltaAngle;
             _rigidbody2D.angularVelocity = 0;

@@ -1,5 +1,5 @@
 using UnityEngine;
-using static Static_Info.LevelSelectData;
+using static Singletons.Static_Info.LevelSelectData;
 namespace LevelPlay
 {
     public class PlanetSetup : MonoBehaviour

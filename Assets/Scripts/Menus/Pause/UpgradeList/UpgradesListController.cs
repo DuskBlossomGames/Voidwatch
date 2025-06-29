@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Player;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using static Static_Info.PlayerData;
+using static Singletons.Static_Info.PlayerData;
 
-namespace Menus
+namespace Menus.Pause.UpgradeList
 {
     public class UpgradesListController : MonoBehaviour
     {

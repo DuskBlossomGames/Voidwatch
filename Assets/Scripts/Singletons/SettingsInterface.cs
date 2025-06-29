@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Util;
 
-namespace Menus
+namespace Singletons
 {
     public class SettingsInterface : MonoBehaviour
     {

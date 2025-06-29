@@ -1,14 +1,12 @@
-using System;
 using Extensions;
 using Player;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Util;
-using static Static_Info.PlayerData;
+using static Singletons.Static_Info.PlayerData;
 
-namespace Menus
+namespace Menus.Pause.UpgradeList
 {
     public class UpgradeHoverController : MonoBehaviour
     {

@@ -5770,13 +5770,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 743845641}
-  camSizeDragRatio: 300
   scrollSpeed: 15
   minCamSize: 50
   maxCamSize: 400
   playerMini: {fileID: 1289256210}
   selector: {fileID: 1553692315}
-  lineMaterial: {fileID: 2100000, guid: 15aa2d3c3b66d49698ea2ae7f9a3c4a7, type: 2}
+  explosion: {fileID: 0}
 --- !u!212 &1181487515
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6466,13 +6465,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 743845641}
-  camSizeDragRatio: 300
   scrollSpeed: 15
   minCamSize: 50
   maxCamSize: 400
   playerMini: {fileID: 1289256210}
   selector: {fileID: 1553692315}
-  lineMaterial: {fileID: 2100000, guid: 15aa2d3c3b66d49698ea2ae7f9a3c4a7, type: 2}
+  explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
 --- !u!61 &1875686439
 BoxCollider2D:
   m_ObjectHideFlags: 0

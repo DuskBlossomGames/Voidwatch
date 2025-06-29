@@ -1,15 +1,9 @@
 using System;
-using System.Collections;
-using System.Timers;
-using Extensions;
 using Player;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Timer = Util.Timer;
 
-namespace Menus
+namespace Menus.Pause.UpgradeList
 {
     public class UpgradeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {

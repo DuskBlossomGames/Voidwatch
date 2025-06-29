@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Static_Objects_or_Misc
+namespace LevelPlay
 {
     public class MiniMapCamController : MonoBehaviour
     {

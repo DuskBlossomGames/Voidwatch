@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appearsAsSelf: 1
+  border: {r: 1, g: 0, b: 0, a: 1}
   miniSprite: {fileID: 0}
   miniColor: {r: 0.70032597, g: 0.09732112, b: 0.764151, a: 0}
   size: 5

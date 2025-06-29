@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Static_Info;
+using Singletons.Static_Info;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Util;
 using Random = UnityEngine.Random;
-using static Static_Info.LevelSelectData;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace LevelSelect
 {

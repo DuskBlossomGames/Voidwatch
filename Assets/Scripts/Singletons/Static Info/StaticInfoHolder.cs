@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
-using static Static_Info.PlayerData;
+using static Singletons.Static_Info.PlayerData;
 
-namespace Static_Info
+namespace Singletons.Static_Info
 {
     public class StaticInfoHolder : MonoBehaviour
     {

@@ -8,7 +8,7 @@ using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using UnityEngine;
 using Util;
-using static Static_Info.PlayerData;
+using static Singletons.Static_Info.PlayerData;
 
 namespace Spawnables.Controllers.Bullets
 {

@@ -2,7 +2,7 @@ using System.Reflection;
 using TMPro;
 using UnityEngine;
 
-namespace Static_Info
+namespace Singletons.Static_Info
 {
     public class Statistics : MonoBehaviour
     {

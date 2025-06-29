@@ -1,7 +1,7 @@
 using System;
-using Static_Info;
+using Singletons.Static_Info;
 using UnityEngine;
-using static Static_Info.LevelSelectData;
+using static Singletons.Static_Info.LevelSelectData;
 using Timer = Util.Timer;
 
 namespace LevelSelect

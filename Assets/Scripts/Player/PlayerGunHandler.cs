@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using ProgressBars;
+using Singletons;
 using Spawnables;
 using Spawnables.Controllers.Bullets;
 using UnityEngine;
 using Util;
-using static Static_Info.GunInfo;
-using static Static_Info.PlayerData;
-using static Static_Info.Statistics;
+using static Singletons.Static_Info.GunInfo;
+using static Singletons.Static_Info.PlayerData;
+using static Singletons.Static_Info.Statistics;
 using Random = UnityEngine.Random;
 
 namespace Player
@@ -35,16 +36,13 @@ namespace Player
         private bool _isFiring;
         private Vector2 _mPos;
         private CustomRigidbody2D _rb;
-        public AudioSource audioPlayer;
-        public AudioClip PlayerShootLaserGeneric;
-        private float _AudioPlayerPitchStatic;
+        public AudioClip laserClip;
 
         private void Start()
         {
             if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
             _curAmmo = GunInfoInstance.ammoCount;
             _rb = GetComponent<CustomRigidbody2D>();
-            _AudioPlayerPitchStatic = audioPlayer.pitch;
         }
 
         public void Shoot(Vector2 worldMousePos)//returns if could start the shoot coroutine
@@ -136,11 +134,9 @@ namespace Player
                         bullet.GetComponent<BulletCollision>().owner = gameObject;
                         bullet.GetComponent<BulletCollision>().chains = PlayerDataInstance.bulletChains;
                     }
-
                 }
-                audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-                audioPlayer.PlayOneShot(PlayerShootLaserGeneric);
-
+                
+                AudioPlayer.Play(laserClip, Random.Range(0.5f, 0.7f), 0.45f);
                 HasDodgePowerAttack = false;
             }
 

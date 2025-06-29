@@ -130,9 +130,7 @@ namespace Player
             var clu = Color.HSVToRGB(vlu / 256f, .2f, .2f);
             var cul = Color.HSVToRGB(vul / 256f, .2f, .2f);
             var cuu = Color.HSVToRGB(vuu / 256f, .2f, .2f);
-
-            //Debug.Log(vll);
-
+            
             return Lerp(
                 Lerp(cll,cul,xt),
                 Lerp(clu,cuu,xt),

@@ -4,12 +4,12 @@ using System.Linq;
 using Extensions;
 using Menus;
 using Player;
+using Singletons.Static_Info;
 using Spawnables;
 using Spawnables.Controllers;
 using Spawnables.Controllers.Asteroids;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
-using Static_Info;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -18,14 +18,15 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
 using Random = UnityEngine.Random;
-using static Static_Info.LevelSelectData;
-using static Static_Info.Statistics;
+using static Singletons.Static_Info.LevelSelectData;
+using static Singletons.Static_Info.Statistics;
 namespace LevelPlay
 {
     public class EnemySpawner : MonoBehaviour
     {
         public GameObject player;
 
+        public float fadeInTime;
         public GameObject HUD, fadeIn;
         public PlanetSetup planet;
 
@@ -116,7 +117,25 @@ namespace LevelPlay
 #endif
           _level =  LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 
-          if (_level.Type == LevelType.Elite) fadeIn.SetActive(true);
+          fadeIn.SetActive(true);
+          if (_level.Type != LevelType.Elite) StartCoroutine(FadeIn());
+          else _faded = true;
+        }
+
+        private bool _faded;
+        private IEnumerator FadeIn()
+        {
+            var img = fadeIn.GetComponent<Image>();
+            for (float t = 0; t < fadeInTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+
+                img.SetAlpha(1 - t / fadeInTime);
+            }
+
+            fadeIn.SetActive(false);
+
+            _faded = true;
         }
 
         private readonly List<GameObject> _spawnedEnemies = new();
@@ -156,7 +175,7 @@ namespace LevelPlay
             if (InputManager.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
 #endif
             
-            if (_groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
+            if (!_faded || _groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
             if (!_spawnedHazards && _level.Type != LevelType.Elite) SpawnHazards();
 
             //var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
@@ -326,7 +345,6 @@ namespace LevelPlay
             {
                 debt += rate;
                 debt -= pts[i] = Mathf.FloorToInt(debt);
-                //Debug.LogFormat("Slot {0} has amt {1}", i, pts[i]);
             }
 
             SortedSet<int> partitions = new SortedSet<int>();
@@ -351,7 +369,6 @@ namespace LevelPlay
 
                 //5.
                 spts[j] += amt;
-                //Debug.LogFormat("Enemy ({0}) has scrap count ({1})", enemies[j].name, enemies[j].GetComponent<EnemyVariant>().ScrapCount);
             }
             
             //Older code
@@ -368,7 +385,6 @@ namespace LevelPlay
                     Quaternion.Euler(0, 0, 180+Mathf.Rad2Deg * rad));
                 if (enemyObj.TryGetComponent<MissleShooter>(out var missleShooter)) missleShooter.target = player;
 
-                //Debug.LogFormat("Late Enemy ({0}) has scrap count ({1})", enemy.name, enemy.GetComponent<EnemyVariant>().ScrapCount);
                 enemyObj.GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
                 enemyObj.GetComponent<EnemyVariant>().ScrapCount = spts[ind++];
 

@@ -7,19 +7,20 @@ using LevelPlay;
 using Menus;
 using ProgressBars;
 using Q_Vignette.Scripts;
+using Singletons;
 using Spawnables;
 using Spawnables.Controllers;
 using Spawnables.Controllers.Bullets;
 using Spawnables.Controllers.Defenses;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
-using Static_Info;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
-using static Static_Info.PlayerData;
+using static Singletons.Static_Info.PlayerData;
 using Random = UnityEngine.Random;
 namespace Player
 {
@@ -43,11 +44,8 @@ namespace Player
 
         public ProgressBar healthBar, shieldBar;
 
-        public AudioSource audioPlayer;
-        public AudioClip PlayerHitShield;
-        private float _AudioPlayerShieldVolumeStatic;
-        private float _AudioPlayerPitchStatic;
-        public AudioClip PlayerHitDamage;
+        public AudioClip shieldDamageClip;
+        public AudioClip healthDamageClip;
         // TODO: swap PlayerHitShield and PlayerHitDamage
 
         public bool godmode = false;
@@ -56,7 +54,7 @@ namespace Player
         private const float BIT_FADE = 1.5f;
         private const float BIT_VEL = 3.5f;
 
-        [CanBeNull] public GameObject explosion; // only put if you want an explosion
+        public GameObject explosion;
         public Sprite[] bitOptions;
         public int numBits;
         public float explosionScale, bitScale;
@@ -97,9 +95,6 @@ namespace Player
                 _vignetteCacheKeys.Add(vignetteCurve.Evaluate(t / vignetteDuration));
                 _vignetteCacheValues.Add(vignetteDuration - t);
             }
-
-            _AudioPlayerPitchStatic = audioPlayer.pitch;
-            _AudioPlayerShieldVolumeStatic = audioPlayer.volume;
         }
 
         private void Update()
@@ -125,13 +120,7 @@ namespace Player
         {
             ShieldPower = Mathf.Max(ShieldPower - damage, -ShieldMaxDebt);
             
-            audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-            audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/13f; //volume of hit modulates logarithmically with damage dealth
-            audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
-            audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
-
-            audioPlayer.clip = PlayerHitDamage;
-            audioPlayer.Play();
+            AudioPlayer.Play(shieldDamageClip, 0.9f, 0.2f);
             
             return ShieldPower < 0;
         }
@@ -180,15 +169,6 @@ namespace Player
                 if (ShieldPower < 0)
                 {
                     bleed += damage;
-
-                    if (damage > 5)
-                    {
-                        audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-                        audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/15f; //volume of hit modulates logarithmically with damage dealth
-
-                        audioPlayer.clip = PlayerHitShield;
-                        audioPlayer.Play();
-                    }
                 }
                 else
                 {
@@ -200,20 +180,18 @@ namespace Player
                         bleed += overDebt / shieldMult;
                     }
 
-                    audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
-                    audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/13f; //volume of hit modulates logarithmically with damage dealth
-                    audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
-                    audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
-
-                    audioPlayer.clip = PlayerHitDamage;
-                    audioPlayer.Play();
-
+                    AudioPlayer.Play(shieldDamageClip, 0.9f, 0.2f);
                 }
             }
 
             if (bleed > 0)
             {
                 Health -= bleed > 0 ? bleed : 0;
+
+                if (bleed > 5)
+                {
+                    AudioPlayer.Play(healthDamageClip, Random.Range(0.9f, 1.1f), 0.3f + Mathf.Log(bleed)/15f);
+                }
 
                 if (Health < 0)
                 {
@@ -264,19 +242,14 @@ namespace Player
                 ftd.transform.localScale = new Vector2(bitScale, bitScale);
             }
 
-            if (explosion != null)
-            {
-                var explosionObj = Instantiate(explosion, null, true);
-                explosionObj.SetActive(true);
-                explosionObj.transform.position = transform.position;
-                explosionObj.transform.localScale = explosionScale * Vector3.one;
-                explosionObj.GetComponent<ExplosionHandler>().Play();
-            }
+            explosion.SetActive(true);
+            explosion.GetComponent<ExplosionHandler>().Play(1, 1);
         }
 
         IEnumerator DeathFade(DeathInfo diedTo)
         {
-            for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(false);
+            foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;
+            foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = false;
             
             _movement.SetInputBlocked(true);
             
@@ -301,15 +274,17 @@ namespace Player
                 godmode = false;
                 GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.zero;
                 GetComponent<SpriteRenderer>().enabled = true;
-                for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(true);
+                foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = true;
+                foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = true;
                 _movement.SetInputBlocked(false);
-                fadeOut.SetActive(false);
                 GetComponent<EnforcePlayArea>().Reset();
                 Health = MaxHealth;
                 ShieldPower = ShieldMaxPower;
                 healthBar.UpdatePercentage(Health, MaxHealth);
                 shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
                 _died = false;
+                yield return new WaitForSeconds(0.35f);
+                fadeOut.SetActive(false);
             }
         }
 

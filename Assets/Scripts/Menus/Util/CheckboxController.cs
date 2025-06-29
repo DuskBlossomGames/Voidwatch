@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Menus
+namespace Menus.Util
 {
     public class CheckboxController : MonoBehaviour
     {
