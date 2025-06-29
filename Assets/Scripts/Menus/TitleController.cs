@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Linq;
 using Extensions;
+using Static_Info;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -7,6 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
 using Button = UnityEngine.UI.Button;
+using static Static_Info.Statistics;
 
 namespace Menus
 {
@@ -35,11 +38,12 @@ namespace Menus
         private bool _initCredits;
         private void Start()
         {
-            _texts = GetComponentsInChildren<TextMeshProUGUI>();
-            _flashes = GetComponentsInChildren<FlashUI>();
-            _buttons = GetComponentsInChildren<Button>();
-            _images = GetComponentsInChildren<Image>();
-
+            _texts = GetComponentsInChildren<TextMeshProUGUI>(true);
+            _flashes = GetComponentsInChildren<FlashUI>(true);
+            _buttons = GetComponentsInChildren<Button>(true);
+            _images = GetComponentsInChildren<Image>(true)
+                .Where(i => i != fadeIn && !i.transform.IsChildOf(options.transform)).ToArray(); // options should always be closed, so just don't mess with it (breaks slider hitboxes)
+            
             _initCredits = GameObject.Find("RollCredits") != null;
             if (_initCredits) Destroy(GameObject.Find("RollCredits"));
 
@@ -51,14 +55,14 @@ namespace Menus
                 tutorialHint.SetActive(true);
                 SettingsInterface.isFirstTime = false; // since this is the only place it's used, easy solution for now, can change if needed elsewhere
             }
-            
+
             StartCoroutine(FadeIn());
         }
 
         private IEnumerator FadeIn()
         {
             fadeIn.gameObject.SetActive(true);
-            if (_initCredits) yield return Fade(false);
+            if (_initCredits) yield return Fade(false, false);
 
             GetComponent<Canvas>().enabled = true;
             ps.gameObject.SetActive(true);
@@ -74,14 +78,14 @@ namespace Menus
             if (_initCredits) yield return CreditsRoutine();
         }
 
-        private IEnumerator Fade(bool includeCredits)
+        private IEnumerator Fade(bool includeCredits, bool wait=true)
         {
             foreach (var flash in _flashes) flash.enabled = false;
             foreach (var button in _buttons) button.interactable = false;
 
             for (float t = 0; t < fadeTime; t += Time.fixedDeltaTime)
             {
-                yield return new WaitForFixedUpdate();
+                if (wait) yield return new WaitForFixedUpdate();
                 foreach (var obj in _texts)
                 {
                     if (!includeCredits && obj.transform.IsChildOf(credits)) continue;
@@ -93,7 +97,7 @@ namespace Menus
                     if (!includeCredits && obj.transform.IsChildOf(credits)) continue;
 
                     var alpha = 1 - t / fadeTime;
-                    if (obj.GetComponent<Button>() != null) alpha = buttonsFadeCurve.Evaluate(alpha);
+                    if (obj.GetComponent<Button>() != null) alpha = buttonsFadeCurve.Evaluate(alpha); 
                     obj.SetAlpha(Mathf.Min(obj.color.a, alpha));
                 }
             }
@@ -134,6 +138,7 @@ namespace Menus
             ps.gameObject.SetActive(false);
 
             yield return new WaitForSeconds(waitTime);
+            StatisticsInstance.startTime = Time.time;
             SceneManager.LoadScene("LevelSelect");
         }
 
@@ -157,11 +162,7 @@ namespace Menus
         {
             options.SetActive(false);
             
-            for (var i = 0; i < transform.childCount; i++)
-            {
-                if (options.transform.GetSiblingIndex() == i) break;
-                transform.GetChild(i).gameObject.SetActive(true);
-            }
+            for (var i = 0; i < options.transform.GetSiblingIndex(); i++) transform.GetChild(i).gameObject.SetActive(true);
         }
 
         public void Credits()

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 582754640268470002}
   - component: {fileID: 6725564530229344085}
   - component: {fileID: 8614088855332405689}
+  - component: {fileID: 7430330871907421853}
   m_Layer: 8
   m_Name: Missiler
   m_TagString: Untagged
@@ -58,6 +59,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -154,6 +158,7 @@ PolygonCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4430136990600543352}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -177,7 +182,8 @@ PolygonCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +216,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  tier: 2
-  enemyType: 1
+  dontDestroyOffscreen: 0
+  trackDeath: 1
   maxHealth: 200
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 1317461934895244640, guid: 5886eced7a3754dd3b2e186b34b40cbb, type: 3}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
@@ -256,8 +261,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hazardObject: 0
   cost: 5
-  ScrapCount: 0
-  ScrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
+  tier: 2
+  enemyType: 1
 --- !u!114 &6725564530229344085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,3 +313,17 @@ MonoBehaviour:
     name: fire
   framesPerSecond: 20
   loop: 0
+--- !u!114 &7430330871907421853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430136990600543352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: -1358975380, guid: dd50de61391000b40a753484f74b5372, type: 3}
+  title: Missiler

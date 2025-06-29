@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
+using Menus;
 using Player;
 using Spawnables;
 using Spawnables.Controllers;
+using Spawnables.Controllers.Asteroids;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using Static_Info;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -16,6 +19,7 @@ using UnityEngine.UI;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.LevelSelectData;
+using static Static_Info.Statistics;
 namespace LevelPlay
 {
     public class EnemySpawner : MonoBehaviour
@@ -26,10 +30,8 @@ namespace LevelPlay
         public PlanetSetup planet;
 
         public WaveIndicatorController wic;
-        
-        public Image carcWinImage;
-        public TextMeshProUGUI carcWinText, carcWinSubtext;
-        public float winFadeInTime, winWaitTime;
+
+        public GameOverController gameOver;
         
         public PlayerDamageable playerDamager;
         public GameObject scrapPrefab;
@@ -37,6 +39,8 @@ namespace LevelPlay
         public List<int> scrapCountTiers;
         public List<float> scrapChanceTiers;
 
+        public float minAsteroidSize, maxAsteroidSize;
+        
         public AssetLabelReference variantLabel;
         public string miniBossesGroup;
         public List<int> groupBudgetTiers;
@@ -48,6 +52,7 @@ namespace LevelPlay
 
         private readonly Dictionary<string, List<EnemyVariant>> _groups = new();
         private readonly Dictionary<string, List<EnemyVariant>> _hazardObjects = new();
+        private readonly List<AsteroidSwarmInit> _asteroids = new();
         private readonly List<GameObject> _miniBosses = new();
         
         private readonly Dictionary<string, bool> _loadedVariants = new();
@@ -79,20 +84,26 @@ namespace LevelPlay
                         }
                         else
                         {
-                            var variant = dataHandle.Result.GetComponent<EnemyVariant>();
-                            if (variant == null) return;
+                            var ev = dataHandle.Result.GetComponent<EnemyVariant>();
+                            if (ev == null)
+                            {
+                                var asteroid = dataHandle.Result.GetComponent<AsteroidSwarmInit>();
+                                if (asteroid != null) _asteroids.Add(asteroid);
+
+                                return;
+                            }
                             
-                            if (variant.hazardObject)
+                            if (ev.hazardObject)
                             {
                                 if (!_hazardObjects.ContainsKey(group)) _hazardObjects[group] = new List<EnemyVariant>();
 
-                                _hazardObjects[group].Add(variant);
+                                _hazardObjects[group].Add(ev);
                             }
                             else
                             {
                                 if (!_groups.ContainsKey(group)) _groups[group] = new List<EnemyVariant>();
 
-                                _groups[group].Add(variant);
+                                _groups[group].Add(ev);
                             }    
                         }
                     };
@@ -104,7 +115,6 @@ namespace LevelPlay
           if (_isDebug) LevelSelectDataInstance.CurrentPlanet = LevelSelectDataInstance.Levels[0].Connections[0];
 #endif
           _level =  LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
-          print(Mathf.Floor(_level.DifficultyScore/LevelSelectDataInstance.MaxDifficultyScore *5 *2)/2);
 
           if (_level.Type == LevelType.Elite) fadeIn.SetActive(true);
         }
@@ -140,7 +150,6 @@ namespace LevelPlay
                 _spawnedElite = true;
             }
             
-            // TODO: debug
 #if UNITY_EDITOR
             if (InputManager.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
             if (_level.Type == LevelType.Elite && InputManager.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
@@ -160,10 +169,12 @@ namespace LevelPlay
                     // kill all hazards
                     FindObjectsByType<Damageable>(FindObjectsSortMode.None).ToList().ForEach(dmg =>
                     {
-                        if (dmg.gameObject.layer == LayerMask.NameToLayer("Hazards") ||
-                            dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) dmg.Damage(float.MaxValue, null);
+                        if ((dmg.gameObject.layer == LayerMask.NameToLayer("Hazards") 
+                            || dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) 
+                            && dmg.GetComponent<AsteroidController>() == null) dmg.Damage(float.MaxValue, null);
                     });
 
+                    StatisticsInstance.levelsCleared++;
                     if (_level.Type == LevelType.Elite)
                     {
                         StartCoroutine(Win());
@@ -178,7 +189,6 @@ namespace LevelPlay
                 return;
             }
 
-            // TODO: do spawning waves better
             if (SpawnedEnemies.Count == 0)
             {
                 if (_level.Type == LevelType.Elite || _wave == _level.Waves.Length-1)
@@ -194,15 +204,17 @@ namespace LevelPlay
             }
         }
 
+        public bool WaitingOnIndicator => _waitingOnIndicator;
         private bool _waitingOnIndicator;
         public IEnumerator SpawnWaveWithIndicator()
         {
             if (_waitingOnIndicator) yield break;
             _waitingOnIndicator = true;
-            yield return wic.Flash();
-            _waitingOnIndicator = false;
             
+            yield return wic.Flash();
             SpawnWave();
+            
+            _waitingOnIndicator = false;
         }
 
         private bool _won;
@@ -214,45 +226,22 @@ namespace LevelPlay
             player.GetComponent<Movement>().SetInputBlocked(true);
             player.GetComponent<Movement>().autoPilot = true;
             player.GetComponent<PlayerDamageable>().godmode = true;
-            
-            fadeIn.SetActive(true);
-            fadeIn.GetComponent<Image>().SetAlpha(0);
-            for (float t = 0; t < winFadeInTime; t += Time.fixedDeltaTime)
-            {
-                yield return new WaitForFixedUpdate();
-                fadeIn.GetComponent<Image>().SetAlpha(t / winFadeInTime);
-            }
 
-            carcWinImage.gameObject.SetActive(true);
-            carcWinText.gameObject.SetActive(true);
-            carcWinSubtext.gameObject.SetActive(true);
-            carcWinImage.SetAlpha(0);
-            carcWinText.SetAlpha(0);
-            carcWinSubtext.SetAlpha(0);
-            for (float t = 0; t < winFadeInTime; t += Time.fixedDeltaTime)
-            {
-                yield return new WaitForFixedUpdate();
-                carcWinImage.SetAlpha(t / winFadeInTime);
-                carcWinText.SetAlpha(t / winFadeInTime);
-                carcWinSubtext.SetAlpha(t / winFadeInTime);
-            }
-
-            yield return new WaitForSeconds(winWaitTime);
-            
-            Destroy(StaticInfoHolder.Instance.gameObject);
-            DontDestroyOnLoad(new GameObject("RollCredits")); // TODO: this is so scuffed ahhhh
-            SceneManager.LoadScene("TitleScreen");
+            yield return gameOver.Run(true, null);
         }
 
         public void SpawnHazards()
         {
             if (_isDebug) return;
-            
             _spawnedHazards = true;
-            var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
             
-            var sectorSize = 2*Mathf.PI / (hazards.Count+1);
-            for (var sector = 1; sector < hazards.Count+1; sector++)
+            SpawnAsteroids();
+            
+            var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
+            var lootPer = _level.HazardLoot / hazards.Count;
+            
+            var sectorSize = 4/3f*Mathf.PI / hazards.Count;
+            for (var sector = 0; sector < hazards.Count; sector++)
             {
                 var idx = Random.Range(0, hazards.Count);
                 var hazard = hazards[idx];
@@ -260,12 +249,54 @@ namespace LevelPlay
                     
                 var offset = Random.Range(-sectorSize/3, sectorSize/3);
 
-                var theta = sectorSize/2 + sector * sectorSize + offset;
+                var theta = 1/3f * Mathf.PI + sectorSize/2 + sector * sectorSize + offset;
                 var r = Random.Range(planet.transform.localScale.x / 2 + 30,
                     boundaryCircle.transform.localScale.x / 2 - 20);
                     
                 var hazardObj = Instantiate(
                     hazard,
+                    transform.position +  
+                    new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0),
+                    Quaternion.identity);
+                
+                hazardObj.GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
+                hazardObj.GetComponent<EnemyVariant>().ScrapCount = lootPer;
+            }
+        }
+
+        private void SpawnAsteroids()
+        {
+            
+            var asteroidSize = Random.Range(minAsteroidSize, maxAsteroidSize);
+            _asteroids.Sort((a,b) => a.size < b.size ? -1 : a.size > b.size ? 1 : 0);
+
+            var asteroids = new List<AsteroidSwarmInit>();
+            
+            while (asteroidSize > 0)
+            {
+                var available = _asteroids.Where(a => a.size >= asteroidSize).ToList();
+                if (available.Count == 0) available.Add(_asteroids[0]);
+                
+                var asteroid = available[Random.Range(0, available.Count)];
+                var amt = Mathf.Min(asteroidSize, asteroid.size);
+                asteroidSize -= amt;
+
+                asteroids.Add(asteroid);
+            }
+            
+            var sectorSize = 7/4f*Mathf.PI / asteroids.Count;
+            for (var sector = 0; sector < asteroids.Count; sector++)
+            {
+                var idx = Random.Range(0, asteroids.Count);
+                var asteroid = asteroids[idx];
+                    
+                var offset = Random.Range(-sectorSize/3, sectorSize/3);
+                var theta = 1/8f * Mathf.PI + sectorSize/2 + sector * sectorSize + offset;
+                var r = Random.Range(planet.transform.localScale.x / 2 + 30,
+                    boundaryCircle.transform.localScale.x / 2 - 35);
+                    
+                var asteroidObj = Instantiate(
+                    asteroid.gameObject,
                     transform.position +  
                     new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0),
                     Quaternion.identity);
@@ -285,10 +316,8 @@ namespace LevelPlay
             int pointWidth = 0;
             foreach (var enemy in enemies) pointWidth += enemy.GetComponent<EnemyVariant>().cost;
 
-            enemies.Sort(
-                delegate (GameObject A, GameObject B)
-                    { return A.GetComponent<EnemyVariant>().cost.CompareTo(B.GetComponent<EnemyVariant>().cost); }
-                );
+            enemies.Sort((a, b) =>
+                a.GetComponent<EnemyVariant>().cost.CompareTo(b.GetComponent<EnemyVariant>().cost));
 
             int[] pts = new int[pointWidth];
             float rate = (float)_level.Loot / (float)pointWidth / _level.Waves.Length;
@@ -305,7 +334,7 @@ namespace LevelPlay
             partitions.Add(pointWidth);
 
             //2.
-            for (int i = 0; i < enemies.Count - 1; i++) partitions.Add(Random.Range(1, enemies.Count));
+            for (int i = 0; i < pointWidth - 1; i++) partitions.Add(Random.Range(1, pointWidth));
 
 
             for (int i = 0; i < partitions.Count - 1; i++)
@@ -323,24 +352,24 @@ namespace LevelPlay
                 //5.
                 spts[j] += amt;
                 //Debug.LogFormat("Enemy ({0}) has scrap count ({1})", enemies[j].name, enemies[j].GetComponent<EnemyVariant>().ScrapCount);
-                enemies[j].GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
             }
-
+            
             //Older code
             int ind = 0;
             foreach (var enemy in enemies)
             {
                 var boundarySize = boundaryCircle.transform.localScale / 2;
-                var rad = Random.Range(0, 2 * Mathf.PI);
+                var rad = Random.Range(1/4f * Mathf.PI, 7/4f * Mathf.PI);
 
                 var enemyObj = Instantiate(
                     enemy,
                     transform.position +
                     new Vector3(boundarySize.x * Mathf.Cos(rad), boundarySize.y * Mathf.Sin(rad), 0),
-                    Quaternion.identity);
+                    Quaternion.Euler(0, 0, 180+Mathf.Rad2Deg * rad));
                 if (enemyObj.TryGetComponent<MissleShooter>(out var missleShooter)) missleShooter.target = player;
 
                 //Debug.LogFormat("Late Enemy ({0}) has scrap count ({1})", enemy.name, enemy.GetComponent<EnemyVariant>().ScrapCount);
+                enemyObj.GetComponent<EnemyVariant>().ScrapPrefab = scrapPrefab;
                 enemyObj.GetComponent<EnemyVariant>().ScrapCount = spts[ind++];
 
                 _spawnedEnemies.Add(enemyObj);
@@ -354,6 +383,13 @@ namespace LevelPlay
             var groupBudgets = new Dictionary<string, int>();
 
             var enemyGroups = hazards ? _hazardObjects : _groups;
+            foreach (var kvp in enemyGroups.ToList())
+            {
+                kvp.Value.RemoveAll(e => e.tier > _level.MaxTier);
+                if (kvp.Value.Count == 0) enemyGroups.Remove(kvp.Key);
+            }
+            
+            
             var groups = enemyGroups.Keys.ToList();
             var budgets = new List<int>(groupBudgetTiers);
             while (groups.Count > 0 && budget > groupBudgetTiers[0])

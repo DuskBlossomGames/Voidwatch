@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -8967648618552505094}
   - component: {fileID: 2038406915348808591}
   - component: {fileID: -8458669790153916616}
+  - component: {fileID: 9137129563670252777}
   m_Layer: 19
   m_Name: Asteroid Large
   m_TagString: Untagged
@@ -67,10 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  tier: 1
-  enemyType: 0
+  dontDestroyOffscreen: 0
+  trackDeath: 0
   maxHealth: 500
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -90,7 +90,7 @@ MonoBehaviour:
   - {fileID: 1261275619952868859, guid: dbb7d8c15429e4891830b22781838d56, type: 3}
   nextSize: {fileID: 4661534520163306949, guid: fb010a693aaff49869af75025b383f5b, type: 3}
   shieldMult: 1.6
-  bleedPerc: 0.05
+  bleedPerc: 0
   startVel: {x: 0, y: 0}
 --- !u!114 &-8967648618552505094
 MonoBehaviour:
@@ -217,3 +217,17 @@ PolygonCollider2D:
       - {x: 0.58778536, y: -0.80901694}
       - {x: 0.9510565, y: 0.30901712}
   m_UseDelaunayMesh: 0
+--- !u!114 &9137129563670252777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4661534520163306949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 864c738debf1c4afaa422c0e22d1d93b, type: 3}
+  title: Asteroid

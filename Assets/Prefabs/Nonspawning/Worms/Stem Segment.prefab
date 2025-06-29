@@ -152,7 +152,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  atkRange: 30
+  atkRange: 50
   chargeUpTime: 1
   bend: 0
 --- !u!114 &-7001248555379214586
@@ -168,11 +168,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chargeTime: 1
-  dodgeTime: 0.2
+  dodgeTime: 0.4
   ramp: 1.15
   baseDmg: 50
   shieldMult: 2
-  bleedPerc: 0.05
+  bleedPerc: 0
   material: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   warnColor:
     serializedVersion: 2
@@ -360,10 +360,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
-  tier: 3
-  enemyType: 3
+  trackDeath: 0
   maxHealth: 1500
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -390,8 +388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d4d169d436b534784dbe3223ce433d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snakeyness: 0.8
-  snaketime: 2
+  snakeyness: 0.4
+  snaketime: 0.75
 --- !u!114 &8290449300364683273
 MonoBehaviour:
   m_ObjectHideFlags: 0

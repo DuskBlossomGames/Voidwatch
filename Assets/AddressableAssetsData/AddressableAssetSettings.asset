@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: b0ae79841bd6e4f5386bff506e0dea46
   m_currentHash:
     serializedVersion: 2
-    Hash: caa3ddf77dc5bd7feb972ad479cd0ee6
+    Hash: 3f8790e1a890cb6eb1b9d8d40151b6dd
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
     - asteroids
     - upgrade-borders
     - upgrade-sprites
+    - boostable-stats
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 1951f15ecbeb0452a9f4b4bb83dcfe57, type: 2}

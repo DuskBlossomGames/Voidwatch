@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -19,50 +20,60 @@ namespace Menus
 
         public TMP_Dropdown resolution;
         public CheckboxController fullscreen, vsync;
-        public Slider hudSizeSlider;
+        public Slider hudSizeSlider, minimapSizeSlider;
 
         private KeybindController[] _keybinds;
         public bool BindingKey => _keybinds.Any(kc => kc.BindingKey);
-        
-        public void Awake()
+
+        private void Awake() // setup listeners
         {
             // AUDIO
-            masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
             masterSlider.onValueChanged.AddListener(v => SettingsInterface.SetChannelVolume(SoundChannel.Master, v));
-            
-            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
             musicSlider.onValueChanged.AddListener(v => SettingsInterface.SetChannelVolume(SoundChannel.Music, v));
-            
-            effectsSlider.value = PlayerPrefs.GetFloat("EffectsVolume");
             effectsSlider.onValueChanged.AddListener(v => SettingsInterface.SetChannelVolume(SoundChannel.Effects, v));
-            
+
             // VIDEO
-            resolution.ClearOptions();
-            resolution.AddOptions(SettingsInterface.resolutions.Select(r => $"{r.width} x {r.height}").ToList());
-            resolution.value = PlayerPrefs.GetInt("Resolution");
             resolution.onValueChanged.AddListener(SettingsInterface.SetResolution);
             
             fullscreen.Setup();
-            fullscreen.SetValue(PlayerPrefs.GetInt("Fullscreen") == 1);
             fullscreen.OnToggle += SettingsInterface.SetFullscreen;
             
             vsync.Setup();
-            vsync.SetValue(PlayerPrefs.GetInt("Vsync") == 1);
             vsync.OnToggle += SettingsInterface.SetVsync;
             
-            hudSizeSlider.value = PlayerPrefs.GetFloat("HUDSize")*10;
             hudSizeSlider.onValueChanged.AddListener(v => SettingsInterface.SetHUDSize(v/10));
-            
+            minimapSizeSlider.onValueChanged.AddListener(v => SettingsInterface.SetMinimapSize(v/10));
+
             // CONTROLS
             _keybinds = GetComponentsInChildren<KeybindController>(true);
             for (var i = 0; i < _keybinds.Length; i++)
             {
                 var constI = i;
-                _keybinds[i].OnKeybindChange += k => SettingsInterface.SetKeybind(constI, k);
                 
                 _keybinds[i].Setup();
-                _keybinds[i].DisplayKey((KeyCode) PlayerPrefs.GetInt($"Control{i}"));
+                _keybinds[i].OnKeybindChange += k => SettingsInterface.SetKeybind(constI, k);
             }
+        }
+
+        public void OnEnable() // setup values based on prefs
+        {
+            // AUDIO
+            masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+            effectsSlider.value = PlayerPrefs.GetFloat("EffectsVolume");
+            
+            // VIDEO
+            resolution.ClearOptions();
+            resolution.AddOptions(SettingsInterface.resolutions.Select(r => $"{r.width} x {r.height}").ToList());
+            resolution.value = PlayerPrefs.GetInt("Resolution");
+            
+            fullscreen.SetValue(PlayerPrefs.GetInt("Fullscreen") == 1);
+            vsync.SetValue(PlayerPrefs.GetInt("Vsync") == 1);
+            hudSizeSlider.value = PlayerPrefs.GetFloat("HUDSize")*10;
+            minimapSizeSlider.value = PlayerPrefs.GetFloat("MinimapSize")*10;
+            
+            // CONTROLS
+            for (var i = 0; i < _keybinds.Length; i++) _keybinds[i].DisplayKey((KeyCode) PlayerPrefs.GetInt($"Control{i}"));
         }
 
         private void Update()

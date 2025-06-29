@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Extensions;
 using JetBrains.Annotations;
+using LevelPlay;
+using Menus;
 using ProgressBars;
 using Q_Vignette.Scripts;
+using Spawnables;
+using Spawnables.Controllers;
+using Spawnables.Controllers.Bullets;
+using Spawnables.Controllers.Defenses;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
 using Static_Info;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,8 +28,13 @@ namespace Player
         public bool isTutorial;
 
         public Q_Vignette_Single vignette;
+
+        public EnemySpawner enemySpawner;
         public GameObject fadeOut;
         public float fadeouttime = 1;
+
+        public GameOverController gameOver;
+        
         public AnimationCurve vignetteCurve;
         public float vignetteDuration, vignettePeak;
         public float sigmoidStart, sigmoidEnd;
@@ -51,11 +65,7 @@ namespace Player
         protected override float Health
         {
             get => PlayerDataInstance.Health;
-            set
-            {
-                PlayerDataInstance.Health = value;
-                if (value <= 0) OnDeath(null);
-            }
+            set => PlayerDataInstance.Health = value;
         }
 
         protected float ShieldRegenRate => PlayerDataInstance.shieldRegenRate;
@@ -95,10 +105,13 @@ namespace Player
         private void Update()
         {
             // failsafe
-            if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Damage(float.MaxValue, null);
+            if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Damage(float.MaxValue, FindAnyObjectByType<PointAtTargets>().gameObject);
+
+            if (Health < 0) OnDeath(null);
             
             ShieldPower = Mathf.Clamp(ShieldPower + ShieldRegenRate * Time.deltaTime, -ShieldMaxDebt, ShieldMaxPower);
             shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
+            healthBar.UpdatePercentage(Health, MaxHealth);
         }
 
         private void FixedUpdate()
@@ -111,7 +124,15 @@ namespace Player
         public bool TakeEMP(float damage)
         {
             ShieldPower = Mathf.Max(ShieldPower - damage, -ShieldMaxDebt);
+            
+            audioPlayer.pitch = _AudioPlayerPitchStatic + Random.Range(0.1f,-0.1f); //pitch modulation for sound variance
+            audioPlayer.volume = _AudioPlayerShieldVolumeStatic +Mathf.Log(damage)/13f; //volume of hit modulates logarithmically with damage dealth
+            audioPlayer.pitch = _AudioPlayerPitchStatic -0.1f; //normal hit is static and quiet
+            audioPlayer.volume = (_AudioPlayerShieldVolumeStatic );
 
+            audioPlayer.clip = PlayerHitDamage;
+            audioPlayer.Play();
+            
             return ShieldPower < 0;
         }
 
@@ -121,13 +142,14 @@ namespace Player
         {
             if (godmode) return;
 
-            if (PlayerDataInstance.autoDodge)
+            if (PlayerDataInstance.autoDodge && damage > 10)
             {
                 var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
-                    19*Mathf.Log(damage/110.6f)); // magic formula; max dodgeable is 2000 dmg, first dmg above min cost is 200
+                    19*Mathf.Log(damage/110.6f)); // magic formula; min cost is 5/4 normal, max dodgeable is 2000 dmg, first dmg above min cost is 200
                 if (cost <= _movement.DodgeJuice)
                 {
                     _movement.DodgeOnceCost = cost;
+                    _movement.DodgeOnceDir = _movement.GetComponent<CustomRigidbody2D>().linearVelocity.normalized;
                     return;
                 }
             }
@@ -211,10 +233,15 @@ namespace Player
             healthBar.UpdatePercentage(Health, MaxHealth);
         }
 
+        private bool _died;
         protected override void OnDeath(GameObject source)
         {
+            if (_died) return;
+            _died = true;
+            
+            if (enemySpawner != null) enemySpawner.enabled = false;
 
-            StartCoroutine(DeathFade());
+            StartCoroutine(DeathFade(FindDeathInfo(source)));
             var angleOffset = Random.Range(0, 360f);
             for (var i = 0; i < numBits; i++)
             {
@@ -247,35 +274,75 @@ namespace Player
             }
         }
 
-        IEnumerator DeathFade()
+        IEnumerator DeathFade(DeathInfo diedTo)
         {
             for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(false);
             
             _movement.SetInputBlocked(true);
-            fadeOut.SetActive(true);
-            fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-            for (int i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
-            {
-                yield return new WaitForSecondsRealtime(.01f);
-                var prog = i / (100 * fadeouttime);
-                fadeOut.GetComponent<Image>().color = new Color(0, 0, 0, Mathf.Pow(prog, .5f));
-            }
-
+            
             if (!isTutorial)
             {
-                Destroy(StaticInfoHolder.Instance.gameObject); // reset static info
-                SceneManager.LoadScene("TitleScreen"); // return to boot
+                StartCoroutine(gameOver.Run(false, diedTo));
             }
             else
             {
+                fadeOut.SetActive(true);
+                fadeOut.GetComponent<Image>().SetAlpha(0);
+                for (var i = 0; i < Mathf.RoundToInt(100 * fadeouttime); i++)
+                {
+                    yield return new WaitForSecondsRealtime(.01f);
+                    var prog = i / (100 * fadeouttime);
+                
+                    fadeOut.GetComponent<Image>().SetAlpha(Mathf.Pow(prog, .5f));
+                }
+
                 transform.position = _startLoc;
+                Camera.main!.transform.position = new Vector3(_startLoc.x, _startLoc.y, Camera.main.transform.position.z);
                 godmode = false;
                 GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.zero;
                 GetComponent<SpriteRenderer>().enabled = true;
                 for (var i = 0; i < transform.childCount; i++) if (transform.GetChild(i).GetComponent<ParticleSystem>() == null) transform.GetChild(i).gameObject.SetActive(true);
                 _movement.SetInputBlocked(false);
                 fadeOut.SetActive(false);
-                Heal(MaxHealth);
+                GetComponent<EnforcePlayArea>().Reset();
+                Health = MaxHealth;
+                ShieldPower = ShieldMaxPower;
+                healthBar.UpdatePercentage(Health, MaxHealth);
+                shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
+                _died = false;
+            }
+        }
+
+        [CanBeNull]
+        private static DeathInfo FindDeathInfo(GameObject source)
+        {
+            while (true)
+            {
+                if (source.TryGetComponent<BulletCollision>(out var bullet))
+                {
+                    source = bullet.owner;
+                    continue;
+                }
+
+                if (source.TryGetComponent<MissleAim>(out var missile) && missile.owner != null)
+                {
+                    source = missile.owner;
+                    continue;
+                }
+
+                if (source.TryGetComponent<AreaDamager>(out var ae) && ae.owner != null)
+                {
+                    source = ae.owner;
+                    continue;
+                }
+
+                if (source.TryGetComponent<ExplosionHandler>(out var exp) && exp.source != null)
+                {
+                    source = exp.source;
+                    continue;
+                }
+
+                return source.GetComponentInParent<DeathInfo>();
             }
         }
     }

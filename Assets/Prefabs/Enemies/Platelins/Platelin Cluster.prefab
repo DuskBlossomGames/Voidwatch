@@ -162,10 +162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
-  tier: 2
-  enemyType: 2
+  trackDeath: 1
   maxHealth: 0
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -190,13 +188,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9aad688cf243894dad95f0cb0e525cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxColonySize: 10
+  maxColonySize: 7
   maxNumColonies: 4
   normalSize: 5
   leaderSize: 7.75
   isLeader: 1
-  maxHealth: 150
-  leaderMaxHealth: 300
+  maxHealth: 75
+  leaderMaxHealth: 150
   leaderChance: 0.2
   explosionScaleMult: 2.5
   gooSpawnTime: 1.25
@@ -235,7 +233,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   scaleCurveTime: 2
-  speed: 6
+  speed: 15
   speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -271,7 +269,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   speedCurveScale: 1.25
   initialDelay: 3
-  spawndelay: 9
+  spawndelay: 5
   swellsize: 3
   swelltime: 0.6181264
   isSpore: 0
@@ -375,6 +373,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6077276900865238909}
   - component: {fileID: 4352720049731049132}
+  - component: {fileID: 8753938358301726008}
   m_Layer: 0
   m_Name: Platelin Cluster
   m_TagString: Untagged
@@ -412,5 +411,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hazardObject: 0
   cost: 7
-  ScrapCount: 0
-  ScrapPrefab: {fileID: 0}
+  tier: 1
+  enemyType: 2
+--- !u!114 &8753938358301726008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663828382742004186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 454445444, guid: 706e2aa31ab3c44bc9fafd74e9a38518, type: 3}
+  title: Platelin

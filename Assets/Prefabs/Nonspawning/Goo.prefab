@@ -4954,11 +4954,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe1ddaa031c9745b33a24da9d80ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerSecond: 10
-  entryDamage: 20
-  shieldMult: 4
+  damagePerSecond: 20
+  entryDamage: 40
+  shieldMult: 2
   bleedPerc: 0
   canOnlyHurtPlayer: 0
+  owner: {fileID: 0}
 --- !u!114 &-9096522590030787941
 MonoBehaviour:
   m_ObjectHideFlags: 0

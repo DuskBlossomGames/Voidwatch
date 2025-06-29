@@ -29,13 +29,15 @@ namespace Spawnables.Controllers.Worms
             GameObject child, oldChild;
             Vector3 relPos = Vector3.zero;
             child = Instantiate(segmentPrefab, transform);
-            child.transform.localRotation = Quaternion.Euler(0, 0, 90);
+            child.transform.localRotation = Quaternion.Euler(0, 0, -90);
             child.GetComponent<SpriteRenderer>().sprite = headSprite;
             child.GetComponent<WormSegment>().form = WormSegment.Form.Head;
             child.GetComponent<WormDamageable>().root = gameObject;
+            child.GetComponent<WormDamageable>().trackDeath = true;
+            child.GetComponent<WormDamageable>().Variant = GetComponent<EnemyVariant>();
             child.transform.localPosition = relPos;
             oldChild = child;
-            relPos.x += segLength;
+            relPos.x -= segLength;
 
             var head = child;
             GetComponent<MultiDamageable>().HealthChanged += (_, n) =>
@@ -46,7 +48,7 @@ namespace Spawnables.Controllers.Worms
             for (int i = 0; i < length-2; i++)
             {
                 child = Instantiate(segmentPrefab, transform);
-                child.transform.localRotation = Quaternion.Euler(0, 0, 90);
+                child.transform.localRotation = Quaternion.Euler(0, 0, -90);
                 child.GetComponent<SpriteRenderer>().sprite = bodySprite;
                 child.GetComponent<WormSegment>().form = WormSegment.Form.Middle;
                 child.GetComponent<WormSegment>().prev = oldChild;
@@ -55,10 +57,10 @@ namespace Spawnables.Controllers.Worms
                 child.GetComponent<WormDamageable>().root = gameObject;
                 child.GetComponent<PositionHinter>().enabled = false;
                 oldChild = child;
-                relPos.x += segLength;
+                relPos.x -= segLength;
             }
             child = Instantiate(segmentPrefab, transform);
-            child.transform.localRotation = Quaternion.Euler(0, 0, 90);
+            child.transform.localRotation = Quaternion.Euler(0, 0, -90);
             child.GetComponent<SpriteRenderer>().sprite = tailSprite;
             child.GetComponent<WormSegment>().form = WormSegment.Form.Tail;
             child.GetComponent<WormSegment>().prev = oldChild;

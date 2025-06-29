@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3342660715160142731}
   - component: {fileID: -406451604270218808}
-  - component: {fileID: 6330358158676112379}
   m_Layer: 0
   m_Name: Asteroid Swarm Large
   m_TagString: Untagged
@@ -53,19 +52,3 @@ MonoBehaviour:
   - {fileID: 4661534520163306949, guid: 4451433ea321044f1ae32d37a4aca9c4, type: 3}
   - {fileID: 4661534520163306949, guid: fb010a693aaff49869af75025b383f5b, type: 3}
   - {fileID: 4661534520163306949, guid: 262429f9a5a28412795ffc80e858bacc, type: 3}
---- !u!114 &6330358158676112379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6427611813052790821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hazardObject: 1
-  cost: 12
-  ScrapCount: 0
-  ScrapPrefab: {fileID: 0}

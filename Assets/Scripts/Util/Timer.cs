@@ -27,6 +27,11 @@ namespace Util
         {
             _value = value;
         }
+
+        public void CustomUpdate(float deltaTime, float direction = -1)
+        {
+            _value = Mathf.Clamp(_value + (_lastStep = direction * deltaTime * CustomRigidbody2D.Scaling), 0, _maxValue);
+        }
         
         public void Update(float direction = -1)
         {

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Player;
+using Shop;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Static_Info
 {
@@ -9,14 +12,16 @@ namespace Static_Info
     {
         public static PlayerData PlayerDataInstance => StaticInfoHolder.Instance.GetCachedComponent<PlayerData>();
 
-        public int maxHealth;
-        public float maxShield;
+        public AssetLabelReference borderSprites, upgradeSprites, boostableStatSprite;
+        
+        public MaxHealthStat maxHealth;
+        public BoostableStat<float> maxShield;
         public float shieldRegenRate;
         public float maxShieldDebt;
-        public float maxDodgeJuice;
+        public BoostableStat<float> maxDodgeJuice;
         public float dodgeJuiceRegenRate;
         public float driftCorrection;
-        public float speedLimit;
+        public BoostableStat<float> speedLimit;
         public float acceleration;
         public float dodgeRedirectPercentage;
         public float dodgeJuiceCost;
@@ -39,10 +44,36 @@ namespace Static_Info
 
         [NonSerialized] public float Health;
         [NonSerialized] public int Scrap;
-
-        [NonSerialized] public short HealthBoosts = 0;
-        [NonSerialized] public short DamageBoosts = 0;
-        [NonSerialized] public short SpeedBoosts = 0;
-
+        
+        public readonly Dictionary<string, Sprite> UpgradeSprites = new();
+        public readonly Dictionary<string, Sprite[]> RaritySprites = new();
+        public readonly Dictionary<string, Sprite> BoostableStatSprites = new();
+        private void Awake()
+        {
+            Addressables.LoadAssetsAsync<Sprite>(borderSprites, null).Completed += handle =>
+            {
+                var byName = handle.Result.ToDictionary(s => s.name, s => s);
+                foreach (var rarity in UpgradePlayer.Rarity.ALL)
+                {
+                    RaritySprites[rarity.Name] = new[] { byName[rarity.Name], byName[rarity.Name + "-BOX"] };
+                }
+            };
+            Addressables.LoadAssetsAsync<Sprite>(upgradeSprites, null).Completed += handle =>
+            {
+                var byName = handle.Result.ToDictionary(s => s.name, s => s);
+                foreach (var upgrade in UpgradePlayer.UPGRADES)
+                {
+                    UpgradeSprites[upgrade.Title] = byName[upgrade.Title];
+                }
+            };
+            Addressables.LoadAssetsAsync<Sprite>(boostableStatSprite, null).Completed += handle =>
+            {
+                var byName = handle.Result.ToDictionary(s => s.name, s => s);
+                foreach (var stat in BoostableStat.STATS)
+                {
+                    BoostableStatSprites[stat.name] = byName[stat.name];
+                }
+            };
+        }
     }
 }

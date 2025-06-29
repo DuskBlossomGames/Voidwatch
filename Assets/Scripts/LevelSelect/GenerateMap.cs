@@ -26,6 +26,7 @@ namespace LevelSelect
         public int minElites, maxElites;
         public int minEligibleBosses;
         
+#if UNITY_EDITOR
         private void Update()
         {
             if (InputManager.GetKeyUp(KeyCode.LeftBracket))
@@ -35,16 +36,16 @@ namespace LevelSelect
                 RenderGalaxy(true);
             }
         }
+#endif
 
         private void Start()
         {
             Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
             {
                 // only re-generate if it doesn't already exist
-                Debug.LogFormat("CurrentPlanet = {0}", LevelSelectDataInstance.CurrentPlanet);
                 if (LevelSelectDataInstance.CurrentPlanet == -1) GenerateGalaxy(handle.Result);
 
-                playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 1.5f);
+                playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 2f);
                 RenderGalaxy();
                 mapController.Instantiate();
             };

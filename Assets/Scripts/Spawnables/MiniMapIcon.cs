@@ -40,10 +40,12 @@ namespace Spawnables
             _miniIcon.transform.localScale = new Vector3(sizeX, sizeY, 1);
             var renderer = _miniIcon.AddComponent<SpriteRenderer>();
             renderer.sprite = miniSprite;
-            renderer.sortingOrder = transform.GetComponent<SpriteRenderer>().sortingOrder;
-            renderer.sortingLayerID = transform.GetComponent<SpriteRenderer>().sortingLayerID;
-            renderer.drawMode = transform.GetComponent<SpriteRenderer>().drawMode;
-            renderer.maskInteraction = transform.GetComponent<SpriteRenderer>().maskInteraction;
+            var sr = transform.GetComponent<SpriteRenderer>();
+            if (sr == null) sr = renderer; // just use the defaults present if null
+            renderer.sortingOrder = sr.sortingOrder;
+            renderer.sortingLayerID = sr.sortingLayerID;
+            renderer.drawMode = sr.drawMode;
+            renderer.maskInteraction = sr.maskInteraction;
             renderer.color = miniColor;
             _miniIcon.layer = LayerMask.NameToLayer("Minimap");
         }

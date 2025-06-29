@@ -70,16 +70,17 @@ namespace Player
                 false,
                 () => {
                     PlayerDataInstance.Health += Mathf.CeilToInt(0.1f * PlayerDataInstance.maxHealth);
-                    PlayerDataInstance.maxHealth = Mathf.CeilToInt(1.1f * PlayerDataInstance.maxHealth);
-                    PlayerDataInstance.maxShield = Mathf.CeilToInt(1.05f * PlayerDataInstance.maxShield);
+                    PlayerDataInstance.maxHealth *= 1.1f;
+                    PlayerDataInstance.maxShield *= 1.05f;
                 }),
             new("Experimental Batteries",
-                "These third-party shield batteries hold longer, but recharge slower.",
+                "These third-party shield batteries hold charge longer, but recharge slower.",
                 "Huh, this warning seems to have faded...",
                 Rarity.Rare,
                 false,
-                () => {
-                    PlayerDataInstance.maxShield = Mathf.CeilToInt(1.3f * PlayerDataInstance.maxShield);
+                () =>
+                {
+                    PlayerDataInstance.maxShield *= 1.3f;
                     PlayerDataInstance.maxShieldDebt *= 1.5f;
                     PlayerDataInstance.shieldRegenRate *= .75f;
                 }),
@@ -98,9 +99,9 @@ namespace Player
                 false,
                 () => {
                     PlayerDataInstance.shieldRegenRate *= 1.3f;
-                    PlayerDataInstance.maxShield = Mathf.CeilToInt(1.8f * PlayerDataInstance.maxShield);
+                    PlayerDataInstance.maxShield *= 1.8f;
                     PlayerDataInstance.maxShieldDebt *= .2f;
-                    PlayerDataInstance.maxHealth = Mathf.CeilToInt(.7f * PlayerDataInstance.maxHealth);
+                    PlayerDataInstance.maxHealth *= 0.7f;
                     PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.maxHealth);
                 }),
             new("Black Market Mod",
@@ -122,7 +123,7 @@ namespace Player
                     PlayerDataInstance.dodgeJuiceRegenRate *= 1.25f;
                 }),
             new("Laminar Plating",
-                "Specialized plating eases the transition to Voidspace, lower the cost of jaunts.",
+                "Specialized plating eases the transition to Voidspace, lowering the cost of jaunts.",
                 "Their world shall be ours.",
                 Rarity.Common,
                 false,

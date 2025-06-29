@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Spawnables.Controllers.Bullets;
 using UnityEngine;
 using Util;
 
@@ -80,7 +81,8 @@ namespace Spawnables.Controllers.Boids
                 }
                 //Debug.LogFormat("Distance is {0}", dist);
                 var turnAmt = TurnAmt(dist);
-                sumturn += turnAmt * turnScale * turnAggr;
+                sumturn += turnAmt * turnScale * turnAggr *
+                           (collision.collider != null && collision.collider.GetComponent<BulletCollision>() != null ? 0.8f : 1);
             }
             
             var tarDelta = target.transform.position - transform.position;
@@ -89,7 +91,7 @@ namespace Spawnables.Controllers.Boids
             {
                 sumturn += turnTowardsPlayer * Mathf.DeltaAngle(transform.rotation.eulerAngles.z + 90, Mathf.Rad2Deg * tarAngle);
                 
-                sumturn = Mathf.SmoothDamp(_prevSumTurn, sumturn, ref _turnSmoothVel, 0.25f);
+                sumturn = Mathf.SmoothDamp(_prevSumTurn, sumturn, ref _turnSmoothVel, 0.3f);
                 Shoot();
                 
                 // if (((Vector2) tarDelta).sqrMagnitude > 7 * 7)

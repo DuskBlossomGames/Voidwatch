@@ -363,10 +363,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
-  tier: 2
-  enemyType: 1
+  trackDeath: 1
   maxHealth: 50
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 1317461934895244640, guid: 5886eced7a3754dd3b2e186b34b40cbb, type: 3}
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
@@ -416,14 +414,14 @@ MonoBehaviour:
   bulletsPerShotVarience: 0
   reloadTime: 0.2
   refillTime: 0.7
-  shotForce: 1500
+  shotForce: 750
   forceVarience: 200
   lateralSeperation: 200
   verticalSeperation: 0
   misfireChance: 0
   repeats: 1
   repeatSeperation: 0.1
-  dmgMod: 30
+  dmgMod: 11
   shieldMult: 1
   bleedPerc: 0
 --- !u!114 &7410061765303661339
@@ -612,6 +610,7 @@ GameObject:
   - component: {fileID: 7559449250106545150}
   - component: {fileID: 1394847146331642573}
   - component: {fileID: 5597069691401805074}
+  - component: {fileID: -6122183145087737700}
   m_Layer: 0
   m_Name: SmartBoid 2
   m_TagString: Untagged
@@ -629,7 +628,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6130144567755134268}
@@ -647,7 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c7deeaa2a87ea4f88935a16f9654d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boidCount: 5
+  boidCount: 6
 --- !u!114 &5597069691401805074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,5 +661,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hazardObject: 0
   cost: 7
-  ScrapCount: 0
-  ScrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
+  tier: 2
+  enemyType: 1
+--- !u!114 &-6122183145087737700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6001684470992877439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: c004eb8c56a024722a3d1c9c85c8eb65, type: 3}
+  title: Elite Boid

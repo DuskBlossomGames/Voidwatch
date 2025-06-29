@@ -2026,7 +2026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontScaleWithDamage: 0
+  scaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -2436,10 +2436,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
-  tier: 1
-  enemyType: 5
+  trackDeath: 0
   maxHealth: 0
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -2720,7 +2718,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 9172983
+    m_Bits: 76281847
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3920,12 +3918,24 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: title
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: fadeOut
       value: 
       objectReference: {fileID: 1741064933}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: godmode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: gameOver
+      value: 
+      objectReference: {fileID: 1521854022}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: subtitle
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: vignette
@@ -3943,6 +3953,34 @@ PrefabInstance:
       propertyPath: audioPlayer
       value: 
       objectReference: {fileID: 1280461908}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: statistics.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: 'statistics.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: 'statistics.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: 'statistics.Array.data[2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: 'statistics.Array.data[3]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: 'statistics.Array.data[4]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+      propertyPath: 'statistics.Array.data[5]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 9038072507043348681, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: bulletText
       value: 
@@ -4375,6 +4413,7 @@ RectTransform:
   - {fileID: 986469350}
   - {fileID: 646311447}
   - {fileID: 1741064934}
+  - {fileID: 1521854021}
   - {fileID: 1418853179}
   m_Father: {fileID: 1562156499}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4395,6 +4434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f583515f119495fa0482d8bb0bcc340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   healthBar: {fileID: 1896843935}
   dashBar: {fileID: 830563147}
   scrapCount: {fileID: 0}
@@ -4581,6 +4621,7 @@ GameObject:
   - component: {fileID: 877449873}
   - component: {fileID: 877449872}
   - component: {fileID: 877449874}
+  - component: {fileID: 877449875}
   m_Layer: 14
   m_Name: Worm Boss
   m_TagString: Untagged
@@ -4793,6 +4834,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snakeyness: 0.9
   snaketime: 4
+--- !u!114 &877449875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877449871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hazardObject: 0
+  cost: 0
+  tier: 5
+  enemyType: 5
 --- !u!1 &885995848
 GameObject:
   m_ObjectHideFlags: 0
@@ -5277,10 +5334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 1
-  tier: 1
-  enemyType: 5
+  trackDeath: 0
   maxHealth: 60
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -5655,7 +5710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontScaleWithDamage: 0
+  scaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -6493,7 +6548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontScaleWithDamage: 0
+  scaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -6709,7 +6764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontScaleWithDamage: 0
+  scaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -7207,10 +7262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 1
-  tier: 1
-  enemyType: 5
+  trackDeath: 0
   maxHealth: 60
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -8894,10 +8947,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
-  tier: 1
-  enemyType: 5
+  trackDeath: 0
   maxHealth: 0
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -9916,9 +9967,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1427075527
+  m_SortingLayer: -1
+  m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -10092,6 +10143,119 @@ Transform:
   - {fileID: 1638856990}
   m_Father: {fileID: 1648830972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1521854020
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 762970116}
+    m_Modifications:
+    - target: {fileID: 985338382834621376, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_Name
+      value: Game Over
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -164.23848
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 36.342102
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+--- !u!224 &1521854021 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5138074768556404350, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+  m_PrefabInstance: {fileID: 1521854020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1521854022 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7599818572435888140, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+  m_PrefabInstance: {fileID: 1521854020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b2cb6c256c4324a01d5f533889f1cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1540928430
 GameObject:
   m_ObjectHideFlags: 0
@@ -11003,7 +11167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontScaleWithDamage: 0
+  scaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0
@@ -12337,10 +12501,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 0}
   dontDestroyOffscreen: 1
-  tier: 1
-  enemyType: 5
+  trackDeath: 0
   maxHealth: 0
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -12925,7 +13087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91c7da8e78a54388d40fa9ae1dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontScaleWithDamage: 0
+  scaleWithDamage: 0
   dmg: 150
   owner: {fileID: 490401127}
   chains: 0

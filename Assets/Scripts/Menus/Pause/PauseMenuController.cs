@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using Static_Info;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
+using static Static_Info.Statistics;
 
 namespace Menus
 {
@@ -14,6 +16,7 @@ namespace Menus
         public OptionsController options;
         
         private static PauseMenuController _instance;
+
         private void Awake()
         {
             if (_instance != null)
@@ -24,8 +27,10 @@ namespace Menus
             
             _instance = this;
             StartCoroutine(DontDestroyOnLoadAsync());
+            
+            SceneManager.sceneLoaded += (_, _) => Resume();
         }
-
+        
         private IEnumerator DontDestroyOnLoadAsync()
         {
             DontDestroyOnLoad(gameObject);
@@ -48,6 +53,8 @@ namespace Menus
                 canvas.SetActive(true);
                 Time.timeScale = 0;
                 InputManager.isPaused = true;
+
+                foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.Pause();
             }
         }
 
@@ -56,6 +63,7 @@ namespace Menus
             Time.timeScale = 1;
             InputManager.isPaused = false;
             canvas.SetActive(false);
+            foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.UnPause();
         }
 
         public void Options()
@@ -67,8 +75,7 @@ namespace Menus
         public void MainMenu()
         {
             Destroy(StaticInfoHolder.Instance.gameObject);
-            Resume();
-            
+
             SceneManager.LoadScene("TitleScreen");
         }
 

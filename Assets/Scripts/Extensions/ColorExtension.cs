@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 namespace Extensions
 {
-    public static class ColorExtension
+    public static class 
+        ColorExtension
     {
         public static void SetAlpha(this Image obj, float alpha)
         {

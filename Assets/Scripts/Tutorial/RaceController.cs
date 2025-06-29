@@ -108,7 +108,7 @@ namespace Tutorial
             }
         }
 
-        private string GetTimerText(float time, float mspace=16)
+        private string GetTimerText(float time, float mspace=15)
         {
             return $"<mspace={mspace}>{(time/60).ToString("00")}</mspace>:<mspace={mspace}>{((int) (time%60)).ToString("00")}</mspace>.<mspace={mspace}>{(100*(time%1)).ToString("00")}";
         }

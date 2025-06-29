@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -275,8 +275,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c86d3eb2265b44e880c72238251efd31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   fadeTime: 0.75
   timeToLive: 1
 --- !u!114 &7654183531837655818
@@ -289,8 +289,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a2ac8af1ada4af5b072c038a09e3c0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   correctionPerSec: 45
 --- !u!1 &678751671282696022
 GameObject:
@@ -10151,11 +10151,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39bf40b1343a1f945bbd6d326dd801f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   audioSource: {fileID: 8827315544250419742}
   shieldMult: 0
   bleedPerc: 0
+  source: {fileID: 0}
 --- !u!82 &8827315544250419742
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10444,8 +10445,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b793088af154059a928494c5da01491, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   quadIIMask: {fileID: 8380990879101399197}
   quadIIIMask: {fileID: 7574062641910099526}
   quadIVMask: {fileID: 5092580433167615517}
@@ -10595,9 +10596,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf58cae5392a4bfda803ce5b50f16597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyMod: 0.5
+  m_Name:
+  m_EditorClassIdentifier:
+  enemyMod: 1.1
   playerMod: 1.5
   trueDamageMod: 1.2
   cooldown: 0.15
@@ -20521,6 +20522,7 @@ GameObject:
   - component: {fileID: 6517574593632805756}
   - component: {fileID: 4196548031175783819}
   - component: {fileID: 3119659123227047046}
+  - component: {fileID: 5576731283433186254}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -20620,15 +20622,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41b649eef00d9fe439d8acf01ce0920d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   inputBlocked: 0
   autoPilot: 0
   dodgeBar: {fileID: 0}
   dodgeExcludeMask:
     serializedVersion: 2
-    m_Bits: 67108343
+    m_Bits: 134217207
   dodgeTimeDilation: 0.25
   dodgeTimeDilationCurve:
     serializedVersion: 2
@@ -20689,8 +20691,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   mass: 1
   collisionDetection: 0
   constraints:
@@ -20707,13 +20709,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6fc2b787f5664dcd8b93639b559eee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   healthBarPrefab: {fileID: 0}
   isTutorial: 0
   vignette: {fileID: 0}
+  enemySpawner: {fileID: 0}
   fadeOut: {fileID: 0}
   fadeouttime: 1
+  gameOver: {fileID: 0}
   vignetteCurve:
     serializedVersion: 2
     m_Curve:
@@ -20768,7 +20772,7 @@ MonoBehaviour:
   shieldBar: {fileID: 0}
   audioPlayer: {fileID: 0}
   PlayerHitShield: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
-  PlayerHitDamage: {fileID: 8300000, guid: a5ac4e7b3681b458a894b4481f2fb3da, type: 3}
+  PlayerHitDamage: {fileID: 8300000, guid: 43ad996c8068547eba46b0acb990ae4a, type: 3}
   godmode: 0
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   bitOptions:
@@ -20788,8 +20792,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 834ab3770f6b1904db0f12dc82a856a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   attackable: 0
   timeTillAttack: 2.5
   colorCurve:
@@ -20835,12 +20839,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   appearsAsSelf: 0
-  miniSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  miniColor: {r: 1, g: 0, b: 0, a: 1}
-  size: 5
+  miniSprite: {fileID: 21300000, guid: c1e9c54a6f1868c4887f0b7ecb966774, type: 3}
+  miniColor: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+  size: 7
   inheritsRotation: 1
   staticRot: {x: 0, y: 0, z: 0}
 --- !u!114 &7806520410933609926
@@ -20853,8 +20857,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 356abe5ba08c65247a7bdf3269e9b0ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   HasDodgePowerAttack: 0
   ammoBar: {fileID: 8799055199267113399}
   bulletPrefab: {fileID: 6569384808679381653, guid: 80bc1211d4903fc42a611f718553e243, type: 3}
@@ -20872,8 +20876,8 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 356abe5ba08c65247a7bdf3269e9b0ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   HasDodgePowerAttack: 0
   ammoBar: {fileID: 0}
   bulletPrefab: {fileID: 6569384808679381653, guid: def303003056d41c08423a159b65ee18, type: 3}
@@ -20927,10 +20931,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22647bdd4c2a6413f8bf8922fea23383, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   bif: {fileID: 7119497648670040162}
   StunElectricity: {fileID: 3163672952808208618}
+--- !u!114 &5576731283433186254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997792626973407928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  icon: {fileID: -810062340, guid: cde6125cc0d214d11a087a64bebe0a9f, type: 3}
+  title: Yourself
 --- !u!1 &6003794264972008175
 GameObject:
   m_ObjectHideFlags: 0
@@ -26060,9 +26078,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1427075527
+  m_SortingLayer: -1
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

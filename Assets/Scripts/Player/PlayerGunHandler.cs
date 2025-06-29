@@ -7,6 +7,7 @@ using UnityEngine;
 using Util;
 using static Static_Info.GunInfo;
 using static Static_Info.PlayerData;
+using static Static_Info.Statistics;
 using Random = UnityEngine.Random;
 
 namespace Player
@@ -68,9 +69,11 @@ namespace Player
 
             if (_curAmmo < GunInfoInstance.ammoCount && (_noShootRefillTimer.IsFinished || (_emptyRefilling && _emptyRefillTimer.IsFinished)))
             {
-                _curAmmo = Mathf.Clamp(_curAmmo + GunInfoInstance.ammoCount / GunInfoInstance.timeToRefillFully * Time.deltaTime, 0, GunInfoInstance.ammoCount);
+                _curAmmo = Mathf.Clamp(_curAmmo + (int) GunInfoInstance.ammoCount / GunInfoInstance.timeToRefillFully * Time.deltaTime, 0, GunInfoInstance.ammoCount);
                 ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
             }
+
+            _curAmmo = Mathf.Clamp(_curAmmo, 0, GunInfoInstance.ammoCount);
         }
 
         public float ExpectedVelocity()
@@ -117,6 +120,7 @@ namespace Player
                         transform.rotation.eulerAngles.z + angCorr);
                     if (Random.Range(0f, 1f) > GunInfoInstance.misfireChance)
                     {
+                        StatisticsInstance.bulletsShot++;
                         var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
                         bullet.GetComponent<CustomRigidbody2D>().linearVelocity = GetComponent<CustomRigidbody2D>().linearVelocity;

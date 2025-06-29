@@ -1202,7 +1202,7 @@ MonoBehaviour:
   maxAngle: 25
   minTime: 0.005
   maxTime: 0.03
-  travelTime: 0.2
+  travelTime: 0.5
 --- !u!1 &3003821881512258811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,6 +1950,8 @@ GameObject:
   - component: {fileID: -5548867977713206262}
   - component: {fileID: -9101354916200461371}
   - component: {fileID: 2306016957590154251}
+  - component: {fileID: -7286475855829482345}
+  - component: {fileID: -7302791274613200644}
   m_Layer: 17
   m_Name: Carcodon
   m_TagString: Untagged
@@ -2267,9 +2269,10 @@ MonoBehaviour:
   stealthAcc: 9
   stealthLowAccTime: 2
   destealthRadius: 22.5
-  attackAccel: 8
-  attackSpeed: 27
+  attackAccel: 9
+  attackSpeed: 32
   attackRadius: 10
+  maxTimeAttacking: 8
   editorNote: Cutscene Variables
   fadeInTime: 3
   waitTime: 0.3
@@ -2283,7 +2286,7 @@ MonoBehaviour:
   timeBeforeExpand: 0.8
   timeBeforeReveal: 2.7
   timeBeforeUnfurl: 3.5
-  finalDistAbovePlayer: 12
+  finalDistAbovePlayer: 20
   camExpandTime: 4.5
   camExpandAmt: 10
   camMoveAmt: 5
@@ -2318,10 +2321,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
   dontDestroyOffscreen: 0
-  tier: 1
-  enemyType: 4
+  trackDeath: 1
   maxHealth: 3500
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -2331,6 +2332,36 @@ MonoBehaviour:
   stunBar: {fileID: 0}
   stunnable: {fileID: 0}
   hitsToStun: 0
+--- !u!114 &-7286475855829482345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4353281618518814614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f672683bfce149898d93fccce6968b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: -392216076, guid: 56d5e5933486345bab95fca6a0a7d972, type: 3}
+  title: Carcadon
+--- !u!114 &-7302791274613200644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4353281618518814614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff5f9532c004eda92f046fdf12d30a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hazardObject: 0
+  cost: 0
+  tier: 5
+  enemyType: 4
 --- !u!1 &4413525710197146119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2628,6 +2659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675ed14927146a484414c6170171e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clawTip: {x: 0, y: 0}
   joints:
   - {x: 0.046, y: -0.222}
   - {x: 0.141, y: -0.148}
@@ -3225,6 +3257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675ed14927146a484414c6170171e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clawTip: {x: 0, y: 0}
   joints:
   - {x: -0.046, y: -0.222}
   - {x: -0.141, y: -0.148}
@@ -3351,7 +3384,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.6348991, w: 0.7725951}
   m_LocalPosition: {x: -0.4589999, y: -0.11599994, z: 0}
-  m_LocalScale: {x: 1, y: 0.99924, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6798118379262112045}
@@ -4389,6 +4422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675ed14927146a484414c6170171e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clawTip: {x: 0.007, y: 0.196}
   joints:
   - {x: 0.04, y: -0.202}
   - {x: 0.146, y: -0.15}
@@ -4402,10 +4436,10 @@ MonoBehaviour:
   timeToFold: 0.6
   hasAttack: 1
   minSlash: 1
-  maxSlash: 3
+  maxSlash: 4
   slashDelay: 0.5
-  minAttackDelay: 1
-  maxAttackDelay: 2
+  minAttackDelay: 2
+  maxAttackDelay: 4
   timeToOpen: 0.1
   timeToClose: 0.175
   timeToReturn: 0.25
@@ -4426,7 +4460,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 261111
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -4456,11 +4490,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.2048719, y: 1.2736353}
+    - - {x: -1.1559322, y: 1.0167018}
       - {x: -1.130382, y: -0.0019807965}
       - {x: -0.729417, y: -0.25817567}
       - {x: -0.0060915947, y: 0.09681493}
-      - {x: 0.02213088, y: 1.2643237}
+      - {x: 0.02213088, y: 1.0135075}
   m_UseDelaunayMesh: 0
 --- !u!1 &8125593938387779123
 GameObject:
@@ -4818,6 +4852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675ed14927146a484414c6170171e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clawTip: {x: -0.007, y: 0.196}
   joints:
   - {x: -0.04, y: -0.202}
   - {x: -0.146, y: -0.15}
@@ -4831,10 +4866,10 @@ MonoBehaviour:
   timeToFold: 0.6
   hasAttack: 1
   minSlash: 1
-  maxSlash: 3
+  maxSlash: 4
   slashDelay: 0.5
-  minAttackDelay: 1
-  maxAttackDelay: 2
+  minAttackDelay: 2
+  maxAttackDelay: 4
   timeToOpen: 0.1
   timeToClose: 0.175
   timeToReturn: 0.25
@@ -4855,7 +4890,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 261111
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -4885,9 +4920,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.056299575, y: 1.2493267}
+    - - {x: 0.0048750527, y: 1.029098}
       - {x: 0.006036043, y: 0.18033227}
       - {x: 0.7473188, y: -0.24602151}
       - {x: 1.1303265, y: -0.06118971}
-      - {x: 1.3773246, y: 1.2339383}
+      - {x: 1.2733277, y: 1.0381795}
   m_UseDelaunayMesh: 0

@@ -52,7 +52,7 @@ namespace Player
 
             if (!damageable.IsDead && other.gameObject.GetComponent<AsteroidController>() == null) // asteroid handles it itself
             {
-                _dmgable.Damage(playerMod * vel, gameObject, shieldMult, bleedPerc);
+                _dmgable.Damage(playerMod * vel, other.gameObject, shieldMult, bleedPerc);
                 _cooldownTimer.Value = cooldown;
             }
             

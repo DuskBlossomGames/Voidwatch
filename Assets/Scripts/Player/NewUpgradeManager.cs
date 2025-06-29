@@ -2,24 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
+using Menus;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Upgrade = Player.UpgradePlayer.Upgrade;
 using static Static_Info.PlayerData;
 using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 using Random = UnityEngine.Random;
 
 namespace Player
 {
     public class NewUpgradeManager : MonoBehaviour
     {
-        public AssetLabelReference borderSprites, upgradeSprites;
-        private readonly Dictionary<string, Sprite> _upgradeSprites = new();
-        private readonly Dictionary<string, Sprite[]> _raritySprites = new();
-
         public Button reroll;
     
         public GameObject minimap;
@@ -36,27 +35,7 @@ namespace Player
         private Upgrade[] _upgrades;
 
         public GraphicRaycaster raycaster;
-
-        private void Start()
-        {
-            Addressables.LoadAssetsAsync<Sprite>(borderSprites, null).Completed += handle =>
-            {
-                var byName = handle.Result.ToDictionary(s => s.name, s => s);
-                foreach (var rarity in UpgradePlayer.Rarity.ALL)
-                {
-                    _raritySprites[rarity.Name] = new[] { byName[rarity.Name], byName[rarity.Name + "-BOX"] };
-                }
-            };
-            Addressables.LoadAssetsAsync<Sprite>(upgradeSprites, null).Completed += handle =>
-            {
-                var byName = handle.Result.ToDictionary(s => s.name, s => s);
-                foreach (var upgrade in UpgradePlayer.UPGRADES)
-                {
-                    _upgradeSprites[upgrade.Title] = byName[upgrade.Title];
-                }
-            };
-        }
-
+        
         private void Update()
         {
             reroll.interactable = PlayerDataInstance.Scrap >= 50;
@@ -143,27 +122,30 @@ namespace Player
         {
             for (var i = 0; i < 3; i++)
             {
-                upgrades[i].GetChild(0).GetComponent<Image>().sprite = _upgradeSprites[_upgrades[i].Title];
-                upgrades[i].GetChild(1).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity.Name][0];
-                upgrades[i].GetChild(2).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Title;
-                upgrades[i].GetChild(3).GetComponent<Image>().sprite = _raritySprites[_upgrades[i].Rarity.Name][1];
-                upgrades[i].GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Description;
-                upgrades[i].GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
+                upgrades[i].GetChild(0).GetChild(0).GetComponent<Image>().sprite = PlayerDataInstance.UpgradeSprites[_upgrades[i].Title];
+                upgrades[i].GetChild(0).GetChild(1).GetComponent<Image>().sprite = PlayerDataInstance.RaritySprites[_upgrades[i].Rarity.Name][0];
+                upgrades[i].GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Title;
+                upgrades[i].GetChild(2).GetComponent<Image>().sprite = PlayerDataInstance.RaritySprites[_upgrades[i].Rarity.Name][1];
+                upgrades[i].GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Description;
+                upgrades[i].GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
             }
         }
 
         public void SelectUpgrade(int i)
         {
             _upgrades[i].Apply();
-            StartCoroutine(ExitAfter(0));
+            Exit();
         }
 
         private int _rerollCost = 50;
         private int _numRerolls;
         public void Reroll()
         {
+            if (PlayerDataInstance.Scrap < 50) return;
+            
             PlayerDataInstance.Scrap -= _rerollCost;
             _rerollCost = Mathf.RoundToInt(_rerollCost * Mathf.Max(1.8f - 0.1f * ++_numRerolls, 1.2f) / 10) * 10;
+            reroll.GetComponentInChildren<TextMeshProUGUI>().text = _rerollCost.ToString();
             
             SetUpgrades();
             UpdateUpgrades();
@@ -171,17 +153,17 @@ namespace Player
 
         public void Scavenge()
         {
-            var scrap = Random.Range(100, 200);
+            var scrap = Random.Range(200, 300);
             PlayerDataInstance.Scrap += scrap;
-        
-            var sdc = FindObjectOfType<ScrapDisplayController>();
+
             raycaster.enabled = false; // just disable all interaction at this point
-            StartCoroutine(ExitAfter(0.5f * (sdc.waitTime + (float) scrap / sdc.transferPerSec + 1)));
+            
+            var sdc = FindObjectsByType<ScrapDisplayController>(FindObjectsSortMode.None)[0];
+            sdc.FinishTransfer += Exit;
         }
 
-        private IEnumerator ExitAfter(float time)
+        private void Exit()
         {
-            yield return new WaitForSeconds(time);
             SceneManager.LoadScene("LevelSelect");
         }
     }

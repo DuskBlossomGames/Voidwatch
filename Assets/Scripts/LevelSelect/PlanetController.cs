@@ -49,6 +49,8 @@ namespace LevelSelect
         {
             if (!Clickable || !_selected) return;
 
+            foreach (var s in transform.parent.GetComponentsInChildren<Selectable>()) s.clickable = false;
+            
             playerMini.GoTo(Level.WorldPosition, LevelIdx,
                 Level.IsBoss ? "LevelBoss" : Level.Type == LevelType.SpaceStation ? "Shop" : "LevelPlay");
         }

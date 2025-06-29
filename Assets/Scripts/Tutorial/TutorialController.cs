@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Extensions;
 using Player;
+using Static_Info;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
+using static Static_Info.GunInfo;
 
 namespace Tutorial
 {
@@ -30,14 +33,14 @@ namespace Tutorial
                 Stage.Camera, new[]
                 {
                     "Welcome to the Voidwatch Academy. Here you will learn how to be a part of the galaxy's greatest fighting force. And our last hope.",
-                    "The latest Voidhawk Infiltrator starship is equipped with state-of-the-art scouting technology. <b>Move your mouse around to see further.</b>",
+                    "The latest Voidhawk Infiltrator starship is equipped with state-of-the-art scouting technology. <b>Move your mouse around to see farther.</b>",
                     "Great work. When you're ready, the simulation will enable the propulsion system."
                 }
             },
             {
                 Stage.Movement, new[]
                 {
-                    "Infiltrators will always accelerate in the direction they are facing, when <b>{Accelerate}</b> is pressed. It is recommended to keep your mouse some distance from the ship.",
+                    "Your ship will always accelerate in the direction you are facing, when <b>{Accelerate}</b> is pressed. It is recommended to keep your mouse some distance from the ship.",
                     "Deceleration is achieved through the braking apparatus, generating thrust backwards. Pilots can use <b>{Brake}</b> to slow down.",
                     "Finally, as a convenience to the pilot, the ship's camera system will always orient 'down' as towards the nearest planet. <b>Practice accelerating and braking.</b>",
                     "When you feel comfortable, continue to see what makes this a Voidhawk-class starship."
@@ -63,7 +66,7 @@ namespace Tutorial
             {
                 Stage.Shooting, new[]
                 {
-                    "Your starship converts electrical energy into concentrated packets of destruction upon pressing <b>{PrimaryWeapon}</b>. Your HUD displays your energy stores in a partial circle around your ship when you shoot.",
+                    "Your starship converts electrical energy into bullets upon pressing <b>{PrimaryWeapon}</b>. Your HUD displays your energy stores in a partial circle around your ship when you shoot.",
                     "The energy bullets cannot be replenished while you are shooting, and if you fully deplete your stores, you cannot shoot until the ship recharges fully.",
                     "Also be aware that the planet's gravity will not affect your bullets. This will cause apparent curvature if you are flying around the planet, as skilled pilots must take into account.",
                     "Practice shooting now, and reloading without fully draining it. Then, <b>empty your clip and allow it to refill.</b>",
@@ -93,6 +96,7 @@ namespace Tutorial
         };
     
         public DialogueController dialogueController;
+        public GameObject instruction;
         public Movement playerMovement;
         public PlayerGunHandler playerGun;
         public float minStageWaitTime;
@@ -136,8 +140,8 @@ namespace Tutorial
         
             dialogueController.Continue += Continue;
             playerMovement.SetInputBlocked(true);
-        
-            Continue();
+
+            StartCoroutine(FadeIn(Continue));
         }
 
         private void Update()
@@ -175,7 +179,7 @@ namespace Tutorial
                     break;
             }
         }
-
+        
         private void Continue()
         {
             _textIdx += 1;
@@ -190,19 +194,35 @@ namespace Tutorial
                         dashBar.SetActive(true);
                         break;
                     case Stage.Dashing:
-                        raceCourse.SetActive(true);
-                        break;
+                        StartCoroutine(FadeOut(() =>
+                        {
+                            raceCourse.SetActive(true);
+                            StartCoroutine(FadeIn());
+                            Continue();
+                            dialogueController.Continue += Continue;
+                        }));
+                        dialogueController.Continue -= Continue;
+                        _stage += 1;
+                        _textIdx = -1;
+                        _genFlag = false;
+                        return;
                     case Stage.Race:
                         raceCourse.SetActive(false);
                         playerMovement.SetInputBlocked(false); // enable player shoot
+                        GunInfoInstance.ammoCount *= 0.5f;
                         break;
                     case Stage.Shooting:
                         minimap.SetActive(true);
                         securityBorder.SetActive(false);
                         healthBar.SetActive(true);
+                        GunInfoInstance.ammoCount *= 2;
                         break;
                     case Stage.Enemy:
-                        StartCoroutine(FadeOut());
+                        StartCoroutine(FadeOut(() =>
+                        {
+                            Destroy(StaticInfoHolder.Instance.gameObject);
+                            SceneManager.LoadScene("TitleScreen");
+                        }));
                         return;
                 }
             
@@ -222,7 +242,20 @@ namespace Tutorial
             dialogueController.ShowText(Text[_stage][_textIdx], !_waitingForAction);
         }
 
-        private IEnumerator FadeOut()
+        private IEnumerator FadeIn(Action then=null)
+        {
+            fadeOut.gameObject.SetActive(true);
+            fadeOut.SetAlpha(1);
+            for (float t = 0; t < fadeOutTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                fadeOut.SetAlpha(1 - (t / fadeOutTime));
+            }
+
+            then?.Invoke();
+        }
+        
+        private IEnumerator FadeOut(Action then=null)
         {
             fadeOut.gameObject.SetActive(true);
             fadeOut.SetAlpha(0);
@@ -232,7 +265,7 @@ namespace Tutorial
                 fadeOut.SetAlpha(t / fadeOutTime);
             }
 
-            SceneManager.LoadScene("TitleScreen");
+            then?.Invoke();
         }
     }
 }

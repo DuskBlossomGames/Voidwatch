@@ -22,6 +22,8 @@ namespace Spawnables.Controllers.Asteroids
             {
                 var options = asteroids.Where(g => size >= g.transform.localScale.x).ToList();
                 if (options.Count == 0) break;
+                var ideal = options.Where(g => origSize / 3f >= g.transform.localScale.x).ToList();
+                if (ideal.Count > 0) options = ideal;
                 
                 var obj = options[Random.Range(0, options.Count)];
                 
@@ -29,7 +31,6 @@ namespace Spawnables.Controllers.Asteroids
 
                 var asteroid = Instantiate(obj, transform.position +
                                  (Vector3) (spreadMultiplier*origSize*Random.insideUnitCircle), Quaternion.identity);
-                asteroid.transform.SetParent(null);
 
                 asteroid.GetComponent<AsteroidController>().startVel = driftVel;
             }

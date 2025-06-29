@@ -35,13 +35,16 @@ TagManager:
   - Both Cameras
   - Pickups
   - Dodgeable Scene Objects
-  - 
+  - Missiles
   - 
   - 
   - 
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2867891769
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

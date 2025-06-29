@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -9,6 +10,7 @@ using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.PlayerData;
+using static Static_Info.Statistics;
 
 namespace Spawnables.Damage
 {
@@ -27,16 +29,6 @@ namespace Spawnables.Damage
         public float Value;
     }
     
-    public enum EnemyType
-    {
-        None,
-        Mechanical,
-        Organic,
-        Worm,
-        Carcadon,
-        WormBoss
-    }
-    
     public class EnemyDamageable : Damageable
     {
         private const float BIT_TTL = 1;
@@ -48,12 +40,9 @@ namespace Spawnables.Damage
         private const float STUN_FALL_PERC_PER_SEC = 0.1f;
 
         public bool dontDestroyOffscreen;
-        
-        [Range(1, 5)] public int tier = 1;
-        public EnemyType enemyType; // TODO: give values for these
+        public bool trackDeath;
         
         public int maxHealth;
-        public GameObject varientParent;
 
         [CanBeNull] public GameObject healthPickup; // null for no drops, regardless of tier
         [CanBeNull] public GameObject explosion; // only put if you want an explosion
@@ -65,6 +54,8 @@ namespace Spawnables.Damage
         public Stunnable stunnable;
         public int hitsToStun; // 0 means can't stun
 
+        [NonSerialized] public EnemyVariant Variant;
+        
         private readonly Timer _stunTimer = new();
         private readonly Timer _stunFallWaitTimer = new();
         private readonly Timer _stunImmunityTimer = new();
@@ -76,6 +67,7 @@ namespace Spawnables.Damage
         protected override float Health { get => _health; set => _health = value; }
         protected override float MaxHealth => maxHealth;
 
+        private EnemyType _type;
         public new void Start()
         {
             base.Start();
@@ -86,6 +78,8 @@ namespace Spawnables.Damage
 
             _stunImmunityTimer.Value = 3 + Mathf.Pow(hitsToStun, 1.1f) / 4; // calculate MaxValue once
             _stunImmunityTimer.SetValue(0);
+
+            _type = Variant == null ? EnemyType.None : Variant.enemyType;
         }
 
         private void Update()
@@ -126,9 +120,9 @@ namespace Spawnables.Damage
 
         public void SpawnHealthPickups()
         {
-            if (!PlayerDataInstance.healthPickupsEnabled || healthPickup == null) return;
+            if (!PlayerDataInstance.healthPickupsEnabled || healthPickup == null || Variant == null) return;
 
-            var options = HealthPickup.HealthPickupDropsByTier[tier-1];
+            var options = HealthPickup.HealthPickupDropsByTier[Variant.tier-1];
             var sum = options.Sum(o => o.Weight);
             var pick = Random.value * sum;
 
@@ -152,6 +146,8 @@ namespace Spawnables.Damage
         
         protected override void OnDeath(GameObject source)
         {
+            if (trackDeath) StatisticsInstance.enemiesDefeated++;
+            
             var angleOffset = Random.Range(0, 360f);
             for (var i = 0; i < numBits; i++)
             {
@@ -185,12 +181,12 @@ namespace Spawnables.Damage
             
             SpawnHealthPickups();
             
-            if(varientParent != null) varientParent.GetComponent<EnemyVariant>().SpawnScrap(transform.position);
+            if(Variant != null) Variant.SpawnScrap(transform.position);
         }
 
         public void Damage(float damage, GameObject source, List<PlayerDamageType> type)
         {
-            Damage(type.Aggregate(damage, (a, t) => a * t.Modifiers[enemyType]), source);
+            Damage(type.Aggregate(damage, (a, t) => a * t.Modifiers[_type]), source);
             if (type.Contains(PlayerDamageType.Electric)) StunHit();
         }
 

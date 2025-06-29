@@ -44,7 +44,7 @@ namespace Spawnables.Controllers.Defenses
             {
                 _countdown = .05f;
                 var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-                bullet.GetComponent<DestroyOffScreen>().enabled = false ;
+                bullet.GetComponent<DestroyOffScreen>().playRadius = 200; // player gets destroyed at 200
                 bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
                 bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(0, turretBulletSpeed));
                 bullet.GetComponent<BulletCollision>().owner = gameObject;

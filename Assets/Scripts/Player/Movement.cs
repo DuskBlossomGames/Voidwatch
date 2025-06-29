@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Spawnables.Controllers.Misslers;
+using Static_Info;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 using static Static_Info.PlayerData;
+using static Static_Info.Statistics;
 using ProgressBar = ProgressBars.ProgressBar;
 
 namespace Player
@@ -64,6 +66,7 @@ namespace Player
         private float _dodgeJuice;
         private float _dodgeCost;
         private readonly Timer _dodgeTimer = new();
+        private readonly Timer _dodgeCostTimer = new();
         private readonly Timer _dodgeCooldownTimer = new();
         private readonly Timer _afterImageTimer = new();
         private Vector2 _dodgeDirection;
@@ -126,6 +129,8 @@ namespace Player
                 _redirectDodge = true;
                 _redirectDirection = new Vector2(_forwards.x, _forwards.y);
             }
+            
+            dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice); // just always keep up to date
         }
 
         private void FixedUpdate()
@@ -159,6 +164,7 @@ namespace Player
                 _preDodgeVel = velocity;
                 _dodgeTimeLength = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity;
                 _dodgeTimer.Value = _dodgeTimeLength;
+                _dodgeCostTimer.Value = _dodgeTimeLength;
                 _dodgeCost = DodgeOnceCost ?? PlayerDataInstance.dodgeJuiceCost;
                 _dodgeCooldownTimer.Value = PlayerDataInstance.dodgeDistance / PlayerDataInstance.dodgeVelocity + PlayerDataInstance.dodgeCooldown;
                 _dodgeDirection = DodgeOnceDir ?? new Vector2(_forwards.x, _forwards.y);
@@ -169,9 +175,11 @@ namespace Player
                     var obj = Instantiate(explosion);
                     obj.transform.position = transform.position;
                     obj.GetComponent<ExplosionHandler>().Run(PlayerDataInstance.dodgeExplosionDamage,
-                        1.5f + PlayerDataInstance.dodgeExplosionDamage / 25, gameObject.layer,
+                        1.5f + PlayerDataInstance.dodgeExplosionDamage / 25, gameObject,
                         new List<Collider2D> { _collider });
                 }
+
+                StatisticsInstance.timesDashed++;
 
                 DodgeOnceDir = null;
                 DodgeOnceCost = null;
@@ -179,6 +187,7 @@ namespace Player
 
             var wasDodging = !_dodgeTimer.IsFinished;
             _dodgeTimer.FixedUpdate();
+            _dodgeCostTimer.FixedUpdate();
             _dodgeCooldownTimer.FixedUpdate();
             _afterImageTimer.FixedUpdate();
             var dodging = !_dodgeTimer.IsFinished;
@@ -194,10 +203,13 @@ namespace Player
             // CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilationCurve.Evaluate(1 - _dodgeTimer.Value/_dodgeTimeLength) : 1;
             CustomRigidbody2D.Scaling = dodging ? dodgeTimeDilation : 1;
             _collider.excludeLayers = dodging ? dodgeExcludeMask : 0;
+            _collider.layerOverridePriority = dodging ? 1000 : 1;
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
-
-            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate : -_dodgeCost/_dodgeTimeLength*dodgeTimeDilation) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
+            
+            _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate
+                : !_dodgeCostTimer.IsFinished ? -_dodgeCost/_dodgeTimeLength*dodgeTimeDilation
+                : 0) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
             dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice);
 
             if (dodging)
@@ -270,6 +282,7 @@ namespace Player
 
             if (!autoPilot) velocity += _forwards * (_acceleration * Time.fixedDeltaTime);
             velocity *= Mathf.Pow(.99f, Time.fixedDeltaTime);
+            StatisticsInstance.distanceTraveled += velocity.magnitude * Time.fixedDeltaTime;
 
             _rigid.linearVelocity = velocity;
         }

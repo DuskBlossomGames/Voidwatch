@@ -38,6 +38,11 @@ namespace Spawnables.Controllers.Misslers
             _rigid.AddRelativeForce(new Vector2(Mathf.Abs(mult)*speed, 0));
             _rigid.linearVelocity = Vector2.ClampMagnitude(_rigid.linearVelocity, speed);
             if (mult == 0) _rigid.linearVelocity *= Mathf.Pow(0.3f, Time.deltaTime);
+
+            if (((Vector2)transform.position).sqrMagnitude > 75 * 75)
+            {
+                _rigid.AddForce(Quaternion.Euler(0, 0, 45) * ((Vector2)transform.position).normalized * -20);
+            }
         }
     }
 }

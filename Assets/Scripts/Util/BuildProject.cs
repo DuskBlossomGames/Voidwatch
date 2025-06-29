@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -24,6 +25,15 @@ namespace Util
             
             proc.Start();
             if (wait) proc.WaitForExit();
+        }
+
+        private static void Cleanup()
+        {
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+            Procs.ForEach(p => p.Kill());
+            Procs.Clear();
+            ExecuteSequentialCommands(new [] { "rm -rf /tmp/voidwatch" });
+            EditorUtility.DisplayDialog("Build Failed", "Check the console for errors, or try building manually.", "OK");
         }
         
         [MenuItem("File/Execute CI\u200A\u200A\u2215\u200A\u200ACD (macOS only) &#B")]
@@ -48,12 +58,17 @@ namespace Util
             var scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
             
             // MACOS
-            BuildPipeline.BuildPlayer(new BuildPlayerOptions
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+            if (BuildPipeline.BuildPlayer(new BuildPlayerOptions
+                {
+                    scenes = scenes,
+                    locationPathName = "/tmp/voidwatch/mac/Voidwatch.app",
+                    target = BuildTarget.StandaloneOSX
+                }).summary.result != BuildResult.Succeeded)
             {
-                scenes = scenes,
-                locationPathName = "/tmp/voidwatch/mac/Voidwatch.app",
-                target = BuildTarget.StandaloneOSX
-            });
+                Cleanup();
+                return;
+            }
             ExecuteSequentialCommands(new[]
             {
                 "cd /tmp/voidwatch/mac",
@@ -62,19 +77,24 @@ namespace Util
                 $"../butler push voidwatch.zip DuskBlossomGames/Voidwatch:osx --identity=\"{butlerAPIPath}\" --userversion={VERSION}",
             }, false);
             
-            // WINDOWS x86
+            // WINDOWS
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
             for (var arch = 0; arch <= 1; arch++)
             {
                 var archStr = arch == 0 ? "x86" : "arm";
                 
                 EditorUserBuildSettings.SetPlatformSettings(BuildPipeline.GetBuildTargetName(BuildTarget.StandaloneWindows64),
                     "Architecture", ((OSArchitecture) arch).ToString());
-                BuildPipeline.BuildPlayer(new BuildPlayerOptions
+                if (BuildPipeline.BuildPlayer(new BuildPlayerOptions
+                    {
+                        scenes = scenes,
+                        locationPathName = $"/tmp/voidwatch/win-{archStr}/Voidwatch/Voidwatch.exe",
+                        target = BuildTarget.StandaloneWindows64
+                    }).summary.result != BuildResult.Succeeded)
                 {
-                    scenes = scenes,
-                    locationPathName = $"/tmp/voidwatch/win-{archStr}/Voidwatch/Voidwatch.exe",
-                    target = BuildTarget.StandaloneWindows64
-                });
+                    Cleanup();
+                    return;
+                }
                 ExecuteSequentialCommands(new[]
                 {
                     $"cd /tmp/voidwatch/win-{archStr}",
@@ -85,12 +105,17 @@ namespace Util
             }
             
             // LINUX
-            BuildPipeline.BuildPlayer(new BuildPlayerOptions
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneLinux64);
+            if (BuildPipeline.BuildPlayer(new BuildPlayerOptions
+                {
+                    scenes = scenes,
+                    locationPathName = "/tmp/voidwatch/linux/Voidwatch/Voidwatch",
+                    target = BuildTarget.StandaloneLinux64
+                }).summary.result != BuildResult.Succeeded)
             {
-                scenes = scenes,
-                locationPathName = "/tmp/voidwatch/linux/Voidwatch/Voidwatch",
-                target = BuildTarget.StandaloneLinux64
-            });
+                Cleanup();
+                return;
+            }
             ExecuteSequentialCommands(new[]
             {
                 "cd /tmp/voidwatch/linux",
@@ -101,7 +126,7 @@ namespace Util
             
             // reset to OSX
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
-            
+
             // wait for finish and cleanup
             while (Procs.Any(p=>!p.HasExited)) System.Threading.Thread.Sleep(500); // checking every half second should be plenty
             Procs.Clear();

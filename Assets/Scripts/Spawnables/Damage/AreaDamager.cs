@@ -8,6 +8,7 @@ namespace Spawnables.Damage
         public float entryDamage;
         public float shieldMult, bleedPerc;
         public bool canOnlyHurtPlayer = false;
+        public GameObject owner;
 
         void OnTriggerStay2D(Collider2D other)
         {

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3649866088729683831}
   - component: {fileID: 8581359476377103620}
   - component: {fileID: 5345334240102758022}
-  m_Layer: 8
+  m_Layer: 26
   m_Name: Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelforce: 35
+  owner: {fileID: 0}
   target: {fileID: 0}
   maxFuel: 50
   particles: {fileID: 8367763298320455633}
@@ -311,10 +312,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
-  tier: 1
-  enemyType: 1
+  dontDestroyOffscreen: 0
+  trackDeath: 0
   maxHealth: 10
-  varientParent: {fileID: 0}
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions: []
@@ -350,7 +350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1150279454695792879}
   - component: {fileID: 4158478437872649878}
-  m_Layer: 8
+  m_Layer: 26
   m_Name: Missile (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 2756940670225009990}
   - component: {fileID: 3847061452025517280}
   - component: {fileID: 4544992128976689179}
-  m_Layer: 8
+  m_Layer: 26
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
