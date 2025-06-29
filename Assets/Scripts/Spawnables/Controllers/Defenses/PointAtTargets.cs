@@ -31,7 +31,7 @@ namespace Spawnables.Controllers.Defenses
                 _countdown -= Time.deltaTime;
                 float bulletVel = turretBulletSpeed / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
                 float globalrot = Mathf.Deg2Rad * transform.parent.rotation.eulerAngles.z;
-                float angle = UtilFuncs.LeadShot(rot(diff,globalrot), rot(target.GetComponent<CustomRigidbody2D>().linearVelocity,globalrot), bulletVel);
+                float angle = UtilFuncs.LeadShot(rot(diff,globalrot), rot(UtilFuncs.GetTargetVel(target), globalrot), bulletVel);
                 _rot = angle;
                 //_rot = Mathf.Atan2(diff.y, diff.x);
             } else

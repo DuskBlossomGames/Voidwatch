@@ -108,9 +108,9 @@ namespace Spawnables.Controllers.Boids
 
         void Shoot()
         {
-            Vector2 diff = target.transform.position - transform.position;
-            Vector2 relVel = target.GetComponent<CustomRigidbody2D>().linearVelocity;
-            float angle = UtilFuncs.LeadShot(diff, relVel, _gun.ExpectedVelocity());
+            float angle = UtilFuncs.LeadShot(target.transform.position - transform.position,
+                                                UtilFuncs.GetTargetVel(target), 
+                                                _gun.ExpectedVelocity());
 
 
             if (diff.sqrMagnitude < shootDist * shootDist)

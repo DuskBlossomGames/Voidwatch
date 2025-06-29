@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 
 namespace Util
@@ -12,6 +13,16 @@ namespace Util
         public static float Angle(Vector2 v)
         {
             return Mathf.Atan2(v.y, v.x);
+        }
+
+        public static Vector2 GetTargetVel(GameObject target)
+        {
+            if (target.TryGetComponent<Movement>(out var playerMovement))
+            {
+                return playerMovement.PreDodgeVel;
+            }
+            
+            return target.GetComponent<CustomRigidbody2D>().linearVelocity;
         }
 
         public static Vector2 PredictTargetPos(Vector2 pos, Vector2 vel, float time)
