@@ -18,7 +18,7 @@ namespace Spawnables.Controllers.Misslers
         public GameObject source;
 
 
-        public void Play(float pitch = 0.8f, float volume = 0.141f)
+        public void Play(float pitch = 0.8f, float volume = 0.3f)
         {
             AudioPlayer.Play(explosionClip, pitch + Random.Range(-0.1f, 0.1f), volume);
             
