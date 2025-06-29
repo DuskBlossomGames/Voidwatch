@@ -133,6 +133,8 @@ namespace LevelPlay
                 img.SetAlpha(1 - t / fadeInTime);
             }
 
+            fadeIn.SetActive(false);
+
             _faded = true;
         }
 
