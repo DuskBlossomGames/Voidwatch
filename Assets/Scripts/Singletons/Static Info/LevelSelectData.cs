@@ -67,7 +67,7 @@ namespace Singletons.Static_Info
         private float EliteDifficulty => 1.1f * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 
 
-// #if UNITY_EDITOR
+#if UNITY_EDITOR
         public void RevealAll()
         {
             var orig = CurrentPlanet;
@@ -75,7 +75,7 @@ namespace Singletons.Static_Info
             CurrentPlanet = orig;
             _visitedPlanets.Clear();
         }
-// #endif
+#endif
         [NonSerialized] private int _currentPlanet = -1;
         public int CurrentPlanet
         {

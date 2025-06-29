@@ -26,7 +26,7 @@ namespace LevelSelect
         public int minElites, maxElites;
         public int minEligibleBosses;
         
-// #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void Update()
         {
             if (InputManager.GetKeyUp(KeyCode.LeftBracket))
@@ -36,7 +36,7 @@ namespace LevelSelect
                 RenderGalaxy(true);
             }
         }
-// #endif
+#endif
 
         private void Start()
         {
