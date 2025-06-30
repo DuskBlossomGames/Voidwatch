@@ -17,7 +17,7 @@ namespace Util
 
         public static Vector2 GetTargetVel(GameObject target)
         {
-            if (target.TryGetComponent<Movement>(out var playerMovement))
+            if (target.TryGetComponent<Movement>(out var playerMovement) && playerMovement.Dodging)
             {
                 return playerMovement.PreDodgeVel;
             }

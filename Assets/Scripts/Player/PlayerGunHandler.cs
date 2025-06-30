@@ -4,6 +4,7 @@ using ProgressBars;
 using Singletons;
 using Spawnables;
 using Spawnables.Controllers.Bullets;
+using Unity.Editor.Tasks.Helpers;
 using UnityEngine;
 using Util;
 using static Singletons.Static_Info.GunInfo;
@@ -86,7 +87,7 @@ namespace Player
 
             Vector2 mVel = Vector2.zero;
             Vector2 relPos = _mPos - (Vector2)transform.position;
-            float angCorr = UtilFuncs.LeadShot(relPos, mVel - _rb.linearVelocity, ExpectedVelocity());
+            float angCorr = UtilFuncs.LeadShot(relPos, mVel - UtilFuncs.GetTargetVel(gameObject), ExpectedVelocity());
         
             for (int rep = 0; rep <= GunInfoInstance.repeats; rep++)
             {
