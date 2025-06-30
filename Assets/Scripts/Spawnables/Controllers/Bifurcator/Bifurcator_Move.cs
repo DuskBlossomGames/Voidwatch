@@ -1,5 +1,6 @@
 using Spawnables.Damage;
 using UnityEngine;
+using Util;
 
 namespace Spawnables.Controllers.Bifurcator
 {
@@ -12,8 +13,9 @@ namespace Spawnables.Controllers.Bifurcator
     
         void Start()
         {
+            var rot = UtilFuncs.Angle(transform.position);
             transform.position = new Vector3(0, 0, transform.position.z);
-            transform.rotation = Quaternion.Euler(0, 0, Random.Range(1/3f * Mathf.PI, 5/3f * Mathf.PI));
+            transform.rotation = Quaternion.Euler(0, 0, rot * Mathf.Rad2Deg);
 
             rotSpeed *= Mathf.Sign(Random.value - 0.5f);
             _rotMult = 1;
