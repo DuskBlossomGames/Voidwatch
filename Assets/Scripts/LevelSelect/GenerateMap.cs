@@ -63,7 +63,7 @@ namespace LevelSelect
                     Sprite = entranceSprite,
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{1},
-                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                     Name = "Entrance",
                     LoreText = ""
             });
@@ -75,7 +75,7 @@ namespace LevelSelect
                     Sprite = sprites[Random.Range(0, sprites.Count)],
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{i,i+2},
-                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*(i+1), 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*(i+1), 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                     Name = "Planet",
                     LoreText = ""
                 });
@@ -87,7 +87,7 @@ namespace LevelSelect
                 Sprite = spaceStationSprite,
                 HiddenSprite = hiddenSprite,
                 Connections = new List<int>{5, 7},
-                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(18, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(18, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                 Name = "Space Station",
                 LoreText = ""
             });
@@ -98,7 +98,7 @@ namespace LevelSelect
                 Sprite = sprites[Random.Range(0, sprites.Count)],
                 HiddenSprite = hiddenSprite,
                 Connections = new List<int>{6},
-                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(21, 0) * planetScale * 2.25f + Random.insideUnitCircle * planetScale / 2),
+                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(21, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                 Name = "Elite Enemy",
                 LoreText = ""
             });

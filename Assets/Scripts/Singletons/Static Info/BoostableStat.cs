@@ -21,7 +21,9 @@ namespace Singletons.Static_Info
     {
         public float value;
 
-        public BoostableStat() => STATS.Add(this);
+        public BoostableStat() : this(true) { }
+
+        protected BoostableStat(bool add) { if (add) STATS.Add(this); }
 
         private static T AsType(float value)
         {
@@ -34,25 +36,25 @@ namespace Singletons.Static_Info
 
         public static implicit operator T(BoostableStat<T> stat) => AsType(stat.value * BOOST_AMOUNTS[stat.Boosts]);
         
-        public static BoostableStat<T> operator *(BoostableStat<T> stat, float b) => new()
+        public static BoostableStat<T> operator *(BoostableStat<T> stat, float b) => new(false)
         {
             name = stat.name,
             value = AsFloat(AsType(stat.value * b)),
             Boosts = stat.Boosts
         };
-        public static BoostableStat<T> operator /(BoostableStat<T> stat, float b) => new()
+        public static BoostableStat<T> operator /(BoostableStat<T> stat, float b) => new(false)
         {
             name = stat.name,
             value = AsFloat(AsType(stat.value / b)),
             Boosts = stat.Boosts
         };
-        public static BoostableStat<T> operator +(BoostableStat<T> stat, float b) => new()
+        public static BoostableStat<T> operator +(BoostableStat<T> stat, float b) => new(false)
         {
             name = stat.name,
             value = AsFloat(AsType(stat.value + b)),
             Boosts = stat.Boosts
         };
-        public static BoostableStat<T> operator -(BoostableStat<T> stat, float b) => new()
+        public static BoostableStat<T> operator -(BoostableStat<T> stat, float b) => new(false)
         {
             name = stat.name,
             value = AsFloat(AsType(stat.value - b)),
@@ -75,25 +77,28 @@ namespace Singletons.Static_Info
             }
         }
 
-        public static MaxHealthStat operator *(MaxHealthStat stat, float b) => new()
+        public MaxHealthStat() { }
+        protected MaxHealthStat(bool add) : base(add) { }
+
+        public static MaxHealthStat operator *(MaxHealthStat stat, float b) => new(false)
         {
             name = stat.name,
             value = (int) (stat.value * b),
             Boosts = stat.Boosts
         };
-        public static MaxHealthStat operator /(MaxHealthStat stat, float b) => new()
+        public static MaxHealthStat operator /(MaxHealthStat stat, float b) => new(false)
         {
             name = stat.name,
             value = (int) (stat.value / b),
             Boosts = stat.Boosts
         };
-        public static MaxHealthStat operator +(MaxHealthStat stat, float b) => new()
+        public static MaxHealthStat operator +(MaxHealthStat stat, float b) => new(false)
         {
             name = stat.name,
             value = (int) (stat.value + b),
             Boosts = stat.Boosts
         };
-        public static MaxHealthStat operator -(MaxHealthStat stat, float b) => new()
+        public static MaxHealthStat operator -(MaxHealthStat stat, float b) => new(false)
         {
             name = stat.name,
             value = (int) (stat.value - b),

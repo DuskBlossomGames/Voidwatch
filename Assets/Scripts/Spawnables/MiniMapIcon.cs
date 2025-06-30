@@ -80,7 +80,6 @@ namespace Spawnables
                 var main = obj.GetComponent<ParticleSystem>().main;
                 main.startColor = particleColor;
                 obj.GetComponent<ParticleSystemRenderer>().sortingOrder -= 2; // make sure it's fully behind MMI and MMIO
-                print(obj.GetComponent<ParticleSystemRenderer>().sortingOrder);
             }
         }
     }

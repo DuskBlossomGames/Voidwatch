@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -5838437573490083613}
   - component: {fileID: 3984119249238024877}
   - component: {fileID: -4549609167405607020}
-  m_Layer: 8
+  m_Layer: 19
   m_Name: Chaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 4070176899446930106}
   - component: {fileID: 3598904866042879251}
   - component: {fileID: 8856951756730776579}
-  m_Layer: 8
+  m_Layer: 19
   m_Name: Collision Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 1288165168614315835}
   - component: {fileID: 7731121725679908282}
   - component: {fileID: 112673506430647192}
-  m_Layer: 13
+  m_Layer: 19
   m_Name: Electric Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5280,7 +5280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5639829735691245698}
   - component: {fileID: 3479185017442721062}
-  m_Layer: 8
+  m_Layer: 19
   m_Name: Wakeup Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
