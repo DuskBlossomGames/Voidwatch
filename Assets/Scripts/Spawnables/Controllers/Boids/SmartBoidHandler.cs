@@ -108,16 +108,14 @@ namespace Spawnables.Controllers.Boids
 
         void Shoot()
         {
-            float angle = UtilFuncs.LeadShot(target.transform.position - transform.position,
-                                                UtilFuncs.GetTargetVel(target), 
-                                                _gun.ExpectedVelocity());
+            Vector2 diff = target.transform.position - transform.position;
+            if (!(diff.sqrMagnitude < shootDist * shootDist)) return;
+            
+            var angle = UtilFuncs.LeadShot(diff,
+                UtilFuncs.GetTargetVel(target), 
+                _gun.ExpectedVelocity());
 
-
-            if (diff.sqrMagnitude < shootDist * shootDist)
-            {
-                //_gun.Shoot(-transform.rotation.z);
-                _gun.Shoot(-90 + Mathf.Rad2Deg * angle - transform.rotation.eulerAngles.z);
-            }
+            _gun.Shoot(-90 + Mathf.Rad2Deg * angle - transform.rotation.eulerAngles.z);
 
         }
     }

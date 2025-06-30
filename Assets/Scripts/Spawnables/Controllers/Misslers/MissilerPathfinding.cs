@@ -11,7 +11,6 @@ namespace Spawnables.Controllers.Misslers
 
 
         private Vector3 _tar;
-        private bool _moving = false;
         private CustomRigidbody2D _rigid;
 
 

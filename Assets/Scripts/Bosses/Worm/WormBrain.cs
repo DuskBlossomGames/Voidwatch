@@ -957,7 +957,7 @@ namespace Bosses.Worm
 
         public string editorNote = "Cutscene Variables";
         public GameObject fadeIn, portal, planet, gradient, defenses, boundaryCircle;
-        public ParticleSystem particleSystem;
+        public new ParticleSystem particleSystem;
         public Texture2D destructionSprite;
         public float destructionFps;
         public float fadeInTime;

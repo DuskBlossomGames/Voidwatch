@@ -1,12 +1,13 @@
 using System.Collections;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Bosses.Worm
 {
     public class SpikeLinkedList : MonoBehaviour
     {
-        public SpikeLinkedList? previous = null;
-        public SpikeLinkedList? next = null;
+        [CanBeNull] public SpikeLinkedList previous = null;
+        [CanBeNull] public SpikeLinkedList next = null;
 
         public float timebetweensegments;
         public float animtime;

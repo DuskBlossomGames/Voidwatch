@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Util
         private static void Cleanup()
         {
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
-            Procs.ForEach(p => p.Kill());
+            Procs.ForEach(p => { if (!p.HasExited) p.Kill(); });
             Procs.Clear();
             ExecuteSequentialCommands(new [] { "rm -rf /tmp/voidwatch" });
             EditorUtility.DisplayDialog("Build Failed", "Check the console for errors, or try building manually.", "OK");
