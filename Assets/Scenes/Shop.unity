@@ -1488,7 +1488,6 @@ MonoBehaviour:
   - {fileID: 591877897}
   - {fileID: 263797581}
   - {fileID: 1695227927}
-  boostCost: 20
   scrapPerThouHp: 300
 --- !u!1 &504727927
 GameObject:
@@ -4502,7 +4501,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Health Boost
+  m_text: Shield Boost
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
   m_sharedMaterial: {fileID: 7206338398465205622, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}

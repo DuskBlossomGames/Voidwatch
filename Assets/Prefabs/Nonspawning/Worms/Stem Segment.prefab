@@ -276,13 +276,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearsAsSelf: 1
-  border: {r: 1, g: 0, b: 0, a: 1}
-  miniSprite: {fileID: 0}
-  miniColor: {r: 0.70032597, g: 0.09732112, b: 0.764151, a: 0}
-  size: 5
-  inheritsRotation: 0
-  staticRot: {x: 0, y: 0, z: 0}
+  border: {r: 0.75, g: 0, b: 0, a: 1}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
+  borderMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  scale: 1
+  borderScale: 1.6
 --- !u!114 &1797802202704939343
 MonoBehaviour:
   m_ObjectHideFlags: 0

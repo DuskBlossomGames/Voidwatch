@@ -7,7 +7,8 @@ namespace Spawnables
     public class MiniMapIcon : MonoBehaviour
     {
         public Color border, particleColor;
-        public float scale = 1;
+        public Material borderMaterial;
+        public float scale = 1, borderScale = 1.3f;
         
         void Start()
         {
@@ -43,13 +44,14 @@ namespace Spawnables
                             parent = obj.transform,
                             localPosition = Vector3.zero,
                             localRotation = Quaternion.identity,
-                            localScale = Vector3.one * 1.3f
+                            localScale = Vector3.one * borderScale
                         },
                         layer = obj.layer
                     };
                     var oSr = outline.AddComponent<SpriteRenderer>();
                     oSr.sprite = sr.sprite;
                     oSr.color = border;
+                    oSr.material = borderMaterial;
                     oSr.sortingOrder = sr.sortingOrder-1;
                     oSr.sortingLayerID = sr.sortingLayerID;
                     oSr.drawMode = sr.drawMode;

@@ -204,6 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 1
   maxHealth: 50
@@ -247,8 +248,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fbc0662514f734b8963da31bb71619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  border: {r: 1, g: 0, b: 0, a: 1}
-  scale: 1.5
+  border: {r: 0.75, g: 0, b: 0, a: 1}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
+  borderMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  scale: 1.75
+  borderScale: 1.3
 --- !u!114 &8939435154034989935
 MonoBehaviour:
   m_ObjectHideFlags: 0

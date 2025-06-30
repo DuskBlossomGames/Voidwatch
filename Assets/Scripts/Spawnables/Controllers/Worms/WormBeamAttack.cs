@@ -107,7 +107,7 @@ namespace Spawnables.Controllers.Worms
             lrend.material = material;
             Vector3[] rpos = new[] { LineStart, LineStart + 200 * (Vector3)dir };
             lrend.SetPositions(rpos);
-            lrend.widthMultiplier = 1.1f;
+            lrend.widthMultiplier = 1.3f;
             lrend.sortingOrder = -1;
             RaycastHit2D rhit = Physics2D.Linecast(rpos[0], rpos[1], 1 << LayerMask.NameToLayer("Player"));
             if (rhit.collider != null && !rhit.collider.GetComponent<Movement>().Dodging)
