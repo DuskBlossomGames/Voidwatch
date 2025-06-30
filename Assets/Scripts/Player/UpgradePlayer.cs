@@ -70,8 +70,8 @@ namespace Player
                 false,
                 () => {
                     PlayerDataInstance.Health += Mathf.CeilToInt(0.1f * PlayerDataInstance.maxHealth);
-                    PlayerDataInstance.maxHealth *= 1.1f;
-                    PlayerDataInstance.maxShield *= 1.05f;
+                    PlayerDataInstance.maxHealth.MulEq(1.1f);
+                    PlayerDataInstance.maxShield.MulEq(1.05f);
                 }),
             new("Experimental Batteries",
                 "These third-party shield batteries hold charge longer, but recharge slower.",
@@ -80,7 +80,7 @@ namespace Player
                 false,
                 () =>
                 {
-                    PlayerDataInstance.maxShield *= 1.3f;
+                    PlayerDataInstance.maxShield.MulEq(1.3f);
                     PlayerDataInstance.maxShieldDebt *= 1.5f;
                     PlayerDataInstance.shieldRegenRate *= .75f;
                 }),
@@ -99,9 +99,9 @@ namespace Player
                 false,
                 () => {
                     PlayerDataInstance.shieldRegenRate *= 1.3f;
-                    PlayerDataInstance.maxShield *= 1.8f;
+                    PlayerDataInstance.maxShield.MulEq(1.8f);
                     PlayerDataInstance.maxShieldDebt *= .2f;
-                    PlayerDataInstance.maxHealth *= 0.7f;
+                    PlayerDataInstance.maxHealth.MulEq(0.7f);
                     PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.maxHealth);
                 }),
             new("Black Market Mod",
@@ -110,7 +110,7 @@ namespace Player
                 Rarity.Legendary,
                 false,
                 () => {
-                    GunInfoInstance.dmgMod *= 1.6f;
+                    GunInfoInstance.dmgMod.MulEq(1.6f);
                     GunInfoInstance.shotForce *= 1.9f;
                     GunInfoInstance.fireTime += 0.4f;
                 }),
@@ -136,7 +136,7 @@ namespace Player
                 Rarity.Common,
                 false,
                 () => {
-                    PlayerDataInstance.maxDodgeJuice *= 1.35f;
+                    PlayerDataInstance.maxDodgeJuice.MulEq(1.35f);
                 }),
             new("High Yield Plasma Coils",
                 "Greater plasma harnessing capabilities allows for faster shooting.",

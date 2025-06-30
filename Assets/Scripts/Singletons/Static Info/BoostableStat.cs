@@ -21,9 +21,7 @@ namespace Singletons.Static_Info
     {
         public float value;
 
-        public BoostableStat() : this(true) { }
-
-        protected BoostableStat(bool add) { if (add) STATS.Add(this); }
+        public BoostableStat() => STATS.Add(this);
 
         private static T AsType(float value)
         {
@@ -35,31 +33,27 @@ namespace Singletons.Static_Info
         }
 
         public static implicit operator T(BoostableStat<T> stat) => AsType(stat.value * BOOST_AMOUNTS[stat.Boosts]);
-        
-        public static BoostableStat<T> operator *(BoostableStat<T> stat, float b) => new(false)
+
+        public BoostableStat<T> MulEq(float b)
         {
-            name = stat.name,
-            value = AsFloat(AsType(stat.value * b)),
-            Boosts = stat.Boosts
-        };
-        public static BoostableStat<T> operator /(BoostableStat<T> stat, float b) => new(false)
+            value = AsFloat(AsType(value * b));
+            return this;
+        }
+        public BoostableStat<T> DivEq(float b)
         {
-            name = stat.name,
-            value = AsFloat(AsType(stat.value / b)),
-            Boosts = stat.Boosts
-        };
-        public static BoostableStat<T> operator +(BoostableStat<T> stat, float b) => new(false)
+            value = AsFloat(AsType(value / b));
+            return this;
+        }
+        public BoostableStat<T> AddEq(float b)
         {
-            name = stat.name,
-            value = AsFloat(AsType(stat.value + b)),
-            Boosts = stat.Boosts
-        };
-        public static BoostableStat<T> operator -(BoostableStat<T> stat, float b) => new(false)
+            value = AsFloat(AsType(value + b));
+            return this;
+        }
+        public BoostableStat<T> SubEq(float b)
         {
-            name = stat.name,
-            value = AsFloat(AsType(stat.value - b)),
-            Boosts = stat.Boosts
-        };
+            value = AsFloat(AsType(value - b));
+            return this;
+        }
     }
 
     [Serializable]
@@ -76,33 +70,26 @@ namespace Singletons.Static_Info
                 PlayerDataInstance.Health = (int) PlayerDataInstance.maxHealth - dmg;
             }
         }
-
-        public MaxHealthStat() { }
-        protected MaxHealthStat(bool add) : base(add) { }
-
-        public static MaxHealthStat operator *(MaxHealthStat stat, float b) => new(false)
+        
+        public new MaxHealthStat MulEq(float b)
         {
-            name = stat.name,
-            value = (int) (stat.value * b),
-            Boosts = stat.Boosts
-        };
-        public static MaxHealthStat operator /(MaxHealthStat stat, float b) => new(false)
+            value = (int)(value * b);
+            return this;
+        }
+        public new MaxHealthStat DivEq(float b)
         {
-            name = stat.name,
-            value = (int) (stat.value / b),
-            Boosts = stat.Boosts
-        };
-        public static MaxHealthStat operator +(MaxHealthStat stat, float b) => new(false)
+            value = (int)(value / b);
+            return this;
+        }
+        public new MaxHealthStat AddEq(float b)
         {
-            name = stat.name,
-            value = (int) (stat.value + b),
-            Boosts = stat.Boosts
-        };
-        public static MaxHealthStat operator -(MaxHealthStat stat, float b) => new(false)
+            value = (int)(value + b);
+            return this;
+        }
+        public new MaxHealthStat SubEq(float b)
         {
-            name = stat.name,
-            value = (int) (stat.value - b),
-            Boosts = stat.Boosts
-        };
+            value = (int)(value - b);
+            return this;
+        }
     }
 }

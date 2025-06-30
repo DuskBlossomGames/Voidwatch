@@ -48,7 +48,7 @@ namespace Spawnables
             _crb.linearVelocity = norm * _crb.linearVelocity.magnitude;
             _crb.linearVelocity += 30 * norm * Time.deltaTime;
 
-            if(16 * _crb.linearVelocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude)
+            if(8 * _crb.linearVelocity.sqrMagnitude * Time.deltaTime * Time.deltaTime > dist.sqrMagnitude || dist.sqrMagnitude < 1)
             {
                 StatisticsInstance.scrapCollected += value;
                 PlayerDataInstance.Scrap += value;

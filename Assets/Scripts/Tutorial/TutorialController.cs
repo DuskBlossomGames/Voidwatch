@@ -209,13 +209,13 @@ namespace Tutorial
                     case Stage.Race:
                         raceCourse.SetActive(false);
                         playerMovement.SetInputBlocked(false); // enable player shoot
-                        GunInfoInstance.ammoCount *= 0.5f;
+                        GunInfoInstance.ammoCount.MulEq(0.5f);
                         break;
                     case Stage.Shooting:
                         minimap.SetActive(true);
                         securityBorder.SetActive(false);
                         healthBar.SetActive(true);
-                        GunInfoInstance.ammoCount *= 2;
+                        GunInfoInstance.ammoCount.MulEq(2);
                         break;
                     case Stage.Enemy:
                         StartCoroutine(FadeOut(() =>
