@@ -8053,10 +8053,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1781870393}
     - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
-      propertyPath: godmode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8656161946522945512, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
       propertyPath: gameOver
       value: 
       objectReference: {fileID: 1381428871}
