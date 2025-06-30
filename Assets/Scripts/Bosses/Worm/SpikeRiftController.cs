@@ -51,7 +51,7 @@ namespace Bosses.Worm
                 -10);
 
             var vel = Spike.GetComponent<CustomRigidbody2D>().linearVelocity;
-            var rot = UtilFuncs.LeadShot(player.transform.position - _exit.transform.position, player.linearVelocity, vel.magnitude);
+            var rot = UtilFuncs.LeadShot(player.transform.position - _exit.transform.position, UtilFuncs.GetTargetVel(player.gameObject), vel.magnitude);
             _exit.transform.rotation = Quaternion.Euler(0, 0, rot*Mathf.Rad2Deg);
             
             var newSpike = Instantiate(Spike);
