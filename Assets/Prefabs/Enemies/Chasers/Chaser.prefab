@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 9fd23843ae735468fb6594e44fee3f68, type: 3}
-  title: Chaser
+  title: Charger
 --- !u!1 &5576403035857070923
 GameObject:
   m_ObjectHideFlags: 0
