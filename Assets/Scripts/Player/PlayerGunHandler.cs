@@ -15,9 +15,8 @@ namespace Player
 {
     public class PlayerGunHandler : MonoBehaviour
     {
-        [NonSerialized]
-        public bool Shootable = true;
-        public bool HasDodgePowerAttack;
+        [NonSerialized] public bool Shootable = true;
+        [NonSerialized] public bool HasDodgePowerAttack;
     
         public ProgressBar ammoBar;
 
@@ -137,8 +136,8 @@ namespace Player
                 }
                 
                 AudioPlayer.Play(laserClip, Random.Range(0.5f, 0.7f), 0.45f);
-                HasDodgePowerAttack = false;
             }
+            HasDodgePowerAttack = false;
 
             yield return new WaitForSeconds(GunInfoInstance.fireTime);
 

@@ -191,7 +191,9 @@ namespace Spawnables.Controllers.Platelins
                 
                     if (isLeader && _numColonies < maxNumColonies && Random.value < leaderChance)
                     {
-                        copy.GetComponent<CustomRigidbody2D>().AddForce(25000 * Random.insideUnitCircle.normalized);
+                        var myRot = UtilFuncs.Angle(transform.position);
+                        copy.GetComponent<CustomRigidbody2D>().AddForce(25000 * UtilFuncs.AngleToVector(
+                            Random.Range(myRot + Mathf.PI/2, myRot - Mathf.PI/2)));
                         copy._spawntimer += 5;
                         copy.animationState.SwapState("Dormant");
                         copy.isSpore = true;

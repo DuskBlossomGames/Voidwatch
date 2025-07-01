@@ -168,7 +168,7 @@ namespace Spawnables.Controllers.Carcadon
 
                 var dist = _attackTarg - (Vector2)transform.position;
 
-                if (_timeGoingForPos > 2.5f || _attackTarg.sqrMagnitude == 0 || dist.magnitude < 3.5f)
+                if (_timeGoingForPos > 2.5f || _attackTarg.sqrMagnitude == 0 || dist.magnitude < 3.5f || (_attackTarg-(Vector2)_player.transform.position).sqrMagnitude > attackRadius*attackRadius*1.5f*1.5f)
                 {
                     var radius = Random.Range(3, attackRadius);
                     var angle = Random.Range(0, 2 * Mathf.PI);
@@ -189,7 +189,7 @@ namespace Spawnables.Controllers.Carcadon
             }
             else
             {
-                _rb.linearVelocity = Vector3.RotateTowards(_rb.linearVelocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 5 : 1.5f) * Time.deltaTime, 15 * Time.deltaTime);
+                _rb.linearVelocity = Vector3.RotateTowards(_rb.linearVelocity, _currSpeed * dir, (_timeGoingForPos < 0.7f ? 4 : 2f) * Time.deltaTime, 15 * Time.deltaTime);
             }
 
             transform.rotation = Quaternion.Lerp(transform.rotation, UtilFuncs.RotFromNorm(_rb.linearVelocity), 5 * Time.deltaTime);
