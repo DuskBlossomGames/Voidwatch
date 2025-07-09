@@ -26,8 +26,6 @@ namespace Player
 {
     public class PlayerDamageable : Damageable
     {
-        public bool isTutorial;
-
         public Q_Vignette_Single vignette;
 
         public EnemySpawner enemySpawner;
@@ -59,8 +57,8 @@ namespace Player
         public int numBits;
         public float explosionScale, bitScale;
 
-        protected override float MaxHealth => PlayerDataInstance.maxHealth;
-        protected override float Health
+        public override float MaxHealth => PlayerDataInstance.maxHealth;
+        public override float Health
         {
             get => PlayerDataInstance.Health;
             set => PlayerDataInstance.Health = value;
@@ -253,7 +251,7 @@ namespace Player
             
             _movement.SetInputBlocked(true);
             
-            if (!isTutorial)
+            if (!PlayerDataInstance.IsTutorial)
             {
                 StartCoroutine(gameOver.Run(false, diedTo));
             }

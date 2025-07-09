@@ -32,7 +32,7 @@ namespace Singletons.Static_Info
 
         private static IEnumerator LoadInfo()
         {
-            SceneManager.LoadScene("LevelSelect");
+            if (SceneManager.GetActiveScene().name == "LevelPlay") SceneManager.LoadScene("LevelSelect");
             yield return new WaitForSeconds(0.1f);
             SceneManager.LoadScene(_returnScene);
         }

@@ -24,12 +24,12 @@ namespace Spawnables.Controllers
         
         private Dictionary<GameObject, float> _spawned = new();
         
-        public void Update()
+        public void FixedUpdate()
         {
-            _active.Update();
+            _active.FixedUpdate();
             if (_active.IsFinished) return;
 
-            _wait.Update();
+            _wait.FixedUpdate();
             if (_active.Value > travelTime && _wait.IsFinished)
             {
                 _wait.Value = Random.Range(minTime, maxTime);

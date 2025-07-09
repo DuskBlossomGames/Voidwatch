@@ -22,6 +22,8 @@ namespace Tutorial
         private float _time, _bestTime = -1;
         private RingController[] _rings;
 
+        public int CompletedRings => _rings.Sum(r => r.Completed ? 1 : 0);
+
         public bool Completed { get; private set; }
 
         private void OnEnable() { timer.gameObject.SetActive(true); }
@@ -88,7 +90,7 @@ namespace Tutorial
             
             _time += Time.deltaTime;
             timer.text = GetTimerText(_time);
-            ringCount.text = _rings.Sum(r=>r.Completed ? 1 : 0) + " / " + _rings.Length;
+            ringCount.text = CompletedRings + " / " + _rings.Length;
         }
 
         private void OnTriggerEnter2D(Collider2D other)

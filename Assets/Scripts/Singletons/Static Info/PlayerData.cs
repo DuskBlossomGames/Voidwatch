@@ -12,6 +12,8 @@ namespace Singletons.Static_Info
         public static PlayerData PlayerDataInstance => StaticInfoHolder.Instance.GetCachedComponent<PlayerData>();
 
         public AssetLabelReference borderSprites, upgradeSprites, boostableStatSprite;
+
+        [NonSerialized] public bool IsTutorial;
         
         public MaxHealthStat maxHealth;
         public BoostableStat<float> maxShield;

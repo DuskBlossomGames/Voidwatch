@@ -272,7 +272,7 @@ namespace Player
                 _acceleration = 0;
             }
 
-            if (autoPilot && ((Vector2)transform.position).sqrMagnitude > 60 * 60) velocity -= (Vector2)transform.position * Time.fixedDeltaTime;
+            if (autoPilot && ((Vector2)transform.position).sqrMagnitude > 75 * 75) velocity -= (Vector2)transform.position * Time.fixedDeltaTime;
 
             if (velocity.sqrMagnitude > PlayerDataInstance.speedLimit * PlayerDataInstance.speedLimit)
             {

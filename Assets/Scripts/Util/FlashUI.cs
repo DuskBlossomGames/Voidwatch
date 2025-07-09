@@ -6,21 +6,20 @@ using UnityEngine.UI;
 
 namespace Util
 {
+    [RequireComponent(typeof(CanvasGroup))]
     public class FlashUI : MonoBehaviour
     {
         public float minAlpha, maxAlpha, time;
 
         private readonly Timer _timer = new();
         private int _dir = -1;
-        private Image[] _images;
-        private TextMeshProUGUI[] _text;
+        private CanvasGroup _cg;
         
-        private void Awake()
+        private void OnEnable()
         {
+            _cg = GetComponent<CanvasGroup>();
             _timer.Value = time;
-            _timer.SetValue(0);
-            _images = GetComponentsInChildren<Image>();
-            _text = GetComponentsInChildren<TextMeshProUGUI>();
+            _timer.SetValue(Mathf.Clamp01((_cg.alpha-minAlpha)/(maxAlpha-minAlpha))*time);
         }
 
         private void Update()
@@ -29,8 +28,7 @@ namespace Util
             if (_timer.IsFinished) _dir = 1;
             if (_timer.Progress == 1) _dir = -1;
             
-            foreach (var image in _images) image.SetAlpha(Mathf.SmoothStep(minAlpha, maxAlpha, _timer.Progress));
-            foreach (var text in _text) text.SetAlpha(Mathf.SmoothStep(minAlpha, maxAlpha, _timer.Progress));
+            _cg.alpha = Mathf.SmoothStep(minAlpha, maxAlpha, _timer.Progress);
         }
     }
 }

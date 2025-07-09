@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using Util;
 using Random = UnityEngine.Random;
 using static Singletons.Static_Info.LevelSelectData;
+using static Singletons.Static_Info.PlayerData;
 
 namespace LevelSelect
 {
@@ -68,7 +69,8 @@ namespace LevelSelect
                     LoreText = ""
             });
 
-            for (var i = 0; i < 5; i++)
+            int i;
+            for (i = 0; i < (PlayerDataInstance.IsTutorial ? 1 : 5); i++)
             {
                 levels.Add(new LevelData {
                     Type = LevelType.Normal,
@@ -86,25 +88,26 @@ namespace LevelSelect
                 Type = LevelType.SpaceStation,
                 Sprite = spaceStationSprite,
                 HiddenSprite = hiddenSprite,
-                Connections = new List<int>{5, 7},
-                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(18, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
+                Connections = new List<int>{i, i+2},
+                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                 Name = "Space Station",
                 LoreText = ""
             });
-            connections.Add(new Tuple<int, int>(5, 6));
+            connections.Add(new Tuple<int, int>(i-1, i));
             
             levels.Add(new LevelData {
-                Type = LevelType.Elite,
+                Type = PlayerDataInstance.IsTutorial ? LevelType.Tutorial : LevelType.Elite,
                 Sprite = sprites[Random.Range(0, sprites.Count)],
                 HiddenSprite = hiddenSprite,
-                Connections = new List<int>{6},
-                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(21, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
+                Connections = new List<int>{i},
+                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                 Name = "Elite Enemy",
                 LoreText = ""
             });
-            connections.Add(new Tuple<int, int>(6, 7));
+            connections.Add(new Tuple<int, int>(i-1, i));
 
             LevelSelectDataInstance.PopulateData(levels.ToArray(), connections.ToArray());
+            LevelSelectDataInstance.CurrentPlanet = 1;
         }
 
         private void RenderGalaxy(bool revealAll = false)

@@ -9326,6 +9326,7 @@ GameObject:
   - component: {fileID: 1289172186}
   - component: {fileID: 1289172185}
   - component: {fileID: 1289172187}
+  - component: {fileID: 1289172188}
   m_Layer: 5
   m_Name: Tutorial Hint
   m_TagString: Untagged
@@ -9406,6 +9407,18 @@ MonoBehaviour:
   minAlpha: 0.5
   maxAlpha: 1
   time: 0.85
+--- !u!225 &1289172188
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289172183}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1307402779
 GameObject:
   m_ObjectHideFlags: 0

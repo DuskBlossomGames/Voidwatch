@@ -1,9 +1,11 @@
 using System.Collections;
 using Singletons.Static_Info;
 using TMPro;
+using Tutorial;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
+using static Singletons.Static_Info.PlayerData;
 
 namespace Menus.Pause
 {
@@ -45,8 +47,7 @@ namespace Menus.Pause
             }
             else if (SceneManager.GetActiveScene().name != "TitleScreen")
             {
-                if (SceneManager.GetActiveScene().name == "Tutorial") mainMenu.text = "Exit Tutorial";
-                else mainMenu.text = "Main Menu";
+                mainMenu.text = PlayerDataInstance.IsTutorial ? "Exit Tutorial" : "Main Menu";
                 
                 canvas.SetActive(true);
                 Time.timeScale = 0;
@@ -73,6 +74,7 @@ namespace Menus.Pause
         public void MainMenu()
         {
             Destroy(StaticInfoHolder.Instance.gameObject);
+            if (PlayerDataInstance.IsTutorial) FindAnyObjectByType<TutorialController>().ExitTutorial();
 
             SceneManager.LoadScene("TitleScreen");
         }

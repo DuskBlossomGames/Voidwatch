@@ -6,8 +6,8 @@ namespace Spawnables.Controllers.Worms
 {
     public class WormDamageable : EnemyDamageable
     {
-        protected override float MaxHealth { get => _rootDamageable.MaxHealth; }
-        protected override float Health { get => _rootDamageable.Health; set => _rootDamageable.Health = value; }
+        public override float MaxHealth { get => _rootDamageable.MaxHealth; }
+        public override float Health { get => _rootDamageable.Health; set => _rootDamageable.Health = value; }
     
         public GameObject root;
         public float dmgMod = 1;

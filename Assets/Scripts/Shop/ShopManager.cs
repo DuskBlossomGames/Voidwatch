@@ -49,9 +49,7 @@ namespace Shop
                 boostIcons[i].sprite = PlayerDataInstance.BoostableStatSprites[_stats[i].name];
             }
 
-            PlayerDataInstance.Scrap = 1000;
             UpdateShop();
-            print("Health: "+(float) PlayerDataInstance.maxHealth+" Speed: "+(float) PlayerDataInstance.speedLimit+" Shield: "+(float) PlayerDataInstance.maxShield+" Void Energy: "+(float) PlayerDataInstance.maxDodgeJuice+" Ammo: "+(float) GunInfoInstance.ammoCount+" Damage: "+(float) GunInfoInstance.dmgMod);
         }
 
         private static float HealedHealth => Mathf.Min(PlayerDataInstance.maxHealth, 

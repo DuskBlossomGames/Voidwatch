@@ -64,8 +64,8 @@ namespace Spawnables.Damage
         
         // have to do this b/c unity doesn't like duplicated properties -_-
         private float _health;
-        protected override float Health { get => _health; set => _health = value; }
-        protected override float MaxHealth => maxHealth;
+        public override float Health { get => _health; set => _health = value; }
+        public override float MaxHealth => maxHealth;
 
         private EnemyType _type;
         public new void Start()

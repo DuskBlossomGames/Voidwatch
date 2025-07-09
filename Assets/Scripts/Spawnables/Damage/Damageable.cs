@@ -10,8 +10,8 @@ namespace Spawnables.Damage
         public bool takeAsteroidDmg = true;
         public bool IsDead => Health <= 0;
         
-        protected virtual float Health { get; set; }
-        protected virtual float MaxHealth { get; }
+        public virtual float Health { get; set; }
+        public virtual float MaxHealth { get; }
         
         protected ProgressBar _healthBar;
         

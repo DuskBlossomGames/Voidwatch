@@ -65,7 +65,7 @@ namespace Tutorial
             
             continueText.SetAlpha(0);
 
-            StartCoroutine(Open());
+            StartCoroutine(Open(true));
         }
         
         public void ShowText(string text, bool continuable)
@@ -99,7 +99,7 @@ namespace Tutorial
         {
             if (!_opened) return;
             
-            if (InputManager.GetKeyDown(KeyCode.LeftShift) || InputManager.GetKeyDown(KeyCode.RightShift) || InputManager.GetKeyDown(KeyCode.Return))
+            if (InputManager.GetKeyDown(KeyCode.LeftShift) || InputManager.GetKeyDown(KeyCode.RightShift) || InputManager.GetKeyDown(KeyCode.Return) || InputManager.GetKeyDown(KeyCode.Space))
             {
                 if (!_progress.IsFinished)
                 {
@@ -144,48 +144,103 @@ namespace Tutorial
             }
         }
 
-        private IEnumerator Open()
+        public IEnumerator Open(float speedMod=1)
+        {
+            yield return Open(false, speedMod);
+        }
+        
+        public void SetClosed() // get the end result of Close() instantly
+        {
+            _person.SetAlpha(0);
+            _personBox.SetAlpha(0);
+            continueText.SetAlpha(0);
+            text.text = _text = "";
+            text.SetAlpha(1);
+            _transform.anchorMin = _transform.anchorMax = new Vector2(_startAnchorX, _startAnchorY);
+            _opened = false;
+        }
+        
+        public IEnumerator Close(float speedMod=1)
+        {
+            _opened = false;
+            
+            for (float t = 0; t < personFadeInTime/speedMod; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                
+                _person.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
+                _personBox.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
+                text.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
+                continueText.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
+            }
+            text.text = _text = "";
+            text.SetAlpha(1);
+            
+            for (float t = 0; t < openTime/speedMod; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                
+                _transform.anchorMin = new Vector2(_anchorMinX, Mathf.Lerp(_anchorMinY, _startAnchorY - barHeight/2, t/openTime*speedMod));
+                _transform.anchorMax = new Vector2(_anchorMaxX, Mathf.Lerp(_anchorMaxY, _startAnchorY + barHeight/2, t/openTime*speedMod));
+            }
+
+            for (float t = 0; t < barExpandTime/speedMod; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                
+                _transform.anchorMin = new Vector2(Mathf.Lerp(_anchorMinX, _startAnchorX, t / barExpandTime*speedMod), _startAnchorY - barHeight / 2);
+                _transform.anchorMax = new Vector2(Mathf.Lerp(_anchorMaxX, _startAnchorX, t / barExpandTime*speedMod), _startAnchorY + barHeight / 2);
+            }
+
+            _transform.anchorMin = _transform.anchorMax = new Vector2(_startAnchorX, _startAnchorY);
+        }
+
+        private IEnumerator Open(bool flash, float speedMod=1)
         {
             yield return new WaitForSeconds(waitTime);
             
-            for (var i = 0; i < numberOfFlashes; i++)
+            for (var i = 0; i < numberOfFlashes/speedMod; i++)
             {
-                var wait = i == 0 ? waitBeforeFlash : 0;
-                for (float t = 0; t < flashTime + wait; t += Time.fixedDeltaTime)
+                var wait = i == 0 ? waitBeforeFlash/speedMod : 0;
+                for (float t = 0; t < flashTime/speedMod + wait; t += Time.fixedDeltaTime)
                 {
                     yield return new WaitForFixedUpdate();
 
-                    var a = Mathf.SmoothStep(t - wait < flashTime / 2 ? 0 : 1, t - wait < flashTime / 2 ? 1 : 0, 2 * (t - wait) / flashTime % 1);
-                    if (t > wait) circle.SetAlpha(a);
+                    var a = Mathf.SmoothStep(t - wait < flashTime/speedMod / 2 ? 0 : 1, t - wait < flashTime/speedMod / 2 ? 1 : 0, 2 * (t - wait) / flashTime/speedMod % 1);
+                    if (flash && t > wait) circle.SetAlpha(a);
                     if (i == 0 && t < barExpandTime)
                     {
-                        _transform.anchorMin = new Vector2(Mathf.Lerp(_startAnchorX, _anchorMinX, t/barExpandTime),
-                            Mathf.Lerp(_startAnchorY, _startAnchorY - barHeight/2, Mathf.Clamp01(5*t/barExpandTime)));
-                        _transform.anchorMax = new Vector2(Mathf.Lerp(_startAnchorX, _anchorMaxX, t/barExpandTime),
-                            Mathf.Lerp(_startAnchorY, _startAnchorY + barHeight/2, Mathf.Clamp01(5*t/barExpandTime)));
-                    } else if (i < numberOfFlashes - 1 || t < flashTime / 2) _box.SetAlpha(a); 
+                        _transform.anchorMin = new Vector2(Mathf.Lerp(_startAnchorX, _anchorMinX, t / barExpandTime*speedMod),
+                            Mathf.Lerp(_startAnchorY, _startAnchorY - barHeight / 2,
+                                Mathf.Clamp01(5 * t / barExpandTime*speedMod)));
+                        _transform.anchorMax = new Vector2(Mathf.Lerp(_startAnchorX, _anchorMaxX, t / barExpandTime*speedMod),
+                            Mathf.Lerp(_startAnchorY, _startAnchorY + barHeight / 2,
+                                Mathf.Clamp01(5 * t / barExpandTime*speedMod)));
+                    }
+                    else if (!flash) break; 
+                    else if (i < numberOfFlashes - 1 || t < flashTime/speedMod / 2) _box.SetAlpha(a); 
                 }
             }
             _box.SetAlpha(1);
             _person.SetAlpha(0);
             _personBox.SetAlpha(0);
 
-            yield return new WaitForSeconds(waitBeforeOpen);
+            if (flash) yield return new WaitForSeconds(waitBeforeOpen/speedMod);
 
-            for (float t = 0; t < openTime; t += Time.fixedDeltaTime)
+            for (float t = 0; t < openTime/speedMod; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
                 
-                _transform.anchorMin = new Vector2(_anchorMinX, Mathf.Lerp(_startAnchorY - barHeight/2, _anchorMinY, t/openTime));
-                _transform.anchorMax = new Vector2(_anchorMaxX, Mathf.Lerp(_startAnchorY + barHeight/2, _anchorMaxY, t/openTime));
+                _transform.anchorMin = new Vector2(_anchorMinX, Mathf.Lerp(_startAnchorY - barHeight/2, _anchorMinY, t/openTime*speedMod));
+                _transform.anchorMax = new Vector2(_anchorMaxX, Mathf.Lerp(_startAnchorY + barHeight/2, _anchorMaxY, t/openTime*speedMod));
             }
 
-            for (float t = 0; t < personFadeInTime; t += Time.fixedDeltaTime)
+            for (float t = 0; t < personFadeInTime/speedMod; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
                 
-                _person.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime));
-                _personBox.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime));
+                _person.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime*speedMod));
+                _personBox.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime*speedMod));
             }
 
             _opened = true;

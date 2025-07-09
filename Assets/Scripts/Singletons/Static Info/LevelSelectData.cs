@@ -11,6 +11,7 @@ namespace Singletons.Static_Info
     {
         public static readonly LevelType Entrance = new("The entrance to the galaxy. Where you just came from!");
         public static readonly LevelType Normal = new("The Cult of the Void has control. Can you break them?");
+        public static readonly LevelType Tutorial = new("Finish the tutorial!");
         public static readonly LevelType Elite = new("The Cult of the Void has control. Can you bre~kskxzsh");
         public static readonly LevelType Boss = new("The Void beckons...");
         public static readonly LevelType SpaceStation = new("A brief respite for the weary. Who might you find?");
