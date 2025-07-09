@@ -45,12 +45,6 @@ namespace Spawnables.Controllers.Boids
                 original = false;
                 transform.parent.GetComponent<BoidSpawner>().Ready();
             }
-            //_collisionObjs = new List<GameObject>();
-            //_collisionObjs.Add(collisionObj);
-            //for (int i = 0; i < numRays - 1; i++)
-            //{
-            //    _collisionObjs.Add(Instantiate(collisionObj));
-            //}
         }
 
         // Update is called once per frame

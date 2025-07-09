@@ -72,7 +72,7 @@ namespace Spawnables
                 }
 
                 int bullets = Mathf.Min(_currClipCap, bulletsPerShot + Random.Range(-bulletsPerShotVarience, bulletsPerShotVarience + 1));
-                // _currClipCap -= bullets;
+                _currClipCap -= bullets;
                 for (int i = 0; i < bullets; i++)
                 {
                     float latOff, verOff;
