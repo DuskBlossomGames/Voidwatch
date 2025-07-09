@@ -248,6 +248,7 @@ namespace Player
         {
             foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;
             foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = false;
+            GetComponentInChildren<AmmoBar>().gameObject.SetActive(false);
             
             _movement.SetInputBlocked(true);
             
@@ -274,6 +275,7 @@ namespace Player
                 GetComponent<SpriteRenderer>().enabled = true;
                 foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = true;
                 foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = true;
+                GetComponentInChildren<AmmoBar>().gameObject.SetActive(true);
                 _movement.SetInputBlocked(false);
                 GetComponent<EnforcePlayArea>().Reset();
                 Health = MaxHealth;
