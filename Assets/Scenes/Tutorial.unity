@@ -5413,7 +5413,7 @@ MonoBehaviour:
   instruction: {fileID: 486999784}
   warning: {fileID: 1298423072}
   instructionFadeTime: 1
-  warningWaitTime: 1
+  warningWaitTime: 0.5
   warningFadeTime: 1
   playerMovement: {fileID: 2066395882}
   scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
@@ -6126,16 +6126,16 @@ MonoBehaviour:
   - {fileID: 479703026}
   everythingElse: {fileID: 523975390}
   minimapFadeTime: 1.5
-  titleTime: 1.25
-  titleWaitTime: 0.3
-  subtitleFadeTime: 1.4
-  subtitleWaitTime: 0.4
-  slideTime: 1.5
-  slideWaitTime: 0.3
+  titleTime: 0
+  titleWaitTime: 0
+  subtitleFadeTime: 0
+  subtitleWaitTime: 0
+  slideTime: 0
+  slideWaitTime: 0
   fadeInTime: 1.7
   startAnchorMin: 0.6
   startAnchorMax: 0.75
-  debugUpgrade: 13
+  debugUpgrade: -1
   playMov: {fileID: 2066395882}
   followPlayer: {fileID: 1390494418}
   raycaster: {fileID: 739004519}
@@ -8619,7 +8619,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '>> enter to continue <<'
+  m_text: '>> space to continue <<'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
   m_sharedMaterial: {fileID: 7206338398465205622, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
@@ -13658,6 +13658,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 739004518}
     m_Modifications:
+    - target: {fileID: 2537328440739691775, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1069860546}
+    - target: {fileID: 2537328440739691775, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Reroll
+      objectReference: {fileID: 0}
+    - target: {fileID: 2537328440739691775, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Player.NewUpgradeManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3493475472164691200, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -13667,6 +13679,18 @@ PrefabInstance:
       value: SelectUpgrade
       objectReference: {fileID: 0}
     - target: {fileID: 3493475472164691200, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Player.NewUpgradeManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150130950135428502, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1069860546}
+    - target: {fileID: 4150130950135428502, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Scavenge
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150130950135428502, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Player.NewUpgradeManager, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -13717,6 +13741,10 @@ PrefabInstance:
     - target: {fileID: 6136461721657598665, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Player.NewUpgradeManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6844589767955892121, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7150606377639650071, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
       propertyPath: m_Pivot.x

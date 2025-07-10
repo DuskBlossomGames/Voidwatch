@@ -275,7 +275,7 @@ namespace Player
                 GetComponent<SpriteRenderer>().enabled = true;
                 foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = true;
                 foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = true;
-                GetComponentInChildren<AmmoBar>().gameObject.SetActive(true);
+                GetComponentInChildren<AmmoBar>(true).gameObject.SetActive(true);
                 _movement.SetInputBlocked(false);
                 GetComponent<EnforcePlayArea>().Reset();
                 Health = MaxHealth;

@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Rendering;
 using static Singletons.Static_Info.PlayerData;
 
 namespace Singletons.Static_Info
@@ -10,8 +13,26 @@ namespace Singletons.Static_Info
         protected static readonly float[] BOOST_AMOUNTS = { 1f, 1.2f, 1.5f, 2f };
         
         public static readonly int[] BOOST_COSTS = { 100, 300, 900 };
-        public static readonly List<BoostableStat> STATS = new ();
         
+        protected static readonly List<BoostableStat> STATS = new();
+        public static List<BoostableStat> Stats
+        {
+            get
+            {
+                for (var i = STATS.Count - 1; i >= 0; i--)
+                {
+                    for (var j = i-1; j >= 0; j--)
+                    {
+                        if (STATS[i].name != STATS[j].name) continue;
+                        
+                        STATS.RemoveAt(j);
+                        i--;
+                    }
+                }
+                return new List<BoostableStat>(STATS);
+            }
+        }
+
         public virtual int Boosts { get; set; }
         public string name;
     }

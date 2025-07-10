@@ -15,7 +15,7 @@ namespace Spawnables.Controllers.Bullets
     public class BulletCollision : MonoBehaviour
     {
         public bool scaleWithDamage;
-        public float dmg = 10000000;
+        public float dmg;
         public GameObject owner;
         public int chains;
         public float shieldMult, bleedPerc;

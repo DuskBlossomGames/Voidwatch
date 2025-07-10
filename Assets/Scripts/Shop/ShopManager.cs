@@ -39,7 +39,7 @@ namespace Shop
         
         private void Start()
         {
-            _stats = BoostableStat.STATS.OrderBy(_=>Random.value).Take(3).ToList();
+            _stats = BoostableStat.Stats.OrderBy(_=>Random.value).Take(3).ToList();
             _healPreviewTimer.Value = 0.085f;
             _healPreviewTimer.SetValue(0);
 

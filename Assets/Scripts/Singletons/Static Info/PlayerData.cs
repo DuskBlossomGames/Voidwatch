@@ -70,7 +70,7 @@ namespace Singletons.Static_Info
             Addressables.LoadAssetsAsync<Sprite>(boostableStatSprite, null).Completed += handle =>
             {
                 var byName = handle.Result.ToDictionary(s => s.name, s => s);
-                foreach (var stat in BoostableStat.STATS)
+                foreach (var stat in BoostableStat.Stats)
                 {
                     BoostableStatSprites[stat.name] = byName[stat.name];
                 }

@@ -14,8 +14,8 @@ namespace Player
             public static readonly List<Rarity> ALL = new();
 
             public static readonly Rarity Common = new(0.7f, "common");
-            public static readonly Rarity Rare = new(0.25f, "rare");
-            public static readonly Rarity Legendary = new(0.05f, "legendary");
+            public static readonly Rarity Rare = new(0.27f, "rare");
+            public static readonly Rarity Legendary = new(0.03f, "legendary");
 
             public readonly float Weight;
             public readonly string Name;

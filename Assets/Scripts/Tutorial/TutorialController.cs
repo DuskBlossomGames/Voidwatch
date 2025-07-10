@@ -38,7 +38,7 @@ namespace Tutorial
                 {
                     "Welcome to the Voidwatch Academy. Here you will learn how to be a part of the galaxy's greatest fighting force. And our last hope.",
                     "Your ship accelerates towards the mouse when <b>{Accelerate}</b> is pressed. The camera also expands to follow the mouse; <b>it is recommended to keep the mouse farther out</b>.",
-                    "Finally, <b>{Brake}</b> can be used to brake and slow movement. Continue to practice the movement.",
+                    "Finally, <b>{Brake}</b> can be used to brake and slow movement. Continue, to practice the movement.",
                     "Practice Accelerating and Braking"
                 }
             },
@@ -54,7 +54,7 @@ namespace Tutorial
                 Stage.Attacking, new []
                 {
                     "Use <b>{PrimaryWeapon}</b> to attack, with your ammo displayed in a partial circle around your ship. Beware getting too close to enemies, as contact will damage both them and you.",
-                    "All enemies also have an arrow pointing to them while offscreen. Continue to practice on targets.",
+                    "All enemies also have an arrow pointing to them while offscreen. Continue, to practice on targets.",
                     "Destroy the Targets"
                 }
             },
@@ -62,7 +62,7 @@ namespace Tutorial
                 Stage.Enemy, new[]
                 {
                     "Your HUD displays a red health bar with blue shield on top, which automatically regenerates over time. It also displays a minimap with enemies highlighted in red.",
-                    "The safety border around the play area will now be removed, allowing the orbital cannons to attack should you exit. Continue to practice on a real enemy.",
+                    "The safety border around the play area will now be removed, allowing the orbital cannons to attack should you exit. Continue, to practice on a real enemy.",
                     "Defeat the Missiler"
                 }
             },
@@ -249,10 +249,16 @@ namespace Tutorial
                 case Stage.Attacking:
                 {
                     if (_genFloat == 0) _genFloat = Time.time;
-                    if (Time.time - _genFloat > 20 && !targets.GetComponentsInChildren<EnemyDamageable>()
-                            .Any(d => d.Health < d.MaxHealth))
+                    if (Time.time - _genFloat > 20)
                     {
-                        ShowWarning("TIP: follow the arrows at the edge of the screen");
+                        if (!targets.GetComponentsInChildren<EnemyDamageable>().Any(d => d.Health < d.MaxHealth))
+                        {
+                            ShowWarning("TIP: follow the arrows at the edge of the screen");
+                        }
+                        else
+                        {
+                            _genFloat = 0;
+                        }
                     }
 
                     _metCondition |= targets.transform.childCount == 0;
@@ -285,7 +291,6 @@ namespace Tutorial
                 }
                 case Stage.Enemies:
                 {
-                    print(enemies.transform.childCount);
                     _metCondition |= enemies.transform.childCount == 0;
                     break;
                 }
@@ -391,9 +396,9 @@ namespace Tutorial
                         dialogueController.Continue -= Continue;
                         StartCoroutine(FadeOut(() =>
                         {
-                            ExitTutorial();
                             Destroy(StaticInfoHolder.Instance.gameObject);
                             SceneManager.LoadScene("TitleScreen");
+                            ExitTutorial();
                         }));
                         return;
                     }
