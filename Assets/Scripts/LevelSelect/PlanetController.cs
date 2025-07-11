@@ -25,7 +25,7 @@ namespace LevelSelect
             _scaleTimer.Value = 1;
             _scaleTimer.SetValue(0);
             
-            if (Clickable && Level.Type != LevelType.SpaceStation) transform.GetChild(0).gameObject.SetActive(true);
+            if (Clickable && Level.Type == LevelType.Normal) transform.GetChild(0).gameObject.SetActive(true);
             GetComponent<Selectable>().clickable = Clickable;
             GetComponent<Selectable>().selector.OnSelectionChange += pos => _selected = pos == Level.WorldPosition;
         }
@@ -52,7 +52,7 @@ namespace LevelSelect
             foreach (var s in transform.parent.GetComponentsInChildren<Selectable>()) s.clickable = false;
             
             playerMini.GoTo(Level.WorldPosition, LevelIdx,
-                Level.IsBoss ? "LevelBoss" : Level.Type == LevelType.SpaceStation ? "Shop" : Level.Type == LevelType.Tutorial ? "Tutorial" : "LevelPlay");
+                Level.Type == LevelType.Boss ? "LevelBoss" : Level.Type == LevelType.SpaceStation ? "Shop" : Level.Type == LevelType.Tutorial ? "Tutorial" : "LevelPlay");
         }
 
     }

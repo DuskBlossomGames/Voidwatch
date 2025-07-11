@@ -19,7 +19,7 @@ namespace Menus.Pause
             "Platelin colonies will multiply to be a problem if not dealt with early",
             "Chargers can be shot down to prevent their EMP detonation",
             "asteroids can be deadly!",
-            "in the shop, you can boost Health, Shield, Speed, Void Energy, Damage, and Ammo"
+            "at space stations, you can boost Health, Shield, Speed, Void Energy, Damage, and Ammo"
         };
 
         public float thickness, padding;

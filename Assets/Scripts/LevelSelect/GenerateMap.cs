@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Extensions;
 using Singletons.Static_Info;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -15,24 +16,21 @@ namespace LevelSelect
     {
         public Material lineMaterial;
         public GameObject planetPrefab;
-        public AssetLabelReference spriteLabel;
-        public Sprite hiddenSprite, spaceStationSprite, entranceSprite;
+        public Sprite eliteSprite, hiddenSprite, spaceStationSprite, entranceSprite;
         public MiniPlayerController playerMini;
         public MapController mapController;
 
-        public int mapGridSize;
-        public int minLevels, avgLevels, expScale;
-        public int minPlanetConnections, maxPlanetConnections;
-        public int minBossStartDist, minBossShopDist, minEliteDist;
-        public int minElites, maxElites;
-        public int minEligibleBosses;
+        public Pair<Sprite, string[]>[] planetNames;
+        public string[] spaceStationNames;
+        private Dictionary<Sprite, List<string>> _planetNames;
+        private List<string> _spaceStationNames;
         
 #if UNITY_EDITOR
         private void Update()
         {
             if (InputManager.GetKeyUp(KeyCode.LeftBracket))
             {
-                for (var i = 1; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
+                for (var i = 2; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
                 LevelSelectDataInstance.RevealAll();
                 RenderGalaxy(true);
             }
@@ -41,18 +39,19 @@ namespace LevelSelect
 
         private void Start()
         {
-            Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
-            {
-                // only re-generate if it doesn't already exist
-                if (LevelSelectDataInstance.CurrentPlanet == -1) GenerateGalaxy(handle.Result);
+            _planetNames = planetNames.ToDictionary(p=>p.a, p=>new List<string>(p.b));
+            _spaceStationNames = new List<string>(spaceStationNames);
+            
 
-                playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 2f);
-                RenderGalaxy();
-                mapController.Instantiate();
-            };
+            // only re-generate if it doesn't already exist
+            if (LevelSelectDataInstance.CurrentPlanet == -1) GenerateGalaxy();
+
+            playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 2f);
+            RenderGalaxy();
+            mapController.Instantiate();
         }
         
-        private void GenerateGalaxy(IList<Sprite> sprites)
+        private void GenerateGalaxy()
         {
             var levels = new List<LevelData>();
             var connections = new List<Tuple<int, int>>();
@@ -65,21 +64,20 @@ namespace LevelSelect
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{1},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Name = "Entrance",
-                    LoreText = ""
             });
 
             int i;
             for (i = 0; i < (PlayerDataInstance.IsTutorial ? 1 : 5); i++)
             {
+                var sprite = _planetNames.Keys.ElementAt(Random.Range(0, _planetNames.Keys.Count));
                 levels.Add(new LevelData {
                     Type = LevelType.Normal,
-                    Sprite = sprites[Random.Range(0, sprites.Count)],
+                    Sprite = sprite,
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{i,i+2},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*(i+1), 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Name = "Planet",
-                    LoreText = ""
+                    Title = _planetNames[sprite].Pop(Random.Range(0, _planetNames.Count)),
+                    Description = "Cult of the Void controlled"
                 });
                 connections.Add(new Tuple<int, int>(i, i+1));
             }
@@ -90,19 +88,19 @@ namespace LevelSelect
                 HiddenSprite = hiddenSprite,
                 Connections = new List<int>{i, i+2},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                Name = "Space Station",
-                LoreText = ""
+                Title = _spaceStationNames.Pop(Random.Range(0, _spaceStationNames.Count)),
+                Description = "A respite for the weary"
             });
             connections.Add(new Tuple<int, int>(i-1, i));
             
             levels.Add(new LevelData {
                 Type = PlayerDataInstance.IsTutorial ? LevelType.Tutorial : LevelType.Elite,
-                Sprite = sprites[Random.Range(0, sprites.Count)],
+                Sprite = eliteSprite,
                 HiddenSprite = hiddenSprite,
                 Connections = new List<int>{i},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                Name = "Elite Enemy",
-                LoreText = ""
+                Title = "Deep Space",
+                Description = "Home of the Carcadon"
             });
             connections.Add(new Tuple<int, int>(i-1, i));
 
