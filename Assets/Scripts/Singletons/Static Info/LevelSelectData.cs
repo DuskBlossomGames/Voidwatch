@@ -1,39 +1,47 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Singletons.Static_Info
 {
-    public class LevelType
+    public enum LevelType
     {
-        public static readonly LevelType Entrance = new("The entrance to the galaxy. Where you just came from!");
-        public static readonly LevelType Normal = new("The Cult of the Void has control. Can you break them?");
-        public static readonly LevelType Tutorial = new("Finish the tutorial!");
-        public static readonly LevelType Elite = new("The Cult of the Void has control. Can you bre~kskxzsh");
-        public static readonly LevelType Boss = new("The Void beckons...");
-        public static readonly LevelType SpaceStation = new("A brief respite for the weary. Who might you find?");
-
-        public readonly string Description;
-
-        private LevelType() { }
-        private LevelType(string description)
-        {
-            Description = description;
-        }
-
-        // TODO: warp (wormhole)
-        // TODO: other NPCs
-
+        Entrance, Normal, Tutorial, Elite, Boss, SpaceStation
     }
 
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public class Difficulty
+    {
+        public static readonly Difficulty Easy = new("Easy", Color.HSVToRGB(0.36f, 1, 0.75f));
+        public static readonly Difficulty Medium = new("Medium", Color.HSVToRGB(0.16f, 1, 0.85f));
+        public static readonly Difficulty Difficult = new("Difficult", Color.HSVToRGB(0f, 0.9f, 0.9f));
+        public static readonly Difficulty Insane = new("Insane", Color.HSVToRGB(0.83f, 0.7f, 1));
+
+        public readonly string Text;
+        public readonly Color Color;
+        
+        public static int Count { get; private set; }
+        private Difficulty(string text, Color color)
+        {
+            Text = text;
+            Color = color;
+
+            Count++;
+        }
+        
+        public static implicit operator Difficulty(int idx) { return (Difficulty) typeof(Difficulty).GetFields(BindingFlags.Static | BindingFlags.Public)[idx].GetValue(null); }
+    }
+    
     public class LevelData
     {
         public LevelType Type;
         public int Loot;
-        public int DifficultyScore, MaxTier;
+        public int MaxTier;
         public int HazardBudget, HazardLoot;
         public int[] Waves;
         public Sprite Sprite;
@@ -42,10 +50,8 @@ namespace Singletons.Static_Info
 
         public Vector3 WorldPosition;
 
-        public string Name;
-        public string LoreText;
-
-        public bool IsBoss;
+        public string Title, Description;
+        public Difficulty Difficulty;
     }
 
     public class LevelSelectData : MonoBehaviour
@@ -60,7 +66,7 @@ namespace Singletons.Static_Info
         public int[] minBudgetPerWave;
 
         // based on how difficultyScore is generated below
-        public float MaxDifficultyScore => baseDifficulty + levelModifier * (Levels.Length - 1) + randomModifier;
+        public float MaxDifficultyScore => baseDifficulty + levelModifier * Levels.Count(l=>l.Type == LevelType.Normal) + randomModifier;
         
         public const int EliteWaves = 3;
         private const int EliteWaveStart = 1; // for difficulty, which wave elites start at (2)
@@ -92,9 +98,13 @@ namespace Singletons.Static_Info
                     var level = Levels[idx];
                     if (level.Waves != null) continue;
 
-                    var difficultyScore = level.Type == LevelType.Boss ? MaxDifficultyScore :
-                        level.Type == LevelType.Elite ? EliteDifficulty :
-                        baseDifficulty + levelModifier * (_visitedPlanets.Count - 1) + Random.Range(0, 1) * randomModifier;
+                    var difficultyScore = level.Type switch
+                    {
+                        LevelType.Boss => MaxDifficultyScore,
+                        LevelType.Elite => EliteDifficulty,
+                        LevelType.SpaceStation => 0,
+                        _ => baseDifficulty + levelModifier * _visitedPlanets.Count(p=>Levels[p].Type == LevelType.Normal) + Random.Range(0, 1) * randomModifier
+                    };
                     
                     var difficultyBudget = (int) (gameDifficultyModifier * difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/);
                     List<int> waves = new();
@@ -149,9 +159,11 @@ namespace Singletons.Static_Info
                     }
 
                     level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
-                    level.DifficultyScore = (int) difficultyScore;
                     level.MaxTier = (int) (5*Mathf.Pow(difficultyScore/MaxDifficultyScore, 2/3f) + 1);
                     level.Waves = waves.ToArray();
+
+                    var scale = Difficulty.Count/2;
+                    level.Difficulty = (int) (scale * Mathf.Pow(2, 1.5f*Mathf.Clamp01(difficultyScore / MaxDifficultyScore)) - scale);
                 }
             }
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Extensions;
 using Singletons.Static_Info;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -20,19 +21,15 @@ namespace LevelSelect
         public MiniPlayerController playerMini;
         public MapController mapController;
 
-        public int mapGridSize;
-        public int minLevels, avgLevels, expScale;
-        public int minPlanetConnections, maxPlanetConnections;
-        public int minBossStartDist, minBossShopDist, minEliteDist;
-        public int minElites, maxElites;
-        public int minEligibleBosses;
+        public string[] planetNames, spaceStationNames;
+        private List<string> _planetNames, _spaceStationNames;
         
 #if UNITY_EDITOR
         private void Update()
         {
             if (InputManager.GetKeyUp(KeyCode.LeftBracket))
             {
-                for (var i = 1; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
+                for (var i = 2; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
                 LevelSelectDataInstance.RevealAll();
                 RenderGalaxy(true);
             }
@@ -41,6 +38,9 @@ namespace LevelSelect
 
         private void Start()
         {
+            _planetNames = new List<string>(planetNames);
+            _spaceStationNames = new List<string>(spaceStationNames);
+            
             Addressables.LoadAssetsAsync<Sprite>(spriteLabel, null).Completed += handle =>
             {
                 // only re-generate if it doesn't already exist
@@ -65,8 +65,6 @@ namespace LevelSelect
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{1},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Name = "Entrance",
-                    LoreText = ""
             });
 
             int i;
@@ -78,8 +76,8 @@ namespace LevelSelect
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{i,i+2},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*(i+1), 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Name = "Planet",
-                    LoreText = ""
+                    Title = _planetNames.Pop(Random.Range(0, _planetNames.Count)),
+                    Description = "Cult of the Void controlled"
                 });
                 connections.Add(new Tuple<int, int>(i, i+1));
             }
@@ -90,8 +88,8 @@ namespace LevelSelect
                 HiddenSprite = hiddenSprite,
                 Connections = new List<int>{i, i+2},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                Name = "Space Station",
-                LoreText = ""
+                Title = _spaceStationNames.Pop(Random.Range(0, _spaceStationNames.Count)),
+                Description = "A respite for the weary"
             });
             connections.Add(new Tuple<int, int>(i-1, i));
             
@@ -101,8 +99,8 @@ namespace LevelSelect
                 HiddenSprite = hiddenSprite,
                 Connections = new List<int>{i},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                Name = "Elite Enemy",
-                LoreText = ""
+                Title = "Deep Space",
+                Description = "Home of the Carcadon..."
             });
             connections.Add(new Tuple<int, int>(i-1, i));
 

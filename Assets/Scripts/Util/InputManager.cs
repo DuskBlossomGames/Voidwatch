@@ -83,15 +83,14 @@ namespace Util
         public static readonly InputAction PrimaryWeapon = new();
         public static readonly InputAction SecondaryWeapon = new();
 
-        public static int Count { get; private set; }
         
         public static InputAction Parse(string s)
         {
             return (InputAction)typeof(InputAction).GetField(s, BindingFlags.Static | BindingFlags.Public)!.GetValue(null);
         }
 
+        public static int Count { get; private set; }
         private readonly int _idx;
-
         private InputAction() { _idx = Count++; }
 
         public static implicit operator InputAction(int idx) { return (InputAction) typeof(InputAction).GetFields(BindingFlags.Static | BindingFlags.Public)[..^1][idx].GetValue(null); }

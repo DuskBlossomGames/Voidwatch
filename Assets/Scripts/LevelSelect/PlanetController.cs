@@ -52,7 +52,7 @@ namespace LevelSelect
             foreach (var s in transform.parent.GetComponentsInChildren<Selectable>()) s.clickable = false;
             
             playerMini.GoTo(Level.WorldPosition, LevelIdx,
-                Level.IsBoss ? "LevelBoss" : Level.Type == LevelType.SpaceStation ? "Shop" : Level.Type == LevelType.Tutorial ? "Tutorial" : "LevelPlay");
+                Level.Type == LevelType.Boss ? "LevelBoss" : Level.Type == LevelType.SpaceStation ? "Shop" : Level.Type == LevelType.Tutorial ? "Tutorial" : "LevelPlay");
         }
 
     }

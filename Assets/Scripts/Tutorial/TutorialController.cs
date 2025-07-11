@@ -70,8 +70,8 @@ namespace Tutorial
                 Stage.UI, new[]
                 {
                     "Every world you clear can be <b>Pilfered</b> for an upgrade, or <b>Scavenged</b> for a random quantity of scrap. Your current upgrades are visible in the pause menu.",
-                    "Scrap is also recieved from enemies, and can be spent on <b>Pilfering Further</b> to see new upgrade options, or <b>Boosting</b> stats in the Shop. You have been given 500 scrap.",
-                    "Select an Upgrade then Visit the Shop"
+                    "Scrap is also recieved from enemies, and can be spent on <b>Pilfering Further</b> to see new upgrade options, or <b>Boosting</b> stats in the Space Station. You have been given 500 scrap.",
+                    "Select an Upgrade then Visit the Space Station"
                 }
             },
             {
