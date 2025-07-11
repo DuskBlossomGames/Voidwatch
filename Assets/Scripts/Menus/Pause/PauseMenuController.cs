@@ -53,6 +53,7 @@ namespace Menus.Pause
                 Time.timeScale = 0;
                 InputManager.isPaused = true;
 
+                FindAnyObjectByType<MusicTransitionManager>().enabled = false;
                 foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.Pause();
             }
         }
@@ -63,6 +64,7 @@ namespace Menus.Pause
             InputManager.isPaused = false;
             canvas.SetActive(false);
             foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.UnPause();
+            FindAnyObjectByType<MusicTransitionManager>().enabled = true;
         }
 
         public void Options()

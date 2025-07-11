@@ -107,7 +107,7 @@ namespace LevelSelect
             connections.Add(new Tuple<int, int>(i-1, i));
 
             LevelSelectDataInstance.PopulateData(levels.ToArray(), connections.ToArray());
-            LevelSelectDataInstance.CurrentPlanet = 1;
+            LevelSelectDataInstance.CurrentPlanet = PlayerDataInstance.IsTutorial ? 1 : 0;
         }
 
         private void RenderGalaxy(bool revealAll = false)
