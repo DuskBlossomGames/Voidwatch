@@ -6546,29 +6546,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineMaterial: {fileID: 2100000, guid: 15aa2d3c3b66d49698ea2ae7f9a3c4a7, type: 2}
   planetPrefab: {fileID: 1680533821085019361}
-  spriteLabel:
-    m_LabelString: planets
+  eliteSprite: {fileID: 21300000, guid: 41146739b277f49a48bcf1b66700d454, type: 3}
   hiddenSprite: {fileID: 21300000, guid: 9be96e015369c43edae8d4f7a511c4bf, type: 3}
   spaceStationSprite: {fileID: 21300000, guid: 2bda11fe986974445b5f06ae3ffa0169, type: 3}
   entranceSprite: {fileID: 21300000, guid: e758bd15639d74ba888c3b34e56e38a7, type: 3}
   playerMini: {fileID: 1289256210}
   mapController: {fileID: 1875686438}
   planetNames:
-  - Velmorin
-  - Caelus
-  - New Thessaly
-  - Aeternum
-  - Halden Reach
-  - Elaris Prime
-  - Liora
-  - Virella
-  - Tarnix
-  - Draymoor
-  - Orelius
-  - Rendax
-  - Mireden
-  - Junith
-  - Cryden
+  - a: {fileID: 21300000, guid: 3bc0bcf1ea37a47f8a69c89e76e4a651, type: 3}
+    b:
+    - Velmorin
+    - New Thessaly
+    - Virella
+    - Mireden
+    - Junith
+    - Isenmark
+  - a: {fileID: 21300000, guid: 0cf666e707d3e40fea8023af38d6fcac, type: 3}
+    b:
+    - Aeternum
+    - Halden Reach
+    - Elaris Prime
+    - Liora
+    - Orelius
+    - Cryden
+  - a: {fileID: 21300000, guid: 354e8fe3b5769452da08f36dfee42b8b, type: 3}
+    b:
+    - Caelus
+    - Tarnix
+    - Draymoor
+    - Mireforge
+    - Rendax
+    - Brumal
   spaceStationNames:
   - 'Karnith Station '
   - Forgehold-6

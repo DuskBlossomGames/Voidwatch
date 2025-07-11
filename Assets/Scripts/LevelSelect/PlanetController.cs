@@ -25,7 +25,7 @@ namespace LevelSelect
             _scaleTimer.Value = 1;
             _scaleTimer.SetValue(0);
             
-            if (Clickable && Level.Type != LevelType.SpaceStation) transform.GetChild(0).gameObject.SetActive(true);
+            if (Clickable && Level.Type == LevelType.Normal) transform.GetChild(0).gameObject.SetActive(true);
             GetComponent<Selectable>().clickable = Clickable;
             GetComponent<Selectable>().selector.OnSelectionChange += pos => _selected = pos == Level.WorldPosition;
         }

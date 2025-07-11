@@ -21,12 +21,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - upgrade-sprites
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7c73869e016d24e6ab576ed09db01a13
-    m_Address: Assets/Sprites/Planets
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - planets
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bcba12ffcccca47c7afbad0e2f988c33
     m_Address: Assets/Sprites/Upgrades/Borders
     m_ReadOnly: 0
