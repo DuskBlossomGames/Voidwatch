@@ -21,6 +21,7 @@ namespace Spawnables.Controllers.Bullets
         public float shieldMult, bleedPerc;
         public bool ignoresOwner;
 
+        private bool _hasChained;
         private GameObject _firstCollider;
     
         [CanBeNull] public GameObject explosion;
@@ -91,6 +92,9 @@ namespace Spawnables.Controllers.Bullets
                         
                         chains -= 1;
                         _firstCollider = other;
+
+                        if (!_hasChained) dmg *= 0.5f;
+                        _hasChained = true;
 
                         GetComponent<CustomRigidbody2D>().linearVelocity =
                             GetComponent<CustomRigidbody2D>().linearVelocity.magnitude * (nearest.transform.position - transform.position).normalized;
