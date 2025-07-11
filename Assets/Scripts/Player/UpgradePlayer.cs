@@ -81,7 +81,6 @@ namespace Player
                 () =>
                 {
                     PlayerDataInstance.maxShield.MulEq(1.3f);
-                    PlayerDataInstance.maxShieldDebt *= 1.5f;
                     PlayerDataInstance.shieldRegenRate *= .75f;
                 }),
             new("Hyperefficient Generators",
@@ -100,7 +99,6 @@ namespace Player
                 () => {
                     PlayerDataInstance.shieldRegenRate *= 1.3f;
                     PlayerDataInstance.maxShield.MulEq(1.8f);
-                    PlayerDataInstance.maxShieldDebt *= .2f;
                     PlayerDataInstance.maxHealth.MulEq(0.7f);
                     PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.maxHealth);
                 }),

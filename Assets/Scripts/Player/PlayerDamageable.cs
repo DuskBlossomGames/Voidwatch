@@ -41,7 +41,8 @@ namespace Player
         public float minVignetteScale, maxVignetteScale;
 
         public ProgressBar healthBar, shieldBar;
-
+        public float shieldBreakCooldown, damageCooldown;
+        
         public AudioClip shieldDamageClip;
         public AudioClip healthDamageClip;
         // TODO: swap PlayerHitShield and PlayerHitDamage
@@ -64,10 +65,8 @@ namespace Player
             set => PlayerDataInstance.Health = value;
         }
 
-        protected float ShieldRegenRate => PlayerDataInstance.shieldRegenRate;
-        protected float ShieldMaxPower => PlayerDataInstance.maxShield;
-        protected float ShieldMaxDebt => PlayerDataInstance.maxShieldDebt;
-        protected float ShieldPower;
+        private float _shieldPower;
+        private readonly Timer _shieldCooldown = new();
 
         private readonly Timer _vignetteTimer = new();
         private readonly List<float> _vignetteCacheKeys = new();
@@ -77,6 +76,11 @@ namespace Player
 
         private Vector3 _startLoc;
 
+        private void DelayShield(float delay)
+        {
+            _shieldCooldown.Value = Mathf.Max(_shieldCooldown.Value, delay);
+        }
+        
         public new void Start()
         {
             _movement = GetComponent<Movement>();
@@ -86,7 +90,7 @@ namespace Player
             healthBar.UpdatePercentage(Health, MaxHealth);
 
             Destroy(_healthBar);
-            ShieldPower = ShieldMaxPower;
+            _shieldPower = PlayerDataInstance.maxShield;
 
             for (float t = 0; t <= vignettePeak * vignetteDuration; t += Time.fixedDeltaTime)
             {
@@ -101,9 +105,13 @@ namespace Player
             if (((Vector2)transform.position).sqrMagnitude > 200 * 200) Damage(float.MaxValue, FindAnyObjectByType<PointAtTargets>().gameObject);
 
             if (Health < 0) OnDeath(null);
-            
-            ShieldPower = Mathf.Clamp(ShieldPower + ShieldRegenRate * Time.deltaTime, -ShieldMaxDebt, ShieldMaxPower);
-            shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
+
+            _shieldCooldown.Update();
+            if (_shieldCooldown.IsFinished)
+            {
+                _shieldPower = Mathf.Clamp(_shieldPower + PlayerDataInstance.shieldRegenRate * Time.deltaTime, 0, PlayerDataInstance.maxShield);
+            }
+            shieldBar.UpdatePercentage(_shieldPower, PlayerDataInstance.maxShield);
             healthBar.UpdatePercentage(Health, MaxHealth);
         }
 
@@ -116,11 +124,12 @@ namespace Player
         // returns true if the shields got broken
         public bool TakeEMP(float damage)
         {
-            ShieldPower = Mathf.Max(ShieldPower - damage, -ShieldMaxDebt);
-            
+            _shieldPower = Mathf.Max(_shieldPower - damage, 0);
             AudioPlayer.Play(shieldDamageClip, 0.9f, 0.2f);
             
-            return ShieldPower < 0;
+            DelayShield(_shieldPower <= 0 ? shieldBreakCooldown : damageCooldown);
+            
+            return _shieldPower <= 0;
         }
 
         public override void Damage(float damage, GameObject source) { Damage(damage, source, 1, 0); }
@@ -164,27 +173,23 @@ namespace Player
 
             if (damage > 0)
             {
-                if (ShieldPower < 0)
+                if (_shieldPower <= 0)
                 {
                     bleed += damage;
                 }
                 else
                 {
-                    ShieldPower -= damage * shieldMult;
-                    if (ShieldPower < -ShieldMaxDebt)
-                    {
-                        var overDebt = -ShieldMaxDebt - ShieldPower;
-                        ShieldPower += overDebt;
-                        bleed += overDebt / shieldMult;
-                    }
-
+                    _shieldPower = Mathf.Clamp(_shieldPower - damage * shieldMult, 0, PlayerDataInstance.maxShield);
                     AudioPlayer.Play(shieldDamageClip, 0.9f, 0.2f);
+
+                    DelayShield(_shieldPower <= 0 ? shieldBreakCooldown : damageCooldown);;
                 }
             }
 
             if (bleed > 0)
             {
-                Health -= bleed > 0 ? bleed : 0;
+                Health -= bleed;
+                DelayShield(damageCooldown);
 
                 if (bleed > 5)
                 {
@@ -200,7 +205,7 @@ namespace Player
             }
 
             healthBar.UpdatePercentage(Health, MaxHealth);
-            shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
+            shieldBar.UpdatePercentage(_shieldPower, PlayerDataInstance.maxShield);
         }
 
         public void Heal(float heal)
@@ -279,9 +284,9 @@ namespace Player
                 _movement.SetInputBlocked(false);
                 GetComponent<EnforcePlayArea>().Reset();
                 Health = MaxHealth;
-                ShieldPower = ShieldMaxPower;
+                _shieldPower = PlayerDataInstance.maxShield;
                 healthBar.UpdatePercentage(Health, MaxHealth);
-                shieldBar.UpdatePercentage(ShieldPower, ShieldMaxPower);
+                shieldBar.UpdatePercentage(_shieldPower, PlayerDataInstance.maxShield);
                 _died = false;
                 yield return new WaitForSeconds(0.35f);
                 fadeOut.SetActive(false);

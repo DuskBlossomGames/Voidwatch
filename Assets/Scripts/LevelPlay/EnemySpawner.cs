@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace LevelPlay
 
         private void Awake()
         {
-            _isDebug = debugEnemy != null;
+            _isDebug = LevelSelectDataInstance.Levels == null || debugEnemy != null;
             
             _isTerminal = false;
             groupBudgetTiers.Sort();
@@ -111,15 +112,23 @@ namespace LevelPlay
                 }
             };
     
-          // if debug, it's probably being booted from nothing which will make CurrentPlanet 0 TODO: is debug 
-#if UNITY_EDITOR
-          if (_isDebug) LevelSelectDataInstance.CurrentPlanet = LevelSelectDataInstance.Levels[0].Connections[0];
-#endif
-          _level =  LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
+            // if debug, it's probably being booted from nothing which will make CurrentPlanet 0 TODO: is debug 
+            if (_isDebug)
+            {
+                _level = new LevelData
+                {
+                    Type = LevelType.Normal,
+                    Waves = Array.Empty<int>()
+                };
+            }
+            else
+            {
+                _level =  LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
+            }
 
-          fadeIn.SetActive(true);
-          if (_level.Type != LevelType.Elite) StartCoroutine(FadeIn());
-          else _faded = true;
+            fadeIn.SetActive(true);
+            if (_level.Type != LevelType.Elite) StartCoroutine(FadeIn());
+            else _faded = true;
         }
 
         private bool _faded;
@@ -208,7 +217,7 @@ namespace LevelPlay
                 return;
             }
 
-            if (SpawnedEnemies.Count == 0)
+            if (!_isDebug && SpawnedEnemies.Count == 0)
             {
                 if (_level.Type == LevelType.Elite || _wave == _level.Waves.Length-1)
                 {

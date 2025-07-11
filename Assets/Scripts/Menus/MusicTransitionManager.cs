@@ -49,6 +49,7 @@ namespace Menus
             
             switch (SceneManager.GetActiveScene().name)
             {
+                case "Tutorial":
                 case "LevelPlay":
                 {
                     introClip = battleIntro;

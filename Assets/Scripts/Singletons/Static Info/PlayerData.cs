@@ -18,7 +18,6 @@ namespace Singletons.Static_Info
         public MaxHealthStat maxHealth;
         public BoostableStat<float> maxShield;
         public float shieldRegenRate;
-        public float maxShieldDebt;
         public BoostableStat<float> maxDodgeJuice;
         public float dodgeJuiceRegenRate;
         public float driftCorrection;

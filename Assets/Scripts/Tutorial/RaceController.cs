@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Player;
 using TMPro;
@@ -30,8 +31,19 @@ namespace Tutorial
 
         private void OnDisable()
         {
-            timer.gameObject.SetActive(false);
+            StartCoroutine(FadeRaceTimer());
             player.inputBlocked = player.autoPilot = false;
+        }
+
+        private IEnumerator FadeRaceTimer()
+        {
+            const float time = 0.75f;
+            var cg = timer.GetComponent<CanvasGroup>();
+            for (float t = 0; t < time; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                cg.alpha = Mathf.Lerp(1, 0, t / time);
+            }
         }
 
         private void Start()

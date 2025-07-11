@@ -1,7 +1,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
+using Extensions;
+using Menus.Util;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace Util
 {
@@ -29,9 +35,14 @@ namespace Util
             }
         }
 
-        public static bool GetKey(KeyCode key) { return !isPaused && Input.GetKey(key); }
-        public static bool GetKeyDown(KeyCode key) { return !isPaused && Input.GetKeyDown(key); }
-        public static bool GetKeyUp(KeyCode key) { return !isPaused && Input.GetKeyUp(key); }
+        private static bool IsClickConsumed(KeyCode key)
+        {
+            return key == KeyCode.Mouse0 && EventSystem.current.IsPointerOverGameObject() && EventSystem.current.GetPointerData().pointerClick != null;
+        }
+
+        public static bool GetKey(KeyCode key) { return !isPaused && Input.GetKey(key) && !IsClickConsumed(key); }
+        public static bool GetKeyDown(KeyCode key) { return !isPaused && Input.GetKeyDown(key) && !IsClickConsumed(key); }
+        public static bool GetKeyUp(KeyCode key) { return !isPaused && Input.GetKeyUp(key) && !IsClickConsumed(key); }
         
         public static readonly Dictionary<KeyCode, string> VALID_KEY_CODES = new();
         static InputManager()

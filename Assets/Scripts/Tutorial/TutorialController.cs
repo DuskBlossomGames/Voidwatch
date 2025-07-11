@@ -96,6 +96,10 @@ namespace Tutorial
         public float instructionFadeTime, warningWaitTime, warningFadeTime;
         public Movement playerMovement;
 
+        public CanvasGroup continueButton;
+        public float continueFadeTime;
+        public Pair<Vector2, Vector2>[] continuePositions;
+        
         public GameObject scrapPrefab;
         
         public Image fadeOut;
@@ -296,11 +300,44 @@ namespace Tutorial
                 }
             }
             
-            // TODO: make it a physical thing?
             if (_metCondition)
             {
-                _inTask = false;
-                Continue();
+                if (_stage is Stage.Movement or Stage.Dashing)
+                {
+                    if (!_continueState) StartCoroutine(FadeContinue(true));
+                }
+                else
+                {
+                    FinishTask();
+                }
+            }
+        }
+
+        public void FinishTask()
+        {
+            _inTask = false;
+            Continue();
+            
+            if (_continueState) StartCoroutine(FadeContinue(false));
+        }
+
+        private bool _continueState;
+        private int _continueIdx;
+        private IEnumerator FadeContinue(bool shown)
+        {
+            if (shown)
+            {
+                var pos = continuePositions[_continueIdx++];
+                continueButton.GetComponent<RectTransform>().anchorMin = pos.a;
+                continueButton.GetComponent<RectTransform>().anchorMax = pos.b;
+            }
+            continueButton.interactable = shown;
+            
+            _continueState = shown;
+            for (float t = 0; t < continueFadeTime; t += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                continueButton.alpha = Mathf.Lerp(shown ? 0 : 1, shown ? 1 : 0, t / continueFadeTime);
             }
         }
 
@@ -365,8 +402,8 @@ namespace Tutorial
                 {
                     if (_textIdx == 1)
                     {
-                        PlayerDataInstance.Scrap = 500;
                         StartCoroutine(FadeObjIn(scrap));
+                        PlayerDataInstance.Scrap = 500;
                     }
                     else if (task)
                     {

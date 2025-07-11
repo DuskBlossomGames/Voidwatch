@@ -20777,6 +20777,8 @@ MonoBehaviour:
   maxVignetteScale: 3.8
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
+  shieldBreakCooldown: 3
+  damageCooldown: 0.75
   shieldDamageClip: {fileID: 8300000, guid: 43ad996c8068547eba46b0acb990ae4a, type: 3}
   healthDamageClip: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
   godmode: 0
