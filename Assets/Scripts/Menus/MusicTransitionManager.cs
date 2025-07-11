@@ -100,6 +100,7 @@ namespace Menus
                 {
                     audioPlayer.clip = skipIntro ? loopClip : introClip;
                     audioPlayer.time = playAt;
+                    audioPlayer.loop = false;
                     audioPlayer.Play();
                     _playingIntro = !skipIntro;
                 }
@@ -110,7 +111,7 @@ namespace Menus
                 audioPlayer.volume = Mathf.Clamp(audioPlayer.volume, 0f, staticMusicVolume);
             }
 
-            if (!audioPlayer.isPlaying && _playingIntro)
+            if (!audioPlayer.isPlaying && audioPlayer.time >= audioPlayer.clip.length && _playingIntro)
             {
                 _playingIntro = false;
                 audioPlayer.clip = loopClip;

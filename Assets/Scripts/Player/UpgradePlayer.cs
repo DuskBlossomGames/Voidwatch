@@ -171,7 +171,7 @@ namespace Player
                 true,
                 () =>
                 {
-                    PlayerDataInstance.postDodgeMult = 1.5f;
+                    PlayerDataInstance.postDodgeMult = 2f;
                 }),
             new("Intrinsic Refraction",
                 "Bullets refract upon hitting their target, launching a copy at the nearest enemy.",

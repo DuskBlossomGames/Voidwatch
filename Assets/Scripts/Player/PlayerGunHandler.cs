@@ -17,7 +17,9 @@ namespace Player
     {
         [NonSerialized] public bool Shootable = true;
         [NonSerialized] public bool HasDodgePowerAttack;
-    
+
+        public Gradient dodgePowerAttackColor;
+        
         public ProgressBar ammoBar;
 
         public GameObject bulletPrefab;
@@ -120,6 +122,12 @@ namespace Player
                         StatisticsInstance.bulletsShot++;
                         var bullet = Instantiate(bulletPrefab, transform.position, rot);
 
+                        if (HasDodgePowerAttack && PlayerDataInstance.postDodgeMult > 1)
+                        {
+                            bullet.GetComponent<SpriteRenderer>().color = dodgePowerAttackColor.Evaluate(0);
+                            bullet.GetComponent<TrailRenderer>().colorGradient = dodgePowerAttackColor;
+                        }
+                        
                         bullet.GetComponent<CustomRigidbody2D>().linearVelocity = GetComponent<CustomRigidbody2D>().linearVelocity;
                         bullet.GetComponent<DestroyOffScreen>().playRadius = playRadius;
                         bullet.GetComponent<Gravitatable>().gravitySource = gravitySource;
@@ -136,8 +144,8 @@ namespace Player
                 }
                 
                 AudioPlayer.Play(laserClip, Random.Range(0.5f, 0.7f), 0.45f);
+                HasDodgePowerAttack = false;
             }
-            HasDodgePowerAttack = false;
 
             yield return new WaitForSeconds(GunInfoInstance.fireTime);
 

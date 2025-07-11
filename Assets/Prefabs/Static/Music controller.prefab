@@ -56,7 +56,7 @@ MonoBehaviour:
   bossOverlayPlayer: {fileID: 0}
   bossPhase2Intro: {fileID: 8300000, guid: f81152f7813a2440193b31bf091c2831, type: 3}
   bossPhase2Loop: {fileID: 8300000, guid: f81152f7813a2440193b31bf091c2831, type: 3}
-  timeInterpolate: 0.75
+  timeInterpolate: 1
   staticMusicVolume: 0
 --- !u!82 &7628158841933090656
 AudioSource:
