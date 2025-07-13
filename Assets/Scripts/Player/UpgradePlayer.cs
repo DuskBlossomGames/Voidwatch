@@ -57,26 +57,25 @@ namespace Player
             new("Plasma Coil Array",
                 "More plasma coils allows for more bullets per shot.",
                 "Bigger is better, right?",
-                Rarity.Common,
+                Rarity.Rare,
                 false,
                 () => {
-                    GunInfoInstance.bulletsPerShot = Mathf.Max(2,Mathf.CeilToInt(1.1f * GunInfoInstance.bulletsPerShot));
+                    GunInfoInstance.bulletsPerShot += 1;
                     GunInfoInstance.lateralSeperation *= 1.2f;
                 }),
-            new("Absorptive Plating",
-                "Redistributes the energy of incoming bullets, increasing hull integrity and shield capacity.",
-                "Can't let one spot hog all the energy. Sharing is caring!",
+            new("Streamlined Hull",
+                "All projectiles have a chance to be redirected, missing your ship.",
+                "Missed me, missed me!",
                 Rarity.Common,
                 false,
-                () => {
-                    PlayerDataInstance.Health += Mathf.CeilToInt(0.1f * PlayerDataInstance.maxHealth);
-                    PlayerDataInstance.maxHealth.MulEq(1.1f);
-                    PlayerDataInstance.maxShield.MulEq(1.05f);
+                () =>
+                {
+                    PlayerDataInstance.missChance += 0.1f;
                 }),
             new("Experimental Batteries",
                 "These third-party shield batteries hold charge longer, but recharge slower.",
                 "Huh, this warning seems to have faded...",
-                Rarity.Rare,
+                Rarity.Common,
                 false,
                 () =>
                 {
@@ -92,20 +91,20 @@ namespace Player
                     PlayerDataInstance.shieldRegenRate *= 1.5f;
                 }),
             new("Durable Duct Tape",
-                "Diverted power massively improves shield capacity and regeneration, but lowers hull integrity.",
+                "Ship can fire with redirected shield energy when out of ammo, and fire rate is significantly increased.",
                 "If we just divert this cable... wait, where was that going?",
                 Rarity.Legendary,
                 false,
-                () => {
-                    PlayerDataInstance.shieldRegenRate *= 1.3f;
-                    PlayerDataInstance.maxShield.MulEq(1.8f);
-                    PlayerDataInstance.maxHealth.MulEq(0.7f);
-                    PlayerDataInstance.Health = Mathf.Min(PlayerDataInstance.Health, PlayerDataInstance.maxHealth);
+                () =>
+                {
+                    GunInfoInstance.fireTime *= 0.5f;
+                    GunInfoInstance.dmgMod.MulEq(0.5f);
+                    GunInfoInstance.shieldAsAmmo = true;
                 }),
             new("Black Market Mod",
                 "Bullets charge in the chamber longer, increasing damage and speed but decreasing fire rate.",
                 "I'll just insert this into a critical system component real quick...",
-                Rarity.Legendary,
+                Rarity.Rare,
                 false,
                 () => {
                     GunInfoInstance.dmgMod.MulEq(1.6f);
@@ -113,7 +112,7 @@ namespace Player
                     GunInfoInstance.fireTime += 0.4f;
                 }),
             new("Voidwrought Accumulator",
-                "Attaches to your Void Energy eXtraction (V.E.X.) device, increasing Void Energy replenishment speed.",
+                "Attaches to your Void Energy extraction device, increasing Void Energy replenishment speed.",
                 "I am one with the Void...",
                 Rarity.Common,
                 false,
@@ -121,25 +120,26 @@ namespace Player
                     PlayerDataInstance.dodgeJuiceRegenRate *= 1.25f;
                 }),
             new("Laminar Plating",
-                "Specialized plating eases the transition to Voidspace, lowering the cost of jaunts.",
+                "Specialized plating eases the transition to Voidspace, lower the cost of dashing.",
                 "Their world shall be ours.",
                 Rarity.Common,
                 false,
                 () => {
                     PlayerDataInstance.dodgeJuiceCost *= 0.75f;
                 }),
-            new("Containment Matrix",
-                "Allows Voidhawk starships to hold more Void Energy without leaking.",
-                "Hey, stop running away! Get back here!",
-                Rarity.Common,
+            new("Dimensional Folding",
+                "Through manipulating folding within Voidspace, you can travel further in one dash.",
+                "Does that mean there's Voidigami?",
+                Rarity.Rare,
                 false,
-                () => {
-                    PlayerDataInstance.maxDodgeJuice.MulEq(1.35f);
+                () =>
+                {
+                    PlayerDataInstance.dodgeDistance *= 1.3f;
                 }),
             new("High Yield Plasma Coils",
                 "Greater plasma harnessing capabilities allows for faster shooting.",
                 "More plasma? More bullets. More explosions!",
-                Rarity.Rare,
+                Rarity.Common,
                 false,
                 () => {
                     GunInfoInstance.fireTime *= 0.8f;
@@ -174,7 +174,7 @@ namespace Player
             new("Intrinsic Refraction",
                 "Bullets refract upon hitting their target, launching a copy at the nearest enemy.",
                 "You get a bullet! And you get a bullet! And you get a bullet!",
-                Rarity.Rare,
+                Rarity.Legendary,
                 false,
                 () =>
                 {

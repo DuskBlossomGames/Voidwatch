@@ -22,5 +22,8 @@ namespace Singletons.Static_Info
         public float repeatSeperation;
 
         public BoostableStat<float> dmgMod;
+
+        [Space(10)] [Header("Upgrade Values (uninitialized)")]
+        public bool shieldAsAmmo;
     }
 }

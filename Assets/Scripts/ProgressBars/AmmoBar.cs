@@ -1,3 +1,4 @@
+using Extensions;
 using UnityEngine;
 
 namespace ProgressBars
@@ -20,12 +21,7 @@ namespace ProgressBars
         private void Update()
         {
             _opacityPos = Mathf.Clamp01(_opacityPos - 0.7f * Time.deltaTime);
-            foreach (var sr in _srs)
-            {
-                var color = sr.color;
-                color.a = opacityCurve.Evaluate(_opacityPos); // magic constant: speed
-                sr.color = color;
-            }
+            foreach (var sr in _srs) sr.SetAlpha(opacityCurve.Evaluate(_opacityPos));
 
             transform.rotation = _cam.transform.rotation;
         }

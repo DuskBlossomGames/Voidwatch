@@ -189,8 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9aad688cf243894dad95f0cb0e525cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxColonySize: 7
-  maxNumColonies: 4
+  maxColonySize: 6
+  maxNumColonies: 3
   normalSize: 5
   leaderSize: 7.75
   isLeader: 1

@@ -21,6 +21,8 @@ namespace Spawnables.Damage
             _healthBar?.transform.SetParent(transform, true);
         }
 
+        public virtual bool Missed(GameObject source) => false;
+
         public virtual void Damage(float damage, GameObject source)
         {
             if (!enabled || IsDead) return;

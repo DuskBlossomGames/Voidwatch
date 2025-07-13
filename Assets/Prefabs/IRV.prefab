@@ -5136,6 +5136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6640671108004503463, guid: ddff0bd0a45194f8da988b352078c237, type: 3}
+  takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 0
   maxHealth: 10

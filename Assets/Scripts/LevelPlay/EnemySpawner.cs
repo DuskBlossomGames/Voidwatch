@@ -118,7 +118,7 @@ namespace LevelPlay
                 _level = new LevelData
                 {
                     Type = LevelType.Normal,
-                    Waves = Array.Empty<int>()
+                    Waves = new [] {0}
                 };
             }
             else
@@ -217,12 +217,15 @@ namespace LevelPlay
                 return;
             }
 
-            if (!_isDebug && SpawnedEnemies.Count == 0)
+            if (SpawnedEnemies.Count == 0)
             {
                 if (_level.Type == LevelType.Elite || _wave == _level.Waves.Length-1)
                 {
-                    _timeTillExit = 3;
-                    _isTerminal = true;
+                    if (!_isDebug)
+                    {
+                        _timeTillExit = 3;
+                        _isTerminal = true;
+                    }
                 }
                 else if (_level.Type != LevelType.Elite)
                 {

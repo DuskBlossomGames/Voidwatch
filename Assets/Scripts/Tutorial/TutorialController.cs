@@ -38,7 +38,7 @@ namespace Tutorial
                 {
                     "Welcome to the Voidwatch Academy. Here you will learn how to be a part of the galaxy's greatest fighting force. And our last hope.",
                     "Your ship accelerates towards the mouse when <b>{Accelerate}</b> is pressed. The camera also expands to follow the mouse; <b>it is recommended to keep the mouse farther out</b>.",
-                    "Finally, <b>{Brake}</b> can be used to brake and slow movement. Continue, to practice the movement.",
+                    "Finally, <b>{Brake}</b> can be used to brake and slow movement. Proceed to practice moving.",
                     "Practice Accelerating and Braking"
                 }
             },
@@ -54,7 +54,7 @@ namespace Tutorial
                 Stage.Attacking, new []
                 {
                     "Use <b>{PrimaryWeapon}</b> to attack, with your ammo displayed in a partial circle around your ship. Beware getting too close to enemies, as contact will damage both them and you.",
-                    "All enemies also have an arrow pointing to them while offscreen. Continue, to practice on targets.",
+                    "All enemies also have an arrow pointing to them while offscreen. Next, you will practice on targets.",
                     "Destroy the Targets"
                 }
             },
@@ -62,7 +62,7 @@ namespace Tutorial
                 Stage.Enemy, new[]
                 {
                     "Your HUD displays a red health bar with blue shield on top, which automatically regenerates over time. It also displays a minimap with enemies highlighted in red.",
-                    "The safety border around the play area will now be removed, allowing the orbital cannons to attack should you exit. Continue, to practice on a real enemy.",
+                    "The safety border around the play area will now be removed, allowing the orbital cannons to attack should you exit. You will now practice on a real enemy.",
                     "Defeat the Missiler"
                 }
             },
@@ -210,13 +210,13 @@ namespace Tutorial
 
                     if (tooClose)
                     {
-                        ShowWarning("WARNING: keep your mouse further from the ship");
+                        ShowWarning("WARNING: keep your mouse farther from the ship");
                     }
                     else if (InputManager.GetKey(KeyCode.A) || InputManager.GetKey(KeyCode.D))
                     {
                         ShowWarning("WARNING: A/D cannot strafe, move mouse to turn");
                     }
-                    else if (warning.text.Contains("further")) // if it's the mouse one, make it fade immediately upon fixing
+                    else if (warning.text.Contains("farther")) // if it's the mouse one, make it fade immediately upon fixing
                     {
                         _warningTimer.Value = Mathf.Min(_warningTimer.Value, warningFadeTime);
                     }

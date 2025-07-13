@@ -26,8 +26,8 @@ namespace Player
         public float playRadius;
         public GameObject gravitySource;
 
-        public bool EmptyRefilling => _emptyRefilling;
-    
+        public Color shieldBarColor;
+        
         private float _curAmmo;
 
         private readonly Timer _noShootRefillTimer = new();
@@ -39,21 +39,30 @@ namespace Player
         private CustomRigidbody2D _rb;
         public AudioClip laserClip;
 
+        private PlayerDamageable _pd;
+        private SpriteRenderer _ammoRenderer;
+
+        private Color _origAmmoColor;
         private void Start()
         {
             if (gravitySource == null) gravitySource = GameObject.FindGameObjectWithTag("GravitySource");
             _curAmmo = GunInfoInstance.ammoCount;
             _rb = GetComponent<CustomRigidbody2D>();
+            _pd = GetComponent<PlayerDamageable>();
+            _ammoRenderer = ammoBar.GetComponentsInChildren<SpriteRenderer>()[1];
+
+            _origAmmoColor = _ammoRenderer.color;
         }
 
         public void Shoot(Vector2 worldMousePos)//returns if could start the shoot coroutine
         {
-            if (_isFiring || _curAmmo <= 0 || _emptyRefilling) return;
+            if (_isFiring || (_curAmmo <= 0 && (!GunInfoInstance.shieldAsAmmo || _pd.ShieldPower <= 0)) || _emptyRefilling) return;
 
             _mPos = worldMousePos;
             StartCoroutine(_Fire());
         }
 
+        private float _oldShield;
         private void Update()
         {
             if (Shootable && InputManager.GetKeyDown(InputAction.PrimaryWeapon))
@@ -68,13 +77,44 @@ namespace Player
 
             if (_curAmmo < GunInfoInstance.ammoCount && (_noShootRefillTimer.IsFinished || (_emptyRefilling && _emptyRefillTimer.IsFinished)))
             {
+                UpdateBar();
                 _curAmmo = Mathf.Clamp(_curAmmo + (int) GunInfoInstance.ammoCount / GunInfoInstance.timeToRefillFully * Time.deltaTime, 0, GunInfoInstance.ammoCount);
-                ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
             }
 
             _curAmmo = Mathf.Clamp(_curAmmo, 0, GunInfoInstance.ammoCount);
+            
+            if (_oldShield != _pd.ShieldPower && _curAmmo <= 0 && GunInfoInstance.shieldAsAmmo) UpdateBar();
+            _oldShield = _pd.ShieldPower;
         }
 
+        // ======= GENERALIZATION FOR UPGRADES =======
+        private const float SHIELD_PER_AMMO = 5;
+        private void SetAmmoColor(Color color) => _ammoRenderer.color = new Color(color.r, color.g, color.b, _ammoRenderer.color.a);
+        private void UpdateBar()
+        {
+            if (_curAmmo <= 0 && GunInfoInstance.shieldAsAmmo)
+            {
+                SetAmmoColor(shieldBarColor);
+                ammoBar.UpdatePercentage(_pd.ShieldPower, PlayerDataInstance.maxShield);
+                return;
+            }
+
+            SetAmmoColor(_origAmmoColor);
+            ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
+        }
+        private void SpendAmmo(int count)
+        {
+            if (_curAmmo <= 0 && GunInfoInstance.shieldAsAmmo)
+            {
+                _pd.ShieldPower -= count * SHIELD_PER_AMMO;
+                _pd.DelayShield(false);
+                return;
+            }
+            _curAmmo -= count;
+        }
+        private bool IsEmpty => _curAmmo <= 0 && (!GunInfoInstance.shieldAsAmmo || _pd.ShieldPower <= 0);
+        // ===========================================
+        
         public float ExpectedVelocity()
         {
             return GunInfoInstance.shotForce / bulletPrefab.GetComponent<CustomRigidbody2D>().mass * Time.fixedDeltaTime;
@@ -97,9 +137,9 @@ namespace Player
                 }
 
                 _curAmmo = (int)_curAmmo;
-                int bullets = Mathf.Min((int) _curAmmo, GunInfoInstance.bulletsPerShot + Random.Range(-GunInfoInstance.bulletsPerShotVarience, GunInfoInstance.bulletsPerShotVarience + 1));
-                _curAmmo -= bullets;
-                ammoBar.UpdatePercentage(_curAmmo, GunInfoInstance.ammoCount);
+                int bullets = Mathf.Min((int) (_curAmmo > 0 || !GunInfoInstance.shieldAsAmmo ? _curAmmo : _pd.ShieldPower/SHIELD_PER_AMMO), GunInfoInstance.bulletsPerShot + Random.Range(-GunInfoInstance.bulletsPerShotVarience, GunInfoInstance.bulletsPerShotVarience + 1));
+                SpendAmmo(bullets);
+                UpdateBar();
 
                 for (int i = 0; i < bullets; i++)
                 {
@@ -149,7 +189,7 @@ namespace Player
 
             yield return new WaitForSeconds(GunInfoInstance.fireTime);
 
-            if (_curAmmo <= 0)
+            if (IsEmpty)
             {
                 _emptyRefillTimer.Value = GunInfoInstance.emptyRefillTime;
                 _emptyRefilling = true;

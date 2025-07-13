@@ -5875,9 +5875,9 @@ MonoBehaviour:
   ammoCount:
     name: Ammo
     value: 100
-  noShootRefillTime: 1
-  emptyRefillTime: 1
-  timeToRefillFully: 1
+  noShootRefillTime: 2
+  emptyRefillTime: 3
+  timeToRefillFully: 3
   bulletsPerShot: 2
   bulletsPerShotVarience: 0
   fireTime: 0.17
@@ -5891,6 +5891,7 @@ MonoBehaviour:
   dmgMod:
     name: Damage
     value: 15
+  shieldAsAmmo: 0
 --- !u!114 &342308706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5933,7 +5934,7 @@ MonoBehaviour:
   maxShield:
     name: Shield
     value: 500
-  shieldRegenRate: 30
+  shieldRegenRate: 50
   maxDodgeJuice:
     name: Void Energy
     value: 100
@@ -5948,6 +5949,7 @@ MonoBehaviour:
   dodgeVelocity: 120
   dodgeDistance: 11
   dodgeCooldown: 0.35
+  missChance: 0
   dodgeDamage: 0
   dodgeExplosionDamage: 0
   postDodgeMult: 1

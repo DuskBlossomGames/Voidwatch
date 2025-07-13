@@ -65,6 +65,12 @@ namespace Spawnables.Controllers.Bullets
             if (!_leftFirstCollider && other == _firstCollider) return;
             
             var damageable = other.GetComponent<IDamageable>();
+            if (damageable is PlayerDamageable pd && pd.Missed(gameObject))
+            {
+                _leftFirstCollider = false;
+                _firstCollider = other;
+                return;
+            }
             if (damageable != null)
             {
                 Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().linearVelocity - GetComponent<CustomRigidbody2D>().linearVelocity;

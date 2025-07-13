@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Player;
 using Singletons;
+using UnityEditor.AddressableAssets.Build.Layout;
 using UnityEngine;
 using Util;
 using Complex = System.Numerics.Complex;
@@ -35,11 +37,14 @@ namespace Spawnables.Controllers.Misslers
         private float _tickTimer;
         private float _timeToImpact;
 
+        private Collider2D _collider;
         public void Start()
         {
             _fuel = maxFuel;
             _rigid = GetComponent<CustomRigidbody2D>();
             StartCoroutine(LeadShots());
+
+            _collider = GetComponent<Collider2D>();
         }
 
         IEnumerator LeadShots()
@@ -107,6 +112,7 @@ namespace Spawnables.Controllers.Misslers
         protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.gameObject == owner) return;
+
             Explode(collision.collider);
         }
 

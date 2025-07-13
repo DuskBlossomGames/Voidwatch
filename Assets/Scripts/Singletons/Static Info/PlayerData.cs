@@ -28,9 +28,9 @@ namespace Singletons.Static_Info
         public float dodgeVelocity;
         public float dodgeDistance;
         public float dodgeCooldown;
-        
-        [Space(10)]
-        [Header("Upgrade Values (uninitialized)")]
+
+        [Space(10)] [Header("Upgrade Values (uninitialized)")]
+        public float missChance;
         public float dodgeDamage;
         public float dodgeExplosionDamage;
         public float postDodgeMult = 1;

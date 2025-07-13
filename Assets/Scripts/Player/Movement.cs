@@ -11,6 +11,8 @@ using ProgressBar = ProgressBars.ProgressBar;
 
 namespace Player
 {
+    public enum BillboardMessage { Stunned, Missed }
+    
     public class Movement : MonoBehaviour
     {
         public GameObject explosion;
@@ -25,8 +27,8 @@ namespace Player
         public float afterImageSpacing;
         public Sprite afterImageSprite;
 
-        public GameObject stunnedMsg;
-        public float stunMsgRadius;
+        public GameObject billboards;
+        public float billboardMsgRadius;
         public float stunRotPerSec; // degrees
         public float stunBreakStrength;
         public float stunCurveStrength;
@@ -111,13 +113,18 @@ namespace Player
 
             _stunTimer.Value = time;
             SetInputBlocked(true);
-            Instantiate(stunnedMsg,
-                stunnedMsg.transform.position + stunMsgRadius *
-                (Vector3)UtilFuncs.AngleToVector(_camera.transform.eulerAngles.z * Mathf.Deg2Rad + Mathf.PI / 2),
-                Camera.main!.transform.rotation).SetActive(true);
-            // TODO: stunned VFX
+            ShowBillboard(BillboardMessage.Stunned);
             gameObject.GetComponent<PlayerVFXController>().RunStun();
 
+        }
+
+        public void ShowBillboard(BillboardMessage bm, Vector3? position=null)
+        {
+            var obj = billboards.transform.GetChild((int)bm).gameObject;
+            Instantiate(obj,
+                position ?? transform.position + billboardMsgRadius * 
+                    (Vector3)UtilFuncs.AngleToVector(_camera.transform.eulerAngles.z * Mathf.Deg2Rad + Mathf.PI / 2),
+                Camera.main!.transform.rotation).SetActive(true);
         }
 
         private void Update()

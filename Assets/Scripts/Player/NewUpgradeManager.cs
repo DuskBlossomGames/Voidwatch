@@ -9,6 +9,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Util;
 using Upgrade = Player.UpgradePlayer.Upgrade;
 using static Singletons.Static_Info.PlayerData;
 using Button = UnityEngine.UI.Button;
@@ -38,6 +39,9 @@ namespace Player
         
         private void Update()
         {
+#if UNITY_EDITOR
+            if (debugUpgrade != -1 && InputManager.GetKeyDown(KeyCode.LeftBracket)) UpgradePlayer.UPGRADES[debugUpgrade].Apply(); 
+#endif
             reroll.interactable = PlayerDataInstance.Scrap >= 50;
         }
 
