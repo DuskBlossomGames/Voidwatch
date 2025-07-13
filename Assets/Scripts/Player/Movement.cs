@@ -136,7 +136,7 @@ namespace Player
                 _redirectDodge = true;
                 _redirectDirection = new Vector2(_forwards.x, _forwards.y);
             }
-            
+
             dodgeBar.UpdatePercentage(_dodgeJuice, PlayerDataInstance.maxDodgeJuice); // just always keep up to date
         }
 
@@ -177,6 +177,10 @@ namespace Player
                 _dodgeDirection = DodgeOnceDir ?? new Vector2(_forwards.x, _forwards.y);
                 _gun.HasDodgePowerAttack = true;
 
+                //move to Interdimensional Spike
+                gameObject.GetComponent<PlayerVFXController>().RunSpike();
+
+
                 if (PlayerDataInstance.dodgeExplosionDamage > 0)
                 {
                     var obj = Instantiate(explosion);
@@ -204,6 +208,7 @@ namespace Player
                 _redirected = true;
                 _dodgeTimer.SetValue(_dodgeTimeLength / 2);
                 _dodgeDirection = _redirectDirection;
+                gameObject.GetComponent<PlayerVFXController>().RunSpike();
             }
 
 
@@ -213,7 +218,7 @@ namespace Player
             _collider.layerOverridePriority = dodging ? 1000 : 1;
             foreach (var trail in _trails) trail.emitting = !dodging;
             _sprite.color = dodging ? new Color(1, 1, 1, 0.5f) : Color.white;
-            
+
             _dodgeJuice = Mathf.Clamp(_dodgeJuice + (!dodging ? PlayerDataInstance.dodgeJuiceRegenRate
                 : !_dodgeCostTimer.IsFinished ? -_dodgeCost/_dodgeTimeLength*dodgeTimeDilation
                 : 0) * Time.fixedDeltaTime, 0, PlayerDataInstance.maxDodgeJuice);
