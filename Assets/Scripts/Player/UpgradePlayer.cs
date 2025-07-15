@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEngine;
 using static Singletons.Static_Info.PlayerData;
@@ -7,8 +8,9 @@ using static Singletons.Static_Info.GunInfo;
 using Random = UnityEngine.Random;
 namespace Player
 {
-    public class UpgradePlayer
+    public static class UpgradePlayer
     {
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         public class Rarity
         {
             public static readonly List<Rarity> ALL = new();
@@ -66,7 +68,7 @@ namespace Player
             new("Streamlined Hull",
                 "All projectiles have a chance to be redirected, missing your ship.",
                 "Missed me, missed me!",
-                Rarity.Common,
+                Rarity.Rare,
                 false,
                 () =>
                 {
@@ -92,18 +94,17 @@ namespace Player
                 }),
             new("Durable Duct Tape",
                 "Ship can fire with redirected shield energy when out of ammo, and fire rate is significantly increased.",
-                "If we just divert this cable... wait, where was that going?",
+                "If we just divert this cable...\nwait, where was that going?",
                 Rarity.Legendary,
                 false,
                 () =>
                 {
                     GunInfoInstance.fireTime *= 0.5f;
-                    GunInfoInstance.dmgMod.MulEq(0.5f);
                     GunInfoInstance.shieldAsAmmo = true;
                 }),
             new("Black Market Mod",
                 "Bullets charge in the chamber longer, increasing damage and speed but decreasing fire rate.",
-                "I'll just insert this into a critical system component real quick...",
+                "I'll just insert this into a critical\nsystem component real quick...",
                 Rarity.Rare,
                 false,
                 () => {
@@ -128,8 +129,8 @@ namespace Player
                     PlayerDataInstance.dodgeJuiceCost *= 0.75f;
                 }),
             new("Dimensional Folding",
-                "Through manipulating folding within Voidspace, you can travel further in one dash.",
-                "Does that mean there's Voidigami?",
+                "Through manipulating folding within Voidspace, you can travel farther in one dash.",
+                "One day, I'll become a Voidigami master!",
                 Rarity.Rare,
                 false,
                 () =>
@@ -138,7 +139,7 @@ namespace Player
                 }),
             new("High Yield Plasma Coils",
                 "Greater plasma harnessing capabilities allows for faster shooting.",
-                "More plasma? More bullets. More explosions!",
+                "More plasma?\nMore bullets. More explosions!",
                 Rarity.Common,
                 false,
                 () => {
@@ -155,7 +156,7 @@ namespace Player
                 }),
             new("Mining Drill",
                 "A frontal drill increases the damage done when ramming ships.",
-                "If you squint, a ship is basically an asteroid.",
+                "If you squint, a ship\nis basically an asteroid.",
                 Rarity.Common,
                 false,
                 () =>
@@ -164,7 +165,7 @@ namespace Player
                 }),
             new("Void Energy Sieve",
                 "Captures Void Energy as you pass through Voidspace, infusing your next bullets with extra power.",
-                "Hippity hoppity, your Energy is my property!",
+                "Hippity hoppity, your\nEnergy is my property!",
                 Rarity.Rare,
                 true,
                 () =>
@@ -173,7 +174,7 @@ namespace Player
                 }),
             new("Intrinsic Refraction",
                 "Bullets refract upon hitting their target, launching a copy at the nearest enemy.",
-                "You get a bullet! And you get a bullet! And you get a bullet!",
+                "You get a bullet! And you get\na bullet! And you get a bullet!",
                 Rarity.Legendary,
                 false,
                 () =>
@@ -182,7 +183,7 @@ namespace Player
                 }),
             new("Void Implant",
                 "This Void cybernetic grants brief foresight, instinctively attempting to dodge if you would be hit, at a cost proportional to damage.",
-                "No need to worry, I feel perfectly f~ AAAHHHHH!",
+                "No need to worry, I feel\nperfectly f~ AAAHHHHH!",
                 Rarity.Legendary,
                 true,
                 () =>

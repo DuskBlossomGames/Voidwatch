@@ -420,9 +420,9 @@ namespace Spawnables.Controllers.Carcadon
             }
 
             // hold
-            _armControllers[0].Attack();
+            _armControllers[0].VisualAttack();
             yield return new WaitForSeconds(0.2f);
-            _armControllers[1].Attack();
+            _armControllers[1].VisualAttack();
             
             camFp.ScreenShake(shakeTime, shakeIntensity);
             GetComponentInChildren<SpitController>().Spit(shakeTime);

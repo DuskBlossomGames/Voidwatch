@@ -20,12 +20,10 @@ namespace Spawnables.Damage
             _healthBar = healthBarPrefab == null ? null : Instantiate(healthBarPrefab).GetComponent<ProgressBar>();
             _healthBar?.transform.SetParent(transform, true);
         }
-
-        public virtual bool Missed(GameObject source) => false;
-
-        public virtual void Damage(float damage, GameObject source)
+        
+        public virtual bool Damage(float damage, GameObject source)
         {
-            if (!enabled || IsDead) return;
+            if (!enabled || IsDead) return false;
             
             Health -= damage>0 ? damage : 0;
         
@@ -36,9 +34,11 @@ namespace Spawnables.Damage
             }
 
             _healthBar?.UpdatePercentage(Health, MaxHealth);
+
+            return true;
         }
         
-        public virtual void Damage(float damage, GameObject source, float shieldMult, float bleedPerc) { Damage(damage, source); }
+        public virtual bool Damage(float damage, GameObject source, float shieldMult, float bleedPerc) { return Damage(damage, source); }
         
         protected virtual void OnDeath(GameObject source) { }
     }

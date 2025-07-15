@@ -69,7 +69,7 @@ namespace LevelSelect
             int i;
             for (i = 0; i < (PlayerDataInstance.IsTutorial ? 1 : 5); i++)
             {
-                var sprite = _planetNames.Keys.ElementAt(Random.Range(0, _planetNames.Keys.Count));
+                var sprite = _planetNames.Keys.ElementAt(PlayerDataInstance.IsTutorial ? 0 : Random.Range(0, _planetNames.Keys.Count));
                 levels.Add(new LevelData {
                     Type = LevelType.Normal,
                     Sprite = sprite,
@@ -89,19 +89,36 @@ namespace LevelSelect
                 Connections = new List<int>{i, i+2},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                 Title = _spaceStationNames.Pop(Random.Range(0, _spaceStationNames.Count)),
-                Description = "A respite for the weary"
+                Description = "A respite for the weary",
+                Metadata = ShopMetadata.Generate()
             });
             connections.Add(new Tuple<int, int>(i-1, i));
-            
-            levels.Add(new LevelData {
-                Type = PlayerDataInstance.IsTutorial ? LevelType.Tutorial : LevelType.Elite,
-                Sprite = eliteSprite,
-                HiddenSprite = hiddenSprite,
-                Connections = new List<int>{i},
-                WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                Title = "Deep Space",
-                Description = "Home of the Carcadon"
-            });
+
+            if (PlayerDataInstance.IsTutorial)
+            {
+                var sprite = _planetNames.Keys.ElementAt(0);
+                levels.Add(new LevelData {
+                    Type = LevelType.Tutorial,
+                    Sprite = sprite,
+                    HiddenSprite = hiddenSprite,
+                    Connections = new List<int>{i},
+                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
+                    Title = _planetNames[sprite].Pop(Random.Range(0, _planetNames.Count)),
+                    Description = "Complete the tutorial"
+                });
+            }
+            else
+            {
+                levels.Add(new LevelData {
+                    Type = LevelType.Elite,
+                    Sprite = eliteSprite,
+                    HiddenSprite = hiddenSprite,
+                    Connections = new List<int>{i},
+                    WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
+                    Title = "Deep Space",
+                    Description = "Home of the Carcadon"
+                });
+            }
             connections.Add(new Tuple<int, int>(i-1, i));
 
             LevelSelectDataInstance.PopulateData(levels.ToArray(), connections.ToArray());
@@ -149,13 +166,12 @@ namespace LevelSelect
                     ? level.Sprite
                     : level.HiddenSprite;
 
-                planetObj.GetComponent<PlanetController>().Clickable =
-                    revealed.Contains(idx) && (level.Type == LevelType.SpaceStation ||
-                    !LevelSelectDataInstance.VisitedPlanets.Contains(idx));
+                var travellable = (revealed.Contains(idx) && !LevelSelectDataInstance.VisitedPlanets.Contains(idx)) ||
+                                 (level.Type == LevelType.SpaceStation && LevelSelectDataInstance.CurrentPlanet == idx);
+                planetObj.GetComponent<PlanetController>().Clickable = travellable;
                 planetObj.GetComponent<PlanetController>().LevelIdx = idx;
 
-                if (revealed.Contains(idx) && level.Type != LevelType.SpaceStation &&
-                    LevelSelectDataInstance.VisitedPlanets.Contains(idx))
+                if (revealed.Contains(idx) && !travellable)
                 {
                     planetObj.GetComponent<SpriteRenderer>().color = new Color(0.6f, 0.6f, 0.6f);
                 }

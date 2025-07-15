@@ -10,17 +10,17 @@ namespace Menus.Pause
     public class TipController : MonoBehaviour
     {
         private static readonly string[] Tips = {
-            "All keybinds can be changed in the settings menu",
-            "When exiting a dash, previous velocity is resumed in the ship's new direction",
-            "If you press <b>Dash</b> again partway through, the dash will be redirected and last longer",
-            "Enemies killed by collision damage do not injure your ship",
-            "When ammo is fully depleted, it takes longer to refill",
-            "When your shield is broken, it takes longer to recharge",
-            "When orbiting a planet, your bullets appear to curve due to the coriolis effect",
-            "Platelin colonies will multiply to be a problem if not dealt with early",
-            "Chargers can be shot down to prevent their EMP detonation",
+            "All keybinds can be changed in the settings menu.",
+            "When exiting a dash, previous velocity is resumed in the ship's new direction.",
+            "If you press <b>Dash</b> again partway through, the dash will be redirected and last longer.",
+            "Enemies killed by collision damage do not injure your ship.",
+            "When ammo is fully depleted, it takes longer to refill.",
+            "When your shield is broken, it takes longer to recharge.",
+            "When orbiting a planet, your bullets appear to curve due to the coriolis effect.",
+            "Platelin colonies will multiply to be a problem if not dealt with early.",
+            "Chargers can be shot down to prevent their EMP detonation.",
             "Asteroids can be deadly!",
-            "At space stations, you can boost Health, Shield, Speed, Void Energy, Damage, and Ammo"
+            "At space stations, you can boost Health, Shield, Speed, Void Energy, Damage, and Ammo."
         };
 
         public float thickness, padding;

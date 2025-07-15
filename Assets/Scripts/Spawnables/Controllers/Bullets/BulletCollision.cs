@@ -31,6 +31,8 @@ namespace Spawnables.Controllers.Bullets
         private bool _leftFirstCollider;
         public bool isKinetic;
 
+        private Collider2D _collider;
+
         public bool isEnabled = true;
         private List<PlayerDamageType> _damageTypes = new();
 
@@ -39,6 +41,8 @@ namespace Spawnables.Controllers.Bullets
             if (_firstCollider == null) _firstCollider = owner;
             if (owner != null && owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
 
+            _collider = GetComponent<Collider2D>();
+            
             if (scaleWithDamage)
             {
                 transform.localScale *= dmg / 15;
@@ -56,22 +60,18 @@ namespace Spawnables.Controllers.Bullets
             }
 
         }
+
+        public bool CanCollideWith(Collider2D other) => _leftFirstCollider || other.gameObject != _firstCollider;
         private void OnTriggerEnter2D(Collider2D otherCollider)
         {
+            if (Physics2D.GetIgnoreCollision(otherCollider, _collider)) return;
             if (!isEnabled) return;
         
             var other = otherCollider.gameObject;
-            if (other.layer == LayerMask.NameToLayer("Bullet Detector")) return;
-            if (!_leftFirstCollider && other == _firstCollider) return;
+            if (other.layer == LayerMask.NameToLayer("Bullet Detector") || other.layer == LayerMask.NameToLayer("Miss Detector")) return;
+            if (!CanCollideWith(otherCollider)) return;
             
-            var damageable = other.GetComponent<IDamageable>();
-            if (damageable is PlayerDamageable pd && pd.Missed(gameObject))
-            {
-                _leftFirstCollider = false;
-                _firstCollider = other;
-                return;
-            }
-            if (damageable != null)
+            if (other.TryGetComponent<IDamageable>(out var damageable))
             {
                 Vector2 velDiff = other.GetComponent<CustomRigidbody2D>().linearVelocity - GetComponent<CustomRigidbody2D>().linearVelocity;
                 float mass = GetComponent<CustomRigidbody2D>().mass;
@@ -81,7 +81,7 @@ namespace Spawnables.Controllers.Bullets
                 if (isKinetic) damage *= 0.5f * sqrSpeed;
                 
                 if (damageable.GetType() == typeof(EnemyDamageable)) ((EnemyDamageable) damageable).Damage(damage, gameObject, _damageTypes); 
-                else damageable.Damage(damage, gameObject, shieldMult, bleedPerc);
+                else if (!damageable.Damage(damage, gameObject, shieldMult, bleedPerc)) return;
                 
                 if (chains == 0)
                 {

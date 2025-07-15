@@ -855,7 +855,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 254474231
+    m_Bits: 925562871
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1030,7 +1030,7 @@ MonoBehaviour:
   fadeInTime: 1.7
   startAnchorMin: 0.6
   startAnchorMax: 0.75
-  debugUpgrade: -1
+  debugUpgrade: 1
   playMov: {fileID: 1840725724178856789}
   followPlayer: {fileID: 519420033}
   raycaster: {fileID: 762970113}
@@ -1082,6 +1082,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 7d4897fe219a64eb881c2d88cabf4db8, type: 3}
   title: Orbital Cannon
+  additionalChildren: {fileID: 0}
+  offsetMin: {x: 0, y: 0}
+  offsetMax: {x: 0, y: 0}
 --- !u!1 &762970112
 GameObject:
   m_ObjectHideFlags: 0
@@ -3591,6 +3594,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6fc2b787f5664dcd8b93639b559eee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1840725724178856791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 288120715808517032, guid: 4c80fe45c756241f8bc602fb5a17b963, type: 3}
+  m_PrefabInstance: {fileID: 1840725724178856788}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086174079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb6783022c940c1b3377ace63a84d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3429618836961753843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3971,6 +3985,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7599818572435888140, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1840725724178856791}
     - target: {fileID: 7599818572435888140, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
       propertyPath: fadeOut
       value: 

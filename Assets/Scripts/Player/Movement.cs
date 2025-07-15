@@ -177,10 +177,6 @@ namespace Player
                 _dodgeDirection = DodgeOnceDir ?? new Vector2(_forwards.x, _forwards.y);
                 _gun.HasDodgePowerAttack = true;
 
-                //move to Interdimensional Spike
-                gameObject.GetComponent<PlayerVFXController>().RunSpike();
-
-
                 if (PlayerDataInstance.dodgeExplosionDamage > 0)
                 {
                     var obj = Instantiate(explosion);
@@ -208,7 +204,6 @@ namespace Player
                 _redirected = true;
                 _dodgeTimer.SetValue(_dodgeTimeLength / 2);
                 _dodgeDirection = _redirectDirection;
-                gameObject.GetComponent<PlayerVFXController>().RunSpike();
             }
 
 

@@ -236,6 +236,7 @@ namespace Bosses.Worm
         {
             if (_inCutscene) return;
             
+#if UNITY_EDITOR
             if (InputManager.GetKeyDown(KeyCode.RightBracket))
             {
                 foreach (var dmgable in GetComponentsInChildren<WormEyeDamageable>())
@@ -243,6 +244,7 @@ namespace Bosses.Worm
                     dmgable.Damage(float.PositiveInfinity, gameObject); // kill, triggering OnDeath
                 }
             }
+#endif
 
             UpdateMovement();
 

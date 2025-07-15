@@ -132,21 +132,21 @@ namespace Player
             
             return ShieldPower <= 0;
         }
-        
-        public override bool Missed(GameObject source)
+
+        public bool CheckMissed(Vector3 billboardPos)
         {
             if (Random.value >= PlayerDataInstance.missChance) return false;
-            
-            _movement.ShowBillboard(BillboardMessage.Missed, source.transform.position);
+
+            _movement.ShowBillboard(BillboardMessage.Missed, billboardPos);
             return true;
         }
+        
+        public override bool Damage(float damage, GameObject source) { return Damage(damage, source, 1, 0); }
 
-        public override void Damage(float damage, GameObject source) { Damage(damage, source, 1, 0); }
-
-        public override void Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
+        public override bool Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
         {
-            if (godmode) return;
-
+            if (godmode) return false;
+            
             if (PlayerDataInstance.autoDodge && damage > 11)
             {
                 var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
@@ -155,7 +155,7 @@ namespace Player
                 {
                     _movement.DodgeOnceCost = cost;
                     _movement.DodgeOnceDir = _movement.GetComponent<CustomRigidbody2D>().linearVelocity.normalized;
-                    return;
+                    return false;
                 }
             }
 
@@ -215,6 +215,8 @@ namespace Player
 
             healthBar.UpdatePercentage(Health, MaxHealth);
             shieldBar.UpdatePercentage(ShieldPower, PlayerDataInstance.maxShield);
+
+            return true;
         }
 
         public void Heal(float heal)

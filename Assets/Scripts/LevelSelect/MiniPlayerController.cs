@@ -41,10 +41,10 @@ namespace LevelSelect
 
         private float _orbitAngle;
 
-        public bool IsTraveling { get; private set; }
+        public int TravelingTo { get; private set; } = -1;
         private void FixedUpdate()
         {
-            if (IsTraveling) return;
+            if (TravelingTo != -1) return;
             
             _orbitAngle += 2 * Mathf.PI * Time.fixedDeltaTime / secondsPerOrbit % (2 * Mathf.PI);
 
@@ -95,8 +95,8 @@ namespace LevelSelect
 
         private IEnumerator DoGoTo(Vector3 planetLoc, int planetIdx, string scene)
         {
-            if (IsTraveling) yield break;
-            IsTraveling = true;
+            if (TravelingTo != -1) yield break;
+            TravelingTo = planetIdx;
             
             var planetPath = MapUtil.GetShortestPath(LevelSelectDataInstance.Levels, 
                 LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet], planetLoc,

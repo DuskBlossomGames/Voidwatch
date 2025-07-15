@@ -10,6 +10,7 @@ using Spawnables.Controllers;
 using Spawnables.Damage;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
@@ -71,7 +72,7 @@ namespace Tutorial
                 {
                     "Every world you clear can be <b>Pilfered</b> for an upgrade, or <b>Scavenged</b> for a random quantity of scrap. Your current upgrades are visible in the pause menu.",
                     "Scrap is also recieved from enemies, and can be spent on <b>Pilfering Further</b> to see new upgrade options, or <b>Boosting</b> stats in the Space Station. You have been given 500 scrap.",
-                    "Select an Upgrade then Visit the Space Station"
+                    "Continue Your Journey"
                 }
             },
             {
@@ -93,7 +94,7 @@ namespace Tutorial
         public DialogueController dialogueController;
         public GameObject instruction;
         public TextMeshProUGUI warning;
-        public float instructionFadeTime, warningWaitTime, warningFadeTime;
+        public float instructionFadeTime, warningFadeTime;
         public Movement playerMovement;
 
         public CanvasGroup continueButton;
@@ -101,9 +102,10 @@ namespace Tutorial
         public Pair<Vector2, Vector2>[] continuePositions;
         
         public GameObject scrapPrefab;
-        
+
         public Image fadeOut;
         public float fadeOutTime;
+        public GameObject blackScreen;
 
         public GameObject canvas;
         
@@ -152,6 +154,7 @@ namespace Tutorial
                 securityBorder.SetActive(false);
                 _instance.playerMovement = playerMovement;
                 _instance.enemies = enemies;
+                _instance.blackScreen = blackScreen;
                 playerMovement.GetComponent<PlayerDamageable>().fadeOut = _instance.fadeOut.gameObject;
                 
                 StartCoroutine(FadeIn(() =>
@@ -210,11 +213,11 @@ namespace Tutorial
 
                     if (tooClose)
                     {
-                        ShowWarning("WARNING: keep your mouse farther from the ship");
+                        ShowWarning("WARNING: keep your mouse farther from the ship", 0.5f);
                     }
                     else if (InputManager.GetKey(KeyCode.A) || InputManager.GetKey(KeyCode.D))
                     {
-                        ShowWarning("WARNING: A/D cannot strafe, move mouse to turn");
+                        ShowWarning("WARNING: A/D cannot strafe, move mouse to turn", 1);
                     }
                     else if (warning.text.Contains("farther")) // if it's the mouse one, make it fade immediately upon fixing
                     {
@@ -230,7 +233,7 @@ namespace Tutorial
                         _raceController.CompletedRings > 0 && // make sure you're not on the starting block
                         _raceController.CompletedRings < _raceController.rings.transform.childCount)
                     {
-                        ShowWarning("WARNING: not all rings completed");
+                        ShowWarning("WARNING: not all rings completed", 1);
                     }
                     
                     var playerRot = Mathf.Rad2Deg * UtilFuncs.Angle(playerMovement.transform.position);
@@ -241,7 +244,7 @@ namespace Tutorial
                                 raceCourse.transform.GetChild(i).rotation.eulerAngles.z+90)) > 5) continue;
                         
                         if (_genFloat == 0) _genFloat = Time.time;
-                        else if (Time.time - _genFloat > 1.5f) ShowWarning("TIP: dash through the walls to progress");
+                        else if (Time.time - _genFloat > 1.5f) ShowWarning("TIP: dash through the walls to progress", 0);
                             
                         found = true;
                         break;
@@ -252,17 +255,12 @@ namespace Tutorial
                 }
                 case Stage.Attacking:
                 {
-                    if (_genFloat == 0) _genFloat = Time.time;
-                    if (Time.time - _genFloat > 20)
+                    var anyDamaged = targets.GetComponentsInChildren<EnemyDamageable>().Any(d => d.Health < d.MaxHealth);
+                    
+                    if (_genFloat == 0 || anyDamaged) _genFloat = Time.time;
+                    if (Time.time - _genFloat > 10 && !anyDamaged)
                     {
-                        if (!targets.GetComponentsInChildren<EnemyDamageable>().Any(d => d.Health < d.MaxHealth))
-                        {
-                            ShowWarning("TIP: follow the arrows at the edge of the screen");
-                        }
-                        else
-                        {
-                            _genFloat = 0;
-                        }
+                        ShowWarning("TIP: follow the arrows at the edge of the screen", 0);
                     }
 
                     _metCondition |= targets.transform.childCount == 0;
@@ -280,15 +278,19 @@ namespace Tutorial
 
                     if (SceneManager.GetActiveScene().name == "LevelSelect")
                     {
-                        if (_genFlag && FindAnyObjectByType<MiniPlayerController>().IsTraveling) StartCoroutine(FadeInstruction());
+                        if (_genFlag && FindAnyObjectByType<MiniPlayerController>().TravelingTo == 3) StartCoroutine(FadeInstruction());
 
-                        if (_genFloat == 0) _genFloat = Time.time;
-                        if (Time.time - _genFloat > 20) ShowWarning("TIP: click a selected planet to visit it");
+                        if (_genFloat == 0)
+                        {
+                            _genFloat = Time.time;
+                            if (_genFlag) ShowWarning("Proceed to the next planet", 3);
+                        }
+                        if (Time.time - _genFloat > 20) ShowWarning("TIP: click a selected planet to visit it", 0);
                     }
                     else if (SceneManager.GetActiveScene().name == "Shop")
                     {
                         if (_genFloat == 0) _genFloat = Time.time;
-                        if (Time.time - _genFloat > 20) ShowWarning("TIP: after buying upgrades, exit the shop");
+                        if (Time.time - _genFloat > 20) ShowWarning("TIP: after buying upgrades, exit the shop", 0);
                     }
 
                     break;
@@ -332,6 +334,7 @@ namespace Tutorial
                 continueButton.GetComponent<RectTransform>().anchorMax = pos.b;
             }
             continueButton.interactable = shown;
+            FindAnyObjectByType<EventSystem>().SetSelectedGameObject(null); // so space, etc doesn't trigger it
             
             _continueState = shown;
             for (float t = 0; t < continueFadeTime; t += Time.fixedDeltaTime)
@@ -433,6 +436,7 @@ namespace Tutorial
                         dialogueController.Continue -= Continue;
                         StartCoroutine(FadeOut(() =>
                         {
+                            blackScreen.SetActive(true);
                             Destroy(StaticInfoHolder.Instance.gameObject);
                             SceneManager.LoadScene("TitleScreen");
                             ExitTutorial();
@@ -490,8 +494,12 @@ namespace Tutorial
 
             if (_stage == Stage.Dashing)
             {
-                ShowWarning("Fly through the rings and cross the finish line");
+                ShowWarning("Fly through the rings and cross the finish line", 3);
                 warning.SetAlpha(0); // it'll fix itself, but for now don't show as instruction fades in
+            } else if (_stage == Stage.UI)
+            {
+                ShowWarning("Select an upgrade", 0.2f);
+                warning.SetAlpha(0);
             }
 
             var cg = instruction.GetComponent<CanvasGroup>();
@@ -499,7 +507,7 @@ namespace Tutorial
             {
                 yield return new WaitForFixedUpdate();
                 cg.alpha = Mathf.Lerp(0, 1, t / instructionFadeTime);
-                if (_stage == Stage.Dashing) warning.SetAlpha(Mathf.Lerp(0, 1, t / instructionFadeTime));
+                if (!_warningTimer.IsFinished) warning.SetAlpha(Mathf.Lerp(0, 1, t / instructionFadeTime));
             }
 
             instruction.GetComponent<FlashUI>().enabled = true;
@@ -523,6 +531,7 @@ namespace Tutorial
             }
             instruction.SetActive(false);
             warning.gameObject.SetActive(false);
+            _warningTimer.Value = 0;
         }
         private IEnumerator ShowDialogue(string text, Action setup=null)
         {
@@ -538,9 +547,9 @@ namespace Tutorial
             dialogueController.Continue += Continue;
         }
 
-        private void ShowWarning(string text)
+        private void ShowWarning(string text, float waitTime)
         {
-            _warningTimer.Value = warningWaitTime + warningFadeTime;
+            _warningTimer.Value = waitTime + warningFadeTime;
             warning.text = text;
         }
 

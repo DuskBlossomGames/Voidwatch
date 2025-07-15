@@ -5725,7 +5725,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4292335575
-  m_fontColor: {r: 0.84400004, g: 0.84400004, b: 0.84400004, a: 1}
+  m_fontColor: {r: 0.95, g: 0.95, b: 0.95, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -11456,6 +11456,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: -810062340, guid: cde6125cc0d214d11a087a64bebe0a9f, type: 3}
   title: Yourself
+  additionalChildren: {fileID: 0}
+  offsetMin: {x: 0, y: 0}
+  offsetMax: {x: 0, y: 0}
 --- !u!1 &6003794264972008175
 GameObject:
   m_ObjectHideFlags: 0

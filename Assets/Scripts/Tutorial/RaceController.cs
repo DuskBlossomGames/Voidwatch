@@ -31,7 +31,7 @@ namespace Tutorial
 
         private void OnDisable()
         {
-            StartCoroutine(FadeRaceTimer());
+            _playerRb.StartCoroutine(FadeRaceTimer()); // someone else start it since I'm disabling
             player.inputBlocked = player.autoPilot = false;
         }
 

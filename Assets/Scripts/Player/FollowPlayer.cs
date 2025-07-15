@@ -72,11 +72,10 @@ namespace Player
             var sqM = (mouseToPlayer - (cameraPosition - playerPos)).sqrMagnitude/camLaziness;
             var mouseInf = mouseToPlayer.sqrMagnitude / 10;
             var scale = (sqM + mouseInf) / (1 + sqM + mouseInf);
-            if (suppress) scale = 1;
             //camOffset = Lerp((transform.position - playerpos), mouse2player * shipPull, jump * scale);
 
             //transform.position = playerpos + camOffset;
-            _camOffset = Lerp(cameraPosition, Lerp(playerPos,mousePos, shipPull), jump * scale * scale);
+            _camOffset = Vector3.Lerp(cameraPosition, Vector3.Lerp(playerPos, mousePos, shipPull), (suppress ? 0.3f : 1) * jump * scale * scale);
 
             //_moddedOffset = _camOffset;
             transform.position = _camOffset;
@@ -86,7 +85,7 @@ namespace Player
 
             sqM = (mousePos-playerPos).sqrMagnitude/500;
             scale = sqM / (1 + sqM);
-            _mainCamera.orthographicSize = baseSize +  mouseZoomScale * scale;
+            _mainCamera.orthographicSize = Mathf.Lerp(_mainCamera.orthographicSize, baseSize +  mouseZoomScale * scale, suppress ? 0.2f : 1);
         }
         
         private static int Hash(int input)

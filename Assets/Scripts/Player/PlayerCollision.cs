@@ -40,6 +40,7 @@ namespace Player
                 if (PlayerDataInstance.dodgeDamage > 0)
                 {
                     damageable.Damage(PlayerDataInstance.dodgeDamage, gameObject);
+                    GetComponentInParent<PlayerVFXController>().RunSpike();
                 }
                 return;
             }

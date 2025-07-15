@@ -11,7 +11,7 @@ namespace Menus.Pause
 {
     public class PauseMenuController : OptionsHolder
     {
-        public GameObject canvas, buttons;
+        public GameObject tip, canvas, buttons;
         public TextMeshProUGUI mainMenu;
         public OptionsController options;
         
@@ -70,6 +70,7 @@ namespace Menus.Pause
         public void Options()
         {
             buttons.SetActive(false);
+            tip.SetActive(false);
             options.gameObject.SetActive(true);
         }
 
@@ -85,6 +86,7 @@ namespace Menus.Pause
         {
             options.gameObject.SetActive(false);
             buttons.SetActive(true);
+            tip.SetActive(true);
         }
     }
 }

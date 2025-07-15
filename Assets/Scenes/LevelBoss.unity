@@ -1916,6 +1916,7 @@ GameObject:
   - component: {fileID: 369090547}
   - component: {fileID: 369090548}
   - component: {fileID: 369090549}
+  - component: {fileID: 369090550}
   m_Layer: 7
   m_Name: Tail Shoot Spike 3
   m_TagString: Untagged
@@ -2114,6 +2115,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f9c782c7bcc4480a84d55a4b427c219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &369090550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369090540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6ff9a96fee4e9abb56e109691cee07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &387278592
@@ -2715,7 +2728,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 210499575
+    m_Bits: 881588215
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5437,6 +5450,7 @@ GameObject:
   - component: {fileID: 995742472}
   - component: {fileID: 995742473}
   - component: {fileID: 995742474}
+  - component: {fileID: 995742475}
   m_Layer: 7
   m_Name: Tail Shoot Spike 0
   m_TagString: Untagged
@@ -5634,6 +5648,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f9c782c7bcc4480a84d55a4b427c219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &995742475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995742465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6ff9a96fee4e9abb56e109691cee07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1032159888
@@ -6371,6 +6397,7 @@ GameObject:
   - component: {fileID: 1073859046}
   - component: {fileID: 1073859047}
   - component: {fileID: 1073859048}
+  - component: {fileID: 1073859049}
   m_Layer: 7
   m_Name: Tail Shoot Spike 4
   m_TagString: Untagged
@@ -6572,6 +6599,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f9c782c7bcc4480a84d55a4b427c219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1073859049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073859039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6ff9a96fee4e9abb56e109691cee07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1108519877
 GameObject:
   m_ObjectHideFlags: 0
@@ -6587,6 +6626,7 @@ GameObject:
   - component: {fileID: 1108519884}
   - component: {fileID: 1108519885}
   - component: {fileID: 1108519886}
+  - component: {fileID: 1108519887}
   m_Layer: 7
   m_Name: Tail Shoot Spike 1
   m_TagString: Untagged
@@ -6783,6 +6823,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f9c782c7bcc4480a84d55a4b427c219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1108519887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108519877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6ff9a96fee4e9abb56e109691cee07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1118998922
@@ -10161,6 +10213,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7599818572435888140, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 528394105}
+    - target: {fileID: 7599818572435888140, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: fadeOut
+      value: 
+      objectReference: {fileID: 1741064935}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10986,6 +11046,7 @@ GameObject:
   - component: {fileID: 1591632615}
   - component: {fileID: 1591632616}
   - component: {fileID: 1591632617}
+  - component: {fileID: 1591632618}
   m_Layer: 7
   m_Name: Tail Shoot Spike 5
   m_TagString: Untagged
@@ -11183,6 +11244,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f9c782c7bcc4480a84d55a4b427c219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1591632618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591632608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6ff9a96fee4e9abb56e109691cee07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1617894451
@@ -12904,6 +12977,7 @@ GameObject:
   - component: {fileID: 1990071522}
   - component: {fileID: 1990071523}
   - component: {fileID: 1990071524}
+  - component: {fileID: 1990071525}
   m_Layer: 7
   m_Name: Tail Shoot Spike 2
   m_TagString: Untagged
@@ -13102,6 +13176,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f9c782c7bcc4480a84d55a4b427c219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1990071525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990071515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6ff9a96fee4e9abb56e109691cee07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2014539821

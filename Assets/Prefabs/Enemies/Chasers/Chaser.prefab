@@ -18,7 +18,8 @@ GameObject:
   - component: {fileID: -5838437573490083613}
   - component: {fileID: 3984119249238024877}
   - component: {fileID: -4549609167405607020}
-  m_Layer: 19
+  - component: {fileID: -2283059079345957141}
+  m_Layer: 28
   m_Name: Chaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +40,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5639829735691245698}
-  - {fileID: 4070176899446930106}
   - {fileID: 6854223478876350233}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -269,88 +269,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 9fd23843ae735468fb6594e44fee3f68, type: 3}
   title: Charger
---- !u!1 &5576403035857070923
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4070176899446930106}
-  - component: {fileID: 3598904866042879251}
-  - component: {fileID: 8856951756730776579}
-  m_Layer: 19
-  m_Name: Collision Detection
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4070176899446930106
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5576403035857070923}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6163149212636201720}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &3598904866042879251
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5576403035857070923}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.45
---- !u!114 &8856951756730776579
+  additionalChildren: {fileID: 0}
+  offsetMin: {x: 0, y: 0}
+  offsetMax: {x: 0, y: 0}
+--- !u!114 &-2283059079345957141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5576403035857070923}
+  m_GameObject: {fileID: 4353281618518814614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f657572af5043a29321f14a85cd8e76, type: 3}
+  m_Script: {fileID: 11500000, guid: ec6ff9a96fee4e9abb56e109691cee07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaser: {fileID: 7995879903636855662}
 --- !u!1 &6133222388846604360
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +299,7 @@ GameObject:
   - component: {fileID: 1288165168614315835}
   - component: {fileID: 7731121725679908282}
   - component: {fileID: 112673506430647192}
-  m_Layer: 19
+  m_Layer: 28
   m_Name: Electric Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1183,7 +1116,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1.5
+      value: 2
       mode: 0
       spread: 0
       speed:
@@ -5236,7 +5169,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 4.5
+  m_Radius: 6
 --- !u!114 &7731121725679908282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5280,7 +5213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5639829735691245698}
   - component: {fileID: 3479185017442721062}
-  m_Layer: 19
+  m_Layer: 28
   m_Name: Wakeup Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

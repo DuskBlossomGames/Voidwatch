@@ -73,6 +73,8 @@ namespace Spawnables.Controllers.Worms
                 dmg *= (1 + transform.parent.GetChild(i).GetComponent<WormSegment>().bend)/2 * ramp;
             }
 
+            var checkedMissed = false;
+
             for (int i = 0; i < 5; i++)
             {
                 GameObject lilray = new GameObject("Mini-Beam");
@@ -90,11 +92,13 @@ namespace Spawnables.Controllers.Worms
                 if (hit.collider != null && !hit.collider.GetComponent<Movement>().Dodging)
                 {
                     var tar = hit.transform.gameObject;
-                    var dmgable = tar.GetComponent<IDamageable>();
-                    if (dmgable != null)
+                    var dmgable = tar.GetComponent<PlayerDamageable>();
+                    if (!checkedMissed)
                     {
-                        dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
+                        if (dmgable.CheckMissed(dmgable.transform.position)) yield break;
+                        checkedMissed = true;
                     }
+                    dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
                 }
                 yield return new WaitForSeconds(.02f);
             }
@@ -113,11 +117,13 @@ namespace Spawnables.Controllers.Worms
             if (rhit.collider != null && !rhit.collider.GetComponent<Movement>().Dodging)
             {
                 var tar = rhit.transform.gameObject;
-                var dmgable = tar.GetComponent<Damageable>();
-                if (dmgable != null)
+                var dmgable = tar.GetComponent<PlayerDamageable>();
+                if (!checkedMissed)
                 {
-                    dmgable.Damage(dmg, gameObject, shieldMult, bleedPerc);
+                    if (dmgable.CheckMissed(dmgable.transform.position)) yield break;
+                    checkedMissed = true;
                 }
+                dmgable.Damage(dmg, gameObject, shieldMult, bleedPerc);
             }
 
             for (int i = 0; i < 20; i++)
@@ -137,11 +143,13 @@ namespace Spawnables.Controllers.Worms
                 if (hit.collider != null && !hit.collider.GetComponent<Movement>().Dodging)
                 {
                     var tar = hit.transform.gameObject;
-                    var dmgable = tar.GetComponent<Damageable>();
-                    if (dmgable != null)
+                    var dmgable = tar.GetComponent<PlayerDamageable>();
+                    if (!checkedMissed)
                     {
-                        dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
+                        if (dmgable.CheckMissed(dmgable.transform.position)) yield break;
+                        checkedMissed = true;
                     }
+                    dmgable.Damage(.05f * dmg, gameObject, shieldMult, bleedPerc);
                 }
             }
 

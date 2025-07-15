@@ -6,5 +6,9 @@ namespace Spawnables
     {
         public Sprite icon;
         public string title;
+        public Transform additionalChildren;
+
+        public Vector2 offsetMin;
+        public Vector2 offsetMax;
     }
 }

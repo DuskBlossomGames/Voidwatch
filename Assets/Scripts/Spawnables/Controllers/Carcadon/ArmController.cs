@@ -3,6 +3,7 @@ using Player;
 using Singletons;
 using UnityEngine;
 using Util;
+using static Singletons.Static_Info.PlayerData;
 
 namespace Spawnables.Controllers.Carcadon
 {
@@ -30,19 +31,22 @@ namespace Spawnables.Controllers.Carcadon
         private bool _attacking;
         private Vector2? _target;
 
-        private GameObject _player;
+        private Movement _player;
         public GameObject Player
         {
             set
             {
-                _player = value;
+                _player = value.GetComponent<Movement>();
                 var cd = GetComponentInChildren<ClawDamage>();
                 if (cd != null) cd.Player = value.GetComponent<PlayerDamageable>();
             }
         }
 
+        private bool _missed, _shownMissed;
+        
         private ClawDamage _clawDamage;
         private PolygonCollider2D _collider;
+        private CircleCollider2D _playerCol;
 
         private int _curAttackSlashes;
         private int _curSlash;
@@ -58,6 +62,7 @@ namespace Spawnables.Controllers.Carcadon
         {
             _collider = GetComponent<PolygonCollider2D>();
             _clawDamage = GetComponentInChildren<ClawDamage>();
+            _playerCol = _player.GetComponent<CircleCollider2D>();
 
             _segments = new [] {transform.GetChild(3).gameObject, transform.GetChild(2).gameObject,
                 transform.GetChild(1).gameObject, transform.GetChild(0).gameObject};
@@ -91,9 +96,8 @@ namespace Spawnables.Controllers.Carcadon
             }
         }
 
-        public void Attack()
+        public void VisualAttack()
         {
-            _clawDamage.Active = true;
             _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(true); // enable trail renderer
 
             _curAttackSlashes = 1;
@@ -136,28 +140,46 @@ namespace Spawnables.Controllers.Carcadon
             
             if ((hasAttack && _foldDirection == 0 && !_folded && _attackCooldown.IsFinished && _slashCooldown.IsFinished && _collider.OverlapPoint(_player.transform.position)) || _attackProgress != 0)
             {
-                if (!_player.GetComponent<Movement>().Dodging)
+                if (_missed && !_shownMissed)
+                {
+                    foreach (var seg in _segments)
+                    {
+                        var myCol = seg.GetComponentInChildren<BoxCollider2D>();
+                        if (!myCol.bounds.Intersects(_playerCol.bounds)) continue;
+
+                        _shownMissed = true;
+                        _player.ShowBillboard(BillboardMessage.Missed, (Vector2) _player.transform.position + 0.2f*_player.GetComponent<CustomRigidbody2D>().linearVelocity);
+                        break;
+                    }
+                }
+                
+                if (!_missed && !_player.Dodging)
                 {
                     // avoid player going through them
                     for (var i = 0; i < _segments.Length; i++)
                     {
                         var myCol = _segments[i].GetComponentInChildren<BoxCollider2D>();
-                        var playerCol = _player.GetComponentInChildren<CircleCollider2D>();
-                        if (myCol.bounds.Intersects(playerCol.bounds))
-                        {
-                            var arm = (Vector2) _segments[i].transform.position - GetJoint(i);
-                            var normalAngle = Mathf.Atan2(arm.y, arm.x) * Mathf.Rad2Deg + 90;
+                        if (!myCol.bounds.Intersects(_playerCol.bounds)) continue;
+                        
+                        var arm = (Vector2) _segments[i].transform.position - GetJoint(i);
+                        var normalAngle = Mathf.Atan2(arm.y, arm.x) * Mathf.Rad2Deg + 90;
 
-                            var playerDist = (Quaternion.Euler(0, 0, -normalAngle) * (_player.transform.position - _segments[i].transform.position)).x;
+                        var playerDist = (Quaternion.Euler(0, 0, -normalAngle) * (_player.transform.position - _segments[i].transform.position)).x;
 
-                            _player.transform.position += Quaternion.Euler(0, 0, normalAngle) * new Vector3(myCol.transform.lossyScale.x*myCol.size.x/2 + playerCol.transform.lossyScale.x*playerCol.radius/2 - playerDist, 0, 0);
-                        }
+                        _player.transform.position += Quaternion.Euler(0, 0, normalAngle) * new Vector3(myCol.transform.lossyScale.x*myCol.size.x/2 + _playerCol.transform.lossyScale.x*_playerCol.radius/2 - playerDist, 0, 0);
                     }
                 }
 
                 if (_attackProgress == 0)
                 {
-                    _clawDamage.Active = true;
+                    _missed = Random.value < PlayerDataInstance.missChance;
+                    _shownMissed = false;
+                    foreach (var seg in _segments)
+                    {
+                        Physics2D.IgnoreCollision(seg.GetComponentInChildren<BoxCollider2D>(), _playerCol, _missed);
+                    }
+                    
+                    _clawDamage.Active = !_missed;
                     _clawDamage.transform.parent.GetChild(1).gameObject.SetActive(true); // enable trail renderer
                 }
 
@@ -196,6 +218,11 @@ namespace Spawnables.Controllers.Carcadon
                 }
                 else
                 {
+                    foreach (var seg in _segments)
+                    {
+                        Physics2D.IgnoreCollision(seg.GetComponentInChildren<BoxCollider2D>(), _playerCol, false);
+                    }
+
                     SetFolded(false); // fail-safe
                     _clawDamage.Active = false;
                     _clawSoundBegan = false;

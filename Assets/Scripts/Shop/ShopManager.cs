@@ -11,6 +11,7 @@ using Util;
 using static Singletons.Static_Info.PlayerData;
 using static Singletons.Static_Info.GunInfo;
 using Random = UnityEngine.Random;
+using static Singletons.Static_Info.LevelSelectData;
 
 
 namespace Shop
@@ -32,21 +33,21 @@ namespace Shop
         
         private int _healCost;
         private readonly int[] _boostCosts = new int[3];
-        private List<BoostableStat> _stats;
 
         private readonly Timer _healPreviewTimer = new();
         private int _previewDir = -1;
+
+        private ShopMetadata Data => (ShopMetadata) LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].Metadata;
         
         private void Start()
         {
-            _stats = BoostableStat.Stats.OrderBy(_=>Random.value).Take(3).ToList();
             _healPreviewTimer.Value = 0.085f;
             _healPreviewTimer.SetValue(0);
 
             for (var i = 0; i < 3; i++)
             {
-                boostTitles[i].text = _stats[i].name + " Boost";
-                boostIcons[i].sprite = PlayerDataInstance.BoostableStatSprites[_stats[i].name];
+                boostTitles[i].text = Data.Stats[i].name + " Boost";
+                boostIcons[i].sprite = PlayerDataInstance.BoostableStatSprites[Data.Stats[i].name];
             }
 
             UpdateShop();
@@ -74,7 +75,7 @@ namespace Shop
             if (PlayerDataInstance.Scrap < _boostCosts[idx]) return;
 
             PlayerDataInstance.Scrap -= _boostCosts[idx];
-            _stats[idx].Boosts++;
+            Data.Stats[idx].Boosts++;
             
             UpdateShop();
         }
@@ -85,7 +86,7 @@ namespace Shop
 
             for (var i = 0; i < 3; i++)
             {
-                _boostCosts[i] = BoostableStat.BOOST_COSTS[_stats[i].Boosts];
+                _boostCosts[i] = BoostableStat.BOOST_COSTS[Data.Stats[i].Boosts];
             }
         }
 
@@ -101,8 +102,8 @@ namespace Shop
             for (var i = 0; i < 3; i++)
             {
                 boostCosts[i].text = _boostCosts[i].ToString();
-                boostButtons[i].interactable = _stats[i].Boosts < 3 && PlayerDataInstance.Scrap >= _boostCosts[i];
-                boostChains[i].Unlocked = _stats[i].Boosts;
+                boostButtons[i].interactable = Data.Stats[i].Boosts < 3 && PlayerDataInstance.Scrap >= _boostCosts[i];
+                boostChains[i].Unlocked = Data.Stats[i].Boosts;
             }
 
             healthBar.anchorMin = new Vector2(PlayerDataInstance.Health / PlayerDataInstance.maxHealth, healthBar.anchorMin.y);

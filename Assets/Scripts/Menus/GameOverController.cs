@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Linq;
 using Extensions;
+using LevelPlay;
+using Player;
 using Singletons.Static_Info;
 using Spawnables;
 using Spawnables.Controllers;
@@ -15,6 +17,8 @@ namespace Menus
 {
     public class GameOverController : MonoBehaviour
     {
+        public CustomRigidbody2D player;
+        
         public Image fadeOut;
         public float fadeOutTime;
         public Image winImage;
@@ -27,6 +31,9 @@ namespace Menus
 
         public IEnumerator Run(bool won, DeathInfo diedTo)
         {
+            var es = FindAnyObjectByType<EnemySpawner>();
+            es.enabled = false;
+            
             var timePlayed = Time.time - StatisticsInstance.startTime;
             var hour = (int) timePlayed / 3600;
             var minute = (int) (timePlayed % 3600) / 60;
@@ -38,7 +45,18 @@ namespace Menus
                 if (diedTo != null)
                 {
                     enemy.GetComponentsInChildren<TextMeshProUGUI>()[1].text = diedTo.title;
-                    enemy.GetComponentInChildren<Image>().sprite = diedTo.icon;
+
+                    var icon = enemy.GetComponentsInChildren<Image>()[1];
+                    icon.sprite = diedTo.icon;
+                    icon.rectTransform.offsetMin = -diedTo.offsetMin;
+                    icon.rectTransform.offsetMax = diedTo.offsetMax;
+                    if (diedTo.additionalChildren != null)
+                    {
+                        foreach (Transform child in diedTo.additionalChildren)
+                        {
+                            Instantiate(child, icon.transform, false);
+                        }
+                    }
                 }
                 else
                 {
@@ -54,6 +72,9 @@ namespace Menus
                 yield return new WaitForFixedUpdate();
                 fadeOut.SetAlpha(t/fadeOutTime);
             }
+            player.transform.position = Vector3.zero;
+            player.linearVelocity = Vector2.zero;
+            es.SpawnedEnemies.ForEach(Destroy);
             
             var title = won ? winTitle : loseTitle;
             var subtitle = won ? winSubtitle : loseSubtitle;
@@ -86,12 +107,7 @@ namespace Menus
                 foreach (var stat in stats) stat.SetActive(true);
                 for (float t = 0; t < statisticsFadeTime; t += Time.fixedDeltaTime)
                 {
-                    foreach (var stat in stats)
-                    {
-                        stat.GetComponentInChildren<Image>()?.SetAlpha(t/statisticsFadeTime);
-                        foreach (var text in stat.GetComponentsInChildren<TextMeshProUGUI>()) text.SetAlpha(t/statisticsFadeTime);
-                    }
-                        
+                    foreach (var stat in stats) stat.GetComponent<CanvasGroup>().alpha = t / statisticsFadeTime;
                     yield return new WaitForFixedUpdate();
                 }
                     

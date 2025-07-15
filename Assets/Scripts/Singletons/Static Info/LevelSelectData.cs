@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,6 +22,8 @@ namespace Singletons.Static_Info
         public static readonly Difficulty Medium = new("Medium", Color.HSVToRGB(0.16f, 1, 0.85f));
         public static readonly Difficulty Difficult = new("Difficult", Color.HSVToRGB(0f, 0.9f, 0.9f));
         public static readonly Difficulty Insane = new("Insane", Color.HSVToRGB(0.83f, 0.7f, 1));
+        
+        public static readonly Difficulty SpaceStation = new("Space Station", Color.HSVToRGB(0f, 0f, 0.7f));
 
         public readonly string Text;
         public readonly Color Color;
@@ -35,6 +38,21 @@ namespace Singletons.Static_Info
         }
         
         public static implicit operator Difficulty(int idx) { return (Difficulty) typeof(Difficulty).GetFields(BindingFlags.Static | BindingFlags.Public)[idx].GetValue(null); }
+    }
+    
+    public interface ILevelMetadata {}
+
+    public class ShopMetadata : ILevelMetadata
+    {
+        public List<BoostableStat> Stats;
+
+        public static ShopMetadata Generate()
+        {
+            return new ShopMetadata
+            {
+                Stats = BoostableStat.Stats.OrderBy(_ => Random.value).Take(3).ToList()
+            };
+        }
     }
     
     public class LevelData
@@ -52,6 +70,8 @@ namespace Singletons.Static_Info
 
         public string Title, Description;
         public Difficulty Difficulty;
+
+        [CanBeNull] public ILevelMetadata Metadata;
     }
 
     public class LevelSelectData : MonoBehaviour
@@ -163,7 +183,12 @@ namespace Singletons.Static_Info
                     level.Waves = waves.ToArray();
 
                     var scale = Difficulty.Count/2;
-                    level.Difficulty = (int) (scale * Mathf.Pow(2, 1.5f*Mathf.Clamp01(difficultyScore / MaxDifficultyScore)) - scale);
+                    level.Difficulty = level.Type switch
+                    {
+                        LevelType.SpaceStation => Difficulty.SpaceStation,
+                        LevelType.Tutorial => Difficulty.Easy,
+                        _ => (int)(scale * Mathf.Pow(2, 1.5f * Mathf.Clamp01(difficultyScore / MaxDifficultyScore)) - scale)
+                    };
                 }
             }
         }

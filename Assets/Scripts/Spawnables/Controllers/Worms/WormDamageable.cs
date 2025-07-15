@@ -20,9 +20,9 @@ namespace Spawnables.Controllers.Worms
             base.Start();
         }
 
-        public override void Damage(float damage, GameObject source)
+        public override bool Damage(float damage, GameObject source)
         {
-            base.Damage(dmgMod * damage, source);
+            return base.Damage(dmgMod * damage, source);
         }
 
         private void SpawnBits(GameObject source)

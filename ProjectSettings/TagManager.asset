@@ -36,9 +36,9 @@ TagManager:
   - Pickups
   - Dodgeable Scene Objects
   - Missiles
-  - PlayerDetector
-  - 
-  - 
+  - Miss Detector
+  - Missable Enemy
+  - Missable Enemy no Scene Objects
   - 
   - 
   m_SortingLayers:

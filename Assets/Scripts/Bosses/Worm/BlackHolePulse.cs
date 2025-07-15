@@ -58,7 +58,7 @@ namespace Bosses.Worm
                 _lr.SetPositions(points);
 
                 var playerRad = ((Vector2)player.transform.position).magnitude;
-                if (_playerCollider.enabled && Mathf.Abs(playerRad - radius) < lrWidth) player.Damage(damage, gameObject, shieldMult, bleedPerc);
+                if (_playerCollider.enabled && Mathf.Abs(playerRad - radius) < lrWidth && !player.CheckMissed(player.transform.position)) player.Damage(damage, gameObject, shieldMult, bleedPerc);
             }
             _lr.enabled = false;
 

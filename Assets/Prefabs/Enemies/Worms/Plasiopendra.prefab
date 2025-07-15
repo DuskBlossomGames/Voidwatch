@@ -95,3 +95,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 4c7b9a68cef5b4aab9b127e4a368b8bb, type: 3}
   title: Plasiopendra
+  additionalChildren: {fileID: 0}
+  offsetMin: {x: 0, y: 3}
+  offsetMax: {x: 0, y: -3}
