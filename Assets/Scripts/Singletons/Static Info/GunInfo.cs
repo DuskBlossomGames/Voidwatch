@@ -1,4 +1,6 @@
+using Player.Upgrades;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Singletons.Static_Info
 {
@@ -10,12 +12,12 @@ namespace Singletons.Static_Info
         public float noShootRefillTime;
         public float emptyRefillTime;
         public float timeToRefillFully;
-        public int bulletsPerShot;
+        public UpgradableStat<int> bulletsPerShot;
         public int bulletsPerShotVarience;
-        public float fireTime;
-        public float shotForce;
+        public UpgradableStat<float> fireTime;
+        public UpgradableStat<float> shotForce;
         public float forceVarience;
-        public float lateralSeperation;
+        public UpgradableStat<float> lateralSeparation;
         public float verticalSeperation;
         public float misfireChance;
         public int repeats;

@@ -49,11 +49,14 @@ namespace Player
             if (damageable.GetComponent<MissleAim>() != null) return;
                 
             var vel = (other.attachedRigidbody.linearVelocity - _rb.linearVelocity).magnitude;
-            damageable.Damage(PlayerDataInstance.collisionDamageMult * enemyMod * vel, gameObject);
+            var mult = damageable.GetComponent<AsteroidController>() != null
+                ? PlayerDataInstance.asteroidDamageMult
+                : PlayerDataInstance.collisionDamageMult;
+            damageable.Damage(mult * enemyMod * vel, gameObject);
 
             if (!damageable.IsDead && other.gameObject.GetComponent<AsteroidController>() == null) // asteroid handles it itself
             {
-                _dmgable.Damage(playerMod * vel, other.gameObject, shieldMult, bleedPerc);
+                _dmgable.Damage(PlayerDataInstance.takenCollisionDamageMult * playerMod * vel, other.gameObject, shieldMult, bleedPerc);
                 _cooldownTimer.Value = cooldown;
             }
             

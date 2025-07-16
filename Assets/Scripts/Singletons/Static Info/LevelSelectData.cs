@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Player.Upgrades;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -44,13 +45,13 @@ namespace Singletons.Static_Info
 
     public class ShopMetadata : ILevelMetadata
     {
-        public List<BoostableStat> Stats;
+        public List<IBoostableStat> Stats;
 
         public static ShopMetadata Generate()
         {
             return new ShopMetadata
             {
-                Stats = BoostableStat.Stats.OrderBy(_ => Random.value).Take(3).ToList()
+                Stats = IBoostableStat.Stats.OrderBy(_ => Random.value).Take(3).ToList()
             };
         }
     }

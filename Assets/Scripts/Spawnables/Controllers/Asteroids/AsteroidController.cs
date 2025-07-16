@@ -1,10 +1,12 @@
 using JetBrains.Annotations;
+using Player;
 using Spawnables.Controllers.Carcadon;
 using Spawnables.Controllers.Worms;
 using Spawnables.Damage;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
+using static Singletons.Static_Info.PlayerData;
 
 namespace Spawnables.Controllers.Asteroids
 {
@@ -43,8 +45,9 @@ namespace Spawnables.Controllers.Asteroids
             
             if (!other.gameObject.TryGetComponent<Damageable>(out var dmgable)) return;
             if (!dmgable.takeAsteroidDmg) return; // don't damage other asteroids, carc, or worms
-            
-            dmgable.Damage(0.25f * other.relativeVelocity.sqrMagnitude, gameObject, shieldMult, bleedPerc);
+
+            var mult = dmgable is PlayerDamageable ? (float) PlayerDataInstance.takenCollisionDamageMult : 1;
+            dmgable.Damage(mult * 0.25f * other.relativeVelocity.sqrMagnitude, gameObject, shieldMult, bleedPerc);
         }
 
         protected override void OnDeath(GameObject source)

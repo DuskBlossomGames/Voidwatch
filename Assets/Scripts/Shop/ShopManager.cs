@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Player.Upgrades;
 using Singletons.Static_Info;
 using TMPro;
 using UnityEngine;
@@ -46,10 +47,11 @@ namespace Shop
 
             for (var i = 0; i < 3; i++)
             {
-                boostTitles[i].text = Data.Stats[i].name + " Boost";
-                boostIcons[i].sprite = PlayerDataInstance.BoostableStatSprites[Data.Stats[i].name];
+                boostTitles[i].text = Data.Stats[i].GetName() + " Boost";
+                boostIcons[i].sprite = PlayerDataInstance.BoostableStatSprites[Data.Stats[i].GetName()];
             }
 
+            PlayerDataInstance.Scrap = 10000;
             UpdateShop();
         }
 
@@ -75,8 +77,8 @@ namespace Shop
             if (PlayerDataInstance.Scrap < _boostCosts[idx]) return;
 
             PlayerDataInstance.Scrap -= _boostCosts[idx];
-            Data.Stats[idx].Boosts++;
-            
+            Data.Stats[idx].Boost();
+
             UpdateShop();
         }
 
@@ -86,7 +88,7 @@ namespace Shop
 
             for (var i = 0; i < 3; i++)
             {
-                _boostCosts[i] = BoostableStat.BOOST_COSTS[Data.Stats[i].Boosts];
+                _boostCosts[i] = IBoostableStat.BOOST_COSTS[Data.Stats[i].GetBoosts()];
             }
         }
 
@@ -102,8 +104,8 @@ namespace Shop
             for (var i = 0; i < 3; i++)
             {
                 boostCosts[i].text = _boostCosts[i].ToString();
-                boostButtons[i].interactable = Data.Stats[i].Boosts < 3 && PlayerDataInstance.Scrap >= _boostCosts[i];
-                boostChains[i].Unlocked = Data.Stats[i].Boosts;
+                boostButtons[i].interactable = Data.Stats[i].GetBoosts() < 3 && PlayerDataInstance.Scrap >= _boostCosts[i];
+                boostChains[i].Unlocked = Data.Stats[i].GetBoosts();
             }
 
             healthBar.anchorMin = new Vector2(PlayerDataInstance.Health / PlayerDataInstance.maxHealth, healthBar.anchorMin.y);

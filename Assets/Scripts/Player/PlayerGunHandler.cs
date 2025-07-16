@@ -146,7 +146,7 @@ namespace Player
                     float latOff, verOff;
                     if (bullets > 1)
                     {
-                        latOff = GunInfoInstance.lateralSeperation * (2 * i - bullets + 1) / (bullets - 1);
+                        latOff = GunInfoInstance.lateralSeparation * (2 * i - bullets + 1) / (bullets - 1);
                         verOff = GunInfoInstance.verticalSeperation * (1 - Mathf.Abs(2 * ((float)i / (bullets - 1)) - 1));
                     }
                     else

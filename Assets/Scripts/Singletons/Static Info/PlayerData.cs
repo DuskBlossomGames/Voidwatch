@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Player;
+using Player.Upgrades;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -17,25 +18,27 @@ namespace Singletons.Static_Info
         
         public MaxHealthStat maxHealth;
         public BoostableStat<float> maxShield;
-        public float shieldRegenRate;
+        public UpgradableStat<float> shieldRegenRate;
         public BoostableStat<float> maxDodgeJuice;
-        public float dodgeJuiceRegenRate;
+        public UpgradableStat<float> dodgeJuiceRegenRate;
         public float driftCorrection;
         public BoostableStat<float> speedLimit;
         public float acceleration;
         public float dodgeRedirectPercentage;
-        public float dodgeJuiceCost;
+        public UpgradableStat<float> dodgeJuiceCost;
         public float dodgeVelocity;
-        public float dodgeDistance;
+        public UpgradableStat<float> dodgeDistance;
         public float dodgeCooldown;
 
         [Space(10)] [Header("Upgrade Values (uninitialized)")]
-        public float missChance;
-        public float dodgeDamage;
+        public UpgradableStat<float> missChance;
+        public UpgradableStat<float> dodgeDamage;
         public float dodgeExplosionDamage;
-        public float postDodgeMult = 1;
-        public float collisionDamageMult = 1;
-        public int bulletChains;
+        public UpgradableStat<float> postDodgeMult;
+        public UpgradableStat<float> collisionDamageMult;
+        public UpgradableStat<float> asteroidDamageMult;
+        public UpgradableStat<float> takenCollisionDamageMult;
+        public UpgradableStat<int> bulletChains;
         public bool healthPickupsEnabled;
         public bool autoDodge;
         public readonly List<PlayerDamageType> DamageTypes = new();
@@ -69,9 +72,9 @@ namespace Singletons.Static_Info
             Addressables.LoadAssetsAsync<Sprite>(boostableStatSprite, null).Completed += handle =>
             {
                 var byName = handle.Result.ToDictionary(s => s.name, s => s);
-                foreach (var stat in BoostableStat.Stats)
+                foreach (var stat in IBoostableStat.Stats)
                 {
-                    BoostableStatSprites[stat.name] = byName[stat.name];
+                    BoostableStatSprites[stat.GetName()] = byName[stat.GetName()];
                 }
             };
         }

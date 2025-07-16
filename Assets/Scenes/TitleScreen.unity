@@ -5873,24 +5873,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoCount:
+    baseValue: 100
+    minValue: 0
+    interaction: 0
     name: Ammo
-    value: 100
   noShootRefillTime: 1.5
   emptyRefillTime: 2
   timeToRefillFully: 3
-  bulletsPerShot: 2
+  bulletsPerShot:
+    baseValue: 2
+    minValue: 0
+    interaction: 1
   bulletsPerShotVarience: 0
-  fireTime: 0.18
-  shotForce: 2125
+  fireTime:
+    baseValue: 0.18
+    minValue: 0
+    interaction: 0
+  shotForce:
+    baseValue: 2125
+    minValue: 0
+    interaction: 0
   forceVarience: 5
-  lateralSeperation: 20
+  lateralSeparation:
+    baseValue: 20
+    minValue: 0
+    interaction: 1
   verticalSeperation: 200
   misfireChance: 0
   repeats: 2
   repeatSeperation: 0.08
   dmgMod:
+    baseValue: 15
+    minValue: 0
+    interaction: 0
     name: Damage
-    value: 15
   shieldAsAmmo: 0
 --- !u!114 &342308706
 MonoBehaviour:
@@ -5929,32 +5945,75 @@ MonoBehaviour:
   boostableStatSprite:
     m_LabelString: boostable-stats
   maxHealth:
+    baseValue: 2000
+    minValue: 0
+    interaction: 0
     name: Health
-    value: 2000
   maxShield:
+    baseValue: 500
+    minValue: 0
+    interaction: 0
     name: Shield
-    value: 500
-  shieldRegenRate: 50
+  shieldRegenRate:
+    baseValue: 50
+    minValue: 0
+    interaction: 0
   maxDodgeJuice:
+    baseValue: 100
+    minValue: 0
+    interaction: 0
     name: Void Energy
-    value: 100
-  dodgeJuiceRegenRate: 20
+  dodgeJuiceRegenRate:
+    baseValue: 20
+    minValue: 0
+    interaction: 0
   driftCorrection: 5
   speedLimit:
+    baseValue: 25
+    minValue: 0
+    interaction: 0
     name: Speed
-    value: 25
   acceleration: 4
   dodgeRedirectPercentage: 0.6
-  dodgeJuiceCost: 45
+  dodgeJuiceCost:
+    baseValue: 45
+    minValue: 0
+    interaction: 0
   dodgeVelocity: 120
-  dodgeDistance: 11
+  dodgeDistance:
+    baseValue: 11
+    minValue: 0
+    interaction: 0
   dodgeCooldown: 0.35
-  missChance: 0
-  dodgeDamage: 0
+  missChance:
+    baseValue: 0
+    minValue: 0
+    interaction: 1
+  dodgeDamage:
+    baseValue: 0
+    minValue: 0
+    interaction: 1
   dodgeExplosionDamage: 0
-  postDodgeMult: 1
-  collisionDamageMult: 1
-  bulletChains: 0
+  postDodgeMult:
+    baseValue: 1
+    minValue: 0
+    interaction: 0
+  collisionDamageMult:
+    baseValue: 1
+    minValue: 1
+    interaction: 1
+  asteroidDamageMult:
+    baseValue: 1
+    minValue: 1
+    interaction: 1
+  takenCollisionDamageMult:
+    baseValue: 1
+    minValue: 0
+    interaction: 0
+  bulletChains:
+    baseValue: 0
+    minValue: 0
+    interaction: 1
   healthPickupsEnabled: 0
   autoDodge: 0
 --- !u!114 &342308708
