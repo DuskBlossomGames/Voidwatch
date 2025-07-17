@@ -35,9 +35,9 @@ namespace Menus.Pause.UpgradeList
 
             var right = transform.GetChild(1).GetChild(1).GetComponent<RectTransform>().anchorMax.x
                 + 2 * (_prefab.anchorMin.x - transform.GetChild(1).GetChild(1).GetComponent<RectTransform>().anchorMax.x)
-                + spacing * (PlayerDataInstance.Upgrades.Count-1)
+                + spacing * (Mathf.Max(0, PlayerDataInstance.Upgrades.Count-1))
                 + _prefab.anchorMax.x-_prefab.anchorMin.x;
-            transform.GetChild(1).gameObject.SetActive(PlayerDataInstance.Upgrades.Count > 0);
+            // transform.GetChild(1).gameObject.SetActive(PlayerDataInstance.Upgrades.Count > 0);
             transform.GetChild(1).GetChild(2).GetComponent<RectTransform>().anchorMin = new Vector2(right, 0);
             transform.GetChild(1).GetChild(2).GetComponent<RectTransform>().anchorMax = new Vector2(right, 1);
             transform.GetChild(1).GetChild(3).GetComponent<RectTransform>().anchorMax = new Vector2(right, 1);

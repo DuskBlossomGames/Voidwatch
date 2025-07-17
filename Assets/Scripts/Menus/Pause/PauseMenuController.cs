@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Singletons.Static_Info;
 using TMPro;
@@ -37,6 +38,20 @@ namespace Menus.Pause
             yield return null;
         }
 
+        private void TryPause()
+        {
+            if (SceneManager.GetActiveScene().name == "TitleScreen") return;
+            
+            mainMenu.text = PlayerDataInstance.IsTutorial ? "Exit Tutorial" : "Main Menu";
+                
+            canvas.SetActive(true);
+            Time.timeScale = 0;
+            InputManager.isPaused = true;
+
+            FindAnyObjectByType<MusicTransitionManager>().enabled = false;
+            foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.Pause();
+        }
+        
         private void Update()
         {
             if (!Input.GetKeyDown(KeyCode.Escape) || (options.gameObject.activeSelf && options.BindingKey)) return;
@@ -45,17 +60,12 @@ namespace Menus.Pause
             {
                 if (buttons.activeSelf) Resume();
             }
-            else if (SceneManager.GetActiveScene().name != "TitleScreen")
-            {
-                mainMenu.text = PlayerDataInstance.IsTutorial ? "Exit Tutorial" : "Main Menu";
-                
-                canvas.SetActive(true);
-                Time.timeScale = 0;
-                InputManager.isPaused = true;
+            else TryPause();
+        }
 
-                FindAnyObjectByType<MusicTransitionManager>().enabled = false;
-                foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.Pause();
-            }
+        private void OnApplicationFocus(bool focused)
+        {
+            if (!focused) TryPause();
         }
 
         public void Resume()
