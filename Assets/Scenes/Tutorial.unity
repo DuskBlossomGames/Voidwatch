@@ -1347,7 +1347,7 @@ MonoBehaviour:
   barExpandTime: 0.9
   waitBeforeFlash: 0.3
   flashTime: 1.25
-  numberOfFlashes: 3
+  numberOfFlashes: 2
   barHeight: 0.001
   waitBeforeOpen: 0.65
   openTime: 1.35
@@ -8339,7 +8339,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 925562871
+    m_Bits: 1059780599
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

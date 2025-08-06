@@ -51,7 +51,6 @@ namespace Shop
                 boostIcons[i].sprite = PlayerDataInstance.BoostableStatSprites[Data.Stats[i].GetName()];
             }
 
-            PlayerDataInstance.Scrap = 10000;
             UpdateShop();
         }
 
