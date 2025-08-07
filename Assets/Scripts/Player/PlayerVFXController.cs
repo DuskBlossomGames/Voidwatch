@@ -8,10 +8,13 @@ namespace Player
     public ParticleSystem bif;
     public ParticleSystem StunElectricity;
     public GameObject spikeRight;
+    public ParticleSystem ShieldBreak;
 
     public void RunBif(){  bif.Play();}
 
     public void RunStun(){  StunElectricity.Play();}
+
+    public void RunShield(){ShieldBreak.Play();}
 
     public void RunSpike()
     {
