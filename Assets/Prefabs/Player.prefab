@@ -17322,6 +17322,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldBreak
       objectReference: {fileID: 0}
+    - target: {fileID: 1532788544717185353, guid: b6756d05f4fd8473d9a6df04305b2e28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3586153426300161582, guid: b6756d05f4fd8473d9a6df04305b2e28, type: 3}
       propertyPath: SubModule.subEmitters.Array.data[0].emitter
       value: 
