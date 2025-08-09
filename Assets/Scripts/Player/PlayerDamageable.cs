@@ -28,13 +28,14 @@ namespace Player
     public class PlayerDamageable : Damageable
     {
         public Q_Vignette_Single vignette;
-
+        
         public EnemySpawner enemySpawner;
         public GameObject fadeOut;
         public float fadeouttime = 1;
 
         public GameOverController gameOver;
-        
+
+        public PlayerVFXController vfx;
         public AnimationCurve vignetteCurve;
         public float vignetteDuration, vignettePeak;
         public float sigmoidStart, sigmoidEnd;
@@ -79,6 +80,7 @@ namespace Player
 
         public void DelayShield(bool broken)
         {
+            if (broken) vfx.RunShield();
             _shieldCooldown.Value = Mathf.Max(_shieldCooldown.Value, broken ? shieldBreakCooldown : damageCooldown);
         }
         
