@@ -6,6 +6,7 @@ using Player;
 using Spawnables.Controllers.Asteroids;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
+using UnityEditor;
 using UnityEngine;
 using Util;
 using static Singletons.Static_Info.PlayerData;
@@ -36,8 +37,12 @@ namespace Spawnables.Controllers.Bullets
         public bool isEnabled = true;
         private List<PlayerDamageType> _damageTypes = new();
 
+        private static int idx;
+        private int _idx;
         private void Start()
         {
+            _idx = idx++;
+            
             if (_firstCollider == null) _firstCollider = owner;
             if (owner != null && owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
 
@@ -52,16 +57,15 @@ namespace Spawnables.Controllers.Bullets
 
         private void OnTriggerExit2D(Collider2D otherCollider)
         {
-            if (!isEnabled) return;
+            if (!isEnabled || _leftFirstCollider) return;
         
             if (otherCollider.gameObject == _firstCollider)
             {
                 _leftFirstCollider = true;
             }
-
         }
 
-        public bool CanCollideWith(Collider2D other) => _leftFirstCollider || other.gameObject != _firstCollider;
+        private bool CanCollideWith(Collider2D other) => _leftFirstCollider || other.gameObject != _firstCollider;
         private void OnTriggerEnter2D(Collider2D otherCollider)
         {
             if (Physics2D.GetIgnoreCollision(otherCollider, _collider)) return;

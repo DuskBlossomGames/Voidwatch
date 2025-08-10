@@ -62,10 +62,12 @@ namespace Menus.Pause
             }
             else TryPause();
         }
-
+        
         private void OnApplicationFocus(bool focused)
         {
+#if !UNITY_EDITOR
             if (!focused) TryPause();
+#endif
         }
 
         public void Resume()

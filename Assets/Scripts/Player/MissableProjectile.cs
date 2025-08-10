@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Util;
 using Random = UnityEngine.Random;
 using static Singletons.Static_Info.PlayerData;
 
@@ -80,6 +81,7 @@ namespace Player
                 layer = gameObject.layer
             };
             trigger.AddComponent<TriggerHandler>();
+            trigger.AddComponent<Rigidbody2D>();
             var triggerColl = (Collider2D) trigger.AddComponent(myCollider.GetType());
             triggerColl.isTrigger = true;
             switch (myCollider)
