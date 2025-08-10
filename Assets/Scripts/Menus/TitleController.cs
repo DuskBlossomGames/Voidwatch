@@ -206,7 +206,7 @@ namespace Menus
 
         public void OpenSteam()
         {
-            //Application.OpenURL("https://steam.com");
+            Application.OpenURL("https://store.steampowered.com/app/3764010/Voidwatch");
         }
 
         public void Quit()
