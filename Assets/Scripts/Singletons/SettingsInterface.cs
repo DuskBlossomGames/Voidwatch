@@ -34,19 +34,19 @@ namespace Singletons
             isFirstTime = !PlayerPrefs.HasKey("check");
             if (isFirstTime) PlayerPrefs.DeleteAll();
             PlayerPrefs.SetInt("check", 1);
-            
-            // VIDEO
-            SetResolution(PlayerPrefs.GetInt("Resolution", resolutions.IndexOf(Screen.currentResolution)));
-            SetFullscreen(PlayerPrefs.GetInt("Fullscreen", 1) == 1);
-            SetVsync(PlayerPrefs.GetInt("Vsync", 1) == 1);
-            SetHUDSize(PlayerPrefs.GetFloat("HUDSize", 1));
-            SetMinimapSize(PlayerPrefs.GetFloat("MinimapSize", 1));
-            
+
             // CONTROLS
             for (var control = 0; control < InputAction.Count; control++)
             {
                 SetKeybind(control, (KeyCode) PlayerPrefs.GetInt($"Control{control}", (int) InputManager.DEFAULT_ACTIONS[control]));
             }
+
+            // VIDEO
+            SetFullscreen(PlayerPrefs.GetInt("Fullscreen", 1) == 1);
+            SetVsync(PlayerPrefs.GetInt("Vsync", 1) == 1);
+            SetHUDSize(PlayerPrefs.GetFloat("HUDSize", 1));
+            SetMinimapSize(PlayerPrefs.GetFloat("MinimapSize", 1));
+            SetResolution(PlayerPrefs.GetInt("Resolution", resolutions.IndexOf(Screen.currentResolution)));
         }
 
         public void Start()
