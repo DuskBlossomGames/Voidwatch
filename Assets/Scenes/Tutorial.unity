@@ -5557,7 +5557,7 @@ MonoBehaviour:
   scrapPrefab: {fileID: 389265811991204148, guid: 32d039aa979244044a7b25f87d2191f8, type: 3}
   fadeOut: {fileID: 666178717}
   fadeOutTime: 1
-  blackScreen: {fileID: 0}
+  blackScreen: {fileID: 1646751299}
   canvas: {fileID: 20034035}
   dashBar: {fileID: 2603935374738002160}
   minimap: {fileID: 93163517}
