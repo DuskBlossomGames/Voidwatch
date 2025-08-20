@@ -28,7 +28,7 @@ namespace Player
     public class PlayerDamageable : Damageable
     {
         public Q_Vignette_Single vignette;
-        
+
         public EnemySpawner enemySpawner;
         public GameObject fadeOut;
         public float fadeouttime = 1;
@@ -44,7 +44,7 @@ namespace Player
 
         public ProgressBar healthBar, shieldBar;
         public float shieldBreakCooldown, damageCooldown;
-        
+
         public AudioClip shieldDamageClip;
         public AudioClip healthDamageClip;
         public AudioClip shieldBreakClip;
@@ -84,11 +84,11 @@ namespace Player
             if (broken && runFX)
             {
                 vfx.RunShield();
-                AudioPlayer.Play(shieldBreakClip, Random.Range(0.9f, 1.1f), 0.8f);
+                AudioPlayer.Play(shieldBreakClip, Random.Range(0.8f, 1.0f), 0.6f);
             }
             _shieldCooldown.Value = Mathf.Max(_shieldCooldown.Value, broken ? shieldBreakCooldown : damageCooldown);
         }
-        
+
         public new void Start()
         {
             _movement = GetComponent<Movement>();
@@ -134,9 +134,9 @@ namespace Player
         {
             ShieldPower = Mathf.Max(ShieldPower - damage, 0);
             AudioPlayer.Play(shieldDamageClip, 0.9f, 0.2f);
-            
+
             DelayShield(ShieldPower <= 0, false);
-            
+
             return ShieldPower <= 0;
         }
 
@@ -147,13 +147,13 @@ namespace Player
             _movement.ShowBillboard(BillboardMessage.Missed, billboardPos);
             return true;
         }
-        
+
         public override bool Damage(float damage, GameObject source) { return Damage(damage, source, 1, 0); }
 
         public override bool Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
         {
             if (godmode) return false;
-            
+
             if (PlayerDataInstance.autoDodge && damage > 11)
             {
                 var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
@@ -237,7 +237,7 @@ namespace Player
         {
             if (_died) return;
             _died = true;
-            
+
             if (enemySpawner != null) enemySpawner.enabled = false;
 
             StartCoroutine(DeathFade(FindDeathInfo(source)));
@@ -272,9 +272,9 @@ namespace Player
             foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;
             foreach (var trail in GetComponentsInChildren<TrailRenderer>()) trail.enabled = false;
             GetComponentInChildren<AmmoBar>().gameObject.SetActive(false);
-            
+
             _movement.SetInputBlocked(true);
-            
+
             if (!PlayerDataInstance.IsTutorial)
             {
                 StartCoroutine(gameOver.Run(false, diedTo));
@@ -287,7 +287,7 @@ namespace Player
                 {
                     yield return new WaitForSecondsRealtime(.01f);
                     var prog = i / (100 * fadeouttime);
-                
+
                     fadeOut.GetComponent<Image>().SetAlpha(Mathf.Pow(prog, .5f));
                 }
 

@@ -11143,7 +11143,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   afterImageSpacing: 1.1
   afterImageSprite: {fileID: 21300000, guid: 831fd86f5d01b4ef88ea35f15411e077, type: 3}
-  stunClip: {fileID: 8300000, guid: d0fb3b1647b6a4ab2828aaeea165096e, type: 3}
+  stunClip: {fileID: 8300000, guid: 096dfcf2bd3584199b3d069c22aba325, type: 3}
   billboards: {fileID: 3596913904132632275}
   billboardMsgRadius: 1.9
   stunRotPerSec: 200

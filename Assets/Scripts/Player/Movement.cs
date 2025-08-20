@@ -13,7 +13,7 @@ using ProgressBar = ProgressBars.ProgressBar;
 namespace Player
 {
     public enum BillboardMessage { Stunned, Missed }
-    
+
     public class Movement : MonoBehaviour
     {
         public GameObject explosion;
@@ -118,14 +118,14 @@ namespace Player
             SetInputBlocked(true);
             ShowBillboard(BillboardMessage.Stunned);
             gameObject.GetComponent<PlayerVFXController>().RunStun();
-            AudioPlayer.Play(stunClip, Random.Range(0.9f, 1.1f), 0.4f);
+            AudioPlayer.Play(stunClip, Random.Range(0.8f, 1.0f), 0.3f);
         }
 
         public void ShowBillboard(BillboardMessage bm, Vector3? position=null)
         {
             var obj = billboards.transform.GetChild((int)bm).gameObject;
             Instantiate(obj,
-                position ?? transform.position + billboardMsgRadius * 
+                position ?? transform.position + billboardMsgRadius *
                     (Vector3)UtilFuncs.AngleToVector(_camera.transform.eulerAngles.z * Mathf.Deg2Rad + Mathf.PI / 2),
                 Camera.main!.transform.rotation).SetActive(true);
         }
