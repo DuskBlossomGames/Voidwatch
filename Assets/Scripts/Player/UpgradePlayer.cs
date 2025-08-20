@@ -96,7 +96,7 @@ namespace Player
                 0,
                 new Dictionary<UpgradableStat, float>
                 {
-                    {PlayerDataInstance.missChance, 1.5f}
+                    {PlayerDataInstance.shieldRegenRate, 1.5f}
                 }),
             new("Durable Duct Tape",
                 "Ship can fire with redirected shield energy when out of ammo, and fire rate is significantly increased.",
@@ -165,7 +165,7 @@ namespace Player
                     {PlayerDataInstance.dodgeDamage, 50}
                 }),
             new("Mining Drill",
-                "A frontal drill increases the damage done when ramming ships.",
+                "A frontal drill increases the damage done when ramming ships, and lowering damage taken.",
                 "If you squint, a ship\nis basically an asteroid.",
                 Rarity.Common,
                 0,
@@ -173,7 +173,8 @@ namespace Player
                 {
                     {PlayerDataInstance.collisionDamageMult, 1f},
                     {PlayerDataInstance.asteroidDamageMult, 1.5f},
-                    {PlayerDataInstance.takenCollisionDamageMult, 0.75f}
+                    {PlayerDataInstance.takenCollisionDamageMult, 0.65f},
+                    {PlayerDataInstance.takenAsteroidCollisionDamageMult, 0.5f}
                 }),
             new("Void Energy Sieve",
                 "Captures Void Energy as you pass through Voidspace, infusing your next bullets with extra power.",

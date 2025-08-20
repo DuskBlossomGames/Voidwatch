@@ -1,4 +1,5 @@
 using System;
+using Spawnables.Controllers.Bullets;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
@@ -18,12 +19,14 @@ namespace Player
             private float _timeEntered;
 
             private Collider2D _myCollider, _playerCollider;
+            private BulletCollision _bullet;
 
             private void Awake()
             {
                 _movement = FindAnyObjectByType<Movement>();
                 _playerCollider = _movement.GetComponent<Collider2D>();
                 _myCollider = transform.parent.GetComponent<Collider2D>();
+                _bullet = GetComponentInParent<BulletCollision>();
 
                 CheckMiss();
             }
@@ -43,14 +46,16 @@ namespace Player
 
             private void OnTriggerEnter2D(Collider2D other)
             {
+                if (_bullet != null && !_bullet.CanCollideWith(other)) return;
                 if (!_willMiss || other != _playerCollider) return;
-                
+
                 _movement.ShowBillboard(BillboardMessage.Missed, transform.position);
                 _timeEntered = Time.time;
             }
 
             private void OnTriggerStay2D(Collider2D other)
             {
+                if (_bullet != null && !_bullet.CanCollideWith(other)) return;
                 if (!_willMiss || other != _playerCollider || Time.time - _timeEntered <= IMMUNE_TIME) return;
 
                 _willMiss = false;
@@ -81,7 +86,9 @@ namespace Player
                 layer = gameObject.layer
             };
             trigger.AddComponent<TriggerHandler>();
-            trigger.AddComponent<Rigidbody2D>();
+            var trb = trigger.AddComponent<Rigidbody2D>();
+            trb.angularDamping = trb.gravityScale = trb.mass = 0;
+            trigger.AddComponent<FixedJoint2D>().connectedBody = GetComponent<Rigidbody2D>();
             var triggerColl = (Collider2D) trigger.AddComponent(myCollider.GetType());
             triggerColl.isTrigger = true;
             switch (myCollider)

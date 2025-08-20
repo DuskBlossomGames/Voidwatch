@@ -46,7 +46,7 @@ namespace Spawnables.Controllers.Asteroids
             if (!other.gameObject.TryGetComponent<Damageable>(out var dmgable)) return;
             if (!dmgable.takeAsteroidDmg) return; // don't damage other asteroids, carc, or worms
 
-            var mult = dmgable is PlayerDamageable ? (float) PlayerDataInstance.takenCollisionDamageMult : 1;
+            var mult = dmgable is PlayerDamageable ? (float) PlayerDataInstance.takenAsteroidCollisionDamageMult : 1;
             dmgable.Damage(mult * 0.25f * other.relativeVelocity.sqrMagnitude, gameObject, shieldMult, bleedPerc);
         }
 

@@ -38,6 +38,7 @@ namespace Singletons.Static_Info
         public UpgradableStat<float> collisionDamageMult;
         public UpgradableStat<float> asteroidDamageMult;
         public UpgradableStat<float> takenCollisionDamageMult;
+        public UpgradableStat<float> takenAsteroidCollisionDamageMult;
         public UpgradableStat<int> bulletChains;
         public bool healthPickupsEnabled;
         public bool autoDodge;

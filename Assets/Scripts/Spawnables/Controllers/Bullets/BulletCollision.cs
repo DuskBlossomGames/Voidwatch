@@ -37,12 +37,8 @@ namespace Spawnables.Controllers.Bullets
         public bool isEnabled = true;
         private List<PlayerDamageType> _damageTypes = new();
 
-        private static int idx;
-        private int _idx;
         private void Start()
         {
-            _idx = idx++;
-            
             if (_firstCollider == null) _firstCollider = owner;
             if (owner != null && owner.GetComponent<PlayerDamageable>() != null) _damageTypes = PlayerDataInstance.DamageTypes;
 
@@ -65,7 +61,7 @@ namespace Spawnables.Controllers.Bullets
             }
         }
 
-        private bool CanCollideWith(Collider2D other) => _leftFirstCollider || other.gameObject != _firstCollider;
+        public bool CanCollideWith(Collider2D other) => _leftFirstCollider || other.gameObject != _firstCollider;
         private void OnTriggerEnter2D(Collider2D otherCollider)
         {
             if (Physics2D.GetIgnoreCollision(otherCollider, _collider)) return;
