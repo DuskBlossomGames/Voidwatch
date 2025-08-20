@@ -48,7 +48,7 @@ namespace Player
         public AudioClip shieldDamageClip;
         public AudioClip healthDamageClip;
         public AudioClip shieldBreakClip;
-        // TODO: swap PlayerHitShield and PlayerHitDamage
+        public float shieldBreakDelay;
 
         public bool godmode = false;
 
@@ -79,12 +79,17 @@ namespace Player
 
         private Vector3 _startLoc;
 
+        private readonly Timer _shieldBreakSfxCooldown = new();
         public void DelayShield(bool broken, bool runFX=true)
         {
             if (broken && runFX)
             {
                 vfx.RunShield();
-                AudioPlayer.Play(shieldBreakClip, Random.Range(0.9f, 1.1f), 0.8f);
+                if (!_shieldBreakSfxCooldown.IsFinished)
+                {
+                    AudioPlayer.Play(shieldBreakClip, Random.Range(0.9f, 1.1f), 0.8f);
+                    _shieldBreakSfxCooldown.Value = shieldBreakDelay;
+                }
             }
             _shieldCooldown.Value = Mathf.Max(_shieldCooldown.Value, broken ? shieldBreakCooldown : damageCooldown);
         }
@@ -114,6 +119,7 @@ namespace Player
 
             if (Health < 0) OnDeath(null);
 
+            _shieldBreakSfxCooldown.Update();
             _shieldCooldown.Update();
             if (_shieldCooldown.IsFinished)
             {
