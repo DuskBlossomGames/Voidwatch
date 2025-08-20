@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Singletons;
 using Spawnables.Controllers.Misslers;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -26,6 +27,8 @@ namespace Player
         public AnimationCurve dodgeTimeDilationCurve;
         public float afterImageSpacing;
         public Sprite afterImageSprite;
+
+        public AudioClip stunClip;
 
         public GameObject billboards;
         public float billboardMsgRadius;
@@ -115,7 +118,7 @@ namespace Player
             SetInputBlocked(true);
             ShowBillboard(BillboardMessage.Stunned);
             gameObject.GetComponent<PlayerVFXController>().RunStun();
-
+            AudioPlayer.Play(stunClip, Random.Range(0.9f, 1.1f), 0.4f);
         }
 
         public void ShowBillboard(BillboardMessage bm, Vector3? position=null)

@@ -11143,6 +11143,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   afterImageSpacing: 1.1
   afterImageSprite: {fileID: 21300000, guid: 831fd86f5d01b4ef88ea35f15411e077, type: 3}
+  stunClip: {fileID: 8300000, guid: d0fb3b1647b6a4ab2828aaeea165096e, type: 3}
   billboards: {fileID: 3596913904132632275}
   billboardMsgRadius: 1.9
   stunRotPerSec: 200
@@ -11242,6 +11243,7 @@ MonoBehaviour:
   damageCooldown: 0.5
   shieldDamageClip: {fileID: 8300000, guid: 43ad996c8068547eba46b0acb990ae4a, type: 3}
   healthDamageClip: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
+  shieldBreakClip: {fileID: 8300000, guid: 100ac36341f9049a88ee7c33f968c4db, type: 3}
   godmode: 0
   explosion: {fileID: 1590450694551336149}
   bitOptions:
