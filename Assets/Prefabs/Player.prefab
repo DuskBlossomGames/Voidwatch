@@ -11244,6 +11244,7 @@ MonoBehaviour:
   shieldDamageClip: {fileID: 8300000, guid: 43ad996c8068547eba46b0acb990ae4a, type: 3}
   healthDamageClip: {fileID: 8300000, guid: bf702469263264174bafd8f25123bddd, type: 3}
   shieldBreakClip: {fileID: 8300000, guid: 100ac36341f9049a88ee7c33f968c4db, type: 3}
+  shieldBreakDelay: 0.6
   godmode: 0
   explosion: {fileID: 1590450694551336149}
   bitOptions:
