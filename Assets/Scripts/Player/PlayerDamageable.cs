@@ -78,9 +78,9 @@ namespace Player
 
         private Vector3 _startLoc;
 
-        public void DelayShield(bool broken)
+        public void DelayShield(bool broken, bool runVfx=true)
         {
-            if (broken) vfx.RunShield();
+            if (broken && runVfx) vfx.RunShield();
             _shieldCooldown.Value = Mathf.Max(_shieldCooldown.Value, broken ? shieldBreakCooldown : damageCooldown);
         }
         
@@ -130,7 +130,7 @@ namespace Player
             ShieldPower = Mathf.Max(ShieldPower - damage, 0);
             AudioPlayer.Play(shieldDamageClip, 0.9f, 0.2f);
             
-            DelayShield(ShieldPower <= 0);
+            DelayShield(ShieldPower <= 0, false);
             
             return ShieldPower <= 0;
         }
