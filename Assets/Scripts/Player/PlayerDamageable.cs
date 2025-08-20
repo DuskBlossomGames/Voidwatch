@@ -88,9 +88,10 @@ namespace Player
                 if (!_shieldBreakSfxCooldown.IsFinished)
                 {
                     AudioPlayer.Play(shieldBreakClip, Random.Range(0.8f, 1.0f), 0.2f);
+                } else
+                {
+                    AudioPlayer.Play(shieldBreakClip, Random.Range(0.8f, 1.0f), 0.7f);
                     _shieldBreakSfxCooldown.Value = shieldBreakDelay;
-                } else{
-                  AudioPlayer.Play(shieldBreakClip, Random.Range(0.8f, 1.0f), 0.7f);
                 }
             }
             _shieldCooldown.Value = Mathf.Max(_shieldCooldown.Value, broken ? shieldBreakCooldown : damageCooldown);
