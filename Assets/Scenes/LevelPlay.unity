@@ -1031,6 +1031,7 @@ MonoBehaviour:
   startAnchorMin: 0.6
   startAnchorMax: 0.75
   debugUpgrade: -1
+  upgradeSound: {fileID: 8300000, guid: 226d15dfa7d8840e58cd182f750364b0, type: 3}
   playMov: {fileID: 1840725724178856789}
   followPlayer: {fileID: 519420033}
   raycaster: {fileID: 762970113}

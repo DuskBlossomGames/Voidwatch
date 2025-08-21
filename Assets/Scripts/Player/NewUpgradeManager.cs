@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Extensions;
 using Menus;
+using Singletons;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -30,7 +31,9 @@ namespace Player
         public float minimapFadeTime, titleTime, titleWaitTime, subtitleFadeTime, subtitleWaitTime, slideTime, slideWaitTime, fadeInTime;
         public float startAnchorMin, startAnchorMax;
         public int debugUpgrade = -1; // TODO: remove
-    
+
+        public AudioClip upgradeSound;
+        
         public Movement playMov;
         public FollowPlayer followPlayer;
 
@@ -139,6 +142,13 @@ namespace Player
         public void SelectUpgrade(int i)
         {
             _upgrades[i].Apply();
+            AudioPlayer.Play(upgradeSound, 1f, 1.1f);
+            StartCoroutine(ExitAfter(upgradeSound.length + 0.5f));
+        }
+
+        private IEnumerator ExitAfter(float time)
+        {
+            yield return new WaitForSeconds(time);
             Exit();
         }
 
