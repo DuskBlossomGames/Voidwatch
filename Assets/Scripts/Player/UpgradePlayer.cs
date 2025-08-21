@@ -165,7 +165,7 @@ namespace Player
                     {PlayerDataInstance.dodgeDamage, 50}
                 }),
             new("Mining Drill",
-                "A frontal drill increases the damage done when ramming ships, and lowering damage taken.",
+                "A frontal drill increases the damage done when ramming ships, and lowers damage taken.",
                 "If you squint, a ship\nis basically an asteroid.",
                 Rarity.Common,
                 0,
