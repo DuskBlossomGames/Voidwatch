@@ -6548,7 +6548,7 @@ MonoBehaviour:
   planetPrefab: {fileID: 1680533821085019361}
   eliteSprite: {fileID: 21300000, guid: f1d0df29c3bf94587bc05a28f14e051e, type: 3}
   hiddenSprite: {fileID: 21300000, guid: 9be96e015369c43edae8d4f7a511c4bf, type: 3}
-  spaceStationSprite: {fileID: 21300000, guid: 2bda11fe986974445b5f06ae3ffa0169, type: 3}
+  spaceStationSprite: {fileID: 21300000, guid: 08a4ea8a33c9c46909a4a2037ad6e0c2, type: 3}
   entranceSprite: {fileID: 21300000, guid: e758bd15639d74ba888c3b34e56e38a7, type: 3}
   playerMini: {fileID: 1289256210}
   mapController: {fileID: 1875686438}
