@@ -61,7 +61,7 @@ namespace Player
         public static readonly Upgrade[] UPGRADES =
         {
             new("Plasma Coil Array",
-                "More plasma coils allows for more bullets per shot.",
+                "More plasma coils allow for more bullets per shot.",
                 "Bigger is better, right?",
                 Rarity.Rare,
                 0,
@@ -147,7 +147,7 @@ namespace Player
                     {PlayerDataInstance.dodgeDistance, 1.3f}
                 }),
             new("High Yield Plasma Coils",
-                "Greater plasma harnessing capabilities allows for faster shooting.",
+                "Greater plasma harnessing capabilities allow for faster shooting.",
                 "More plasma?\nMore bullets. More explosions!",
                 Rarity.Common,
                 0,

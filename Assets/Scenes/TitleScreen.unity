@@ -5876,7 +5876,7 @@ MonoBehaviour:
     baseValue: 100
     minValue: 0
     interaction: 0
-    name: Ammo
+    name: Max Ammo
   noShootRefillTime: 1.5
   emptyRefillTime: 2
   timeToRefillFully: 3
