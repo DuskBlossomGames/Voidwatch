@@ -33,7 +33,6 @@ namespace Player
         private readonly Timer _noShootRefillTimer = new();
         private readonly Timer _emptyRefillTimer = new();
 
-        private bool _emptyRefilling;
         private bool _isFiring;
         private Vector2 _mPos;
         private CustomRigidbody2D _rb;
@@ -56,7 +55,7 @@ namespace Player
 
         public void Shoot(Vector2 worldMousePos)//returns if could start the shoot coroutine
         {
-            if (_isFiring || (_curAmmo <= 0 && (!GunInfoInstance.shieldAsAmmo || _pd.ShieldPower <= 0)) || _emptyRefilling) return;
+            if (_isFiring || (_curAmmo <= 0 && (!GunInfoInstance.shieldAsAmmo || _pd.ShieldPower <= 0))) return;
 
             _mPos = worldMousePos;
             StartCoroutine(_Fire());
@@ -69,13 +68,11 @@ namespace Player
             {
                 Shoot(Camera.main.ScreenToWorldPoint(InputManager.mousePosition));
             }
-        
-            _emptyRefilling &= _curAmmo < GunInfoInstance.ammoCount;
-        
+            
             _noShootRefillTimer.Update();
             _emptyRefillTimer.Update();
 
-            if (_curAmmo < GunInfoInstance.ammoCount && (_noShootRefillTimer.IsFinished || (_emptyRefilling && _emptyRefillTimer.IsFinished)))
+            if (_curAmmo < GunInfoInstance.ammoCount && _noShootRefillTimer.IsFinished && _emptyRefillTimer.IsFinished)
             {
                 UpdateBar();
                 _curAmmo = Mathf.Clamp(_curAmmo + (int) GunInfoInstance.ammoCount / GunInfoInstance.timeToRefillFully * Time.deltaTime, 0, GunInfoInstance.ammoCount);
@@ -192,7 +189,6 @@ namespace Player
             if (IsEmpty)
             {
                 _emptyRefillTimer.Value = GunInfoInstance.emptyRefillTime;
-                _emptyRefilling = true;
             }
 
             _isFiring = false;

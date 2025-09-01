@@ -153,8 +153,10 @@ namespace LevelSelect
                     line.textureMode = LineTextureMode.RepeatPerSegment;
                     line.textureScale = new Vector2(Vector2.Distance(pos1, pos2)/100 * 3, 0);
 
-                    line.SetPosition(0, pos1);
-                    line.SetPosition(1, pos2);
+                    var dir = (pos2 - pos1).normalized;
+                    var distance = planetPrefab.transform.localScale.x / 4;
+                    line.SetPosition(0, pos1 + dir * distance);
+                    line.SetPosition(1, pos2 - dir * distance);
                 }
             }
 
@@ -169,6 +171,12 @@ namespace LevelSelect
                 var travellable = (revealed.Contains(idx) && !LevelSelectDataInstance.VisitedPlanets.Contains(idx)) ||
                                  (level.Type == LevelType.SpaceStation && LevelSelectDataInstance.CurrentPlanet == idx);
                 planetObj.GetComponent<PlanetController>().Clickable = travellable;
+                planetObj.GetComponent<ScaleUI>().enabled = travellable || level.Type == LevelType.Entrance || !revealed.Contains(idx);
+                if (level.Type == LevelType.Entrance || !revealed.Contains(idx))
+                {
+                    planetObj.GetComponent<ScaleUI>().maxScaleMult = 1.1f;
+                    planetObj.GetComponent<ScaleUI>().time = Random.Range(1.8f, 2.2f);
+                }
                 planetObj.GetComponent<PlanetController>().LevelIdx = idx;
 
                 if (revealed.Contains(idx) && !travellable)

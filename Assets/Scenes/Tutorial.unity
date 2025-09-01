@@ -488,7 +488,7 @@ MonoBehaviour:
   takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 0
-  maxHealth: 200
+  maxHealth: 75
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -4716,7 +4716,7 @@ MonoBehaviour:
   takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 0
-  maxHealth: 200
+  maxHealth: 75
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -6275,6 +6275,7 @@ MonoBehaviour:
   startAnchorMin: 0.6
   startAnchorMax: 0.75
   debugUpgrade: -1
+  upgradeSound: {fileID: 0}
   playMov: {fileID: 2066395882}
   followPlayer: {fileID: 1390494418}
   raycaster: {fileID: 739004519}
@@ -7055,7 +7056,7 @@ MonoBehaviour:
   takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 0
-  maxHealth: 200
+  maxHealth: 75
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -8473,7 +8474,7 @@ MonoBehaviour:
   takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 0
-  maxHealth: 200
+  maxHealth: 75
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -10470,7 +10471,7 @@ MonoBehaviour:
   takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 0
-  maxHealth: 200
+  maxHealth: 75
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -12681,7 +12682,7 @@ MonoBehaviour:
   takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 0
-  maxHealth: 200
+  maxHealth: 75
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:
@@ -12890,7 +12891,7 @@ MonoBehaviour:
   takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 0
-  maxHealth: 200
+  maxHealth: 75
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
   bitOptions:

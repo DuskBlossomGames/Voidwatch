@@ -33,6 +33,7 @@ namespace Menus
 
         private TextMeshProUGUI[] _texts;
         private FlashUI[] _flashes;
+        private ScaleUI _scale;
         private Button[] _buttons;
         private Image[] _images;
 
@@ -43,6 +44,7 @@ namespace Menus
         {
             _texts = GetComponentsInChildren<TextMeshProUGUI>(true);
             _flashes = GetComponentsInChildren<FlashUI>(true);
+            _scale = GetComponentInChildren<ScaleUI>();
             _buttons = GetComponentsInChildren<Button>(true);
             _images = GetComponentsInChildren<Image>(true)
                 .Where(i => i != fadeIn && !i.transform.IsChildOf(options.transform)).ToArray(); // options should always be closed, so just don't mess with it (breaks slider hitboxes)
@@ -84,6 +86,7 @@ namespace Menus
         private IEnumerator Fade(bool includeCredits, bool wait=true)
         {
             foreach (var flash in _flashes) flash.enabled = false;
+            _scale.enabled = false;
             foreach (var button in _buttons) button.interactable = false;
 
             for (float t = 0; t < fadeTime; t += Time.fixedDeltaTime)
@@ -124,6 +127,7 @@ namespace Menus
 
             foreach (var flash in _flashes) flash.enabled = true;
             foreach (var button in _buttons) button.interactable = true;
+            _scale.enabled = true;
         }
 
         public void Play() { StartCoroutine(PlayRoutine()); }

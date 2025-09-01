@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using LevelPlay;
 using Spawnables.Damage;
 using UnityEngine;
 using Util;
@@ -49,7 +51,8 @@ namespace Spawnables.Controllers.Platelins
         private float _speedCurve, _scaleCurve;
         private readonly Timer _gooTimer = new();
         private float _scale;
-
+        private EnemySpawner _spawner;
+        
         public enum Mode
         {
             Immature,
@@ -63,6 +66,7 @@ namespace Spawnables.Controllers.Platelins
 
         void OnEnable()
         {
+            _spawner = FindAnyObjectByType<EnemySpawner>();
             GetComponent<EnemyDamageable>().maxHealth = isLeader ? leaderMaxHealth : maxHealth;
         
             isSpore = false;
@@ -161,7 +165,7 @@ namespace Spawnables.Controllers.Platelins
 
             if (mode == Mode.Idle || _scaleCurve != 0)
             {
-                if (_leader._subjects.Count < maxColonySize && _numPlatelins < maxNumColonies * maxColonySize) _spawntimer -= Time.deltaTime;
+                if (_leader._subjects.Count < maxColonySize && _numPlatelins < maxNumColonies * maxColonySize && _spawner.SpawnedEnemies.Any(e=>e.GetComponentInChildren<PlatelinController>() == null)) _spawntimer -= Time.deltaTime;
                 if (_spawntimer <= 0)
                 {
                     mode = Mode.Swell;

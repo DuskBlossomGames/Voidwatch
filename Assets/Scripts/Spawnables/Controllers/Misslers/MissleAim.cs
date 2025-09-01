@@ -114,7 +114,12 @@ namespace Spawnables.Controllers.Misslers
             Explode(collision.collider);
         }
 
-        public void Explode(Collider2D other = null)
+        public void OnDestroy()
+        {
+            Explode(doDmg: false);
+        }
+
+        public void Explode(Collider2D other = null, bool doDmg=true)
         {
             var exp = Instantiate(explosion);
             exp.transform.position = transform.position;
@@ -123,7 +128,14 @@ namespace Spawnables.Controllers.Misslers
 
             var ignore = new List<Collider2D>();
             if (owner != null) ignore.Add(owner.GetComponent<Collider2D>());
-            exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject, ignore, enemyMod: 0.3f);
+            if (doDmg)
+            {
+                exp.GetComponent<ExplosionHandler>().Run(dmg, 5, gameObject, ignore, enemyMod: 0.3f);
+            }
+            else
+            {
+                exp.GetComponent<ExplosionHandler>().Play();
+            }
             Destroy(gameObject);
         }
 
