@@ -24,6 +24,7 @@ namespace Singletons.Static_Info
         public static readonly Difficulty Difficult = new("Difficult", Color.HSVToRGB(0f, 0.9f, 0.9f));
         public static readonly Difficulty Insane = new("Insane", Color.HSVToRGB(0.83f, 0.7f, 1));
         
+        public static readonly Difficulty Entrance = new("Safe", Color.HSVToRGB(0.51f, 0.35f, 0.88f));
         public static readonly Difficulty SpaceStation = new("Space Station", Color.HSVToRGB(0f, 0f, 0.7f));
 
         public readonly string Text;
@@ -70,6 +71,7 @@ namespace Singletons.Static_Info
         public Vector3 WorldPosition;
 
         public string Title, Description;
+        public bool Travellable;
         public Difficulty Difficulty;
 
         [CanBeNull] public ILevelMetadata Metadata;

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Extensions;
+using Singletons.Static_Info;
 using TMPro;
 using UnityEngine;
 using Util;
@@ -11,34 +13,29 @@ namespace LevelSelect
     public class PlanetInfoController : MonoBehaviour
     {
         public Selector selector;
-        public float maxScaleMult;
         public float yOffset;
         public float fadeTime;
 
-        private TextMeshPro _title, _description, _difficulty;
+        [NonSerialized] public PlanetController SelectedPlanet;
+        
+        private TextMeshPro _title, _description, _difficulty, _travel, _shift;
         private SpriteRenderer _background;
 
-
-        private float _baseScale;
-        private float _scaleMult = 1;
-        private readonly Timer _scaleTimer = new();
-        private int _dir = 1;
-
+        private LevelData _level;
+        
         private readonly Timer _fadeTimer = new();
         private bool _shown;
 
         private void Awake()
         {
-            _baseScale = transform.localScale.x;
-            _scaleTimer.Value = 1;
-            _scaleTimer.SetValue(0);
-            
             _fadeTimer.Value = fadeTime;
             _fadeTimer.SetValue(0);
 
             _title = GetComponentsInChildren<TextMeshPro>()[0];
             _description = GetComponentsInChildren<TextMeshPro>()[1];
             _difficulty = GetComponentsInChildren<TextMeshPro>()[2];
+            _travel = GetComponentsInChildren<TextMeshPro>()[3];
+            _shift = GetComponentsInChildren<TextMeshPro>()[4];
             _background = GetComponent<SpriteRenderer>();
             
             selector.OnSelectionChange += pos =>
@@ -48,11 +45,13 @@ namespace LevelSelect
                 
                 transform.position = pos!.Value + yOffset * Vector3.up;
 
-                var level = LevelSelectDataInstance.Levels.First(l => l.WorldPosition == pos);
-                _title.text = level.Title;
-                _description.text = level.Description;
-                _difficulty.text = level.Difficulty.Text;
-                _difficulty.color = level.Difficulty.Color;
+                _level = LevelSelectDataInstance.Levels.First(l => l.WorldPosition == pos);
+                _title.text = _level.Title;
+                _description.text = _level.Description;
+                _difficulty.text = _level.Difficulty.Text;
+                _difficulty.color = _level.Difficulty.Color;
+                _travel.text = _level.Travellable ? "Click to Travel" : "Cannot Travel";
+                _travel.color = Color.HSVToRGB(0, 0, _level.Travellable ? 1 : 0.75f);
             };
         }
         private void Update()
@@ -62,13 +61,13 @@ namespace LevelSelect
             _description.SetAlpha(_fadeTimer.Progress);
             _difficulty.SetAlpha(_fadeTimer.Progress);
             _background.SetAlpha(_fadeTimer.Progress);
-            
-            _scaleTimer.Update(_dir);
-            if (_scaleTimer.Value >= 1) _dir = -1;
-            if (_scaleTimer.Value <= 0) _dir = 1;
-            
-            _scaleMult = Mathf.SmoothStep(1, maxScaleMult, _scaleTimer.Value);
-            transform.localScale = new Vector3(_baseScale * _scaleMult, _baseScale * _scaleMult, 1);
+            _travel.SetAlpha(_fadeTimer.Progress);
+            _shift.SetAlpha(_fadeTimer.Progress);
+        }
+
+        private void OnMouseUpAsButton()
+        {
+            SelectedPlanet.OnMouseUpAsButton();
         }
     }
 }

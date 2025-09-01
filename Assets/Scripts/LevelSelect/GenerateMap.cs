@@ -64,6 +64,9 @@ namespace LevelSelect
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{1},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
+                    Title = "Entrance Portal",
+                    Description = "No way home",
+                    Difficulty = Difficulty.Entrance
             });
 
             int i;
@@ -76,7 +79,7 @@ namespace LevelSelect
                     HiddenSprite = hiddenSprite,
                     Connections = new List<int>{i,i+2},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*(i+1), 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Title = _planetNames[sprite].Pop(Random.Range(0, _planetNames.Count)),
+                    Title = _planetNames[sprite].Pop(Random.Range(0, _planetNames[sprite].Count)),
                     Description = "Cult of the Void controlled"
                 });
                 connections.Add(new Tuple<int, int>(i, i+1));
@@ -170,9 +173,9 @@ namespace LevelSelect
 
                 var travellable = (revealed.Contains(idx) && !LevelSelectDataInstance.VisitedPlanets.Contains(idx)) ||
                                  (level.Type == LevelType.SpaceStation && LevelSelectDataInstance.CurrentPlanet == idx);
-                planetObj.GetComponent<PlanetController>().Clickable = travellable;
-                planetObj.GetComponent<ScaleUI>().enabled = travellable || level.Type == LevelType.Entrance || !revealed.Contains(idx);
-                if (level.Type == LevelType.Entrance || !revealed.Contains(idx))
+                level.Travellable = travellable;
+                planetObj.GetComponent<PlanetController>().Clickable = revealed.Contains(idx);
+                if (!travellable)
                 {
                     planetObj.GetComponent<ScaleUI>().maxScaleMult = 1.1f;
                     planetObj.GetComponent<ScaleUI>().time = Random.Range(1.8f, 2.2f);

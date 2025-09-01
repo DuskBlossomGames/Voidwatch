@@ -5,11 +5,12 @@ namespace LevelSelect
     public class Selectable : MonoBehaviour
     {
         public Selector selector;
+        public bool clickAgainDeselect = true;
         public bool clickable;
         
         private void OnMouseUpAsButton()
         {
-            selector.SetPosition(clickable && selector.Position != transform.position ?
+            selector.SetPosition(clickable && (!clickAgainDeselect || selector.Position != transform.position) ?
                 transform.position : null);
         }
     }
