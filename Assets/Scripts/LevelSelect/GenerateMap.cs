@@ -97,7 +97,8 @@ namespace LevelSelect
                 SpriteData = new LevelSpriteData
                 {
                     Sprite = spaceStationSprite,
-                    HiddenSprite = hiddenSprite
+                    HiddenSprite = hiddenSprite,
+                    RadiusMult = 1.5f,
                 },
                 Connections = new List<int>{i, i+2},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
@@ -188,7 +189,7 @@ namespace LevelSelect
                 planetObj.GetComponent<SpriteRenderer>().sprite = revealed.Contains(idx)
                     ? level.SpriteData.Sprite
                     : level.SpriteData.HiddenSprite;
-                planetObj.transform.localScale *= level.SpriteData.RadiusMult;
+                if (revealed.Contains(idx)) planetObj.transform.localScale *= level.SpriteData.RadiusMult;
 
                 var travellable = (revealed.Contains(idx) && !LevelSelectDataInstance.VisitedPlanets.Contains(idx)) ||
                                  (level.Type == LevelType.SpaceStation && LevelSelectDataInstance.CurrentPlanet == idx);
