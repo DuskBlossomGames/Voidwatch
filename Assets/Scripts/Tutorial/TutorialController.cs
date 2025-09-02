@@ -5,6 +5,7 @@ using System.Linq;
 using Extensions;
 using LevelSelect;
 using Player;
+using ProgressBars;
 using Singletons.Static_Info;
 using Spawnables.Controllers;
 using Spawnables.Damage;
@@ -96,6 +97,7 @@ namespace Tutorial
         public TextMeshProUGUI warning;
         public float instructionFadeTime, warningFadeTime;
         public Movement playerMovement;
+        public ProgressBar progressBar;
 
         public CanvasGroup continueButton;
         public float continueFadeTime;
@@ -133,6 +135,8 @@ namespace Tutorial
         private FollowPlayer _fp;
         private CustomRigidbody2D _playerRb;
 
+        private string _pbFormat;
+
         private Stage _stage;
         private int _textIdx = -1;
         private string _instrFormat;
@@ -165,6 +169,8 @@ namespace Tutorial
                 return;
             }
             _instance = this;
+
+            _pbFormat = progressBar.GetComponentInChildren<TextMeshProUGUI>().text;
             
             _camera = Camera.main;
             _fp = _camera!.GetComponent<FollowPlayer>();
@@ -502,11 +508,17 @@ namespace Tutorial
                 warning.SetAlpha(0);
             }
 
+            var cur = (int)_stage + 1;
+            var max = Enum.GetValues(typeof(Stage)).Length;
+            progressBar.GetComponentInChildren<TextMeshProUGUI>().text = string.Format(_pbFormat, cur, max);
+            progressBar.UpdatePercentage(cur, max);
+
             var cg = instruction.GetComponent<CanvasGroup>();
+            var pbCg = progressBar.GetComponentInParent<CanvasGroup>();
             for (float t = 0; t < instructionFadeTime; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
-                cg.alpha = Mathf.Lerp(0, 1, t / instructionFadeTime);
+                cg.alpha = pbCg.alpha = Mathf.Lerp(0, 1, t / instructionFadeTime);
                 if (!_warningTimer.IsFinished) warning.SetAlpha(Mathf.Lerp(0, 1, t / instructionFadeTime));
             }
 
@@ -523,11 +535,24 @@ namespace Tutorial
             var cg = instruction.GetComponent<CanvasGroup>();
             var start = cg.alpha;
             var warnStart = warning.color.a;
+            var pbCg = progressBar.GetComponentInParent<CanvasGroup>();
+            
+            var cur = (int)_stage; // already been incremented
+            var max = Enum.GetValues(typeof(Stage)).Length;
             for (float t = 0; t < instructionFadeTime; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
                 cg.alpha = Mathf.Lerp(start, 0, t / instructionFadeTime);
                 warning.SetAlpha(Mathf.Lerp(warnStart, 0, t / instructionFadeTime));
+
+                if (t <= instructionFadeTime / 2)
+                {
+                    progressBar.UpdatePercentage(Mathf.Lerp(cur, cur+1, t/instructionFadeTime*2), max); // animation ✨
+                }
+                else
+                {
+                    pbCg.alpha = Mathf.Lerp(1, 0, (t-instructionFadeTime/2) / instructionFadeTime*2);
+                }
             }
             instruction.SetActive(false);
             warning.gameObject.SetActive(false);
