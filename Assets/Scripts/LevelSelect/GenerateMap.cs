@@ -20,9 +20,9 @@ namespace LevelSelect
         public MiniPlayerController playerMini;
         public MapController mapController;
 
-        public Pair<Sprite, string[]>[] planetNames;
+        private Dictionary<Sprite, List<string>> _availableNames;
+        public Triple<Sprite, string[], float>[] planetNames;
         public string[] spaceStationNames;
-        private Dictionary<Sprite, List<string>> _planetNames;
         private List<string> _spaceStationNames;
         
 #if UNITY_EDITOR
@@ -39,7 +39,7 @@ namespace LevelSelect
 
         private void Start()
         {
-            _planetNames = planetNames.ToDictionary(p=>p.a, p=>new List<string>(p.b));
+            _availableNames = planetNames.ToDictionary(p=>p.a, t=>new List<string>(t.b));
             _spaceStationNames = new List<string>(spaceStationNames);
             
 
@@ -60,8 +60,11 @@ namespace LevelSelect
             
             levels.Add(new LevelData {
                     Type = LevelType.Entrance,
-                    Sprite = entranceSprite,
-                    HiddenSprite = hiddenSprite,
+                    SpriteData = new LevelSpriteData
+                    {
+                        Sprite = entranceSprite,
+                        HiddenSprite = hiddenSprite
+                    },
                     Connections = new List<int>{1},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                     Title = "Entrance Portal",
@@ -72,14 +75,18 @@ namespace LevelSelect
             int i;
             for (i = 0; i < (PlayerDataInstance.IsTutorial ? 1 : 5); i++)
             {
-                var sprite = _planetNames.Keys.ElementAt(PlayerDataInstance.IsTutorial ? 0 : Random.Range(0, _planetNames.Keys.Count));
+                var sprite = planetNames.ElementAt(PlayerDataInstance.IsTutorial ? 0 : Random.Range(0, planetNames.Length));
                 levels.Add(new LevelData {
                     Type = LevelType.Normal,
-                    Sprite = sprite,
-                    HiddenSprite = hiddenSprite,
+                    SpriteData = new LevelSpriteData
+                    {
+                        Sprite = sprite,
+                        HiddenSprite = hiddenSprite,
+                        RadiusMult = sprite
+                    },
                     Connections = new List<int>{i,i+2},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*(i+1), 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Title = _planetNames[sprite].Pop(Random.Range(0, _planetNames[sprite].Count)),
+                    Title = _availableNames[sprite].Pop(Random.Range(0, _availableNames[sprite].Count)),
                     Description = "Cult of the Void controlled"
                 });
                 connections.Add(new Tuple<int, int>(i, i+1));
@@ -87,8 +94,11 @@ namespace LevelSelect
             
             levels.Add(new LevelData {
                 Type = LevelType.SpaceStation,
-                Sprite = spaceStationSprite,
-                HiddenSprite = hiddenSprite,
+                SpriteData = new LevelSpriteData
+                {
+                    Sprite = spaceStationSprite,
+                    HiddenSprite = hiddenSprite
+                },
                 Connections = new List<int>{i, i+2},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                 Title = _spaceStationNames.Pop(Random.Range(0, _spaceStationNames.Count)),
@@ -99,14 +109,18 @@ namespace LevelSelect
 
             if (PlayerDataInstance.IsTutorial)
             {
-                var sprite = _planetNames.Keys.ElementAt(0);
+                var sprite = planetNames.ElementAt(0);
                 levels.Add(new LevelData {
                     Type = LevelType.Tutorial,
-                    Sprite = sprite,
-                    HiddenSprite = hiddenSprite,
+                    SpriteData = new LevelSpriteData
+                    {
+                        Sprite = sprite,
+                        HiddenSprite = hiddenSprite,
+                        RadiusMult = sprite
+                    },
                     Connections = new List<int>{i},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Title = _planetNames[sprite].Pop(Random.Range(0, _planetNames.Count)),
+                    Title = _availableNames[sprite].Pop(Random.Range(0, _availableNames.Count)),
                     Description = "Complete the tutorial"
                 });
             }
@@ -114,8 +128,12 @@ namespace LevelSelect
             {
                 levels.Add(new LevelData {
                     Type = LevelType.Elite,
-                    Sprite = eliteSprite,
-                    HiddenSprite = hiddenSprite,
+                    SpriteData = new LevelSpriteData
+                    {
+                        Sprite = eliteSprite,
+                        HiddenSprite = hiddenSprite,
+                        RadiusMult = 1
+                    },
                     Connections = new List<int>{i},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                     Title = "Deep Space",
@@ -168,8 +186,9 @@ namespace LevelSelect
                 var planetObj = Instantiate(planetPrefab, level.WorldPosition, Quaternion.identity, transform);
                 planetObj.SetActive(true);
                 planetObj.GetComponent<SpriteRenderer>().sprite = revealed.Contains(idx)
-                    ? level.Sprite
-                    : level.HiddenSprite;
+                    ? level.SpriteData.Sprite
+                    : level.SpriteData.HiddenSprite;
+                planetObj.transform.localScale *= level.SpriteData.RadiusMult;
 
                 var travellable = (revealed.Contains(idx) && !LevelSelectDataInstance.VisitedPlanets.Contains(idx)) ||
                                  (level.Type == LevelType.SpaceStation && LevelSelectDataInstance.CurrentPlanet == idx);

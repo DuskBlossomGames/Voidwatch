@@ -22,7 +22,7 @@ namespace Player
 {
     public class NewUpgradeManager : MonoBehaviour
     {
-        public Button reroll;
+        public Button reroll, pilfer;
     
         public GameObject minimap;
         public RectTransform titleBox, title, subtitle;
@@ -46,7 +46,6 @@ namespace Player
 #if UNITY_EDITOR
             if (debugUpgrade != -1 && InputManager.GetKeyDown(KeyCode.LeftBracket)) UpgradePlayer.UPGRADES[debugUpgrade].Apply(); 
 #endif
-            reroll.interactable = PlayerDataInstance.Scrap >= 50;
         }
 
         private void SetUpgrades()
@@ -137,6 +136,8 @@ namespace Player
                 upgrades[i].GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Description;
                 upgrades[i].GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
             }
+
+            reroll.interactable = PlayerDataInstance.Scrap >= 50;
         }
 
         public void SelectUpgrade(int i)
@@ -144,6 +145,16 @@ namespace Player
             _upgrades[i].Apply();
             AudioPlayer.Play(upgradeSound, 1f, 1.1f);
             StartCoroutine(ExitAfter(upgradeSound.length + 0.5f));
+
+            // disable other options
+            for (var j = 0; j < 3; j++)
+            {
+                if (j == i) continue;
+                
+                foreach (var b in upgrades[j].GetComponentsInChildren<Button>()) b.interactable = false;
+                upgrades[j].GetChild(1).GetComponent<TextMeshProUGUI>().SetAlpha(0.5f);
+            }
+            reroll.interactable = pilfer.interactable = false;
         }
 
         private IEnumerator ExitAfter(float time)
@@ -175,6 +186,13 @@ namespace Player
             
             var sdc = FindObjectsByType<ScrapDisplayController>(FindObjectsSortMode.None)[0];
             sdc.FinishTransfer += Exit;
+            
+            for (var i = 0; i < 3; i++)
+            {
+                foreach (var b in upgrades[i].GetComponentsInChildren<Button>()) b.interactable = false;
+                upgrades[i].GetChild(1).GetComponent<TextMeshProUGUI>().SetAlpha(0.5f);
+            }
+            reroll.interactable = false;
         }
 
         private void Exit()

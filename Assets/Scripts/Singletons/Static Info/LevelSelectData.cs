@@ -56,6 +56,12 @@ namespace Singletons.Static_Info
             };
         }
     }
+
+    public class LevelSpriteData
+    {
+        public Sprite Sprite, HiddenSprite;
+        public float RadiusMult = 1;
+    }
     
     public class LevelData
     {
@@ -64,9 +70,8 @@ namespace Singletons.Static_Info
         public int MaxTier;
         public int HazardBudget, HazardLoot;
         public int[] Waves;
-        public Sprite Sprite;
         public List<int> Connections;
-        public Sprite HiddenSprite;
+        public LevelSpriteData SpriteData;
 
         public Vector3 WorldPosition;
 

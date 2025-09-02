@@ -63,7 +63,6 @@ namespace Spawnables.Controllers.Carcadon
         private CustomRigidbody2D _player;
 
         private float _maxHealth;
-        private float _forceFieldRadius;
         private void Start()
         {
             _colliders = GetComponentsInChildren<BoxCollider2D>();
@@ -86,9 +85,7 @@ namespace Spawnables.Controllers.Carcadon
             _player = _enemySpawner.player.GetComponent<CustomRigidbody2D>();
 
             foreach (var ac in _armControllers) ac.Player = _player.gameObject;
-
-            _forceFieldRadius = _enemySpawner.planet.transform.GetChild(0).transform.lossyScale.x / 2;
-
+            
             StartCoroutine(Cutscene());
         }
 
@@ -197,7 +194,7 @@ namespace Spawnables.Controllers.Carcadon
             // opacity
             if (!_stealth && _opacityDir == 0)
             {
-                if (((Vector2)transform.position).magnitude < _forceFieldRadius)
+                if (((Vector2)transform.position).sqrMagnitude < PlanetSetup.Radius * PlanetSetup.Radius)
                 {
                     if (_isOpaque) _opacityDir = -2;
                 }

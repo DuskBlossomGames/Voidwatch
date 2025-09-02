@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LevelPlay;
 using Spawnables.Controllers.Bullets;
 using UnityEngine;
 using Util;
@@ -89,9 +90,9 @@ namespace Spawnables.Controllers.Boids
 
             _rigidbody2D.linearVelocity = speed * deltaAngle;
             _rigidbody2D.angularVelocity = 0;
-            if (((Vector2)transform.position).sqrMagnitude < 15 * 15)
+            if (((Vector2)transform.position).sqrMagnitude < PlanetSetup.Radius * PlanetSetup.Radius)
             {
-                transform.position = (Vector3)(15 * ((Vector2)transform.position).normalized) + transform.position.z * Vector3.forward;
+                transform.position = (Vector3)(PlanetSetup.Radius * ((Vector2)transform.position).normalized) + transform.position.z * Vector3.forward;
             }
         }
 

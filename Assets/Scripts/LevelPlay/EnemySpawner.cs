@@ -29,7 +29,6 @@ namespace LevelPlay
 
         public float fadeInTime;
         public GameObject HUD, fadeIn;
-        public PlanetSetup planet;
 
         public WaveIndicatorController wic;
 
@@ -281,7 +280,7 @@ namespace LevelPlay
                 var offset = Random.Range(-sectorSize/3, sectorSize/3);
 
                 var theta = 1/3f * Mathf.PI + sectorSize/2 + sector * sectorSize + offset;
-                var r = Random.Range(planet.transform.localScale.x / 2 + 30,
+                var r = Random.Range(PlanetSetup.Radius + 30,
                     boundaryCircle.transform.localScale.x / 2 - 20);
                     
                 var hazardObj = Instantiate(
@@ -323,7 +322,7 @@ namespace LevelPlay
                     
                 var offset = Random.Range(-sectorSize/3, sectorSize/3);
                 var theta = 1/8f * Mathf.PI + sectorSize/2 + sector * sectorSize + offset;
-                var r = Random.Range(planet.transform.localScale.x / 2 + 30,
+                var r = Random.Range(PlanetSetup.Radius + 30,
                     boundaryCircle.transform.localScale.x / 2 - 35);
                     
                 var asteroidObj = Instantiate(
@@ -420,6 +419,9 @@ namespace LevelPlay
             
             var groups = enemyGroups.Keys.ToList();
             var budgets = new List<int>(groupBudgetTiers);
+            
+            groups.Remove("Platelins"); // only able to spawn platelins after choosing another group
+            var hasPlatelins = hazards; // if hazards, we don't want to add back in platelins so just start it as true 
             while (groups.Count > 0 && budget > groupBudgetTiers[0])
             {
                 budgets.RemoveAll(b => b > budget);
@@ -428,6 +430,11 @@ namespace LevelPlay
                 budget -= groupBudgets[groups[group]] = budgets[Random.Range(0, budgets.Count)];
 
                 groups.RemoveAt(group);
+                if (!hasPlatelins)
+                {
+                    hasPlatelins = true;
+                    groups.Add("Platelins");
+                }
             }
 
             // randomly add in the rest

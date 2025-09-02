@@ -1011,6 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reroll: {fileID: 1429863985}
+  pilfer: {fileID: 934176845376999219}
   minimap: {fileID: 1755684698}
   titleBox: {fileID: 1779492369}
   title: {fileID: 1725061153}
@@ -1030,7 +1031,7 @@ MonoBehaviour:
   fadeInTime: 1.7
   startAnchorMin: 0.6
   startAnchorMax: 0.75
-  debugUpgrade: 13
+  debugUpgrade: -1
   upgradeSound: {fileID: 8300000, guid: 226d15dfa7d8840e58cd182f750364b0, type: 3}
   playMov: {fileID: 1840725724178856789}
   followPlayer: {fileID: 519420033}
@@ -2389,7 +2390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashTime: 1.5
-  numFlashes: 3
+  numFlashes: 2
 --- !u!1 &1562156498
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,6 +3328,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+--- !u!114 &934176845376999219 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4150130950135428502, guid: f21b91180b6f94582909f21a5aa51846, type: 3}
+  m_PrefabInstance: {fileID: 934176845376999218}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1616393753307876499
 PrefabInstance:
   m_ObjectHideFlags: 0

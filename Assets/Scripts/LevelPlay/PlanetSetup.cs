@@ -4,11 +4,20 @@ namespace LevelPlay
 {
     public class PlanetSetup : MonoBehaviour
     {
+        public static float Radius
+        {
+            get;
+            private set;
+        }
+        
         private void Awake()
         {
             var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
 
-            GetComponent<SpriteRenderer>().sprite = level.Sprite;
+            GetComponent<SpriteRenderer>().sprite = level.SpriteData.Sprite;
+
+            transform.localScale *= level.SpriteData.RadiusMult;
+            Radius = transform.localScale.x / 2;
         }
     }
 }

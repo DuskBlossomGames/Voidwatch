@@ -6561,6 +6561,7 @@ MonoBehaviour:
     - Mireden
     - Junith
     - Isenmark
+    c: 1
   - a: {fileID: 21300000, guid: 0cf666e707d3e40fea8023af38d6fcac, type: 3}
     b:
     - Aeternum
@@ -6569,6 +6570,7 @@ MonoBehaviour:
     - Liora
     - Orelius
     - Cryden
+    c: 0.9
   - a: {fileID: 21300000, guid: 354e8fe3b5769452da08f36dfee42b8b, type: 3}
     b:
     - Caelus
@@ -6577,6 +6579,7 @@ MonoBehaviour:
     - Mireforge
     - Rendax
     - Brumal
+    c: 1.3
   spaceStationNames:
   - 'Karnith Station '
   - Forgehold-6
@@ -7347,7 +7350,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.03}
+  m_AnchoredPosition: {x: 0, y: 0.04}
   m_SizeDelta: {x: 1, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5039728463029856741
