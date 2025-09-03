@@ -9,6 +9,10 @@ namespace Util
         {
             return (a%b + b)%b;
         }
+        public static int Mod(int a, int b)
+        {
+            return (a%b + b)%b;
+        }
         
         public static float Angle(Vector2 v)
         {
