@@ -19,6 +19,7 @@ namespace LevelSelect
         public float yOffset;
         public float fadeTime;
         public GameObject planetPrefab;
+        public float camLoreSize;
         
         [NonSerialized] public PlanetController SelectedPlanet;
         
@@ -33,7 +34,8 @@ namespace LevelSelect
         private Vector3 _startPos, _baseScale;
         
         private readonly Timer _fadeTimer = new();
-        private bool _shown, _hasInfo;
+        private bool _shown, _hasLore, _showingLore;
+        private bool _hideLore;
 
         private void Awake()
         {
@@ -61,11 +63,12 @@ namespace LevelSelect
             {
                 _shown = pos != null;
                 if (!_shown) return;
+                _hideLore = true;
 
                 _level = LevelSelectDataInstance.Levels.First(l => l.WorldPosition == pos);
                 
                 transform.position = _startPos = pos!.Value + (yOffset + planetPrefab.transform.localScale.x * (_level.SpriteData.RadiusMult-1)) * Vector3.up;
-                transform.position += InputManager.GetKey(KeyCode.LeftShift) ? 1.5f * _baseScale.y * Vector3.up : Vector3.zero;
+                transform.position += _showingLore ? 1.5f * _baseScale.y * Vector3.up : Vector3.zero;
 
                 _title.text = _level.Title;
                 _description.text = _level.Description;
@@ -74,9 +77,9 @@ namespace LevelSelect
                 _travel.text = _level.Travellable ? "Click to Travel" : "Cannot Travel";
                 _travel.color = Color.HSVToRGB(0, 0, _level.Travellable ? 1 : 0.75f);
 
-                _hasInfo = _level.LoreData != null;
-                _shift.text = _hasInfo ? "Shift for Info" : "Info Unavailable";
-                _shift.color = Color.HSVToRGB(0, 0, _hasInfo ? 1 : 0.75f);
+                _hasLore = _level.LoreData != null;
+                _shift.text = _hasLore ? "Shift for Info" : "Info Unavailable";
+                _shift.color = Color.HSVToRGB(0, 0, _hasLore ? 1 : 0.75f);
 
                 if (_level.LoreData == null) return;
                 if (_level.LoreData.GetType() == typeof(LevelLoreData))
@@ -103,23 +106,45 @@ namespace LevelSelect
             _background.SetAlpha(_fadeTimer.Progress);
             _travel.SetAlpha(_fadeTimer.Progress);
             _shift.SetAlpha(_fadeTimer.Progress);
+            _loreMain.SetAlpha(_fadeTimer.Progress);
+            _loreRight.SetAlpha(_fadeTimer.Progress);
+            if (!_shown && _fadeTimer.IsFinished && _showingLore) _hideLore = true;
 
-            bool? lore = InputManager.GetKeyDown(KeyCode.LeftShift) ? true : InputManager.GetKeyUp(KeyCode.LeftShift) ? false : null;
-            if (_shown && _hasInfo && lore != null)
+            bool? lore = _hideLore || InputManager.GetKeyUp(KeyCode.LeftShift) ? false : InputManager.GetKeyDown(KeyCode.LeftShift) ? true : null;
+            if (lore != null && ((_shown && _hasLore) || !lore.Value))
             {
-                var l = (bool)lore;
-                _background.sprite = l ? loreSprite : infoSprite;
-                _scaleListener.SetScaleMult(l ? 4 : 1);
-                transform.position = _startPos + (l ? 1.5f*_baseScale.y*Vector3.up : Vector3.zero);
+                _hideLore = false;
                 
-                transform.GetChild(0).gameObject.SetActive(!l);
-                transform.GetChild(1).gameObject.SetActive(l);
+                _showingLore = lore.Value;
+                _background.sprite = _showingLore ? loreSprite : infoSprite;
+                _scaleListener.SetScaleMult(_showingLore ? 4 : 1);
+                transform.position = _startPos + (_showingLore ? 1.5f*_baseScale.y*Vector3.up : Vector3.zero);
+                
+                transform.GetChild(0).gameObject.SetActive(!_showingLore);
+                transform.GetChild(1).gameObject.SetActive(_showingLore);
+
+                if (_showingLore)
+                {
+                    var cam = Camera.main!;
+                    if (cam.orthographicSize < camLoreSize) StartCoroutine(ExpandCamera());
+                }
+            }
+        }
+
+        private IEnumerator ExpandCamera()
+        {
+            var cam = Camera.main!;
+            var start = cam.orthographicSize;
+            for (float t = 0; t < 0.7f; t += Time.fixedDeltaTime)
+            {
+                cam.orthographicSize = Mathf.SmoothStep(start, camLoreSize, t / 0.7f);
+                yield return new WaitForFixedUpdate();
             }
         }
 
         private void OnMouseUpAsButton()
         {
-            SelectedPlanet.OnMouseUpAsButton();
+            if (!_showingLore) SelectedPlanet.OnMouseUpAsButton();
         }
     }
 }
