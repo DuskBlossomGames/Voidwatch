@@ -127,7 +127,7 @@ namespace Spawnables.Controllers.Carcadon
                                         _enemySpawner.SpawnedEnemies.All(g => g == gameObject))))
                 {
                     _mode = Mode.Rush;
-                    AudioPlayer.Play(carcRoar, 1, 1);
+                    AudioPlayer.Play(carcRoar, null, 1, 1);
                 }
             } else if (_mode == Mode.Rush)
             {
@@ -388,7 +388,7 @@ namespace Spawnables.Controllers.Carcadon
                 }
                 if(t >= timeBeforeReveal+(timeBeforeUnfurl-timeBeforeReveal)/5){
                   if(!roarBegun){
-                    AudioPlayer.Play(carcRoar, 1, 1);
+                    AudioPlayer.Play(carcRoar, null, 1, 1);
                     roarBegun = true;
                   }
                 }

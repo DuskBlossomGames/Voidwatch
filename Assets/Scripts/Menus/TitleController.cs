@@ -38,6 +38,7 @@ namespace Menus
         private Image[] _images;
 
         public GameObject tutorialHint;
+        private bool _firstTime;
         
         private bool _initCredits;
         private void Start()
@@ -55,7 +56,8 @@ namespace Menus
             GetComponent<Canvas>().enabled = false;
             ps.gameObject.SetActive(false);
 
-            if (SettingsInterface.isFirstTime)
+            // ReSharper disable once AssignmentInConditionalExpression
+            if (_firstTime = SettingsInterface.isFirstTime)
             {
                 tutorialHint.SetActive(true);
                 SettingsInterface.isFirstTime = false; // since this is the only place it's used, easy solution for now, can change if needed elsewhere
@@ -170,6 +172,7 @@ namespace Menus
             options.SetActive(false);
             
             for (var i = 0; i < options.transform.GetSiblingIndex(); i++) transform.GetChild(i).gameObject.SetActive(true);
+            tutorialHint.SetActive(_firstTime);
         }
 
         public void Credits()

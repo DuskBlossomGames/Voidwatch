@@ -1,3 +1,4 @@
+using Singletons;
 using Spawnables.Damage;
 using UnityEngine;
 using Util;
@@ -13,7 +14,8 @@ namespace Spawnables.Controllers.Misslers
         public float shootForce = 1000;
         public int amt = 3;
         public NSpriteAnimation animationState;
-
+        public AudioClip missilerShoot;
+        
         private bool _isShooting, _shot;
         private readonly Timer _shoot = new();
         private float _fireAnimDuration;
@@ -38,6 +40,7 @@ namespace Spawnables.Controllers.Misslers
             {
 
                 animationState.SwapState("fire");
+                AudioPlayer.Play(missilerShoot, this, 1, 0.8f);
                 _isShooting = true;
                 _shot = false;
             }
@@ -45,7 +48,7 @@ namespace Spawnables.Controllers.Misslers
             if (_shoot.Value <= _fireAnimDuration/2 && !_shot)
             {
                 _shot = true;
-            
+                
                 for (var i = 0; i < amt; i++)
                 {
                     var missile = Instantiate(missilePrefab, transform.position, transform.rotation);

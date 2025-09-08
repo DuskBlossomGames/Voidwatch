@@ -180,7 +180,7 @@ namespace Player
                     }
                 }
                 
-                AudioPlayer.Play(laserClip, Random.Range(0.5f, 0.7f), 0.45f);
+                AudioPlayer.Play(laserClip, this, Random.Range(0.5f, 0.7f), 0.45f);
                 HasDodgePowerAttack = false;
             }
 

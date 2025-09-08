@@ -33,6 +33,7 @@ namespace Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.attachedRigidbody == null) return;
             var vel = (other.attachedRigidbody.linearVelocity - _rb.linearVelocity).magnitude;
 
             if (!other.gameObject.TryGetComponent<Damageable>(out var damageable))

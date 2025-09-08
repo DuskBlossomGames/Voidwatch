@@ -280,6 +280,7 @@ MonoBehaviour:
   tendonLength: 5
   drag: 0.5
   suction: 1
+  gloopSound: {fileID: 8300000, guid: 11fd9300c7e3b46e792310bb2574a0a7, type: 3}
   mode: 1
 --- !u!114 &8772780823410768721
 MonoBehaviour:
@@ -427,3 +428,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 454445444, guid: 706e2aa31ab3c44bc9fafd74e9a38518, type: 3}
   title: Platelin
+  additionalChildren: {fileID: 0}
+  offsetMin: {x: 0, y: 0}
+  offsetMax: {x: 0, y: 0}

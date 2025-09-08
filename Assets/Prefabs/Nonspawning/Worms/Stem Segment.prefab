@@ -264,6 +264,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
+  wormShoot: {fileID: 8300000, guid: 18a79f1abaeb14bb8aed2f3a73d2b74b, type: 3}
 --- !u!114 &-8078297690866453646
 MonoBehaviour:
   m_ObjectHideFlags: 0

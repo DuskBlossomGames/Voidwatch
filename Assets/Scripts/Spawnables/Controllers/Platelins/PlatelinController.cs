@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LevelPlay;
+using Singletons;
 using Spawnables.Damage;
 using UnityEngine;
 using Util;
@@ -52,6 +53,8 @@ namespace Spawnables.Controllers.Platelins
         private readonly Timer _gooTimer = new();
         private float _scale;
         private EnemySpawner _spawner;
+
+        public AudioClip gloopSound;
         
         public enum Mode
         {
@@ -147,6 +150,10 @@ namespace Spawnables.Controllers.Platelins
             {
                 if (((Vector2)transform.position).sqrMagnitude < 80 * 80)
                 {
+                    if (_speedCurve < 1.5f*Time.deltaTime) // if at start
+                    {
+                        AudioPlayer.Play(gloopSound, this, 1.5f, 0.5f);
+                    }
                     var targSpeed = speed * speedCurve.Evaluate(_speedCurve / speedCurveScale) *
                                     ((Vector2)(_target.transform.position - transform.position)).normalized;
                     GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.SmoothDamp(GetComponent<CustomRigidbody2D>().linearVelocity, targSpeed, ref _dampVel, 0.1f);

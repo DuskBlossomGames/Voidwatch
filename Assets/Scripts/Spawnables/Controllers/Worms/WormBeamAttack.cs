@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Player;
+using Singletons;
 using Spawnables.Damage;
 using UnityEditor;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace Spawnables.Controllers.Worms
         public Gradient beamColor;
         public Gradient littlebeamColor;
 
+        public AudioClip wormShoot;
+
         private bool _isShooting;
         private float _atkTimer;
 
@@ -41,10 +44,16 @@ namespace Spawnables.Controllers.Worms
         {
             GetComponent<WormSegment>().aroundPather.snakeyness /= 3;
             GetComponent<WormSegment>().pathmode = WormSegment.PathMode.Direct;
-            yield return new WaitForSeconds(chargeTime);
+            yield return new WaitForSeconds(chargeTime-0.1f);
 
+            AudioPlayer.Play(wormShoot, this, 1, 0.85f);
+            
+            yield return new WaitForSeconds(0.1f); // split charge time so that the beam audio starts exactly 1s before major beam 
+            
+            
+            
             GetComponent<WormSegment>().speed /= 4;
-            Vector2 dir = GetComponent<WormSegment>().PredDir(LineStart, dodgeTime+0.1f);
+            Vector2 dir = GetComponent<WormSegment>().PredDir(LineStart, dodgeTime+0.1f); // 0.1f because each of the five minibeams waits 0.02f
 
             GameObject ray = new GameObject("Warning Beam");
             _spawns.Add(ray);

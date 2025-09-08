@@ -198,7 +198,7 @@ namespace Spawnables.Controllers.Carcadon
 
                     if (!_clawSoundBegan)
                     {
-                        AudioPlayer.Play(slashClip, Random.Range(0.8f, 1f), 0.7f);
+                        AudioPlayer.Play(slashClip, this, Random.Range(0.8f, 1f), 0.7f);
                         _clawSoundBegan = true;
                     }
                     

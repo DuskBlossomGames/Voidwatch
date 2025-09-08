@@ -87,9 +87,9 @@ namespace Player
                 vfx.RunShield();
                 if (!_shieldBreakSfxCooldown.IsFinished)
                 {
-                    AudioPlayer.Play(shieldBreakClip, Random.Range(0.8f, 1.0f), 0.2f);
+                    AudioPlayer.Play(shieldBreakClip, this,Random.Range(0.8f, 1.0f), 0.2f);
                 } else{
-                  AudioPlayer.Play(shieldBreakClip, Random.Range(0.8f, 1.0f), 0.7f);
+                  AudioPlayer.Play(shieldBreakClip, this, Random.Range(0.8f, 1.0f), 0.7f);
                   _shieldBreakSfxCooldown.Value = shieldBreakDelay;
                 }
             }
@@ -141,7 +141,7 @@ namespace Player
         public bool TakeEMP(float damage)
         {
             ShieldPower = Mathf.Max(ShieldPower - damage, 0);
-            AudioPlayer.Play(shieldDamageClip, 0.9f, 0.2f);
+            AudioPlayer.Play(shieldDamageClip, this, 0.9f, 0.2f);
 
             DelayShield(ShieldPower <= 0, false);
 
@@ -204,7 +204,7 @@ namespace Player
                 else
                 {
                     ShieldPower = Mathf.Clamp(ShieldPower - damage * shieldMult, 0, PlayerDataInstance.maxShield);
-                    AudioPlayer.Play(shieldDamageClip, 0.9f, 0.2f);
+                    AudioPlayer.Play(shieldDamageClip, this, 0.9f, 0.2f);
 
                     DelayShield(ShieldPower <= 0);
                 }
@@ -217,7 +217,7 @@ namespace Player
 
                 if (bleed > 5)
                 {
-                    AudioPlayer.Play(healthDamageClip, Random.Range(0.9f, 1.1f), 0.3f + Mathf.Log(bleed)/15f);
+                    AudioPlayer.Play(healthDamageClip, this, Random.Range(0.9f, 1.1f), 0.3f + Mathf.Log(bleed)/15f);
                 }
 
                 if (Health < 0)
@@ -271,7 +271,6 @@ namespace Player
                 ftd.transform.localScale = new Vector2(bitScale, bitScale);
             }
 
-            explosion.SetActive(true);
             explosion.GetComponent<ExplosionHandler>().Play(1, 1);
         }
 
@@ -283,6 +282,7 @@ namespace Player
 
             _movement.SetInputBlocked(true);
 
+            yield return new WaitForSeconds(0.35f); // wait before fading
             if (!PlayerDataInstance.IsTutorial)
             {
                 StartCoroutine(gameOver.Run(false, diedTo));

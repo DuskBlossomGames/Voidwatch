@@ -101,7 +101,7 @@ namespace Menus
                 {
                     audioPlayer.clip = skipIntro ? loopClip : introClip;
                     audioPlayer.time = playAt;
-                    audioPlayer.loop = false;
+                    audioPlayer.loop = skipIntro;
                     audioPlayer.Play();
                     _playingIntro = !skipIntro;
                 }

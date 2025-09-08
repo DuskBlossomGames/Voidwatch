@@ -73,7 +73,7 @@ namespace Spawnables.Controllers.Misslers
 
                 if (_timeToImpact < 2 && !_hasAudio)
                 {
-                    _audio = AudioPlayer.Play(warningClip, 1, 0.05f).gameObject;
+                    _audio = AudioPlayer.Play(warningClip, this, 1, 0.15f).gameObject;
                     _hasAudio = true;
                 }
                 else if(_timeToImpact > 2 && _hasAudio)

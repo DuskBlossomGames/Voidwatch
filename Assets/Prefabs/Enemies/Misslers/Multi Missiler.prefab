@@ -116,6 +116,7 @@ MonoBehaviour:
   shootForce: 1000
   amt: 5
   animationState: {fileID: 3600005745741968676}
+  missilerShoot: {fileID: 8300000, guid: 49194836ef88243cc9624a9908a43508, type: 3}
 --- !u!114 &1114353160703292457
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -118,7 +118,7 @@ namespace Player
             SetInputBlocked(true);
             ShowBillboard(BillboardMessage.Stunned);
             gameObject.GetComponent<PlayerVFXController>().RunStun();
-            AudioPlayer.Play(stunClip, Random.Range(0.8f, 1.0f), 0.3f);
+            AudioPlayer.Play(stunClip, this, Random.Range(0.8f, 1.0f), 0.3f);
         }
 
         public void ShowBillboard(BillboardMessage bm, Vector3? position=null)

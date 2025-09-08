@@ -143,7 +143,7 @@ namespace Player
         public void SelectUpgrade(int i)
         {
             _upgrades[i].Apply();
-            AudioPlayer.Play(upgradeSound, 1f, 1.1f);
+            AudioPlayer.Play(upgradeSound, null, 1f, 1.1f);
             StartCoroutine(ExitAfter(upgradeSound.length + 0.5f));
 
             // disable other options
