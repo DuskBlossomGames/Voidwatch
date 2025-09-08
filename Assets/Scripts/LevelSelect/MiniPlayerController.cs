@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Singletons.Static_Info;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
@@ -16,6 +17,8 @@ namespace LevelSelect
         private Vector2 _orbitPosition;
         private float _orbitRadius;
         private SpriteRenderer _bg;
+
+        private LevelData _startPlanet;
 
         private void Awake()
         {
@@ -36,8 +39,11 @@ namespace LevelSelect
         
         public void SetOrbitRadius(float radius)
         {
+            _startPlanet = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
             _orbitRadius = radius + transform.localScale.x / 2;
         }
+
+        private float OrbitRadius(LevelData planet) => _orbitRadius * planet.SpriteData.RadiusMult;
 
         private float _orbitAngle;
 
@@ -50,8 +56,8 @@ namespace LevelSelect
 
             transform.SetLocalPositionAndRotation(
                 _orbitPosition + new Vector2(
-                    _orbitRadius * Mathf.Cos(_orbitAngle), 
-                    _orbitRadius * Mathf.Sin(_orbitAngle)),
+                    OrbitRadius(_startPlanet) * Mathf.Cos(_orbitAngle), 
+                    OrbitRadius(_startPlanet) * Mathf.Sin(_orbitAngle)),
                 Quaternion.Euler(0, 0, Mathf.Rad2Deg * _orbitAngle));
         }
 
@@ -71,20 +77,18 @@ namespace LevelSelect
             var vec = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet].WorldPosition - planetLoc;
             var targPos = vec/2 + planetLoc;
             targPos.z = cam.transform.position.z;
-            var targSize = vec.magnitude;
+            var targSize = _orbitRadius + (Mathf.Abs(vec.x) > cam.aspect * Mathf.Abs(vec.y) ? Mathf.Abs(vec.x) / (2 * cam.aspect) : Mathf.Abs(vec.y) / 2);
 
             const float camTime = 1.5f;
             
             var camStartPos = cam.transform.position;
-            float camPosProgress;
             var camStartSize = cam.orthographicSize;
             for (float t = 0; t < camTime; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();
 
                 cam.orthographicSize = Mathf.SmoothStep(camStartSize, targSize, t / camTime);
-                camPosProgress = Mathf.SmoothStep(0, 1, t / camTime);
-                cam.transform.position = camStartPos + (targPos - camStartPos) * camPosProgress;
+                cam.transform.position = camStartPos + (targPos - camStartPos) * Mathf.SmoothStep(0, 1, t / camTime);
             }
         }
 
@@ -111,25 +115,25 @@ namespace LevelSelect
 
                 const float planetExitRadMult = 1.95f;
                 const float planetDivergePoint = 40 * Mathf.Deg2Rad;
-
-                var orbitalVelocity = 3.5f * 2 * Mathf.PI / secondsPerOrbit * _orbitRadius;
-
+                
                 var current = _orbitPosition;
                 var currentRot = _orbitAngle;
                 for (var i = 1; i < planetPath.Length; i++)
                 {
-                    var target = (Vector2)planetPath[i];
+                    var orbitRadius = OrbitRadius(planetPath[i-1]);
+                    var orbitalVelocity = 3.5f * 2 * Mathf.PI / secondsPerOrbit * orbitRadius;
+                    
+                    var target = (Vector2)planetPath[i].WorldPosition;
                     var exitRot = UtilFuncs.Mod(UtilFuncs.Angle(target - current), Mathf.PI * 2);
 
                     // rotate around current planet
                     var direction = i == 1 ? 1 : Mathf.Abs(exitRot - currentRot) < Mathf.PI ? 1 : -1;
 
-                    float radsTraveled = 0;
                     for (var r = currentRot;
                          DeltaAngle(r, exitRot) >= 1.5f * rotateStep;
                          r = UtilFuncs.Mod(r + direction * rotateStep, Mathf.PI * 2))
                     {
-                        var rad = _orbitRadius;
+                        var rad = orbitRadius;
                         var vel = orbitalVelocity;
                         if (DeltaAngle(r, exitRot) <= planetDivergePoint)
                         {
@@ -141,14 +145,13 @@ namespace LevelSelect
                         path.Add(new Tuple<Vector2, float>(current + new Vector2(
                             rad * Mathf.Cos(r),
                             rad * Mathf.Sin(r)), vel));
-
-                        radsTraveled += rotateStep;
                     }
 
                     // move to next planet
-                    var startPos = current + (target - current).normalized * (_orbitRadius * planetExitRadMult);
+                    var startPos = current + (target - current).normalized * (orbitRadius * planetExitRadMult);
                     var endPos = target + (current - target).normalized *
-                        (i == planetPath.Length - 1 ? _orbitRadius / 4 : _orbitRadius);
+                        (i == planetPath.Length - 1 ? OrbitRadius(planetPath[i]) / 4 : OrbitRadius(planetPath[i]));
+                    
                     for (float t = 0; t < 1; t += 0.05f)
                     {
                         var multEvaluation = i < planetPath.Length - 1
@@ -159,7 +162,7 @@ namespace LevelSelect
                     }
 
                     current = target;
-                    currentRot = UtilFuncs.Angle(current - target);
+                    currentRot = UtilFuncs.Angle(endPos - target);
                 }
 
                 for (var i = 1; i < path.Count; i++)

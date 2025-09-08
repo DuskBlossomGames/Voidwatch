@@ -20,9 +20,11 @@ namespace LevelSelect
         public MiniPlayerController playerMini;
         public MapController mapController;
 
-        private Dictionary<Sprite, List<string>> _availableNames;
-        public Triple<Sprite, string[], float>[] planetNames;
+        private Dictionary<Sprite, List<Pair<string, LevelLoreData>>> _availableNames;
+        public Triple<Sprite, Pair<string, LevelLoreData>[], float>[] planetNames;
         public string[] spaceStationNames;
+        public LoreData entranceLore, stationLore;
+        public LevelLoreData carcLore;
         private List<string> _spaceStationNames;
         
 #if UNITY_EDITOR
@@ -39,7 +41,7 @@ namespace LevelSelect
 
         private void Start()
         {
-            _availableNames = planetNames.ToDictionary(p=>p.a, t=>new List<string>(t.b));
+            _availableNames = planetNames.ToDictionary(p=>p.a, t=>new List<Pair<string, LevelLoreData>>(t.b));
             _spaceStationNames = new List<string>(spaceStationNames);
             
 
@@ -49,6 +51,20 @@ namespace LevelSelect
             playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 2f);
             RenderGalaxy();
             mapController.Instantiate();
+        }
+
+        // TODO: eventually all planets should have lore so this should be vestigial
+        private Pair<string, LevelLoreData> GetPlanet(Sprite sprite)
+        {
+            var list = new List<Pair<string, LevelLoreData>>(_availableNames[sprite]);
+            
+            list.RemoveAll(p => p.b.localName.Length == 0);
+            if (list.Count == 0) return _availableNames[sprite].Pop(Random.Range(0, _availableNames[sprite].Count));
+            
+            var ret = list[Random.Range(0, list.Count)];
+            _availableNames[sprite].RemoveAll(p=>p.a == ret.a);
+
+            return ret;
         }
         
         private void GenerateGalaxy()
@@ -68,6 +84,7 @@ namespace LevelSelect
                     Connections = new List<int>{1},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(0, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                     Title = "Entrance Portal",
+                    LoreData =  entranceLore,
                     Description = "No way home",
                     Difficulty = Difficulty.Entrance
             });
@@ -76,6 +93,7 @@ namespace LevelSelect
             for (i = 0; i < (PlayerDataInstance.IsTutorial ? 1 : 5); i++)
             {
                 var sprite = planetNames.ElementAt(PlayerDataInstance.IsTutorial ? 0 : Random.Range(0, planetNames.Length));
+                var lore = GetPlanet(sprite);
                 levels.Add(new LevelData {
                     Type = LevelType.Normal,
                     SpriteData = new LevelSpriteData
@@ -86,7 +104,8 @@ namespace LevelSelect
                     },
                     Connections = new List<int>{i,i+2},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*(i+1), 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Title = _availableNames[sprite].Pop(Random.Range(0, _availableNames[sprite].Count)),
+                    Title = lore,
+                    LoreData = lore.b.localName.Length > 0 ? lore : null,
                     Description = "Cult of the Void controlled"
                 });
                 connections.Add(new Tuple<int, int>(i, i+1));
@@ -103,6 +122,7 @@ namespace LevelSelect
                 Connections = new List<int>{i, i+2},
                 WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                 Title = _spaceStationNames.Pop(Random.Range(0, _spaceStationNames.Count)),
+                LoreData = stationLore,
                 Description = "A respite for the weary",
                 Metadata = ShopMetadata.Generate()
             });
@@ -111,6 +131,7 @@ namespace LevelSelect
             if (PlayerDataInstance.IsTutorial)
             {
                 var sprite = planetNames.ElementAt(0);
+                var lore = GetPlanet(sprite);
                 levels.Add(new LevelData {
                     Type = LevelType.Tutorial,
                     SpriteData = new LevelSpriteData
@@ -121,7 +142,8 @@ namespace LevelSelect
                     },
                     Connections = new List<int>{i},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
-                    Title = _availableNames[sprite].Pop(Random.Range(0, _availableNames.Count)),
+                    Title = lore,
+                    LoreData = lore.b.localName.Length > 0 ? lore : null,
                     Description = "Complete the tutorial"
                 });
             }
@@ -138,6 +160,7 @@ namespace LevelSelect
                     Connections = new List<int>{i},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),
                     Title = "Deep Space",
+                    LoreData = carcLore,
                     Description = "Home of the Carcadon"
                 });
             }

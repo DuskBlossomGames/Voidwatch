@@ -5575,6 +5575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMod: 1.1
   playerMod: 1.5
+  planetMod: 0.35
   trueDamageMod: 1.2
   cooldown: 0.15
   shieldMult: 2

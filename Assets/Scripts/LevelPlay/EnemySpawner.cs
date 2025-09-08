@@ -180,7 +180,11 @@ namespace LevelPlay
 #if UNITY_EDITOR
             if (InputManager.GetKeyUp(KeyCode.RightBracket)) _spawnedEnemies.ForEach(Destroy);
             if (_level.Type == LevelType.Elite && InputManager.GetKeyUp(KeyCode.Backslash)) for (var i = 1; i < _spawnedEnemies.Count; i++) Destroy(_spawnedEnemies[i]);
-            if (InputManager.GetKeyUp(KeyCode.LeftBracket)) _timeTillExit = 0;
+            if (InputManager.GetKeyUp(KeyCode.LeftBracket))
+            {
+                _isTerminal = true;
+                _timeTillExit = 0;
+            }
 #endif
             
             if (!_faded || _groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;

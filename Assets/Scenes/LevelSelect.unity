@@ -5511,6 +5511,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
+--- !u!1 &666578441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 666578442}
+  m_Layer: 0
+  m_Name: Info
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &666578442
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666578441}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2758394316610131049}
+  - {fileID: 3434491804021605896}
+  - {fileID: 4605528334637744589}
+  - {fileID: 8947478576555413750}
+  - {fileID: 7202853807711810125}
+  m_Father: {fileID: 4548566308125673488}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &743845639
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,7 +6219,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 55, y: 55, z: 1}
+  m_LocalScale: {x: 60, y: 60, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 588395350}
@@ -6555,30 +6595,187 @@ MonoBehaviour:
   planetNames:
   - a: {fileID: 21300000, guid: 3bc0bcf1ea37a47f8a69c89e76e4a651, type: 3}
     b:
-    - Velmorin
-    - New Thessaly
-    - Virella
-    - Mireden
-    - Junith
-    - Isenmark
+    - a: Velmorin
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: New Thessaly
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Virella
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Mireden
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Junith
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Isenmark
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Salacia
+      b:
+        lore: "Salacia is home to some of the clearest and freshest water in the
+          Known Universe. Many caste tribes lived solely on buoyant rafts, fishing
+          for food and warring amongst themselves, until the Terra Novan explorers
+          discovered them. As a free-of-charge favor to the Terra Novans, the native
+          people built water processing plants that allowed Salacia to act as Terra
+          Nova\u2019s water fountain, draining around 1,200 cubic miles of water
+          every day. The best part? The Native Salacians still work free\u2013of-charge,
+          making it a sustainable, healthy, and ethical way of consuming water."
+        localName: "L\u014Dkka"
+        discovered: 2209
+        voidInfluence: 33 WEEKS, 1 DAY, 18 HOURS
+    - a: Bellona
+      b:
+        lore: Bellona has been a fixture of the Terra Novan military for nearly as
+          long as the government itself. It has been a storing complex for all state-of-the-art
+          missiles, spacecraft, and combat tools. After its capture into the control
+          of the Void Gods, they have used its technology and mind-controlled strategists
+          to turn this interdimensional skirmish into a fully fledged war.
+        localName: '[Redacted]'
+        discovered: 2146
+        voidInfluence: 36 WEEKS, 2 DAYS, 20 HOURS
     c: 1
   - a: {fileID: 21300000, guid: 0cf666e707d3e40fea8023af38d6fcac, type: 3}
     b:
-    - Aeternum
-    - Halden Reach
-    - Elaris Prime
-    - Liora
-    - Orelius
-    - Cryden
+    - a: Aeternum
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Halden Reach
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Elaris Prime
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Liora
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Orelius
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Cryden
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Nyx
+      b:
+        lore: "What started as a filthy and impoverished city moon turned into a
+          flourishing paradise after Terra Nova announced the \u201CGorration Solarization
+          Plan. \u201D The Gorrations agreed to help with the planned hundred-year-long
+          endeavor to harness the power of the sun, as it gave them employment and
+          purpose. However, after being born into a world of eternal night, the ensuing
+          generations realized that participating in the construction of a Dyson
+          Sphere around their sun wasn\u2019t a great long-term plan. They began
+          to protest en masse, claiming the Terra Novan government took advantage
+          of the Gorration\u2019s economic status. On an unrelated note, the Terra
+          Novan government decided to make Nyx their first official Quark Bomb testing
+          tests, which sent clouds of dust into the atmosphere that still remain
+          uncleared."
+        localName: Gorrer
+        discovered: 2189
+        voidInfluence: 29 WEEKS, 3 DAYS, 4 HOURS
+    - a: Agerona
+      b:
+        lore: Once a lush jungle, the aboriginal Sundrattans were a relatively primitive
+          society. After discovering swaths of fossil fuels deep within the ground,
+          Terra Nova colonized Vulcan and turned it into their primary resource mine,
+          leading to a progress and civilization for the Sundrattans. However, due
+          to poor planning and an overestimation of resources, the several thousand
+          factories emitted harmful and thick toxins into the atmosphere, plunging
+          the environment into an irreparable winter. In exchange for this wrongdoing,
+          Terra Nova has decided to grant the Sundrattans their sovereignty back.
+        localName: Sundratta
+        discovered: 2322
+        voidInfluence: 36 WEEKS, 5 DAYS, 10 HOURS
     c: 0.9
   - a: {fileID: 21300000, guid: 354e8fe3b5769452da08f36dfee42b8b, type: 3}
     b:
-    - Caelus
-    - Tarnix
-    - Draymoor
-    - Mireforge
-    - Rendax
-    - Brumal
+    - a: Caelus
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Tarnix
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Draymoor
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Mireforge
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Rendax
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Brumal
+      b:
+        lore: 
+        localName: 
+        discovered: 
+        voidInfluence: 
+    - a: Tutunus
+      b:
+        lore: "Tutunus, a nebulous gas giant, acts as a casino getaway for all Terra
+          Novans, from the elites to the working class. The casino - called Tut\u2019s
+          - is a pyramid shaped space station. Its hallways will move and shift based
+          on how the rotation of the gas giant affects the station\u2019s gravity.
+          High rollers will find themselves at the easy to navigate Apex Rooms of
+          the pyramid, with lesser gamblers or demimondes in the less user-friendly
+          Base. Tut\u2019s has been compared by some to a maze, labyrinth, and a
+          \u201Chotbed of addicts, \u201D but those who are familiar with the place
+          and its shifting ways know it to be a fun, must-see tourist destination."
+        localName: Tutunus
+        discovered: 2348
+        voidInfluence: 1 WEEK, 8 DAYS, 2 HOURS
     c: 1.3
   spaceStationNames:
   - 'Karnith Station '
@@ -6593,6 +6790,30 @@ MonoBehaviour:
   - Zorpheus Bastion
   - Veltraxis Hold
   - Fracture Line
+  entranceLore:
+    lore: The IPH Entry Portal, a recent milestone Terra Novan exploration, is a
+      fast-track travel tool that has made the universe simultaneously larger in
+      its potential and smaller through its accessibility. Developed by Dr. Vanessa
+      Grimm not long after her discovery of Void, the Interstellar Portal Highway
+      (IPH) turned the Known Universe into a playground of trade and exploration,
+      with Earth at its epicenter. Outer Humanity and Extraterrestrials alike can
+      pay the Terra Novan government to install an IPH Entry Portal right outside
+      their atmospheres in exchange for ownership over land and resources on their
+      home planets.
+  stationLore:
+    lore: The Voidwatch Space Stations have been rapidly distributed across the galaxy
+      ever since the Voidron Super Collider had its core meltdown last quarter. Dr.
+      Adam Battaglia and renowned engineer Jacob Trembley designed these stations
+      to act as a refuge for all those affected by the Cult of the Void in its conquest,
+      be they humans, Outer Humans, or Extraterrestrials. With the uploaded consciousness
+      of Jacob Trembley as a welcoming host, Voidwatch pilots will find these stations
+      to be a place of relative quiet where they can dock their ships, upgrade their
+      gear, and rest their hearts for the journey ahead.
+  carcLore:
+    lore: ???
+    localName: ???
+    discovered: ???
+    voidInfluence: ???
 --- !u!4 &1935833801
 Transform:
   m_ObjectHideFlags: 0
@@ -7018,6 +7239,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!224 &2096846575694231679
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188273196724191600}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4580833489438790271}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.060000002, y: -0.012499996}
+  m_SizeDelta: {x: -0.12, y: -0.02500001}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2363297971874597724
 GameObject:
   m_ObjectHideFlags: 0
@@ -7142,17 +7382,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7774480003536290374}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4548566308125673488}
+  m_Father: {fileID: 666578442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 0.5}
+  m_SizeDelta: {x: 0, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!58 &3275128187205761392
 CircleCollider2D:
@@ -7197,17 +7437,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5723601001985700314}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4548566308125673488}
+  m_Father: {fileID: 666578442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.01}
-  m_SizeDelta: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.00999999}
+  m_SizeDelta: {x: 0, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3535162678754338952
 MeshRenderer:
@@ -7216,6 +7456,164 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034513290770026115}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 7206338398465205622, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3677904158260867483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744053841141195760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "<line-height=0.30>\n<size=0.45><b>{0}</b>\n<size=0.33>\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500</size>|\n<line-height=0.40><size=0.25><b>DISCOVERED:</b><size=0.35>
+    {1}</size>\n<b>UNDER VOID INFLUENCE:</b><size=0.35> {2}</size>|<line-height=0.27>\n<line-height=0.32><size=0.25>\n{3}"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
+  m_sharedMaterial: {fileID: 7206338398465205622, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 0.35
+  m_fontSizeBase: 0.35
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0.02, y: 0.02, z: 0.02, w: 0.02}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  _SortingLayer: 0
+  _SortingLayerID: 0
+  _SortingOrder: 0
+  m_hasFontAssetChanged: 0
+  m_renderer: {fileID: 7817729207267581088}
+  m_maskType: 0
+--- !u!1 &3744053841141195760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4580833489438790271}
+  - component: {fileID: 7817729207267581088}
+  - component: {fileID: 3677904158260867483}
+  m_Layer: 0
+  m_Name: Lore
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!23 &3866595431800679228
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188273196724191600}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -7327,13 +7725,30 @@ Transform:
   m_LocalScale: {x: 120, y: 120, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2758394316610131049}
-  - {fileID: 3434491804021605896}
-  - {fileID: 4605528334637744589}
-  - {fileID: 8947478576555413750}
-  - {fileID: 7202853807711810125}
+  - {fileID: 666578442}
+  - {fileID: 4580833489438790271}
   m_Father: {fileID: 1935833801}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &4580833489438790271
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744053841141195760}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2096846575694231679}
+  m_Father: {fileID: 4548566308125673488}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.15}
+  m_SizeDelta: {x: 1, y: 0.61}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4605528334637744589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7341,17 +7756,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5641584075574667088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4548566308125673488}
+  m_Father: {fileID: 666578442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.04}
-  m_SizeDelta: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0.040000003}
+  m_SizeDelta: {x: 0, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5039728463029856741
 MeshRenderer:
@@ -7492,6 +7907,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2631017774458940250}
   m_maskType: 0
+--- !u!1 &5188273196724191600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2096846575694231679}
+  - component: {fileID: 3866595431800679228}
+  - component: {fileID: 6256204331416093731}
+  m_Layer: 0
+  m_Name: Planet Info Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &5579127307253370222
 GameObject:
   m_ObjectHideFlags: 0
@@ -7641,6 +8074,100 @@ MonoBehaviour:
   _SortingOrder: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5039728463029856741}
+  m_maskType: 0
+--- !u!114 &6256204331416093731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188273196724191600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: <size=0.25><b>LOCAL DESIGNATION:</b><size=0.35> {0}
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
+  m_sharedMaterial: {fileID: 7206338398465205622, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 0.35
+  m_fontSizeBase: 0.35
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 4
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0.02, y: 0.02, z: 0.02, w: 0.02}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  _SortingLayer: 0
+  _SortingLayerID: 0
+  _SortingOrder: 0
+  m_hasFontAssetChanged: 0
+  m_renderer: {fileID: 3866595431800679228}
   m_maskType: 0
 --- !u!114 &6350865687080839655
 MonoBehaviour:
@@ -7896,17 +8423,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034513290770026115}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4548566308125673488}
+  m_Father: {fileID: 666578442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.08, y: -0.03}
-  m_SizeDelta: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -0.080000006, y: -0.030000027}
+  m_SizeDelta: {x: 0, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &7370700908070252597
 SpriteRenderer:
@@ -7975,9 +8502,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c3e43cc4bd49ca9fd225e20065bea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoSprite: {fileID: 21300000, guid: a472b1a13c37d442fb1f1b6e0a99e4de, type: 3}
+  loreSprite: {fileID: 21300000, guid: 715dccb9de31c48b9a4ed77a3aef179b, type: 3}
   selector: {fileID: 1553692315}
-  yOffset: 120
+  yOffset: 110
   fadeTime: 0.2
+  planetPrefab: {fileID: 1680533821085019361}
 --- !u!114 &7370700908070252599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8055,6 +8585,51 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!23 &7817729207267581088
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744053841141195760}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 7206338398465205622, guid: e1c784262980c44fba71bf95e68d19c5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!224 &8947478576555413750
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8062,17 +8637,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 706767620878322960}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4548566308125673488}
+  m_Father: {fileID: 666578442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.08, y: -0.03}
-  m_SizeDelta: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0.080000006, y: -0.030000027}
+  m_SizeDelta: {x: 0, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

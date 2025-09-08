@@ -31,7 +31,13 @@ namespace Spawnables.Controllers.Asteroids
 
             var type = asteroidTypes[Random.Range(0, asteroidTypes.Length)];
             GetComponent<SpriteRenderer>().sprite = type.GetComponent<SpriteRenderer>().sprite;
-            GetComponent<PolygonCollider2D>().points = type.GetComponent<PolygonCollider2D>().points;
+
+            for (var i = 0;
+                 i < (GetComponent<PolygonCollider2D>().pathCount = type.GetComponent<PolygonCollider2D>().pathCount);
+                 i++)
+            {
+                GetComponent<PolygonCollider2D>().SetPath(i, type.GetComponent<PolygonCollider2D>().GetPath(i));
+            }
         }
 
         private void Update()

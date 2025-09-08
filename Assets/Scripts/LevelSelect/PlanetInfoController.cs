@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Extensions;
 using Singletons.Static_Info;
 using TMPro;
@@ -12,46 +13,85 @@ namespace LevelSelect
 {
     public class PlanetInfoController : MonoBehaviour
     {
+        public Sprite infoSprite, loreSprite;
+        
         public Selector selector;
         public float yOffset;
         public float fadeTime;
-
+        public GameObject planetPrefab;
+        
         [NonSerialized] public PlanetController SelectedPlanet;
         
         private TextMeshPro _title, _description, _difficulty, _travel, _shift;
         private SpriteRenderer _background;
+        private ScaleListener _scaleListener;
+
+        private TextMeshPro _loreMain, _loreRight;
+        private string _loreMainFormat, _loreMainReducedFormat, _loreRightFormat;
 
         private LevelData _level;
+        private Vector3 _startPos, _baseScale;
         
         private readonly Timer _fadeTimer = new();
-        private bool _shown;
+        private bool _shown, _hasInfo;
 
         private void Awake()
         {
             _fadeTimer.Value = fadeTime;
             _fadeTimer.SetValue(0);
 
-            _title = GetComponentsInChildren<TextMeshPro>()[0];
-            _description = GetComponentsInChildren<TextMeshPro>()[1];
-            _difficulty = GetComponentsInChildren<TextMeshPro>()[2];
-            _travel = GetComponentsInChildren<TextMeshPro>()[3];
-            _shift = GetComponentsInChildren<TextMeshPro>()[4];
+            _title = transform.GetChild(0).GetComponentsInChildren<TextMeshPro>()[0];
+            _description = transform.GetChild(0).GetComponentsInChildren<TextMeshPro>()[1];
+            _difficulty = transform.GetChild(0).GetComponentsInChildren<TextMeshPro>()[2];
+            _travel = transform.GetChild(0).GetComponentsInChildren<TextMeshPro>()[3];
+            _shift = transform.GetChild(0).GetComponentsInChildren<TextMeshPro>()[4];
+
+            _loreMain = transform.GetChild(1).GetComponentsInChildren<TextMeshPro>()[0];
+            _loreMainFormat = _loreMain.text.Replace("|", "");
+            _loreMainReducedFormat = new Regex("\\|(.|\n)*\\|").Replace(_loreMain.text, "").Replace("{3}", "{1}");
+            _loreRight = transform.GetChild(1).GetComponentsInChildren<TextMeshPro>()[1];
+            _loreRightFormat = _loreRight.text;
+            
             _background = GetComponent<SpriteRenderer>();
+            _scaleListener = GetComponent<ScaleListener>();
+            
+            _baseScale = transform.localScale;
             
             selector.OnSelectionChange += pos =>
             {
                 _shown = pos != null;
                 if (!_shown) return;
-                
-                transform.position = pos!.Value + yOffset * Vector3.up;
 
                 _level = LevelSelectDataInstance.Levels.First(l => l.WorldPosition == pos);
+                
+                transform.position = _startPos = pos!.Value + (yOffset + planetPrefab.transform.localScale.x * (_level.SpriteData.RadiusMult-1)) * Vector3.up;
+                transform.position += InputManager.GetKey(KeyCode.LeftShift) ? 1.5f * _baseScale.y * Vector3.up : Vector3.zero;
+
                 _title.text = _level.Title;
                 _description.text = _level.Description;
                 _difficulty.text = _level.Difficulty.Text;
                 _difficulty.color = _level.Difficulty.Color;
                 _travel.text = _level.Travellable ? "Click to Travel" : "Cannot Travel";
                 _travel.color = Color.HSVToRGB(0, 0, _level.Travellable ? 1 : 0.75f);
+
+                _hasInfo = _level.LoreData != null;
+                _shift.text = _hasInfo ? "Shift for Info" : "Info Unavailable";
+                _shift.color = Color.HSVToRGB(0, 0, _hasInfo ? 1 : 0.75f);
+
+                if (_level.LoreData == null) return;
+                if (_level.LoreData.GetType() == typeof(LevelLoreData))
+                {
+                    var lld = (LevelLoreData) _level.LoreData;
+                    _loreMain.text = string.Format(_loreMainFormat, _level.Title.ToUpper(), lld.discovered,
+                        lld.voidInfluence, lld.lore);
+                    _loreRight.enabled = true;
+                    _loreRight.text = string.Format(_loreRightFormat, lld.localName.ToUpper());
+                }
+                else
+                {
+                    _loreMain.text = string.Format(_loreMainReducedFormat, _level.Title.ToUpper(), _level.LoreData.lore);
+                    _loreRight.enabled = false;
+                }
             };
         }
         private void Update()
@@ -63,6 +103,18 @@ namespace LevelSelect
             _background.SetAlpha(_fadeTimer.Progress);
             _travel.SetAlpha(_fadeTimer.Progress);
             _shift.SetAlpha(_fadeTimer.Progress);
+
+            bool? lore = InputManager.GetKeyDown(KeyCode.LeftShift) ? true : InputManager.GetKeyUp(KeyCode.LeftShift) ? false : null;
+            if (_shown && _hasInfo && lore != null)
+            {
+                var l = (bool)lore;
+                _background.sprite = l ? loreSprite : infoSprite;
+                _scaleListener.SetScaleMult(l ? 4 : 1);
+                transform.position = _startPos + (l ? 1.5f*_baseScale.y*Vector3.up : Vector3.zero);
+                
+                transform.GetChild(0).gameObject.SetActive(!l);
+                transform.GetChild(1).gameObject.SetActive(l);
+            }
         }
 
         private void OnMouseUpAsButton()

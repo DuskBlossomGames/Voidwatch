@@ -7,6 +7,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Player.Upgrades;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Singletons.Static_Info
@@ -24,19 +25,19 @@ namespace Singletons.Static_Info
         public static readonly Difficulty Difficult = new("Difficult", Color.HSVToRGB(0f, 0.9f, 0.9f));
         public static readonly Difficulty Insane = new("Insane", Color.HSVToRGB(0.83f, 0.7f, 1));
         
-        public static readonly Difficulty Entrance = new("Safe", Color.HSVToRGB(0.51f, 0.35f, 0.88f));
-        public static readonly Difficulty SpaceStation = new("Space Station", Color.HSVToRGB(0f, 0f, 0.7f));
+        public static readonly Difficulty Entrance = new("Safe", Color.HSVToRGB(0.51f, 0.35f, 0.88f), false);
+        public static readonly Difficulty SpaceStation = new("Space Station", Color.HSVToRGB(0f, 0f, 0.7f), false);
 
         public readonly string Text;
         public readonly Color Color;
         
         public static int Count { get; private set; }
-        private Difficulty(string text, Color color)
+        private Difficulty(string text, Color color, bool count = true)
         {
             Text = text;
             Color = color;
 
-            Count++;
+            if (count) Count++;
         }
         
         public static implicit operator Difficulty(int idx) { return (Difficulty) typeof(Difficulty).GetFields(BindingFlags.Static | BindingFlags.Public)[idx].GetValue(null); }
@@ -62,6 +63,18 @@ namespace Singletons.Static_Info
         public Sprite Sprite, HiddenSprite;
         public float RadiusMult = 1;
     }
+
+    [Serializable]
+    public class LoreData
+    {
+        public string lore;
+    }
+    
+    [Serializable]
+    public class LevelLoreData : LoreData 
+    {
+        public string localName, discovered, voidInfluence;
+    }
     
     public class LevelData
     {
@@ -72,6 +85,7 @@ namespace Singletons.Static_Info
         public int[] Waves;
         public List<int> Connections;
         public LevelSpriteData SpriteData;
+        public LoreData LoreData;
 
         public Vector3 WorldPosition;
 
@@ -193,6 +207,7 @@ namespace Singletons.Static_Info
                     var scale = Difficulty.Count/2;
                     level.Difficulty = level.Type switch
                     {
+                        LevelType.Entrance => Difficulty.Entrance,
                         LevelType.SpaceStation => Difficulty.SpaceStation,
                         LevelType.Tutorial => Difficulty.Easy,
                         _ => (int)(scale * Mathf.Pow(2, 1.5f * Mathf.Clamp01(difficultyScore / MaxDifficultyScore)) - scale)

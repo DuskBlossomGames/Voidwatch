@@ -25,14 +25,21 @@ namespace LevelSelect
 
             var scaleUi = GetComponent<ScaleUI>();
             var pic = infoScaleListener.GetComponent<PlanetInfoController>();
+            var selector = GetComponent<Selectable>().selector;
             GetComponent<Selectable>().clickable = Clickable;
             GetComponent<Selectable>().selector.OnSelectionChange += pos =>
             {
                 _selected = pos == Level.WorldPosition;
-                if (_selected) pic.SelectedPlanet = this;
-                
-                if (_selected) scaleUi.listeners.Add(infoScaleListener);
-                else scaleUi.listeners.Remove(infoScaleListener);
+                if (_selected)
+                {
+                    pic.SelectedPlanet = this;
+                    selector.SetScaleMult(Level.SpriteData.RadiusMult);
+                    scaleUi.listeners.Add(infoScaleListener);
+                }
+                else
+                {
+                    scaleUi.listeners.Remove(infoScaleListener);
+                }
             };
         }
 

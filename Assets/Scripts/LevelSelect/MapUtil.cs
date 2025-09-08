@@ -8,14 +8,14 @@ namespace LevelSelect
 {
     public static class MapUtil
     {
-        public static Vector3[] GetShortestPath(LevelData[] levels, LevelData start, Vector3 end, [CanBeNull] ICollection<int> discovered = null)
+        public static LevelData[] GetShortestPath(LevelData[] levels, LevelData start, Vector3 end, [CanBeNull] ICollection<int> discovered = null)
         {
-            if (start.WorldPosition == end) return new Vector3[] {};
+            if (start.WorldPosition == end) return new LevelData[] {};
             
-            var visited = new List<Vector3>();
-            var queue = new SortedList<double, (int, double, List<Vector3>)>
+            var visited = new List<LevelData>();
+            var queue = new SortedList<double, (int, double, List<LevelData>)>
             {
-                { 0, (levels.ToList().IndexOf(start), 0, new List<Vector3> { start.WorldPosition }) }
+                { 0, (levels.ToList().IndexOf(start), 0, new List<LevelData> { start }) }
             };
             
             while (true)
@@ -28,16 +28,15 @@ namespace LevelSelect
                 foreach (var neighbor in levels[current].Connections)
                 {
                     var neighborData = levels[neighbor];
-                    var position = neighborData.WorldPosition;
                     
-                    if (visited.Contains(position)) continue;
-                    visited.Add(position);
+                    if (visited.Contains(neighborData)) continue;
+                    visited.Add(neighborData);
                     
-                    var newPath = new List<Vector3>(path) { position };
-                    if (position == end) return newPath.ToArray();
+                    var newPath = new List<LevelData>(path) { neighborData };
+                    if (neighborData.WorldPosition == end) return newPath.ToArray();
                     
                     if (discovered != null && !discovered.Contains(neighbor)) continue;
-                    var newDistance = distance + Vector2.Distance(levels[current].WorldPosition, position);
+                    var newDistance = distance + Vector2.Distance(levels[current].WorldPosition, neighborData.WorldPosition);
                     queue.Add(newDistance, (neighbor, newDistance, newPath));
                 }
             }

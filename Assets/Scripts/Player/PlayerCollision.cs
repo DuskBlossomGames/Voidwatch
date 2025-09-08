@@ -9,7 +9,7 @@ namespace Player
 {
     public class PlayerCollision : MonoBehaviour
     {
-        public float enemyMod, playerMod;
+        public float enemyMod, playerMod, planetMod;
         public float trueDamageMod;
         public float cooldown;
         public float shieldMult, bleedPerc;
@@ -33,7 +33,16 @@ namespace Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.gameObject.TryGetComponent<Damageable>(out var damageable)) return;
+            var vel = (other.attachedRigidbody.linearVelocity - _rb.linearVelocity).magnitude;
+
+            if (!other.gameObject.TryGetComponent<Damageable>(out var damageable))
+            {
+                if (other.gameObject.layer == LayerMask.NameToLayer("Scene Objects"))
+                {
+                    _dmgable.Damage(PlayerDataInstance.takenCollisionDamageMult * playerMod * planetMod * vel, other.gameObject, shieldMult, bleedPerc);
+                }
+                return;
+            }
 
             if (_movement.Dodging)
             {
@@ -48,7 +57,6 @@ namespace Player
             if (!_cooldownTimer.IsFinished) return;
             if (damageable.GetComponent<MissleAim>() != null) return;
                 
-            var vel = (other.attachedRigidbody.linearVelocity - _rb.linearVelocity).magnitude;
             var mult = damageable.GetComponent<AsteroidController>() != null
                 ? PlayerDataInstance.asteroidDamageMult
                 : PlayerDataInstance.collisionDamageMult;
