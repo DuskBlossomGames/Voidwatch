@@ -25,6 +25,7 @@ namespace LevelSelect
         public string[] spaceStationNames;
         public LoreData entranceLore, stationLore;
         public LevelLoreData carcLore;
+        public float carcPlanetScale;
         private List<string> _spaceStationNames;
         
 #if UNITY_EDITOR
@@ -155,7 +156,7 @@ namespace LevelSelect
                     {
                         Sprite = eliteSprite,
                         HiddenSprite = hiddenSprite,
-                        RadiusMult = 1
+                        RadiusMult = carcPlanetScale
                     },
                     Connections = new List<int>{i},
                     WorldPosition = planetPrefab.transform.localPosition + (Vector3) (new Vector2(3*++i, 0) * planetScale * 2f + Random.insideUnitCircle * planetScale / 2),

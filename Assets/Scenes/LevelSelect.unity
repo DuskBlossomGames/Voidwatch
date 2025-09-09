@@ -6861,6 +6861,7 @@ MonoBehaviour:
     localName: ???
     discovered: ???
     voidInfluence: ???
+  carcPlanetScale: 2
 --- !u!4 &1935833801
 Transform:
   m_ObjectHideFlags: 0

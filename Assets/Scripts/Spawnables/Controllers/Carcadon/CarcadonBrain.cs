@@ -65,7 +65,7 @@ namespace Spawnables.Controllers.Carcadon
         private float _maxHealth;
         private void Start()
         {
-            _colliders = GetComponentsInChildren<BoxCollider2D>();
+            _colliders = GetComponents<BoxCollider2D>();
 
             _mouthSr = GetComponent<SpriteRenderer>();
             _numMouthFrames = texture.width / texture.height;
@@ -197,6 +197,7 @@ namespace Spawnables.Controllers.Carcadon
                 if (((Vector2)transform.position).sqrMagnitude < PlanetSetup.Radius * PlanetSetup.Radius)
                 {
                     if (_isOpaque) _opacityDir = -2;
+                    else if (Vector2.SqrMagnitude(_player.transform.position - transform.position) < 10 * 10) _opacityDir = 3;
                 }
                 else
                 {
@@ -207,8 +208,8 @@ namespace Spawnables.Controllers.Carcadon
             {
                 _opacityTimer.Update(_opacityDir);
 
-                foreach (var sr in _baseSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-_opacityTimer.Progress) * (1-stealthOpacity));
-                foreach (var sr in _stackedSpriteRenderers) sr.color = new Color(1, 1, 1, 1-(1-_opacityTimer.Progress) * (1-stackedStealthOpacity));
+                foreach (var sr in _baseSpriteRenderers) sr.SetAlpha(1-(1-_opacityTimer.Progress) * (1-stealthOpacity));
+                foreach (var sr in _stackedSpriteRenderers) sr.SetAlpha(1-(1-_opacityTimer.Progress) * (1-stackedStealthOpacity));
 
                 if (_opacityTimer.IsFinished || _opacityTimer.Progress >= 1)
                 {

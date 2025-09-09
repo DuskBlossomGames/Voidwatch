@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,17 @@ namespace Util.UI
     [RequireComponent(typeof(PolygonCollider2D), typeof(SpriteRenderer))]
     public class PixelCollider2D : MonoBehaviour
     {
+        private int _keepEvery = 1;
+        
         private Texture2D _texture;
-        private void Reset()
+        private float _ppu;
+        private void Reset() => Run(1); // in editor
+
+        public void Run(int keepEvery) // in game
         {
+            _keepEvery = keepEvery;
             _texture = GetComponent<SpriteRenderer>().sprite.texture;
+            _ppu = GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
             
             ParseTexture();
 
@@ -94,9 +102,9 @@ namespace Util.UI
             col.pathCount = _edges.Count;
             for (var i = 0; i < _edges.Count; i++)
             {
-                col.SetPath(i, _edges[i].Select(pos => new Vector2(
-                    -0.5f + pos.x/_texture.width,
-                    0.5f - pos.y/_texture.height
+                col.SetPath(i, _edges[i].Where((_, j) => j % _keepEvery == 0).Select(pos => new Vector2(
+                    (-0.5f + pos.x/_texture.width) * _texture.width/_ppu,
+                    (0.5f - pos.y/_texture.height) * _texture.height/_ppu
                 )).ToList());
             }
         }

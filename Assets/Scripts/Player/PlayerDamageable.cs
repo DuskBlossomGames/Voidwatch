@@ -272,6 +272,8 @@ namespace Player
             }
 
             explosion.GetComponent<ExplosionHandler>().Play(1, 1);
+            explosion.transform.SetParent(null, true); // camera keeps moving, but explosion stays
+            _movement.braking = true;
         }
 
         IEnumerator DeathFade(DeathInfo diedTo)

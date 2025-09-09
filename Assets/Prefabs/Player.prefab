@@ -6245,6 +6245,7 @@ MonoBehaviour:
   explosion: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
   inputBlocked: 0
   autoPilot: 0
+  braking: 0
   dodgeBar: {fileID: 0}
   dodgeExcludeMask:
     serializedVersion: 2
@@ -12663,6 +12664,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1362395923931163341}
     m_Modifications:
+    - target: {fileID: 3039596454856787306, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3039596454856787306, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3039596454856787306, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

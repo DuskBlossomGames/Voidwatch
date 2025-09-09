@@ -1,4 +1,5 @@
 using UnityEngine;
+using Util.UI;
 using static Singletons.Static_Info.LevelSelectData;
 namespace LevelPlay
 {
@@ -18,6 +19,8 @@ namespace LevelPlay
 
             transform.localScale *= level.SpriteData.RadiusMult;
             Radius = transform.localScale.x / 2;
+
+            gameObject.AddComponent<PixelCollider2D>().Run(4); // compute collider
         }
     }
 }

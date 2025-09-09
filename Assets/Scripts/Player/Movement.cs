@@ -20,6 +20,7 @@ namespace Player
 
         public bool inputBlocked;
         public bool autoPilot;
+        public bool braking;
 
         public ProgressBar dodgeBar;
         public LayerMask dodgeExcludeMask;
@@ -276,7 +277,7 @@ namespace Player
                     _velocity = _or
                 }*/
 
-            } else if (GetKey(InputAction.Brake) || autoPilot) {
+            } else if (GetKey(InputAction.Brake) || autoPilot || braking) {
                 velocity *= Mathf.Pow(.2f, Time.fixedDeltaTime);
             } else {
                 _acceleration = 0;
