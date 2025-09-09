@@ -9,7 +9,7 @@ namespace Singletons
 {
     public class SettingsInterface : MonoBehaviour
     {
-        public static bool isFirstTime;
+        public static bool isFirstTime, beatenGame;
         
         private static SettingsInterface _instance;
         public static List<Resolution> resolutions;
@@ -34,6 +34,8 @@ namespace Singletons
             isFirstTime = !PlayerPrefs.HasKey("check");
             if (isFirstTime) PlayerPrefs.DeleteAll();
             PlayerPrefs.SetInt("check", 1);
+            
+            SetBeatenGame(PlayerPrefs.GetInt("beatenGame") == 1);
 
             // CONTROLS
             for (var control = 0; control < InputAction.Count; control++)
@@ -56,6 +58,13 @@ namespace Singletons
             {
                 SetChannelVolume(channel, PlayerPrefs.GetFloat(channel+"Volume", 100));
             }
+        }
+
+        public static void SetBeatenGame(bool beatenGame)
+        {
+            PlayerPrefs.SetInt("beatenGame", beatenGame ? 1 : 0);
+            
+            SettingsInterface.beatenGame = beatenGame;
         }
         
         public static void SetChannelVolume(SoundChannel channel, float perc)

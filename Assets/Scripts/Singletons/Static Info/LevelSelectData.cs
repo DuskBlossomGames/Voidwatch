@@ -99,21 +99,33 @@ namespace Singletons.Static_Info
     public class LevelSelectData : MonoBehaviour
     {
         public static LevelSelectData LevelSelectDataInstance => StaticInfoHolder.Instance.GetCachedComponent<LevelSelectData>();
-
+        
         public float baseDifficulty;
+        public float hardBaseDifficulty;
         public float gameDifficultyModifier;
+        public float hardGameDifficultyModifier;
         public float levelModifier;
+        public float hardLevelModifier;
         public float randomModifier;
+        public float eliteDifficultyModifier;
+        public float hardEliteDifficultyModifier;
         public float galaxyModifier;
         public int[] minBudgetPerWave;
 
+        public bool hardMode;
+        
+        private float BaseDifficulty => hardMode ? hardBaseDifficulty : baseDifficulty;
+        private float GameDifficultyModifier => hardMode ? hardGameDifficultyModifier : gameDifficultyModifier;
+        private float LevelModifier => hardMode ? hardLevelModifier : levelModifier;
+        private float EliteDifficultyModifier => hardMode ? hardEliteDifficultyModifier : eliteDifficultyModifier;
+        
         // based on how difficultyScore is generated below
-        public float MaxDifficultyScore => baseDifficulty + levelModifier * Levels.Count(l=>l.Type == LevelType.Normal) + randomModifier;
+        public float MaxDifficultyScore => BaseDifficulty + LevelModifier * Levels.Count(l=>l.Type == LevelType.Normal) + randomModifier;
         
         public const int EliteWaves = 3;
         private const int EliteWaveStart = 1; // for difficulty, which wave elites start at (2)
         
-        private float EliteDifficulty => 1.1f * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
+        private float EliteDifficulty => EliteDifficultyModifier * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 
 
 #if UNITY_EDITOR
@@ -131,6 +143,7 @@ namespace Singletons.Static_Info
             get => _currentPlanet;
             set
             {
+                if (_currentPlanet == value) return;
                 _currentPlanet = value;
                 if (value < 0) return;
 
@@ -145,10 +158,10 @@ namespace Singletons.Static_Info
                         LevelType.Boss => MaxDifficultyScore,
                         LevelType.Elite => EliteDifficulty,
                         LevelType.SpaceStation => 0,
-                        _ => baseDifficulty + levelModifier * _visitedPlanets.Count(p=>Levels[p].Type == LevelType.Normal) + Random.Range(0, 1) * randomModifier
+                        _ => BaseDifficulty + LevelModifier * _visitedPlanets.Count(p=>Levels[p].Type == LevelType.Normal) + Random.Range(0, 1) * randomModifier
                     };
                     
-                    var difficultyBudget = (int) (gameDifficultyModifier * difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/);
+                    var difficultyBudget = (int) (GameDifficultyModifier * difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/);
                     List<int> waves = new();
 
                     // TODO: kinda scuffed?
@@ -158,7 +171,7 @@ namespace Singletons.Static_Info
                     // start with as many waves as possible given min budget
                     while (true)
                     {
-                        var budget = (int)(gameDifficultyModifier *
+                        var budget = (int)(GameDifficultyModifier *
                                            minBudgetPerWave[waves.Count + (level.Type == LevelType.Elite ? EliteWaveStart : 0)]);
                         if ((difficultyBudget -= budget) < 0)
                         {
@@ -183,7 +196,7 @@ namespace Singletons.Static_Info
                             if (level.Type == LevelType.Elite) i -= EliteWaveStart;
                             if (i < 0 || i >= waves.Count) return -1;
 
-                            return i == waves.Count - 1 || waves[i] + addition < gameDifficultyModifier * minBudgetPerWave[wave + 1] ? i : -1;
+                            return i == waves.Count - 1 || waves[i] + addition < GameDifficultyModifier * minBudgetPerWave[wave + 1] ? i : -1;
                         }).Where(i=>i!=-1).ToList();
                         waves[validWaves[Random.Range(0, validWaves.Count)]] += addition;
                         difficultyBudget -= addition;

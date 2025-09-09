@@ -5,9 +5,16 @@ namespace Menus.Util
 {
     public class CheckboxController : MonoBehaviour
     {
+        public bool setupOnAwake;
         public event Action<bool> OnToggle;
+        public bool Value => _check.activeSelf;
 
         private GameObject _check;
+
+        private void Awake()
+        {
+            if (setupOnAwake) Setup();
+        }
 
         public void Setup()
         {

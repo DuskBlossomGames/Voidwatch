@@ -12712,6 +12712,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4550650578102152445, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4550650578102152445, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 16.666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 4550650578102152445, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 4550650578102152445, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4550650578102152445, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 6471190628033074325, guid: 09cf8df485e17403aa0f980e21f50471, type: 3}
       propertyPath: m_Name
       value: Explosion

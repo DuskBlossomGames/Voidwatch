@@ -20,7 +20,7 @@ using Random = UnityEngine.Random;
 
 namespace Player
 {
-    public class NewUpgradeManager : MonoBehaviour
+    public class UpgradeManager : MonoBehaviour
     {
         public Button reroll, pilfer;
     
@@ -137,19 +137,29 @@ namespace Player
                 upgrades[i].GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = _upgrades[i].Quip;
             }
 
-            reroll.interactable = PlayerDataInstance.Scrap >= 50;
+            reroll.interactable = PlayerDataInstance.Scrap >= _rerollCost;
         }
 
         public void SelectUpgrade(int i)
         {
             _upgrades[i].Apply();
-            AudioPlayer.Play(upgradeSound, null, 1f, 1.1f);
-            StartCoroutine(ExitAfter(upgradeSound.length + 0.5f));
+            DontDestroyOnLoad(AudioPlayer.Play(upgradeSound, null, 1f, 1.1f));
+            StartCoroutine(ExitAfter(0.3f));
 
             // disable other options
             for (var j = 0; j < 3; j++)
             {
-                if (j == i) continue;
+                if (j == i)
+                {
+                    foreach (var b in upgrades[j].GetComponentsInChildren<Button>())
+                    {
+                        var block = b.colors;
+                        block.disabledColor = b.colors.normalColor;
+                        b.colors = block;
+                        b.interactable = false;
+                    }
+                    continue;
+                }
                 
                 foreach (var b in upgrades[j].GetComponentsInChildren<Button>()) b.interactable = false;
                 upgrades[j].GetChild(1).GetComponent<TextMeshProUGUI>().SetAlpha(0.5f);
@@ -167,7 +177,7 @@ namespace Player
         private int _numRerolls;
         public void Reroll()
         {
-            if (PlayerDataInstance.Scrap < 50) return;
+            if (PlayerDataInstance.Scrap < _rerollCost) return;
             
             PlayerDataInstance.Scrap -= _rerollCost;
             _rerollCost = Mathf.RoundToInt(_rerollCost * Mathf.Max(1.8f - 0.1f * ++_numRerolls, 1.2f) / 10) * 10;

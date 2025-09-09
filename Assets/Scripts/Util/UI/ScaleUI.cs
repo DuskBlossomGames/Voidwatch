@@ -9,7 +9,8 @@ namespace Util
         public float maxScaleMult;
         public float time = 1;
 
-        [NonSerialized] public readonly List<ScaleListener> listeners = new(); 
+        [NonSerialized] public readonly List<ScaleListener> Listeners = new();
+        [NonSerialized] public bool ToNormal;
         
         private float _baseScale;
 
@@ -26,12 +27,12 @@ namespace Util
         {
             _scaleTimer.Update(_dir);
             if (_scaleTimer.Value >= time) _dir = -1;
-            if (_scaleTimer.Value <= 0) _dir = 1;
+            if (_scaleTimer.Value <= 0 && !ToNormal) _dir = 1;
             
             var scaleMult = Mathf.SmoothStep(1, maxScaleMult, _scaleTimer.Progress);
             transform.localScale = new Vector3(_baseScale * scaleMult, _baseScale * scaleMult, 1);
             
-            listeners.ForEach(l => l.SetScale(_scaleTimer.Progress, maxScaleMult));
+            Listeners.ForEach(l => l.SetScale(_scaleTimer.Progress, maxScaleMult));
         }
 
     }

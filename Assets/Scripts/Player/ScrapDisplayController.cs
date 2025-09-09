@@ -50,12 +50,12 @@ namespace Player
                     _scrap += (int) Mathf.Sign(PlayerDataInstance.Scrap - _scrap);
                     if (_scrap == PlayerDataInstance.Scrap) FinishTransfer?.Invoke();
                     
-                    var perSec = transferPerSec * (0.8f + Mathf.Abs(_scrap - PlayerDataInstance.Scrap)/200f);
+                    var perSec = transferPerSec * (1 + Mathf.Abs(_scrap - PlayerDataInstance.Scrap)/50f);
                     _transfer.Value = 1 / perSec;
                 }
                 
                 _gain.SetAlpha(1);
-                _gain.text = (_scrap < PlayerDataInstance.Scrap ? "+" : "- ") +
+                _gain.text = (_scrap > PlayerDataInstance.Scrap ? "- " : "+") +
                              $"{Mathf.Abs(PlayerDataInstance.Scrap - _scrap):# ### ##0}";
             }
             else

@@ -34,11 +34,12 @@ namespace LevelSelect
                 {
                     pic.SelectedPlanet = this;
                     selector.SetScaleMult(Level.SpriteData.RadiusMult);
-                    scaleUi.listeners.Add(infoScaleListener);
+                    selector.SetUsable(Level.Travellable);
+                    scaleUi.Listeners.Add(infoScaleListener);
                 }
                 else
                 {
-                    scaleUi.listeners.Remove(infoScaleListener);
+                    scaleUi.Listeners.Remove(infoScaleListener);
                 }
             };
         }
@@ -58,6 +59,7 @@ namespace LevelSelect
                     LevelType.Tutorial => "Tutorial",
                     _ => "LevelPlay"
                 });
+            GetComponent<ScaleUI>().ToNormal = true;
         }
     }
 }

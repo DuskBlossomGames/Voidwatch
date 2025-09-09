@@ -14,7 +14,7 @@ namespace Player.Upgrades
     {
         protected readonly List<float> Upgrades = new();
 
-        public void ApplyUpgrade(float mod)
+        public virtual void ApplyUpgrade(float mod)
         {
             Upgrades.Add(mod);
         }

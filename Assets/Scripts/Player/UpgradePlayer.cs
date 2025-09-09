@@ -129,7 +129,7 @@ namespace Player
                     {PlayerDataInstance.dodgeJuiceRegenRate, 1.25f}
                 }),
             new("Laminar Plating",
-                "Specialized plating eases the transition to Voidspace, lower the cost of dashing.",
+                "Specialized plating eases the transition to Voidspace, lowering the cost of dashing.",
                 "Their world shall be ours.",
                 Rarity.Common,
                 0,

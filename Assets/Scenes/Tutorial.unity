@@ -6381,6 +6381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reroll: {fileID: 635721724}
+  pilfer: {fileID: 0}
   minimap: {fileID: 93163517}
   titleBox: {fileID: 134311595}
   title: {fileID: 1285109899}
@@ -12103,8 +12104,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1542783123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.37, y: 0}
+  m_AnchorMax: {x: 0.63, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12128,9 +12129,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2108783053, guid: 24f65aa0449d14982b259db2ab5fe266, type: 3}
+  m_Sprite: {fileID: -1423330351, guid: 24f65aa0449d14982b259db2ab5fe266, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

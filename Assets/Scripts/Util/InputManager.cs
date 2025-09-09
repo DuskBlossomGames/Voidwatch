@@ -43,6 +43,14 @@ namespace Util
         public static bool GetKey(KeyCode key) { return !isPaused && Input.GetKey(key) && !IsClickConsumed(key); }
         public static bool GetKeyDown(KeyCode key) { return !isPaused && Input.GetKeyDown(key) && !IsClickConsumed(key); }
         public static bool GetKeyUp(KeyCode key) { return !isPaused && Input.GetKeyUp(key) && !IsClickConsumed(key); }
+
+        public static bool GetAllKeys(params KeyCode[] keys) => keys.All(GetKey);
+        public static bool GetAllKeysDown(params KeyCode[] keys) => keys.All(GetKeyDown);
+        public static bool GetAllKeysUp(params KeyCode[] keys) => keys.All(GetKeyUp);
+        
+        public static bool GetAnyKeys(params KeyCode[] keys) => keys.Any(GetKey);
+        public static bool GetAnyKeysDown(params KeyCode[] keys) => keys.Any(GetKeyDown);
+        public static bool GetAnyKeysUp(params KeyCode[] keys) => keys.Any(GetKeyUp);
         
         public static readonly Dictionary<KeyCode, string> VALID_KEY_CODES = new();
         static InputManager()

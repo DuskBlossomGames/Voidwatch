@@ -110,7 +110,7 @@ namespace LevelSelect
             _loreRight.SetAlpha(_fadeTimer.Progress);
             if (!_shown && _fadeTimer.IsFinished && _showingLore) _hideLore = true;
 
-            bool? lore = _hideLore || InputManager.GetKeyUp(KeyCode.LeftShift) ? false : InputManager.GetKeyDown(KeyCode.LeftShift) ? true : null;
+            bool? lore = _hideLore || InputManager.GetAnyKeysUp(KeyCode.LeftShift, KeyCode.RightShift) ? false : InputManager.GetAnyKeysDown(KeyCode.LeftShift, KeyCode.RightShift) ? true : null;
             if (lore != null && ((_shown && _hasLore) || !lore.Value))
             {
                 _hideLore = false;
@@ -126,18 +126,23 @@ namespace LevelSelect
                 if (_showingLore)
                 {
                     var cam = Camera.main!;
-                    if (cam.orthographicSize < camLoreSize) StartCoroutine(ExpandCamera());
+                    StartCoroutine(SetupCamera());
                 }
             }
         }
 
-        private IEnumerator ExpandCamera()
+        private IEnumerator SetupCamera()
         {
+            const float time = 0.7f;
+            
             var cam = Camera.main!;
             var start = cam.orthographicSize;
-            for (float t = 0; t < 0.7f; t += Time.fixedDeltaTime)
+            var posStart = cam.transform.position;
+            var posDest = new Vector3(_level.WorldPosition.x, _level.WorldPosition.y, posStart.z);
+            for (float t = 0; t < time; t += Time.fixedDeltaTime)
             {
-                cam.orthographicSize = Mathf.SmoothStep(start, camLoreSize, t / 0.7f);
+                // cam.transform.position = Vector3.Lerp(posStart, posDest, t / time);
+                if (start < camLoreSize) cam.orthographicSize = Mathf.SmoothStep(start, camLoreSize, t / time);
                 yield return new WaitForFixedUpdate();
             }
         }

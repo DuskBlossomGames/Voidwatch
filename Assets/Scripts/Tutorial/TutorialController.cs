@@ -127,7 +127,7 @@ namespace Tutorial
         public GameObject raceCourse;
         private RaceController _raceController;
 
-        public NewUpgradeManager upgradeManager;
+        public UpgradeManager upgradeManager;
     
         private readonly Timer _warningTimer = new();
     
@@ -284,6 +284,9 @@ namespace Tutorial
 
                     if (SceneManager.GetActiveScene().name == "LevelSelect")
                     {
+                        warning.rectTransform.offsetMax = Vector2.zero;
+                        instruction.SetActive(true);
+                        progressBar.gameObject.SetActive(true);
                         if (_genFlag && FindAnyObjectByType<MiniPlayerController>().TravelingTo == 3) StartCoroutine(FadeInstruction());
 
                         if (_genFloat == 0)
@@ -295,6 +298,10 @@ namespace Tutorial
                     }
                     else if (SceneManager.GetActiveScene().name == "Shop")
                     {
+                        warning.rectTransform.offsetMax = new Vector2(0, 175);
+                        instruction.SetActive(false);
+                        progressBar.gameObject.SetActive(false);
+                        
                         if (_genFloat == 0) _genFloat = Time.time;
                         if (Time.time - _genFloat > 20) ShowWarning("TIP: after buying upgrades, exit the shop", 0);
                     }

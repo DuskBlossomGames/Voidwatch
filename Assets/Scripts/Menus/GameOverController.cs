@@ -3,6 +3,7 @@ using System.Linq;
 using Extensions;
 using LevelPlay;
 using Player;
+using Singletons;
 using Singletons.Static_Info;
 using Spawnables;
 using Spawnables.Controllers;
@@ -12,6 +13,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Util;
 using static Singletons.Static_Info.Statistics;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace Menus
 {
@@ -22,7 +24,7 @@ namespace Menus
         public Image fadeOut;
         public float fadeOutTime;
         public Image winImage;
-        public TextMeshProUGUI winTitle, winSubtitle, loseTitle, loseSubtitle;
+        public TextMeshProUGUI winTitle, winSubtitle, eliteWinTitle, loseTitle, loseSubtitle;
         public GameObject time, enemy, clickContinue;
         public GameObject[] statistics;
         public float fadeInTime;
@@ -31,6 +33,8 @@ namespace Menus
 
         public IEnumerator Run(bool won, DeathInfo diedTo)
         {
+            if (won) SettingsInterface.SetBeatenGame(true);
+            
             var es = FindAnyObjectByType<EnemySpawner>();
             es.enabled = false;
             
@@ -103,14 +107,16 @@ namespace Menus
             for (var i = 0; i < statistics.Length + 1; i++)
             {
                 var stats = i == statistics.Length ? new[] { time, enemy, clickContinue } : new[] { statistics[i] };
-                
+
+                if (i == 0 && LevelSelectDataInstance.hardMode) eliteWinTitle.gameObject.SetActive(true);
                 foreach (var stat in stats) stat.SetActive(true);
                 for (float t = 0; t < statisticsFadeTime; t += Time.fixedDeltaTime)
                 {
+                    if (i == 0 && LevelSelectDataInstance.hardMode) eliteWinTitle.SetAlpha(t / statisticsFadeTime);
                     foreach (var stat in stats) stat.GetComponent<CanvasGroup>().alpha = t / statisticsFadeTime;
                     yield return new WaitForFixedUpdate();
                 }
-                    
+
                 yield return new WaitForSeconds(statisticsBetweenTime);
             }
             

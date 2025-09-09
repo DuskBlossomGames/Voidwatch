@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using static Singletons.Static_Info.PlayerData;
 
 namespace Player.Upgrades
@@ -29,7 +30,7 @@ namespace Player.Upgrades
         }
         
         public string GetName();
-        public void Boost();
+        public  void Boost();
         public int GetBoosts();
     }
     
@@ -43,7 +44,7 @@ namespace Player.Upgrades
         public int Boosts { get; private set; }
         public int GetBoosts() => Boosts;
 
-        public void Boost()
+        public virtual void Boost()
         {
             Upgrades[0] = IBoostableStat.BOOST_AMOUNTS[Boosts] - (interaction == Interaction.Additive ? 1 : 0);
             Boosts++;
@@ -59,14 +60,14 @@ namespace Player.Upgrades
     [Serializable]
     public class MaxHealthStat : BoostableStat<int>
     {
-        public new void Boost()
+        public override void Boost()
         {
             var dmg = (int) PlayerDataInstance.maxHealth - PlayerDataInstance.Health;
             base.Boost();
             PlayerDataInstance.Health = (int) PlayerDataInstance.maxHealth - dmg;
         }
 
-        public new void ApplyUpgrade(float mod)
+        public override void ApplyUpgrade(float mod)
         {
             var dmg = (int) PlayerDataInstance.maxHealth - PlayerDataInstance.Health;
             base.ApplyUpgrade(mod);

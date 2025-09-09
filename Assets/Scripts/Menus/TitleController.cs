@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using Extensions;
 using Menus.Pause;
+using Menus.Util;
 using Singletons;
 using Spawnables.Controllers.Misslers;
 using Spawnables.Damage;
@@ -13,6 +14,7 @@ using UnityEngine.UI;
 using Util;
 using Button = UnityEngine.UI.Button;
 using static Singletons.Static_Info.Statistics;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace Menus
 {
@@ -38,6 +40,7 @@ namespace Menus
         private Image[] _images;
 
         public GameObject tutorialHint;
+        public CheckboxController hardMode;
         private bool _firstTime;
         
         private bool _initCredits;
@@ -62,6 +65,8 @@ namespace Menus
                 tutorialHint.SetActive(true);
                 SettingsInterface.isFirstTime = false; // since this is the only place it's used, easy solution for now, can change if needed elsewhere
             }
+
+            hardMode.transform.parent.gameObject.SetActive(SettingsInterface.beatenGame);
 
             StartCoroutine(FadeIn());
         }
@@ -135,6 +140,7 @@ namespace Menus
         public void Play() { StartCoroutine(PlayRoutine()); }
         private IEnumerator PlayRoutine()
         {
+            LevelSelectDataInstance.hardMode = SettingsInterface.beatenGame && hardMode.Value;
             yield return Fade(true);
 
             for (float t = 0; t < speedupTime; t += Time.fixedDeltaTime)

@@ -58,7 +58,7 @@ namespace LevelPlay
         
         private readonly Dictionary<string, bool> _loadedVariants = new();
         
-        public NewUpgradeManager nUpMan;
+        public UpgradeManager nUpMan;
         public GameObject debugEnemy;
 
         private void Awake()

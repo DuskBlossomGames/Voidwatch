@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using Singletons.Static_Info;
 using TMPro;
 using Tutorial;
@@ -7,12 +8,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
 using static Singletons.Static_Info.PlayerData;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace Menus.Pause
 {
     public class PauseMenuController : OptionsHolder
     {
-        public GameObject tip, canvas, buttons;
+        public GameObject tip, canvas, buttons, upgrades;
         public TextMeshProUGUI mainMenu;
         public OptionsController options;
         
@@ -48,6 +50,7 @@ namespace Menus.Pause
             Time.timeScale = 0;
             InputManager.isPaused = true;
 
+            upgrades.SetActive(LevelSelectDataInstance.VisitedPlanets.Count > 1);
             FindAnyObjectByType<MusicTransitionManager>().enabled = false;
             foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.Pause();
         }
