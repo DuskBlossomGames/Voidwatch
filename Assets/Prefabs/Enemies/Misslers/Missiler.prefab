@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardObject: 0
-  cost: 5
+  cost: 4
   tier: 2
   enemyType: 1
 --- !u!114 &6725564530229344085

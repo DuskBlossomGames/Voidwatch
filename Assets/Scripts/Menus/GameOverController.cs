@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Extensions;
@@ -30,10 +31,20 @@ namespace Menus
         public float fadeInTime;
         public float statisticsBeforeTime, statisticsFadeTime, statisticsBetweenTime;
         public Image fadeOutAgain;
+        public GameObject instagram;
 
         public IEnumerator Run(bool won, DeathInfo diedTo)
         {
-            if (won) SettingsInterface.SetBeatenGame(true);
+            if (won)
+            {
+                SettingsInterface.SetMinRank(LevelSelectDataInstance.hardMode
+                    ? SettingsInterface.Rank.General
+                    : SettingsInterface.Rank.Captain);
+            }
+            else
+            {
+                SettingsInterface.SetMinRank(SettingsInterface.Rank.Lieutenant);
+            }
             
             var es = FindAnyObjectByType<EnemySpawner>();
             es.enabled = false;
@@ -104,15 +115,17 @@ namespace Menus
             yield return new WaitForSeconds(statisticsBeforeTime);
             SetText(statistics.Select(o => o.GetComponentsInChildren<TextMeshProUGUI>()[1]).ToArray());
                 
-            for (var i = 0; i < statistics.Length + 1; i++)
+            for (var i = LevelSelectDataInstance.hardMode ? -1 : 0; i < statistics.Length + 1; i++)
             {
-                var stats = i == statistics.Length ? new[] { time, enemy, clickContinue } : new[] { statistics[i] };
+                var stats = i == statistics.Length ? new[] { time, enemy, clickContinue } : 
+                    i == -1 ? Array.Empty<GameObject>() : new[] { statistics[i] };
+                if (i == statistics.Length && won) stats = stats.Append(instagram).ToArray();
 
-                if (i == 0 && LevelSelectDataInstance.hardMode) eliteWinTitle.gameObject.SetActive(true);
+                if (i == -1) eliteWinTitle.gameObject.SetActive(true);
                 foreach (var stat in stats) stat.SetActive(true);
                 for (float t = 0; t < statisticsFadeTime; t += Time.fixedDeltaTime)
                 {
-                    if (i == 0 && LevelSelectDataInstance.hardMode) eliteWinTitle.SetAlpha(t / statisticsFadeTime);
+                    if (i == -1) eliteWinTitle.SetAlpha(t / statisticsFadeTime);
                     foreach (var stat in stats) stat.GetComponent<CanvasGroup>().alpha = t / statisticsFadeTime;
                     yield return new WaitForFixedUpdate();
                 }

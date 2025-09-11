@@ -5,7 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using LevelPlay;
 using Player.Upgrades;
+using Spawnables;
+using Spawnables.Controllers;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -121,11 +125,12 @@ namespace Singletons.Static_Info
         
         // based on how difficultyScore is generated below
         public float MaxDifficultyScore => BaseDifficulty + LevelModifier * Levels.Count(l=>l.Type == LevelType.Normal) + randomModifier;
+        public float MinDifficultyScore => BaseDifficulty;
         
         public const int EliteWaves = 3;
-        private const int EliteWaveStart = 1; // for difficulty, which wave elites start at (2)
+        private const int EliteWaveStart = 0; // for difficulty, which wave elites start at (2)
         
-        private float EliteDifficulty => EliteDifficultyModifier * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
+        private float EliteDifficulty => EliteDifficultyModifier * GameDifficultyModifier * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 
 
 #if UNITY_EDITOR
@@ -135,6 +140,62 @@ namespace Singletons.Static_Info
             for (var i = 0; i < Levels.Length; i++) CurrentPlanet = i;
             CurrentPlanet = orig;
             _visitedPlanets.Clear();
+        }
+
+        public void LogDifficulty(EnemySpawner spawner)
+        {
+            var origVisited = _visitedPlanets;
+            var origSpot = CurrentPlanet;
+
+            _visitedPlanets.Clear();
+            foreach (var l in Levels) l.Waves = null;
+            
+            var log = "";
+            for (var i = 0; i < Levels.Length; i++)
+            {
+                var level = Levels[i];
+                log += $"\n\n======== LEVEL {i} ========\t\t{level.Type}\n";
+                CurrentPlanet = i;
+                
+                log += $"  Max Tier: {level.MaxTier}\n";
+
+                var hazards = spawner.GetSpawnedEnemies(level.HazardBudget, level.MaxTier, true);
+                log += $"  Hazards ({level.HazardBudget}):\n";
+                var hCounts = new Dictionary<string, int>();
+                foreach (var title in hazards.Select(hazard => hazard.GetComponentInChildren<DeathInfo>().title))
+                {
+                    hCounts[title] = hCounts.GetValueOrDefault(title, 0) + 1;
+                }
+                foreach (var (title, count) in hCounts)
+                {
+                    log += $"   - {title} x{count}\n";
+                }
+                
+                log += "  Enemies:\n";
+                for (var j = 0; j < level.Waves.Length; j++)
+                {
+                    var enemies = spawner.GetSpawnedEnemies(level.Waves[j], level.MaxTier);
+                    log += $"    Wave {j+1} ({enemies.Sum(g=>g.GetComponent<EnemyVariant>().cost)}/{level.Waves[j]}):\n";
+
+                    var counts = new Dictionary<string, int>();
+                    foreach (var title in enemies.Select(enemy => enemy.GetComponentInChildren<DeathInfo>().title))
+                    {
+                        counts[title] = counts.GetValueOrDefault(title, 0) + 1;
+                    }
+                    foreach (var (title, count) in counts)
+                    {
+                        log += $"     - {title} x{count}\n";
+                    }
+                }
+            }
+
+            _visitedPlanets.Clear();
+            _visitedPlanets.AddRange(origVisited);
+            _currentPlanet = origSpot;
+
+            Debug.Log(log);
+
+            EditorApplication.isPlaying = false;
         }
 #endif
         [NonSerialized] private int _currentPlanet = -1;
@@ -148,7 +209,7 @@ namespace Singletons.Static_Info
                 if (value < 0) return;
 
                 _visitedPlanets.Add(value);
-                foreach (var idx in Levels[value].Connections)
+                foreach (var idx in Levels[value].Connections.Append(value))
                 {
                     var level = Levels[idx];
                     if (level.Waves != null) continue;
@@ -158,7 +219,7 @@ namespace Singletons.Static_Info
                         LevelType.Boss => MaxDifficultyScore,
                         LevelType.Elite => EliteDifficulty,
                         LevelType.SpaceStation => 0,
-                        _ => BaseDifficulty + LevelModifier * _visitedPlanets.Count(p=>Levels[p].Type == LevelType.Normal) + Random.Range(0, 1) * randomModifier
+                        _ => BaseDifficulty + LevelModifier * _visitedPlanets.Count(p=>Levels[p].Type == LevelType.Normal) + Random.value * randomModifier
                     };
                     
                     var difficultyBudget = (int) (GameDifficultyModifier * difficultyScore + 0/*TODO: galaxyNumber * galaxyModifier*/);
@@ -208,13 +269,13 @@ namespace Singletons.Static_Info
                         {
                             if (Random.value < Mathf.Pow(difficultyScore / MaxDifficultyScore, i == 0 ? 1 : 2 * i))
                             {
-                                waves.Add(waves[^1]);
+                                waves.Add(waves[^1] + 1); // similar difficulty, but helps make enemies a little different
                             }
                         }
                     }
 
                     level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
-                    level.MaxTier = (int) (5*Mathf.Pow(difficultyScore/MaxDifficultyScore, 2/3f) + 1);
+                    level.MaxTier = (int) (5*Mathf.Pow((difficultyScore-MinDifficultyScore)/(MaxDifficultyScore-MinDifficultyScore), 2/3f) + 1);
                     level.Waves = waves.ToArray();
 
                     var scale = Difficulty.Count/2;

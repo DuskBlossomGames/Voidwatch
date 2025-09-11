@@ -237,13 +237,5 @@ namespace LevelSelect
                 }
             }
         }
-        
-        private void DebugOutput()
-        {
-            for (var i = 0; i < LevelSelectDataInstance.Levels.Length; i++)
-            {
-                
-            }
-        }
     }
 }

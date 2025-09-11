@@ -6,6 +6,7 @@ using Extensions;
 using LevelSelect;
 using Player;
 using ProgressBars;
+using Singletons;
 using Singletons.Static_Info;
 using Spawnables.Controllers;
 using Spawnables.Damage;
@@ -615,6 +616,7 @@ namespace Tutorial
 
         public void ExitTutorial()
         {
+            SettingsInterface.SetMinRank(SettingsInterface.Rank.Lieutenant);
             PlayerDataInstance.IsTutorial = false;
             Destroy(canvas);
             Destroy(gameObject);

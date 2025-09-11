@@ -3876,6 +3876,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 762970116}
     m_Modifications:
+    - target: {fileID: 675889314863570760, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 26.409
+      objectReference: {fileID: 0}
+    - target: {fileID: 886496341822992359, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 985338382834621376, guid: 1d54b3f814e8643d884ef6dd079d89b0, type: 3}
       propertyPath: m_Name
       value: Game Over

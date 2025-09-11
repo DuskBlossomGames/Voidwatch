@@ -188,6 +188,7 @@ namespace LevelPlay
 #endif
             
             if (!_faded || _groups.Count == 0 || _loadedVariants.ContainsValue(false)) return;
+            // LevelSelectDataInstance.LogDifficulty(this); // can be uncommented for balancing debugging
             if (!_spawnedHazards && _level.Type != LevelType.Elite) SpawnHazards();
 
             //var level = LevelSelectDataInstance.Levels[LevelSelectDataInstance.CurrentPlanet];
@@ -271,7 +272,7 @@ namespace LevelPlay
             
             SpawnAsteroids();
             
-            var hazards = GetSpawnedEnemies(_level.HazardBudget, true);
+            var hazards = GetSpawnedEnemies(_level.HazardBudget, _level.MaxTier, true);
             var lootPer = _level.HazardLoot / hazards.Count;
             
             var sectorSize = 4/3f*Mathf.PI / hazards.Count;
@@ -345,7 +346,7 @@ namespace LevelPlay
             
             //See this link for explanation: https://docs.google.com/presentation/d/1N-m9xBT6kNj14Usj7dzI-zluJXPPxZCACTUyHBboIYs/edit#slide=id.p
             //1.
-            List<GameObject> enemies = GetSpawnedEnemies(_level.Waves[_wave]);
+            List<GameObject> enemies = GetSpawnedEnemies(_level.Waves[_wave], _level.MaxTier);
             int[] spts = new int[enemies.Count];
             int pointWidth = 0;
             foreach (var enemy in enemies) pointWidth += enemy.GetComponent<EnemyVariant>().cost;
@@ -407,18 +408,22 @@ namespace LevelPlay
             }
         }
 
-        private List<GameObject> GetSpawnedEnemies(int budget, bool hazards = false)
+        // TODO: privatize
+        public List<GameObject> GetSpawnedEnemies(int budget, int tier, bool hazards = false)
         {
             if (_isDebug) return new List<GameObject> { debugEnemy };
             
             var groupBudgets = new Dictionary<string, int>();
 
-            var enemyGroups = hazards ? _hazardObjects : _groups;
+            var enemyGroups = (hazards ? _hazardObjects : _groups)
+                .ToDictionary(e=>e.Key, e=>e.Value.ToList());
             foreach (var kvp in enemyGroups.ToList())
             {
-                kvp.Value.RemoveAll(e => e.tier > _level.MaxTier);
+                kvp.Value.RemoveAll(e => e.tier > tier);
                 if (kvp.Value.Count == 0) enemyGroups.Remove(kvp.Key);
             }
+
+            if (enemyGroups.Count == 0) return new List<GameObject>();
             
             
             var groups = enemyGroups.Keys.ToList();
@@ -431,9 +436,15 @@ namespace LevelPlay
                 budgets.RemoveAll(b => b > budget);
 
                 var group = Random.Range(0, groups.Count);
-                budget -= groupBudgets[groups[group]] = budgets[Random.Range(0, budgets.Count)];
-
+                var groupName = groups[group];
                 groups.RemoveAt(group);
+                
+                var minCost = enemyGroups[groupName].Min(v => v.cost);
+                var allowedBudgets = budgets.Where(b=>b >=  minCost).ToList();
+                if (allowedBudgets.Count == 0) continue;
+                
+                budget -= groupBudgets[groupName] = allowedBudgets[Random.Range(0, allowedBudgets.Count)];
+
                 if (!hasPlatelins)
                 {
                     hasPlatelins = true;
@@ -444,18 +455,20 @@ namespace LevelPlay
             // randomly add in the rest
             while (budget > 0)
             {
-                var amt = Random.Range(Mathf.Min(budget, 3), Mathf.Min(budget, 10));
+                var amt = Random.Range(Mathf.Min(budget, 3), Mathf.Min(budget+1, 10));
 
                 groupBudgets[groupBudgets.Keys.ToList()[Random.Range(0, groupBudgets.Count)]] += amt;
                 budget -= amt;
             }
 
-
+            
             var enemies = new List<GameObject>();
+
+            var leftover = 0;
             foreach (var group in groupBudgets.Keys)
             {
                 var groupBudget = groupBudgets[group];
-                var variants = new List<EnemyVariant>(enemyGroups[group]);
+                var variants = enemyGroups[group].Where(v=>v.cost*0.9f <= groupBudget).ToList();
 
                 while (variants.Count > 0 && groupBudget > 0)
                 {
@@ -463,8 +476,20 @@ namespace LevelPlay
                     enemies.Add(variant.gameObject);
 
                     groupBudget -= variant.cost;
-                    variants.RemoveAll(v => v.cost > groupBudget);
+                    variants.RemoveAll(v => v.cost*0.9f > groupBudget); // have the ability to be close enough
                 }
+
+                if (groupBudget > 0) leftover += groupBudget;
+            }
+
+            var leftoverVariants = enemyGroups.Values.SelectMany(l=>l.Where(e=>e.cost <= leftover)).ToList();
+            while (leftoverVariants.Count > 0 && leftover > 0)
+            {
+                var variant = leftoverVariants[Random.Range(0, leftoverVariants.Count)];
+                leftover -= variant.cost;
+                leftoverVariants.RemoveAll(e => e.cost > leftover);
+                
+                enemies.Add(variant.gameObject);
             }
 
             return enemies;

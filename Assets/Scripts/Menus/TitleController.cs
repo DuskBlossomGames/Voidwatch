@@ -41,6 +41,7 @@ namespace Menus
 
         public GameObject tutorialHint;
         public CheckboxController hardMode;
+        public GameObject rank;
         private bool _firstTime;
         
         private bool _initCredits;
@@ -66,7 +67,11 @@ namespace Menus
                 SettingsInterface.isFirstTime = false; // since this is the only place it's used, easy solution for now, can change if needed elsewhere
             }
 
-            hardMode.transform.parent.gameObject.SetActive(SettingsInterface.beatenGame);
+            hardMode.transform.parent.gameObject.SetActive(SettingsInterface.rank >= SettingsInterface.Rank.Captain);
+            for (var i = 0; i < rank.transform.childCount; i++)
+            {
+                rank.transform.GetChild(i).gameObject.SetActive((int) SettingsInterface.rank == i);
+            }
 
             StartCoroutine(FadeIn());
         }
@@ -140,7 +145,7 @@ namespace Menus
         public void Play() { StartCoroutine(PlayRoutine()); }
         private IEnumerator PlayRoutine()
         {
-            LevelSelectDataInstance.hardMode = SettingsInterface.beatenGame && hardMode.Value;
+            LevelSelectDataInstance.hardMode = SettingsInterface.rank >= SettingsInterface.Rank.Captain && hardMode.Value;
             yield return Fade(true);
 
             for (float t = 0; t < speedupTime; t += Time.fixedDeltaTime)

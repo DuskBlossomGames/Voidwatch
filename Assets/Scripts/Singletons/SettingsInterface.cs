@@ -9,7 +9,10 @@ namespace Singletons
 {
     public class SettingsInterface : MonoBehaviour
     {
-        public static bool isFirstTime, beatenGame;
+        public enum Rank { Cadet, Lieutenant, Captain, General }
+        public static Rank rank;
+
+        public static bool isFirstTime;
         
         private static SettingsInterface _instance;
         public static List<Resolution> resolutions;
@@ -35,7 +38,7 @@ namespace Singletons
             if (isFirstTime) PlayerPrefs.DeleteAll();
             PlayerPrefs.SetInt("check", 1);
             
-            SetBeatenGame(PlayerPrefs.GetInt("beatenGame") == 1);
+            SetRank((Rank) PlayerPrefs.GetInt("rank"));
 
             // CONTROLS
             for (var control = 0; control < InputAction.Count; control++)
@@ -60,11 +63,16 @@ namespace Singletons
             }
         }
 
-        public static void SetBeatenGame(bool beatenGame)
+        private static void SetRank(Rank rank)
         {
-            PlayerPrefs.SetInt("beatenGame", beatenGame ? 1 : 0);
+            PlayerPrefs.SetInt("rank", (int) rank);
             
-            SettingsInterface.beatenGame = beatenGame;
+            SettingsInterface.rank = rank;
+        }
+
+        public static void SetMinRank(Rank rank) // safer than exposing SetRank
+        {
+            if (SettingsInterface.rank < rank) SetRank(rank);
         }
         
         public static void SetChannelVolume(SoundChannel channel, float perc)
