@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Extensions;
 using TMPro;
@@ -12,8 +13,17 @@ namespace Tutorial
 {
     public class DialogueController : MonoBehaviour
     {
+        public enum People
+        {
+            General,
+            Mechanic
+        }
+
+        public List<Triple<People, string, Sprite>> peopleInfo;
+        private Dictionary<People, Pair<string, Sprite>> _peopleInfo;
+        
         public TextMeshProUGUI text;
-        public TextMeshProUGUI continueText;
+        public TextMeshProUGUI continueText, nameText;
 
         public float continueFlashTime;
         public uint charPerSec;
@@ -48,6 +58,8 @@ namespace Tutorial
         
         private void Start()
         {
+            _peopleInfo = peopleInfo.ToDictionary(t=>t.a, t=>new Pair<string, Sprite>(t.b, t.c));
+            
             _transform = GetComponent<RectTransform>();
             _personBox = transform.GetChild(0).GetComponent<Image>();
             _person = transform.GetChild(0).GetChild(0).GetComponent<Image>();
@@ -144,8 +156,10 @@ namespace Tutorial
             }
         }
 
-        public IEnumerator Open(float speedMod=1)
+        public IEnumerator Open(People person, float speedMod=1)
         {
+            _person.sprite = _peopleInfo[person];
+            nameText.text = _peopleInfo[person];
             yield return Open(false, speedMod);
         }
         
@@ -153,6 +167,7 @@ namespace Tutorial
         {
             _person.SetAlpha(0);
             _personBox.SetAlpha(0);
+            nameText.SetAlpha(0);
             continueText.SetAlpha(0);
             text.text = _text = "";
             text.SetAlpha(1);
@@ -170,6 +185,7 @@ namespace Tutorial
                 
                 _person.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
                 _personBox.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
+                nameText.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
                 text.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
                 continueText.SetAlpha(Mathf.SmoothStep(1, 0, t / personFadeInTime*speedMod));
             }
@@ -199,6 +215,11 @@ namespace Tutorial
         {
             yield return new WaitForSeconds(waitTime);
             
+            _person.SetAlpha(0);
+            _personBox.SetAlpha(0);
+            nameText.SetAlpha(0);
+            continueText.SetAlpha(0);
+            
             for (var i = 0; i < numberOfFlashes/speedMod; i++)
             {
                 var wait = i == 0 ? waitBeforeFlash/speedMod : 0;
@@ -222,8 +243,6 @@ namespace Tutorial
                 }
             }
             _box.SetAlpha(1);
-            _person.SetAlpha(0);
-            _personBox.SetAlpha(0);
 
             if (flash) yield return new WaitForSeconds(waitBeforeOpen/speedMod);
 
@@ -241,6 +260,7 @@ namespace Tutorial
                 
                 _person.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime*speedMod));
                 _personBox.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime*speedMod));
+                nameText.SetAlpha(Mathf.SmoothStep(0, 1, t / personFadeInTime*speedMod));
             }
 
             _opened = true;

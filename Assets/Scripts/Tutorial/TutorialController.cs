@@ -30,6 +30,7 @@ namespace Tutorial
             Attacking,
             Enemy,
             UI,
+            Shop,
             Enemies,
             Finish
         }
@@ -39,55 +40,65 @@ namespace Tutorial
             {
                 Stage.Movement, new[]
                 {
-                    "Welcome to the Voidwatch Academy. Here you will learn how to be a part of the galaxy's greatest fighting force. And our last hope.",
-                    "Your ship accelerates towards the mouse when <b>{Accelerate}</b> is pressed. The camera also expands to follow the mouse; <b>it is recommended to keep the mouse farther out</b>.",
-                    "Finally, <b>{Brake}</b> can be used to brake and slow movement. Proceed to practice moving.",
+                    "LOOK ALIVE, MAGGOT. My name is General Forrest Benedict. Welcome to Voidwatch Academy. You’re here for one reason and one reason only: kill these Voidborne monsters so we can all go home.",
+                    "Your ship – the Voidhawk Infiltrator – accelerates towards the mouse when <b>{Accelerate}</b> is pressed. The camera also expands to follow the mouse; <b>I’d recommend you keep the mouse farther out.</b>",
+                    "One last thing. <b>{Brake}</b> can be used to brake and slow movement. <b>NOW GET MOVIN’!!!</b>",
                     "Practice Accelerating and Braking"
                 }
             },
             {
                 Stage.Dashing, new []
                 {
-                    "With <b>{Dash}</b>, your ship uses some Void Energy to briefly enter Voidspace, allowing you to pass through enemies and obstacles alike.",
-                    "The purple bar on your HUD displays Void Energy. Your ship holds enough for around three dashes, and regenerates over time. Continue for your first training exercise.",
+                    "Alright, that’s enough. <b>{Dash}</b> uses <b>Void Energy</b> to enter <b>Voidspace</b>. That’ll let ya pass through enemies and obstacles.",
+                    "That purple bar up there shows your <b>Void Energy</b>. You’ve got enough for about three dashes, but it’ll regenerate over time. Go ahead and give it a spin.",
                     "Complete the Course"
                 }
             },
             {
                 Stage.Attacking, new []
                 {
-                    "Use <b>{PrimaryWeapon}</b> to attack, with your ammo displayed in a partial circle around your ship. Beware getting too close to enemies, as contact will damage both them and you.",
-                    "All enemies also have an arrow pointing to them while offscreen. Next, you will practice on targets.",
+                    "Very nice. Now’s the fun part: use your <b>{PrimaryWeapon}</b> to attack. Your <b>ammo</b> is shown in that partial circle around your ship. Careful gettin’ too close to enemies, or it’ll damage the both you.",
+                    "All enemies have an <b>arrow</b> pointing to them while offscreen. Alright kid, GO HAVE SOME FUN!",
                     "Destroy the Targets"
                 }
             },
             {   
                 Stage.Enemy, new[]
                 {
-                    "Your HUD displays a red health bar with blue shield on top, which automatically regenerates over time. It also displays a minimap with enemies highlighted in red.",
-                    "The safety border around the play area will now be removed, allowing the orbital cannons to attack should you exit. You will now practice on a real enemy.",
+                    "<b>HELL YEAH!</b> Alright, now take a look at that <b>red health bar</b>. That <b>blue shield</b> on top will automatically regenerate over time. Also check your <b>minimap</b>. The enemies are in <b>red</b>.",
+                    "The safety border around the drill field will now be removed. <b>Orbital cannons</b> will lock on if you exit. They’ll turn you to debris if you’re not careful. Now you’re ready: shoot some real <b>Voidborne</b>.",
                     "Defeat the Missiler"
                 }
             },
             {
                 Stage.UI, new[]
                 {
-                    "Every world you clear can be <b>Pilfered</b> for an upgrade, or <b>Scavenged</b> for a random quantity of scrap. Your current upgrades are visible in the pause menu.",
-                    "Scrap is also recieved from enemies, and can be spent on <b>Pilfering Further</b> to see new upgrade options, or <b>Boosting</b> stats in the Space Station. You have been given 500 scrap.",
+                    "You just got yourself <b>500 Scrap</b>. Not bad, kid! If I were you, I’d go see about some <b>upgrade options</b> and <b>Boosting stats</b> in the <b>space station</b>.",
+                    "Continue Your Journey"
+                }
+            },
+            {
+                Stage.Shop, new []
+                {
+                    "AHHH! Wh-what was that?? Oh, an infiltrator. Y-you must be in the Academy.",
+                    "I’m <b>Jacob Trembley</b>, the Voidwatch’s engineer and m-m-mechanic. My consciousness is downloaded into the space stations across th-the galaxy so I can h-help pilots like you.",
+                    "Every world you clear out there can be either <b>Pilfered</b> for an upgrade or <b>Scavanged</b> for a random amount of <b>Scrap</b>. Y-your current upgrades are visible in your <b>Pause Menu</b>.",
+                    "<b>Scrap</b> is also received from enemies, and it can be spent on either <b>Pilfering Further</b> to see new upgrade options, or <b>Boosting stats</b>, r-right here in the space station.",
+                    "W-well, I think that’s everything. Good luck out there, c-c-cadet! You’re gonna need it...",
                     "Continue Your Journey"
                 }
             },
             {
                 Stage.Enemies, new []
                 {
-                    "You will now practice on a group of real enemies. Good luck.",
+                    "Alright, now we’re talking. Go fight some more <b>Voidborne</b> with those fancy new weapons. KNOCK ‘EM DEAD!",
                     "Hunt the Enemies"
                 }
             },
             {
                 Stage.Finish, new[]
                 {
-                    "Congratulations! You have completed the Voidwatch Academy. You are ready to join this elite force. Godspeed, soldier. You'll need it.",
+                    "WOOOOO! Looks like we got a new member of the world’s finest pilots: the Voidwatch. Godspeed, kid. Wipe that scum out of our reality!",
                     ""
                 }
             }
@@ -198,8 +209,8 @@ namespace Tutorial
             if (InputManager.GetKeyDown(KeyCode.LeftBracket))
             {
                 _stage = Stage.UI;
-                _textIdx = -1;
-                Continue();
+                // _textIdx = -1;
+                // Continue();
             }
 #endif
             if (!_inTask) return;
@@ -280,15 +291,11 @@ namespace Tutorial
                 }
                 case Stage.UI:
                 {
-                    _genFlag |= SceneManager.GetActiveScene().name == "Shop";
-                    _metCondition |= _genFlag && SceneManager.GetActiveScene().name == "Tutorial";
+                    _metCondition |= SceneManager.GetActiveScene().name == "Shop";
 
                     if (SceneManager.GetActiveScene().name == "LevelSelect")
                     {
-                        warning.rectTransform.offsetMax = Vector2.zero;
-                        instruction.SetActive(true);
-                        progressBar.gameObject.SetActive(true);
-                        if (_genFlag && FindAnyObjectByType<MiniPlayerController>().TravelingTo == 3) StartCoroutine(FadeInstruction());
+                        if (FindAnyObjectByType<MiniPlayerController>().TravelingTo == 2) StartCoroutine(FadeInstruction(true));
 
                         if (_genFloat == 0)
                         {
@@ -297,12 +304,25 @@ namespace Tutorial
                         }
                         if (Time.time - _genFloat > 20) ShowWarning("TIP: click a selected planet to visit it", 0);
                     }
+
+                    break;
+                }
+                case Stage.Shop:
+                {
+                    _metCondition |= SceneManager.GetActiveScene().name == "Tutorial";
+
+                    if (SceneManager.GetActiveScene().name == "LevelSelect")
+                    {
+                        warning.rectTransform.offsetMax = Vector2.zero;
+                        instruction.SetActive(true);
+                        progressBar.gameObject.SetActive(true);
+                        if (FindAnyObjectByType<MiniPlayerController>().TravelingTo == 3) StartCoroutine(FadeInstruction(true));
+
+                        if (_genFloat == 0) _genFloat = Time.time;
+                        if (Time.time - _genFloat > 20) ShowWarning("TIP: click a selected planet to visit it", 0);
+                    }
                     else if (SceneManager.GetActiveScene().name == "Shop")
                     {
-                        warning.rectTransform.offsetMax = new Vector2(0, 175);
-                        instruction.SetActive(false);
-                        progressBar.gameObject.SetActive(false);
-                        
                         if (_genFloat == 0) _genFloat = Time.time;
                         if (Time.time - _genFloat > 20) ShowWarning("TIP: after buying upgrades, exit the shop", 0);
                     }
@@ -417,7 +437,7 @@ namespace Tutorial
                 }
                 case Stage.UI:
                 {
-                    if (_textIdx == 1)
+                    if (_textIdx == 0)
                     {
                         StartCoroutine(FadeObjIn(scrap));
                         PlayerDataInstance.Scrap = 500;
@@ -427,6 +447,19 @@ namespace Tutorial
                         setup = () => upgradeManager.Show();
                         SceneManager.activeSceneChanged += ResetGenFloat;
                     }
+                    break;
+                }
+                case Stage.Shop:
+                {
+                    if (_textIdx == 0)
+                    {
+                        warning.rectTransform.offsetMax = new Vector2(0, 175);
+                        instruction.SetActive(false);
+                        progressBar.gameObject.SetActive(false);
+                        FindAnyObjectByType<GraphicRaycaster>().enabled = false;
+                    }
+                    else if (task) FindAnyObjectByType<GraphicRaycaster>().enabled = true;
+
                     break;
                 }
                 case Stage.Enemies:
@@ -488,9 +521,12 @@ namespace Tutorial
                 yield return FadeIn();
             }
             else yield return dialogueController.Close(1.5f);
-            
-            playerMovement.SetInputBlocked(false);
-            playerMovement.autoPilot = false;
+
+            if (playerMovement != null)
+            {
+                playerMovement.SetInputBlocked(false);
+                playerMovement.autoPilot = false;
+            }
             setup?.Invoke();
 
             var tmp = instruction.GetComponentInChildren<TextMeshProUGUI>();
@@ -499,7 +535,7 @@ namespace Tutorial
             
             warning.gameObject.SetActive(true);
             warning.SetAlpha(0);
-            instruction.SetActive(true);
+            if (_stage != Stage.Shop) instruction.SetActive(true);
             
             var img = instruction.GetComponentInChildren<Image>();
             tmp.ForceMeshUpdate();
@@ -534,7 +570,7 @@ namespace Tutorial
             _inTask = true;
         }
 
-        private IEnumerator FadeInstruction()
+        private IEnumerator FadeInstruction(bool early=false)
         {
             var flashUI = instruction.GetComponent<FlashUI>();
             if (!flashUI.enabled) yield break; // we've already faded
@@ -545,7 +581,7 @@ namespace Tutorial
             var warnStart = warning.color.a;
             var pbCg = progressBar.GetComponentInParent<CanvasGroup>();
             
-            var cur = (int)_stage; // already been incremented
+            var cur = (int)_stage + (early ? 1 : 0); // already been incremented
             var max = Enum.GetValues(typeof(Stage)).Length;
             progressBar.GetComponentInChildren<TextMeshProUGUI>().text = string.Format(_pbFormat, cur+1, max);
             for (float t = 0; t < instructionFadeTime; t += Time.fixedDeltaTime)
@@ -569,13 +605,18 @@ namespace Tutorial
         }
         private IEnumerator ShowDialogue(string text, Action setup=null)
         {
-            playerMovement.SetInputBlocked(true);
-            playerMovement.autoPilot = true;
+            if (playerMovement != null)
+            {
+                playerMovement.SetInputBlocked(true);
+                playerMovement.autoPilot = true;
+            }
 
             yield return FadeInstruction();
             
             dialogueController.ShowText(text, true);
-            yield return dialogueController.Open(1.5f);
+            yield return dialogueController.Open(_stage == Stage.Shop
+                ? DialogueController.People.Mechanic
+                : DialogueController.People.General, 1.5f);
             setup?.Invoke();
             
             dialogueController.Continue += Continue;

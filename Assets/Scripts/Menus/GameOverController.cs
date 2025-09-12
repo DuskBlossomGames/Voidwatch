@@ -156,7 +156,7 @@ namespace Menus
             {
                 dialogue.Continue += () => StartCoroutine(Close(true, true));
 
-                yield return dialogue.Open();
+                yield return dialogue.Open(DialogueController.People.General);
                 
                 dialogue.ShowText(firstEliteWin
                         ? "We appreciate your dedication, General. One day, we hope to reward you with larger galaxies, and more advanced missions. Until then, it's up to you to expand the Voidwatch Academy. Thank you."

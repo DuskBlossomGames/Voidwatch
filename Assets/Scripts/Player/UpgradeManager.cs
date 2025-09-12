@@ -33,7 +33,7 @@ namespace Player
         public int debugUpgrade = -1; // TODO: remove
 
         public AudioClip upgradeSound;
-        
+
         public Movement playMov;
         public FollowPlayer followPlayer;
 
@@ -62,6 +62,7 @@ namespace Player
     
         private IEnumerator DoShow()
         {
+            Debug.Log("SHOWING");
             playMov.SetInputBlocked(true);
             playMov.autoPilot = true;
             playMov.GetComponent<PlayerDamageable>().godmode = true;
