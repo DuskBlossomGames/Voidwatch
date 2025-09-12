@@ -9,6 +9,7 @@ using Singletons.Static_Info;
 using Spawnables;
 using Spawnables.Controllers;
 using TMPro;
+using Tutorial;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -32,9 +33,13 @@ namespace Menus
         public float statisticsBeforeTime, statisticsFadeTime, statisticsBetweenTime;
         public Image fadeOutAgain;
         public GameObject instagram;
+        
+        public DialogueController dialogue;
 
         public IEnumerator Run(bool won, DeathInfo diedTo)
         {
+            var firstWin = SettingsInterface.rank < SettingsInterface.Rank.Captain;
+            var firstEliteWin = SettingsInterface.rank < SettingsInterface.Rank.General && LevelSelectDataInstance.hardMode;
             if (won)
             {
                 SettingsInterface.SetMinRank(LevelSelectDataInstance.hardMode
@@ -146,7 +151,26 @@ namespace Menus
                 yield return new WaitForFixedUpdate();
                 fadeOutAgain.SetAlpha(t/fadeOutTime);
             }
-            
+
+            if (won && (firstWin || firstEliteWin))
+            {
+                dialogue.Continue += () => StartCoroutine(Close(true, true));
+
+                yield return dialogue.Open();
+                
+                dialogue.ShowText(firstEliteWin
+                        ? "We appreciate your dedication, General. One day, we hope to reward you with larger galaxies, and more advanced missions. Until then, it's up to you to expand the Voidwatch Academy. Thank you."
+                        : "Congratulations, Captain. You have done the impossible, and liberated this sector. But the Void lives on, requiring more... <b>Elite Campaigns</b>. Are you up for the challenge?", true);
+            }
+            else
+            {
+                StartCoroutine(Close(false, won));
+            }
+        }
+
+        private IEnumerator Close(bool closeBox, bool won)
+        {
+            if (closeBox) yield return dialogue.Close();
             Destroy(StaticInfoHolder.Instance.gameObject);
             if (won) DontDestroyOnLoad(new GameObject("RollCredits")); // TODO: this is so scuffed ahhhh
             SceneManager.LoadScene("TitleScreen");

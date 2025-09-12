@@ -69,6 +69,7 @@ namespace LevelSelect
                 
                 transform.position = _startPos = pos!.Value + (yOffset + planetPrefab.transform.localScale.x * (_level.SpriteData.RadiusMult-1)) * Vector3.up;
                 transform.position += _showingLore ? 1.5f * _baseScale.y * Vector3.up : Vector3.zero;
+                _scaleListener.SetScaleMult(1 + (_level.SpriteData.RadiusMult-1)/2);
 
                 _title.text = _level.Title;
                 _description.text = _level.Description;
@@ -117,7 +118,7 @@ namespace LevelSelect
                 
                 _showingLore = lore.Value;
                 _background.sprite = _showingLore ? loreSprite : infoSprite;
-                _scaleListener.SetScaleMult(_showingLore ? 4 : 1);
+                _scaleListener.SetScaleMult(_showingLore ? 4 : 1 + (_level.SpriteData.RadiusMult-1)/2);
                 transform.position = _startPos + (_showingLore ? 1.5f*_baseScale.y*Vector3.up : Vector3.zero);
                 
                 transform.GetChild(0).gameObject.SetActive(!_showingLore);

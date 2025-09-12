@@ -547,6 +547,7 @@ namespace Tutorial
             
             var cur = (int)_stage; // already been incremented
             var max = Enum.GetValues(typeof(Stage)).Length;
+            progressBar.GetComponentInChildren<TextMeshProUGUI>().text = string.Format(_pbFormat, cur+1, max);
             for (float t = 0; t < instructionFadeTime; t += Time.fixedDeltaTime)
             {
                 yield return new WaitForFixedUpdate();

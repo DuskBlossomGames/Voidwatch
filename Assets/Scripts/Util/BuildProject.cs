@@ -39,11 +39,18 @@ namespace Util
 
         private static void Cleanup()
         {
+            Reset();
+            EditorUtility.DisplayDialog("Build Failed", "Check the console for errors, or try building manually.", "OK");
+        }
+
+        [MenuItem("File/Reset Auto-Build &#C")]
+        public static void Reset()
+        {
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
             Procs.ForEach(p => { if (!p.HasExited) p.Kill(); });
             Procs.Clear();
             ExecuteSequentialCommands(new [] { "rm -rf /tmp/voidwatch" });
-            EditorUtility.DisplayDialog("Build Failed", "Check the console for errors, or try building manually.", "OK");
+            EditorUtility.DisplayDialog("Reset", "Reset the Auto-Builder's internal state.", "OK");
         }
         
         [MenuItem("File/Execute CI\u200A\u200A\u2215\u200A\u200ACD (macOS only) &#B")]
