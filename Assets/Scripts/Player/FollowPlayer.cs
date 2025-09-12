@@ -1,4 +1,5 @@
 using System;
+using LevelPlay;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
@@ -79,7 +80,12 @@ namespace Player
 
             //_moddedOffset = _camOffset;
             transform.position = _camOffset;
-            transform.rotation = Quaternion.Euler(new Vector3(0,0,-90+Mathf.Rad2Deg*Mathf.Atan2(playerPos.y,playerPos.x)));
+            
+            var targRot = Quaternion.Euler(new Vector3(0, 0, -90 + Mathf.Rad2Deg * Mathf.Atan2(playerPos.y, playerPos.x)));
+            transform.rotation = Vector2.SqrMagnitude(playerPos) < PlanetSetup.Radius*PlanetSetup.Radius
+                ? Quaternion.Lerp(transform.rotation, targRot, 2f*Time.fixedDeltaTime)
+                : Quaternion.Lerp(transform.rotation, targRot, 12*Time.fixedDeltaTime);
+ 
             player.GetComponent<Rigidbody2D>().angularVelocity = 0;
 
 
