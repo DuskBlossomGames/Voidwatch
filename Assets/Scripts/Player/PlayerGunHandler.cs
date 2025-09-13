@@ -176,14 +176,15 @@ namespace Player
                         bullet.GetComponent<CustomRigidbody2D>().AddRelativeForce(new Vector2(latForce, vertForce));
                         bullet.GetComponent<BulletCollision>().dmg = GunInfoInstance.dmgMod * (HasDodgePowerAttack ? PlayerDataInstance.postDodgeMult : 1);
                         bullet.GetComponent<BulletCollision>().owner = gameObject;
-                        bullet.GetComponent<BulletCollision>().chains = PlayerDataInstance.bulletChains;
+                        bullet.GetComponent<BulletCollision>().chains = GunInfoInstance.bulletChains;
+                        bullet.GetComponent<BulletCollision>().pierces = GunInfoInstance.bulletPierce;
                     }
                 }
                 
                 AudioPlayer.Play(laserClip, this, Random.Range(0.5f, 0.7f), 0.45f);
-                HasDodgePowerAttack = false;
             }
-
+            HasDodgePowerAttack = false;
+            
             yield return new WaitForSeconds(GunInfoInstance.fireTime);
 
             if (IsEmpty)

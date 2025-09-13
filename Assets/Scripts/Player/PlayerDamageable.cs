@@ -27,8 +27,8 @@ namespace Player
 {
     public class PlayerDamageable : Damageable
     {
-        public Q_Vignette_Single vignette;
-
+        public VignetteHandler vignette, implantVignette;
+        
         public EnemySpawner enemySpawner;
         public GameObject fadeOut;
         public float fadeouttime = 1;
@@ -36,8 +36,6 @@ namespace Player
         public GameOverController gameOver;
 
         public PlayerVFXController vfx;
-        public AnimationCurve vignetteCurve;
-        public float vignetteDuration, vignettePeak;
         public float sigmoidStart, sigmoidEnd;
         public float minVignetteAlpha, maxVignetteAlpha;
         public float minVignetteScale, maxVignetteScale;
@@ -106,12 +104,6 @@ namespace Player
 
             Destroy(_healthBar);
             ShieldPower = PlayerDataInstance.maxShield;
-
-            for (float t = 0; t <= vignettePeak * vignetteDuration; t += Time.fixedDeltaTime)
-            {
-                _vignetteCacheKeys.Add(vignetteCurve.Evaluate(t / vignetteDuration));
-                _vignetteCacheValues.Add(vignetteDuration - t);
-            }
         }
 
         private void Update()
@@ -130,13 +122,7 @@ namespace Player
             shieldBar.UpdatePercentage(ShieldPower, PlayerDataInstance.maxShield);
             healthBar.UpdatePercentage(Health, MaxHealth);
         }
-
-        private void FixedUpdate()
-        {
-            _vignetteTimer.FixedUpdate();
-            vignette.mainColor.a = _vignettePeakAlpha * vignetteCurve.Evaluate(1-_vignetteTimer.Progress);
-        }
-
+        
         // returns true if the shields got broken
         public bool TakeEMP(float damage)
         {
@@ -162,35 +148,23 @@ namespace Player
         {
             if (godmode) return false;
 
+
+            var vignetteScale = (maxVignetteScale - minVignetteScale) / (1 + Mathf.Exp(-2 * (damage - sigmoidStart) / (sigmoidEnd - sigmoidStart))) + minVignetteScale;
+            var vignetteAlpha = (maxVignetteAlpha - minVignetteAlpha) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteAlpha;
             if (PlayerDataInstance.autoDodge && damage > 11)
             {
                 var cost = PlayerDataInstance.dodgeJuiceCost + Mathf.Max(PlayerDataInstance.dodgeJuiceCost/4,
                     19*Mathf.Log(damage/110.6f)); // magic formula; min cost is 5/4 normal, max dodgeable is 2000 dmg, first dmg above min cost is 200
                 if (cost <= _movement.DodgeJuice)
                 {
+                    implantVignette.Activate(vignetteScale, vignetteAlpha);
                     _movement.DodgeOnceCost = cost;
                     _movement.DodgeOnceDir = _movement.GetComponent<CustomRigidbody2D>().linearVelocity.normalized;
                     return false;
                 }
             }
 
-            if (_vignetteTimer.IsFinished)
-            {
-                _vignetteTimer.Value = vignetteDuration;
-            } else if (1 - _vignetteTimer.Progress >= vignettePeak)
-            {
-                var curve = vignetteCurve.Evaluate(1 - _vignetteTimer.Progress);
-                for (var i = 0; i < _vignetteCacheKeys.Count; i++) // pick the closest from before peak
-                {
-                    if (_vignetteCacheKeys[i] > curve)
-                    {
-                        _vignetteTimer.SetValue(_vignetteCacheValues[i - 1]);
-                        break;
-                    }
-                }
-            }
-            vignette.mainScale = (maxVignetteScale - minVignetteScale) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteScale;
-            _vignettePeakAlpha = (maxVignetteAlpha - minVignetteAlpha) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteAlpha;
+            vignette.Activate(vignetteScale, vignetteAlpha);
 
             var bleed = damage * bleedPerc;
             damage -= bleed;

@@ -117,7 +117,8 @@ namespace Player
                 {
                     {GunInfoInstance.dmgMod, 1.6f},
                     {GunInfoInstance.shotForce, 1.9f},
-                    {GunInfoInstance.fireTime, 3f}
+                    {GunInfoInstance.fireTime, 3f},
+                    {GunInfoInstance.bulletPierce, 1f},
                 }),
             new("Voidwrought Accumulator",
                 "Attaches to your Void Energy extraction device, increasing Void Energy replenishment speed.",
@@ -183,7 +184,7 @@ namespace Player
                 1,
                 new Dictionary<UpgradableStat, float>
                 {
-                    {PlayerDataInstance.postDodgeMult, 2f}
+                    {PlayerDataInstance.postDodgeMult, 1.6f}
                 }),
             new("Intrinsic Refraction",
                 "Bullets refract upon hitting their target, launching a copy at the nearest enemy.",
@@ -192,7 +193,7 @@ namespace Player
                 0,
                 new Dictionary<UpgradableStat, float>
                 {
-                    {PlayerDataInstance.bulletChains, 1f}
+                    {GunInfoInstance.bulletChains, 1f}
                 }),
             new("Void Implant",
                 "This Void cybernetic grants brief foresight, instinctively attempting to dodge if you would be hit, at a cost proportional to damage.",

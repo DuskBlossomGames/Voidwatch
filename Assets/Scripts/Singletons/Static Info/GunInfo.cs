@@ -27,5 +27,7 @@ namespace Singletons.Static_Info
 
         [Space(10)] [Header("Upgrade Values (uninitialized)")]
         public bool shieldAsAmmo;
+        public UpgradableStat<int> bulletChains;
+        public UpgradableStat<int> bulletPierce;
     }
 }

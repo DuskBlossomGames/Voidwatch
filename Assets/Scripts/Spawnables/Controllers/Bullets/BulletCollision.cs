@@ -18,7 +18,7 @@ namespace Spawnables.Controllers.Bullets
         public bool scaleWithDamage;
         public float dmg;
         public GameObject owner;
-        public int chains;
+        public int chains, pierces;
         public float shieldMult, bleedPerc;
         public bool ignoresOwner;
 
@@ -83,11 +83,11 @@ namespace Spawnables.Controllers.Bullets
                 if (damageable.GetType() == typeof(EnemyDamageable)) ((EnemyDamageable) damageable).Damage(damage, gameObject, _damageTypes); 
                 else if (!damageable.Damage(damage, gameObject, shieldMult, bleedPerc)) return;
                 
-                if (chains == 0)
+                if (chains == 0 && pierces == 0)
                 {
                     Destroy(gameObject);
                 }
-                else
+                else if (chains != 0)
                 {
                     try
                     {
@@ -106,6 +106,10 @@ namespace Spawnables.Controllers.Bullets
                             GetComponent<CustomRigidbody2D>().linearVelocity.magnitude * (nearest.transform.position - transform.position).normalized;
                     }
                     catch (InvalidOperationException) {}
+                } else if (pierces != 0)
+                {
+                    pierces -= 1;
+                    _firstCollider = other;
                 }
             }
             else

@@ -44,7 +44,7 @@ namespace Player
         private void Update()
         {
 #if UNITY_EDITOR
-            if (debugUpgrade != -1 && InputManager.GetKeyDown(KeyCode.LeftBracket)) UpgradePlayer.UPGRADES[debugUpgrade].Apply(); 
+            if (debugUpgrade != -1 && InputManager.GetKeyDown(KeyCode.Backslash)) UpgradePlayer.UPGRADES[debugUpgrade].Apply(); 
 #endif
         }
 
@@ -62,7 +62,6 @@ namespace Player
     
         private IEnumerator DoShow()
         {
-            Debug.Log("SHOWING");
             playMov.SetInputBlocked(true);
             playMov.autoPilot = true;
             playMov.GetComponent<PlayerDamageable>().godmode = true;

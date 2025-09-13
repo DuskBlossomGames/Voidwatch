@@ -6195,6 +6195,14 @@ MonoBehaviour:
     interaction: 0
     name: Damage
   shieldAsAmmo: 0
+  bulletChains:
+    baseValue: 0
+    minValue: 0
+    interaction: 1
+  bulletPierce:
+    baseValue: 0
+    minValue: 0
+    interaction: 1
 --- !u!114 &342308706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6307,10 +6315,6 @@ MonoBehaviour:
     baseValue: 1
     minValue: 0
     interaction: 0
-  bulletChains:
-    baseValue: 0
-    minValue: 0
-    interaction: 1
   healthPickupsEnabled: 0
   autoDodge: 0
 --- !u!114 &342308708
