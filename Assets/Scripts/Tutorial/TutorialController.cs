@@ -485,6 +485,7 @@ namespace Tutorial
                         {
                             blackScreen.SetActive(true);
                             Destroy(StaticInfoHolder.Instance.gameObject);
+                            SettingsInterface.SetMinRank(SettingsInterface.Rank.Lieutenant);
                             SceneManager.LoadScene("TitleScreen");
                             ExitTutorial();
                         }));
@@ -658,7 +659,6 @@ namespace Tutorial
 
         public void ExitTutorial()
         {
-            SettingsInterface.SetMinRank(SettingsInterface.Rank.Lieutenant);
             PlayerDataInstance.IsTutorial = false;
             Destroy(canvas);
             Destroy(gameObject);

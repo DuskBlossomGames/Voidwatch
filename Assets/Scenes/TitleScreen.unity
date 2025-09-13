@@ -6164,9 +6164,9 @@ MonoBehaviour:
     minValue: 0
     interaction: 0
     name: Max Ammo
-  noShootRefillTime: 1.5
-  emptyRefillTime: 2
-  timeToRefillFully: 3
+  noShootRefillTime: 1
+  emptyRefillTime: 1.5
+  timeToRefillFully: 2.5
   bulletsPerShot:
     baseValue: 2
     minValue: 0
@@ -10774,7 +10774,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1436384586}
-  - {fileID: 1677751353}
   - {fileID: 1242352783}
   - {fileID: 2055655931}
   - {fileID: 1850880077}
@@ -10782,6 +10781,7 @@ RectTransform:
   - {fileID: 1289172184}
   - {fileID: 934329968}
   - {fileID: 745705478}
+  - {fileID: 1677751353}
   - {fileID: 1157822819}
   - {fileID: 1284637495}
   - {fileID: 1717322072}
