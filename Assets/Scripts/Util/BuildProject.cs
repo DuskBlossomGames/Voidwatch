@@ -36,20 +36,25 @@ namespace Util
                 return BuildPipeline.BuildPlayer(options).summary.result == BuildResult.Succeeded;
             } catch (TaskCanceledException) { return false; }
         }
+        
+        private static void Reset()
+        {
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+            Procs.ForEach(p => { if (!p.HasExited) p.Kill(); });
+            Procs.Clear();
+            ExecuteSequentialCommands(new [] { "rm -rf /tmp/voidwatch" });
+        }
 
         private static void Cleanup()
         {
             Reset();
             EditorUtility.DisplayDialog("Build Failed", "Check the console for errors, or try building manually.", "OK");
         }
-
+        
         [MenuItem("File/Reset Auto-Build &#C")]
-        public static void Reset()
+        public static void ResetHotkey()
         {
-            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
-            Procs.ForEach(p => { if (!p.HasExited) p.Kill(); });
-            Procs.Clear();
-            ExecuteSequentialCommands(new [] { "rm -rf /tmp/voidwatch" });
+            Reset();
             EditorUtility.DisplayDialog("Reset", "Reset the Auto-Builder's internal state.", "OK");
         }
         
