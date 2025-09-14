@@ -57,9 +57,14 @@ namespace Util
             Reset();
             EditorUtility.DisplayDialog("Reset", "Reset the Auto-Builder's internal state.", "OK");
         }
-        
+
         [MenuItem("File/Execute CI\u200A\u200A\u2215\u200A\u200ACD (macOS only) &#B")]
-        public static void Build()
+        public static void BuildItch() => Build(false);
+
+        [MenuItem("File/Build for SteamPipe (macOS only) &#S")]
+        public static void BuildSteamPipe() => Build(true);
+        
+        private static void Build(bool steam)
         {
             if (Procs.Count > 0)
             {
@@ -72,9 +77,9 @@ namespace Util
             {
                 "mkdir /tmp/voidwatch",
                 "cd /tmp/voidwatch",
-                "curl -L -o butler.zip https://broth.itch.ovh/butler/darwin-amd64/LATEST/archive/default",
-                "unzip butler.zip",
-                "chmod +x butler",
+                steam
+                    ? $"cp {Application.dataPath}/../build.vdf ."
+                    : "curl -L -o butler.zip https://broth.itch.ovh/butler/darwin-amd64/LATEST/archive/default && unzip butler.zip && chmod +x butler",
             });
             
             var scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
@@ -91,18 +96,24 @@ namespace Util
                 Cleanup();
                 return;
             }
-            ExecuteSequentialCommands(new[]
+
+            if (!steam)
             {
-                "cd /tmp/voidwatch/mac",
-                "codesign --deep -s - -f Voidwatch.app",
-                "zip -r voidwatch.zip Voidwatch.app",
-                $"../butler push voidwatch.zip DuskBlossomGames/Voidwatch:osx --identity=\"{butlerAPIPath}\" --userversion={VERSION}",
-            }, false);
+                ExecuteSequentialCommands(new[]
+                {
+                    "cd /tmp/voidwatch/mac",
+                    "codesign --deep -s - -f Voidwatch.app",
+                    "zip -r voidwatch.zip Voidwatch.app",
+                    $"../butler push voidwatch.zip DuskBlossomGames/Voidwatch:osx --identity=\"{butlerAPIPath}\" --userversion={VERSION}",
+                }, false);
+            }
             
             // WINDOWS
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
             for (var arch = 0; arch <= 1; arch++)
             {
+                if (steam && arch == 1) continue;
+                
                 var archStr = arch == 0 ? "x86" : "arm";
                 
                 EditorUserBuildSettings.SetPlatformSettings(BuildPipeline.GetBuildTargetName(BuildTarget.StandaloneWindows64),
@@ -110,20 +121,24 @@ namespace Util
                 if (!TryBuildPlayer(new BuildPlayerOptions
                     {
                         scenes = scenes,
-                        locationPathName = $"/tmp/voidwatch/win-{archStr}/Voidwatch/Voidwatch.exe",
+                        locationPathName = $"/tmp/voidwatch/win-{archStr}/{(steam ? "" : "Voidwatch/")}Voidwatch.exe",
                         target = BuildTarget.StandaloneWindows64
                     }))
                 {
                     Cleanup();
                     return;
                 }
-                ExecuteSequentialCommands(new[]
+
+                if (!steam)
                 {
-                    $"cd /tmp/voidwatch/win-{archStr}",
-                    "rm -rf Voidwatch/Voidwatch_BurstDebugInformation_DoNotShip/",
-                    "zip -r voidwatch.zip Voidwatch/",
-                    $"../butler push voidwatch.zip DuskBlossomGames/Voidwatch:windows-{archStr} --identity=\"{butlerAPIPath}\" --userversion={VERSION}",
-                }, false);
+                    ExecuteSequentialCommands(new[]
+                    {
+                        $"cd /tmp/voidwatch/win-{archStr}",
+                        "rm -rf Voidwatch/Voidwatch_BurstDebugInformation_DoNotShip/",
+                        "zip -r voidwatch.zip Voidwatch/",
+                        $"../butler push voidwatch.zip DuskBlossomGames/Voidwatch:windows-{archStr} --identity=\"{butlerAPIPath}\" --userversion={VERSION}",
+                    }, false);
+                }
             }
             
             // LINUX
@@ -131,20 +146,33 @@ namespace Util
             if (!TryBuildPlayer(new BuildPlayerOptions
                 {
                     scenes = scenes,
-                    locationPathName = "/tmp/voidwatch/linux/Voidwatch/Voidwatch",
+                    locationPathName = $"/tmp/voidwatch/linux/{(steam ? "" : "Voidwatch/")}Voidwatch",
                     target = BuildTarget.StandaloneLinux64
                 }))
             {
                 Cleanup();
                 return;
             }
-            ExecuteSequentialCommands(new[]
+
+            if (!steam)
             {
-                "cd /tmp/voidwatch/linux",
-                "rm -rf Voidwatch/Voidwatch_BurstDebugInformation_DoNotShip/",
-                "zip -r \"voidwatch.zip\" Voidwatch/",
-                $"../butler push voidwatch.zip DuskBlossomGames/Voidwatch:linux --identity=\"{butlerAPIPath}\" --userversion={VERSION}"
-            }, false);
+                ExecuteSequentialCommands(new[]
+                {
+                    "cd /tmp/voidwatch/linux",
+                    "rm -rf Voidwatch/Voidwatch_BurstDebugInformation_DoNotShip/",
+                    "zip -r \"voidwatch.zip\" Voidwatch/",
+                    $"../butler push voidwatch.zip DuskBlossomGames/Voidwatch:linux --identity=\"{butlerAPIPath}\" --userversion={VERSION}"
+                }, false);
+            }
+
+            if (steam)
+            {
+                ExecuteSequentialCommands(new []
+                {
+                    "cd /tmp/voidwatch",
+                    "steamcmd +login duskblossomgames +run_app_build build.vdf +quit"
+                }, false);
+            }
             
             // reset to OSX
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
