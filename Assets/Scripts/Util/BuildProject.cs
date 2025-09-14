@@ -167,11 +167,7 @@ namespace Util
 
             if (steam)
             {
-                ExecuteSequentialCommands(new []
-                {
-                    "cd /tmp/voidwatch",
-                    "steamcmd +login duskblossomgames +run_app_build build.vdf +quit"
-                }, false);
+                EditorUtility.DisplayDialog("Build Complete", $"Run the following command in the terminal:\nsteamcmd +login duskblossomgames +run_app_build /tmp/voidwatch/build.vdf +quit", "OK");
             }
             
             // reset to OSX
@@ -182,7 +178,7 @@ namespace Util
             Procs.Clear();
             
             ExecuteSequentialCommands(new [] { "rm -rf /tmp/voidwatch" });
-            EditorUtility.DisplayDialog("Build Complete", $"Uploaded Voidwatch v{VERSION} to channels 'osx', 'windows-x86', 'windows-arm', and 'linux' on Itch.", "OK");
+            if (!steam) EditorUtility.DisplayDialog("Build Complete", $"Uploaded Voidwatch v{VERSION} to channels 'osx', 'windows-x86', 'windows-arm', and 'linux' on Itch.", "OK");
         }
     }
 }
