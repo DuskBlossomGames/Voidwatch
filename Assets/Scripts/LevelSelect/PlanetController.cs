@@ -1,4 +1,5 @@
 using System;
+using Analytics;
 using Singletons.Static_Info;
 using UnityEngine;
 using Util;
@@ -60,6 +61,12 @@ namespace LevelSelect
                     _ => "LevelPlay"
                 });
             GetComponent<ScaleUI>().ToNormal = true;
+            
+            AnalyticsManager.LogEvent(new EnterLevelEvent
+            {
+                LevelType = Level.Type,
+                LevelNum = LevelSelectDataInstance.VisitedPlanets.Count
+            });
         }
     }
 }

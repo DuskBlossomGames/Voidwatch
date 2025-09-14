@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Analytics;
 using Extensions;
 using Singletons.Static_Info;
 using UnityEngine;
@@ -52,6 +53,8 @@ namespace LevelSelect
             playerMini.SetOrbitRadius(planetPrefab.transform.localScale.x / 2 * 2f);
             RenderGalaxy();
             mapController.Instantiate();
+            
+            AnalyticsManager.LogEvent(new VisitScreenEvent { ScreenId = "level_select"});
         }
 
         // TODO: eventually all planets should have lore so this should be vestigial

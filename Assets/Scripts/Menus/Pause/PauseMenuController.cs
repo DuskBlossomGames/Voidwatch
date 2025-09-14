@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Analytics;
 using Singletons.Static_Info;
 using TMPro;
 using Tutorial;
@@ -53,6 +54,8 @@ namespace Menus.Pause
             upgrades.SetActive(LevelSelectDataInstance.VisitedPlanets.Count > 1);
             FindAnyObjectByType<MusicTransitionManager>().enabled = false;
             foreach (var source in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) source.Pause();
+            
+            AnalyticsManager.LogEvent(new VisitScreenEvent { ScreenId = "pause"});
         }
         
         private void Update()

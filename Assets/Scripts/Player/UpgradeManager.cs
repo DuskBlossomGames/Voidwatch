@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Analytics;
 using Extensions;
 using Menus;
 using Singletons;
@@ -165,6 +166,8 @@ namespace Player
                 upgrades[j].GetChild(1).GetComponent<TextMeshProUGUI>().SetAlpha(0.5f);
             }
             reroll.interactable = pilfer.interactable = false;
+            
+            AnalyticsManager.LogEvent(new ChooseUpgradeEvent {Upgrade = _upgrades[i]});
         }
 
         private IEnumerator ExitAfter(float time)
@@ -185,6 +188,8 @@ namespace Player
             
             SetUpgrades();
             UpdateUpgrades();
+            
+            AnalyticsManager.LogEvent(new PilferEvent { Pilfers = _numRerolls});
         }
 
         public void Scavenge()
@@ -203,6 +208,8 @@ namespace Player
                 upgrades[i].GetChild(1).GetComponent<TextMeshProUGUI>().SetAlpha(0.5f);
             }
             reroll.interactable = false;
+            
+            AnalyticsManager.LogEvent(new ScavengeEvent());
         }
 
         private void Exit()

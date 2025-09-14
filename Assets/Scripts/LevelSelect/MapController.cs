@@ -1,3 +1,4 @@
+using Analytics;
 using UnityEngine;
 using Util;
 using static Singletons.Static_Info.LevelSelectData;
@@ -34,6 +35,8 @@ namespace LevelSelect
         
         private Vector3 _lastMousePos;
         private bool _resettingSelector;
+
+        private bool _sentMapPan, _sentMapZoom;
         
         private void OnMouseUp()
         {
@@ -57,6 +60,13 @@ namespace LevelSelect
             camPos.y = Mathf.Clamp(camPos.y, _minScroll.y, _maxScroll.y);
             
             camTransform.position = camPos;
+
+            if (!_sentMapPan && _lastMousePos != InputManager.mousePosition)
+            {
+                AnalyticsManager.LogEvent(new PanMapEvent());
+                _sentMapPan = true;
+            }
+            
             _lastMousePos = InputManager.mousePosition;
         }
         
@@ -64,6 +74,12 @@ namespace LevelSelect
         {
             camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - InputManager.mouseScrollDelta.y * scrollSpeed,
                 minCamSize, maxCamSize);
+
+            if (!_sentMapZoom && InputManager.mouseScrollDelta.y != 0)
+            {
+                AnalyticsManager.LogEvent(new ZoomMapEvent());
+                _sentMapZoom = true;
+            }
         }
     }
 }

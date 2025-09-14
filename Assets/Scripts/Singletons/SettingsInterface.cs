@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Analytics;
+using Unity.Services.Analytics;
+using Unity.Services.Core;
+using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Audio;
 using Util;
@@ -29,13 +33,22 @@ namespace Singletons
             _instance = this;
             DontDestroyOnLoad(gameObject);
             
+            // ===== init on awake things =====
+            AnalyticsManager.Init();
+            // ================================
+            
             resolutions = Screen.resolutions
                 .Where(r => r.refreshRateRatio.value == Screen.currentResolution.refreshRateRatio.value)
                 .OrderByDescending(r => r.width * r.height).ToList();
 
             // MISC
             isFirstTime = !PlayerPrefs.HasKey("check");
-            if (isFirstTime) PlayerPrefs.DeleteAll();
+            if (isFirstTime)
+            {
+                // FIRST LAUNCH ITEMS
+                PlayerPrefs.DeleteAll(); // clear preferences (should already be, but still)
+                AnalyticsManager.LogEvent(new FirstLaunchEvent());
+            }
             PlayerPrefs.SetInt("check", 1);
             
             SetRank((Rank) PlayerPrefs.GetInt("rank"));

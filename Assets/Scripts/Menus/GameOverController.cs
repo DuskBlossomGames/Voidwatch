@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Analytics;
 using Extensions;
 using LevelPlay;
 using Player;
@@ -38,6 +39,16 @@ namespace Menus
 
         public IEnumerator Run(bool won, DeathInfo diedTo)
         {
+            AnalyticsManager.LogEvent(won
+                ? new WinEvent { HardMode = LevelSelectDataInstance.hardMode }
+                : new LoseEvent
+                {
+                    HardMode = LevelSelectDataInstance.hardMode,
+                    LevelNum = LevelSelectDataInstance.VisitedPlanets.Count(i =>
+                        LevelSelectDataInstance.Levels[i].Type == LevelType.Normal || LevelSelectDataInstance.Levels[i].Type == LevelType.Elite),
+                    DiedTo = diedTo == null ? "unknown" : diedTo.title
+                });
+            
             var firstWin = SettingsInterface.rank < SettingsInterface.Rank.Captain;
             var firstEliteWin = SettingsInterface.rank < SettingsInterface.Rank.General && LevelSelectDataInstance.hardMode;
             if (won)

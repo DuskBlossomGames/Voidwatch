@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Analytics;
 using Extensions;
 using Menus;
 using Player;
@@ -128,6 +129,8 @@ namespace LevelPlay
             fadeIn.SetActive(true);
             if (_level.Type != LevelType.Elite) StartCoroutine(FadeIn());
             else _faded = true;
+            
+            AnalyticsManager.LogEvent(new VisitScreenEvent { ScreenId = "level_play"});
         }
 
         private bool _faded;
@@ -273,6 +276,7 @@ namespace LevelPlay
             SpawnAsteroids();
             
             var hazards = GetSpawnedEnemies(_level.HazardBudget, _level.MaxTier, true);
+            if (hazards.Count == 0) return;
             var lootPer = _level.HazardLoot / hazards.Count;
             
             var sectorSize = 4/3f*Mathf.PI / hazards.Count;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Analytics;
 using Extensions;
 using LevelSelect;
 using Player;
@@ -23,7 +24,7 @@ namespace Tutorial
 {
     public class TutorialController : MonoBehaviour
     {
-        private enum Stage
+        public enum Stage
         {
             Movement,
             Dashing,
@@ -201,6 +202,8 @@ namespace Tutorial
             PlayerDataInstance.IsTutorial = true;
             DontDestroyOnLoad(gameObject);
             DontDestroyOnLoad(canvas);
+            
+            AnalyticsManager.LogEvent(new VisitScreenEvent { ScreenId = "tutorial"});
         }
 
         private void Update()
@@ -399,6 +402,7 @@ namespace Tutorial
             _textIdx += 1;
             if (_textIdx >= Text[_stage].Length)
             {
+                AnalyticsManager.LogEvent(new CompleteTutorialStageEvent { TutorialStage = _stage });
                 _stage += 1;
                 _textIdx = 0;
                 _genFloat = 0;

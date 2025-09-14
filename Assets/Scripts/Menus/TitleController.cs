@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Analytics;
 using Extensions;
 using Menus.Pause;
 using Menus.Util;
@@ -74,6 +75,8 @@ namespace Menus
             }
 
             StartCoroutine(FadeIn());
+            
+            AnalyticsManager.LogEvent(new VisitScreenEvent { ScreenId = "title_screen" });
         }
 
         private IEnumerator FadeIn()
@@ -160,6 +163,8 @@ namespace Menus
             yield return new WaitForSeconds(waitTime);
             StatisticsInstance.startTime = Time.time;
             SceneManager.LoadScene("LevelSelect");
+            
+            AnalyticsManager.LogEvent(new PlayEvent { HardMode = LevelSelectDataInstance.hardMode });
         }
 
         public void Tutorial()
@@ -193,6 +198,8 @@ namespace Menus
 
         private IEnumerator CreditsRoutine()
         {
+            AnalyticsManager.LogEvent(new VisitScreenEvent { ScreenId = $"credits_{(_initCredits ? "in" : "")}voluntary"});
+            
             yield return Fade(false);
 
             float anchorMod = 0;

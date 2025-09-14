@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Analytics;
 using Player.Upgrades;
 using Singletons.Static_Info;
 using TMPro;
@@ -47,11 +48,13 @@ namespace Shop
 
             for (var i = 0; i < 3; i++)
             {
-                boostTitles[i].text = Data.Stats[i].GetName() + " Boost";
+                boostTitles[i].text = Data.Stats[i].GetName();
                 boostIcons[i].sprite = PlayerDataInstance.BoostableStatSprites[Data.Stats[i].GetName()];
             }
 
             UpdateShop();
+            
+            AnalyticsManager.LogEvent(new VisitScreenEvent { ScreenId = "shop"});
         }
 
         private static float HealedHealth => Mathf.Min(PlayerDataInstance.maxHealth, 
@@ -64,6 +67,8 @@ namespace Shop
             PlayerDataInstance.Health = HealedHealth;
 
             UpdateShop();
+
+            AnalyticsManager.LogEvent(new HealEvent());
         }
 
         public void HealPreview(bool show)
@@ -79,6 +84,8 @@ namespace Shop
             Data.Stats[idx].Boost();
 
             UpdateShop();
+            
+            AnalyticsManager.LogEvent(new BoostStatEvent { Boost = Data.Stats[idx], Level = Data.Stats[idx].GetBoosts() });
         }
 
         private void SetPrices()

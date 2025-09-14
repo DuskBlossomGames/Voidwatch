@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Analytics;
 using Extensions;
 using Singletons.Static_Info;
 using TMPro;
@@ -126,8 +127,9 @@ namespace LevelSelect
 
                 if (_showingLore)
                 {
-                    var cam = Camera.main!;
                     StartCoroutine(SetupCamera());
+                    
+                    AnalyticsManager.LogEvent(new ViewLoreEvent());
                 }
             }
         }

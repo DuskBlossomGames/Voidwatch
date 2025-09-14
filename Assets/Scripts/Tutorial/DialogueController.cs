@@ -72,12 +72,12 @@ namespace Tutorial
 
             _transform.anchorMin = _transform.anchorMax = new Vector2(_startAnchorX = (_anchorMinX+_anchorMaxX)/2,
                 _startAnchorY = (_anchorMinY+_anchorMaxY)/2);
-            circle.SetAlpha(0);
+            if (circle != null) circle.SetAlpha(0);
             _person.SetAlpha(0);
             
             continueText.SetAlpha(0);
 
-            StartCoroutine(Open(true));
+            if (circle != null) StartCoroutine(Open(true));
         }
         
         public void ShowText(string text, bool continuable)
