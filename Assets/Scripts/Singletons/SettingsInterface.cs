@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Analytics;
+using Singletons.Static_Info;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using Util;
 
 namespace Singletons
@@ -74,6 +76,14 @@ namespace Singletons
             {
                 SetChannelVolume(channel, PlayerPrefs.GetFloat(channel+"Volume", 100));
             }
+        }
+
+        public static void ResetData()
+        {
+            PlayerPrefs.DeleteAll();
+            Destroy(_instance);
+            Destroy(StaticInfoHolder.Instance);
+            SceneManager.LoadScene("SplashScreen");
         }
 
         private static void SetRank(Rank rank)

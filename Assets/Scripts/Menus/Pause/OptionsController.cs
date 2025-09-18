@@ -158,5 +158,10 @@ namespace Menus.Pause
                 SettingsInterface.SetKeybind(i, InputManager.DEFAULT_ACTIONS[i]);
             }
         }
+
+        public void ResetAllData()
+        {
+            SettingsInterface.ResetData();
+        }
     }
 }

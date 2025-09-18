@@ -83,13 +83,14 @@ namespace Util
             });
             
             var scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
+            var name = steam ? "Voidwatch Demo" : "Voidwatch";
             
             // MACOS
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
             if (!TryBuildPlayer(new BuildPlayerOptions
                 {
                     scenes = scenes,
-                    locationPathName = "/tmp/voidwatch/mac/Voidwatch.app",
+                    locationPathName = $"/tmp/voidwatch/mac/{name}.app",
                     target = BuildTarget.StandaloneOSX
                 }))
             {
@@ -121,7 +122,7 @@ namespace Util
                 if (!TryBuildPlayer(new BuildPlayerOptions
                     {
                         scenes = scenes,
-                        locationPathName = $"/tmp/voidwatch/win-{archStr}/{(steam ? "" : "Voidwatch/")}Voidwatch.exe",
+                        locationPathName = $"/tmp/voidwatch/win-{archStr}/{(steam ? "" : "Voidwatch/")}{name}.exe",
                         target = BuildTarget.StandaloneWindows64
                     }))
                 {
@@ -146,7 +147,7 @@ namespace Util
             if (!TryBuildPlayer(new BuildPlayerOptions
                 {
                     scenes = scenes,
-                    locationPathName = $"/tmp/voidwatch/linux/{(steam ? "" : "Voidwatch/")}Voidwatch",
+                    locationPathName = $"/tmp/voidwatch/linux/{(steam ? "" : "Voidwatch/")}{name}",
                     target = BuildTarget.StandaloneLinux64
                 }))
             {
