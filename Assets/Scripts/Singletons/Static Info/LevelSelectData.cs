@@ -12,6 +12,7 @@ using Spawnables.Controllers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Util;
 using Random = UnityEngine.Random;
 
 namespace Singletons.Static_Info
@@ -78,6 +79,8 @@ namespace Singletons.Static_Info
     public class LevelLoreData : LoreData 
     {
         public string localName, discovered, voidInfluence;
+
+        [NonSerialized] public int VoidWeeks, VoidDays, VoidHours;
     }
     
     public class LevelData
@@ -96,6 +99,8 @@ namespace Singletons.Static_Info
         public string Title, Description;
         public bool Travellable;
         public Difficulty Difficulty;
+
+        public bool Cleared;
 
         [CanBeNull] public ILevelMetadata Metadata;
     }
@@ -274,8 +279,10 @@ namespace Singletons.Static_Info
                         }
                     }
 
+                    var difficultyPerc = (difficultyScore - MinDifficultyScore) / (MaxDifficultyScore - MinDifficultyScore);
+                    
                     level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
-                    level.MaxTier = (int) (5*Mathf.Pow((difficultyScore-MinDifficultyScore)/(MaxDifficultyScore-MinDifficultyScore), 2/3f) + 1);
+                    level.MaxTier = (int) (5*Mathf.Pow(difficultyPerc, 2/3f) + 1);
                     level.Waves = waves.ToArray();
 
                     var scale = Difficulty.Count/2;
@@ -286,6 +293,13 @@ namespace Singletons.Static_Info
                         LevelType.Tutorial => Difficulty.Easy,
                         _ => (int)(scale * Mathf.Pow(2, 1.5f * Mathf.Clamp01(difficultyScore / MaxDifficultyScore)) - scale)
                     };
+
+                    if (level.LoreData is LevelLoreData lld)
+                    {
+                        lld.VoidWeeks = Mathf.Max((int) (300 * difficultyPerc + Random.Range(-25f, 25) * difficultyPerc), 2);
+                        lld.VoidDays = Mathf.Clamp((int) UtilFuncs.NextGaussian(182.5f, 75), 0, 364);
+                        lld.VoidHours = Mathf.Clamp((int) UtilFuncs.NextGaussian(12, 5), 0, 23);
+                    }
                 }
             }
         }

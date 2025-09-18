@@ -14,6 +14,8 @@ namespace LevelSelect
 {
     public class PlanetInfoController : MonoBehaviour
     {
+        private const string VOID_INFLUENCE_FORMAT = "{0} WEEK{1}, {2} DAY{3}, {4} HOUR{5}";
+        
         public Sprite infoSprite, loreSprite;
         
         public Selector selector;
@@ -38,6 +40,13 @@ namespace LevelSelect
         private bool _shown, _hasLore, _showingLore;
         private bool _hideLore;
 
+        private static string Pluralize(int n) => n == 1 ? "" : "S";
+
+        private static string VoidInfluence(LevelLoreData lld) => string.Format(VOID_INFLUENCE_FORMAT,
+            lld.VoidWeeks, Pluralize(lld.VoidWeeks),
+            lld.VoidDays, Pluralize(lld.VoidDays),
+            lld.VoidHours, Pluralize(lld.VoidHours));
+        
         private void Awake()
         {
             _fadeTimer.Value = fadeTime;
@@ -88,7 +97,7 @@ namespace LevelSelect
                 {
                     var lld = (LevelLoreData) _level.LoreData;
                     _loreMain.text = string.Format(_loreMainFormat, _level.Title.ToUpper(), lld.discovered,
-                        lld.voidInfluence, lld.lore);
+                        _level.Cleared ? "LIBERATED" : _level.Type == LevelType.Elite ? "???" : VoidInfluence(lld), lld.lore);
                     _loreRight.enabled = true;
                     _loreRight.text = string.Format(_loreRightFormat, lld.localName.ToUpper());
                 }

@@ -7,19 +7,16 @@ namespace SplashScreen
 {
     public class SplashListener : MonoBehaviour
     {
-      private IEnumerator splashcoroutine;
-
         private void Start()
         {
             GetComponent<VideoPlayer>().loopPointReached += _ => SceneManager.LoadScene("TitleScreen");
 
-            splashcoroutine = SplashScreenBypass(8.0f);
-            StartCoroutine(splashcoroutine);
+            StartCoroutine(Bypass());
 
         }
 
-        private IEnumerator SplashScreenBypass(float bypassTime){
-          yield return new WaitForSeconds(bypassTime);
+        private IEnumerator Bypass(){
+          yield return new WaitForSeconds((float) GetComponent<VideoPlayer>().clip.length);
           SceneManager.LoadScene("TitleScreen");
         }
     }

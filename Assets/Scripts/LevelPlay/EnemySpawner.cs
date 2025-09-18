@@ -210,6 +210,7 @@ namespace LevelPlay
                     });
 
                     StatisticsInstance.levelsCleared++;
+                    _level.Cleared = true;
                     if (_level.Type == LevelType.Elite)
                     {
                         StartCoroutine(Win());

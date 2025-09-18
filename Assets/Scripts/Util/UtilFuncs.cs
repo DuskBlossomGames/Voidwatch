@@ -118,5 +118,15 @@ namespace Util
             anim.Sprites = new Sprite[anim.NumFrames];
             for (var i = 0; i < anim.NumFrames; i++) anim.Sprites[i] = Sprite.Create(texture, new Rect(i*sliceWidth, 0, sliceWidth, texture.height), new Vector2(0.5f, 0.5f), texture.height);
         }
+
+        public static float NextGaussian(float mean, float stdDev)
+        {
+            var u1 = 1-Random.value;
+            var u2 = 1-Random.value;
+            var randStdNormal = Mathf.Sqrt(-2 * Mathf.Log(u1)) *
+                                   Mathf.Sin(2 * Mathf.PI * u2); //random normal(0,1)
+            return mean + stdDev * randStdNormal; //random normal(mean,stdDev^2)
+
+        }
     }
 }

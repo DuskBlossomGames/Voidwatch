@@ -6701,6 +6701,22 @@ MonoBehaviour:
         localName: '[Redacted]'
         discovered: 2146
         voidInfluence: 36 WEEKS, 2 DAYS, 20 HOURS
+    - a: Aeon
+      b:
+        lore: "Aeon, the earliest known Outer Human planet, was once a lush paradise
+          inhabited by a variety of strange, docile creatures. Notably, Aeon itself
+          has no native predators. In prehistoric times, the planet was overrun by
+          savage Outer Humans, who sought to take the planet\u2019s lush fertile
+          soil for themselves. When humanity discovered Aeon, she was a shell of
+          her former glory, and all life besides the Outer Humans slowly was in the
+          midst of slowly withering away. The Terra Novan government, however, acted
+          quickly, opting to reform Aeon into a planet that humanity could revel
+          in. Despite resistance from local governments, the Aeon Restoration Project
+          (ARP) was officially put into action in 2201, and has continued to make
+          steady progress on making Aeon fit for everyone."
+        localName: Inanna
+        discovered: 2166
+        voidInfluence: 29 WEEKS, 1 DAY, 4 HOURS
     c: 1
   - a: {fileID: 21300000, guid: 0cf666e707d3e40fea8023af38d6fcac, type: 3}
     b:
