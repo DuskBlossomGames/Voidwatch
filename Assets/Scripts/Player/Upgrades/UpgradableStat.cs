@@ -12,7 +12,7 @@ namespace Player.Upgrades
     [Serializable]
     public class UpgradableStat
     {
-        protected readonly List<float> Upgrades = new();
+        public /*protected readonly*/ List<float> Upgrades = new();
 
         public virtual void ApplyUpgrade(float mod)
         {

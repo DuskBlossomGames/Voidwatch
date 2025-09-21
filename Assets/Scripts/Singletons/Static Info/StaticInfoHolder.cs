@@ -46,7 +46,7 @@ namespace Singletons.Static_Info
                 Destroy(gameObject);
                 return;
             }
-            
+
             _instance = this;
             DontDestroyOnLoad(gameObject);
             

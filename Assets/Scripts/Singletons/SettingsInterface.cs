@@ -81,8 +81,8 @@ namespace Singletons
         public static void ResetData()
         {
             PlayerPrefs.DeleteAll();
-            Destroy(_instance);
-            Destroy(StaticInfoHolder.Instance);
+            Destroy(_instance.gameObject);
+            Destroy(StaticInfoHolder.Instance.gameObject);
             SceneManager.LoadScene("SplashScreen");
         }
 

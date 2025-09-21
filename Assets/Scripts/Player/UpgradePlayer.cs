@@ -36,10 +36,10 @@ namespace Player
             public readonly string Title, Description, Quip;
             public readonly Rarity Rarity;
             public readonly int Cap;
-            private readonly Dictionary<UpgradableStat, float> _statMods;
+            private readonly Func<Dictionary<UpgradableStat, float>> _statMods;
             private readonly Action _applyInternal;
 
-            public Upgrade(string title, string description, string quip, Rarity rarity, int cap, Dictionary<UpgradableStat, float> statMods, Action apply=null)
+            public Upgrade(string title, string description, string quip, Rarity rarity, int cap, Func<Dictionary<UpgradableStat, float>> statMods, Action apply=null)
             {
                 Title = title;
                 Description = description;
@@ -52,7 +52,7 @@ namespace Player
 
             public void Apply()
             {
-                foreach (var (stat, mod) in _statMods) stat.ApplyUpgrade(mod);
+                foreach (var (stat, mod) in _statMods()) stat.ApplyUpgrade(mod);
                 _applyInternal?.Invoke();
                 PlayerDataInstance.Upgrades.Add(this);
             }
@@ -65,7 +65,7 @@ namespace Player
                 "Bigger is better, right?",
                 Rarity.Rare,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {GunInfoInstance.bulletsPerShot, 1},
                     {GunInfoInstance.lateralSeparation, 15}
@@ -75,7 +75,7 @@ namespace Player
                 "Missed me, missed me!",
                 Rarity.Rare,
                 4,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.missChance, 0.1f}
                 }),
@@ -84,7 +84,7 @@ namespace Player
                 "Huh, this warning seems to have faded...",
                 Rarity.Common,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.maxShield, 1.3f},
                     {PlayerDataInstance.shieldRegenRate, 0.75f}
@@ -94,7 +94,7 @@ namespace Player
                 "Why didn't it come with this?",
                 Rarity.Common,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.shieldRegenRate, 1.5f}
                 }),
@@ -103,7 +103,7 @@ namespace Player
                 "If we just divert this cable...\nwait, where was that going?",
                 Rarity.Legendary,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {GunInfoInstance.fireTime, 0.5f}
                 },
@@ -113,7 +113,7 @@ namespace Player
                 "I'll just insert this into a critical\nsystem component real quick...",
                 Rarity.Rare,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {GunInfoInstance.dmgMod, 1.6f},
                     {GunInfoInstance.shotForce, 1.9f},
@@ -125,7 +125,7 @@ namespace Player
                 "I am one with the Void...",
                 Rarity.Common,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.dodgeJuiceRegenRate, 1.25f}
                 }),
@@ -134,7 +134,7 @@ namespace Player
                 "Their world shall be ours.",
                 Rarity.Common,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.dodgeJuiceCost, 0.75f}
                 }),
@@ -143,7 +143,7 @@ namespace Player
                 "One day, I'll become a Voidigami master!",
                 Rarity.Rare,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.dodgeDistance, 1.3f}
                 }),
@@ -152,7 +152,7 @@ namespace Player
                 "More plasma?\nMore bullets. More explosions!",
                 Rarity.Common,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {GunInfoInstance.fireTime, 0.8f}
                 }),
@@ -161,7 +161,7 @@ namespace Player
                 "The best offense is an offensive defense.",
                 Rarity.Rare,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.dodgeDamage, 50}
                 }),
@@ -170,7 +170,7 @@ namespace Player
                 "If you squint, a ship\nis basically an asteroid.",
                 Rarity.Common,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.collisionDamageMult, 1f},
                     {PlayerDataInstance.asteroidDamageMult, 1.75f},
@@ -182,7 +182,7 @@ namespace Player
                 "Hippity hoppity, your\nEnergy is my property!",
                 Rarity.Rare,
                 1,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.postDodgeMult, 1.6f}
                 }),
@@ -191,7 +191,7 @@ namespace Player
                 "You get a bullet! And you get\na bullet! And you get a bullet!",
                 Rarity.Legendary,
                 0,
-                new Dictionary<UpgradableStat, float>
+                () => new Dictionary<UpgradableStat, float>
                 {
                     {GunInfoInstance.bulletChains, 1f}
                 }),
@@ -200,7 +200,7 @@ namespace Player
                 "No need to worry, I feel\nperfectly f~ AAAHHHHH!",
                 Rarity.Legendary,
                 1,
-                new Dictionary<UpgradableStat, float>(),
+                () => new Dictionary<UpgradableStat, float>(),
                 () => { PlayerDataInstance.autoDodge = true; }),
         };
 
