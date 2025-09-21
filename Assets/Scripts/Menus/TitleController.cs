@@ -24,6 +24,9 @@ namespace Menus
         public Image fadeIn;
         public float fadeInTime;
 
+        public RectTransform buttons;
+        public float buttonSlideUp;
+        
         public ParticleSystem ps;
         public AnimationCurve textFadeCurve, buttonsFadeCurve, particleSpeed;
         public float fadeTime, speedupTime, waitTime;
@@ -66,6 +69,11 @@ namespace Menus
             {
                 tutorialHint.SetActive(true);
                 SettingsInterface.isFirstTime = false; // since this is the only place it's used, easy solution for now, can change if needed elsewhere
+            }
+            else
+            {
+                buttons.anchorMin += new Vector2(0, buttonSlideUp);
+                buttons.anchorMax += new Vector2(0, buttonSlideUp);
             }
 
             hardMode.transform.parent.gameObject.SetActive(SettingsInterface.rank >= SettingsInterface.Rank.Captain);
@@ -232,6 +240,16 @@ namespace Menus
         public void OpenSteam()
         {
             Application.OpenURL("https://store.steampowered.com/app/3764010/Voidwatch");
+        }
+
+        public void OpenCommunity()
+        {
+            Application.OpenURL("https://steamcommunity.com/app/3764010/discussions/");
+        }
+
+        public void OpenDiscord()
+        {
+            Application.OpenURL("https://discord.gg/Y9jnebv3dT");
         }
 
         public void Quit()
