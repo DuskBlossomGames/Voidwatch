@@ -94,7 +94,7 @@ namespace Shop
 
             for (var i = 0; i < 3; i++)
             {
-                _boostCosts[i] = IBoostableStat.BOOST_COSTS[Data.Stats[i].GetBoosts()];
+                _boostCosts[i] = Data.Stats[i].GetBoosts() < 3 ? IBoostableStat.BOOST_COSTS[Data.Stats[i].GetBoosts()] : -1;
             }
         }
 
@@ -109,7 +109,16 @@ namespace Shop
 
             for (var i = 0; i < 3; i++)
             {
-                boostCosts[i].text = _boostCosts[i].ToString();
+                if (_boostCosts[i] == -1)
+                {
+                    boostCosts[i].text = "MAX";
+                    boostCosts[i].fontSize = 18;
+                    boostCosts[i].transform.parent.GetChild(0).gameObject.SetActive(false); // disable image
+                }
+                else
+                {
+                    boostCosts[i].text = _boostCosts[i].ToString();
+                }
                 boostButtons[i].interactable = Data.Stats[i].GetBoosts() < 3 && PlayerDataInstance.Scrap >= _boostCosts[i];
                 boostChains[i].Unlocked = Data.Stats[i].GetBoosts();
             }
