@@ -173,7 +173,7 @@ namespace Player
                 new Dictionary<UpgradableStat, float>
                 {
                     {PlayerDataInstance.collisionDamageMult, 1f},
-                    {PlayerDataInstance.asteroidDamageMult, 1.5f},
+                    {PlayerDataInstance.asteroidDamageMult, 1.75f},
                     {PlayerDataInstance.takenCollisionDamageMult, 0.65f},
                     {PlayerDataInstance.takenAsteroidCollisionDamageMult, 0.5f}
                 }),

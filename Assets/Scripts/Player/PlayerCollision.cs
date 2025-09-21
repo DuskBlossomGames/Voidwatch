@@ -26,15 +26,18 @@ namespace Player
             _rb = transform.parent.GetComponent<CustomRigidbody2D>();
         }
 
+        private Vector2 _myVel;
         private void Update()
         {
             _cooldownTimer.Update();
+
+            _myVel = _rb.linearVelocity; // "cache" it from before the collision
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.attachedRigidbody == null) return;
-            var vel = (other.attachedRigidbody.linearVelocity - _rb.linearVelocity).magnitude;
+            var vel = (other.attachedRigidbody.linearVelocity - _myVel).magnitude;
 
             if (!other.gameObject.TryGetComponent<Damageable>(out var damageable))
             {
@@ -57,13 +60,16 @@ namespace Player
             
             if (!_cooldownTimer.IsFinished) return;
             if (damageable.GetComponent<MissleAim>() != null) return;
-                
-            var mult = damageable.GetComponent<AsteroidController>() != null
+
+            var isAsteroid = damageable.GetComponent<AsteroidController>() != null;
+            var mult = isAsteroid
                 ? PlayerDataInstance.asteroidDamageMult
                 : PlayerDataInstance.collisionDamageMult;
+            
+            if (isAsteroid) vel = _myVel.magnitude; // make it not relative so that asteroids are consistent
             damageable.Damage(mult * enemyMod * vel, gameObject);
 
-            if (!damageable.IsDead && other.gameObject.GetComponent<AsteroidController>() == null) // asteroid handles it itself
+            if (!damageable.IsDead && !isAsteroid) // asteroid handles it itself
             {
                 _dmgable.Damage(PlayerDataInstance.takenCollisionDamageMult * playerMod * vel, other.gameObject, shieldMult, bleedPerc);
                 _cooldownTimer.Value = cooldown;

@@ -710,7 +710,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.2
+  m_Radius: 1.3
 --- !u!114 &5223156429669482665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6334,55 +6334,12 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 0}
   takeAsteroidDmg: 1
   vignette: {fileID: 0}
+  implantVignette: {fileID: 0}
   enemySpawner: {fileID: 0}
   fadeOut: {fileID: 0}
   fadeouttime: 1
   gameOver: {fileID: 0}
   vfx: {fileID: 3119659123227047046}
-  vignetteCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.16948119
-      value: 0.25734594
-      inSlope: 4.7943273
-      outSlope: 4.7943273
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.08775445
-    - serializedVersion: 3
-      time: 0.3452245
-      value: 0.77837855
-      inSlope: 3.3160403
-      outSlope: 3.3160403
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.121229135
-    - serializedVersion: 3
-      time: 1.0001831
-      value: 0
-      inSlope: -0.9189948
-      outSlope: -0.9189948
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.6367001
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  vignetteDuration: 0.5
-  vignettePeak: 0.31
   sigmoidStart: 30
   sigmoidEnd: 150
   minVignetteAlpha: 0.25
