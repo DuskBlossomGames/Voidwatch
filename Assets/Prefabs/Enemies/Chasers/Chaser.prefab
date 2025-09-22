@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 1288165168614315835}
   - component: {fileID: 7731121725679908282}
   - component: {fileID: 112673506430647192}
-  m_Layer: 28
+  m_Layer: 13
   m_Name: Electric Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}

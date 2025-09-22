@@ -204,9 +204,7 @@ namespace LevelPlay
                     // kill all hazards
                     FindObjectsByType<Damageable>(FindObjectsSortMode.None).ToList().ForEach(dmg =>
                     {
-                        if ((dmg.gameObject.layer == LayerMask.NameToLayer("Hazards") 
-                            || dmg.gameObject.layer == LayerMask.NameToLayer("PlayerOnlyHazard")) 
-                            && dmg.GetComponent<AsteroidController>() == null) dmg.Damage(float.MaxValue, null);
+                        if (dmg.GetComponentInParent<EnemyVariant>()?.hazardObject == true) dmg.Damage(float.MaxValue, null);
                     });
 
                     StatisticsInstance.levelsCleared++;
