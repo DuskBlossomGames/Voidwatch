@@ -6509,6 +6509,8 @@ MonoBehaviour:
   randomModifier: 1
   eliteDifficultyModifier: 0.85
   hardEliteDifficultyModifier: 0.95
+  eliteWaveStart: 0
+  hardEliteWaveStart: 1
   hardTakenDamageModifier: 1.1
   hardHealthModifier: 1.2
   galaxyModifier: 0

@@ -118,6 +118,8 @@ namespace Singletons.Static_Info
         public float randomModifier;
         public float eliteDifficultyModifier;
         public float hardEliteDifficultyModifier;
+        public int eliteWaveStart;
+        public int hardEliteWaveStart;
         public float hardTakenDamageModifier;
         public float hardHealthModifier;
         public float galaxyModifier;
@@ -135,7 +137,7 @@ namespace Singletons.Static_Info
         public float MinDifficultyScore => BaseDifficulty;
         
         public const int EliteWaves = 3;
-        private const int EliteWaveStart = 0; // for difficulty, which wave elites start at (2)
+        private int EliteWaveStart => hardMode ? eliteWaveStart : hardEliteWaveStart; // for difficulty, which wave elites start at
         
         private float EliteDifficulty => EliteDifficultyModifier * GameDifficultyModifier * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 

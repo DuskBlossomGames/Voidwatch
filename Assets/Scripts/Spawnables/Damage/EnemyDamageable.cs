@@ -71,11 +71,18 @@ namespace Spawnables.Damage
         public override float MaxHealth => maxHealth;
 
         private EnemyType _type;
+
+        private void Awake()
+        {
+            if (LevelSelectDataInstance.hardMode && scaleHardHealth)
+            {
+                maxHealth = (int) (maxHealth*LevelSelectDataInstance.hardHealthModifier);
+            }
+        }
+
         public new void Start()
         {
             base.Start();
-            
-            if (LevelSelectDataInstance.hardMode && scaleHardHealth) maxHealth = (int) (maxHealth*LevelSelectDataInstance.hardHealthModifier);
             Health = MaxHealth;
 
             if (stunBar != null) _stunBar = Instantiate(stunBar).GetComponent<HealthBar>();
