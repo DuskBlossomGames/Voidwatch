@@ -6508,7 +6508,9 @@ MonoBehaviour:
   hardLevelModifier: 3
   randomModifier: 1
   eliteDifficultyModifier: 0.85
-  hardEliteDifficultyModifier: 0.85
+  hardEliteDifficultyModifier: 0.95
+  hardTakenDamageModifier: 1.1
+  hardHealthModifier: 1.2
   galaxyModifier: 0
   minBudgetPerWave: 050000000c0000001200000019000000230000002d00000037000000
   hardMode: 1

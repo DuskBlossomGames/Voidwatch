@@ -22,6 +22,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 using static Singletons.Static_Info.PlayerData;
+using static Singletons.Static_Info.LevelSelectData;
 using Random = UnityEngine.Random;
 namespace Player
 {
@@ -147,7 +148,7 @@ namespace Player
         public override bool Damage(float damage, GameObject source, float shieldMult, float bleedPerc)
         {
             if (godmode) return false;
-
+            if (LevelSelectDataInstance.hardMode) damage *= LevelSelectDataInstance.hardTakenDamageModifier;
 
             var vignetteScale = (maxVignetteScale - minVignetteScale) / (1 + Mathf.Exp(-2 * (damage - sigmoidStart) / (sigmoidEnd - sigmoidStart))) + minVignetteScale;
             var vignetteAlpha = (maxVignetteAlpha - minVignetteAlpha) / (1 + Mathf.Exp(-2*(damage - sigmoidStart)/(sigmoidEnd - sigmoidStart))) + minVignetteAlpha;

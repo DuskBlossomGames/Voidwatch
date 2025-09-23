@@ -2623,6 +2623,7 @@ MonoBehaviour:
   takeAsteroidDmg: 0
   dontDestroyOffscreen: 1
   trackDeath: 1
+  scaleHardHealth: 1
   maxHealth: 3500
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}

@@ -118,6 +118,8 @@ namespace Singletons.Static_Info
         public float randomModifier;
         public float eliteDifficultyModifier;
         public float hardEliteDifficultyModifier;
+        public float hardTakenDamageModifier;
+        public float hardHealthModifier;
         public float galaxyModifier;
         public int[] minBudgetPerWave;
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using Analytics;
 using UnityEngine;
 using Util;
@@ -14,6 +15,8 @@ namespace LevelSelect
 
         private Vector2 _minScroll;
         private Vector2 _maxScroll;
+
+        private bool _enabled;
         
         public void Instantiate()
         {
@@ -30,6 +33,15 @@ namespace LevelSelect
 
             camTransform.position = pos;
             playerMini.SetOrbitPosition(pos);
+            
+            StartCoroutine(EnableLater());
+        }
+
+        private IEnumerator EnableLater()
+        {
+            yield return new WaitForSeconds(1f);
+            _enabled = true;
+            _lastMousePos = InputManager.mousePosition;
         }
 
         
@@ -40,16 +52,22 @@ namespace LevelSelect
         
         private void OnMouseUp()
         {
+            if (!_enabled) return;
+            
             if (_resettingSelector) selector.SetPosition(null);
         }
 
         private void OnMouseDown()
         {
+            if (!_enabled) return;
+            
             _resettingSelector = true;
             _lastMousePos = InputManager.mousePosition;
         }
         private void OnMouseDrag()
         {
+            if (!_enabled) return;
+            
             _resettingSelector &= InputManager.mousePosition == _lastMousePos;
             
             var camTransform = camera.transform;
@@ -72,6 +90,8 @@ namespace LevelSelect
         
         private void Update()
         {
+            if (!_enabled) return;
+            
             camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - InputManager.mouseScrollDelta.y * scrollSpeed,
                 minCamSize, maxCamSize);
 

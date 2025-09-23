@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using Analytics;
 using Extensions;
+using JetBrains.Annotations;
 using LevelPlay;
 using Player;
 using Singletons;
@@ -92,7 +93,7 @@ namespace Menus
                 else
                 {
                     enemy.GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Unclear";
-                    enemy.GetComponentInChildren<Image>().enabled = false;
+                    enemy.GetComponentsInChildren<Image>()[1].enabled = false;
                 }
             } 
             
@@ -125,7 +126,7 @@ namespace Menus
                 yield return new WaitForFixedUpdate();
                 title.SetAlpha(t / fadeInTime);
                 subtitle.SetAlpha(t / fadeInTime);
-                if (won) winImage.SetAlpha(t/fadeInTime);;
+                if (won) winImage.SetAlpha(t/fadeInTime);
             }
             
             yield return new WaitForSeconds(statisticsBeforeTime);

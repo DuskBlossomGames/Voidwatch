@@ -1,9 +1,11 @@
 using System;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace Spawnables.Controllers.Worms
 {
     public class MultiDamageable : HealthHolder
     {
+        public bool scaleHardHealth; // TODO: demo only
         public float maxHealth;
 
         private float _health;
@@ -24,6 +26,7 @@ namespace Spawnables.Controllers.Worms
     
         private void Awake()
         {
+            if (LevelSelectDataInstance.hardMode && scaleHardHealth) maxHealth = (int) (maxHealth*LevelSelectDataInstance.hardHealthModifier);
             Health = maxHealth;
         }
     }

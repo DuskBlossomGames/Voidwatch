@@ -164,6 +164,7 @@ MonoBehaviour:
   takeAsteroidDmg: 1
   dontDestroyOffscreen: 0
   trackDeath: 1
+  scaleHardHealth: 1
   maxHealth: 0
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
@@ -411,7 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardObject: 0
-  cost: 4
+  cost: 3
   tier: 1
   enemyType: 2
 --- !u!114 &8753938358301726008

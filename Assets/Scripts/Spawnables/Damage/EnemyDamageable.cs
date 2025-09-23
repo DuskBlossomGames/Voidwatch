@@ -5,12 +5,14 @@ using JetBrains.Annotations;
 using Player;
 using ProgressBars;
 using Spawnables.Controllers;
+using Spawnables.Controllers.Asteroids;
 using Spawnables.Controllers.Misslers;
 using UnityEngine;
 using Util;
 using Random = UnityEngine.Random;
 using static Singletons.Static_Info.PlayerData;
 using static Singletons.Static_Info.Statistics;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace Spawnables.Damage
 {
@@ -41,6 +43,7 @@ namespace Spawnables.Damage
 
         public bool dontDestroyOffscreen;
         public bool trackDeath;
+        public bool scaleHardHealth; // TODO: demo only
         
         public int maxHealth;
 
@@ -71,8 +74,10 @@ namespace Spawnables.Damage
         public new void Start()
         {
             base.Start();
-            Health = MaxHealth;
             
+            if (LevelSelectDataInstance.hardMode && scaleHardHealth) maxHealth = (int) (maxHealth*LevelSelectDataInstance.hardHealthModifier);
+            Health = MaxHealth;
+
             if (stunBar != null) _stunBar = Instantiate(stunBar).GetComponent<HealthBar>();
             _stunBar?.transform.SetParent(transform, true);
 

@@ -67,6 +67,7 @@ namespace Player
             playMov.autoPilot = true;
             playMov.GetComponent<PlayerDamageable>().godmode = true;
             followPlayer.suppress = true;
+            raycaster.enabled = false;
             
             var rawImage = minimap.GetComponentInChildren<RawImage>();
             var border = minimap.GetComponentsInChildren<Image>()[1];
@@ -124,6 +125,8 @@ namespace Player
                 everythingElse.alpha = t/fadeInTime;
                 yield return new WaitForFixedUpdate();
             }
+
+            raycaster.enabled = true;
         }
 
         private void UpdateUpgrades()
