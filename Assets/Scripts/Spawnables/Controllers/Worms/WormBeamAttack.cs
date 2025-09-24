@@ -44,7 +44,9 @@ namespace Spawnables.Controllers.Worms
         {
             GetComponent<WormSegment>().aroundPather.snakeyness /= 3;
             GetComponent<WormSegment>().pathmode = WormSegment.PathMode.Direct;
-            yield return new WaitForSeconds(chargeTime-0.1f);
+
+            while (Vector2.SqrMagnitude(transform.position - GetComponent<WormSegment>().target.transform.position) > 15 * 15) yield return new WaitForFixedUpdate();
+            // yield return new WaitForSeconds(chargeTime-0.1f);
 
             AudioPlayer.Play(wormShoot, this, 1, 0.85f);
             
