@@ -1,5 +1,6 @@
 using Spawnables.Damage;
 using UnityEngine;
+using static Singletons.Static_Info.LevelSelectData;
 
 namespace Spawnables.Controllers.Carcadon
 {
@@ -9,6 +10,7 @@ namespace Spawnables.Controllers.Carcadon
 
         private void Awake()
         {
+            if (LevelSelectDataInstance.hardMode) maxHealth = (int)(maxHealth * LevelSelectDataInstance.hardEliteHealthMod);
             _cb = GetComponent<CarcadonBrain>();
         }
 

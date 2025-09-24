@@ -29,6 +29,7 @@ namespace Singletons.Static_Info
         public static readonly Difficulty Medium = new("Medium", Color.HSVToRGB(0.16f, 1, 0.85f));
         public static readonly Difficulty Difficult = new("Difficult", Color.HSVToRGB(0f, 0.9f, 0.9f));
         public static readonly Difficulty Insane = new("Insane", Color.HSVToRGB(0.83f, 0.7f, 1));
+        public static readonly Difficulty Demonic = new("Demonic", Color.HSVToRGB(0, 0.93f, 0.21f));
         
         public static readonly Difficulty Entrance = new("Safe", Color.HSVToRGB(0.51f, 0.35f, 0.88f), false);
         public static readonly Difficulty SpaceStation = new("Space Station", Color.HSVToRGB(0f, 0f, 0.7f), false);
@@ -122,8 +123,11 @@ namespace Singletons.Static_Info
         public int hardEliteWaveStart;
         public float hardTakenDamageModifier;
         public float hardHealthModifier;
+        public int hardMaxTierMod;
+        public float hardEliteHealthMod;
         public float galaxyModifier;
         public int[] minBudgetPerWave;
+        public int[] hardMinBudgetPerWave;
 
         public bool hardMode;
         
@@ -132,14 +136,19 @@ namespace Singletons.Static_Info
         private float LevelModifier => hardMode ? hardLevelModifier : levelModifier;
         private float EliteDifficultyModifier => hardMode ? hardEliteDifficultyModifier : eliteDifficultyModifier;
         
+        private int[] MinBudgetPerWave => hardMode ? hardMinBudgetPerWave : minBudgetPerWave;
+        
         // based on how difficultyScore is generated below
-        public float MaxDifficultyScore => BaseDifficulty + LevelModifier * Levels.Count(l=>l.Type == LevelType.Normal) + randomModifier;
-        public float MinDifficultyScore => BaseDifficulty;
+        private float MaxDifficultyScore => BaseDifficulty + LevelModifier * Levels.Count(l=>l.Type == LevelType.Normal) + randomModifier;
+        private float MinDifficultyScore => BaseDifficulty;
+        
+        private float TrueMaxDifficultyScore => hardBaseDifficulty + hardLevelModifier * Levels.Count(l=>l.Type == LevelType.Normal) + randomModifier;
+        private float TrueMinDifficultyScore => baseDifficulty;
         
         public const int EliteWaves = 3;
         private int EliteWaveStart => hardMode ? eliteWaveStart : hardEliteWaveStart; // for difficulty, which wave elites start at
         
-        private float EliteDifficulty => EliteDifficultyModifier * GameDifficultyModifier * minBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
+        private float EliteDifficulty => EliteDifficultyModifier * GameDifficultyModifier * MinBudgetPerWave[EliteWaveStart..(EliteWaveStart + EliteWaves)].Sum();
 
 
 #if UNITY_EDITOR
@@ -242,7 +251,7 @@ namespace Singletons.Static_Info
                     while (true)
                     {
                         var budget = (int)(GameDifficultyModifier *
-                                           minBudgetPerWave[waves.Count + (level.Type == LevelType.Elite ? EliteWaveStart : 0)]);
+                                           MinBudgetPerWave[waves.Count + (level.Type == LevelType.Elite ? EliteWaveStart : 0)]);
                         if ((difficultyBudget -= budget) < 0)
                         {
                             difficultyBudget += budget;
@@ -260,13 +269,13 @@ namespace Singletons.Static_Info
                             Random.Range(1, 5));
 
                         // don't allow waves to go past the next wave's min value
-                        var validWaves = minBudgetPerWave.Select((_, i) =>
+                        var validWaves = MinBudgetPerWave.Select((_, i) =>
                         {
                             var wave = i;
                             if (level.Type == LevelType.Elite) i -= EliteWaveStart;
                             if (i < 0 || i >= waves.Count) return -1;
 
-                            return i == waves.Count - 1 || waves[i] + addition < GameDifficultyModifier * minBudgetPerWave[wave + 1] ? i : -1;
+                            return i == waves.Count - 1 || waves[i] + addition < GameDifficultyModifier * MinBudgetPerWave[wave + 1] ? i : -1;
                         }).Where(i=>i!=-1).ToList();
                         waves[validWaves[Random.Range(0, validWaves.Count)]] += addition;
                         difficultyBudget -= addition;
@@ -286,16 +295,17 @@ namespace Singletons.Static_Info
                     var difficultyPerc = (difficultyScore - MinDifficultyScore) / (MaxDifficultyScore - MinDifficultyScore);
                     
                     level.Loot = 16 * Mathf.Clamp((int)(difficultyScore * (Random.value * 0.4 + 0.8)), 0, (int) MaxDifficultyScore);
-                    level.MaxTier = (int) (5*Mathf.Pow(difficultyPerc, 2/3f) + 1);
+                    level.MaxTier = (int) (5*Mathf.Pow(difficultyPerc, 2/3f) + 1) + (hardMode ? hardMaxTierMod : 0);
                     level.Waves = waves.ToArray();
 
-                    var scale = Difficulty.Count/2;
+                    var scale = hardMode ? 2.5f : 7;
+                    var max = Difficulty.Count - (hardMode ? 1 : 2);
                     level.Difficulty = level.Type switch
                     {
                         LevelType.Entrance => Difficulty.Entrance,
                         LevelType.SpaceStation => Difficulty.SpaceStation,
                         LevelType.Tutorial => Difficulty.Easy,
-                        _ => (int)(scale * Mathf.Pow(2, 1.5f * Mathf.Clamp01(difficultyScore / MaxDifficultyScore)) - scale)
+                        _ => Mathf.Min((int)(scale * Mathf.Pow(2, 1.5f * Mathf.Clamp01((difficultyScore-TrueMinDifficultyScore) / (TrueMaxDifficultyScore-TrueMinDifficultyScore))) - scale), max)
                     };
 
                     if (level.LoreData is LevelLoreData lld)

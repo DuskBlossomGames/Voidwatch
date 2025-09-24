@@ -6501,21 +6501,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDifficulty: 5
-  hardBaseDifficulty: 8
+  hardBaseDifficulty: 15
   gameDifficultyModifier: 1.2
   hardGameDifficultyModifier: 1.5
   levelModifier: 2
   hardLevelModifier: 3
   randomModifier: 1
   eliteDifficultyModifier: 0.85
-  hardEliteDifficultyModifier: 0.95
+  hardEliteDifficultyModifier: 1.05
   eliteWaveStart: 0
   hardEliteWaveStart: 1
-  hardTakenDamageModifier: 1.1
-  hardHealthModifier: 1.2
+  hardTakenDamageModifier: 1.15
+  hardHealthModifier: 1.3
+  hardMaxTierMod: 1
+  hardEliteHealthMod: 1.3
   galaxyModifier: 0
   minBudgetPerWave: 050000000c0000001200000019000000230000002d00000037000000
-  hardMode: 1
+  hardMinBudgetPerWave: 0f000000160000001c000000230000002d0000003700000041000000
+  hardMode: 0
 --- !u!114 &342308707
 MonoBehaviour:
   m_ObjectHideFlags: 0
