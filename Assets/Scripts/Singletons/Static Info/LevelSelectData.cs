@@ -79,7 +79,7 @@ namespace Singletons.Static_Info
     [Serializable]
     public class LevelLoreData : LoreData 
     {
-        public string localName, discovered, voidInfluence;
+        public string localName, discovered;
 
         [NonSerialized] public int VoidWeeks, VoidDays, VoidHours;
     }

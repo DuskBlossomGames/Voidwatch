@@ -6647,37 +6647,31 @@ MonoBehaviour:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: New Thessaly
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Virella
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Mireden
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Junith
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Isenmark
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Salacia
       b:
         lore: "Salacia is home to some of the clearest and freshest water in the
@@ -6690,7 +6684,6 @@ MonoBehaviour:
           making it a sustainable, healthy, and ethical way of consuming water."
         localName: "L\u014Dkka"
         discovered: 2209
-        voidInfluence: 33 WEEKS, 1 DAY, 18 HOURS
     - a: Bellona
       b:
         lore: Bellona has been a fixture of the Terra Novan military for nearly as
@@ -6700,7 +6693,6 @@ MonoBehaviour:
           to turn this interdimensional skirmish into a fully fledged war.
         localName: '[Redacted]'
         discovered: 2146
-        voidInfluence: 36 WEEKS, 2 DAYS, 20 HOURS
     - a: Aeon
       b:
         lore: "Aeon, the earliest known Outer Human planet, was once a lush paradise
@@ -6716,7 +6708,6 @@ MonoBehaviour:
           steady progress on making Aeon fit for everyone."
         localName: Inanna
         discovered: 2166
-        voidInfluence: 29 WEEKS, 1 DAY, 4 HOURS
     c: 1
   - a: {fileID: 21300000, guid: 0cf666e707d3e40fea8023af38d6fcac, type: 3}
     b:
@@ -6725,37 +6716,31 @@ MonoBehaviour:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Halden Reach
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Elaris Prime
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Liora
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Orelius
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Cryden
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Nyx
       b:
         lore: "What started as a filthy and impoverished city moon turned into a
@@ -6772,7 +6757,6 @@ MonoBehaviour:
           uncleared."
         localName: Gorrer
         discovered: 2189
-        voidInfluence: 29 WEEKS, 3 DAYS, 4 HOURS
     - a: Agerona
       b:
         lore: Once a lush jungle, the aboriginal Sundrattans were a relatively primitive
@@ -6785,7 +6769,22 @@ MonoBehaviour:
           Terra Nova has decided to grant the Sundrattans their sovereignty back.
         localName: Sundratta
         discovered: 2322
-        voidInfluence: 36 WEEKS, 5 DAYS, 10 HOURS
+    - a: Janus
+      b:
+        lore: "Janus, one of the most populated planets in deep space, is tidally
+          locked by synchronized rotation with its sun, causing one side to experience
+          endless day, and the other endless night. Upon the planet\u2019s discovery,
+          the land on both sides became extremely coveted, and while developers quickly
+          established the capital city of New Solania, as well as many smaller cities
+          on the brighter side, the darker side became known for its vast criminal
+          underworld. Terra Nova has established several redevelopment projects in
+          the cities of Janus\u2019s dark side, even establishing an innovative urban
+          renewal collaboration with the Luccian mafia. Due to Terra Novan efforts,
+          the cities of the dark side of Janus, especially Lucos, are characterized
+          by astronomically low prices, with many projecting immense future real
+          estate value."
+        localName: eh
+        discovered: 2301
     c: 0.9
   - a: {fileID: 21300000, guid: 354e8fe3b5769452da08f36dfee42b8b, type: 3}
     b:
@@ -6794,37 +6793,31 @@ MonoBehaviour:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Tarnix
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Draymoor
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Mireforge
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Rendax
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Brumal
       b:
         lore: 
         localName: 
         discovered: 
-        voidInfluence: 
     - a: Tutunus
       b:
         lore: "Tutunus, a nebulous gas giant, acts as a casino getaway for all Terra
@@ -6838,7 +6831,6 @@ MonoBehaviour:
           and its shifting ways know it to be a fun, must-see tourist destination."
         localName: Tutunus
         discovered: 2348
-        voidInfluence: 1 WEEK, 8 DAYS, 2 HOURS
     c: 1.3
   spaceStationNames:
   - 'Karnith Station '
@@ -6876,7 +6868,6 @@ MonoBehaviour:
     lore: ???
     localName: ???
     discovered: ???
-    voidInfluence: ???
   carcPlanetScale: 2
 --- !u!4 &1935833801
 Transform:
