@@ -69,6 +69,14 @@ namespace Spawnables.Controllers.Worms
             child.GetComponent<WormDamageable>().root = gameObject;
             child.GetComponent<PositionHinter>().enabled = false;
 
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                for (var j = 0; j < transform.childCount; j++)
+                {
+                    Physics2D.IgnoreCollision(transform.GetChild(i).GetComponent<Collider2D>(), transform.GetChild(j).GetComponent<Collider2D>());
+                }
+            }
+
             buildCallback?.Invoke();
         }
 

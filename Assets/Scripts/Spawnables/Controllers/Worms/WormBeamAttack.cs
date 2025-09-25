@@ -58,6 +58,7 @@ namespace Spawnables.Controllers.Worms
             Vector2 dir = GetComponent<WormSegment>().PredDir(LineStart, dodgeTime+0.1f); // 0.1f because each of the five minibeams waits 0.02f
 
             GameObject ray = new GameObject("Warning Beam");
+            ray.AddComponent<DestroyAfterX>().killTime = dodgeTime;
             _spawns.Add(ray);
             ray.transform.position-= Vector3.forward * 2;
             var lrend = ray.AddComponent<LineRenderer>();
@@ -90,6 +91,7 @@ namespace Spawnables.Controllers.Worms
             {
                 GameObject lilray = new GameObject("Mini-Beam");
                 _spawns.Add(lilray);
+                lilray.AddComponent<DestroyAfterX>().killTime = (5-i) * 0.02f + 0.1f;
                 lilray.transform.position -= Vector3.forward * 2;
                 beams.Add(lilray);
                 lrend = lilray.AddComponent<LineRenderer>();
@@ -115,6 +117,7 @@ namespace Spawnables.Controllers.Worms
             }
 
             ray = new GameObject("Beam");
+            ray.AddComponent<DestroyAfterX>().killTime = 0.1f;
             _spawns.Add(ray);
             ray.transform.position -= Vector3.forward * 2;
             lrend = ray.AddComponent<LineRenderer>();
@@ -140,6 +143,7 @@ namespace Spawnables.Controllers.Worms
             for (int i = 0; i < 20; i++)
             {
                 GameObject lilray = new GameObject("Mini-Beam");
+                lilray.AddComponent<DestroyAfterX>().killTime = 0.1f;
                 _spawns.Add(lilray);
                 lilray.transform.position -= Vector3.forward * 2;
                 beams.Add(lilray);

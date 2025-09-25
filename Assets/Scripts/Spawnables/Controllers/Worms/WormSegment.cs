@@ -99,6 +99,8 @@ namespace Spawnables.Controllers.Worms
                     float angle = Mathf.Atan2(currToPrev.y, currToPrev.x);
                     transform.rotation = Quaternion.Euler(0, 0, 90 + Mathf.Rad2Deg * angle);
                 }
+                
+                GetComponent<CustomRigidbody2D>().linearVelocity = Vector2.zero;
             }
 
         }

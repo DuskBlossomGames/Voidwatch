@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4405246181603560970}
   - component: {fileID: 8290449300364683273}
   - component: {fileID: 8069644381904980747}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Stem Segment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,6 +362,7 @@ MonoBehaviour:
   takeAsteroidDmg: 0
   dontDestroyOffscreen: 0
   trackDeath: 0
+  scaleHardHealth: 0
   maxHealth: 1500
   healthPickup: {fileID: 0}
   explosion: {fileID: 0}
